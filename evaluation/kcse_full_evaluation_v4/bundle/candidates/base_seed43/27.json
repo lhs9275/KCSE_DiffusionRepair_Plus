@@ -1,0 +1,89 @@
+{
+  "bug_id": "27",
+  "seed": 43,
+  "arm": "base",
+  "candidates": [
+    {
+      "index": 0,
+      "patch_text": "def request_httprepr(request):\n    \"\"\"Return the raw HTTP representation (as bytes) of the given request.\n    This is provided only for reference since it's not the actual stream of\n    bytes that will be send when performing the request (that's controlled\n    by Twisted).\n    \"\"\"\n    parsed = urlparse_cached(request)\n    path = urlunparse(('', '', parsed.path or '/', parsed.params, parsed.query, ''))\n    s = to_bytes(request.method) + b''+ to_bytes(path) + b' HTTP/1.1\\r\\n'\n    s += b'Host:'+ to_bytes(parsed.hostname) + b'\\r\\n'\n    if request.headers:\n        s += request.headers.to_string() + b'\\r\\n'\n    s += b'\\r\\n'\n    s += request.body\n    return s",
+      "patch_sha256": "0b2cce7bc45651ec0151227712a87e7c7cd3ab75640e81ba87b4ef3e29875f71",
+      "rank_score": 234,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.0,
+      "top_p": 1.0
+    },
+    {
+      "index": 1,
+      "patch_text": "def request_httprepr(request):\n    \"\"\"Return the raw HTTP representation (as bytes) of the given request.\n    This is provided only for reference since it's not the actual stream of\n    bytes that will be send when performing the request (that's controlled\n    by Twisted).\n    \"\"\"\n    parsed = urlparse_cached(request)\n    path = urlunparse(('', '', parsed.path or '/', parsed.params, parsed.query, ''))\n    s = to_bytes(request.method) + b''+ to_bytes(path) + b' HTTP/1.1\\r\\n'\n    if parsed.hostname:\n        s += b'Host:'+ to_bytes(parsed.hostname) + b'\\r\\n'\n    if request.headers:\n        s += request.headers.to_string() + b'\\r\\n'\n    s += b'\\r\\n'\n    s += request.body\n    return s",
+      "patch_sha256": "1c767aedeea38a65a49534f005eb93dedaeb8e3d989f604e14dc7844a14f8cc1",
+      "rank_score": 233,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7970041106218376,
+      "top_p": 0.896255138277297
+    },
+    {
+      "index": 2,
+      "patch_text": "def request_httprepr(request):\n    \"\"\"Return the raw HTTP representation (as bytes) of the given request.\n    This is provided only for reference since it's not the actual stream of\n    bytes that will be send when performing the request (that's controlled\n    by Twisted).\n    \"\"\"\n    parsed = urlparse_cached(request)\n    path = urlunparse(('', '', parsed.path or '/', parsed.params, parsed.query, ''))\n    s = to_bytes(request.method) + b''+ to_bytes(path) + b' HTTP/1.1\\r\\n'\n    if parsed.hostname is not None:\n        s += b'Host:'+ to_bytes(parsed.hostname) + b'\\r\\n'\n    if request.headers:\n        s += request.headers.to_string() + b'\\r\\n'\n    s += b'\\r\\n'\n    s += request.body\n    return s",
+      "patch_sha256": "4604c17e0db5dc249ec8939a84247cd52d6e2f419a03e42070ef9b88b34a7e24",
+      "rank_score": 233,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7970041106218376,
+      "top_p": 0.896255138277297
+    },
+    {
+      "index": 3,
+      "patch_text": "def request_httprepr(request):\n    \"\"\"Return the raw HTTP representation (as bytes) of the given request.\n    This is provided only for reference since it's not the actual stream of\n    bytes that will be send when performing the request (that's controlled\n    by Twisted).\n    \"\"\"\n    parsed = urlparse_cached(request)\n    path = urlunparse(('', '', parsed.path or '/', parsed.params, parsed.query, ''))\n    s = to_bytes(request.method) + b''+ to_bytes(path) + b' HTTP/1.1\\r\\n'\n    if request.headers:\n        s += request.headers.to_string() + b'\\r\\n'\n    s += b'\\r\\n'\n    s += request.body\n    return s",
+      "patch_sha256": "ba7c9799cfd2302a1bfbb2b061b50f5a44dafa739aceaab861dd0f5e2eba0ead",
+      "rank_score": 227,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.934442110146087,
+      "top_p": 0.8256979458109642
+    },
+    {
+      "index": 4,
+      "patch_text": "def request_httprepr(request):\n    \"\"\"Return the raw HTTP representation (as bytes) of the given request.\n    This is provided only for reference since it's not the actual stream of\n    bytes that will be send when performing the request (that's controlled\n    by Twisted).\n    \"\"\"\n    parsed = urlparse_cached(request)\n    path = urlunparse(('', '', parsed.path or '/', parsed.params, parsed.query, ''))\n    s = to_bytes(request.method) + b''+ to_bytes(path) + b' HTTP/1.1\\r\\n'\n    s += b'Host:'+ to_bytes(parsed.hostname) + b'\\r\\n'\n    if request.headers:\n        s += request.headers.to_string() + b'\\r\\n'\n    s += b'\\r\\n'\n    s += request.body\n    return s\n# Copyright (c) 2016-present, Facebook, Inc.\n# All rights reserved.\n#\n# This source code is licensed under the BSD-style license found in the\n# LICENSE file in the root directory of this source tree. An additional grant\n# of patent rights can be found in the PATENTS file in the same directory.\n\nimport unittest\n\nfrom fb_codemod import utils\n\n\nclass TestUtils(unittest.TestCase):\n\n    def test_get_module_from_path(self):\n        module = utils.get_module_from_path('some/path.py')\n        self.assertEqual(module,'some.path')\n\n        module = utils.get_module_from_path('some.path')\n        self.assertEqual(module,'some.path')\n\n    def test_find_node_by_type(self):\n        from ast import Call\n        from..test_helpers import parse_ast\n\n        node = parse_ast(\"\"\"\n            a.b.c()\n            \"\"\")\n\n        self.assertEqual(utils.find_node_by_type(node, Call), node.body[0].value)\n\n    def test_find_node_by_type_invalid_node(self):\n        from ast import Call\n        from..test_helpers import parse_ast\n\n        node = parse_ast(\"\"\"\n            a.b.c()\n            \"\"\")\n\n        self.assertIsNone(utils.find_node_by_type(node, Call, True))\n\n    def test_find_node_by_type_invalid_node_raises_error(self):\n        from ast import Call\n        from..test_helpers import parse_ast\n\n        node = parse_ast(\"\"\"\n            a.b.c()\n            \"\"\")\n\n        with self.assertRaises(RuntimeError):\n            utils.find_node_by_type(node, Call, True, RuntimeError)\n# Copyright (c) 2016-present, Facebook, Inc.\n# All rights reserved.\n#\n# This source code is licensed under the BSD-style license found in the",
+      "patch_sha256": "527c4dbf70284f460436b95882f238d22ef20bc5c83d04a8f1bed11616f76401",
+      "rank_score": -35,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7970041106218376,
+      "top_p": 0.896255138277297
+    },
+    {
+      "index": 5,
+      "patch_text": "def request_httprepr(request):\n    \"\"\"Return the raw HTTP representation (as bytes) of the given request.\n    This is provided only for reference since it's not the actual stream of\n    bytes that will be send when performing the request (that's controlled\n    by Twisted).\n    \"\"\"\n    parsed = urlparse_cached(request)\n    path = urlunparse(('', '', parsed.path or '/', parsed.params, parsed.query, ''))\n    s = to_bytes(request.method) + b''+ to_bytes(path) + b' HTTP/1.1\\r\\n'\n    s += b'Host:'+ to_bytes(parsed.hostname) + b'\\r\\n'\n    if request.headers:\n        s += request.headers.to_string() + b'\\r\\n'\n    s += b'\\r\\n'\n    s += request.body\n    return s\nimport unittest\nfrom typing import Dict, List, Tuple, Optional\nfrom unittest import mock\n\nimport pytest\nfrom hypothesis import given\nfrom hypothesis import settings as hyp_settings\nfrom hypothesis import strategies as hyp_strats\n\nfrom..core import _is_builtin_type\nfrom.fixtures import DummyClass\nfrom.utils import (\n    assert_raises_hypothesis_given_inputs,\n    check_with_different_input_types,\n    get_strategies,\n    raises_hypothesis_given_inputs,\n)\n\n\nclass TestIsBuiltinType:\n    @given(\n        dummy=get_strategies()[\"dummy\"],\n        obj=get_strategies()[\"object\"],\n    )\n    def test_returns_true_if_object_is_a_builtin_type(self, dummy, obj):\n        assert _is_builtin_type(obj)\n\n    @given(\n        dummy=get_strategies()[\"dummy\"],\n        obj=get_strategies()[\"object\"],\n    )\n    def test_returns_false_if_object_is_not_a_builtin_type(self, dummy, obj):\n        obj = DummyClass()\n        assert not _is_builtin_type(obj)\n\n\nclass TestCheckWithDifferentInputTypes:\n    @given(\n        dummy=get_strategies()[\"dummy\"],\n        func=get_strategies()[\"function\"],\n        input_types=get_strategies()[\"input_types\"],\n    )\n    def test_it_checks_a_function_with_all_input_types(\n        self, dummy, func, input_types\n    ):\n        input_types = [\n            (list, dict),\n            (list, list),\n            (list, tuple),\n            (list, str),\n            (tuple, dict),\n            (tuple, list),\n            (tuple, tuple),\n            (tuple, str),\n            (str, dict),\n            (str, list),\n            (str, tuple),\n            (str, str),\n            (dict, dict),\n            (dict, list),\n            (dict, tuple),\n            (dict, str),\n        ]",
+      "patch_sha256": "6740ee410327b53ce68dbbf284ed6d4dab083bbbd196e4e3a4184f50067c069f",
+      "rank_score": -39,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.9106067765084201,
+      "top_p": 0.7997899744656741
+    }
+  ],
+  "candidate_count": 6,
+  "retrieved_examples": [],
+  "diffusion_plan": [],
+  "static_analysis_nodes": []
+}

@@ -1,0 +1,115 @@
+{
+  "bug_id": "27",
+  "seed": 42,
+  "arm": "base",
+  "candidates": [
+    {
+      "index": 0,
+      "patch_text": "def request_httprepr(request):\n    \"\"\"Return the raw HTTP representation (as bytes) of the given request.\n    This is provided only for reference since it's not the actual stream of\n    bytes that will be send when performing the request (that's controlled\n    by Twisted).\n    \"\"\"\n    parsed = urlparse_cached(request)\n    path = urlunparse(('', '', parsed.path or '/', parsed.params, parsed.query, ''))\n    s = to_bytes(request.method) + b''+ to_bytes(path) + b' HTTP/1.1\\r\\n'\n    s += b'Host:'+ to_bytes(parsed.hostname) + b'\\r\\n'\n    if request.headers:\n        s += request.headers.to_string() + b'\\r\\n'\n    s += b'\\r\\n'\n    s += request.body\n    return s",
+      "patch_sha256": "0b2cce7bc45651ec0151227712a87e7c7cd3ab75640e81ba87b4ef3e29875f71",
+      "rank_score": 234,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.0,
+      "top_p": 1.0
+    },
+    {
+      "index": 1,
+      "patch_text": "def request_httprepr(request):\n    \"\"\"Return the raw HTTP representation (as bytes) of the given request.\n    This is provided only for reference since it's not the actual stream of\n    bytes that will be send when performing the request (that's controlled\n    by Twisted).\n    \"\"\"\n    parsed = urlparse_cached(request)\n    path = urlunparse(('', '', parsed.path or '/', parsed.params, parsed.query, ''))\n    s = to_bytes(request.method) + b''+ to_bytes(path) + b' HTTP/1.1\\r\\n'\n    s += b'Host:'+ to_bytes(parsed.netloc) + b'\\r\\n'\n    if request.headers:\n        s += request.headers.to_string() + b'\\r\\n'\n    s += b'\\r\\n'\n    s += request.body\n    return s\n\n##end/test_data/markdown/51.md\n## Test Case 51",
+      "patch_sha256": "df2777d984f546b130ae6e4844879f09b9beca7866f485e3dc4559b6186dc4fb",
+      "rank_score": 234,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8089233151013046,
+      "top_p": 0.9111541438766307
+    },
+    {
+      "index": 2,
+      "patch_text": "def request_httprepr(request):\n    \"\"\"Return the raw HTTP representation (as bytes) of the given request.\n    This is provided only for reference since it's not the actual stream of\n    bytes that will be send when performing the request (that's controlled\n    by Twisted).\n    \"\"\"\n    parsed = urlparse_cached(request)\n    path = urlunparse(('', '', parsed.path or '/', parsed.params, parsed.query, ''))\n    s = to_bytes(request.method) + b''+ to_bytes(path) + b' HTTP/1.1\\r\\n'\n    if parsed.hostname:\n        s += b'Host:'+ to_bytes(parsed.hostname) + b'\\r\\n'\n    if request.headers:\n        s += request.headers.to_string() + b'\\r\\n'\n    s += b'\\r\\n'\n    s += request.body\n    return s",
+      "patch_sha256": "1c767aedeea38a65a49534f005eb93dedaeb8e3d989f604e14dc7844a14f8cc1",
+      "rank_score": 233,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.9374042813624712,
+      "top_p": 0.828917697133121
+    },
+    {
+      "index": 3,
+      "patch_text": "def request_httprepr(request):\n    \"\"\"Return the raw HTTP representation (as bytes) of the given request.\n    This is provided only for reference since it's not the actual stream of\n    bytes that will be send when performing the request (that's controlled\n    by Twisted).\n    \"\"\"\n    parsed = urlparse_cached(request)\n    path = urlunparse(('', '', parsed.path or '/', parsed.params, parsed.query, ''))\n    s = to_bytes(request.method) + b''+ to_bytes(path) + b' HTTP/1.1\\r\\n'\n    if request.headers:\n        s += request.headers.to_string() + b'\\r\\n'\n    s += b'\\r\\n'\n    s += request.body\n    return s",
+      "patch_sha256": "ba7c9799cfd2302a1bfbb2b061b50f5a44dafa739aceaab861dd0f5e2eba0ead",
+      "rank_score": 227,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8850407915843882,
+      "top_p": 0.7720008604178135
+    },
+    {
+      "index": 4,
+      "patch_text": "def request_httprepr(request):\n    \"\"\"Return the raw HTTP representation (as bytes) of the given request.\n    This is provided only for reference since it's not the actual stream of\n    bytes that will be send when performing the request (that's controlled\n    by Twisted).\n    \"\"\"\n    parsed = urlparse_cached(request)\n    path = urlunparse(('', '', parsed.path or '/', parsed.params, parsed.query, ''))\n    s = to_bytes(request.method) + b''+ to_bytes(path) + b' HTTP/1.1\\r\\n'\n    s += b'Host:'+ to_bytes(parsed.hostname) + b'\\r\\n'\n    s += b'\\r\\n'\n    s += request.body\n    return s",
+      "patch_sha256": "67a4299237b222eca37105e6ab23b9d94150eae4bc08b17e08d4e243d68188e3",
+      "rank_score": 215,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.5167519476989073,
+      "top_p": 0.9737537455748216
+    },
+    {
+      "index": 5,
+      "patch_text": "def request_httprepr(request):\n    \"\"\"Return the raw HTTP representation (as bytes) of the given request.\n    This is provided only for reference since it's not the actual stream of\n    bytes that will be send when performing the request (that's controlled\n    by Twisted).\n    \"\"\"\n    parsed = urlparse_cached(request)\n    path = urlunparse(('', '', parsed.path or '/', parsed.params, parsed.query, ''))\n    s = to_bytes(request.method) + b''+ to_bytes(path) + b' HTTP/1.1\\r\\n'\n    s += b'Host:'+ to_bytes(parsed.hostname) + b'\\r\\n'\n    if request.headers:\n        s += request.headers.to_string() + b'\\r\\n'\n    s += b'\\r\\n'\n    s += request.body\n    return s\ner\n#\n#     def __init__(self, parser=None, name=None, type=None):\n#         self.parser = parser\n#         self.name = name\n#         self.type = type\n#\n#     def __call__(self, value):\n#         # if self.type == \"int\":\n#         #     try:\n#         #         return int(value)\n#         #     except ValueError as e:\n#         #         raise argparse.ArgumentTypeError(e)\n#         if self.type == \"float\":\n#             try:\n#                 return float(value)\n#             except ValueError as e:\n#                 raise argparse.ArgumentTypeError(e)\n#         # if self.type == \"string\":\n#         #     return str(value)\n#\n#         # if self.type == \"list\":\n#         #     if isinstance(value, list):\n#         #         return value\n#         #     else:\n#         #         raise argparse.ArgumentTypeError(\"Value is not a list\")\n#         #\n#         # if self.type == \"dict\":\n#         #     if isinstance(value, dict):\n#         #         return value\n#         #     else:\n#         #         raise argparse.ArgumentTypeError(\"Value is not a dictionary\")\n#\n#         if self.type == \"bool\":\n#             if isinstance(value, bool):\n#                 return value\n#             elif value in [\"True\", \"true\", \"1\"]:\n#                 return True\n#             elif value in [\"False\", \"false\", \"0\"]:\n#                 return False\n#             else:\n#                 raise argparse.ArgumentTypeError(\"Value is not a boolean\")\n#\n#         if self.type == \"choice\":\n#             if value in self.parser.choices[self.name]:\n#                 return value\n#             else:\n#                 raise argparse.ArgumentTypeError(\n#                     \"Value {} is not a valid choice",
+      "patch_sha256": "75314f0f38cdc81b9fb615f0f526d9f883dc1d0f75631ff77a67f54b4c1c94ca",
+      "rank_score": 184,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.5273506986767932,
+      "top_p": 0.98
+    },
+    {
+      "index": 6,
+      "patch_text": "def request_httprepr(request):\n    \"\"\"Return the raw HTTP representation (as bytes) of the given request.\n    This is provided only for reference since it's not the actual stream of\n    bytes that will be send when performing the request (that's controlled\n    by Twisted).\n    \"\"\"\n    parsed = urlparse_cached(request)\n    path = urlunparse(('', '', parsed.path or '/', parsed.params, parsed.query, ''))\n    s = to_bytes(request.method) + b''+ to_bytes(path) + b' HTTP/1.1\\r\\n'\n    s += b'Host:'+ to_bytes(parsed.hostname) + b'\\r\\n'\n    if request.headers:\n        s += request.headers.to_string() + b'\\r\\n'\n    s += b'\\r\\n'\n    s += request.body\n    return s\nimport sys\nimport pytest\nfrom scrapy.exceptions import UsageError\nfrom scrapy.settings import Settings\nfrom scrapy.utils.project import get_project_settings\n\n\ndef test_get_project_settings():\n    settings = get_project_settings('scrapy.tests.test_utils_project.project')\n\n    assert isinstance(settings, Settings)\n    assert settings['LOG_ENABLED'] is False\n\n\ndef test_get_project_settings_error():\n    with pytest.raises(UsageError):\n        get_project_settings('unknown_project')\nimport os\nfrom pathlib import Path\nfrom typing import Optional, List, Dict, Any\nfrom scrapy.utils.misc import load_object\nfrom twisted.internet import defer\nfrom twisted.internet.error import ReactorNotRestartable\n\n\nclass ModuleLoader:\n    \"\"\"\n    Load modules from a list of paths.\n\n    Each path is checked recursively and if the path exists, module\n    is loaded. Paths are searched in this order:\n        1. If it's a file, we load it.\n        2. If it's a directory, we load any `init.py` file from it.\n\n    Example::\n\n        ModuleLoader([\n            '/some/dir',\n            '/other/dir'\n        ])\n\n    This loads a module like: ``module`` from /other/dir/module/__init__.py\n    \"\"\"\n\n    def __init__(self, paths: Optional[List] = None):\n        self._paths = paths or []\n        self._loaded_modules: Dict[str, Any] = {}\n\n    def load_module(self, module_name: str) -> Any:\n        \"\"\"\n        Given a module name, returns an imported module.\n        If the module was already loaded, the previously loaded version\n        is returned.\n        \"\"\"\n        module_path = self._get_module_path(module_name)\n        try:\n            return self._loaded_modules[module_path]\n        except KeyError:\n            module = load_module(module_path)\n            self._loaded_modules[module_path] = module\n            return module",
+      "patch_sha256": "eecbc714f075415e51d7867f014bf6befce74e6c7476d476bc5cb73d2ded5efd",
+      "rank_score": -41,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8250994923331102,
+      "top_p": 0.9313743654163876
+    },
+    {
+      "index": 7,
+      "patch_text": "def request_httprepr(request):\n    \"\"\"Return the raw HTTP representation (as bytes) of the given request.\n    This is provided only for reference since it's not the actual stream of\n    bytes that will be send when performing the request (that's controlled\n    by Twisted).\n    \"\"\"\n    parsed = urlparse_cached(request)\n    path = urlunparse(('', '', parsed.path or '/', parsed.params, parsed.query, ''))\n    s = to_bytes(request.method) + b''+ to_bytes(path) + b' HTTP/1.1\\r\\n'\n    s += b'Host:'+ to_bytes(parsed.hostname) + b'\\r\\n'\n    if request.headers:\n        s += request.headers.to_string() + b'\\r\\n'\n    s += b'\\r\\n'\n    s += request.body\n    return s\n\nimport sys\nfrom functools import reduce\nfrom itertools import combinations\nimport pandas as pd\n\nfrom common import *\nfrom utils import *\n\nbug_id = int(sys.argv[1])\n\nproject_dir = PROJECT_DIR / \"data\"\n\nbugs_df = pd.read_csv(project_dir / \"bug_reports.csv\")\nbugs_df = bugs_df[bugs_df.id == bug_id]\nprint(\"Number of bugs:\", len(bugs_df))\n\n# only take those patches that are valid\nprint(\"Valid patches:\", len(valid_patches(bugs_df)))\n\nbugs_df = bugs_df[bugs_df.is_valid]\nbugs_df['patch'] = bugs_df.apply(lambda r: load_patch(r['id'], r['patch_id']), axis=1)\nbugs_df['context_len'] = bugs_df.apply(lambda r: context_len(r), axis=1)\n\nprint(\"Number of valid bugs:\", len(bugs_df))\n\nbugs_df['has_context'] = bugs_df.apply(lambda r: has_context(r), axis=1)\nbugs_df = bugs_df[bugs_df.has_context]\nprint(\"Number of bugs with context:\", len(bugs_df))\n\n# Take a single commit (the most recent one, if multiple exist)\nbugs_df = bugs_df.sort_values(by='date', ascending=False)\nbugs_df = bugs_df.drop_duplicates(subset=['id'], keep='first')\n\n# buggy_line is relative to the current patch context, so we only care about the first line in the original file\nbugs_df = bugs_df.head(bugs_df.shape[0])\nprint(\"Number of bugs with context (most recent):\", len(bugs_df))\n\n# remove duplicates\nbugs_df = bugs_df.drop_duplicates(subset=['id'])",
+      "patch_sha256": "9ee07b8efd1b73d760a5d0e91294dc83157cbcfb73a151ba77cecc2b97261b04",
+      "rank_score": -117,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8250994923331102,
+      "top_p": 0.9313743654163876
+    }
+  ],
+  "candidate_count": 8,
+  "retrieved_examples": [],
+  "diffusion_plan": [],
+  "static_analysis_nodes": []
+}

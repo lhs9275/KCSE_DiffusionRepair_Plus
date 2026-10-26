@@ -1,0 +1,603 @@
+{
+  "bug_id": "52",
+  "seed": 42,
+  "arm": "full",
+  "candidates": [
+    {
+      "index": 0,
+      "patch_text": "def get_new_command(command, settings):\n    return command.script",
+      "patch_sha256": "216982ea35997bfb35128a2552b84e7975bfde6499ba4ddad5bee2fc4d7a0b2e",
+      "rank_score": 171,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8089233151013046,
+      "top_p": 0.9111541438766307
+    },
+    {
+      "index": 1,
+      "patch_text": "def get_new_command(command, settings):\n    return command.script.replace('open ', 'open http://')",
+      "patch_sha256": "9fea661541a54d181b8f950616c1e4790c94255c0db754aa13b7c3a417c44ea9",
+      "rank_score": 166,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8089233151013046,
+      "top_p": 0.9111541438766307
+    },
+    {
+      "index": 2,
+      "patch_text": "def get_new_command(command, settings):\n    return command.script\n\nfrom. import utils\n\n\n@utils.git_support\ndef get_new_command(command, settings):\n    return '{} --staged'.format(command.script)  # <--- BUGGY LINE\nimport sys\nfrom os import path\n\nsys.path.append(path.dirname(path.abspath(__file__)))\n\nimport unittest\nimport json\n\nimport thefuck\nfrom thefuck.main import get_fixer_from_args\n\n\nclass TestTheFuck(unittest.TestCase):\n    def test_json_output(self):\n        self.assertEqual(\n            json.loads(\n                thefuck.get_fixes(\n                    'rm -rf /',\n                    settings=thefuck.settings.TheFuckSettings(\n                        show_suggestions=True,\n                        max_suggestions=1,\n                    ),\n                )\n            ),\n            [\n                {\n                    \"description\": \"rm -rf /\",\n                    \"edit_distance\": 0,\n                    \"num_edits\": 1,\n                    \"original_command\": \"rm -rf /\",\n                    \"new_command\": \"rm -rf /\",\n                }\n            ],\n        )\n\n    def test_string_output(self):\n        self.assertEqual(\n            thefuck.get_fixes(\n                'rm -rf /',\n                settings=thefuck.settings.TheFuckSettings(\n                    show_suggestions=True,\n                    max_suggestions=1,\n                ),\n            ),\n            [\n                \"rm -rf /\",\n                \"rm -rf /\",\n            ],\n        )\n\n    def test_get_fixer_from_args(self):\n        self.assertTrue(\n            isinstance(\n                get_fixer_from_args(\n                    ['-v', 'rm -rf /'],\n                    settings=thefuck.settings.TheFuckSettings(\n                        show_suggestions=True,\n                        max_suggestions=1,\n                    ),\n                ),\n                thefuck.fixers.Fix,\n            )\n        )\n\n        self.assertRaises(\n            SystemExit,\n            lambda: get_fixer_from_args(['--foobar'], settings=thefuck.settings.TheFuckSettings()),\n        )\n\n        self.assertRaises(\n            SystemExit,\n            lambda: get_fixer_from_args(\n                ['--foobar'],\n                settings=thefuck.settings.TheFuckSettings(show_suggestions=True),\n            ),\n        )\n\n        self.assertRaises(\n            SystemExit,\n            lambda: get_fixer_from_args(\n                ['--foobar'],\n                settings=thefuck.settings.TheFuckSettings(max_suggestions=1),\n            ),\n        )\nfrom. import utils\n\n\n@utils.git_support\ndef get_new_command(command, settings):\n    return command.script\nimport sys\nfrom os import path\n\nsys.path.append(path.dirname(path.abspath(__file__)))",
+      "patch_sha256": "ff4687e0073e7d7e7f2ae0a0156c26d78c850ac92f2265405774631b32a101c3",
+      "rank_score": -90,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.5202227799850999,
+      "top_p": 0.98
+    },
+    {
+      "index": 3,
+      "patch_text": "def get_new_command(command, settings):\n    return '{} --staged'.format(command.script)\nimport pandas as pd\nimport numpy as np\n\nfrom.config import config\nfrom.db import get_db\n\ndef run(path=config['DATASETS_DIR'] + 'test_run.csv'):\n    df = pd.read_csv(path, sep=',')\n    df.columns = ['label', 'text']\n    df['text'] = df['text'].astype(str)\n\n    db = get_db()\n    for index, row in df.iterrows():\n        db.add_item(row['label'], row['text'])\nimport json\nimport requests\nimport os\nimport glob\nimport sys\nimport shutil\n\nsys.path.append(os.path.join(os.path.dirname(__file__), '..'))\n\nfrom core.config import config\nfrom core.db import get_db\n\nurl = config['API_URL']\nauth_token = config['AUTH_TOKEN']\n\ndef get_project_data():\n    project_name = config['PROJECT_NAME']\n    files = glob.glob(config['PROJECTS_DIR'] + project_name + '/*.json')\n\n    projects = []\n    for path in files:\n        with open(path) as file:\n            data = json.load(file)\n\n            if not 'id' in data:\n                data['id'] = get_next_bug_id()\n                with open(path, 'w+') as file:\n                    json.dump(data, file, indent=2)\n\n            data['repo'] = project_name\n            data['file_name'] = os.path.basename(path)\n            data['full_path'] = path\n\n            projects.append(data)\n\n    return projects\n\ndef get_next_bug_id():\n    db = get_db()\n    return len(db.get_bugs())\n\ndef get_project_paths():\n    project_name = config['PROJECT_NAME']\n    paths = []\n    for path in glob.glob(config['PROJECTS_DIR'] + project_name + '/**/*.json'):\n        paths.append(path)\n\n    return paths\n\ndef upload_projects():\n    projects = get_project_data()\n    for project in projects:\n        print('Uploading {}'.format(project['id']))\n        res = requests.post(url, headers={'Authorization': auth_token}, data=json.dumps(project))\n        assert res.status_code == 200\n\n        with open(project['full_path'], 'r') as file:\n            data = json.load(file)\n\n        data['id'] = res.json()['id']",
+      "patch_sha256": "63337f713990ca1af69a5f2205387298404d60375c35bbed8f0cb609c100c94c",
+      "rank_score": -171,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.9374042813624712,
+      "top_p": 0.828917697133121
+    }
+  ],
+  "candidate_count": 4,
+  "retrieved_examples": [
+    {
+      "id": "51",
+      "project_name": "thefuck",
+      "buggy_line_content": "    return 'open http://' + command.script[5:]",
+      "function": {
+        "function_name": "get_new_command",
+        "function_parent": "open.py",
+        "function_before_start_line": 25,
+        "function_before_end_line": 26,
+        "function_after_start_line": 25,
+        "function_after_end_line": 26,
+        "function_before_token_count": 17,
+        "function_after_token_count": 18,
+        "function_before": "def get_new_command(command, settings):\n    return 'open http://' + command.script[5:]",
+        "function_after": "def get_new_command(command, settings):\n    return command.script.replace('open ', 'open http://')"
+      },
+      "file_name": "open.py",
+      "file_path": "thefuck/rules/open.py",
+      "score_reranked": 0.8281535444102883
+    },
+    {
+      "id": "50",
+      "project_name": "thefuck",
+      "buggy_line_content": "    return re.sub('^mkdir (.*)', 'mkdir -p \\\\1', command.script)",
+      "function": {
+        "function_name": "get_new_command",
+        "function_parent": "mkdir_p.py",
+        "function_before_start_line": 12,
+        "function_before_end_line": 13,
+        "function_after_start_line": 12,
+        "function_after_end_line": 13,
+        "function_before_token_count": 20,
+        "function_after_token_count": 20,
+        "function_before": "@sudo_support\ndef get_new_command(command, settings):\n    return re.sub('^mkdir (.*)', 'mkdir -p \\\\1', command.script)",
+        "function_after": "@sudo_support\ndef get_new_command(command, settings):\n    return re.sub('\\\\bmkdir (.*)', 'mkdir -p \\\\1', command.script)"
+      },
+      "file_name": "mkdir_p.py",
+      "file_path": "thefuck/rules/mkdir_p.py",
+      "score_reranked": 0.8195484241585049
+    },
+    {
+      "id": "32",
+      "project_name": "pandas",
+      "buggy_line_content": "            except (ValueError, OverflowError):",
+      "function": {
+        "function_name": "_try_convert_to_date",
+        "function_parent": "Parser",
+        "function_before_start_line": 953,
+        "function_before_end_line": 988,
+        "function_after_start_line": 953,
+        "function_after_end_line": 988,
+        "function_before_token_count": 154,
+        "function_after_token_count": 156,
+        "function_before": "def _try_convert_to_date(self, data):\n    \"\"\"\n        Try to parse a ndarray like into a date column.\n\n        Try to coerce object in epoch/iso formats and integer/float in epoch\n        formats. Return a boolean if parsing was successful.\n        \"\"\"\n    if not len(data):\n        return (data, False)\n    new_data = data\n    if new_data.dtype == 'object':\n        try:\n            new_data = data.astype('int64')\n        except (TypeError, ValueError, OverflowError):\n            pass\n    if issubclass(new_data.dtype.type, np.number):\n        in_range = isna(new_data._values) | (new_data > self.min_stamp) | (new_data._values == iNaT)\n        if not in_range.all():\n            return (data, False)\n    date_units = (self.date_unit,) if self.date_unit else self._STAMP_UNITS\n    for date_unit in date_units:\n        try:\n            new_data = to_datetime(new_data, errors='raise', unit=date_unit)\n        except (ValueError, OverflowError):\n            continue\n        return (new_data, True)\n    return (data, False)",
+        "function_after": "def _try_convert_to_date(self, data):\n    \"\"\"\n        Try to parse a ndarray like into a date column.\n\n        Try to coerce object in epoch/iso formats and integer/float in epoch\n        formats. Return a boolean if parsing was successful.\n        \"\"\"\n    if not len(data):\n        return (data, False)\n    new_data = data\n    if new_data.dtype == 'object':\n        try:\n            new_data = data.astype('int64')\n        except (TypeError, ValueError, OverflowError):\n            pass\n    if issubclass(new_data.dtype.type, np.number):\n        in_range = isna(new_data._values) | (new_data > self.min_stamp) | (new_data._values == iNaT)\n        if not in_range.all():\n            return (data, False)\n    date_units = (self.date_unit,) if self.date_unit else self._STAMP_UNITS\n    for date_unit in date_units:\n        try:\n            new_data = to_datetime(new_data, errors='raise', unit=date_unit)\n        except (ValueError, OverflowError, TypeError):\n            continue\n        return (new_data, True)\n    return (data, False)"
+      },
+      "file_name": "_json.py",
+      "file_path": "pandas/io/json/_json.py",
+      "score_reranked": 0.5331857688356957
+    },
+    {
+      "id": "39",
+      "project_name": "pandas",
+      "buggy_line_content": "            except (TypeError, ValueError):",
+      "function": {
+        "function_name": "_try_convert_data",
+        "function_parent": "Parser",
+        "function_before_start_line": 886,
+        "function_before_end_line": 958,
+        "function_after_start_line": 886,
+        "function_after_end_line": 958,
+        "function_before_token_count": 277,
+        "function_after_token_count": 279,
+        "function_before": "def _try_convert_data(self, name, data, use_dtypes=True, convert_dates=True):\n    \"\"\"\n        Try to parse a ndarray like into a column by inferring dtype.\n        \"\"\"\n    if use_dtypes:\n        if not self.dtype:\n            return (data, False)\n        elif self.dtype is True:\n            pass\n        else:\n            dtype = self.dtype.get(name) if isinstance(self.dtype, dict) else self.dtype\n            if dtype is not None:\n                try:\n                    dtype = np.dtype(dtype)\n                    return (data.astype(dtype), True)\n                except (TypeError, ValueError):\n                    return (data, False)\n    if convert_dates:\n        new_data, result = self._try_convert_to_date(data)\n        if result:\n            return (new_data, True)\n    result = False\n    if data.dtype == 'object':\n        try:\n            data = data.astype('float64')\n            result = True\n        except (TypeError, ValueError):\n            pass\n    if data.dtype.kind == 'f':\n        if data.dtype != 'float64':\n            try:\n                data = data.astype('float64')\n                result = True\n            except (TypeError, ValueError):\n                pass\n    if len(data) and (data.dtype == 'float' or data.dtype == 'object'):\n        try:\n            new_data = data.astype('int64')\n            if (new_data == data).all():\n                data = new_data\n                result = True\n        except (TypeError, ValueError):\n            pass\n    if data.dtype == 'int':\n        try:\n            data = data.astype('int64')\n            result = True\n        except (TypeError, ValueError):\n            pass\n    return (data, result)",
+        "function_after": "def _try_convert_data(self, name, data, use_dtypes=True, convert_dates=True):\n    \"\"\"\n        Try to parse a ndarray like into a column by inferring dtype.\n        \"\"\"\n    if use_dtypes:\n        if not self.dtype:\n            return (data, False)\n        elif self.dtype is True:\n            pass\n        else:\n            dtype = self.dtype.get(name) if isinstance(self.dtype, dict) else self.dtype\n            if dtype is not None:\n                try:\n                    dtype = np.dtype(dtype)\n                    return (data.astype(dtype), True)\n                except (TypeError, ValueError):\n                    return (data, False)\n    if convert_dates:\n        new_data, result = self._try_convert_to_date(data)\n        if result:\n            return (new_data, True)\n    result = False\n    if data.dtype == 'object':\n        try:\n            data = data.astype('float64')\n            result = True\n        except (TypeError, ValueError):\n            pass\n    if data.dtype.kind == 'f':\n        if data.dtype != 'float64':\n            try:\n                data = data.astype('float64')\n                result = True\n            except (TypeError, ValueError):\n                pass\n    if len(data) and (data.dtype == 'float' or data.dtype == 'object'):\n        try:\n            new_data = data.astype('int64')\n            if (new_data == data).all():\n                data = new_data\n                result = True\n        except (TypeError, ValueError, OverflowError):\n            pass\n    if data.dtype == 'int':\n        try:\n            data = data.astype('int64')\n            result = True\n        except (TypeError, ValueError):\n            pass\n    return (data, result)"
+      },
+      "file_name": "_json.py",
+      "file_path": "pandas/io/json/_json.py",
+      "score_reranked": 0.5305589016225675
+    },
+    {
+      "id": "19",
+      "project_name": "youtube-dl",
+      "buggy_line_content": "        [a-zA-Z_][.a-zA-Z_0-9]*|",
+      "function": {
+        "function_name": "js_to_json",
+        "function_parent": "utils.py",
+        "function_before_start_line": 2235,
+        "function_before_end_line": 2273,
+        "function_after_start_line": 2235,
+        "function_after_end_line": 2273,
+        "function_before_token_count": 77,
+        "function_after_token_count": 77,
+        "function_before": "def js_to_json(code):\n    COMMENT_RE = '/\\\\*(?:(?!\\\\*/).)*?\\\\*/|//[^\\\\n]*'\n    SKIP_RE = '\\\\s*(?:{comment})?\\\\s*'.format(comment=COMMENT_RE)\n    INTEGER_TABLE = (('(?s)^(0[xX][0-9a-fA-F]+){skip}:?$'.format(skip=SKIP_RE), 16), ('(?s)^(0+[0-7]+){skip}:?$'.format(skip=SKIP_RE), 8))\n\n    def fix_kv(m):\n        v = m.group(0)\n        if v in ('true', 'false', 'null'):\n            return v\n        elif v.startswith('/*') or v.startswith('//') or v == ',':\n            return ''\n        if v[0] in (\"'\", '\"'):\n            v = re.sub('(?s)\\\\\\\\.|\"', lambda m: {'\"': '\\\\\"', \"\\\\'\": \"'\", '\\\\\\n': '', '\\\\x': '\\\\u00'}.get(m.group(0), m.group(0)), v[1:-1])\n        for regex, base in INTEGER_TABLE:\n            im = re.match(regex, v)\n            if im:\n                i = int(im.group(1), base)\n                return '\"%d\":' % i if v.endswith(':') else '%d' % i\n        return '\"%s\"' % v\n    return re.sub('(?sx)\\n        \"(?:[^\"\\\\\\\\]*(?:\\\\\\\\\\\\\\\\|\\\\\\\\[\\'\"nurtbfx/\\\\n]))*[^\"\\\\\\\\]*\"|\\n        \\'(?:[^\\'\\\\\\\\]*(?:\\\\\\\\\\\\\\\\|\\\\\\\\[\\'\"nurtbfx/\\\\n]))*[^\\'\\\\\\\\]*\\'|\\n        {comment}|,(?={skip}[\\\\]}}])|\\n        [a-zA-Z_][.a-zA-Z_0-9]*|\\n        \\\\b(?:0[xX][0-9a-fA-F]+|0+[0-7]+)(?:{skip}:)?|\\n        [0-9]+(?={skip}:)\\n        '.format(comment=COMMENT_RE, skip=SKIP_RE), fix_kv, code)",
+        "function_after": "def js_to_json(code):\n    COMMENT_RE = '/\\\\*(?:(?!\\\\*/).)*?\\\\*/|//[^\\\\n]*'\n    SKIP_RE = '\\\\s*(?:{comment})?\\\\s*'.format(comment=COMMENT_RE)\n    INTEGER_TABLE = (('(?s)^(0[xX][0-9a-fA-F]+){skip}:?$'.format(skip=SKIP_RE), 16), ('(?s)^(0+[0-7]+){skip}:?$'.format(skip=SKIP_RE), 8))\n\n    def fix_kv(m):\n        v = m.group(0)\n        if v in ('true', 'false', 'null'):\n            return v\n        elif v.startswith('/*') or v.startswith('//') or v == ',':\n            return ''\n        if v[0] in (\"'\", '\"'):\n            v = re.sub('(?s)\\\\\\\\.|\"', lambda m: {'\"': '\\\\\"', \"\\\\'\": \"'\", '\\\\\\n': '', '\\\\x': '\\\\u00'}.get(m.group(0), m.group(0)), v[1:-1])\n        for regex, base in INTEGER_TABLE:\n            im = re.match(regex, v)\n            if im:\n                i = int(im.group(1), base)\n                return '\"%d\":' % i if v.endswith(':') else '%d' % i\n        return '\"%s\"' % v\n    return re.sub('(?sx)\\n        \"(?:[^\"\\\\\\\\]*(?:\\\\\\\\\\\\\\\\|\\\\\\\\[\\'\"nurtbfx/\\\\n]))*[^\"\\\\\\\\]*\"|\\n        \\'(?:[^\\'\\\\\\\\]*(?:\\\\\\\\\\\\\\\\|\\\\\\\\[\\'\"nurtbfx/\\\\n]))*[^\\'\\\\\\\\]*\\'|\\n        {comment}|,(?={skip}[\\\\]}}])|\\n        (?:(?<![0-9])[eE]|[a-df-zA-DF-Z_])[.a-zA-Z_0-9]*|\\n        \\\\b(?:0[xX][0-9a-fA-F]+|0+[0-7]+)(?:{skip}:)?|\\n        [0-9]+(?={skip}:)\\n        '.format(comment=COMMENT_RE, skip=SKIP_RE), fix_kv, code)"
+      },
+      "file_name": "utils.py",
+      "file_path": "youtube_dl/utils.py",
+      "score_reranked": 0.5041616050384682
+    }
+  ],
+  "diffusion_plan": [
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Delete",
+          "node": 7
+        },
+        {
+          "op": "GuardAdd",
+          "node": 3
+        },
+        {
+          "op": "Replace",
+          "node": 7
+        },
+        {
+          "op": "GuardAdd",
+          "node": 7
+        },
+        {
+          "op": "InsertBefore",
+          "node": 7
+        },
+        {
+          "op": "Replace",
+          "node": 3
+        },
+        {
+          "op": "InsertAfter",
+          "node": 7
+        }
+      ],
+      "score": 47.999999925000004
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "InsertBefore",
+          "node": 7
+        },
+        {
+          "op": "Replace",
+          "node": 7
+        },
+        {
+          "op": "GuardAdd",
+          "node": 3
+        },
+        {
+          "op": "InsertAfter",
+          "node": 7
+        },
+        {
+          "op": "GuardAdd",
+          "node": 7
+        },
+        {
+          "op": "Delete",
+          "node": 3
+        },
+        {
+          "op": "Replace",
+          "node": 3
+        }
+      ],
+      "score": 44.99999993
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Delete",
+          "node": 3
+        },
+        {
+          "op": "GuardAdd",
+          "node": 7
+        },
+        {
+          "op": "Replace",
+          "node": 7
+        },
+        {
+          "op": "InsertBefore",
+          "node": 7
+        },
+        {
+          "op": "Delete",
+          "node": 7
+        },
+        {
+          "op": "GuardAdd",
+          "node": 3
+        },
+        {
+          "op": "Replace",
+          "node": 3
+        }
+      ],
+      "score": 43.999999931666665
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "GuardAdd",
+          "node": 7
+        },
+        {
+          "op": "GuardAdd",
+          "node": 3
+        },
+        {
+          "op": "Replace",
+          "node": 3
+        },
+        {
+          "op": "Replace",
+          "node": 7
+        },
+        {
+          "op": "Delete",
+          "node": 7
+        },
+        {
+          "op": "InsertAfter",
+          "node": 7
+        }
+      ],
+      "score": 40.99999993666667
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Delete",
+          "node": 7
+        },
+        {
+          "op": "Replace",
+          "node": 7
+        },
+        {
+          "op": "GuardAdd",
+          "node": 7
+        },
+        {
+          "op": "Replace",
+          "node": 3
+        },
+        {
+          "op": "InsertBefore",
+          "node": 7
+        },
+        {
+          "op": "GuardAdd",
+          "node": 3
+        }
+      ],
+      "score": 40.99999993666667
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 3
+        },
+        {
+          "op": "Delete",
+          "node": 7
+        },
+        {
+          "op": "GuardAdd",
+          "node": 7
+        },
+        {
+          "op": "InsertAfter",
+          "node": 7
+        },
+        {
+          "op": "GuardAdd",
+          "node": 3
+        },
+        {
+          "op": "Replace",
+          "node": 7
+        }
+      ],
+      "score": 40.99999993666667
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 7
+        },
+        {
+          "op": "Delete",
+          "node": 7
+        },
+        {
+          "op": "InsertBefore",
+          "node": 3
+        },
+        {
+          "op": "Replace",
+          "node": 3
+        },
+        {
+          "op": "GuardAdd",
+          "node": 7
+        },
+        {
+          "op": "InsertAfter",
+          "node": 7
+        }
+      ],
+      "score": 40.4999999375
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "GuardAdd",
+          "node": 7
+        },
+        {
+          "op": "Replace",
+          "node": 7
+        },
+        {
+          "op": "InsertAfter",
+          "node": 7
+        },
+        {
+          "op": "GuardAdd",
+          "node": 3
+        },
+        {
+          "op": "Delete",
+          "node": 7
+        },
+        {
+          "op": "InsertAfter",
+          "node": 3
+        }
+      ],
+      "score": 40.166666604722224
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 7
+        },
+        {
+          "op": "GuardAdd",
+          "node": 3
+        },
+        {
+          "op": "InsertBefore",
+          "node": 3
+        },
+        {
+          "op": "Delete",
+          "node": 7
+        },
+        {
+          "op": "GuardAdd",
+          "node": 7
+        },
+        {
+          "op": "InsertBefore",
+          "node": 7
+        }
+      ],
+      "score": 40.166666604722224
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 3
+        },
+        {
+          "op": "Replace",
+          "node": 7
+        },
+        {
+          "op": "GuardAdd",
+          "node": 7
+        },
+        {
+          "op": "Delete",
+          "node": 7
+        },
+        {
+          "op": "InsertBefore",
+          "node": 7
+        },
+        {
+          "op": "Delete",
+          "node": 3
+        }
+      ],
+      "score": 39.99999993833333
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 7
+        },
+        {
+          "op": "GuardAdd",
+          "node": 7
+        },
+        {
+          "op": "GuardAdd",
+          "node": 3
+        },
+        {
+          "op": "InsertAfter",
+          "node": 7
+        },
+        {
+          "op": "Replace",
+          "node": 3
+        },
+        {
+          "op": "InsertBefore",
+          "node": 3
+        }
+      ],
+      "score": 38.499999940833334
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 7
+        },
+        {
+          "op": "InsertAfter",
+          "node": 7
+        },
+        {
+          "op": "InsertBefore",
+          "node": 3
+        },
+        {
+          "op": "Replace",
+          "node": 3
+        },
+        {
+          "op": "GuardAdd",
+          "node": 7
+        },
+        {
+          "op": "InsertAfter",
+          "node": 3
+        }
+      ],
+      "score": 37.999999941666665
+    }
+  ],
+  "static_analysis_nodes": [
+    {
+      "line": 3,
+      "line_absolute": 14,
+      "node_id": 7,
+      "node_id_local": 1,
+      "type": "Call",
+      "code": "'{} --staged'.format(command.script)",
+      "distance_to_buggy": 0,
+      "context": "   1:   @utils.git_support\n   2:   def get_new_command(command, settings):\n   3:->     return '{} --staged'.format(command.script)",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Attribute",
+          "value": {
+            "_type": "Constant"
+          },
+          "attr": "format",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [
+          {
+            "_type": "Attribute",
+            "value": {
+              "_type": "Name"
+            },
+            "attr": "script",
+            "ctx": {
+              "_type": "Load"
+            }
+          }
+        ],
+        "keywords": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -24.0
+    },
+    {
+      "line": 3,
+      "line_absolute": 14,
+      "node_id": 3,
+      "node_id_local": 0,
+      "type": "Return",
+      "code": "return '{} --staged'.format(command.script)",
+      "distance_to_buggy": 0,
+      "context": "   1:   @utils.git_support\n   2:   def get_new_command(command, settings):\n   3:->     return '{} --staged'.format(command.script)",
+      "ast_subtree_json": {
+        "_type": "Return",
+        "value": {
+          "_type": "Call",
+          "func": {
+            "_type": "Attribute"
+          },
+          "args": [
+            {
+              "_type": "Attribute"
+            }
+          ],
+          "keywords": []
+        }
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -22.0
+    }
+  ]
+}

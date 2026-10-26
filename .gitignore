@@ -1,0 +1,6 @@
+.repowise/
+__pycache__/
+*.pyc
+outputs/
+.download/
+*.partial

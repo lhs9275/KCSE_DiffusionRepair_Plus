@@ -1,0 +1,1033 @@
+{
+  "bug_id": "37",
+  "seed": 42,
+  "arm": "full",
+  "candidates": [
+    {
+      "index": 0,
+      "patch_text": "def _convert_key(self, key, is_setter: bool=False):\n    \"\"\"\n        Require they keys to be the same type as the index. (so we don't\n        fallback)\n        \"\"\"\n    if is_setter:\n        return list(key)\n    for ax, i in zip(self.obj.axes, key):\n        if ax.is_integer():\n            if not is_integer(i):\n                raise ValueError('At based indexing on an integer index can only have integer indexers')\n        elif not ax.holds_integer() and not is_integer(i):\n            raise ValueError('At based indexing on an non-integer index can only have non-integer indexers')\n    return key",
+      "patch_sha256": "50090c4496e0aa7fd3e1923b3aa99e662cca7e26accaac36aefb40c06b8587db",
+      "rank_score": 251,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.5167519476989073,
+      "top_p": 0.9737537455748216
+    },
+    {
+      "index": 1,
+      "patch_text": "def _convert_key(self, key, is_setter: bool=False):\n    \"\"\"\n        Require they keys to be the same type as the index. (so we don't\n        fallback)\n        \"\"\"\n    if is_setter:\n        return list(key)\n    for ax, i in zip(self.obj.axes, key):\n        if ax.is_integer():\n            if not is_integer(i):\n                raise ValueError('At based indexing on an integer index can only have integer indexers')\n        elif ax.is_integer():\n            if not is_integer(i):\n                raise ValueError('At based indexing on an integer index can only have integer indexers')\n    return key",
+      "patch_sha256": "6e0a4bd1146df3cc49be5c963e55ce22f3518492b1d9581cc99ea0223562518c",
+      "rank_score": 239,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.5273506986767932,
+      "top_p": 0.98
+    },
+    {
+      "index": 2,
+      "patch_text": "def _convert_key(self, key, is_setter: bool=False):\n    \"\"\"\n        Require they keys to be the same type as the index. (so we don't\n        fallback)\n        \"\"\"\n    if is_setter:\n        return list(key)\n    for ax, i in zip(self.obj.axes, key):\n        if ax.is_integer():\n            if not is_integer(i):\n                raise ValueError('At based indexing on an integer index can only have integer indexers')\n        elif is_integer(i) and not ax.holds_integer():\n            raise ValueError('At based indexing on an non-integer index can only have non-integer indexers')\n    return key\n\n# edit1: Replace node=53\n# edit2: GuardAdd node=67\n# edit3: GuardAdd node=6\n# edit4: Replace node=57\n# edit5: Replace node=55\n# edit6: Replace node=29\n\n##correct\ndef _convert_key(self, key, is_setter: bool=False):\n    \"\"\"\n        Require they keys to be the same type as the index. (so we don't\n        fallback)\n        \"\"\"\n    if is_setter:\n        return list(key)\n    for ax, i in zip(self.obj.axes, key):\n        if ax.is_integer():\n            if not is_integer(i):\n                raise ValueError('At based indexing on an integer index can only have integer indexers')\n        elif ax.is_integer() and not ax.holds_integer():\n            raise ValueError('At based indexing on an non-integer index can only have non-integer indexers')\n    return key\n\n# edit1: Replace node=53\n# edit2: GuardAdd node=67\n# edit3: GuardAdd node=6\n# edit4: Replace node=57\n# edit5: Replace node=55\n# edit6: Replace node=29\n\n##correct\ndef _convert_key(self, key, is_setter: bool=False):\n    \"\"\"\n        Require they keys to be the same type as the index. (so we don't\n        fallback)\n        \"\"\"\n    if is_setter:\n        return list(key)\n    for ax, i in zip(self.obj.axes, key):\n        if ax.is_integer():\n            if not is_integer(i):\n                raise ValueError('At based indexing on an integer index can only have integer indexers')\n        elif ax.is_integer() and not ax.holds_integer():\n            raise ValueError('At based indexing on an non-integer index can only have non-integer indexers')\n    return key\n\n# edit1: Replace node=53\n# edit2: GuardAdd node=67\n# edit3: GuardAdd node=6\n# edit4: Replace node=57\n# edit5: Replace node=55\n# edit6: Replace node=29\n\n##",
+      "patch_sha256": "f3f303c981473b0700604de8ccff25b0f9bf3d665fee4c1c5086ad3e417f80a6",
+      "rank_score": 40,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7699070220440365,
+      "top_p": 0.8623837775550457
+    },
+    {
+      "index": 3,
+      "patch_text": "def _convert_key(self, key, is_setter: bool=False):\n    \"\"\"\n    Require they keys to be the same type as the index. (so we don't\n    fallback)\n    \"\"\"\n    if is_setter:\n        return list(key)\n    for ax, i in zip(self.obj.axes, key):\n        if ax.is_integer():\n            if not is_integer(i):\n                raise ValueError('At based indexing on an integer index can only have integer indexers')\n        else:\n            if not is_integer(i):\n                raise ValueError('At based indexing on an non-integer index can only have non-integer indexers')\n    return key\n\n##correct\ndef _convert_key(self, key, is_setter: bool=False):\n    \"\"\"\n    Require they keys to be the same type as the index. (so we don't\n    fallback)\n    \"\"\"\n    if is_setter:\n        return list(key)\n    for ax, i in zip(self.obj.axes, key):\n        if ax.is_integer():\n            if not is_integer(i):\n                raise ValueError('At based indexing on an integer index can only have integer indexers')\n        else:\n            if not is_integer(i):\n                raise ValueError('At based indexing on an non-integer index can only have non-integer indexers')\n    return key\n# This code was generated by [rust-gen-fix](https://github.com/williambj/rust-gen-fix).\n# This is an experimental tool for fixing rust code with deep learning.\n# This tool is not affiliated with the Rust project in any way.\n#\n# The tool is designed to find fixes to bugs that arise when trying to\n# convert code from python to rust. It does this by converting a set of\n# example python and corresponding rust code. Then it uses a transformer\n# network trained on these examples to find a \"best guess\" at how to\n# rewrite the python code to get it to compile.\n#\n# For more information about the transformer network, see\n# https://arxiv.org/abs/1706.03762\n#\n# For more information about the data format used here, see\n# https://docs.rs/serde_json/1.0.56/serde_json/index.html\n\nimport json\nimport sys\n\nfrom pathlib import Path\n\nif __name__ == \"__main__\":\n    file_path = Path(sys.argv[1])\n\n    with open(file_path, 'r') as file:\n        data = json.load(file)\n\n    print('##correct')\n    print(data['correct'])\n# This code was generated by [rust-gen-fix](https://github.com/williambj/rust-gen-fix).\n# This is an experimental tool for fixing rust code with deep learning.\n# This tool is not affiliated with the Rust project in any",
+      "patch_sha256": "8df58d442a584dd75742014e036d8fa14b3d5924541ca06ff2c864188d65e310",
+      "rank_score": -123,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8992917549455451,
+      "top_p": 0.7874910379842883
+    },
+    {
+      "index": 4,
+      "patch_text": "def _convert_key(self, key, is_setter: bool=False):\n    \"\"\"\n        Require they keys to be the same type as the index. (so we don't\n        fallback)\n        \"\"\"\n    if is_setter:\n        return list(key)\n    for ax, i in zip(self.obj.axes, key):\n        if ax.is_integer():\n            if not is_integer(i):\n                raise ValueError('At based indexing on an integer index can only have integer indexers')\n        elif is_integer(i) and not ax.holds_integer():\n            raise ValueError('At based indexing on an non-integer index can only have non-integer indexers')\n    return key\n\n##original\ndef _convert_key(self, key, is_setter: bool=False):\n    \"\"\"\n        Require they keys to be the same type as the index. (so we don't\n        fallback)\n        \"\"\"\n    if is_setter:\n        return list(key)\n    for ax, i in zip(self.obj.axes, key):\n        if ax.is_integer():\n            if not is_integer(i):\n                raise ValueError('At based indexing on an integer index can only have integer indexers')\n        elif is_integer(i) and not ax.holds_integer():\n            raise ValueError('At based indexing on an non-integer index can only have non-integer indexers')\n    return key\n\nimport sys\nsys.path.append('../..')\n\nfrom src.utils import *\n\nimport pytest\n\ndef test_load_pickle():\n\n    path = '../data/test_data/'\n    file_name = 'data_0.pkl'\n\n    data = load_pickle(path, file_name)\n    assert data.shape == (100,100)\n\ndef test_load_json():\n\n    path = '../data/test_data/'\n    file_name = 'data_0.json'\n\n    data = load_json(path, file_name)\n    assert len(data) == 3\n\ndef test_save_json():\n\n    path = '../data/test_data/'\n    file_name = 'data_0.json'\n\n    data = {'key_0': 1, 'key_1': 2}\n\n    save_json(data, path, file_name)\n\n    data_1 = load_json(path, file_name)\n    assert data == data_1\n\ndef test_save_pickle():\n\n    path = '../data/test_data/'\n    file_name = 'data_0.pkl'\n\n    data = np.random.randint(1,100,(100,100))\n\n    save_pickle(data, path, file_name)\n\n    data_1 = load_pickle(path, file_name)\n    assert np.array_equal(data, data_1)\n\ndef test_load_csv():\n\n    path = '../data/test_data/'\n    file_name",
+      "patch_sha256": "5b146e043d7173c1d706c60e7c8823cd89137b5c306e1b84b03337fe4e82d1a9",
+      "rank_score": -163,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8089233151013046,
+      "top_p": 0.9111541438766307
+    },
+    {
+      "index": 5,
+      "patch_text": "def _convert_key(self, key, is_setter: bool=False):\n    \"\"\"\n        Require they keys to be the same type as the index. (so we don't\n        fallback)\n        \"\"\"\n    if is_setter:\n        return list(key)\n    for ax, i in zip(self.obj.axes, key):\n        if ax.is_integer():\n            if not is_integer(i):\n                raise ValueError('At based indexing on an integer index can only have integer indexers')\n        elif is_integer(i) and not ax.holds_integer():\n            raise ValueError('At based indexing on an non-integer index can only have non-integer indexers')\n    return key\n\n# -*- coding: utf-8 -*-\nimport ast\nimport os\nfrom pathlib import Path\n\nfrom pygments import highlight\nfrom pygments.lexers import get_lexer_by_name\nfrom pygments.formatters import HtmlFormatter\nfrom pygments.util import ClassNotFound\n\nfrom utils.config import Config\n\n\nclass Highlighter:\n    def __init__(self, config: Config):\n        self.__config = config\n\n    @staticmethod\n    def __get_lexer(code):\n        try:\n            lexer = get_lexer_by_name(Config.LANGUAGE)\n        except ClassNotFound:\n            lexer = get_lexer_by_name(\"python\")\n\n        return lexer\n\n    def highlight_code(self, code):\n        lexer = self.__get_lexer(code)\n        formatter = HtmlFormatter(style=Config.STYLE)\n\n        return highlight(code, lexer, formatter)\n\n    def highlight_ast(self, ast_node):\n        source = ast.dump(ast_node)\n        return self.highlight_code(source)\n\n    def highlight_file(self, filepath: Path):\n        with open(filepath, \"r\", encoding=\"utf-8\") as f:\n            code = f.read()\n        return self.highlight_code(code)\n# -*- coding: utf-8 -*-\nfrom pathlib import Path\nfrom typing import List\n\nfrom utils.config import Config\n\n\nclass FileFinder:\n    def __init__(self, config: Config):\n        self.__config = config\n\n    def find_files(self, path: Path):\n        files = []\n        for file in path.iterdir():\n            if file.is_file() and file.suffix in Config.EXTENSIONS:\n                files.append(file)\n        return files\n# -*- coding: utf-8 -*-\nimport json\n\nfrom utils.config import Config\nfrom utils.file_finder import FileFinder\nfrom utils.file_handler import FileHandler\nfrom utils.highlighter import Highlighter\nfrom utils.json_builder import JSONBuilder\n\n\nclass Reporter:\n    def __init__(self, config: Config):\n        self.__config = config\n        self.__file_handler = FileHandler(config)\n        self.__file_finder = FileFinder(config)\n        self.__highlighter = Highlighter(config)\n        self.__json",
+      "patch_sha256": "d9eb353e39ce2afdc53413292a3c1d57570380d8e1e5c074907eed4939254795",
+      "rank_score": -165,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.5202227799850999,
+      "top_p": 0.98
+    },
+    {
+      "index": 6,
+      "patch_text": "def _convert_key(self, key, is_setter: bool=False):\n    \"\"\"\n        Require they keys to be the same type as the index. (so we don't\n        fallback)\n        \"\"\"\n    if is_setter:\n        return list(key)\n    for ax, i in zip(self.obj.axes, key):\n        if ax.is_integer():\n            if not is_integer(i):\n                raise ValueError('At based indexing on an integer index can only have integer indexers')\n        elif is_integer(i) and not ax.holds_integer():\n            raise ValueError('At based indexing on an non-integer index can only have non-integer indexers')\n    return key\n\n\n##end\n##test\nassert_raises(ValueError, lambda: df.iloc[:, 0].at[0, 1],\n              \"At based indexing on an integer index can only have integer indexers\")\n##end\n\n##test\ndf.iloc[:, 0].at[0, 1] = 2\nassert_frame_equal(df, pd.DataFrame({\n    'A': ['a', 'b', 'c'],\n    'B': [1, 2, 3],\n    'C': [4, 5, 6]}, columns=['A', 'B', 'C']))\n##end\nimport os\nimport json\nfrom tqdm import tqdm\nimport subprocess\n\nfrom.buggy_line import BuggyLine\nfrom.buggy_line import BuggyLineDataset\nfrom.buggy_line import BuggyLineDatasetLoader\nfrom.utils import ensure_dir\nfrom.utils import save_json\nfrom.utils import load_json\nfrom.utils import load_pkl\nfrom.utils import save_pkl\n\nfrom. import config\nfrom. import dataset\nfrom. import constants\nfrom. import utils\nfrom. import logging\nfrom. import cache\nfrom. import metrics\nfrom. import evaluate\nfrom. import search\nfrom. import train\n\nfrom.dataset import Dataset\nfrom.dataset import DatasetLoader\nfrom.dataset import DatasetWriter\n\nfrom.cache import Cache\n\nfrom.metrics import Metrics\n\nfrom.search import Searcher\nfrom.search import SearcherLoader\nfrom.search import SearcherWriter\n\nfrom.train import Trainer\nfrom.train import TrainerLoader\nfrom.train import TrainerWriter\n\nfrom.evaluate import Evaluator\nfrom.evaluate import EvaluatorLoader\nfrom.evaluate import EvaluatorWriter\n\nfrom. import search_strategies\nfrom. import metrics_strategies\nfrom. import train_strategies\nfrom. import evaluate_strategies\nfrom. import model_strategies\n\nfrom. import cache_strategies\nfrom. import search_strategies\nfrom. import metrics_strategies\nfrom. import train_strategies\nfrom. import evaluate_strategies\nfrom. import model_strategies\n\nfrom. import cache_strategies\nfrom. import search_str",
+      "patch_sha256": "c258f6599e4511078409989a05d71b27795ff3fe9e7f38a0594ec4311c46f295",
+      "rank_score": -166,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7822854872415247,
+      "top_p": 0.8778568590519058
+    }
+  ],
+  "candidate_count": 7,
+  "retrieved_examples": [
+    {
+      "id": "43",
+      "project_name": "pandas",
+      "buggy_line_content": "        elif self.is_all_dates:",
+      "function": {
+        "function_name": "get_indexer_non_unique",
+        "function_parent": "Index",
+        "function_before_start_line": 4546,
+        "function_before_end_line": 4560,
+        "function_after_start_line": 4546,
+        "function_after_end_line": 4560,
+        "function_before_token_count": 91,
+        "function_after_token_count": 95,
+        "function_before": "@Appender(_index_shared_docs['get_indexer_non_unique'] % _index_doc_kwargs)\ndef get_indexer_non_unique(self, target):\n    target = ensure_index(target)\n    pself, ptarget = self._maybe_promote(target)\n    if pself is not self or ptarget is not target:\n        return pself.get_indexer_non_unique(ptarget)\n    if is_categorical(target):\n        tgt_values = np.asarray(target)\n    elif self.is_all_dates:\n        tgt_values = target.asi8\n    else:\n        tgt_values = target._ndarray_values\n    indexer, missing = self._engine.get_indexer_non_unique(tgt_values)\n    return (ensure_platform_int(indexer), missing)",
+        "function_after": "@Appender(_index_shared_docs['get_indexer_non_unique'] % _index_doc_kwargs)\ndef get_indexer_non_unique(self, target):\n    target = ensure_index(target)\n    pself, ptarget = self._maybe_promote(target)\n    if pself is not self or ptarget is not target:\n        return pself.get_indexer_non_unique(ptarget)\n    if is_categorical(target):\n        tgt_values = np.asarray(target)\n    elif self.is_all_dates and target.is_all_dates:\n        tgt_values = target.asi8\n    else:\n        tgt_values = target._ndarray_values\n    indexer, missing = self._engine.get_indexer_non_unique(tgt_values)\n    return (ensure_platform_int(indexer), missing)"
+      },
+      "file_name": "base.py",
+      "file_path": "pandas/core/indexes/base.py",
+      "score_reranked": 0.5163383680609791
+    },
+    {
+      "id": "45",
+      "project_name": "pandas",
+      "buggy_line_content": "    elif isinstance(obj, (ABCSeries, np.ndarray, ABCIndexClass)):",
+      "function": {
+        "function_name": "_isna_old",
+        "function_parent": "missing.py",
+        "function_before_start_line": 160,
+        "function_before_end_line": 188,
+        "function_after_start_line": 160,
+        "function_after_end_line": 188,
+        "function_before_token_count": 133,
+        "function_after_token_count": 135,
+        "function_before": "def _isna_old(obj):\n    \"\"\"\n    Detect missing values, treating None, NaN, INF, -INF as null.\n\n    Parameters\n    ----------\n    arr: ndarray or object value\n\n    Returns\n    -------\n    boolean ndarray or boolean\n    \"\"\"\n    if is_scalar(obj):\n        return libmissing.checknull_old(obj)\n    elif isinstance(obj, ABCMultiIndex):\n        raise NotImplementedError('isna is not defined for MultiIndex')\n    elif isinstance(obj, type):\n        return False\n    elif isinstance(obj, (ABCSeries, np.ndarray, ABCIndexClass)):\n        return _isna_ndarraylike_old(obj)\n    elif isinstance(obj, ABCGeneric):\n        return obj._constructor(obj._data.isna(func=_isna_old))\n    elif isinstance(obj, list):\n        return _isna_ndarraylike_old(np.asarray(obj, dtype=object))\n    elif hasattr(obj, '__array__'):\n        return _isna_ndarraylike_old(np.asarray(obj))\n    else:\n        return obj is None",
+        "function_after": "def _isna_old(obj):\n    \"\"\"\n    Detect missing values, treating None, NaN, INF, -INF as null.\n\n    Parameters\n    ----------\n    arr: ndarray or object value\n\n    Returns\n    -------\n    boolean ndarray or boolean\n    \"\"\"\n    if is_scalar(obj):\n        return libmissing.checknull_old(obj)\n    elif isinstance(obj, ABCMultiIndex):\n        raise NotImplementedError('isna is not defined for MultiIndex')\n    elif isinstance(obj, type):\n        return False\n    elif isinstance(obj, (ABCSeries, np.ndarray, ABCIndexClass, ABCExtensionArray)):\n        return _isna_ndarraylike_old(obj)\n    elif isinstance(obj, ABCGeneric):\n        return obj._constructor(obj._data.isna(func=_isna_old))\n    elif isinstance(obj, list):\n        return _isna_ndarraylike_old(np.asarray(obj, dtype=object))\n    elif hasattr(obj, '__array__'):\n        return _isna_ndarraylike_old(np.asarray(obj))\n    else:\n        return obj is None"
+      },
+      "file_name": "missing.py",
+      "file_path": "pandas/core/dtypes/missing.py",
+      "score_reranked": 0.5096805496590425
+    },
+    {
+      "id": "39",
+      "project_name": "pandas",
+      "buggy_line_content": "            except (TypeError, ValueError):",
+      "function": {
+        "function_name": "_try_convert_data",
+        "function_parent": "Parser",
+        "function_before_start_line": 886,
+        "function_before_end_line": 958,
+        "function_after_start_line": 886,
+        "function_after_end_line": 958,
+        "function_before_token_count": 277,
+        "function_after_token_count": 279,
+        "function_before": "def _try_convert_data(self, name, data, use_dtypes=True, convert_dates=True):\n    \"\"\"\n        Try to parse a ndarray like into a column by inferring dtype.\n        \"\"\"\n    if use_dtypes:\n        if not self.dtype:\n            return (data, False)\n        elif self.dtype is True:\n            pass\n        else:\n            dtype = self.dtype.get(name) if isinstance(self.dtype, dict) else self.dtype\n            if dtype is not None:\n                try:\n                    dtype = np.dtype(dtype)\n                    return (data.astype(dtype), True)\n                except (TypeError, ValueError):\n                    return (data, False)\n    if convert_dates:\n        new_data, result = self._try_convert_to_date(data)\n        if result:\n            return (new_data, True)\n    result = False\n    if data.dtype == 'object':\n        try:\n            data = data.astype('float64')\n            result = True\n        except (TypeError, ValueError):\n            pass\n    if data.dtype.kind == 'f':\n        if data.dtype != 'float64':\n            try:\n                data = data.astype('float64')\n                result = True\n            except (TypeError, ValueError):\n                pass\n    if len(data) and (data.dtype == 'float' or data.dtype == 'object'):\n        try:\n            new_data = data.astype('int64')\n            if (new_data == data).all():\n                data = new_data\n                result = True\n        except (TypeError, ValueError):\n            pass\n    if data.dtype == 'int':\n        try:\n            data = data.astype('int64')\n            result = True\n        except (TypeError, ValueError):\n            pass\n    return (data, result)",
+        "function_after": "def _try_convert_data(self, name, data, use_dtypes=True, convert_dates=True):\n    \"\"\"\n        Try to parse a ndarray like into a column by inferring dtype.\n        \"\"\"\n    if use_dtypes:\n        if not self.dtype:\n            return (data, False)\n        elif self.dtype is True:\n            pass\n        else:\n            dtype = self.dtype.get(name) if isinstance(self.dtype, dict) else self.dtype\n            if dtype is not None:\n                try:\n                    dtype = np.dtype(dtype)\n                    return (data.astype(dtype), True)\n                except (TypeError, ValueError):\n                    return (data, False)\n    if convert_dates:\n        new_data, result = self._try_convert_to_date(data)\n        if result:\n            return (new_data, True)\n    result = False\n    if data.dtype == 'object':\n        try:\n            data = data.astype('float64')\n            result = True\n        except (TypeError, ValueError):\n            pass\n    if data.dtype.kind == 'f':\n        if data.dtype != 'float64':\n            try:\n                data = data.astype('float64')\n                result = True\n            except (TypeError, ValueError):\n                pass\n    if len(data) and (data.dtype == 'float' or data.dtype == 'object'):\n        try:\n            new_data = data.astype('int64')\n            if (new_data == data).all():\n                data = new_data\n                result = True\n        except (TypeError, ValueError, OverflowError):\n            pass\n    if data.dtype == 'int':\n        try:\n            data = data.astype('int64')\n            result = True\n        except (TypeError, ValueError):\n            pass\n    return (data, result)"
+      },
+      "file_name": "_json.py",
+      "file_path": "pandas/io/json/_json.py",
+      "score_reranked": 0.44761463094255977
+    },
+    {
+      "id": "28",
+      "project_name": "scrapy",
+      "buggy_line_content": "        if ':' not in self._url:",
+      "function": {
+        "function_name": "_set_url",
+        "function_parent": "Request",
+        "function_before_start_line": 62,
+        "function_before_end_line": 70,
+        "function_after_start_line": 62,
+        "function_after_end_line": 70,
+        "function_before_token_count": 65,
+        "function_after_token_count": 79,
+        "function_before": "def _set_url(self, url):\n    if not isinstance(url, six.string_types):\n        raise TypeError('Request url must be str or unicode, got %s:' % type(url).__name__)\n    s = safe_url_string(url, self.encoding)\n    self._url = escape_ajax(s)\n    if ':' not in self._url:\n        raise ValueError('Missing scheme in request url: %s' % self._url)",
+        "function_after": "def _set_url(self, url):\n    if not isinstance(url, six.string_types):\n        raise TypeError('Request url must be str or unicode, got %s:' % type(url).__name__)\n    s = safe_url_string(url, self.encoding)\n    self._url = escape_ajax(s)\n    if '://' not in self._url and (not self._url.startswith('data:')):\n        raise ValueError('Missing scheme in request url: %s' % self._url)"
+      },
+      "file_name": "__init__.py",
+      "file_path": "scrapy/http/request/__init__.py",
+      "score_reranked": 0.4059527013413775
+    },
+    {
+      "id": "21",
+      "project_name": "youtube-dl",
+      "buggy_line_content": "        (?:0[xX][0-9a-fA-F]+|0+[0-7]+)(?:\\s*:)?|",
+      "function": {
+        "function_name": "js_to_json",
+        "function_parent": "utils.py",
+        "function_before_start_line": 1939,
+        "function_before_end_line": 1975,
+        "function_after_start_line": 1939,
+        "function_after_end_line": 1975,
+        "function_before_token_count": 19,
+        "function_after_token_count": 19,
+        "function_before": "def js_to_json(code):\n\n    def fix_kv(m):\n        v = m.group(0)\n        if v in ('true', 'false', 'null'):\n            return v\n        elif v.startswith('/*') or v == ',':\n            return ''\n        if v[0] in (\"'\", '\"'):\n            v = re.sub('(?s)\\\\\\\\.|\"', lambda m: {'\"': '\\\\\"', \"\\\\'\": \"'\", '\\\\\\n': '', '\\\\x': '\\\\u00'}.get(m.group(0), m.group(0)), v[1:-1])\n        INTEGER_TABLE = (('^0[xX][0-9a-fA-F]+', 16), ('^0+[0-7]+', 8))\n        for regex, base in INTEGER_TABLE:\n            im = re.match(regex, v)\n            if im:\n                i = int(im.group(0), base)\n                return '\"%d\":' % i if v.endswith(':') else '%d' % i\n        return '\"%s\"' % v\n    return re.sub('(?sx)\\n        \"(?:[^\"\\\\\\\\]*(?:\\\\\\\\\\\\\\\\|\\\\\\\\[\\'\"nurtbfx/\\\\n]))*[^\"\\\\\\\\]*\"|\\n        \\'(?:[^\\'\\\\\\\\]*(?:\\\\\\\\\\\\\\\\|\\\\\\\\[\\'\"nurtbfx/\\\\n]))*[^\\'\\\\\\\\]*\\'|\\n        /\\\\*.*?\\\\*/|,(?=\\\\s*[\\\\]}])|\\n        [a-zA-Z_][.a-zA-Z_0-9]*|\\n        (?:0[xX][0-9a-fA-F]+|0+[0-7]+)(?:\\\\s*:)?|\\n        [0-9]+(?=\\\\s*:)\\n        ', fix_kv, code)",
+        "function_after": "def js_to_json(code):\n\n    def fix_kv(m):\n        v = m.group(0)\n        if v in ('true', 'false', 'null'):\n            return v\n        elif v.startswith('/*') or v == ',':\n            return ''\n        if v[0] in (\"'\", '\"'):\n            v = re.sub('(?s)\\\\\\\\.|\"', lambda m: {'\"': '\\\\\"', \"\\\\'\": \"'\", '\\\\\\n': '', '\\\\x': '\\\\u00'}.get(m.group(0), m.group(0)), v[1:-1])\n        INTEGER_TABLE = (('^0[xX][0-9a-fA-F]+', 16), ('^0+[0-7]+', 8))\n        for regex, base in INTEGER_TABLE:\n            im = re.match(regex, v)\n            if im:\n                i = int(im.group(0), base)\n                return '\"%d\":' % i if v.endswith(':') else '%d' % i\n        return '\"%s\"' % v\n    return re.sub('(?sx)\\n        \"(?:[^\"\\\\\\\\]*(?:\\\\\\\\\\\\\\\\|\\\\\\\\[\\'\"nurtbfx/\\\\n]))*[^\"\\\\\\\\]*\"|\\n        \\'(?:[^\\'\\\\\\\\]*(?:\\\\\\\\\\\\\\\\|\\\\\\\\[\\'\"nurtbfx/\\\\n]))*[^\\'\\\\\\\\]*\\'|\\n        /\\\\*.*?\\\\*/|,(?=\\\\s*[\\\\]}])|\\n        [a-zA-Z_][.a-zA-Z_0-9]*|\\n        \\\\b(?:0[xX][0-9a-fA-F]+|0+[0-7]+)(?:\\\\s*:)?|\\n        [0-9]+(?=\\\\s*:)\\n        ', fix_kv, code)"
+      },
+      "file_name": "utils.py",
+      "file_path": "youtube_dl/utils.py",
+      "score_reranked": 0.3384893668823305
+    }
+  ],
+  "diffusion_plan": [
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 53
+        },
+        {
+          "op": "GuardAdd",
+          "node": 67
+        },
+        {
+          "op": "GuardAdd",
+          "node": 6
+        },
+        {
+          "op": "Replace",
+          "node": 57
+        },
+        {
+          "op": "Replace",
+          "node": 55
+        },
+        {
+          "op": "Replace",
+          "node": 29
+        },
+        {
+          "op": "GuardAdd",
+          "node": 52
+        },
+        {
+          "op": "Replace",
+          "node": 67
+        },
+        {
+          "op": "InsertAfter",
+          "node": 55
+        },
+        {
+          "op": "Replace",
+          "node": 28
+        },
+        {
+          "op": "Replace",
+          "node": 6
+        }
+      ],
+      "score": 18.063636362085127
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 29
+        },
+        {
+          "op": "Replace",
+          "node": 6
+        },
+        {
+          "op": "Replace",
+          "node": 53
+        },
+        {
+          "op": "Replace",
+          "node": 27
+        },
+        {
+          "op": "InsertAfter",
+          "node": 6
+        },
+        {
+          "op": "Replace",
+          "node": 55
+        },
+        {
+          "op": "GuardAdd",
+          "node": 6
+        },
+        {
+          "op": "GuardAdd",
+          "node": 28
+        },
+        {
+          "op": "Replace",
+          "node": 67
+        },
+        {
+          "op": "Delete",
+          "node": 67
+        },
+        {
+          "op": "Replace",
+          "node": 57
+        }
+      ],
+      "score": 17.818181816652896
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 52
+        },
+        {
+          "op": "GuardAdd",
+          "node": 29
+        },
+        {
+          "op": "Replace",
+          "node": 53
+        },
+        {
+          "op": "Replace",
+          "node": 29
+        },
+        {
+          "op": "InsertBefore",
+          "node": 28
+        },
+        {
+          "op": "Replace",
+          "node": 55
+        },
+        {
+          "op": "GuardAdd",
+          "node": 55
+        },
+        {
+          "op": "GuardAdd",
+          "node": 16
+        },
+        {
+          "op": "GuardAdd",
+          "node": 6
+        },
+        {
+          "op": "Replace",
+          "node": 16
+        },
+        {
+          "op": "Replace",
+          "node": 6
+        }
+      ],
+      "score": 15.927272725915703
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 55
+        },
+        {
+          "op": "Replace",
+          "node": 53
+        },
+        {
+          "op": "Replace",
+          "node": 6
+        },
+        {
+          "op": "Replace",
+          "node": 67
+        },
+        {
+          "op": "Replace",
+          "node": 29
+        },
+        {
+          "op": "Replace",
+          "node": 57
+        },
+        {
+          "op": "GuardAdd",
+          "node": 16
+        },
+        {
+          "op": "GuardAdd",
+          "node": 29
+        }
+      ],
+      "score": 15.81818181701653
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 29
+        },
+        {
+          "op": "Replace",
+          "node": 28
+        },
+        {
+          "op": "Replace",
+          "node": 55
+        },
+        {
+          "op": "Replace",
+          "node": 53
+        },
+        {
+          "op": "Replace",
+          "node": 27
+        },
+        {
+          "op": "Replace",
+          "node": 67
+        },
+        {
+          "op": "Replace",
+          "node": 57
+        },
+        {
+          "op": "GuardAdd",
+          "node": 67
+        },
+        {
+          "op": "Replace",
+          "node": 6
+        },
+        {
+          "op": "InsertAfter",
+          "node": 29
+        }
+      ],
+      "score": 15.654545453213224
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 55
+        },
+        {
+          "op": "Delete",
+          "node": 67
+        },
+        {
+          "op": "Replace",
+          "node": 57
+        },
+        {
+          "op": "Replace",
+          "node": 6
+        },
+        {
+          "op": "Delete",
+          "node": 6
+        },
+        {
+          "op": "Replace",
+          "node": 29
+        },
+        {
+          "op": "Replace",
+          "node": 67
+        }
+      ],
+      "score": 15.072727271629754
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 52
+        },
+        {
+          "op": "Replace",
+          "node": 55
+        },
+        {
+          "op": "Replace",
+          "node": 6
+        },
+        {
+          "op": "Replace",
+          "node": 57
+        },
+        {
+          "op": "Delete",
+          "node": 57
+        },
+        {
+          "op": "GuardAdd",
+          "node": 29
+        },
+        {
+          "op": "Replace",
+          "node": 29
+        },
+        {
+          "op": "Replace",
+          "node": 67
+        },
+        {
+          "op": "GuardAdd",
+          "node": 52
+        }
+      ],
+      "score": 15.036363635087604
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 67
+        },
+        {
+          "op": "Replace",
+          "node": 55
+        },
+        {
+          "op": "Replace",
+          "node": 52
+        },
+        {
+          "op": "Replace",
+          "node": 57
+        },
+        {
+          "op": "GuardAdd",
+          "node": 29
+        },
+        {
+          "op": "Replace",
+          "node": 29
+        },
+        {
+          "op": "Replace",
+          "node": 6
+        }
+      ],
+      "score": 14.909090908008265
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 6
+        },
+        {
+          "op": "Replace",
+          "node": 52
+        },
+        {
+          "op": "GuardAdd",
+          "node": 29
+        },
+        {
+          "op": "Replace",
+          "node": 29
+        },
+        {
+          "op": "Replace",
+          "node": 55
+        },
+        {
+          "op": "GuardAdd",
+          "node": 67
+        },
+        {
+          "op": "Replace",
+          "node": 28
+        },
+        {
+          "op": "Replace",
+          "node": 53
+        }
+      ],
+      "score": 14.799999998927273
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 57
+        },
+        {
+          "op": "Replace",
+          "node": 52
+        },
+        {
+          "op": "Replace",
+          "node": 67
+        },
+        {
+          "op": "Replace",
+          "node": 55
+        },
+        {
+          "op": "Replace",
+          "node": 29
+        },
+        {
+          "op": "GuardAdd",
+          "node": 57
+        },
+        {
+          "op": "GuardAdd",
+          "node": 28
+        },
+        {
+          "op": "Replace",
+          "node": 53
+        },
+        {
+          "op": "InsertAfter",
+          "node": 6
+        }
+      ],
+      "score": 14.727272726024793
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 55
+        },
+        {
+          "op": "Replace",
+          "node": 57
+        },
+        {
+          "op": "InsertBefore",
+          "node": 28
+        },
+        {
+          "op": "GuardAdd",
+          "node": 57
+        },
+        {
+          "op": "Replace",
+          "node": 53
+        },
+        {
+          "op": "Replace",
+          "node": 29
+        },
+        {
+          "op": "InsertAfter",
+          "node": 6
+        }
+      ],
+      "score": 14.490909089864465
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 29
+        },
+        {
+          "op": "GuardAdd",
+          "node": 57
+        },
+        {
+          "op": "Replace",
+          "node": 55
+        },
+        {
+          "op": "GuardAdd",
+          "node": 67
+        },
+        {
+          "op": "Replace",
+          "node": 67
+        },
+        {
+          "op": "InsertBefore",
+          "node": 52
+        },
+        {
+          "op": "Delete",
+          "node": 29
+        },
+        {
+          "op": "Replace",
+          "node": 16
+        },
+        {
+          "op": "GuardAdd",
+          "node": 29
+        },
+        {
+          "op": "Replace",
+          "node": 28
+        }
+      ],
+      "score": 14.281818180610745
+    }
+  ],
+  "static_analysis_nodes": [
+    {
+      "line": 14,
+      "line_absolute": 2123,
+      "node_id": 6,
+      "node_id_local": 14,
+      "type": "Return",
+      "code": "return key",
+      "distance_to_buggy": 2,
+      "context": "  11:                   raise ValueError('At based indexing on an integer index can only have integer indexers')\n  12:           elif is_integer(i) and not ax.holds_integer():\n  13:               raise ValueError('At based indexing on an non-integer index can only have non-integer indexers')\n  14:->     return key",
+      "ast_subtree_json": {
+        "_type": "Return",
+        "value": {
+          "_type": "Name",
+          "id": "key",
+          "ctx": {
+            "_type": "Load"
+          }
+        }
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -2.0
+    },
+    {
+      "line": 13,
+      "line_absolute": 2122,
+      "node_id": 57,
+      "node_id_local": 13,
+      "type": "Call",
+      "code": "ValueError('At based indexing on an non-integer index can only have non-integer indexers')",
+      "distance_to_buggy": 3,
+      "context": "  10:               if not is_integer(i):\n  11:                   raise ValueError('At based indexing on an integer index can only have integer indexers')\n  12:           elif is_integer(i) and not ax.holds_integer():\n  13:->             raise ValueError('At based indexing on an non-integer index can only have non-integer indexers')\n  14:       return key",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Name",
+          "id": "ValueError",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [
+          {
+            "_type": "Constant",
+            "value": "At based indexing on an non-integer index can only have non-integer indexers",
+            "kind": null
+          }
+        ],
+        "keywords": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": 5.0
+    },
+    {
+      "line": 12,
+      "line_absolute": 2121,
+      "node_id": 29,
+      "node_id_local": 10,
+      "type": "If",
+      "code": "if is_integer(i) and (not ax.holds_integer()):\n    raise ValueError('At based indexing on an non-integer index can only have non-integer indexers')",
+      "distance_to_buggy": 4,
+      "context": "   9:           if ax.is_integer():\n  10:               if not is_integer(i):\n  11:                   raise ValueError('At based indexing on an integer index can only have integer indexers')\n  12:->         elif is_integer(i) and not ax.holds_integer():\n  13:               raise ValueError('At based indexing on an non-integer index can only have non-integer indexers')\n  14:       return key",
+      "ast_subtree_json": {
+        "_type": "If",
+        "test": {
+          "_type": "BoolOp",
+          "op": {
+            "_type": "And"
+          },
+          "values": [
+            {
+              "_type": "Call"
+            },
+            {
+              "_type": "UnaryOp"
+            }
+          ]
+        },
+        "body": [
+          {
+            "_type": "Raise",
+            "exc": {
+              "_type": "Call"
+            },
+            "cause": null
+          }
+        ],
+        "orelse": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": 16.0
+    },
+    {
+      "line": 12,
+      "line_absolute": 2121,
+      "node_id": 55,
+      "node_id_local": 11,
+      "type": "Call",
+      "code": "is_integer(i)",
+      "distance_to_buggy": 4,
+      "context": "   9:           if ax.is_integer():\n  10:               if not is_integer(i):\n  11:                   raise ValueError('At based indexing on an integer index can only have integer indexers')\n  12:->         elif is_integer(i) and not ax.holds_integer():\n  13:               raise ValueError('At based indexing on an non-integer index can only have non-integer indexers')\n  14:       return key",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Name",
+          "id": "is_integer",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [
+          {
+            "_type": "Name",
+            "id": "i",
+            "ctx": {
+              "_type": "Load"
+            }
+          }
+        ],
+        "keywords": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": 16.0
+    },
+    {
+      "line": 12,
+      "line_absolute": 2121,
+      "node_id": 67,
+      "node_id_local": 12,
+      "type": "Call",
+      "code": "ax.holds_integer()",
+      "distance_to_buggy": 4,
+      "context": "   9:           if ax.is_integer():\n  10:               if not is_integer(i):\n  11:                   raise ValueError('At based indexing on an integer index can only have integer indexers')\n  12:->         elif is_integer(i) and not ax.holds_integer():\n  13:               raise ValueError('At based indexing on an non-integer index can only have non-integer indexers')\n  14:       return key",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Attribute",
+          "value": {
+            "_type": "Name"
+          },
+          "attr": "holds_integer",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [],
+        "keywords": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": 16.0
+    },
+    {
+      "line": 11,
+      "line_absolute": 2120,
+      "node_id": 53,
+      "node_id_local": 9,
+      "type": "Call",
+      "code": "ValueError('At based indexing on an integer index can only have integer indexers')",
+      "distance_to_buggy": 5,
+      "context": "   8:       for ax, i in zip(self.obj.axes, key):\n   9:           if ax.is_integer():\n  10:               if not is_integer(i):\n  11:->                 raise ValueError('At based indexing on an integer index can only have integer indexers')\n  12:           elif is_integer(i) and not ax.holds_integer():\n  13:               raise ValueError('At based indexing on an non-integer index can only have non-integer indexers')\n  14:       return key",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Name",
+          "id": "ValueError",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [
+          {
+            "_type": "Constant",
+            "value": "At based indexing on an integer index can only have integer indexers",
+            "kind": null
+          }
+        ],
+        "keywords": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": 25.0
+    },
+    {
+      "line": 10,
+      "line_absolute": 2119,
+      "node_id": 28,
+      "node_id_local": 7,
+      "type": "If",
+      "code": "if not is_integer(i):\n    raise ValueError('At based indexing on an integer index can only have integer indexers')",
+      "distance_to_buggy": 6,
+      "context": "   7:           return list(key)\n   8:       for ax, i in zip(self.obj.axes, key):\n   9:           if ax.is_integer():\n  10:->             if not is_integer(i):\n  11:                   raise ValueError('At based indexing on an integer index can only have integer indexers')\n  12:           elif is_integer(i) and not ax.holds_integer():\n  13:               raise ValueError('At based indexing on an non-integer index can only have non-integer indexers')",
+      "ast_subtree_json": {
+        "_type": "If",
+        "test": {
+          "_type": "UnaryOp",
+          "op": {
+            "_type": "Not"
+          },
+          "operand": {
+            "_type": "Call"
+          }
+        },
+        "body": [
+          {
+            "_type": "Raise",
+            "exc": {
+              "_type": "Call"
+            },
+            "cause": null
+          }
+        ],
+        "orelse": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": 36.0
+    },
+    {
+      "line": 10,
+      "line_absolute": 2119,
+      "node_id": 52,
+      "node_id_local": 8,
+      "type": "Call",
+      "code": "is_integer(i)",
+      "distance_to_buggy": 6,
+      "context": "   7:           return list(key)\n   8:       for ax, i in zip(self.obj.axes, key):\n   9:           if ax.is_integer():\n  10:->             if not is_integer(i):\n  11:                   raise ValueError('At based indexing on an integer index can only have integer indexers')\n  12:           elif is_integer(i) and not ax.holds_integer():\n  13:               raise ValueError('At based indexing on an non-integer index can only have non-integer indexers')",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Name",
+          "id": "is_integer",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [
+          {
+            "_type": "Name",
+            "id": "i",
+            "ctx": {
+              "_type": "Load"
+            }
+          }
+        ],
+        "keywords": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": 36.0
+    },
+    {
+      "line": 9,
+      "line_absolute": 2118,
+      "node_id": 16,
+      "node_id_local": 5,
+      "type": "If",
+      "code": "if ax.is_integer():\n    if not is_integer(i):\n        raise ValueError('At based indexing on an integer index can only have integer indexers')\nelif is_integer(i) and (not ax.holds_integer()):\n    raise ValueError('At based indexing on an non-integer index can only have non-integer indexers')",
+      "distance_to_buggy": 7,
+      "context": "   6:       if is_setter:\n   7:           return list(key)\n   8:       for ax, i in zip(self.obj.axes, key):\n   9:->         if ax.is_integer():\n  10:               if not is_integer(i):\n  11:                   raise ValueError('At based indexing on an integer index can only have integer indexers')\n  12:           elif is_integer(i) and not ax.holds_integer():",
+      "ast_subtree_json": {
+        "_type": "If",
+        "test": {
+          "_type": "Call",
+          "func": {
+            "_type": "Attribute"
+          },
+          "args": [],
+          "keywords": []
+        },
+        "body": [
+          {
+            "_type": "If",
+            "test": {
+              "_type": "UnaryOp"
+            },
+            "body": [
+              {
+                "_type": "Raise"
+              }
+            ],
+            "orelse": []
+          }
+        ],
+        "orelse": [
+          {
+            "_type": "If",
+            "test": {
+              "_type": "BoolOp"
+            },
+            "body": [
+              {
+                "_type": "Raise"
+              }
+            ],
+            "orelse": []
+          }
+        ]
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": 46.0
+    },
+    {
+      "line": 9,
+      "line_absolute": 2118,
+      "node_id": 27,
+      "node_id_local": 6,
+      "type": "Call",
+      "code": "ax.is_integer()",
+      "distance_to_buggy": 7,
+      "context": "   6:       if is_setter:\n   7:           return list(key)\n   8:       for ax, i in zip(self.obj.axes, key):\n   9:->         if ax.is_integer():\n  10:               if not is_integer(i):\n  11:                   raise ValueError('At based indexing on an integer index can only have integer indexers')\n  12:           elif is_integer(i) and not ax.holds_integer():",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Attribute",
+          "value": {
+            "_type": "Name"
+          },
+          "attr": "is_integer",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [],
+        "keywords": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": 46.0
+    }
+  ]
+}

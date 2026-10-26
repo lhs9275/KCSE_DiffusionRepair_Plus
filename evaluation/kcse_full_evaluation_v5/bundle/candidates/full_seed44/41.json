@@ -1,0 +1,904 @@
+{
+  "bug_id": "41",
+  "seed": 44,
+  "arm": "full",
+  "candidates": [],
+  "candidate_count": 0,
+  "retrieved_examples": [
+    {
+      "id": "39",
+      "project_name": "pandas",
+      "buggy_line_content": "            except (TypeError, ValueError):",
+      "function": {
+        "function_name": "_try_convert_data",
+        "function_parent": "Parser",
+        "function_before_start_line": 886,
+        "function_before_end_line": 958,
+        "function_after_start_line": 886,
+        "function_after_end_line": 958,
+        "function_before_token_count": 277,
+        "function_after_token_count": 279,
+        "function_before": "def _try_convert_data(self, name, data, use_dtypes=True, convert_dates=True):\n    \"\"\"\n        Try to parse a ndarray like into a column by inferring dtype.\n        \"\"\"\n    if use_dtypes:\n        if not self.dtype:\n            return (data, False)\n        elif self.dtype is True:\n            pass\n        else:\n            dtype = self.dtype.get(name) if isinstance(self.dtype, dict) else self.dtype\n            if dtype is not None:\n                try:\n                    dtype = np.dtype(dtype)\n                    return (data.astype(dtype), True)\n                except (TypeError, ValueError):\n                    return (data, False)\n    if convert_dates:\n        new_data, result = self._try_convert_to_date(data)\n        if result:\n            return (new_data, True)\n    result = False\n    if data.dtype == 'object':\n        try:\n            data = data.astype('float64')\n            result = True\n        except (TypeError, ValueError):\n            pass\n    if data.dtype.kind == 'f':\n        if data.dtype != 'float64':\n            try:\n                data = data.astype('float64')\n                result = True\n            except (TypeError, ValueError):\n                pass\n    if len(data) and (data.dtype == 'float' or data.dtype == 'object'):\n        try:\n            new_data = data.astype('int64')\n            if (new_data == data).all():\n                data = new_data\n                result = True\n        except (TypeError, ValueError):\n            pass\n    if data.dtype == 'int':\n        try:\n            data = data.astype('int64')\n            result = True\n        except (TypeError, ValueError):\n            pass\n    return (data, result)",
+        "function_after": "def _try_convert_data(self, name, data, use_dtypes=True, convert_dates=True):\n    \"\"\"\n        Try to parse a ndarray like into a column by inferring dtype.\n        \"\"\"\n    if use_dtypes:\n        if not self.dtype:\n            return (data, False)\n        elif self.dtype is True:\n            pass\n        else:\n            dtype = self.dtype.get(name) if isinstance(self.dtype, dict) else self.dtype\n            if dtype is not None:\n                try:\n                    dtype = np.dtype(dtype)\n                    return (data.astype(dtype), True)\n                except (TypeError, ValueError):\n                    return (data, False)\n    if convert_dates:\n        new_data, result = self._try_convert_to_date(data)\n        if result:\n            return (new_data, True)\n    result = False\n    if data.dtype == 'object':\n        try:\n            data = data.astype('float64')\n            result = True\n        except (TypeError, ValueError):\n            pass\n    if data.dtype.kind == 'f':\n        if data.dtype != 'float64':\n            try:\n                data = data.astype('float64')\n                result = True\n            except (TypeError, ValueError):\n                pass\n    if len(data) and (data.dtype == 'float' or data.dtype == 'object'):\n        try:\n            new_data = data.astype('int64')\n            if (new_data == data).all():\n                data = new_data\n                result = True\n        except (TypeError, ValueError, OverflowError):\n            pass\n    if data.dtype == 'int':\n        try:\n            data = data.astype('int64')\n            result = True\n        except (TypeError, ValueError):\n            pass\n    return (data, result)"
+      },
+      "file_name": "_json.py",
+      "file_path": "pandas/io/json/_json.py",
+      "score_reranked": 0.8551817188396942
+    },
+    {
+      "id": "32",
+      "project_name": "pandas",
+      "buggy_line_content": "            except (ValueError, OverflowError):",
+      "function": {
+        "function_name": "_try_convert_to_date",
+        "function_parent": "Parser",
+        "function_before_start_line": 953,
+        "function_before_end_line": 988,
+        "function_after_start_line": 953,
+        "function_after_end_line": 988,
+        "function_before_token_count": 154,
+        "function_after_token_count": 156,
+        "function_before": "def _try_convert_to_date(self, data):\n    \"\"\"\n        Try to parse a ndarray like into a date column.\n\n        Try to coerce object in epoch/iso formats and integer/float in epoch\n        formats. Return a boolean if parsing was successful.\n        \"\"\"\n    if not len(data):\n        return (data, False)\n    new_data = data\n    if new_data.dtype == 'object':\n        try:\n            new_data = data.astype('int64')\n        except (TypeError, ValueError, OverflowError):\n            pass\n    if issubclass(new_data.dtype.type, np.number):\n        in_range = isna(new_data._values) | (new_data > self.min_stamp) | (new_data._values == iNaT)\n        if not in_range.all():\n            return (data, False)\n    date_units = (self.date_unit,) if self.date_unit else self._STAMP_UNITS\n    for date_unit in date_units:\n        try:\n            new_data = to_datetime(new_data, errors='raise', unit=date_unit)\n        except (ValueError, OverflowError):\n            continue\n        return (new_data, True)\n    return (data, False)",
+        "function_after": "def _try_convert_to_date(self, data):\n    \"\"\"\n        Try to parse a ndarray like into a date column.\n\n        Try to coerce object in epoch/iso formats and integer/float in epoch\n        formats. Return a boolean if parsing was successful.\n        \"\"\"\n    if not len(data):\n        return (data, False)\n    new_data = data\n    if new_data.dtype == 'object':\n        try:\n            new_data = data.astype('int64')\n        except (TypeError, ValueError, OverflowError):\n            pass\n    if issubclass(new_data.dtype.type, np.number):\n        in_range = isna(new_data._values) | (new_data > self.min_stamp) | (new_data._values == iNaT)\n        if not in_range.all():\n            return (data, False)\n    date_units = (self.date_unit,) if self.date_unit else self._STAMP_UNITS\n    for date_unit in date_units:\n        try:\n            new_data = to_datetime(new_data, errors='raise', unit=date_unit)\n        except (ValueError, OverflowError, TypeError):\n            continue\n        return (new_data, True)\n    return (data, False)"
+      },
+      "file_name": "_json.py",
+      "file_path": "pandas/io/json/_json.py",
+      "score_reranked": 0.8196769983294473
+    },
+    {
+      "id": "29",
+      "project_name": "pandas",
+      "buggy_line_content": "        is_excluded_checks = (is_period_dtype, is_interval_dtype)",
+      "function": {
+        "function_name": "is_string_dtype",
+        "function_parent": "common.py",
+        "function_before_start_line": 566,
+        "function_before_end_line": 605,
+        "function_after_start_line": 566,
+        "function_after_end_line": 605,
+        "function_before_token_count": 19,
+        "function_after_token_count": 19,
+        "function_before": "def is_string_dtype(arr_or_dtype) -> bool:\n    \"\"\"\n    Check whether the provided array or dtype is of the string dtype.\n\n    Parameters\n    ----------\n    arr_or_dtype : array-like\n        The array or dtype to check.\n\n    Returns\n    -------\n    boolean\n        Whether or not the array or dtype is of the string dtype.\n\n    Examples\n    --------\n    >>> is_string_dtype(str)\n    True\n    >>> is_string_dtype(object)\n    True\n    >>> is_string_dtype(int)\n    False\n    >>>\n    >>> is_string_dtype(np.array(['a', 'b']))\n    True\n    >>> is_string_dtype(pd.Series([1, 2]))\n    False\n    \"\"\"\n\n    def condition(dtype) -> bool:\n        return dtype.kind in ('O', 'S', 'U') and (not is_excluded_dtype(dtype))\n\n    def is_excluded_dtype(dtype) -> bool:\n        \"\"\"\n        These have kind = \"O\" but aren't string dtypes so need to be explicitly excluded\n        \"\"\"\n        is_excluded_checks = (is_period_dtype, is_interval_dtype)\n        return any((is_excluded(dtype) for is_excluded in is_excluded_checks))\n    return _is_dtype(arr_or_dtype, condition)",
+        "function_after": "def is_string_dtype(arr_or_dtype) -> bool:\n    \"\"\"\n    Check whether the provided array or dtype is of the string dtype.\n\n    Parameters\n    ----------\n    arr_or_dtype : array-like\n        The array or dtype to check.\n\n    Returns\n    -------\n    boolean\n        Whether or not the array or dtype is of the string dtype.\n\n    Examples\n    --------\n    >>> is_string_dtype(str)\n    True\n    >>> is_string_dtype(object)\n    True\n    >>> is_string_dtype(int)\n    False\n    >>>\n    >>> is_string_dtype(np.array(['a', 'b']))\n    True\n    >>> is_string_dtype(pd.Series([1, 2]))\n    False\n    \"\"\"\n\n    def condition(dtype) -> bool:\n        return dtype.kind in ('O', 'S', 'U') and (not is_excluded_dtype(dtype))\n\n    def is_excluded_dtype(dtype) -> bool:\n        \"\"\"\n        These have kind = \"O\" but aren't string dtypes so need to be explicitly excluded\n        \"\"\"\n        is_excluded_checks = (is_period_dtype, is_interval_dtype, is_categorical_dtype)\n        return any((is_excluded(dtype) for is_excluded in is_excluded_checks))\n    return _is_dtype(arr_or_dtype, condition)"
+      },
+      "file_name": "common.py",
+      "file_path": "pandas/core/dtypes/common.py",
+      "score_reranked": 0.6887576385710826
+    },
+    {
+      "id": "21",
+      "project_name": "youtube-dl",
+      "buggy_line_content": "        (?:0[xX][0-9a-fA-F]+|0+[0-7]+)(?:\\s*:)?|",
+      "function": {
+        "function_name": "js_to_json",
+        "function_parent": "utils.py",
+        "function_before_start_line": 1939,
+        "function_before_end_line": 1975,
+        "function_after_start_line": 1939,
+        "function_after_end_line": 1975,
+        "function_before_token_count": 19,
+        "function_after_token_count": 19,
+        "function_before": "def js_to_json(code):\n\n    def fix_kv(m):\n        v = m.group(0)\n        if v in ('true', 'false', 'null'):\n            return v\n        elif v.startswith('/*') or v == ',':\n            return ''\n        if v[0] in (\"'\", '\"'):\n            v = re.sub('(?s)\\\\\\\\.|\"', lambda m: {'\"': '\\\\\"', \"\\\\'\": \"'\", '\\\\\\n': '', '\\\\x': '\\\\u00'}.get(m.group(0), m.group(0)), v[1:-1])\n        INTEGER_TABLE = (('^0[xX][0-9a-fA-F]+', 16), ('^0+[0-7]+', 8))\n        for regex, base in INTEGER_TABLE:\n            im = re.match(regex, v)\n            if im:\n                i = int(im.group(0), base)\n                return '\"%d\":' % i if v.endswith(':') else '%d' % i\n        return '\"%s\"' % v\n    return re.sub('(?sx)\\n        \"(?:[^\"\\\\\\\\]*(?:\\\\\\\\\\\\\\\\|\\\\\\\\[\\'\"nurtbfx/\\\\n]))*[^\"\\\\\\\\]*\"|\\n        \\'(?:[^\\'\\\\\\\\]*(?:\\\\\\\\\\\\\\\\|\\\\\\\\[\\'\"nurtbfx/\\\\n]))*[^\\'\\\\\\\\]*\\'|\\n        /\\\\*.*?\\\\*/|,(?=\\\\s*[\\\\]}])|\\n        [a-zA-Z_][.a-zA-Z_0-9]*|\\n        (?:0[xX][0-9a-fA-F]+|0+[0-7]+)(?:\\\\s*:)?|\\n        [0-9]+(?=\\\\s*:)\\n        ', fix_kv, code)",
+        "function_after": "def js_to_json(code):\n\n    def fix_kv(m):\n        v = m.group(0)\n        if v in ('true', 'false', 'null'):\n            return v\n        elif v.startswith('/*') or v == ',':\n            return ''\n        if v[0] in (\"'\", '\"'):\n            v = re.sub('(?s)\\\\\\\\.|\"', lambda m: {'\"': '\\\\\"', \"\\\\'\": \"'\", '\\\\\\n': '', '\\\\x': '\\\\u00'}.get(m.group(0), m.group(0)), v[1:-1])\n        INTEGER_TABLE = (('^0[xX][0-9a-fA-F]+', 16), ('^0+[0-7]+', 8))\n        for regex, base in INTEGER_TABLE:\n            im = re.match(regex, v)\n            if im:\n                i = int(im.group(0), base)\n                return '\"%d\":' % i if v.endswith(':') else '%d' % i\n        return '\"%s\"' % v\n    return re.sub('(?sx)\\n        \"(?:[^\"\\\\\\\\]*(?:\\\\\\\\\\\\\\\\|\\\\\\\\[\\'\"nurtbfx/\\\\n]))*[^\"\\\\\\\\]*\"|\\n        \\'(?:[^\\'\\\\\\\\]*(?:\\\\\\\\\\\\\\\\|\\\\\\\\[\\'\"nurtbfx/\\\\n]))*[^\\'\\\\\\\\]*\\'|\\n        /\\\\*.*?\\\\*/|,(?=\\\\s*[\\\\]}])|\\n        [a-zA-Z_][.a-zA-Z_0-9]*|\\n        \\\\b(?:0[xX][0-9a-fA-F]+|0+[0-7]+)(?:\\\\s*:)?|\\n        [0-9]+(?=\\\\s*:)\\n        ', fix_kv, code)"
+      },
+      "file_name": "utils.py",
+      "file_path": "youtube_dl/utils.py",
+      "score_reranked": 0.5828486125190431
+    },
+    {
+      "id": "19",
+      "project_name": "youtube-dl",
+      "buggy_line_content": "        [a-zA-Z_][.a-zA-Z_0-9]*|",
+      "function": {
+        "function_name": "js_to_json",
+        "function_parent": "utils.py",
+        "function_before_start_line": 2235,
+        "function_before_end_line": 2273,
+        "function_after_start_line": 2235,
+        "function_after_end_line": 2273,
+        "function_before_token_count": 77,
+        "function_after_token_count": 77,
+        "function_before": "def js_to_json(code):\n    COMMENT_RE = '/\\\\*(?:(?!\\\\*/).)*?\\\\*/|//[^\\\\n]*'\n    SKIP_RE = '\\\\s*(?:{comment})?\\\\s*'.format(comment=COMMENT_RE)\n    INTEGER_TABLE = (('(?s)^(0[xX][0-9a-fA-F]+){skip}:?$'.format(skip=SKIP_RE), 16), ('(?s)^(0+[0-7]+){skip}:?$'.format(skip=SKIP_RE), 8))\n\n    def fix_kv(m):\n        v = m.group(0)\n        if v in ('true', 'false', 'null'):\n            return v\n        elif v.startswith('/*') or v.startswith('//') or v == ',':\n            return ''\n        if v[0] in (\"'\", '\"'):\n            v = re.sub('(?s)\\\\\\\\.|\"', lambda m: {'\"': '\\\\\"', \"\\\\'\": \"'\", '\\\\\\n': '', '\\\\x': '\\\\u00'}.get(m.group(0), m.group(0)), v[1:-1])\n        for regex, base in INTEGER_TABLE:\n            im = re.match(regex, v)\n            if im:\n                i = int(im.group(1), base)\n                return '\"%d\":' % i if v.endswith(':') else '%d' % i\n        return '\"%s\"' % v\n    return re.sub('(?sx)\\n        \"(?:[^\"\\\\\\\\]*(?:\\\\\\\\\\\\\\\\|\\\\\\\\[\\'\"nurtbfx/\\\\n]))*[^\"\\\\\\\\]*\"|\\n        \\'(?:[^\\'\\\\\\\\]*(?:\\\\\\\\\\\\\\\\|\\\\\\\\[\\'\"nurtbfx/\\\\n]))*[^\\'\\\\\\\\]*\\'|\\n        {comment}|,(?={skip}[\\\\]}}])|\\n        [a-zA-Z_][.a-zA-Z_0-9]*|\\n        \\\\b(?:0[xX][0-9a-fA-F]+|0+[0-7]+)(?:{skip}:)?|\\n        [0-9]+(?={skip}:)\\n        '.format(comment=COMMENT_RE, skip=SKIP_RE), fix_kv, code)",
+        "function_after": "def js_to_json(code):\n    COMMENT_RE = '/\\\\*(?:(?!\\\\*/).)*?\\\\*/|//[^\\\\n]*'\n    SKIP_RE = '\\\\s*(?:{comment})?\\\\s*'.format(comment=COMMENT_RE)\n    INTEGER_TABLE = (('(?s)^(0[xX][0-9a-fA-F]+){skip}:?$'.format(skip=SKIP_RE), 16), ('(?s)^(0+[0-7]+){skip}:?$'.format(skip=SKIP_RE), 8))\n\n    def fix_kv(m):\n        v = m.group(0)\n        if v in ('true', 'false', 'null'):\n            return v\n        elif v.startswith('/*') or v.startswith('//') or v == ',':\n            return ''\n        if v[0] in (\"'\", '\"'):\n            v = re.sub('(?s)\\\\\\\\.|\"', lambda m: {'\"': '\\\\\"', \"\\\\'\": \"'\", '\\\\\\n': '', '\\\\x': '\\\\u00'}.get(m.group(0), m.group(0)), v[1:-1])\n        for regex, base in INTEGER_TABLE:\n            im = re.match(regex, v)\n            if im:\n                i = int(im.group(1), base)\n                return '\"%d\":' % i if v.endswith(':') else '%d' % i\n        return '\"%s\"' % v\n    return re.sub('(?sx)\\n        \"(?:[^\"\\\\\\\\]*(?:\\\\\\\\\\\\\\\\|\\\\\\\\[\\'\"nurtbfx/\\\\n]))*[^\"\\\\\\\\]*\"|\\n        \\'(?:[^\\'\\\\\\\\]*(?:\\\\\\\\\\\\\\\\|\\\\\\\\[\\'\"nurtbfx/\\\\n]))*[^\\'\\\\\\\\]*\\'|\\n        {comment}|,(?={skip}[\\\\]}}])|\\n        (?:(?<![0-9])[eE]|[a-df-zA-DF-Z_])[.a-zA-Z_0-9]*|\\n        \\\\b(?:0[xX][0-9a-fA-F]+|0+[0-7]+)(?:{skip}:)?|\\n        [0-9]+(?={skip}:)\\n        '.format(comment=COMMENT_RE, skip=SKIP_RE), fix_kv, code)"
+      },
+      "file_name": "utils.py",
+      "file_path": "youtube_dl/utils.py",
+      "score_reranked": 0.5758872665870809
+    }
+  ],
+  "diffusion_plan": [
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 48
+        },
+        {
+          "op": "Replace",
+          "node": 14
+        },
+        {
+          "op": "InsertAfter",
+          "node": 48
+        },
+        {
+          "op": "InsertBefore",
+          "node": 14
+        },
+        {
+          "op": "Replace",
+          "node": 497
+        },
+        {
+          "op": "Replace",
+          "node": 491
+        },
+        {
+          "op": "GuardAdd",
+          "node": 48
+        },
+        {
+          "op": "GuardAdd",
+          "node": 463
+        }
+      ],
+      "score": 16.972727271457025
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 462
+        },
+        {
+          "op": "GuardAdd",
+          "node": 48
+        },
+        {
+          "op": "Replace",
+          "node": 48
+        },
+        {
+          "op": "Delete",
+          "node": 497
+        },
+        {
+          "op": "GuardAdd",
+          "node": 496
+        },
+        {
+          "op": "Replace",
+          "node": 497
+        },
+        {
+          "op": "Replace",
+          "node": 14
+        },
+        {
+          "op": "GuardAdd",
+          "node": 497
+        }
+      ],
+      "score": 16.927272726006613
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 48
+        },
+        {
+          "op": "Replace",
+          "node": 496
+        },
+        {
+          "op": "GuardAdd",
+          "node": 496
+        },
+        {
+          "op": "Replace",
+          "node": 463
+        },
+        {
+          "op": "GuardAdd",
+          "node": 48
+        },
+        {
+          "op": "Replace",
+          "node": 14
+        },
+        {
+          "op": "Replace",
+          "node": 497
+        },
+        {
+          "op": "GuardAdd",
+          "node": 463
+        },
+        {
+          "op": "Replace",
+          "node": 434
+        }
+      ],
+      "score": 16.63636363494215
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 496
+        },
+        {
+          "op": "GuardAdd",
+          "node": 462
+        },
+        {
+          "op": "Replace",
+          "node": 14
+        },
+        {
+          "op": "Replace",
+          "node": 462
+        },
+        {
+          "op": "Replace",
+          "node": 497
+        },
+        {
+          "op": "Delete",
+          "node": 463
+        },
+        {
+          "op": "Replace",
+          "node": 48
+        },
+        {
+          "op": "GuardAdd",
+          "node": 48
+        }
+      ],
+      "score": 16.472727271502478
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "InsertAfter",
+          "node": 48
+        },
+        {
+          "op": "Replace",
+          "node": 497
+        },
+        {
+          "op": "Replace",
+          "node": 463
+        },
+        {
+          "op": "Replace",
+          "node": 48
+        },
+        {
+          "op": "Replace",
+          "node": 496
+        },
+        {
+          "op": "Replace",
+          "node": 14
+        },
+        {
+          "op": "GuardAdd",
+          "node": 496
+        }
+      ],
+      "score": 16.109090907899173
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 462
+        },
+        {
+          "op": "Replace",
+          "node": 496
+        },
+        {
+          "op": "InsertBefore",
+          "node": 48
+        },
+        {
+          "op": "Replace",
+          "node": 14
+        },
+        {
+          "op": "Replace",
+          "node": 48
+        },
+        {
+          "op": "Replace",
+          "node": 497
+        },
+        {
+          "op": "GuardAdd",
+          "node": 463
+        },
+        {
+          "op": "Delete",
+          "node": 434
+        }
+      ],
+      "score": 16.09090908971901
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 14
+        },
+        {
+          "op": "Replace",
+          "node": 463
+        },
+        {
+          "op": "Replace",
+          "node": 48
+        },
+        {
+          "op": "Replace",
+          "node": 433
+        },
+        {
+          "op": "Replace",
+          "node": 462
+        },
+        {
+          "op": "Replace",
+          "node": 496
+        },
+        {
+          "op": "Replace",
+          "node": 497
+        },
+        {
+          "op": "GuardAdd",
+          "node": 496
+        }
+      ],
+      "score": 15.854545453376861
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "GuardAdd",
+          "node": 48
+        },
+        {
+          "op": "Replace",
+          "node": 48
+        },
+        {
+          "op": "InsertBefore",
+          "node": 463
+        },
+        {
+          "op": "Replace",
+          "node": 496
+        },
+        {
+          "op": "GuardAdd",
+          "node": 463
+        },
+        {
+          "op": "Replace",
+          "node": 497
+        },
+        {
+          "op": "Replace",
+          "node": 462
+        },
+        {
+          "op": "Replace",
+          "node": 491
+        }
+      ],
+      "score": 15.436363635233059
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "InsertAfter",
+          "node": 497
+        },
+        {
+          "op": "Replace",
+          "node": 14
+        },
+        {
+          "op": "Replace",
+          "node": 48
+        },
+        {
+          "op": "Replace",
+          "node": 497
+        },
+        {
+          "op": "Replace",
+          "node": 496
+        },
+        {
+          "op": "Replace",
+          "node": 491
+        },
+        {
+          "op": "GuardAdd",
+          "node": 496
+        },
+        {
+          "op": "GuardAdd",
+          "node": 14
+        },
+        {
+          "op": "Replace",
+          "node": 432
+        }
+      ],
+      "score": 15.02727272599752
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "GuardAdd",
+          "node": 463
+        },
+        {
+          "op": "Replace",
+          "node": 14
+        },
+        {
+          "op": "Replace",
+          "node": 462
+        },
+        {
+          "op": "Replace",
+          "node": 497
+        },
+        {
+          "op": "Replace",
+          "node": 496
+        },
+        {
+          "op": "Replace",
+          "node": 463
+        },
+        {
+          "op": "Replace",
+          "node": 48
+        }
+      ],
+      "score": 14.945454544368596
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 14
+        },
+        {
+          "op": "Replace",
+          "node": 462
+        },
+        {
+          "op": "Replace",
+          "node": 48
+        },
+        {
+          "op": "Replace",
+          "node": 497
+        },
+        {
+          "op": "Replace",
+          "node": 496
+        },
+        {
+          "op": "GuardAdd",
+          "node": 496
+        },
+        {
+          "op": "InsertBefore",
+          "node": 462
+        }
+      ],
+      "score": 14.918181817098349
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 462
+        },
+        {
+          "op": "Delete",
+          "node": 496
+        },
+        {
+          "op": "Replace",
+          "node": 48
+        },
+        {
+          "op": "Replace",
+          "node": 497
+        },
+        {
+          "op": "GuardAdd",
+          "node": 496
+        },
+        {
+          "op": "InsertAfter",
+          "node": 14
+        },
+        {
+          "op": "Replace",
+          "node": 14
+        },
+        {
+          "op": "Delete",
+          "node": 463
+        },
+        {
+          "op": "Replace",
+          "node": 491
+        }
+      ],
+      "score": 14.790909089655372
+    }
+  ],
+  "static_analysis_nodes": [
+    {
+      "line": 88,
+      "line_absolute": 355,
+      "node_id": 48,
+      "node_id_local": 97,
+      "type": "Call",
+      "code": "AssertionError(msg)",
+      "distance_to_buggy": 0,
+      "context": "  85:                   else:\n  86:                       return (g, None)\n  87:       msg = 'invalid dtype determination in get_concat_dtype'\n  88:->     raise AssertionError(msg)",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Name",
+          "id": "AssertionError",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [
+          {
+            "_type": "Name",
+            "id": "msg",
+            "ctx": {
+              "_type": "Load"
+            }
+          }
+        ],
+        "keywords": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -24.0
+    },
+    {
+      "line": 87,
+      "line_absolute": 354,
+      "node_id": 14,
+      "node_id_local": 96,
+      "type": "Assign",
+      "code": "msg = 'invalid dtype determination in get_concat_dtype'",
+      "distance_to_buggy": 0,
+      "context": "  84:                       return (np.float64, np.nan)\n  85:                   else:\n  86:                       return (g, None)\n  87:->     msg = 'invalid dtype determination in get_concat_dtype'\n  88:       raise AssertionError(msg)",
+      "ast_subtree_json": {
+        "_type": "Assign",
+        "targets": [
+          {
+            "_type": "Name",
+            "id": "msg",
+            "ctx": {
+              "_type": "Store"
+            }
+          }
+        ],
+        "value": {
+          "_type": "Constant",
+          "value": "invalid dtype determination in get_concat_dtype",
+          "kind": null
+        },
+        "type_comment": null
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -23.0
+    },
+    {
+      "line": 84,
+      "line_absolute": 351,
+      "node_id": 496,
+      "node_id_local": 94,
+      "type": "Return",
+      "code": "return (np.float64, np.nan)",
+      "distance_to_buggy": 0,
+      "context": "  81:                   return (g, g.type(np.nan))\n  82:               elif is_numeric_dtype(g):\n  83:                   if has_none_blocks:\n  84:->                     return (np.float64, np.nan)\n  85:                   else:\n  86:                       return (g, None)\n  87:       msg = 'invalid dtype determination in get_concat_dtype'",
+      "ast_subtree_json": {
+        "_type": "Return",
+        "value": {
+          "_type": "Tuple",
+          "elts": [
+            {
+              "_type": "Attribute"
+            },
+            {
+              "_type": "Attribute"
+            }
+          ],
+          "ctx": {
+            "_type": "Load"
+          }
+        }
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -22.0
+    },
+    {
+      "line": 86,
+      "line_absolute": 353,
+      "node_id": 497,
+      "node_id_local": 95,
+      "type": "Return",
+      "code": "return (g, None)",
+      "distance_to_buggy": 0,
+      "context": "  83:                   if has_none_blocks:\n  84:                       return (np.float64, np.nan)\n  85:                   else:\n  86:->                     return (g, None)\n  87:       msg = 'invalid dtype determination in get_concat_dtype'\n  88:       raise AssertionError(msg)",
+      "ast_subtree_json": {
+        "_type": "Return",
+        "value": {
+          "_type": "Tuple",
+          "elts": [
+            {
+              "_type": "Name"
+            },
+            {
+              "_type": "Constant"
+            }
+          ],
+          "ctx": {
+            "_type": "Load"
+          }
+        }
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -21.0
+    },
+    {
+      "line": 83,
+      "line_absolute": 350,
+      "node_id": 463,
+      "node_id_local": 93,
+      "type": "If",
+      "code": "if has_none_blocks:\n    return (np.float64, np.nan)\nelse:\n    return (g, None)",
+      "distance_to_buggy": 1,
+      "context": "  80:               if is_float_dtype(g):\n  81:                   return (g, g.type(np.nan))\n  82:               elif is_numeric_dtype(g):\n  83:->                 if has_none_blocks:\n  84:                       return (np.float64, np.nan)\n  85:                   else:\n  86:                       return (g, None)",
+      "ast_subtree_json": {
+        "_type": "If",
+        "test": {
+          "_type": "Name",
+          "id": "has_none_blocks",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "body": [
+          {
+            "_type": "Return",
+            "value": {
+              "_type": "Tuple"
+            }
+          }
+        ],
+        "orelse": [
+          {
+            "_type": "Return",
+            "value": {
+              "_type": "Tuple"
+            }
+          }
+        ]
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -12.0
+    },
+    {
+      "line": 82,
+      "line_absolute": 349,
+      "node_id": 462,
+      "node_id_local": 92,
+      "type": "Call",
+      "code": "is_numeric_dtype(g)",
+      "distance_to_buggy": 2,
+      "context": "  79:           else:\n  80:               if is_float_dtype(g):\n  81:                   return (g, g.type(np.nan))\n  82:->             elif is_numeric_dtype(g):\n  83:                   if has_none_blocks:\n  84:                       return (np.float64, np.nan)\n  85:                   else:",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Name",
+          "id": "is_numeric_dtype",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [
+          {
+            "_type": "Name",
+            "id": "g",
+            "ctx": {
+              "_type": "Load"
+            }
+          }
+        ],
+        "keywords": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -4.0
+    },
+    {
+      "line": 82,
+      "line_absolute": 349,
+      "node_id": 434,
+      "node_id_local": 91,
+      "type": "If",
+      "code": "if is_numeric_dtype(g):\n    if has_none_blocks:\n        return (np.float64, np.nan)\n    else:\n        return (g, None)",
+      "distance_to_buggy": 2,
+      "context": "  79:           else:\n  80:               if is_float_dtype(g):\n  81:                   return (g, g.type(np.nan))\n  82:->             elif is_numeric_dtype(g):\n  83:                   if has_none_blocks:\n  84:                       return (np.float64, np.nan)\n  85:                   else:",
+      "ast_subtree_json": {
+        "_type": "If",
+        "test": {
+          "_type": "Call",
+          "func": {
+            "_type": "Name"
+          },
+          "args": [
+            {
+              "_type": "Name"
+            }
+          ],
+          "keywords": []
+        },
+        "body": [
+          {
+            "_type": "If",
+            "test": {
+              "_type": "Name"
+            },
+            "body": [
+              {
+                "_type": "Return"
+              }
+            ],
+            "orelse": [
+              {
+                "_type": "Return"
+              }
+            ]
+          }
+        ],
+        "orelse": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -2.0
+    },
+    {
+      "line": 81,
+      "line_absolute": 348,
+      "node_id": 491,
+      "node_id_local": 90,
+      "type": "Call",
+      "code": "g.type(np.nan)",
+      "distance_to_buggy": 3,
+      "context": "  78:               return (np.dtype(np.object_), np.nan)\n  79:           else:\n  80:               if is_float_dtype(g):\n  81:->                 return (g, g.type(np.nan))\n  82:               elif is_numeric_dtype(g):\n  83:                   if has_none_blocks:\n  84:                       return (np.float64, np.nan)",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Attribute",
+          "value": {
+            "_type": "Name"
+          },
+          "attr": "type",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [
+          {
+            "_type": "Attribute",
+            "value": {
+              "_type": "Name"
+            },
+            "attr": "nan",
+            "ctx": {
+              "_type": "Load"
+            }
+          }
+        ],
+        "keywords": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": 6.0
+    },
+    {
+      "line": 81,
+      "line_absolute": 348,
+      "node_id": 433,
+      "node_id_local": 89,
+      "type": "Return",
+      "code": "return (g, g.type(np.nan))",
+      "distance_to_buggy": 3,
+      "context": "  78:               return (np.dtype(np.object_), np.nan)\n  79:           else:\n  80:               if is_float_dtype(g):\n  81:->                 return (g, g.type(np.nan))\n  82:               elif is_numeric_dtype(g):\n  83:                   if has_none_blocks:\n  84:                       return (np.float64, np.nan)",
+      "ast_subtree_json": {
+        "_type": "Return",
+        "value": {
+          "_type": "Tuple",
+          "elts": [
+            {
+              "_type": "Name"
+            },
+            {
+              "_type": "Call"
+            }
+          ],
+          "ctx": {
+            "_type": "Load"
+          }
+        }
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": 8.0
+    },
+    {
+      "line": 80,
+      "line_absolute": 347,
+      "node_id": 432,
+      "node_id_local": 88,
+      "type": "Call",
+      "code": "is_float_dtype(g)",
+      "distance_to_buggy": 4,
+      "context": "  77:           except TypeError:\n  78:               return (np.dtype(np.object_), np.nan)\n  79:           else:\n  80:->             if is_float_dtype(g):\n  81:                   return (g, g.type(np.nan))\n  82:               elif is_numeric_dtype(g):\n  83:                   if has_none_blocks:",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Name",
+          "id": "is_float_dtype",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [
+          {
+            "_type": "Name",
+            "id": "g",
+            "ctx": {
+              "_type": "Load"
+            }
+          }
+        ],
+        "keywords": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": 16.0
+    }
+  ]
+}

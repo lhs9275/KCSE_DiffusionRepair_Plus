@@ -1,0 +1,63 @@
+{
+  "bug_id": "2",
+  "seed": 44,
+  "arm": "base",
+  "candidates": [
+    {
+      "index": 0,
+      "patch_text": "def register_named_middleware(self, middleware, route_names, attach_to='request'):\n    if attach_to =='request':\n        for _rn in route_names:\n            if _rn not in self.named_request_middleware:\n                self.named_request_middleware[_rn] = deque()\n            if middleware not in self.named_request_middleware[_rn]:\n                self.named_request_middleware[_rn].appendleft(middleware)\n    if attach_to =='response':\n        for _rn in route_names:\n            if _rn not in self.named_response_middleware:\n                self.named_response_middleware[_rn] = deque()\n            if middleware not in self.named_response_middleware[_rn]:\n                self.named_response_middleware[_rn].appendleft(middleware)",
+      "patch_sha256": "b0dc34a227b6b903160bb5b939de9d80ed03ebf2898516f56460aa35ba7d3ac2",
+      "rank_score": 219,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7941462962722876,
+      "top_p": 0.8926828703403595
+    },
+    {
+      "index": 1,
+      "patch_text": "def register_named_middleware(self, middleware, route_names, attach_to='request'):\n    if attach_to =='request':\n        for _rn in route_names:\n            if _rn not in self.named_request_middleware:\n                self.named_request_middleware[_rn] = deque()\n            if middleware not in self.named_request_middleware[_rn]:\n                self.named_request_middleware[_rn].append(middleware)\n    if attach_to =='response':\n        for _rn in route_names:\n            if _rn not in self.named_response_middleware:\n                self.named_response_middleware[_rn] = deque()\n            if middleware not in self.named_response_middleware[_rn]:\n                self.named_response_middleware[_rn].append(middleware)",
+      "patch_sha256": "eadd138af41371af95eb21924b601ffd7f552b2def5123bd28554c3fd550683d",
+      "rank_score": 204,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7941462962722876,
+      "top_p": 0.8926828703403595
+    },
+    {
+      "index": 2,
+      "patch_text": "def register_named_middleware(self, middleware, route_names, attach_to='request'):\n    if attach_to =='request':\n        for _rn in route_names:\n            if _rn not in self.named_request_middleware:\n                self.named_request_middleware[_rn] = deque()\n            if middleware not in self.named_request_middleware[_rn]:\n                self.named_request_middleware[_rn].append(middleware)\n    elif attach_to =='response':\n        for _rn in route_names:\n            if _rn not in self.named_response_middleware:\n                self.named_response_middleware[_rn] = deque()\n            if middleware not in self.named_response_middleware[_rn]:\n                self.named_response_middleware[_rn].append(middleware)",
+      "patch_sha256": "09c0d37a58b6ae6549caba44ae16c02a98e16f0d1a5f451373e08c8d04879025",
+      "rank_score": 204,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.9230891398700982,
+      "top_p": 0.8133577607283677
+    },
+    {
+      "index": 3,
+      "patch_text": "def register_named_middleware(self, middleware, route_names, attach_to='request'):\n    if attach_to =='request':\n        for _rn in route_names:\n            if _rn not in self.named_request_middleware:\n                self.named_request_middleware[_rn] = deque()\n            self.named_request_middleware[_rn].append(middleware)\n    if attach_to =='response':\n        for _rn in route_names:\n            if _rn not in self.named_response_middleware:\n                self.named_response_middleware[_rn] = deque()\n            self.named_response_middleware[_rn].append(middleware)",
+      "patch_sha256": "103445e449b58ade2a30ca02570f8299de12785d9f693194c649903cc0152291",
+      "rank_score": 185,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7941462962722876,
+      "top_p": 0.8926828703403595
+    }
+  ],
+  "candidate_count": 4,
+  "retrieved_examples": [],
+  "diffusion_plan": [],
+  "static_analysis_nodes": []
+}

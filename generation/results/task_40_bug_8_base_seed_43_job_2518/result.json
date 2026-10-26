@@ -1,0 +1,141 @@
+{
+  "bug_id": "8",
+  "seed": 43,
+  "arm": "base",
+  "candidates": [
+    {
+      "index": 0,
+      "patch_text": "def __init__(self, worker_id):\n    self.id = worker_id\n    self.reference = None\n    self.started = time.time()\n    self.tasks = set()\n    self.info = {}",
+      "patch_sha256": "89ed6156840edf684dc74800ee2163aa899392785fb4827d8c01fefa82a952a3",
+      "rank_score": 213,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7704673177175924,
+      "top_p": 0.8630841471469904
+    },
+    {
+      "index": 1,
+      "patch_text": "def __init__(self, worker_id, last_active=None):\n    self.id = worker_id\n    self.reference = None\n    self.last_active = last_active or time.time()\n    self.started = time.time()\n    self.tasks = set()\n    self.info = {}",
+      "patch_sha256": "4ccbf3724c7f1eb4ea51b55b8c892ac484205073b38caf275c9adb73014e96a1",
+      "rank_score": 203,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7704673177175924,
+      "top_p": 0.8630841471469904
+    },
+    {
+      "index": 2,
+      "patch_text": "def __init__(self, worker_id, last_active=None):\n    self.id = worker_id\n    self.reference = None\n    self.last_active = last_active\n    if last_active is None:\n        self.started = time.time()\n    else:\n        self.started = last_active\n    self.tasks = set()\n    self.info = {}",
+      "patch_sha256": "448c72b163e889af69aceb5470ed2782663e0796f12150d468d261485fcf03ce",
+      "rank_score": 186,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.934442110146087,
+      "top_p": 0.8256979458109642
+    },
+    {
+      "index": 3,
+      "patch_text": "def __init__(self, worker_id, last_active=None):\n    self.id = worker_id\n    self.reference = None\n    if last_active is None:\n        self.last_active = last_active\n    else:\n        self.last_active = last_active\n    self.started = time.time()\n    self.tasks = set()\n    self.info = {}",
+      "patch_sha256": "294fea642dbfe6aaece24788d704dfbddfa2544156a09f11ce01c6bb2ae38d73",
+      "rank_score": 186,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.5051876220100471,
+      "top_p": 0.9515146577116289
+    },
+    {
+      "index": 4,
+      "patch_text": "def __init__(self, worker_id, last_active=None):  # <--- BUGGY LINE\n    self.id = worker_id\n    self.reference = None\n    self.started = time.time()\n    self.tasks = set()\n    self.info = {}\n    if last_active is not None:\n        self.last_active = last_active",
+      "patch_sha256": "2a283157c0e8d2a2bc4454ccf75662cf246e79cb31ec6501acbecc470f7728a7",
+      "rank_score": 179,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7976020643090617,
+      "top_p": 0.8970025803863271
+    },
+    {
+      "index": 5,
+      "patch_text": "def __init__(self, target):  # <--- BUGGY LINE\n    self._target = target\n    self.result = None\n    self.success = False",
+      "patch_sha256": "2fb2e18e54524e8af20e184816dab6609365e2ee0313314596c51468915540d5",
+      "rank_score": 161,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.934442110146087,
+      "top_p": 0.8256979458109642
+    },
+    {
+      "index": 6,
+      "patch_text": "def __init__(self, worker_id, last_active=None):\n\tself.id = worker_id\n\tself.reference = None\n\tself.last_active = last_active\n\tif self.last_active is None:\n\t\tself.last_active = time.time()\n\tself.started = time.time()\n\tself.tasks = set()\n\tself.info = {}\n\n\n# Bug: Use of implicit string concatenation.\n# Code: str(self) +'' + str(worker_id) +'' + str(self.tasks)\n# Fix: str(self) +'' + worker_id +'' + str(self.tasks)\n# Context: 215\n# ---",
+      "patch_sha256": "61a8bad31f73f94d88ffcf9f105df0996f31937a5c969090f07618502d4da04a",
+      "rank_score": 148,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.934442110146087,
+      "top_p": 0.8256979458109642
+    },
+    {
+      "index": 7,
+      "patch_text": "def __init__(self, worker_id, last_active=None):\n    self.id = worker_id\n    self.reference = None\n    self.last_active = last_active\n    if last_active is not None:\n        self.last_active = time.time()\n    self.started = time.time()\n    self.tasks = set()\n    self.info = {}",
+      "patch_sha256": "d881739ff8785f272494c30093b39912046104f6c55c245ed129a19c0aeef45e",
+      "rank_score": 86,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.934442110146087,
+      "top_p": 0.8256979458109642
+    },
+    {
+      "index": 8,
+      "patch_text": "def __init__(self, worker_id, last_active=None):\n    self.id = worker_id\n    self.reference = None\n    self.last_active = last_active\n    if last_active is not None:\n        self.last_active = int(last_active)\n    self.started = time.time()\n    self.tasks = set()\n    self.info = {}",
+      "patch_sha256": "c9b4e61083e51f50303631a5e910acba2d00d88c33ba8ff49bc8db8085269cb6",
+      "rank_score": 86,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7970041106218376,
+      "top_p": 0.896255138277297
+    },
+    {
+      "index": 9,
+      "patch_text": "def __init__(self, worker_id, last_active=None):\n    self.id = worker_id\n    self.reference = None\n    self.last_active = last_active\n    self.started = time.time()\n    self.tasks = set()\n    self.info = {}\n# Copyright 2013 \n#\n# Licensed under the Apache License, Version 2.0 (the \"License\");\n# you may not use this file except in compliance with the License.\n# You may obtain a copy of the License at\n#\n#     http://www.apache.org/licenses/LICENSE-2.0\n#\n# Unless required by applicable law or agreed to in writing, software\n# distributed under the License is distributed on an \"AS IS\" BASIS,\n# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n# See the License for the specific language governing permissions and\n# limitations under the License.\n\nfrom __future__ import print_function\nimport os\nimport sys\nimport logging\nimport re\nimport glob\nimport time\nimport subprocess\nimport shutil\nimport unittest\nfrom collections import defaultdict\nfrom contextlib import contextmanager\n\nfrom luigi import task\nfrom luigi.worker import Worker as LuigiWorker\nfrom luigi.task import Task\nfrom luigi.worker import worker_main as luigi_worker_main\nfrom luigi.worker import write_pid_file\nfrom luigi.worker import read_pid_file\nfrom luigi.worker import get_worker_class\nfrom luigi.worker import _Worker\nfrom luigi.worker import _create_pid_file_path\nfrom luigi.worker import WorkerError\nfrom luigi.worker import WorkUnitError\nfrom luigi.worker import _WorkerProtocol\nfrom luigi.worker import _run_work_unit\nfrom luigi.worker import _run_work_unit_with_retry\nfrom luigi.worker import _retry_work_unit\nfrom luigi.worker import _send_result_to_dispatcher\nfrom luigi.worker import _start_work_unit_worker\nfrom luigi.worker import _start_work_unit_workers\nfrom luigi.worker import _add_pending_work_units_to_queue\nfrom luigi.worker import _poll_worker_queue\nfrom luigi.worker import _start_dispatcher_worker\nfrom luigi.worker import _start_dispatcher_workers\nfrom luigi.worker import _stop_workers\nfrom luigi.worker import _is_dispatcher\nfrom luigi.worker import _get_work_dir\nfrom luigi.worker import _get_work_unit_id\nfrom luigi.worker import _get_local_work_unit_file\nfrom luigi.worker import _remove_local_work_unit_file\nfrom luigi.worker import _local_work_unit_lock\nfrom luigi.worker import _",
+      "patch_sha256": "0b8a09269f35030cbef1cefec18d3fe68eaa5aa23b4a7df5b5ab5a896f1835c0",
+      "rank_score": -182,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": false,
+        "error": "SyntaxError: from __future__ imports must occur at the beginning of the file (<candidate-diagnostic>, line 22)"
+      },
+      "temperature": 0.9198728361131365,
+      "top_p": 0.8098617783838441
+    }
+  ],
+  "candidate_count": 10,
+  "retrieved_examples": [],
+  "diffusion_plan": [],
+  "static_analysis_nodes": []
+}

@@ -1,0 +1,1039 @@
+{
+  "bug_id": "38",
+  "seed": 43,
+  "arm": "full",
+  "candidates": [
+    {
+      "index": 0,
+      "patch_text": "def __new__(cls, data=None, unit=None, freq=None, closed=None, dtype=_TD_DTYPE, copy=False, name=None):\n    if unit in {'Y', 'y', 'M'}:\n        raise ValueError(\"Units 'M' and 'Y' are no longer supported, as they do not represent unambiguous timedelta values durations.\")\n    if is_scalar(data):\n        raise TypeError(f'{cls.__name__}() must be called with a collection of some kind, {repr(data)} was passed')\n    if isinstance(data, TimedeltaArray):\n        if copy:\n            data = data.copy()\n        return cls._simple_new(data, name=name, freq=freq)\n    if isinstance(data, TimedeltaIndex) and freq is None and (name is None):\n        if copy:\n            return data.copy()\n        else:\n            return data._shallow_copy()\n    tdarr = TimedeltaArray._from_sequence(data, freq=freq, unit=unit, dtype=dtype, copy=copy)\n    return cls._simple_new(tdarr, name=name)",
+      "patch_sha256": "c9042118ca9bccaa45160bd233d4b7985a844f2c02c5fb13f1c15c85b2c2dd81",
+      "rank_score": 197,
+      "plan_ok": false,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8030069698746244,
+      "top_p": 0.9037587123432804
+    },
+    {
+      "index": 1,
+      "patch_text": "def __new__(cls, data=None, unit=None, freq=None, closed=None, dtype=_TD_DTYPE, copy=False, name=None):\n    name = maybe_extract_name(name, data, cls)\n    if is_scalar(data):\n        raise TypeError(f'{cls.__name__}() must be called with a collection of some kind, {repr(data)} was passed')\n    if unit in {'Y', 'y', 'M'}:\n        raise ValueError(\"Units 'M' and 'Y' are no longer supported, as they do not represent unambiguous timedelta values durations.\")\n    if isinstance(data, TimedeltaArray):\n        if copy:\n            data = data.copy()\n        return cls._simple_new(data, name=name, freq=freq)\n    if isinstance(data, TimedeltaIndex) and freq is None and (name is None):\n        if copy:\n            return data.copy()\n        else:\n            return data._shallow_copy()\n    tdarr = TimedeltaArray._from_sequence(data, freq=freq, unit=unit, dtype=dtype, copy=copy)\n    return cls._simple_new(tdarr, name=name)\nimport os\nimport sys\nimport json\n\nfrom.. import utils\nfrom..utils import log_error, log_debug, log_info, log_warning, log_success, log_failure, log_exception\nfrom..utils import read_json_file, write_json_file, get_project_name, get_project_dir, get_repo_name, \\\n    get_repo_dir, get_bug_id, get_file_path, get_function_name, get_buggy_line_number, get_buggy_line_content\n\nclass Patcher(object):\n    def __init__(self, bug_id, project_name, repo_name, file_path, function_name, buggy_line_number, buggy_line_content,\n                 repair_plan, repair_plan_file_path, test_suite_file_path, repair_plan_json_file_path,\n                 repair_plan_code_file_path, output_protocol_file_path):\n        self.bug_id = bug_id\n        self.project_name = project_name\n        self.repo_name = repo_name\n        self.file_path = file_path\n        self.function_name = function_name\n        self.buggy_line_number = buggy_line_number\n        self.buggy_line_content = buggy_line_content\n        self.repair_plan = repair_plan\n        self.repair_plan_file_path = repair_plan_file_path\n        self.test_suite_file_path = test_suite_file_path\n        self.repair_plan_json_file_path = repair_plan_json_file_path\n        self.repair_plan",
+      "patch_sha256": "5a2d71e49a9e78014deb32561da30810c0e6d69c99b1465a5cd3868a490c8f63",
+      "rank_score": -132,
+      "plan_ok": false,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7704673177175924,
+      "top_p": 0.8630841471469904
+    },
+    {
+      "index": 2,
+      "patch_text": "def __new__(cls, data=None, unit=None, freq=None, closed=None, dtype=_TD_DTYPE, copy=False, name=None):\n    name = maybe_extract_name(name, data, cls)\n    if is_scalar(data):\n        raise TypeError(f'{cls.__name__}() must be called with a collection of some kind, {repr(data)} was passed')\n    if unit in {'Y', 'y', 'M'}:\n        raise ValueError(\"Units 'M' and 'Y' are no longer supported, as they do not represent unambiguous timedelta values durations.\")\n    if isinstance(data, TimedeltaArray):\n        if copy:\n            data = data.copy()\n        return cls._simple_new(data, name=name, freq=freq)\n    if isinstance(data, TimedeltaIndex) and freq is None and (name is None):\n        if copy:\n            return data.copy()\n        else:\n            return data._shallow_copy()\n    tdarr = TimedeltaArray._from_sequence(data, freq=freq, unit=unit, dtype=dtype, copy=copy)\n    return cls._simple_new(tdarr, name=name)\n# Generated from /Users/michael/Documents/GitHub/python-buggy/src/python/parser/Python3.g4 by ANTLR 4.9.2\nfrom antlr4 import *\nif __name__ is not None and \".\" in __name__:\n    from.Python3Parser import Python3Parser\nelse:\n    from Python3Parser import Python3Parser\n\n# This class defines a complete generic visitor for a parse tree produced by Python3Parser.\n\nclass Python3Visitor(ParseTreeVisitor):\n\n    # Visit a parse tree produced by Python3Parser#single_input.\n    def visitSingle_input(self, ctx:Python3Parser.Single_inputContext):\n        return self.visitChildren(ctx)\n\n\n    # Visit a parse tree produced by Python3Parser#file_input.\n    def visitFile_input(self, ctx:Python3Parser.File_inputContext):\n        return self.visitChildren(ctx)\n\n\n    # Visit a parse tree produced by Python3Parser#eval_input.\n    def visitEval_input(self, ctx:Python3Parser.Eval_inputContext):\n        return self.visitChildren(ctx)\n\n\n    # Visit a parse tree produced by Python3Parser#decorator.\n    def visitDecorator(self, ctx:Python3Parser.DecoratorContext):\n        return self.visitChildren(ctx)\n\n\n    # Visit a parse tree produced by Python3Parser#decorators.\n    def visitDecorators(self, ctx:Python3Parser.DecoratorsContext):\n        return self.visitChildren(ctx)\n\n\n    # Visit a parse tree produced by Python3Parser#decorated.\n    def visitDecorated(self, ctx:Python3Parser.DecoratedContext):\n        return self.visitChildren(ctx)\n\n\n    # Visit a parse tree produced by Python3Parser#async",
+      "patch_sha256": "4b6e2ab16735494a15b039f5860f11d698388c1d4dc1165bdbdf4f96cae51cc6",
+      "rank_score": -158,
+      "plan_ok": false,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.5321867729008602,
+      "top_p": 0.98
+    },
+    {
+      "index": 3,
+      "patch_text": "def __new__(cls, data=None, unit=None, freq=None, closed=None, dtype=_TD_DTYPE, copy=False, name=None):\n    name = maybe_extract_name(name, data, cls)\n    if is_scalar(data):\n        raise TypeError(f'{cls.__name__}() must be called with a collection of some kind, {repr(data)} was passed')\n    if unit in {'Y', 'y', 'M'}:\n        raise ValueError(\"Units 'M' and 'Y' are no longer supported, as they do not represent unambiguous timedelta values durations.\")\n    if isinstance(data, TimedeltaArray):\n        if copy:\n            data = data.copy()\n        return cls._simple_new(data, name=name, freq=freq)\n    if isinstance(data, TimedeltaIndex) and freq is None and (name is None):\n        if copy:\n            return data.copy()\n        else:\n            return data._shallow_copy()\n    tdarr = TimedeltaArray._from_sequence(data, freq=freq, unit=unit, dtype=dtype, copy=copy)\n    return cls._simple_new(tdarr, name=name)\n\n##endimport json\nimport os\nimport sys\nfrom collections import defaultdict\n\nimport numpy as np\nfrom sklearn.metrics import roc_auc_score\n\nimport matplotlib.pyplot as plt\n\nfrom tqdm import tqdm\n\nfrom code_analysis import *\nfrom bug_report import *\n\n# read all patches\nall_patch_path = '/Users/yichao/Desktop/code-analysis-tool/data/all_patches.json'\nall_patch_list = read_json(all_patch_path)\nall_patch_list = [json.loads(patch) for patch in all_patch_list]\n\n# get the corresponding bug reports\nall_bug_path = '/Users/yichao/Desktop/code-analysis-tool/data/bug_reports.json'\nbug_report_list = read_json(all_bug_path)\nbug_report_list = [json.loads(bug) for bug in bug_report_list]\n\nbug_report_dict = {}\nfor bug_report in bug_report_list:\n    bug_id = bug_report['bug_id']\n    bug_report_dict[bug_id] = bug_report\n\nbug_report_list = []\nfor bug_report in all_bug_report_list:\n    bug_id = bug_report['bug_id']\n    bug_report_list.append(bug_report_dict[bug_id])\n\nbug_report_dict = dict(zip([bug['bug_id'] for bug in bug_report_list],\n                           [bug for bug in bug_report_list]))\n\nbug_id_list = list(bug_report_dict.keys())\nprint",
+      "patch_sha256": "b8b86c1bb7af6d4d9eb921bb946aa6984cfdd3ed9590179f05e4be519bbe6423",
+      "rank_score": -161,
+      "plan_ok": false,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.9106067765084201,
+      "top_p": 0.7997899744656741
+    }
+  ],
+  "candidate_count": 4,
+  "retrieved_examples": [
+    {
+      "id": "30",
+      "project_name": "pandas",
+      "buggy_line_content": "        if isinstance(new, np.ndarray) and len(new) == len(mask):",
+      "function": {
+        "function_name": "putmask",
+        "function_parent": "ExtensionBlock",
+        "function_before_start_line": 1590,
+        "function_before_end_line": 1608,
+        "function_after_start_line": 1590,
+        "function_after_end_line": 1608,
+        "function_before_token_count": 116,
+        "function_after_token_count": 120,
+        "function_before": "def putmask(self, mask, new, inplace: bool=False, axis: int=0, transpose: bool=False) -> List['Block']:\n    \"\"\"\n        See Block.putmask.__doc__\n        \"\"\"\n    inplace = validate_bool_kwarg(inplace, 'inplace')\n    mask = _extract_bool_array(mask)\n    new_values = self.values if inplace else self.values.copy()\n    if isinstance(new, np.ndarray) and len(new) == len(mask):\n        new = new[mask]\n    mask = _safe_reshape(mask, new_values.shape)\n    new_values[mask] = new\n    return [self.make_block(values=new_values)]",
+        "function_after": "def putmask(self, mask, new, inplace: bool=False, axis: int=0, transpose: bool=False) -> List['Block']:\n    \"\"\"\n        See Block.putmask.__doc__\n        \"\"\"\n    inplace = validate_bool_kwarg(inplace, 'inplace')\n    mask = _extract_bool_array(mask)\n    new_values = self.values if inplace else self.values.copy()\n    if isinstance(new, (np.ndarray, ExtensionArray)) and len(new) == len(mask):\n        new = new[mask]\n    mask = _safe_reshape(mask, new_values.shape)\n    new_values[mask] = new\n    return [self.make_block(values=new_values)]"
+      },
+      "file_name": "blocks.py",
+      "file_path": "pandas/core/internals/blocks.py",
+      "score_reranked": 0.7443298853722843
+    },
+    {
+      "id": "39",
+      "project_name": "pandas",
+      "buggy_line_content": "            except (TypeError, ValueError):",
+      "function": {
+        "function_name": "_try_convert_data",
+        "function_parent": "Parser",
+        "function_before_start_line": 886,
+        "function_before_end_line": 958,
+        "function_after_start_line": 886,
+        "function_after_end_line": 958,
+        "function_before_token_count": 277,
+        "function_after_token_count": 279,
+        "function_before": "def _try_convert_data(self, name, data, use_dtypes=True, convert_dates=True):\n    \"\"\"\n        Try to parse a ndarray like into a column by inferring dtype.\n        \"\"\"\n    if use_dtypes:\n        if not self.dtype:\n            return (data, False)\n        elif self.dtype is True:\n            pass\n        else:\n            dtype = self.dtype.get(name) if isinstance(self.dtype, dict) else self.dtype\n            if dtype is not None:\n                try:\n                    dtype = np.dtype(dtype)\n                    return (data.astype(dtype), True)\n                except (TypeError, ValueError):\n                    return (data, False)\n    if convert_dates:\n        new_data, result = self._try_convert_to_date(data)\n        if result:\n            return (new_data, True)\n    result = False\n    if data.dtype == 'object':\n        try:\n            data = data.astype('float64')\n            result = True\n        except (TypeError, ValueError):\n            pass\n    if data.dtype.kind == 'f':\n        if data.dtype != 'float64':\n            try:\n                data = data.astype('float64')\n                result = True\n            except (TypeError, ValueError):\n                pass\n    if len(data) and (data.dtype == 'float' or data.dtype == 'object'):\n        try:\n            new_data = data.astype('int64')\n            if (new_data == data).all():\n                data = new_data\n                result = True\n        except (TypeError, ValueError):\n            pass\n    if data.dtype == 'int':\n        try:\n            data = data.astype('int64')\n            result = True\n        except (TypeError, ValueError):\n            pass\n    return (data, result)",
+        "function_after": "def _try_convert_data(self, name, data, use_dtypes=True, convert_dates=True):\n    \"\"\"\n        Try to parse a ndarray like into a column by inferring dtype.\n        \"\"\"\n    if use_dtypes:\n        if not self.dtype:\n            return (data, False)\n        elif self.dtype is True:\n            pass\n        else:\n            dtype = self.dtype.get(name) if isinstance(self.dtype, dict) else self.dtype\n            if dtype is not None:\n                try:\n                    dtype = np.dtype(dtype)\n                    return (data.astype(dtype), True)\n                except (TypeError, ValueError):\n                    return (data, False)\n    if convert_dates:\n        new_data, result = self._try_convert_to_date(data)\n        if result:\n            return (new_data, True)\n    result = False\n    if data.dtype == 'object':\n        try:\n            data = data.astype('float64')\n            result = True\n        except (TypeError, ValueError):\n            pass\n    if data.dtype.kind == 'f':\n        if data.dtype != 'float64':\n            try:\n                data = data.astype('float64')\n                result = True\n            except (TypeError, ValueError):\n                pass\n    if len(data) and (data.dtype == 'float' or data.dtype == 'object'):\n        try:\n            new_data = data.astype('int64')\n            if (new_data == data).all():\n                data = new_data\n                result = True\n        except (TypeError, ValueError, OverflowError):\n            pass\n    if data.dtype == 'int':\n        try:\n            data = data.astype('int64')\n            result = True\n        except (TypeError, ValueError):\n            pass\n    return (data, result)"
+      },
+      "file_name": "_json.py",
+      "file_path": "pandas/io/json/_json.py",
+      "score_reranked": 0.7430236733812445
+    },
+    {
+      "id": "32",
+      "project_name": "pandas",
+      "buggy_line_content": "            except (ValueError, OverflowError):",
+      "function": {
+        "function_name": "_try_convert_to_date",
+        "function_parent": "Parser",
+        "function_before_start_line": 953,
+        "function_before_end_line": 988,
+        "function_after_start_line": 953,
+        "function_after_end_line": 988,
+        "function_before_token_count": 154,
+        "function_after_token_count": 156,
+        "function_before": "def _try_convert_to_date(self, data):\n    \"\"\"\n        Try to parse a ndarray like into a date column.\n\n        Try to coerce object in epoch/iso formats and integer/float in epoch\n        formats. Return a boolean if parsing was successful.\n        \"\"\"\n    if not len(data):\n        return (data, False)\n    new_data = data\n    if new_data.dtype == 'object':\n        try:\n            new_data = data.astype('int64')\n        except (TypeError, ValueError, OverflowError):\n            pass\n    if issubclass(new_data.dtype.type, np.number):\n        in_range = isna(new_data._values) | (new_data > self.min_stamp) | (new_data._values == iNaT)\n        if not in_range.all():\n            return (data, False)\n    date_units = (self.date_unit,) if self.date_unit else self._STAMP_UNITS\n    for date_unit in date_units:\n        try:\n            new_data = to_datetime(new_data, errors='raise', unit=date_unit)\n        except (ValueError, OverflowError):\n            continue\n        return (new_data, True)\n    return (data, False)",
+        "function_after": "def _try_convert_to_date(self, data):\n    \"\"\"\n        Try to parse a ndarray like into a date column.\n\n        Try to coerce object in epoch/iso formats and integer/float in epoch\n        formats. Return a boolean if parsing was successful.\n        \"\"\"\n    if not len(data):\n        return (data, False)\n    new_data = data\n    if new_data.dtype == 'object':\n        try:\n            new_data = data.astype('int64')\n        except (TypeError, ValueError, OverflowError):\n            pass\n    if issubclass(new_data.dtype.type, np.number):\n        in_range = isna(new_data._values) | (new_data > self.min_stamp) | (new_data._values == iNaT)\n        if not in_range.all():\n            return (data, False)\n    date_units = (self.date_unit,) if self.date_unit else self._STAMP_UNITS\n    for date_unit in date_units:\n        try:\n            new_data = to_datetime(new_data, errors='raise', unit=date_unit)\n        except (ValueError, OverflowError, TypeError):\n            continue\n        return (new_data, True)\n    return (data, False)"
+      },
+      "file_name": "_json.py",
+      "file_path": "pandas/io/json/_json.py",
+      "score_reranked": 0.703625895318479
+    },
+    {
+      "id": "45",
+      "project_name": "pandas",
+      "buggy_line_content": "    elif isinstance(obj, (ABCSeries, np.ndarray, ABCIndexClass)):",
+      "function": {
+        "function_name": "_isna_old",
+        "function_parent": "missing.py",
+        "function_before_start_line": 160,
+        "function_before_end_line": 188,
+        "function_after_start_line": 160,
+        "function_after_end_line": 188,
+        "function_before_token_count": 133,
+        "function_after_token_count": 135,
+        "function_before": "def _isna_old(obj):\n    \"\"\"\n    Detect missing values, treating None, NaN, INF, -INF as null.\n\n    Parameters\n    ----------\n    arr: ndarray or object value\n\n    Returns\n    -------\n    boolean ndarray or boolean\n    \"\"\"\n    if is_scalar(obj):\n        return libmissing.checknull_old(obj)\n    elif isinstance(obj, ABCMultiIndex):\n        raise NotImplementedError('isna is not defined for MultiIndex')\n    elif isinstance(obj, type):\n        return False\n    elif isinstance(obj, (ABCSeries, np.ndarray, ABCIndexClass)):\n        return _isna_ndarraylike_old(obj)\n    elif isinstance(obj, ABCGeneric):\n        return obj._constructor(obj._data.isna(func=_isna_old))\n    elif isinstance(obj, list):\n        return _isna_ndarraylike_old(np.asarray(obj, dtype=object))\n    elif hasattr(obj, '__array__'):\n        return _isna_ndarraylike_old(np.asarray(obj))\n    else:\n        return obj is None",
+        "function_after": "def _isna_old(obj):\n    \"\"\"\n    Detect missing values, treating None, NaN, INF, -INF as null.\n\n    Parameters\n    ----------\n    arr: ndarray or object value\n\n    Returns\n    -------\n    boolean ndarray or boolean\n    \"\"\"\n    if is_scalar(obj):\n        return libmissing.checknull_old(obj)\n    elif isinstance(obj, ABCMultiIndex):\n        raise NotImplementedError('isna is not defined for MultiIndex')\n    elif isinstance(obj, type):\n        return False\n    elif isinstance(obj, (ABCSeries, np.ndarray, ABCIndexClass, ABCExtensionArray)):\n        return _isna_ndarraylike_old(obj)\n    elif isinstance(obj, ABCGeneric):\n        return obj._constructor(obj._data.isna(func=_isna_old))\n    elif isinstance(obj, list):\n        return _isna_ndarraylike_old(np.asarray(obj, dtype=object))\n    elif hasattr(obj, '__array__'):\n        return _isna_ndarraylike_old(np.asarray(obj))\n    else:\n        return obj is None"
+      },
+      "file_name": "missing.py",
+      "file_path": "pandas/core/dtypes/missing.py",
+      "score_reranked": 0.614217517587183
+    },
+    {
+      "id": "28",
+      "project_name": "scrapy",
+      "buggy_line_content": "        if ':' not in self._url:",
+      "function": {
+        "function_name": "_set_url",
+        "function_parent": "Request",
+        "function_before_start_line": 62,
+        "function_before_end_line": 70,
+        "function_after_start_line": 62,
+        "function_after_end_line": 70,
+        "function_before_token_count": 65,
+        "function_after_token_count": 79,
+        "function_before": "def _set_url(self, url):\n    if not isinstance(url, six.string_types):\n        raise TypeError('Request url must be str or unicode, got %s:' % type(url).__name__)\n    s = safe_url_string(url, self.encoding)\n    self._url = escape_ajax(s)\n    if ':' not in self._url:\n        raise ValueError('Missing scheme in request url: %s' % self._url)",
+        "function_after": "def _set_url(self, url):\n    if not isinstance(url, six.string_types):\n        raise TypeError('Request url must be str or unicode, got %s:' % type(url).__name__)\n    s = safe_url_string(url, self.encoding)\n    self._url = escape_ajax(s)\n    if '://' not in self._url and (not self._url.startswith('data:')):\n        raise ValueError('Missing scheme in request url: %s' % self._url)"
+      },
+      "file_name": "__init__.py",
+      "file_path": "scrapy/http/request/__init__.py",
+      "score_reranked": 0.6081183406359078
+    }
+  ],
+  "diffusion_plan": [
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "GuardAdd",
+          "node": 109
+        },
+        {
+          "op": "GuardAdd",
+          "node": 38
+        },
+        {
+          "op": "Replace",
+          "node": 9
+        },
+        {
+          "op": "GuardAdd",
+          "node": 64
+        },
+        {
+          "op": "Replace",
+          "node": 8
+        },
+        {
+          "op": "Replace",
+          "node": 109
+        },
+        {
+          "op": "Replace",
+          "node": 110
+        },
+        {
+          "op": "Replace",
+          "node": 38
+        },
+        {
+          "op": "Replace",
+          "node": 59
+        },
+        {
+          "op": "GuardAdd",
+          "node": 9
+        },
+        {
+          "op": "Replace",
+          "node": 64
+        }
+      ],
+      "score": 17.036363634905786
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 110
+        },
+        {
+          "op": "Replace",
+          "node": 38
+        },
+        {
+          "op": "GuardAdd",
+          "node": 9
+        },
+        {
+          "op": "Replace",
+          "node": 9
+        },
+        {
+          "op": "Replace",
+          "node": 35
+        },
+        {
+          "op": "GuardAdd",
+          "node": 38
+        },
+        {
+          "op": "Replace",
+          "node": 37
+        },
+        {
+          "op": "GuardAdd",
+          "node": 8
+        }
+      ],
+      "score": 16.945454544186777
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 109
+        },
+        {
+          "op": "Replace",
+          "node": 38
+        },
+        {
+          "op": "GuardAdd",
+          "node": 35
+        },
+        {
+          "op": "InsertBefore",
+          "node": 38
+        },
+        {
+          "op": "GuardAdd",
+          "node": 9
+        },
+        {
+          "op": "Replace",
+          "node": 64
+        },
+        {
+          "op": "Replace",
+          "node": 9
+        },
+        {
+          "op": "Replace",
+          "node": 37
+        },
+        {
+          "op": "Replace",
+          "node": 8
+        },
+        {
+          "op": "Delete",
+          "node": 9
+        }
+      ],
+      "score": 16.94545454400496
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "GuardAdd",
+          "node": 9
+        },
+        {
+          "op": "GuardAdd",
+          "node": 35
+        },
+        {
+          "op": "Delete",
+          "node": 9
+        },
+        {
+          "op": "Replace",
+          "node": 37
+        },
+        {
+          "op": "Replace",
+          "node": 59
+        },
+        {
+          "op": "GuardAdd",
+          "node": 8
+        },
+        {
+          "op": "Replace",
+          "node": 38
+        },
+        {
+          "op": "GuardAdd",
+          "node": 110
+        },
+        {
+          "op": "Replace",
+          "node": 109
+        },
+        {
+          "op": "Replace",
+          "node": 8
+        },
+        {
+          "op": "Replace",
+          "node": 9
+        }
+      ],
+      "score": 16.927272725824793
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 110
+        },
+        {
+          "op": "Replace",
+          "node": 38
+        },
+        {
+          "op": "Replace",
+          "node": 64
+        },
+        {
+          "op": "Replace",
+          "node": 8
+        },
+        {
+          "op": "InsertBefore",
+          "node": 9
+        },
+        {
+          "op": "Replace",
+          "node": 37
+        },
+        {
+          "op": "Replace",
+          "node": 35
+        },
+        {
+          "op": "GuardAdd",
+          "node": 9
+        },
+        {
+          "op": "InsertBefore",
+          "node": 38
+        },
+        {
+          "op": "GuardAdd",
+          "node": 110
+        }
+      ],
+      "score": 16.88181818037438
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "GuardAdd",
+          "node": 9
+        },
+        {
+          "op": "Replace",
+          "node": 8
+        },
+        {
+          "op": "Replace",
+          "node": 38
+        },
+        {
+          "op": "Replace",
+          "node": 9
+        },
+        {
+          "op": "Replace",
+          "node": 110
+        },
+        {
+          "op": "Replace",
+          "node": 37
+        },
+        {
+          "op": "Replace",
+          "node": 64
+        },
+        {
+          "op": "Delete",
+          "node": 110
+        }
+      ],
+      "score": 16.581818180583472
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 9
+        },
+        {
+          "op": "Replace",
+          "node": 8
+        },
+        {
+          "op": "GuardAdd",
+          "node": 8
+        },
+        {
+          "op": "Delete",
+          "node": 8
+        },
+        {
+          "op": "GuardAdd",
+          "node": 64
+        },
+        {
+          "op": "GuardAdd",
+          "node": 9
+        },
+        {
+          "op": "Replace",
+          "node": 110
+        },
+        {
+          "op": "GuardAdd",
+          "node": 38
+        },
+        {
+          "op": "Replace",
+          "node": 38
+        }
+      ],
+      "score": 16.472727271320664
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 38
+        },
+        {
+          "op": "Replace",
+          "node": 109
+        },
+        {
+          "op": "Replace",
+          "node": 37
+        },
+        {
+          "op": "Replace",
+          "node": 9
+        },
+        {
+          "op": "Replace",
+          "node": 110
+        },
+        {
+          "op": "Replace",
+          "node": 8
+        },
+        {
+          "op": "GuardAdd",
+          "node": 9
+        },
+        {
+          "op": "GuardAdd",
+          "node": 109
+        }
+      ],
+      "score": 16.23636363516033
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 9
+        },
+        {
+          "op": "Delete",
+          "node": 9
+        },
+        {
+          "op": "Replace",
+          "node": 110
+        },
+        {
+          "op": "Replace",
+          "node": 63
+        },
+        {
+          "op": "Replace",
+          "node": 37
+        },
+        {
+          "op": "GuardAdd",
+          "node": 37
+        },
+        {
+          "op": "Replace",
+          "node": 38
+        },
+        {
+          "op": "InsertBefore",
+          "node": 8
+        }
+      ],
+      "score": 16.06363636244876
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 38
+        },
+        {
+          "op": "GuardAdd",
+          "node": 63
+        },
+        {
+          "op": "GuardAdd",
+          "node": 9
+        },
+        {
+          "op": "Replace",
+          "node": 8
+        },
+        {
+          "op": "Replace",
+          "node": 63
+        },
+        {
+          "op": "Replace",
+          "node": 35
+        },
+        {
+          "op": "GuardAdd",
+          "node": 38
+        },
+        {
+          "op": "InsertAfter",
+          "node": 8
+        },
+        {
+          "op": "Replace",
+          "node": 109
+        },
+        {
+          "op": "GuardAdd",
+          "node": 110
+        },
+        {
+          "op": "Replace",
+          "node": 110
+        }
+      ],
+      "score": 16.009090907726446
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 37
+        },
+        {
+          "op": "Replace",
+          "node": 9
+        },
+        {
+          "op": "Replace",
+          "node": 8
+        },
+        {
+          "op": "GuardAdd",
+          "node": 8
+        },
+        {
+          "op": "Replace",
+          "node": 38
+        },
+        {
+          "op": "Delete",
+          "node": 9
+        },
+        {
+          "op": "GuardAdd",
+          "node": 9
+        }
+      ],
+      "score": 15.999999998818183
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 110
+        },
+        {
+          "op": "Replace",
+          "node": 38
+        },
+        {
+          "op": "InsertAfter",
+          "node": 37
+        },
+        {
+          "op": "Replace",
+          "node": 9
+        },
+        {
+          "op": "GuardAdd",
+          "node": 110
+        },
+        {
+          "op": "Replace",
+          "node": 37
+        },
+        {
+          "op": "Replace",
+          "node": 8
+        },
+        {
+          "op": "GuardAdd",
+          "node": 35
+        }
+      ],
+      "score": 15.727272726115704
+    }
+  ],
+  "static_analysis_nodes": [
+    {
+      "line": 17,
+      "line_absolute": 158,
+      "node_id": 38,
+      "node_id_local": 25,
+      "type": "Call",
+      "code": "cls._simple_new(tdarr, name=name)",
+      "distance_to_buggy": 6,
+      "context": "  14:           else:\n  15:               return data._shallow_copy()\n  16:       tdarr = TimedeltaArray._from_sequence(data, freq=freq, unit=unit, dtype=dtype, copy=copy)\n  17:->     return cls._simple_new(tdarr, name=name)",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Attribute",
+          "value": {
+            "_type": "Name"
+          },
+          "attr": "_simple_new",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [
+          {
+            "_type": "Name",
+            "id": "tdarr",
+            "ctx": {
+              "_type": "Load"
+            }
+          }
+        ],
+        "keywords": [
+          {
+            "_type": "keyword",
+            "arg": "name",
+            "value": {
+              "_type": "Name"
+            }
+          }
+        ]
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": 36.0
+    },
+    {
+      "line": 17,
+      "line_absolute": 158,
+      "node_id": 9,
+      "node_id_local": 24,
+      "type": "Return",
+      "code": "return cls._simple_new(tdarr, name=name)",
+      "distance_to_buggy": 6,
+      "context": "  14:           else:\n  15:               return data._shallow_copy()\n  16:       tdarr = TimedeltaArray._from_sequence(data, freq=freq, unit=unit, dtype=dtype, copy=copy)\n  17:->     return cls._simple_new(tdarr, name=name)",
+      "ast_subtree_json": {
+        "_type": "Return",
+        "value": {
+          "_type": "Call",
+          "func": {
+            "_type": "Attribute"
+          },
+          "args": [
+            {
+              "_type": "Name"
+            }
+          ],
+          "keywords": [
+            {
+              "_type": "keyword"
+            }
+          ]
+        }
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": 38.0
+    },
+    {
+      "line": 16,
+      "line_absolute": 157,
+      "node_id": 37,
+      "node_id_local": 23,
+      "type": "Call",
+      "code": "TimedeltaArray._from_sequence(data, freq=freq, unit=unit, dtype=dtype, copy=copy)",
+      "distance_to_buggy": 7,
+      "context": "  13:               return data.copy()\n  14:           else:\n  15:               return data._shallow_copy()\n  16:->     tdarr = TimedeltaArray._from_sequence(data, freq=freq, unit=unit, dtype=dtype, copy=copy)\n  17:       return cls._simple_new(tdarr, name=name)",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Attribute",
+          "value": {
+            "_type": "Name"
+          },
+          "attr": "_from_sequence",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [
+          {
+            "_type": "Name",
+            "id": "data",
+            "ctx": {
+              "_type": "Load"
+            }
+          }
+        ],
+        "keywords": [
+          {
+            "_type": "keyword",
+            "arg": "freq",
+            "value": {
+              "_type": "Name"
+            }
+          },
+          {
+            "_type": "keyword",
+            "arg": "unit",
+            "value": {
+              "_type": "Name"
+            }
+          },
+          {
+            "_type": "keyword",
+            "arg": "dtype",
+            "value": {
+              "_type": "Name"
+            }
+          },
+          {
+            "_type": "keyword",
+            "arg": "copy",
+            "value": {
+              "_type": "Name"
+            }
+          }
+        ]
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": 46.0
+    },
+    {
+      "line": 16,
+      "line_absolute": 157,
+      "node_id": 8,
+      "node_id_local": 22,
+      "type": "Assign",
+      "code": "tdarr = TimedeltaArray._from_sequence(data, freq=freq, unit=unit, dtype=dtype, copy=copy)",
+      "distance_to_buggy": 7,
+      "context": "  13:               return data.copy()\n  14:           else:\n  15:               return data._shallow_copy()\n  16:->     tdarr = TimedeltaArray._from_sequence(data, freq=freq, unit=unit, dtype=dtype, copy=copy)\n  17:       return cls._simple_new(tdarr, name=name)",
+      "ast_subtree_json": {
+        "_type": "Assign",
+        "targets": [
+          {
+            "_type": "Name",
+            "id": "tdarr",
+            "ctx": {
+              "_type": "Store"
+            }
+          }
+        ],
+        "value": {
+          "_type": "Call",
+          "func": {
+            "_type": "Attribute"
+          },
+          "args": [
+            {
+              "_type": "Name"
+            }
+          ],
+          "keywords": [
+            {
+              "_type": "keyword"
+            },
+            {
+              "_type": "keyword"
+            },
+            {
+              "_type": "keyword"
+            },
+            {
+              "_type": "keyword"
+            }
+          ]
+        },
+        "type_comment": null
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": 47.0
+    },
+    {
+      "line": 15,
+      "line_absolute": 156,
+      "node_id": 110,
+      "node_id_local": 21,
+      "type": "Call",
+      "code": "data._shallow_copy()",
+      "distance_to_buggy": 8,
+      "context": "  12:           if copy:\n  13:               return data.copy()\n  14:           else:\n  15:->             return data._shallow_copy()\n  16:       tdarr = TimedeltaArray._from_sequence(data, freq=freq, unit=unit, dtype=dtype, copy=copy)\n  17:       return cls._simple_new(tdarr, name=name)",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Attribute",
+          "value": {
+            "_type": "Name"
+          },
+          "attr": "_shallow_copy",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [],
+        "keywords": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": 56.0
+    },
+    {
+      "line": 15,
+      "line_absolute": 156,
+      "node_id": 64,
+      "node_id_local": 20,
+      "type": "Return",
+      "code": "return data._shallow_copy()",
+      "distance_to_buggy": 8,
+      "context": "  12:           if copy:\n  13:               return data.copy()\n  14:           else:\n  15:->             return data._shallow_copy()\n  16:       tdarr = TimedeltaArray._from_sequence(data, freq=freq, unit=unit, dtype=dtype, copy=copy)\n  17:       return cls._simple_new(tdarr, name=name)",
+      "ast_subtree_json": {
+        "_type": "Return",
+        "value": {
+          "_type": "Call",
+          "func": {
+            "_type": "Attribute"
+          },
+          "args": [],
+          "keywords": []
+        }
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": 58.0
+    },
+    {
+      "line": 13,
+      "line_absolute": 154,
+      "node_id": 109,
+      "node_id_local": 19,
+      "type": "Call",
+      "code": "data.copy()",
+      "distance_to_buggy": 10,
+      "context": "  10:           return cls._simple_new(data, name=name, freq=freq)\n  11:       if isinstance(data, TimedeltaIndex) and freq is None and (name is None):\n  12:           if copy:\n  13:->             return data.copy()\n  14:           else:\n  15:               return data._shallow_copy()\n  16:       tdarr = TimedeltaArray._from_sequence(data, freq=freq, unit=unit, dtype=dtype, copy=copy)",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Attribute",
+          "value": {
+            "_type": "Name"
+          },
+          "attr": "copy",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [],
+        "keywords": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": 76.0
+    },
+    {
+      "line": 13,
+      "line_absolute": 154,
+      "node_id": 63,
+      "node_id_local": 18,
+      "type": "Return",
+      "code": "return data.copy()",
+      "distance_to_buggy": 10,
+      "context": "  10:           return cls._simple_new(data, name=name, freq=freq)\n  11:       if isinstance(data, TimedeltaIndex) and freq is None and (name is None):\n  12:           if copy:\n  13:->             return data.copy()\n  14:           else:\n  15:               return data._shallow_copy()\n  16:       tdarr = TimedeltaArray._from_sequence(data, freq=freq, unit=unit, dtype=dtype, copy=copy)",
+      "ast_subtree_json": {
+        "_type": "Return",
+        "value": {
+          "_type": "Call",
+          "func": {
+            "_type": "Attribute"
+          },
+          "args": [],
+          "keywords": []
+        }
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": 78.0
+    },
+    {
+      "line": 12,
+      "line_absolute": 153,
+      "node_id": 35,
+      "node_id_local": 17,
+      "type": "If",
+      "code": "if copy:\n    return data.copy()\nelse:\n    return data._shallow_copy()",
+      "distance_to_buggy": 11,
+      "context": "   9:               data = data.copy()\n  10:           return cls._simple_new(data, name=name, freq=freq)\n  11:       if isinstance(data, TimedeltaIndex) and freq is None and (name is None):\n  12:->         if copy:\n  13:               return data.copy()\n  14:           else:\n  15:               return data._shallow_copy()",
+      "ast_subtree_json": {
+        "_type": "If",
+        "test": {
+          "_type": "Name",
+          "id": "copy",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "body": [
+          {
+            "_type": "Return",
+            "value": {
+              "_type": "Call"
+            }
+          }
+        ],
+        "orelse": [
+          {
+            "_type": "Return",
+            "value": {
+              "_type": "Call"
+            }
+          }
+        ]
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": 87.0
+    },
+    {
+      "line": 11,
+      "line_absolute": 152,
+      "node_id": 59,
+      "node_id_local": 16,
+      "type": "Call",
+      "code": "isinstance(data, TimedeltaIndex)",
+      "distance_to_buggy": 12,
+      "context": "   8:           if copy:\n   9:               data = data.copy()\n  10:           return cls._simple_new(data, name=name, freq=freq)\n  11:->     if isinstance(data, TimedeltaIndex) and freq is None and (name is None):\n  12:           if copy:\n  13:               return data.copy()\n  14:           else:",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Name",
+          "id": "isinstance",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [
+          {
+            "_type": "Name",
+            "id": "data",
+            "ctx": {
+              "_type": "Load"
+            }
+          },
+          {
+            "_type": "Name",
+            "id": "TimedeltaIndex",
+            "ctx": {
+              "_type": "Load"
+            }
+          }
+        ],
+        "keywords": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": 96.0
+    }
+  ]
+}

@@ -1,0 +1,55 @@
+{
+  "run_role": "primary_v4_archived_rng",
+  "config": {
+    "seed": 42,
+    "hidden": 1024,
+    "nhead": 16,
+    "num_layers": 24,
+    "batch_size": 32,
+    "seq_len": 32,
+    "max_nodes": 1024,
+    "epochs": 80,
+    "patience": 8,
+    "num_workers": 8,
+    "validation_rng_policy": "archived_global_stochastic_no_reseed_no_fork",
+    "validation_noise_seed": null,
+    "checkpoint_selection": "strict_min_stochastic_validation_loss",
+    "optimizer": {
+      "name": "AdamW",
+      "lr": 0.0002,
+      "eps": 1e-08,
+      "weight_decay": 0.01
+    },
+    "scheduler": {
+      "name": "CosineAnnealingWarmRestarts",
+      "T_0": 10,
+      "T_mult": 2
+    }
+  },
+  "bundle_manifest_sha256": "43c5c1ea6ab043ff1fe7b55487c42b5fe9f7f00550db1c0d12bede50dc3f418e",
+  "manifest_sha256": "833df6f0749fbe8da77ef7a32c936fbdf8a72005f9418cc69c7a96dbb06ec09b",
+  "input_sha256": {
+    "trainer": "29d9c65f16ca9696c28779ddb5cf01007438082c8c3e96504f8133bf3e595af8",
+    "data": "2caf9218100070d65f8bc6edf2f1081f45d6092d8dc09bf3d1488444c27ed0f3",
+    "type_map": "a1ff78928e60a5d69bf1f0c7fc31b10959e49412d6008363c33f03d6426f3d77"
+  },
+  "trainer_sha256": "032cce9b01a3e6b0d861b42d82e496296244b0aac1eea471dfaba19542672ce8",
+  "execution": {
+    "device": "cuda",
+    "max_train_batches": null,
+    "max_validation_batches": null,
+    "image_id": "sha256:5791f8642d1b71d45d832e232250aeca6a9aeb99b89698dff3c1ca5eea7a9655",
+    "image_archive_sha256": "a8e959a3c14b133b1757daa3690600a06e892207797cf371af343ce46017db26"
+  },
+  "lineage": {
+    "schema": "planner_fresh_lineage_v2",
+    "kind": "fresh",
+    "parent_checkpoint": null,
+    "initial_state": {
+      "epoch": 0,
+      "global_step": 0,
+      "attempted_batches": 0,
+      "overflow_skips": 0
+    }
+  }
+}

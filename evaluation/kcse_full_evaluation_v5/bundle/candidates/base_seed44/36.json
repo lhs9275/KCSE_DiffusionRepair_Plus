@@ -1,0 +1,141 @@
+{
+  "bug_id": "36",
+  "seed": 44,
+  "arm": "base",
+  "candidates": [
+    {
+      "index": 0,
+      "patch_text": "def __init__(self, df, na_rep: str='', float_format: Optional[str]=None, cols: Optional[Sequence[Label]]=None, header: Union[Sequence[Label], bool]=True, index: bool=True, index_label: Optional[Union[Label, Sequence[Label]]]=None, merge_cells: bool=False, inf_rep: str='inf', style_converter: Optional[Callable]=None):\n    self.rowcounter = 0\n    self.na_rep = na_rep\n    if hasattr(df,'render'):\n        self.styler = df\n        df = df.data\n        if style_converter is None:\n            style_converter = CSSToExcelConverter()\n        self.style_converter = style_converter\n    else:\n        self.styler = None\n    if cols is not None:\n        if not len(Index(cols) & df.columns):\n            raise KeyError('passes columns are not ALL present dataframe')\n        if len(Index(cols) & df.columns)!= len(cols):\n            raise KeyError(\"Not all names specified in 'columns' are found\")\n        df = df[cols]\n    self.columns = df.columns\n    self.float_format = float_format\n    self.index = index\n    self.index_label = index_label\n    self.header = header\n    self.merge_cells = merge_cells\n    self.inf_rep = inf_rep",
+      "patch_sha256": "21f8cc0aa3a9c290bf10397e3f73a052ace09fdc7b15ebd6baf768973c62d7bb",
+      "rank_score": 233,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.9230891398700982,
+      "top_p": 0.8133577607283677
+    },
+    {
+      "index": 1,
+      "patch_text": "def __init__(self, df, na_rep: str='', float_format: Optional[str]=None, cols: Optional[Sequence[Label]]=None, header: Union[Sequence[Label], bool]=True, index: bool=True, index_label: Optional[Union[Label, Sequence[Label]]]=None, merge_cells: bool=False, inf_rep: str='inf', style_converter: Optional[Callable]=None):\n    self.rowcounter = 0\n    self.na_rep = na_rep\n    if hasattr(df,'render'):\n        self.styler = df\n        df = df.data\n        if style_converter is None:\n            style_converter = CSSToExcelConverter()\n        self.style_converter = style_converter\n    else:\n        self.styler = None\n    if cols is not None:\n        if not len(Index(cols) & df.columns):\n            raise KeyError('passes columns are not ALL present dataframe')\n        if len(Index(cols) & df.columns)!= len(cols):\n            raise KeyError(\"Not all names specified in 'columns' are found\")\n        self.df = df\n    else:\n        self.df = df\n    self.columns = self.df.columns\n    self.float_format = float_format\n    self.index = index\n    self.index_label = index_label\n    self.header = header\n    self.merge_cells = merge_cells\n    self.inf_rep = inf_rep",
+      "patch_sha256": "e584a261efd05eb42318d412dff63cbb254b6d95dd3c4895c06377137f087403",
+      "rank_score": 214,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7941462962722876,
+      "top_p": 0.8926828703403595
+    },
+    {
+      "index": 2,
+      "patch_text": "def __init__(self, df, na_rep: str='', float_format: Optional[str]=None, cols: Optional[Sequence[Label]]=None, header: Union[Sequence[Label], bool]=True, index: bool=True, index_label: Optional[Union[Label, Sequence[Label]]]=None, merge_cells: bool=False, inf_rep: str='inf', style_converter: Optional[Callable]=None):\n    self.rowcounter = 0\n    self.na_rep = na_rep\n    if hasattr(df,'render'):\n        self.styler = df\n        df = df.data\n        if style_converter is None:\n            style_converter = CSSToExcelConverter()\n        self.style_converter = style_converter\n    else:\n        self.styler = None\n        self.df = df\n    if cols is not None:\n        if not len(Index(cols) & df.columns):\n            raise KeyError('passes columns are not ALL present dataframe')\n        if len(Index(cols) & df.columns)!= len(cols):\n            raise KeyError(\"Not all names specified in 'columns' are found\")\n        self.df = df\n    self.columns = self.df.columns\n    self.float_format = float_format\n    self.index = index\n    self.index_label = index_label\n    self.header = header\n    self.merge_cells = merge_cells\n    self.inf_rep = inf_rep",
+      "patch_sha256": "c93f6e73e85d4f96a304dcc31699eeb73db044f1106f1630320d10f1858f5fb3",
+      "rank_score": 214,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7941462962722876,
+      "top_p": 0.8926828703403595
+    },
+    {
+      "index": 3,
+      "patch_text": "def __init__(self, df, na_rep: str='', float_format: Optional[str]=None, cols: Optional[Sequence[Label]]=None, header: Union[Sequence[Label], bool]=True, index: bool=True, index_label: Optional[Union[Label, Sequence[Label]]]=None, merge_cells: bool=False, inf_rep: str='inf', style_converter: Optional[Callable]=None):\n    self.rowcounter = 0\n    self.na_rep = na_rep\n    if hasattr(df,'render'):\n        self.styler = df\n        df = df.data\n        if style_converter is None:\n            style_converter = CSSToExcelConverter()\n        self.style_converter = style_converter\n    else:\n        self.styler = None\n    self.df = df.copy()  # <-- FIX HERE\n    if cols is not None:\n        if not len(Index(cols) & df.columns):\n            raise KeyError('passes columns are not ALL present dataframe')\n        if len(Index(cols) & df.columns)!= len(cols):\n            raise KeyError(\"Not all names specified in 'columns' are found\")\n        self.df = df\n    self.columns = self.df.columns\n    self.float_format = float_format\n    self.index = index\n    self.index_label = index_label\n    self.header = header\n    self.merge_cells = merge_cells\n    self.inf_rep = inf_rep",
+      "patch_sha256": "0f562c6fc9a6b015b3bace452aad05a9edc9b61a16f7730e161c38ef6293db4f",
+      "rank_score": 214,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.9230891398700982,
+      "top_p": 0.8133577607283677
+    },
+    {
+      "index": 4,
+      "patch_text": "def __init__(self, df, na_rep: str='', float_format: Optional[str]=None, cols: Optional[Sequence[Label]]=None, header: Union[Sequence[Label], bool]=True, index: bool=True, index_label: Optional[Union[Label, Sequence[Label]]]=None, merge_cells: bool=False, inf_rep: str='inf', style_converter: Optional[Callable]=None):\n    self.rowcounter = 0\n    self.na_rep = na_rep\n    if hasattr(df,'render'):\n        self.styler = df\n        df = df.data\n        if style_converter is None:\n            style_converter = CSSToExcelConverter()\n        self.style_converter = style_converter\n    else:\n        self.styler = None\n    if cols is not None:\n        if not len(Index(cols) & df.columns):\n            raise KeyError('passes columns are not ALL present dataframe')\n        if len(Index(cols) & df.columns)!= len(cols):\n            raise KeyError(\"Not all names specified in 'columns' are found\")\n        self.df = df[cols]\n    else:\n        self.df = df\n    self.columns = self.df.columns\n    self.float_format = float_format\n    self.index = index\n    self.index_label = index_label\n    self.header = header\n    self.merge_cells = merge_cells\n    self.inf_rep = inf_rep",
+      "patch_sha256": "7bd8fea97c2fed7f4e5e1552a8c45fab4e15c3e96c8fbc8da2f4300725015a04",
+      "rank_score": 214,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7793066012285085,
+      "top_p": 0.8741332515356355
+    },
+    {
+      "index": 5,
+      "patch_text": "def __init__(self, df, na_rep: str='', float_format: Optional[str]=None, cols: Optional[Sequence[Label]]=None, header: Union[Sequence[Label], bool]=True, index: bool=True, index_label: Optional[Union[Label, Sequence[Label]]]=None, merge_cells: bool=False, inf_rep: str='inf', style_converter: Optional[Callable]=None):\n    self.rowcounter = 0\n    self.na_rep = na_rep\n    if hasattr(df,'render'):\n        self.styler = df\n        df = df.data\n        if style_converter is None:\n            style_converter = CSSToExcelConverter()\n        self.style_converter = style_converter\n    else:\n        self.styler = None\n    if cols is not None:\n        if not len(Index(cols) & df.columns):\n            raise KeyError('passes columns are not ALL present dataframe')\n        if len(Index(cols) & df.columns)!= len(cols):\n            raise KeyError(\"Not all names specified in 'columns' are found\")\n        self.df = df\n    self.columns = self.df.columns\n    self.float_format = float_format\n    self.index = index\n    self.index_label = index_label\n    self.header = header\n    self.merge_cells = merge_cells\n    self.inf_rep = inf_rep",
+      "patch_sha256": "9a5424f12adfebd60aad8ac5934524b7e23decc6a241aa71b94be8405e029ab7",
+      "rank_score": 214,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7793066012285085,
+      "top_p": 0.8741332515356355
+    },
+    {
+      "index": 6,
+      "patch_text": "def __init__(self, df, na_rep: str='', float_format: Optional[str]=None, cols: Optional[Sequence[Label]]=None, header: Union[Sequence[Label], bool]=True, index: bool=True, index_label: Optional[Union[Label, Sequence[Label]]]=None, merge_cells: bool=False, inf_rep: str='inf', style_converter: Optional[Callable]=None):\n    self.rowcounter = 0\n    self.na_rep = na_rep\n    if hasattr(df,'render'):\n        self.styler = df\n        df = df.data\n        if style_converter is None:\n            style_converter = CSSToExcelConverter()\n        self.style_converter = style_converter\n    else:\n        self.styler = None\n    if cols is not None:\n        if not len(Index(cols) & df.columns):\n            raise KeyError('passes columns are not ALL present dataframe')\n        if len(Index(cols) & df.columns)!= len(cols):\n            raise KeyError(\"Not all names specified in 'columns' are found\")\n        self.df = df.loc[:, cols]\n    else:\n        self.df = df\n    self.columns = self.df.columns\n    self.float_format = float_format\n    self.index = index\n    self.index_label = index_label\n    self.header = header\n    self.merge_cells = merge_cells\n    self.inf_rep = inf_rep",
+      "patch_sha256": "c5c23691748bb67a72335de34e8a01d58138230f22d7d373b0f6c96c18d88c13",
+      "rank_score": 213,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.9230891398700982,
+      "top_p": 0.8133577607283677
+    },
+    {
+      "index": 7,
+      "patch_text": "def __init__(self, df, na_rep: str='', float_format: Optional[str]=None, cols: Optional[Sequence[Label]]=None, header: Union[Sequence[Label], bool]=True, index: bool=True, index_label: Optional[Union[Label, Sequence[Label]]]=None, merge_cells: bool=False, inf_rep: str='inf', style_converter: Optional[Callable]=None):\n    self.rowcounter = 0\n    self.na_rep = na_rep\n    if hasattr(df,'render'):\n        self.styler = df\n        df = df.data\n        if style_converter is None:\n            style_converter = CSSToExcelConverter()\n        self.style_converter = style_converter\n    else:\n        self.styler = None\n    if cols is not None:\n        if not len(Index(cols) & df.columns):\n            raise KeyError('passes columns are not ALL present dataframe')\n        if len(Index(cols) & df.columns)!= len(cols):\n            raise KeyError(\"Not all names specified in 'columns' are found\")\n        self.df = df[cols]\n    self.columns = self.df.columns\n    self.float_format = float_format\n    self.index = index\n    self.index_label = index_label\n    self.header = header\n    self.merge_cells = merge_cells\n    self.inf_rep = inf_rep",
+      "patch_sha256": "815fc51264ad51b0f524b5d05e2da570c014c0b3b28633f8bf89f21faa8b3ce8",
+      "rank_score": 204,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.0,
+      "top_p": 1.0
+    },
+    {
+      "index": 8,
+      "patch_text": "def __init__(self, df, na_rep: str='', float_format: Optional[str]=None, cols: Optional[Sequence[Label]]=None, header: Union[Sequence[Label], bool]=True, index: bool=True, index_label: Optional[Union[Label, Sequence[Label]]]=None, merge_cells: bool=False, inf_rep: str='inf', style_converter: Optional[Callable]=None):\n    self.rowcounter = 0\n    self.na_rep = na_rep\n    if hasattr(df,'render'):\n        self.styler = df\n        df = df.data\n        if style_converter is None:\n            style_converter = CSSToExcelConverter()\n        self.style_converter = style_converter\n    else:\n        self.styler = None\n    if cols is not None:\n        if not len(Index(cols) & df.columns):\n            raise KeyError('passes columns are not ALL present dataframe')\n        if len(Index(cols) & df.columns)!= len(cols):\n            raise KeyError(\"Not all names specified in 'columns' are found\")\n        self.df = df.loc[:, cols]\n    self.columns = self.df.columns\n    self.float_format = float_format\n    self.index = index\n    self.index_label = index_label\n    self.header = header\n    self.merge_cells = merge_cells\n    self.inf_rep = inf_rep",
+      "patch_sha256": "4b236e1a7ee607971d17c4eeeca5e994747629700ca4b6eab5488bb40315a965",
+      "rank_score": 204,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7941462962722876,
+      "top_p": 0.8926828703403595
+    },
+    {
+      "index": 9,
+      "patch_text": "def __init__(self, df, na_rep: str='', float_format: Optional[str]=None, cols: Optional[Sequence[Label]]=None, header: Union[Sequence[Label], bool]=True, index: bool=True, index_label: Optional[Union[Label, Sequence[Label]]]=None, merge_cells: bool=False, inf_rep: str='inf', style_converter: Optional[Callable]=None):\n    self.rowcounter = 0\n    self.na_rep = na_rep\n    if hasattr(df,'render'):\n        self.styler = df\n        df = df.data\n        if style_converter is None:\n            style_converter = CSSToExcelConverter()\n        self.style_converter = style_converter\n    else:\n        self.styler = None\n    self.df = df.loc[df.index[:], :]\n    self.columns = self.df.columns\n    self.float_format = float_format\n    self.index = index\n    self.index_label = index_label\n    self.header = header\n    self.merge_cells = merge_cells\n    self.inf_rep = inf_rep",
+      "patch_sha256": "75a4bb4303cc9742dd4eacc8dd3de26f1392babc5dc5fc39d025ca580aeea013",
+      "rank_score": 163,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7941462962722876,
+      "top_p": 0.8926828703403595
+    }
+  ],
+  "candidate_count": 10,
+  "retrieved_examples": [],
+  "diffusion_plan": [],
+  "static_analysis_nodes": []
+}

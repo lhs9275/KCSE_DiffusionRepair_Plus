@@ -1,0 +1,975 @@
+{
+  "bug_id": "53",
+  "seed": 43,
+  "arm": "full",
+  "candidates": [
+    {
+      "index": 0,
+      "patch_text": "def _read_body(self, code, headers, delegate):\n    if 'Content-Length' in headers:\n        if 'Transfer-Encoding' in headers:\n            raise httputil.HTTPInputError('Response with both Transfer-Encoding and Content-Length')\n        if ',' in headers['Content-Length']:\n            pieces = re.split(',\\\\s*', headers['Content-Length'])\n            if any((i!= pieces[0] for i in pieces)):\n                raise httputil.HTTPInputError('Multiple unequal Content-Lengths: %r' % headers['Content-Length'])\n            headers['Content-Length'] = pieces[0]\n        try:\n            content_length = int(headers['Content-Length'])\n        except ValueError:\n            raise httputil.HTTPInputError('Only integer Content-Length is allowed: %s' % headers['Content-Length'])\n        if content_length > self._max_body_size:\n            raise httputil.HTTPInputError('Content-Length too long')\n    else:\n        content_length = None\n    if code == 204:\n        if 'Transfer-Encoding' in headers or content_length not in (None, 0):\n            raise httputil.HTTPInputError('Response with code %d should not have body' % code)\n        content_length = 0\n    if content_length is not None:\n        return self._read_fixed_body(content_length, delegate)\n    if self.is_client:\n        return self._read_body_until_close(delegate)\n    return None",
+      "patch_sha256": "7674e1515db7efdc7faa5e383cd833cfe4808416528ae5854f8df4d6a0c8073a",
+      "rank_score": 252,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.9198728361131365,
+      "top_p": 0.8098617783838441
+    },
+    {
+      "index": 1,
+      "patch_text": "def _read_body(self, code, headers, delegate):\n    if 'Content-Length' in headers:\n        if 'Transfer-Encoding' in headers:\n            raise httputil.HTTPInputError('Response with both Transfer-Encoding and Content-Length')\n        if ',' in headers['Content-Length']:\n            pieces = re.split(',\\\\s*', headers['Content-Length'])\n            if any((i!= pieces[0] for i in pieces)):\n                raise httputil.HTTPInputError('Multiple unequal Content-Lengths: %r' % headers['Content-Length'])\n            headers['Content-Length'] = pieces[0]\n        try:\n            content_length = int(headers['Content-Length'])\n        except ValueError:\n            raise httputil.HTTPInputError('Only integer Content-Length is allowed: %s' % headers['Content-Length'])\n        if content_length > self._max_body_size:\n            raise httputil.HTTPInputError('Content-Length too long')\n    else:\n        content_length = None\n    if code == 204:\n        if 'Transfer-Encoding' in headers or content_length not in (None, 0):\n            raise httputil.HTTPInputError('Response with code %d should not have body' % code)\n        content_length = 0\n    if content_length is not None:\n        return self._read_fixed_body(content_length, delegate)\n    if 'Transfer-Encoding' in headers:\n        if headers['Transfer-Encoding'] == 'chunked':\n            return self._read_chunked_body(delegate)\n    if self.is_client:\n        return self._read_body_until_close(delegate)\n    return None\n\n##original\ndef _read_body(self, code, headers, delegate):\n    if 'Content-Length' in headers:\n        if 'Transfer-Encoding' in headers:\n            raise httputil.HTTPInputError('Response with both Transfer-Encoding and Content-Length')\n        if ',' in headers['Content-Length']:\n            pieces = re.split(',\\\\s*', headers['Content-Length'])\n            if any((i!= pieces[0] for i in pieces)):\n                raise httputil.HTTPInputError('Multiple unequal Content-Lengths: %r' % headers['Content-Length'])\n            headers['Content-Length'] = pieces[0]\n        try:\n            content_length = int(headers['Content-Length'])\n        except ValueError:\n            raise httputil.HTTPInputError('Only integer Content-Length is allowed: %s' % headers['Content-Length'])\n        if content_length > self._max_body_size:\n            raise httputil.HTTPInputError('Content-Length too long')\n    else:\n        content_length = None\n    if code == 204:\n        if 'Transfer-Encoding' in headers or content_length not in (None, 0):\n            raise httputil.HTTPInputError('Response with code %d should not have body' % code)\n        content",
+      "patch_sha256": "e3054b1beb7500b4f0714cb0384008c87a354a860ccae43d571c9ae7a006a66c",
+      "rank_score": 211,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.934442110146087,
+      "top_p": 0.8256979458109642
+    }
+  ],
+  "candidate_count": 2,
+  "retrieved_examples": [
+    {
+      "id": "28",
+      "project_name": "scrapy",
+      "buggy_line_content": "        if ':' not in self._url:",
+      "function": {
+        "function_name": "_set_url",
+        "function_parent": "Request",
+        "function_before_start_line": 62,
+        "function_before_end_line": 70,
+        "function_after_start_line": 62,
+        "function_after_end_line": 70,
+        "function_before_token_count": 65,
+        "function_after_token_count": 79,
+        "function_before": "def _set_url(self, url):\n    if not isinstance(url, six.string_types):\n        raise TypeError('Request url must be str or unicode, got %s:' % type(url).__name__)\n    s = safe_url_string(url, self.encoding)\n    self._url = escape_ajax(s)\n    if ':' not in self._url:\n        raise ValueError('Missing scheme in request url: %s' % self._url)",
+        "function_after": "def _set_url(self, url):\n    if not isinstance(url, six.string_types):\n        raise TypeError('Request url must be str or unicode, got %s:' % type(url).__name__)\n    s = safe_url_string(url, self.encoding)\n    self._url = escape_ajax(s)\n    if '://' not in self._url and (not self._url.startswith('data:')):\n        raise ValueError('Missing scheme in request url: %s' % self._url)"
+      },
+      "file_name": "__init__.py",
+      "file_path": "scrapy/http/request/__init__.py",
+      "score_reranked": 0.4440683841897336
+    },
+    {
+      "id": "39",
+      "project_name": "pandas",
+      "buggy_line_content": "            except (TypeError, ValueError):",
+      "function": {
+        "function_name": "_try_convert_data",
+        "function_parent": "Parser",
+        "function_before_start_line": 886,
+        "function_before_end_line": 958,
+        "function_after_start_line": 886,
+        "function_after_end_line": 958,
+        "function_before_token_count": 277,
+        "function_after_token_count": 279,
+        "function_before": "def _try_convert_data(self, name, data, use_dtypes=True, convert_dates=True):\n    \"\"\"\n        Try to parse a ndarray like into a column by inferring dtype.\n        \"\"\"\n    if use_dtypes:\n        if not self.dtype:\n            return (data, False)\n        elif self.dtype is True:\n            pass\n        else:\n            dtype = self.dtype.get(name) if isinstance(self.dtype, dict) else self.dtype\n            if dtype is not None:\n                try:\n                    dtype = np.dtype(dtype)\n                    return (data.astype(dtype), True)\n                except (TypeError, ValueError):\n                    return (data, False)\n    if convert_dates:\n        new_data, result = self._try_convert_to_date(data)\n        if result:\n            return (new_data, True)\n    result = False\n    if data.dtype == 'object':\n        try:\n            data = data.astype('float64')\n            result = True\n        except (TypeError, ValueError):\n            pass\n    if data.dtype.kind == 'f':\n        if data.dtype != 'float64':\n            try:\n                data = data.astype('float64')\n                result = True\n            except (TypeError, ValueError):\n                pass\n    if len(data) and (data.dtype == 'float' or data.dtype == 'object'):\n        try:\n            new_data = data.astype('int64')\n            if (new_data == data).all():\n                data = new_data\n                result = True\n        except (TypeError, ValueError):\n            pass\n    if data.dtype == 'int':\n        try:\n            data = data.astype('int64')\n            result = True\n        except (TypeError, ValueError):\n            pass\n    return (data, result)",
+        "function_after": "def _try_convert_data(self, name, data, use_dtypes=True, convert_dates=True):\n    \"\"\"\n        Try to parse a ndarray like into a column by inferring dtype.\n        \"\"\"\n    if use_dtypes:\n        if not self.dtype:\n            return (data, False)\n        elif self.dtype is True:\n            pass\n        else:\n            dtype = self.dtype.get(name) if isinstance(self.dtype, dict) else self.dtype\n            if dtype is not None:\n                try:\n                    dtype = np.dtype(dtype)\n                    return (data.astype(dtype), True)\n                except (TypeError, ValueError):\n                    return (data, False)\n    if convert_dates:\n        new_data, result = self._try_convert_to_date(data)\n        if result:\n            return (new_data, True)\n    result = False\n    if data.dtype == 'object':\n        try:\n            data = data.astype('float64')\n            result = True\n        except (TypeError, ValueError):\n            pass\n    if data.dtype.kind == 'f':\n        if data.dtype != 'float64':\n            try:\n                data = data.astype('float64')\n                result = True\n            except (TypeError, ValueError):\n                pass\n    if len(data) and (data.dtype == 'float' or data.dtype == 'object'):\n        try:\n            new_data = data.astype('int64')\n            if (new_data == data).all():\n                data = new_data\n                result = True\n        except (TypeError, ValueError, OverflowError):\n            pass\n    if data.dtype == 'int':\n        try:\n            data = data.astype('int64')\n            result = True\n        except (TypeError, ValueError):\n            pass\n    return (data, result)"
+      },
+      "file_name": "_json.py",
+      "file_path": "pandas/io/json/_json.py",
+      "score_reranked": 0.42196241025813147
+    },
+    {
+      "id": "30",
+      "project_name": "pandas",
+      "buggy_line_content": "        if isinstance(new, np.ndarray) and len(new) == len(mask):",
+      "function": {
+        "function_name": "putmask",
+        "function_parent": "ExtensionBlock",
+        "function_before_start_line": 1590,
+        "function_before_end_line": 1608,
+        "function_after_start_line": 1590,
+        "function_after_end_line": 1608,
+        "function_before_token_count": 116,
+        "function_after_token_count": 120,
+        "function_before": "def putmask(self, mask, new, inplace: bool=False, axis: int=0, transpose: bool=False) -> List['Block']:\n    \"\"\"\n        See Block.putmask.__doc__\n        \"\"\"\n    inplace = validate_bool_kwarg(inplace, 'inplace')\n    mask = _extract_bool_array(mask)\n    new_values = self.values if inplace else self.values.copy()\n    if isinstance(new, np.ndarray) and len(new) == len(mask):\n        new = new[mask]\n    mask = _safe_reshape(mask, new_values.shape)\n    new_values[mask] = new\n    return [self.make_block(values=new_values)]",
+        "function_after": "def putmask(self, mask, new, inplace: bool=False, axis: int=0, transpose: bool=False) -> List['Block']:\n    \"\"\"\n        See Block.putmask.__doc__\n        \"\"\"\n    inplace = validate_bool_kwarg(inplace, 'inplace')\n    mask = _extract_bool_array(mask)\n    new_values = self.values if inplace else self.values.copy()\n    if isinstance(new, (np.ndarray, ExtensionArray)) and len(new) == len(mask):\n        new = new[mask]\n    mask = _safe_reshape(mask, new_values.shape)\n    new_values[mask] = new\n    return [self.make_block(values=new_values)]"
+      },
+      "file_name": "blocks.py",
+      "file_path": "pandas/core/internals/blocks.py",
+      "score_reranked": 0.3815851546882604
+    },
+    {
+      "id": "32",
+      "project_name": "pandas",
+      "buggy_line_content": "            except (ValueError, OverflowError):",
+      "function": {
+        "function_name": "_try_convert_to_date",
+        "function_parent": "Parser",
+        "function_before_start_line": 953,
+        "function_before_end_line": 988,
+        "function_after_start_line": 953,
+        "function_after_end_line": 988,
+        "function_before_token_count": 154,
+        "function_after_token_count": 156,
+        "function_before": "def _try_convert_to_date(self, data):\n    \"\"\"\n        Try to parse a ndarray like into a date column.\n\n        Try to coerce object in epoch/iso formats and integer/float in epoch\n        formats. Return a boolean if parsing was successful.\n        \"\"\"\n    if not len(data):\n        return (data, False)\n    new_data = data\n    if new_data.dtype == 'object':\n        try:\n            new_data = data.astype('int64')\n        except (TypeError, ValueError, OverflowError):\n            pass\n    if issubclass(new_data.dtype.type, np.number):\n        in_range = isna(new_data._values) | (new_data > self.min_stamp) | (new_data._values == iNaT)\n        if not in_range.all():\n            return (data, False)\n    date_units = (self.date_unit,) if self.date_unit else self._STAMP_UNITS\n    for date_unit in date_units:\n        try:\n            new_data = to_datetime(new_data, errors='raise', unit=date_unit)\n        except (ValueError, OverflowError):\n            continue\n        return (new_data, True)\n    return (data, False)",
+        "function_after": "def _try_convert_to_date(self, data):\n    \"\"\"\n        Try to parse a ndarray like into a date column.\n\n        Try to coerce object in epoch/iso formats and integer/float in epoch\n        formats. Return a boolean if parsing was successful.\n        \"\"\"\n    if not len(data):\n        return (data, False)\n    new_data = data\n    if new_data.dtype == 'object':\n        try:\n            new_data = data.astype('int64')\n        except (TypeError, ValueError, OverflowError):\n            pass\n    if issubclass(new_data.dtype.type, np.number):\n        in_range = isna(new_data._values) | (new_data > self.min_stamp) | (new_data._values == iNaT)\n        if not in_range.all():\n            return (data, False)\n    date_units = (self.date_unit,) if self.date_unit else self._STAMP_UNITS\n    for date_unit in date_units:\n        try:\n            new_data = to_datetime(new_data, errors='raise', unit=date_unit)\n        except (ValueError, OverflowError, TypeError):\n            continue\n        return (new_data, True)\n    return (data, False)"
+      },
+      "file_name": "_json.py",
+      "file_path": "pandas/io/json/_json.py",
+      "score_reranked": 0.3699062930607219
+    },
+    {
+      "id": "21",
+      "project_name": "youtube-dl",
+      "buggy_line_content": "        (?:0[xX][0-9a-fA-F]+|0+[0-7]+)(?:\\s*:)?|",
+      "function": {
+        "function_name": "js_to_json",
+        "function_parent": "utils.py",
+        "function_before_start_line": 1939,
+        "function_before_end_line": 1975,
+        "function_after_start_line": 1939,
+        "function_after_end_line": 1975,
+        "function_before_token_count": 19,
+        "function_after_token_count": 19,
+        "function_before": "def js_to_json(code):\n\n    def fix_kv(m):\n        v = m.group(0)\n        if v in ('true', 'false', 'null'):\n            return v\n        elif v.startswith('/*') or v == ',':\n            return ''\n        if v[0] in (\"'\", '\"'):\n            v = re.sub('(?s)\\\\\\\\.|\"', lambda m: {'\"': '\\\\\"', \"\\\\'\": \"'\", '\\\\\\n': '', '\\\\x': '\\\\u00'}.get(m.group(0), m.group(0)), v[1:-1])\n        INTEGER_TABLE = (('^0[xX][0-9a-fA-F]+', 16), ('^0+[0-7]+', 8))\n        for regex, base in INTEGER_TABLE:\n            im = re.match(regex, v)\n            if im:\n                i = int(im.group(0), base)\n                return '\"%d\":' % i if v.endswith(':') else '%d' % i\n        return '\"%s\"' % v\n    return re.sub('(?sx)\\n        \"(?:[^\"\\\\\\\\]*(?:\\\\\\\\\\\\\\\\|\\\\\\\\[\\'\"nurtbfx/\\\\n]))*[^\"\\\\\\\\]*\"|\\n        \\'(?:[^\\'\\\\\\\\]*(?:\\\\\\\\\\\\\\\\|\\\\\\\\[\\'\"nurtbfx/\\\\n]))*[^\\'\\\\\\\\]*\\'|\\n        /\\\\*.*?\\\\*/|,(?=\\\\s*[\\\\]}])|\\n        [a-zA-Z_][.a-zA-Z_0-9]*|\\n        (?:0[xX][0-9a-fA-F]+|0+[0-7]+)(?:\\\\s*:)?|\\n        [0-9]+(?=\\\\s*:)\\n        ', fix_kv, code)",
+        "function_after": "def js_to_json(code):\n\n    def fix_kv(m):\n        v = m.group(0)\n        if v in ('true', 'false', 'null'):\n            return v\n        elif v.startswith('/*') or v == ',':\n            return ''\n        if v[0] in (\"'\", '\"'):\n            v = re.sub('(?s)\\\\\\\\.|\"', lambda m: {'\"': '\\\\\"', \"\\\\'\": \"'\", '\\\\\\n': '', '\\\\x': '\\\\u00'}.get(m.group(0), m.group(0)), v[1:-1])\n        INTEGER_TABLE = (('^0[xX][0-9a-fA-F]+', 16), ('^0+[0-7]+', 8))\n        for regex, base in INTEGER_TABLE:\n            im = re.match(regex, v)\n            if im:\n                i = int(im.group(0), base)\n                return '\"%d\":' % i if v.endswith(':') else '%d' % i\n        return '\"%s\"' % v\n    return re.sub('(?sx)\\n        \"(?:[^\"\\\\\\\\]*(?:\\\\\\\\\\\\\\\\|\\\\\\\\[\\'\"nurtbfx/\\\\n]))*[^\"\\\\\\\\]*\"|\\n        \\'(?:[^\\'\\\\\\\\]*(?:\\\\\\\\\\\\\\\\|\\\\\\\\[\\'\"nurtbfx/\\\\n]))*[^\\'\\\\\\\\]*\\'|\\n        /\\\\*.*?\\\\*/|,(?=\\\\s*[\\\\]}])|\\n        [a-zA-Z_][.a-zA-Z_0-9]*|\\n        \\\\b(?:0[xX][0-9a-fA-F]+|0+[0-7]+)(?:\\\\s*:)?|\\n        [0-9]+(?=\\\\s*:)\\n        ', fix_kv, code)"
+      },
+      "file_name": "utils.py",
+      "file_path": "youtube_dl/utils.py",
+      "score_reranked": 0.36360288399733603
+    }
+  ],
+  "diffusion_plan": [
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 61
+        },
+        {
+          "op": "Replace",
+          "node": 27
+        },
+        {
+          "op": "GuardAdd",
+          "node": 8
+        },
+        {
+          "op": "InsertBefore",
+          "node": 27
+        },
+        {
+          "op": "GuardAdd",
+          "node": 7
+        },
+        {
+          "op": "GuardAdd",
+          "node": 27
+        },
+        {
+          "op": "Replace",
+          "node": 58
+        },
+        {
+          "op": "Replace",
+          "node": 8
+        },
+        {
+          "op": "Replace",
+          "node": 25
+        },
+        {
+          "op": "Replace",
+          "node": 7
+        },
+        {
+          "op": "Delete",
+          "node": 8
+        }
+      ],
+      "score": 20.254545452795043
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 61
+        },
+        {
+          "op": "Replace",
+          "node": 27
+        },
+        {
+          "op": "Replace",
+          "node": 58
+        },
+        {
+          "op": "Replace",
+          "node": 7
+        },
+        {
+          "op": "InsertBefore",
+          "node": 8
+        },
+        {
+          "op": "Replace",
+          "node": 25
+        },
+        {
+          "op": "Replace",
+          "node": 8
+        },
+        {
+          "op": "GuardAdd",
+          "node": 8
+        },
+        {
+          "op": "InsertBefore",
+          "node": 27
+        },
+        {
+          "op": "GuardAdd",
+          "node": 54
+        },
+        {
+          "op": "GuardAdd",
+          "node": 61
+        }
+      ],
+      "score": 19.65454545284959
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 61
+        },
+        {
+          "op": "Replace",
+          "node": 7
+        },
+        {
+          "op": "GuardAdd",
+          "node": 6
+        },
+        {
+          "op": "GuardAdd",
+          "node": 7
+        },
+        {
+          "op": "Replace",
+          "node": 27
+        },
+        {
+          "op": "Replace",
+          "node": 58
+        },
+        {
+          "op": "Replace",
+          "node": 25
+        },
+        {
+          "op": "InsertBefore",
+          "node": 58
+        },
+        {
+          "op": "Delete",
+          "node": 27
+        },
+        {
+          "op": "Replace",
+          "node": 55
+        },
+        {
+          "op": "Replace",
+          "node": 8
+        },
+        {
+          "op": "GuardAdd",
+          "node": 8
+        }
+      ],
+      "score": 19.399999998327274
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "GuardAdd",
+          "node": 8
+        },
+        {
+          "op": "Replace",
+          "node": 7
+        },
+        {
+          "op": "GuardAdd",
+          "node": 7
+        },
+        {
+          "op": "Replace",
+          "node": 27
+        },
+        {
+          "op": "Replace",
+          "node": 8
+        },
+        {
+          "op": "Replace",
+          "node": 61
+        },
+        {
+          "op": "Replace",
+          "node": 58
+        },
+        {
+          "op": "Delete",
+          "node": 61
+        },
+        {
+          "op": "Delete",
+          "node": 27
+        },
+        {
+          "op": "Replace",
+          "node": 25
+        }
+      ],
+      "score": 18.127272725715702
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 61
+        },
+        {
+          "op": "Replace",
+          "node": 27
+        },
+        {
+          "op": "GuardAdd",
+          "node": 8
+        },
+        {
+          "op": "Replace",
+          "node": 8
+        },
+        {
+          "op": "Replace",
+          "node": 7
+        },
+        {
+          "op": "GuardAdd",
+          "node": 27
+        },
+        {
+          "op": "Replace",
+          "node": 25
+        },
+        {
+          "op": "GuardAdd",
+          "node": 7
+        }
+      ],
+      "score": 17.67272727139339
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "GuardAdd",
+          "node": 8
+        },
+        {
+          "op": "Delete",
+          "node": 7
+        },
+        {
+          "op": "Replace",
+          "node": 25
+        },
+        {
+          "op": "GuardAdd",
+          "node": 7
+        },
+        {
+          "op": "Replace",
+          "node": 27
+        },
+        {
+          "op": "GuardAdd",
+          "node": 61
+        },
+        {
+          "op": "Replace",
+          "node": 61
+        },
+        {
+          "op": "Replace",
+          "node": 8
+        }
+      ],
+      "score": 17.381818180510745
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 61
+        },
+        {
+          "op": "Replace",
+          "node": 27
+        },
+        {
+          "op": "InsertAfter",
+          "node": 25
+        },
+        {
+          "op": "Replace",
+          "node": 8
+        },
+        {
+          "op": "GuardAdd",
+          "node": 61
+        },
+        {
+          "op": "Replace",
+          "node": 25
+        },
+        {
+          "op": "Replace",
+          "node": 7
+        },
+        {
+          "op": "GuardAdd",
+          "node": 8
+        }
+      ],
+      "score": 17.318181816880166
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 61
+        },
+        {
+          "op": "Replace",
+          "node": 55
+        },
+        {
+          "op": "Replace",
+          "node": 27
+        },
+        {
+          "op": "GuardAdd",
+          "node": 58
+        },
+        {
+          "op": "Replace",
+          "node": 8
+        },
+        {
+          "op": "GuardAdd",
+          "node": 61
+        },
+        {
+          "op": "GuardAdd",
+          "node": 7
+        },
+        {
+          "op": "GuardAdd",
+          "node": 8
+        },
+        {
+          "op": "Replace",
+          "node": 58
+        }
+      ],
+      "score": 16.727272725842976
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 7
+        },
+        {
+          "op": "Replace",
+          "node": 61
+        },
+        {
+          "op": "GuardAdd",
+          "node": 61
+        },
+        {
+          "op": "Replace",
+          "node": 27
+        },
+        {
+          "op": "Replace",
+          "node": 8
+        },
+        {
+          "op": "InsertAfter",
+          "node": 7
+        },
+        {
+          "op": "GuardAdd",
+          "node": 8
+        }
+      ],
+      "score": 16.518181816952893
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 7
+        },
+        {
+          "op": "Delete",
+          "node": 7
+        },
+        {
+          "op": "Replace",
+          "node": 61
+        },
+        {
+          "op": "Replace",
+          "node": 55
+        },
+        {
+          "op": "Replace",
+          "node": 25
+        },
+        {
+          "op": "Replace",
+          "node": 8
+        },
+        {
+          "op": "GuardAdd",
+          "node": 25
+        },
+        {
+          "op": "Replace",
+          "node": 27
+        },
+        {
+          "op": "InsertBefore",
+          "node": 7
+        },
+        {
+          "op": "Delete",
+          "node": 8
+        }
+      ],
+      "score": 16.37272727132975
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 8
+        },
+        {
+          "op": "Replace",
+          "node": 27
+        },
+        {
+          "op": "Delete",
+          "node": 61
+        },
+        {
+          "op": "Replace",
+          "node": 61
+        },
+        {
+          "op": "Replace",
+          "node": 7
+        },
+        {
+          "op": "Replace",
+          "node": 58
+        },
+        {
+          "op": "GuardAdd",
+          "node": 61
+        }
+      ],
+      "score": 15.89090908973719
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 27
+        },
+        {
+          "op": "GuardAdd",
+          "node": 55
+        },
+        {
+          "op": "GuardAdd",
+          "node": 7
+        },
+        {
+          "op": "Replace",
+          "node": 55
+        },
+        {
+          "op": "Replace",
+          "node": 8
+        },
+        {
+          "op": "GuardAdd",
+          "node": 27
+        },
+        {
+          "op": "InsertAfter",
+          "node": 7
+        },
+        {
+          "op": "Replace",
+          "node": 61
+        },
+        {
+          "op": "GuardAdd",
+          "node": 61
+        }
+      ],
+      "score": 15.772727271384298
+    }
+  ],
+  "static_analysis_nodes": [
+    {
+      "line": 28,
+      "line_absolute": 552,
+      "node_id": 8,
+      "node_id_local": 32,
+      "type": "Return",
+      "code": "return None",
+      "distance_to_buggy": 14,
+      "context": "  25:           return self._read_chunked_body(delegate)\n  26:       if self.is_client:\n  27:           return self._read_body_until_close(delegate)\n  28:->     return None",
+      "ast_subtree_json": {
+        "_type": "Return",
+        "value": {
+          "_type": "Constant",
+          "value": null,
+          "kind": null
+        }
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": 119.0
+    },
+    {
+      "line": 27,
+      "line_absolute": 551,
+      "node_id": 61,
+      "node_id_local": 31,
+      "type": "Call",
+      "code": "self._read_body_until_close(delegate)",
+      "distance_to_buggy": 15,
+      "context": "  24:       if headers.get('Transfer-Encoding') == 'chunked':\n  25:           return self._read_chunked_body(delegate)\n  26:       if self.is_client:\n  27:->         return self._read_body_until_close(delegate)\n  28:       return None",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Attribute",
+          "value": {
+            "_type": "Name"
+          },
+          "attr": "_read_body_until_close",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [
+          {
+            "_type": "Name",
+            "id": "delegate",
+            "ctx": {
+              "_type": "Load"
+            }
+          }
+        ],
+        "keywords": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": 126.0
+    },
+    {
+      "line": 27,
+      "line_absolute": 551,
+      "node_id": 27,
+      "node_id_local": 30,
+      "type": "Return",
+      "code": "return self._read_body_until_close(delegate)",
+      "distance_to_buggy": 15,
+      "context": "  24:       if headers.get('Transfer-Encoding') == 'chunked':\n  25:           return self._read_chunked_body(delegate)\n  26:       if self.is_client:\n  27:->         return self._read_body_until_close(delegate)\n  28:       return None",
+      "ast_subtree_json": {
+        "_type": "Return",
+        "value": {
+          "_type": "Call",
+          "func": {
+            "_type": "Attribute"
+          },
+          "args": [
+            {
+              "_type": "Name"
+            }
+          ],
+          "keywords": []
+        }
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": 128.0
+    },
+    {
+      "line": 26,
+      "line_absolute": 550,
+      "node_id": 7,
+      "node_id_local": 29,
+      "type": "If",
+      "code": "if self.is_client:\n    return self._read_body_until_close(delegate)",
+      "distance_to_buggy": 16,
+      "context": "  23:           return self._read_fixed_body(content_length, delegate)\n  24:       if headers.get('Transfer-Encoding') == 'chunked':\n  25:           return self._read_chunked_body(delegate)\n  26:->     if self.is_client:\n  27:           return self._read_body_until_close(delegate)\n  28:       return None",
+      "ast_subtree_json": {
+        "_type": "If",
+        "test": {
+          "_type": "Attribute",
+          "value": {
+            "_type": "Name"
+          },
+          "attr": "is_client",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "body": [
+          {
+            "_type": "Return",
+            "value": {
+              "_type": "Call"
+            }
+          }
+        ],
+        "orelse": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": 137.0
+    },
+    {
+      "line": 25,
+      "line_absolute": 549,
+      "node_id": 58,
+      "node_id_local": 28,
+      "type": "Call",
+      "code": "self._read_chunked_body(delegate)",
+      "distance_to_buggy": 17,
+      "context": "  22:       if content_length is not None:\n  23:           return self._read_fixed_body(content_length, delegate)\n  24:       if headers.get('Transfer-Encoding') == 'chunked':\n  25:->         return self._read_chunked_body(delegate)\n  26:       if self.is_client:\n  27:           return self._read_body_until_close(delegate)\n  28:       return None",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Attribute",
+          "value": {
+            "_type": "Name"
+          },
+          "attr": "_read_chunked_body",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [
+          {
+            "_type": "Name",
+            "id": "delegate",
+            "ctx": {
+              "_type": "Load"
+            }
+          }
+        ],
+        "keywords": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|system|>...",
+      "reranker_score": 146.0
+    },
+    {
+      "line": 25,
+      "line_absolute": 549,
+      "node_id": 25,
+      "node_id_local": 27,
+      "type": "Return",
+      "code": "return self._read_chunked_body(delegate)",
+      "distance_to_buggy": 17,
+      "context": "  22:       if content_length is not None:\n  23:           return self._read_fixed_body(content_length, delegate)\n  24:       if headers.get('Transfer-Encoding') == 'chunked':\n  25:->         return self._read_chunked_body(delegate)\n  26:       if self.is_client:\n  27:           return self._read_body_until_close(delegate)\n  28:       return None",
+      "ast_subtree_json": {
+        "_type": "Return",
+        "value": {
+          "_type": "Call",
+          "func": {
+            "_type": "Attribute"
+          },
+          "args": [
+            {
+              "_type": "Name"
+            }
+          ],
+          "keywords": []
+        }
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": 148.0
+    },
+    {
+      "line": 24,
+      "line_absolute": 548,
+      "node_id": 55,
+      "node_id_local": 26,
+      "type": "Call",
+      "code": "headers.get('Transfer-Encoding')",
+      "distance_to_buggy": 18,
+      "context": "  21:           content_length = 0\n  22:       if content_length is not None:\n  23:           return self._read_fixed_body(content_length, delegate)\n  24:->     if headers.get('Transfer-Encoding') == 'chunked':\n  25:           return self._read_chunked_body(delegate)\n  26:       if self.is_client:\n  27:           return self._read_body_until_close(delegate)",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Attribute",
+          "value": {
+            "_type": "Name"
+          },
+          "attr": "get",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [
+          {
+            "_type": "Constant",
+            "value": "Transfer-Encoding",
+            "kind": null
+          }
+        ],
+        "keywords": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|system|>...",
+      "reranker_score": 154.8
+    },
+    {
+      "line": 24,
+      "line_absolute": 548,
+      "node_id": 6,
+      "node_id_local": 25,
+      "type": "If",
+      "code": "if headers.get('Transfer-Encoding') == 'chunked':\n    return self._read_chunked_body(delegate)",
+      "distance_to_buggy": 18,
+      "context": "  21:           content_length = 0\n  22:       if content_length is not None:\n  23:           return self._read_fixed_body(content_length, delegate)\n  24:->     if headers.get('Transfer-Encoding') == 'chunked':\n  25:           return self._read_chunked_body(delegate)\n  26:       if self.is_client:\n  27:           return self._read_body_until_close(delegate)",
+      "ast_subtree_json": {
+        "_type": "If",
+        "test": {
+          "_type": "Compare",
+          "left": {
+            "_type": "Call"
+          },
+          "ops": [
+            {
+              "_type": "Eq"
+            }
+          ],
+          "comparators": [
+            {
+              "_type": "Constant"
+            }
+          ]
+        },
+        "body": [
+          {
+            "_type": "Return",
+            "value": {
+              "_type": "Call"
+            }
+          }
+        ],
+        "orelse": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": 155.8
+    },
+    {
+      "line": 23,
+      "line_absolute": 547,
+      "node_id": 54,
+      "node_id_local": 24,
+      "type": "Call",
+      "code": "self._read_fixed_body(content_length, delegate)",
+      "distance_to_buggy": 19,
+      "context": "  20:               raise httputil.HTTPInputError('Response with code %d should not have body' % code)\n  21:           content_length = 0\n  22:       if content_length is not None:\n  23:->         return self._read_fixed_body(content_length, delegate)\n  24:       if headers.get('Transfer-Encoding') == 'chunked':\n  25:           return self._read_chunked_body(delegate)\n  26:       if self.is_client:",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Attribute",
+          "value": {
+            "_type": "Name"
+          },
+          "attr": "_read_fixed_body",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [
+          {
+            "_type": "Name",
+            "id": "content_length",
+            "ctx": {
+              "_type": "Load"
+            }
+          },
+          {
+            "_type": "Name",
+            "id": "delegate",
+            "ctx": {
+              "_type": "Load"
+            }
+          }
+        ],
+        "keywords": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": 166.0
+    },
+    {
+      "line": 23,
+      "line_absolute": 547,
+      "node_id": 23,
+      "node_id_local": 23,
+      "type": "Return",
+      "code": "return self._read_fixed_body(content_length, delegate)",
+      "distance_to_buggy": 19,
+      "context": "  20:               raise httputil.HTTPInputError('Response with code %d should not have body' % code)\n  21:           content_length = 0\n  22:       if content_length is not None:\n  23:->         return self._read_fixed_body(content_length, delegate)\n  24:       if headers.get('Transfer-Encoding') == 'chunked':\n  25:           return self._read_chunked_body(delegate)\n  26:       if self.is_client:",
+      "ast_subtree_json": {
+        "_type": "Return",
+        "value": {
+          "_type": "Call",
+          "func": {
+            "_type": "Attribute"
+          },
+          "args": [
+            {
+              "_type": "Name"
+            },
+            {
+              "_type": "Name"
+            }
+          ],
+          "keywords": []
+        }
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": 168.0
+    }
+  ]
+}

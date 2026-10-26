@@ -1,0 +1,89 @@
+{
+  "bug_id": "60",
+  "seed": 42,
+  "arm": "base",
+  "candidates": [
+    {
+      "index": 0,
+      "patch_text": "def create_cloned_field(field: ModelField) -> ModelField:\n    original_type = field.type_\n    if is_dataclass(original_type) and hasattr(original_type, '__pydantic_model__'):\n        original_type = original_type.__pydantic_model__\n    use_type = original_type\n    if lenient_issubclass(original_type, BaseModel):\n        original_type = cast(Type[BaseModel], original_type)\n        use_type = create_model(original_type.__name__, __config__=original_type.__config__)\n        use_type.__fields__ = dict(original_type.__fields__)\n        use_type.__validators__ = original_type.__validators__\n    if PYDANTIC_1:\n        new_field = ModelField(name=field.name, type_=use_type, class_validators={}, default=None, required=False, model_config=BaseConfig, field_info=FieldInfo(None))\n    else:\n        new_field = ModelField(name=field.name, type_=use_type, class_validators={}, default=None, required=False, model_config=BaseConfig, schema=FieldInfo(None))\n    new_field.has_alias = field.has_alias\n    new_field.alias = field.alias\n    new_field.class_validators = field.class_validators\n    new_field.default = field.default\n    new_field.required = field.required\n    new_field.model_config = field.model_config\n    if PYDANTIC_1:\n        new_field.field_info = field.field_info\n    else:\n        new_field.schema = field.schema\n    new_field.allow_none = field.allow_none\n    new_field.validate_always = field.validate_always\n    if field.sub_fields:\n        new_field.sub_fields = [create_cloned_field(sub_field) for sub_field in field.sub_fields]\n    if field.key_field:\n        new_field.key_field = create_cloned_field(field.key_field)\n    new_field.validators = field.validators\n    if PYDANTIC_1:\n        new_field.pre_validators = field.pre_validators\n        new_field.post_validators = field.post_validators\n    else:\n        new_field.whole_pre_validators = field.whole_pre_validators\n        new_field.whole_post_validators = field.whole_post_validators\n    new_field.parse_json = field.parse_json\n    new_field.shape = field.shape\n    try:\n        new_field.populate_validators()\n    except AttributeError:\n        new_field._populate_validators()\n    return new_field",
+      "patch_sha256": "4155ea873fd8a8aa12ad82b08cdf2bbd58d57148b4c3c4e4ae2b6100c8cf7ea6",
+      "rank_score": 243,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8250994923331102,
+      "top_p": 0.9313743654163876
+    },
+    {
+      "index": 1,
+      "patch_text": "def create_cloned_field(field: ModelField) -> ModelField:\n    original_type = field.type_\n    if is_dataclass(original_type) and hasattr(original_type, '__pydantic_model__'):\n        original_type = original_type.__pydantic_model__\n    use_type = original_type\n    if lenient_issubclass(original_type, BaseModel):\n        original_type = cast(Type[BaseModel], original_type)\n        use_type = create_model(original_type.__name__, __config__=original_type.__config__)\n        for f in original_type.__fields__.values():\n            use_type.__fields__[f.name] = f\n    if PYDANTIC_1:\n        new_field = ModelField(name=field.name, type_=use_type, class_validators={}, default=None, required=False, model_config=BaseConfig, field_info=FieldInfo(None))\n    else:\n        new_field = ModelField(name=field.name, type_=use_type, class_validators={}, default=None, required=False, model_config=BaseConfig, schema=FieldInfo(None))\n    new_field.has_alias = field.has_alias\n    new_field.alias = field.alias\n    new_field.class_validators = field.class_validators\n    new_field.default = field.default\n    new_field.required = field.required\n    new_field.model_config = field.model_config\n    if PYDANTIC_1:\n        new_field.field_info = field.field_info\n    else:\n        new_field.schema = field.schema\n    new_field.allow_none = field.allow_none\n    new_field.validate_always = field.validate_always\n    if field.sub_fields:\n        new_field.sub_fields = [create_cloned_field(sub_field) for sub_field in field.sub_fields]\n    if field.key_field:\n        new_field.key_field = create_cloned_field(field.key_field)\n    new_field.validators = field.validators\n    if PYDANTIC_1:\n        new_field.pre_validators = field.pre_validators\n        new_field.post_validators = field.post_validators\n    else:\n        new_field.whole_pre_validators = field.whole_pre_validators\n        new_field.whole_post_validators = field.whole_post_validators\n    new_field.parse_json = field.parse_json\n    new_field.shape = field.shape\n    try:\n        new_field.populate_validators()\n    except AttributeError:\n        new_field._populate_validators()\n    return new_field\n# coding=utf-8\n# Copyright 2021 Google LLC\n#\n# Licensed under the Apache License, Version 2.0 (the \"",
+      "patch_sha256": "b812e4badc5d9a365bbda2bba0acf6cab659a19c78c0968424e1a224f0de541a",
+      "rank_score": 224,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8089233151013046,
+      "top_p": 0.9111541438766307
+    },
+    {
+      "index": 2,
+      "patch_text": "def create_cloned_field(field: ModelField) -> ModelField:\n    original_type = field.type_\n    if is_dataclass(original_type) and hasattr(original_type, '__pydantic_model__'):\n        original_type = original_type.__pydantic_model__\n    use_type = original_type\n    if lenient_issubclass(original_type, BaseModel):\n        original_type = cast(Type[BaseModel], original_type)\n        use_type = create_model(original_type.__name__, __config__=original_type.__config__)\n        for f in original_type.__fields__.values():\n            use_type.__fields__[f.name] = f\n        use_type.__validators__ = original_type.__validators__\n    if PYDANTIC_1:\n        new_field = ModelField(name=field.name, type_=use_type, class_validators={}, default=None, required=False, model_config=BaseConfig, field_info=FieldInfo(None))\n    else:\n        new_field = ModelField(name=field.name, type_=use_type, class_validators={}, default=None, required=False, model_config=BaseConfig, schema=FieldInfo(None))\n    new_field.has_alias = field.has_alias\n    new_field.alias = field.alias\n    new_field.class_validators = field.class_validators\n    new_field.default = field.default\n    new_field.required = field.required\n    new_field.model_config = field.model_config\n    if PYDANTIC_1:\n        new_field.field_info = field.field_info\n    else:\n        new_field.schema = field.schema\n    new_field.allow_none = field.allow_none\n    new_field.validate_always = field.validate_always\n    if field.sub_fields:\n        new_field.sub_fields = [create_cloned_field(sub_field) for sub_field in field.sub_fields]\n    if field.key_field:\n        new_field.key_field = create_cloned_field(field.key_field)\n    new_field.validators = field.validators\n    if PYDANTIC_1:\n        new_field.pre_validators = field.pre_validators\n        new_field.post_validators = field.post_validators\n    else:\n        new_field.whole_pre_validators = field.whole_pre_validators\n        new_field.whole_post_validators = field.whole_post_validators\n    new_field.parse_json = field.parse_json\n    new_field.shape = field.shape\n    try:\n        new_field.populate_validators()\n    except AttributeError:\n        new_field._populate_validators()\n    return new_field/tests/test_data/expected/issue159/task.md\n## Task",
+      "patch_sha256": "03271e50d901d3accd55ac398680c7da2bf85ed3246d2bad26226bd0b20e43e3",
+      "rank_score": 224,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.5106412196441554,
+      "top_p": 0.9620023454695296
+    },
+    {
+      "index": 3,
+      "patch_text": "def create_cloned_field(field: ModelField) -> ModelField:\n    original_type = field.type_\n    if is_dataclass(original_type) and hasattr(original_type, '__pydantic_model__'):\n        original_type = original_type.__pydantic_model__\n    use_type = original_type\n    if lenient_issubclass(original_type, BaseModel):\n        original_type = cast(Type[BaseModel], original_type)\n        use_type = create_model(original_type.__name__, __config__=original_type.__config__)\n        for f in original_type.__fields__.values():\n            use_type.__fields__[f.name] = f\n        use_type.__validators__ = original_type.__validators__\n    if PYDANTIC_1:\n        new_field = ModelField(name=field.name, type_=use_type, class_validators={}, default=None, required=False, model_config=BaseConfig, field_info=FieldInfo(None))\n    else:\n        new_field = ModelField(name=field.name, type_=use_type, class_validators={}, default=None, required=False, model_config=BaseConfig, schema=FieldInfo(None))\n    new_field.has_alias = field.has_alias\n    new_field.alias = field.alias\n    new_field.class_validators = field.class_validators\n    new_field.default = field.default\n    new_field.required = field.required\n    new_field.model_config = field.model_config\n    if PYDANTIC_1:\n        new_field.field_info = field.field_info\n    else:\n        new_field.schema = field.schema\n    new_field.allow_none = field.allow_none\n    new_field.validate_always = field.validate_always\n    if field.sub_fields:\n        new_field.sub_fields = [create_cloned_field(sub_field) for sub_field in field.sub_fields]\n    if field.key_field:\n        new_field.key_field = create_cloned_field(field.key_field)\n    new_field.validators = field.validators\n    if PYDANTIC_1:\n        new_field.pre_validators = field.pre_validators\n        new_field.post_validators = field.post_validators\n    else:\n        new_field.whole_pre_validators = field.whole_pre_validators\n        new_field.whole_post_validators = field.whole_post_validators\n    new_field.parse_json = field.parse_json\n    new_field.shape = field.shape\n    try:\n        new_field.populate_validators()\n    except AttributeError:\n        new_field._populate_validators()\n    return new_field/pydantic_task_generator/pydantic_task_generator/scripts/generate",
+      "patch_sha256": "b57ea4dc04787bd605bd2a30265fbcb43188cf4e9ebc3899363543c9515ea1d5",
+      "rank_score": 224,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.9374042813624712,
+      "top_p": 0.828917697133121
+    },
+    {
+      "index": 4,
+      "patch_text": "def create_cloned_field(field: ModelField) -> ModelField:\n    original_type = field.type_\n    if is_dataclass(original_type) and hasattr(original_type, '__pydantic_model__'):\n        original_type = original_type.__pydantic_model__\n    use_type = original_type\n    if lenient_issubclass(original_type, BaseModel):\n        original_type = cast(Type[BaseModel], original_type)\n        use_type = create_model(original_type.__name__, __config__=original_type.__config__)\n        for f in original_type.__fields__.values():\n            use_type.__fields__[f.name] = f\n        use_type.__validators__ = original_type.__validators__\n    if PYDANTIC_1:\n        new_field = ModelField(name=field.name, type_=use_type, class_validators={}, default=None, required=False, model_config=BaseConfig, field_info=FieldInfo(None))\n    else:\n        new_field = ModelField(name=field.name, type_=use_type, class_validators={}, default=None, required=False, model_config=BaseConfig, schema=FieldInfo(None))\n    new_field.has_alias = field.has_alias\n    new_field.alias = field.alias\n    new_field.class_validators = field.class_validators\n    new_field.default = field.default\n    new_field.required = field.required\n    new_field.model_config = field.model_config\n    if PYDANTIC_1:\n        new_field.field_info = field.field_info\n    else:\n        new_field.schema = field.schema\n    new_field.allow_none = field.allow_none\n    new_field.validate_always = field.validate_always\n    if field.sub_fields:\n        new_field.sub_fields = [create_cloned_field(sub_field) for sub_field in field.sub_fields]\n    if field.key_field:\n        new_field.key_field = create_cloned_field(field.key_field)\n    new_field.validators = field.validators\n    if PYDANTIC_1:\n        new_field.pre_validators = field.pre_validators\n        new_field.post_validators = field.post_validators\n    else:\n        new_field.whole_pre_validators = field.whole_pre_validators\n        new_field.whole_post_validators = field.whole_post_validators\n    new_field.parse_json = field.parse_json\n    new_field.shape = field.shape\n    try:\n        new_field.populate_validators()\n    except AttributeError:\n        new_field._populate_validators()\n    return new_field/tests/test_data/correct/test_bug_258.py\n##correct",
+      "patch_sha256": "217eb2505c2e570634f8bc64bb9c13ba07c0c25a1748d6f0d44282ccb3aa54fd",
+      "rank_score": 224,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8250994923331102,
+      "top_p": 0.9313743654163876
+    },
+    {
+      "index": 5,
+      "patch_text": "def create_cloned_field(field: ModelField) -> ModelField:\n    original_type = field.type_\n    if is_dataclass(original_type) and hasattr(original_type, \"__pydantic_model__\"):\n        original_type = original_type.__pydantic_model__\n    use_type = original_type\n    if lenient_issubclass(original_type, BaseModel):\n        original_type = cast(Type[BaseModel], original_type)\n        use_type = create_model(original_type.__name__, __config__=original_type.__config__)\n        for f in original_type.__fields__.values():\n            use_type.__fields__[f.name] = f\n    if PYDANTIC_1:\n        new_field = ModelField(\n            name=field.name,\n            type_=use_type,\n            class_validators={},\n            default=None,\n            required=False,\n            model_config=BaseConfig,\n            field_info=FieldInfo(None),\n        )\n    else:\n        new_field = ModelField(\n            name=field.name,\n            type_=use_type,\n            class_validators={},\n            default=None,\n            required=False,\n            model_config=BaseConfig,\n            schema=FieldInfo(None),\n        )\n    new_field.has_alias = field.has_alias\n    new_field.alias = field.alias\n    new_field.class_validators = field.class_validators\n    new_field.default = field.default\n    new_field.required = field.required\n    new_field.model_config = field.model_config\n    if PYDANTIC_1:\n        new_field.field_info = field.field_info\n    else:\n        new_field.schema = field.schema\n    new_field.allow_none = field.allow_none\n    new_field.validate_always = field.validate_always\n    if field.sub_fields:\n        new_field.sub_fields = [create_cloned_field(sub_field) for sub_field in field.sub_fields]\n    if field.key_field:\n        new_field.key_field = create_cloned_field(field.key_field)\n    new_field.validators = field.validators\n    if PYDANTIC_1:\n        new_field.pre_validators = field.pre_validators\n        new_field.post_validators = field.post_validators\n    else:\n        new_field.whole_pre_validators = field.whole_pre_validators\n        new_field.whole_post_validators = field.whole_post_validators\n    new_field.parse_json = field.parse_json\n    new_field.shape = field.shape\n    try:\n        new_field.populate_validators()\n    except AttributeError:\n        new_field._populate_validators()\n    return new_field\n\n##end.",
+      "patch_sha256": "be7ca29edf9df9e332582ce440cd40c71bac43981070b965bb9fc17c29e372f9",
+      "rank_score": 202,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.5273506986767932,
+      "top_p": 0.98
+    }
+  ],
+  "candidate_count": 6,
+  "retrieved_examples": [],
+  "diffusion_plan": [],
+  "static_analysis_nodes": []
+}

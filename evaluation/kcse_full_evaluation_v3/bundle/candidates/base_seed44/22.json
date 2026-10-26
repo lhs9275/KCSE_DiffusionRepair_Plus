@@ -1,0 +1,141 @@
+{
+  "bug_id": "22",
+  "seed": 44,
+  "arm": "base",
+  "candidates": [
+    {
+      "index": 0,
+      "patch_text": "def url_basename(url):\n    m = re.match(r'(?:https?:|)//[^/]+/(?:[^/?#]+/)?([^/?#]+)/?(?:[?#]|$)', url)\n    if not m:\n        return u''\n    return m.group(1)",
+      "patch_sha256": "2aa5e7633e9f41b4213d27f92bd676a3cafb9c8a83920964a4a06f490da2a357",
+      "rank_score": 219,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.0,
+      "top_p": 1.0
+    },
+    {
+      "index": 1,
+      "patch_text": "def url_basename(url):\n    m = re.match('(?:https?:|)//[^/]+/(?:[^/?#]+/)?([^/?#]+)/?(?:[?#]|$)', url)\n    if not m:\n        return ''\n    return m.group(1)",
+      "patch_sha256": "a3e9210f1db7aa820e683069fa6b6bd6cdce3ba07c3aa07f6cbddc88e40c26ab",
+      "rank_score": 219,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8997717407145516,
+      "top_p": 0.7880127616462518
+    },
+    {
+      "index": 2,
+      "patch_text": "def url_basename(url):\n    if not url:\n        return u''\n    return url.split('/')[-1]",
+      "patch_sha256": "b65ee13bca0fa5556ba8e3ddf9d7bb545062ffe6d133399ebd7d1aeccaf3eb17",
+      "rank_score": 172,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7793066012285085,
+      "top_p": 0.8741332515356355
+    },
+    {
+      "index": 3,
+      "patch_text": "def url_basename(url):\n    if url.startswith('http://') or url.startswith('https://'):\n        if '/' in url:\n            return url.split('/')[-1]\n    return ''",
+      "patch_sha256": "0a7f7dbe5d2c80a808bdd0feeb971021b9c86d67c9a4422785af59a5da945275",
+      "rank_score": 170,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.9230891398700982,
+      "top_p": 0.8133577607283677
+    },
+    {
+      "index": 4,
+      "patch_text": "def url_basename(url):\n    if '://' not in url:\n        return ''\n    if '/' in url:\n        return url.split('/').pop()\n    return url.split(':').pop()",
+      "patch_sha256": "79304b5c52a1d79444e3e419885b8c750689bfaca21fb4efdb982cd8a85df681",
+      "rank_score": 167,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7941462962722876,
+      "top_p": 0.8926828703403595
+    },
+    {
+      "index": 5,
+      "patch_text": "def url_basename(url):\n    # <--- BUGGY LINE\n    return url.split('/')[-1]",
+      "patch_sha256": "40939994b800aa99c22eef86c6bd2ccacba1afa13653e88ca6a0164859a0a350",
+      "rank_score": 153,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7793066012285085,
+      "top_p": 0.8741332515356355
+    },
+    {
+      "index": 6,
+      "patch_text": "def url_basename(url):\n    if '//' not in url:\n        return u''\n    if '?' in url:\n        return url.split('?', 1)[0].rsplit('/', 1)[-1]\n    if '#' in url:\n        return url.split('#', 1)[0].rsplit('/', 1)[-1]\n    return url.rsplit('/', 1)[-1]",
+      "patch_sha256": "6a12c74833a211b0a8176c2b9b6024fd72b4f760e545891281318004ade60ce0",
+      "rank_score": 143,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7941462962722876,
+      "top_p": 0.8926828703403595
+    },
+    {
+      "index": 7,
+      "patch_text": "def url_basename(url):\n    \"\"\"Parse and return the basename of a URL.\"\"\"\n    if not isinstance(url, six.string_types):\n        url = str(url)\n    # this is a dirty hack but it works for now\n    url = url.encode('ascii', 'ignore')\n    return url.split('/')[-1].split('?')[0]",
+      "patch_sha256": "af3e21dc3f1ce00d718b3f290bbac32c1e3d79fbcff0cf334f624954cd1063d4",
+      "rank_score": 142,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7941462962722876,
+      "top_p": 0.8926828703403595
+    },
+    {
+      "index": 8,
+      "patch_text": "def url_basename(url):\n    return '' if not url else url.split('/')[-1]",
+      "patch_sha256": "037bc2c57e804e898ae31d0da30a7f8d94f81926233558a7138e151486c92c4d",
+      "rank_score": 117,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8997717407145516,
+      "top_p": 0.7880127616462518
+    },
+    {
+      "index": 9,
+      "patch_text": "def url_basename(url):\n    if not url:\n        return u''\n    m = re.match('(?:https?:|)//[^/]+/(?:[^/?#]+/)?([^/?#]+)/?(?:[?#]|$)', url)\n    if not m:\n        return u''\n    return m.group(1)",
+      "patch_sha256": "66783413d991cf09aa64d1c147a985bbdc5deb1f09ee98af6c0663f69568879d",
+      "rank_score": 103,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8997717407145516,
+      "top_p": 0.7880127616462518
+    }
+  ],
+  "candidate_count": 10,
+  "retrieved_examples": [],
+  "diffusion_plan": [],
+  "static_analysis_nodes": []
+}

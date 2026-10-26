@@ -1,0 +1,190 @@
+{
+  "38": {
+    "status": "Success",
+    "nucleus_sampling_flags": [
+      "Fail"
+    ],
+    "test_evidence": [
+      {
+        "target_file_before_test_sha256": "03078b7a8d1d18ceded9d9b513d0d25d591d3bf0da933ebbdba9dc94f8989a0d",
+        "bytecode_removed_before_test": [],
+        "command": [
+          "bugsinpy-test"
+        ],
+        "cwd": "/output/workspaces/ws_38_9_66pgv9ij/pandas_128/pandas",
+        "stdout": "pytest pandas/tests/indexes/timedeltas/test_constructors.py::TestTimedeltaIndex::test_infer_from_tdi_mismatch\nRUN EVERY COMMAND\n0\n\n\nImportError while loading conftest '/output/workspaces/ws_38_9_66pgv9ij/pandas_128/pandas/pandas/conftest.py'.\npandas/__init__.py:31: in <module>\n    from pandas._libs import hashtable as _hashtable, lib as _lib, tslib as _tslib\npandas/_libs/__init__.py:3: in <module>\n    from .tslibs import (\npandas/_libs/tslibs/__init__.py:3: in <module>\n    from .conversion import localize_pydatetime, normalize_date\npandas/_libs/tslibs/conversion.pyx:1: in init pandas._libs.tslibs.conversion\n    import cython\nE   ValueError: numpy.ndarray size changed, may indicate binary incompatibility. Expected 96 from C header, got 80 from PyObject\n",
+        "stderr": "",
+        "returncode": 0,
+        "timed_out": false,
+        "flag": "Error: test_execution",
+        "import_root": "/output/workspaces/ws_38_9_66pgv9ij/pandas_128/pandas",
+        "pythonpath": "/output/workspaces/ws_38_9_66pgv9ij/pandas_128/pandas",
+        "raw_test_flag": "Error: test_execution",
+        "target_file_after_test_sha256": "03078b7a8d1d18ceded9d9b513d0d25d591d3bf0da933ebbdba9dc94f8989a0d",
+        "test_preserved_target_file": true,
+        "target_file_sha256": "03078b7a8d1d18ceded9d9b513d0d25d591d3bf0da933ebbdba9dc94f8989a0d",
+        "stage": "fixed_control_initial",
+        "bug_id": "38",
+        "candidate_index": null,
+        "patch_sha256": null
+      },
+      {
+        "target_file_before_test_sha256": "03078b7a8d1d18ceded9d9b513d0d25d591d3bf0da933ebbdba9dc94f8989a0d",
+        "bytecode_removed_before_test": [],
+        "command": [
+          "bugsinpy-test"
+        ],
+        "cwd": "/output/workspaces/ws_38_9_66pgv9ij/pandas_128/pandas",
+        "stdout": "pytest pandas/tests/indexes/timedeltas/test_constructors.py::TestTimedeltaIndex::test_infer_from_tdi_mismatch\nRUN EVERY COMMAND\n0\n\n\n============================= test session starts ==============================\nplatform linux -- Python 3.8.0, pytest-5.4.3, py-1.8.1, pluggy-0.13.1\nrootdir: /output/workspaces/ws_38_9_66pgv9ij/pandas_128/pandas, inifile: setup.cfg\nplugins: hypothesis-5.16.0\ncollected 1 item\n\npandas/tests/indexes/timedeltas/test_constructors.py .                   [100%]\n\n============================== 1 passed in 0.01s ===============================\n",
+        "stderr": "",
+        "returncode": 0,
+        "timed_out": false,
+        "flag": "Plausible",
+        "import_root": "/output/workspaces/ws_38_9_66pgv9ij/pandas_128/pandas",
+        "pythonpath": "/output/workspaces/ws_38_9_66pgv9ij/pandas_128/pandas",
+        "raw_test_flag": "Plausible",
+        "target_file_after_test_sha256": "03078b7a8d1d18ceded9d9b513d0d25d591d3bf0da933ebbdba9dc94f8989a0d",
+        "test_preserved_target_file": true,
+        "target_file_sha256": "03078b7a8d1d18ceded9d9b513d0d25d591d3bf0da933ebbdba9dc94f8989a0d",
+        "stage": "fixed_control_post_rebuild",
+        "bug_id": "38",
+        "candidate_index": null,
+        "patch_sha256": null
+      },
+      {
+        "target_file_before_test_sha256": "03078b7a8d1d18ceded9d9b513d0d25d591d3bf0da933ebbdba9dc94f8989a0d",
+        "bytecode_removed_before_test": [],
+        "command": [
+          "bugsinpy-test"
+        ],
+        "cwd": "/output/workspaces/ws_38_9_66pgv9ij/pandas_128/pandas",
+        "stdout": "pytest pandas/tests/indexes/timedeltas/test_constructors.py::TestTimedeltaIndex::test_infer_from_tdi_mismatch\nRUN EVERY COMMAND\n0\n\n\n============================= test session starts ==============================\nplatform linux -- Python 3.8.0, pytest-5.4.3, py-1.8.1, pluggy-0.13.1\nrootdir: /output/workspaces/ws_38_9_66pgv9ij/pandas_128/pandas, inifile: setup.cfg\nplugins: hypothesis-5.16.0\ncollected 1 item\n\npandas/tests/indexes/timedeltas/test_constructors.py .                   [100%]\n\n============================== 1 passed in 0.01s ===============================\n",
+        "stderr": "",
+        "returncode": 0,
+        "timed_out": false,
+        "flag": "Plausible",
+        "import_root": "/output/workspaces/ws_38_9_66pgv9ij/pandas_128/pandas",
+        "pythonpath": "/output/workspaces/ws_38_9_66pgv9ij/pandas_128/pandas",
+        "raw_test_flag": "Plausible",
+        "target_file_after_test_sha256": "03078b7a8d1d18ceded9d9b513d0d25d591d3bf0da933ebbdba9dc94f8989a0d",
+        "test_preserved_target_file": true,
+        "target_file_sha256": "03078b7a8d1d18ceded9d9b513d0d25d591d3bf0da933ebbdba9dc94f8989a0d",
+        "stage": "fixed_control",
+        "bug_id": "38",
+        "candidate_index": null,
+        "patch_sha256": null
+      },
+      {
+        "target_file_before_test_sha256": "cc607c94bf7c1b884c01d84028e414ed7d4fbeb11f9cfd4209549d7188bd129d",
+        "bytecode_removed_before_test": [],
+        "command": [
+          "bugsinpy-test"
+        ],
+        "cwd": "/output/workspaces/ws_38_9_66pgv9ij/pandas_128/pandas",
+        "stdout": "pytest pandas/tests/indexes/timedeltas/test_constructors.py::TestTimedeltaIndex::test_infer_from_tdi_mismatch\nRUN EVERY COMMAND\n0\n\n\n============================= test session starts ==============================\nplatform linux -- Python 3.8.0, pytest-5.4.3, py-1.8.1, pluggy-0.13.1\nrootdir: /output/workspaces/ws_38_9_66pgv9ij/pandas_128/pandas, inifile: setup.cfg\nplugins: hypothesis-5.16.0\ncollected 1 item\n\npandas/tests/indexes/timedeltas/test_constructors.py F                   [100%]\n\n=================================== FAILURES ===================================\n_______________ TestTimedeltaIndex.test_infer_from_tdi_mismatch ________________\n\nself = <pandas.tests.indexes.timedeltas.test_constructors.TestTimedeltaIndex object at 0x7f7bf2cc1550>\n\n    def test_infer_from_tdi_mismatch(self):\n        # GH#23539\n        # fast-path for invalidating a frequency if the passed data already\n        #  has one and it does not match the `freq` input\n        tdi = pd.timedelta_range(\"1 second\", periods=100, freq=\"1s\")\n    \n        msg = (\n            \"Inferred frequency .* from passed values does \"\n            \"not conform to passed frequency\"\n        )\n        with pytest.raises(ValueError, match=msg):\n            TimedeltaIndex(tdi, freq=\"D\")\n    \n        with pytest.raises(ValueError, match=msg):\n            # GH#23789\n            TimedeltaArray(tdi, freq=\"D\")\n    \n        with pytest.raises(ValueError, match=msg):\n>           TimedeltaIndex(tdi._data, freq=\"D\")\nE           Failed: DID NOT RAISE <class 'ValueError'>\n\npandas/tests/indexes/timedeltas/test_constructors.py:51: Failed\n=========================== short test summary info ============================\nFAILED pandas/tests/indexes/timedeltas/test_constructors.py::TestTimedeltaIndex::test_infer_from_tdi_mismatch\n============================== 1 failed in 0.09s ===============================\n",
+        "stderr": "",
+        "returncode": 0,
+        "timed_out": false,
+        "flag": "Fail",
+        "import_root": "/output/workspaces/ws_38_9_66pgv9ij/pandas_128/pandas",
+        "pythonpath": "/output/workspaces/ws_38_9_66pgv9ij/pandas_128/pandas",
+        "raw_test_flag": "Fail",
+        "target_file_after_test_sha256": "cc607c94bf7c1b884c01d84028e414ed7d4fbeb11f9cfd4209549d7188bd129d",
+        "test_preserved_target_file": true,
+        "candidate_input_sha256": "f36655ce49cebe35c28e0e02812b1afcb731ebb01a4c7ce7a75fcfbbb34b7091",
+        "target_file_before_sha256": "03078b7a8d1d18ceded9d9b513d0d25d591d3bf0da933ebbdba9dc94f8989a0d",
+        "executed_function_sha256": "6e6894994353417d0b74b345aae40bc13907c76e13fa0910bac5409589f95726",
+        "target_file_during_test_sha256": "cc607c94bf7c1b884c01d84028e414ed7d4fbeb11f9cfd4209549d7188bd129d",
+        "target_file_after_restore_sha256": "03078b7a8d1d18ceded9d9b513d0d25d591d3bf0da933ebbdba9dc94f8989a0d",
+        "restore_integrity": true,
+        "restore_returncode": 0,
+        "restore_exception": null,
+        "bytecode_removed_after_restore": [],
+        "cache_cleanup_exception": null,
+        "stage": "buggy_control",
+        "bug_id": "38",
+        "candidate_index": null,
+        "patch_sha256": "f36655ce49cebe35c28e0e02812b1afcb731ebb01a4c7ce7a75fcfbbb34b7091"
+      },
+      {
+        "target_file_before_test_sha256": "03078b7a8d1d18ceded9d9b513d0d25d591d3bf0da933ebbdba9dc94f8989a0d",
+        "bytecode_removed_before_test": [],
+        "command": [
+          "bugsinpy-test"
+        ],
+        "cwd": "/output/workspaces/ws_38_9_66pgv9ij/pandas_128/pandas",
+        "stdout": "pytest pandas/tests/indexes/timedeltas/test_constructors.py::TestTimedeltaIndex::test_infer_from_tdi_mismatch\nRUN EVERY COMMAND\n0\n\n\n============================= test session starts ==============================\nplatform linux -- Python 3.8.0, pytest-5.4.3, py-1.8.1, pluggy-0.13.1\nrootdir: /output/workspaces/ws_38_9_66pgv9ij/pandas_128/pandas, inifile: setup.cfg\nplugins: hypothesis-5.16.0\ncollected 1 item\n\npandas/tests/indexes/timedeltas/test_constructors.py .                   [100%]\n\n============================== 1 passed in 0.08s ===============================\n",
+        "stderr": "",
+        "returncode": 0,
+        "timed_out": false,
+        "flag": "Plausible",
+        "import_root": "/output/workspaces/ws_38_9_66pgv9ij/pandas_128/pandas",
+        "pythonpath": "/output/workspaces/ws_38_9_66pgv9ij/pandas_128/pandas",
+        "raw_test_flag": "Plausible",
+        "target_file_after_test_sha256": "03078b7a8d1d18ceded9d9b513d0d25d591d3bf0da933ebbdba9dc94f8989a0d",
+        "test_preserved_target_file": true,
+        "target_file_sha256": "03078b7a8d1d18ceded9d9b513d0d25d591d3bf0da933ebbdba9dc94f8989a0d",
+        "matches_initial_fixed_file": true,
+        "stage": "restored_fixed_control",
+        "bug_id": "38",
+        "candidate_index": null,
+        "patch_sha256": null
+      },
+      {
+        "target_file_before_test_sha256": "2b08b03203e31783d93dcbbc259a38878a5dc4a8740647546334c5ce4cafdcfd",
+        "bytecode_removed_before_test": [],
+        "command": [
+          "bugsinpy-test"
+        ],
+        "cwd": "/output/workspaces/ws_38_9_66pgv9ij/pandas_128/pandas",
+        "stdout": "pytest pandas/tests/indexes/timedeltas/test_constructors.py::TestTimedeltaIndex::test_infer_from_tdi_mismatch\nRUN EVERY COMMAND\n0\n\n\nImportError while loading conftest '/output/workspaces/ws_38_9_66pgv9ij/pandas_128/pandas/pandas/conftest.py'.\npandas/__init__.py:53: in <module>\n    from pandas.core.api import (\npandas/core/api.py:29: in <module>\n    from pandas.core.groupby import Grouper, NamedAgg\npandas/core/groupby/__init__.py:1: in <module>\n    from pandas.core.groupby.generic import DataFrameGroupBy, NamedAgg, SeriesGroupBy\npandas/core/groupby/generic.py:54: in <module>\n    from pandas.core.aggregation import (\npandas/core/aggregation.py:13: in <module>\n    from pandas.core.indexes.api import Index\npandas/core/indexes/api.py:16: in <module>\n    from pandas.core.indexes.interval import IntervalIndex\npandas/core/indexes/interval.py:55: in <module>\n    from pandas.core.indexes.timedeltas import TimedeltaIndex, timedelta_range\npandas/core/indexes/timedeltas.py:75: in <module>\n    class TimedeltaIndex(\npandas/core/indexes/timedeltas.py:166: in TimedeltaIndex\n    from tqdm import tqdm\nE   ModuleNotFoundError: No module named 'tqdm'\n",
+        "stderr": "",
+        "returncode": 0,
+        "timed_out": false,
+        "flag": "Fail",
+        "import_root": "/output/workspaces/ws_38_9_66pgv9ij/pandas_128/pandas",
+        "pythonpath": "/output/workspaces/ws_38_9_66pgv9ij/pandas_128/pandas",
+        "raw_test_flag": "Error: test_execution",
+        "target_file_after_test_sha256": "2b08b03203e31783d93dcbbc259a38878a5dc4a8740647546334c5ce4cafdcfd",
+        "test_preserved_target_file": true,
+        "candidate_input_sha256": "3427386930fd1a4777c3472ff3e99e5052e5ea3cd8e93a51d0d38fc85978c60a",
+        "target_file_before_sha256": "03078b7a8d1d18ceded9d9b513d0d25d591d3bf0da933ebbdba9dc94f8989a0d",
+        "executed_function_sha256": "fe33258f6fff89d9e0e333e7afe062021849316a462cd44567787c21a9380052",
+        "target_file_during_test_sha256": "2b08b03203e31783d93dcbbc259a38878a5dc4a8740647546334c5ce4cafdcfd",
+        "target_file_after_restore_sha256": "03078b7a8d1d18ceded9d9b513d0d25d591d3bf0da933ebbdba9dc94f8989a0d",
+        "restore_integrity": true,
+        "raw_flag": "Error: test_execution",
+        "classification": "candidate_failure",
+        "exception": "ModuleNotFoundError",
+        "target_file": "pandas/core/indexes/timedeltas.py",
+        "source_line": "from tqdm import tqdm",
+        "traceback_line": 166,
+        "fixed_control_passed": true,
+        "patch_line_range": [
+          142,
+          200
+        ],
+        "restore_returncode": 0,
+        "restore_exception": null,
+        "bytecode_removed_after_restore": [],
+        "cache_cleanup_exception": null,
+        "stage": "candidate",
+        "bug_id": "38",
+        "candidate_index": 0,
+        "patch_sha256": "3427386930fd1a4777c3472ff3e99e5052e5ea3cd8e93a51d0d38fc85978c60a"
+      }
+    ],
+    "benchmark_identity": {
+      "project": "pandas",
+      "metadata_bugsinpy_id": "128",
+      "resolved_bugsinpy_id": "128",
+      "metadata_fix_commit": "839e7f1416148caff518a5b75327a2480a2bbbb4",
+      "fixed_commit_id": "839e7f1416148caff518a5b75327a2480a2bbbb4",
+      "buggy_commit_id": "9a211aa",
+      "test_file": "pandas/tests/indexes/timedeltas/test_constructors.py",
+      "bug_info_sha256": "44b9092df4a0b2df131f94c36882725cb822771f3e1c3d1af8ff3046e1c698a6",
+      "run_test_sha256": "4c7953470ad6a44d1ef0ff765dab2c474f2e21d8b5501e2c9a48cb75af0b7487"
+    },
+    "result_file_sha256": "d8106e66abfd5b1fa1efd59d469065777a3ce5c969f582e093e1457140d6fe26"
+  }
+}

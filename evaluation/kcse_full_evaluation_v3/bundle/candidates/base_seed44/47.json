@@ -1,0 +1,141 @@
+{
+  "bug_id": "47",
+  "seed": 44,
+  "arm": "base",
+  "candidates": [
+    {
+      "index": 0,
+      "patch_text": "def get_all_executables():\n    from thefuck.shells import shell\n\n    def _safe(fn, fallback):\n        try:\n            return fn()\n        except OSError:\n            return fallback\n    tf_alias = get_alias()\n    tf_entry_points = ['thefuck', 'fuck']\n    bins = [exe.name.decode('utf8') if six.PY2 else exe.name for exe in _safe(lambda: list(Path('.').iterdir()), []) if not _safe(exe.is_dir, True) and exe.name not in tf_entry_points]\n    aliases = [alias.decode('utf8') if six.PY2 else alias for alias in shell.get_aliases() if alias!= tf_alias]\n    return bins + aliases",
+      "patch_sha256": "fcc294959250674d633518853e1ca23c90ea2f60d78ea893139f62a978c6aa9d",
+      "rank_score": 32,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7941462962722876,
+      "top_p": 0.8926828703403595
+    },
+    {
+      "index": 1,
+      "patch_text": "def get_all_executables():\n    from thefuck.shells import shell\n\n    def _safe(fn, fallback):\n        try:\n            return fn()\n        except OSError:\n            return fallback\n    tf_alias = get_alias()\n    tf_entry_points = ['thefuck', 'fuck']\n    bins = [exe.name.decode('utf8') if six.PY2 else exe.name for exe in _safe(lambda: list(Path(path).iterdir()), []) if not _safe(exe.is_dir, True) and exe.name not in tf_entry_points]  # <--- BUGGY LINE\n    aliases = [alias.decode('utf8') if six.PY2 else alias for alias in shell.get_aliases() if alias!= tf_alias]\n    return bins + aliases",
+      "patch_sha256": "a2b91d67abfa58cb2018d88d745565aee9a2d0dda4e5cd5d68b28e6afe2bbb5b",
+      "rank_score": 32,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7941462962722876,
+      "top_p": 0.8926828703403595
+    },
+    {
+      "index": 2,
+      "patch_text": "def get_all_executables():\n    from thefuck.shells import shell\n\n    def _safe(fn, fallback):\n        try:\n            return fn()\n        except OSError:\n            return fallback\n    tf_alias = get_alias()\n    tf_entry_points = ['thefuck', 'fuck']\n    bins = [exe.name.decode('utf8') if six.PY2 else exe.name for exe in _safe(lambda: list(Path().iterdir()), []) if not _safe(exe.is_dir, True) and exe.name not in tf_entry_points]\n    aliases = [alias.decode('utf8') if six.PY2 else alias for alias in shell.get_aliases() if alias!= tf_alias]\n    return bins + aliases",
+      "patch_sha256": "3ce6a96982debedff9546809ef767c70c52c0879d52df70d414a0bd7ecd78410",
+      "rank_score": 32,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.5350607232455378,
+      "top_p": 0.98
+    },
+    {
+      "index": 3,
+      "patch_text": "def get_all_executables():\n    from thefuck.shells import shell\n\n    def _safe(fn, fallback):\n        try:\n            return fn()\n        except OSError:\n            return fallback\n    tf_alias = get_alias()\n    tf_entry_points = ['thefuck', 'fuck']\n    bins = [exe.name.decode('utf8') if six.PY2 else exe.name for exe in _safe(lambda: list(Path(os.environ.get('PATH', '')).rglob('*')), []) if not _safe(exe.is_dir, True) and exe.name not in tf_entry_points]\n    aliases = [alias.decode('utf8') if six.PY2 else alias for alias in shell.get_aliases() if alias!= tf_alias]\n    return bins + aliases",
+      "patch_sha256": "ee9eff55cff26b898ba0da4fb2638cb63870d0bacc1bb166cef0cd1a7a5a9413",
+      "rank_score": 30,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.9230891398700982,
+      "top_p": 0.8133577607283677
+    },
+    {
+      "index": 4,
+      "patch_text": "def get_all_executables():\n    from thefuck.shells import shell\n\n    def _safe(fn, fallback):\n        try:\n            return fn()\n        except OSError:\n            return fallback\n    tf_alias = get_alias()\n    tf_entry_points = ['thefuck', 'fuck']\n    bins = [exe.name.decode('utf8') if six.PY2 else exe.name for exe in list(Path('.').iterdir()) if not _safe(exe.is_dir, True) and exe.name not in tf_entry_points]\n    aliases = [alias.decode('utf8') if six.PY2 else alias for alias in shell.get_aliases() if alias!= tf_alias]\n    return bins + aliases",
+      "patch_sha256": "0a199a342df46dd925c794e9cb254c130e856bd9895929ab778b77357c27b323",
+      "rank_score": 29,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7941462962722876,
+      "top_p": 0.8926828703403595
+    },
+    {
+      "index": 5,
+      "patch_text": "def get_all_executables():\n    from thefuck.shells import shell\n\n    def _safe(fn, fallback):\n        try:\n            return fn()\n        except OSError:\n            return fallback\n    tf_alias = get_alias()\n    tf_entry_points = ['thefuck', 'fuck']\n    bins = [exe.name.decode('utf8') if six.PY2 else exe.name for path in os.environ.get('PATH', '').split(':') for exe in _safe(lambda: list(Path(path).iterdir()), []) if not _safe(exe.is_dir, True) and exe.name not in tf_entry_points]\n    aliases = [alias.decode('utf8') if six.PY2 else alias for alias in shell.get_aliases() if alias!= tf_alias]\n    return bins + aliases",
+      "patch_sha256": "bc9f8e3f95fe8b7ed414dc00c4c8433a0bd61be9fcac4480fe3d3299860d7cf0",
+      "rank_score": 4,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.0,
+      "top_p": 1.0
+    },
+    {
+      "index": 6,
+      "patch_text": "def get_all_executables():\n    from thefuck.shells import shell\n\n    def _safe(fn, fallback):\n        try:\n            return fn()\n        except OSError:\n            return fallback\n    tf_alias = get_alias()\n    tf_entry_points = ['thefuck', 'fuck']\n    bins = [exe.name for path in os.environ.get('PATH', '').split(':') for exe in _safe(lambda: list(Path(path).iterdir()), []) if not _safe(exe.is_dir, True) and exe.name not in tf_entry_points]\n    aliases = [alias for alias in shell.get_aliases() if alias!= tf_alias]\n    return bins + aliases",
+      "patch_sha256": "19fafd59a7d6f1427e7f68b8c0980cf8d647a4814d94dab4f1a1fa3cd749b9c0",
+      "rank_score": 1,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7941462962722876,
+      "top_p": 0.8926828703403595
+    },
+    {
+      "index": 7,
+      "patch_text": "def get_all_executables():\n    from thefuck.shells import shell\n\n    def _safe(fn, fallback):\n        try:\n            return fn()\n        except OSError:\n            return fallback\n    tf_alias = get_alias()\n    tf_entry_points = ['thefuck', 'fuck']\n    bins = [exe.name.decode('utf8') if six.PY2 else exe.name for exe in _safe(lambda: list(Path(path).iterdir()), []) if not _safe(exe.is_dir, True) and exe.name not in tf_entry_points for path in os.environ.get('PATH', '').split(':')]\n    aliases = [alias.decode('utf8') if six.PY2 else alias for alias in shell.get_aliases() if alias!= tf_alias]\n    return bins + aliases",
+      "patch_sha256": "812c57dceb6a40b9eeb8d3a893de762348d67b7bdfe7e6e56aae469ac9ff893e",
+      "rank_score": -6,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7941462962722876,
+      "top_p": 0.8926828703403595
+    },
+    {
+      "index": 8,
+      "patch_text": "def get_all_executables():\n    from thefuck.shells import shell\n\n    tf_alias = get_alias()\n    tf_entry_points = ['thefuck', 'fuck']\n    bins = []\n    for path in os.environ.get('PATH', '').split(':'):\n        for exe in list(Path(path).iterdir()):\n            if not exe.is_dir() and exe.name not in tf_entry_points:\n                bins.append(exe.name.decode('utf8') if six.PY2 else exe.name)\n    aliases = [alias.decode('utf8') if six.PY2 else alias for alias in shell.get_aliases() if alias!= tf_alias]\n    return bins + aliases",
+      "patch_sha256": "023f18155a614e4f5c5cd381cf041752a5f4b5f712209623e29fbcf0d3c352bb",
+      "rank_score": -54,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.9230891398700982,
+      "top_p": 0.8133577607283677
+    },
+    {
+      "index": 9,
+      "patch_text": "def get_all_executables():\n    from thefuck.shells import shell\n\n    tf_alias = get_alias()\n    tf_entry_points = ['thefuck', 'fuck']\n    bins = [exe.name.decode('utf8') if six.PY2 else exe.name for path in os.environ.get('PATH', '').split(':') for exe in list(Path(path).iterdir()) if not exe.is_dir() and exe.name not in tf_entry_points]\n    aliases = [alias.decode('utf8') if six.PY2 else alias for alias in shell.get_aliases() if alias!= tf_alias]\n    return bins + aliases",
+      "patch_sha256": "7029e1c2c5b41790715a6a0d37814ee8f8fa75613733dd63833edff3ddbebd65",
+      "rank_score": -57,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.5350607232455378,
+      "top_p": 0.98
+    }
+  ],
+  "candidate_count": 10,
+  "retrieved_examples": [],
+  "diffusion_plan": [],
+  "static_analysis_nodes": []
+}

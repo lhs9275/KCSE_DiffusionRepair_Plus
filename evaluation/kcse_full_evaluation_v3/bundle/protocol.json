@@ -1,0 +1,1333 @@
+{
+  "scope": "Full experiment candidate evaluation, corrected continuation",
+  "contract": "full-execution-guideline-v2 / EXECUTION_CONTRACT.json",
+  "batching_note": "pandas bugs run one per job because their workspace build is CPU bound; all other bugs are batched within one arm-seed group. evaluate.py, metadata.json and every candidate file are unchanged; only grouping differs.",
+  "retry_note": "Attempts previously ending in Error: compile (contention timeout) or Error: result_file_missing (candidate absent from the earlier bundle) are re-evaluated. Their earlier output directories are kept as evidence.",
+  "planned_total_attempts": 258,
+  "already_successful": 110,
+  "retried_here": 14,
+  "attempts_in_this_protocol": 148,
+  "attempts_without_candidate_file": [],
+  "candidate_order": "frozen rank order as generated",
+  "controls": "fixed, buggy, restored-fixed before candidate evaluation",
+  "image": "sha256:eb2e457d0685eb31003fa6e1ff6a6fac6ce3230765ec7bf494747fd9111b71a0",
+  "tasks": [
+    {
+      "run": "base_seed42",
+      "ids": [
+        "29"
+      ],
+      "task_indices": [
+        123
+      ],
+      "compile_timeout": 3600,
+      "num_processes": 4,
+      "grouping": "serial_native_build"
+    },
+    {
+      "run": "base_seed42",
+      "ids": [
+        "30"
+      ],
+      "task_indices": [
+        129
+      ],
+      "compile_timeout": 3600,
+      "num_processes": 4,
+      "grouping": "serial_native_build"
+    },
+    {
+      "run": "base_seed42",
+      "ids": [
+        "31"
+      ],
+      "task_indices": [
+        135
+      ],
+      "compile_timeout": 3600,
+      "num_processes": 4,
+      "grouping": "serial_native_build"
+    },
+    {
+      "run": "base_seed42",
+      "ids": [
+        "32"
+      ],
+      "task_indices": [
+        141
+      ],
+      "compile_timeout": 3600,
+      "num_processes": 4,
+      "grouping": "serial_native_build"
+    },
+    {
+      "run": "base_seed42",
+      "ids": [
+        "33"
+      ],
+      "task_indices": [
+        147
+      ],
+      "compile_timeout": 3600,
+      "num_processes": 4,
+      "grouping": "serial_native_build"
+    },
+    {
+      "run": "base_seed42",
+      "ids": [
+        "37"
+      ],
+      "task_indices": [
+        165
+      ],
+      "compile_timeout": 3600,
+      "num_processes": 4,
+      "grouping": "serial_native_build"
+    },
+    {
+      "run": "base_seed42",
+      "ids": [
+        "38"
+      ],
+      "task_indices": [
+        171
+      ],
+      "compile_timeout": 3600,
+      "num_processes": 4,
+      "grouping": "serial_native_build"
+    },
+    {
+      "run": "base_seed42",
+      "ids": [
+        "41"
+      ],
+      "task_indices": [
+        177
+      ],
+      "compile_timeout": 3600,
+      "num_processes": 4,
+      "grouping": "serial_native_build"
+    },
+    {
+      "run": "base_seed42",
+      "ids": [
+        "42"
+      ],
+      "task_indices": [
+        183
+      ],
+      "compile_timeout": 3600,
+      "num_processes": 4,
+      "grouping": "serial_native_build"
+    },
+    {
+      "run": "base_seed42",
+      "ids": [
+        "43"
+      ],
+      "task_indices": [
+        189
+      ],
+      "compile_timeout": 3600,
+      "num_processes": 4,
+      "grouping": "serial_native_build"
+    },
+    {
+      "run": "base_seed42",
+      "ids": [
+        "44"
+      ],
+      "task_indices": [
+        195
+      ],
+      "compile_timeout": 3600,
+      "num_processes": 4,
+      "grouping": "serial_native_build"
+    },
+    {
+      "run": "base_seed42",
+      "ids": [
+        "45"
+      ],
+      "task_indices": [
+        201
+      ],
+      "compile_timeout": 3600,
+      "num_processes": 4,
+      "grouping": "serial_native_build"
+    },
+    {
+      "run": "base_seed42",
+      "ids": [
+        "53",
+        "60",
+        "68"
+      ],
+      "task_indices": [
+        243,
+        249,
+        255
+      ],
+      "compile_timeout": 3600,
+      "num_processes": 4,
+      "grouping": "batched"
+    },
+    {
+      "run": "base_seed43",
+      "ids": [
+        "29"
+      ],
+      "task_indices": [
+        124
+      ],
+      "compile_timeout": 3600,
+      "num_processes": 4,
+      "grouping": "serial_native_build"
+    },
+    {
+      "run": "base_seed43",
+      "ids": [
+        "30"
+      ],
+      "task_indices": [
+        130
+      ],
+      "compile_timeout": 3600,
+      "num_processes": 4,
+      "grouping": "serial_native_build"
+    },
+    {
+      "run": "base_seed43",
+      "ids": [
+        "31"
+      ],
+      "task_indices": [
+        136
+      ],
+      "compile_timeout": 3600,
+      "num_processes": 4,
+      "grouping": "serial_native_build"
+    },
+    {
+      "run": "base_seed43",
+      "ids": [
+        "32"
+      ],
+      "task_indices": [
+        142
+      ],
+      "compile_timeout": 3600,
+      "num_processes": 4,
+      "grouping": "serial_native_build"
+    },
+    {
+      "run": "base_seed43",
+      "ids": [
+        "33"
+      ],
+      "task_indices": [
+        148
+      ],
+      "compile_timeout": 3600,
+      "num_processes": 4,
+      "grouping": "serial_native_build"
+    },
+    {
+      "run": "base_seed43",
+      "ids": [
+        "35"
+      ],
+      "task_indices": [
+        154
+      ],
+      "compile_timeout": 3600,
+      "num_processes": 4,
+      "grouping": "serial_native_build"
+    },
+    {
+      "run": "base_seed43",
+      "ids": [
+        "36"
+      ],
+      "task_indices": [
+        160
+      ],
+      "compile_timeout": 3600,
+      "num_processes": 4,
+      "grouping": "serial_native_build"
+    },
+    {
+      "run": "base_seed43",
+      "ids": [
+        "37"
+      ],
+      "task_indices": [
+        166
+      ],
+      "compile_timeout": 3600,
+      "num_processes": 4,
+      "grouping": "serial_native_build"
+    },
+    {
+      "run": "base_seed43",
+      "ids": [
+        "38"
+      ],
+      "task_indices": [
+        172
+      ],
+      "compile_timeout": 3600,
+      "num_processes": 4,
+      "grouping": "serial_native_build"
+    },
+    {
+      "run": "base_seed43",
+      "ids": [
+        "41"
+      ],
+      "task_indices": [
+        178
+      ],
+      "compile_timeout": 3600,
+      "num_processes": 4,
+      "grouping": "serial_native_build"
+    },
+    {
+      "run": "base_seed43",
+      "ids": [
+        "42"
+      ],
+      "task_indices": [
+        184
+      ],
+      "compile_timeout": 3600,
+      "num_processes": 4,
+      "grouping": "serial_native_build"
+    },
+    {
+      "run": "base_seed43",
+      "ids": [
+        "43"
+      ],
+      "task_indices": [
+        190
+      ],
+      "compile_timeout": 3600,
+      "num_processes": 4,
+      "grouping": "serial_native_build"
+    },
+    {
+      "run": "base_seed43",
+      "ids": [
+        "44"
+      ],
+      "task_indices": [
+        196
+      ],
+      "compile_timeout": 3600,
+      "num_processes": 4,
+      "grouping": "serial_native_build"
+    },
+    {
+      "run": "base_seed43",
+      "ids": [
+        "45"
+      ],
+      "task_indices": [
+        202
+      ],
+      "compile_timeout": 3600,
+      "num_processes": 4,
+      "grouping": "serial_native_build"
+    },
+    {
+      "run": "base_seed43",
+      "ids": [
+        "28",
+        "47",
+        "48",
+        "49"
+      ],
+      "task_indices": [
+        118,
+        208,
+        214,
+        220
+      ],
+      "compile_timeout": 3600,
+      "num_processes": 4,
+      "grouping": "batched"
+    },
+    {
+      "run": "base_seed43",
+      "ids": [
+        "50",
+        "51",
+        "52",
+        "53"
+      ],
+      "task_indices": [
+        226,
+        232,
+        238,
+        244
+      ],
+      "compile_timeout": 3600,
+      "num_processes": 4,
+      "grouping": "batched"
+    },
+    {
+      "run": "base_seed43",
+      "ids": [
+        "60",
+        "68"
+      ],
+      "task_indices": [
+        250,
+        256
+      ],
+      "compile_timeout": 3600,
+      "num_processes": 4,
+      "grouping": "batched"
+    },
+    {
+      "run": "base_seed44",
+      "ids": [
+        "29"
+      ],
+      "task_indices": [
+        125
+      ],
+      "compile_timeout": 3600,
+      "num_processes": 4,
+      "grouping": "serial_native_build"
+    },
+    {
+      "run": "base_seed44",
+      "ids": [
+        "30"
+      ],
+      "task_indices": [
+        131
+      ],
+      "compile_timeout": 3600,
+      "num_processes": 4,
+      "grouping": "serial_native_build"
+    },
+    {
+      "run": "base_seed44",
+      "ids": [
+        "31"
+      ],
+      "task_indices": [
+        137
+      ],
+      "compile_timeout": 3600,
+      "num_processes": 4,
+      "grouping": "serial_native_build"
+    },
+    {
+      "run": "base_seed44",
+      "ids": [
+        "32"
+      ],
+      "task_indices": [
+        143
+      ],
+      "compile_timeout": 3600,
+      "num_processes": 4,
+      "grouping": "serial_native_build"
+    },
+    {
+      "run": "base_seed44",
+      "ids": [
+        "33"
+      ],
+      "task_indices": [
+        149
+      ],
+      "compile_timeout": 3600,
+      "num_processes": 4,
+      "grouping": "serial_native_build"
+    },
+    {
+      "run": "base_seed44",
+      "ids": [
+        "35"
+      ],
+      "task_indices": [
+        155
+      ],
+      "compile_timeout": 3600,
+      "num_processes": 4,
+      "grouping": "serial_native_build"
+    },
+    {
+      "run": "base_seed44",
+      "ids": [
+        "36"
+      ],
+      "task_indices": [
+        161
+      ],
+      "compile_timeout": 3600,
+      "num_processes": 4,
+      "grouping": "serial_native_build"
+    },
+    {
+      "run": "base_seed44",
+      "ids": [
+        "37"
+      ],
+      "task_indices": [
+        167
+      ],
+      "compile_timeout": 3600,
+      "num_processes": 4,
+      "grouping": "serial_native_build"
+    },
+    {
+      "run": "base_seed44",
+      "ids": [
+        "38"
+      ],
+      "task_indices": [
+        173
+      ],
+      "compile_timeout": 3600,
+      "num_processes": 4,
+      "grouping": "serial_native_build"
+    },
+    {
+      "run": "base_seed44",
+      "ids": [
+        "41"
+      ],
+      "task_indices": [
+        179
+      ],
+      "compile_timeout": 3600,
+      "num_processes": 4,
+      "grouping": "serial_native_build"
+    },
+    {
+      "run": "base_seed44",
+      "ids": [
+        "42"
+      ],
+      "task_indices": [
+        185
+      ],
+      "compile_timeout": 3600,
+      "num_processes": 4,
+      "grouping": "serial_native_build"
+    },
+    {
+      "run": "base_seed44",
+      "ids": [
+        "43"
+      ],
+      "task_indices": [
+        191
+      ],
+      "compile_timeout": 3600,
+      "num_processes": 4,
+      "grouping": "serial_native_build"
+    },
+    {
+      "run": "base_seed44",
+      "ids": [
+        "44"
+      ],
+      "task_indices": [
+        197
+      ],
+      "compile_timeout": 3600,
+      "num_processes": 4,
+      "grouping": "serial_native_build"
+    },
+    {
+      "run": "base_seed44",
+      "ids": [
+        "45"
+      ],
+      "task_indices": [
+        203
+      ],
+      "compile_timeout": 3600,
+      "num_processes": 4,
+      "grouping": "serial_native_build"
+    },
+    {
+      "run": "base_seed44",
+      "ids": [
+        "23",
+        "24",
+        "26",
+        "27"
+      ],
+      "task_indices": [
+        95,
+        101,
+        107,
+        113
+      ],
+      "compile_timeout": 3600,
+      "num_processes": 4,
+      "grouping": "batched"
+    },
+    {
+      "run": "base_seed44",
+      "ids": [
+        "28",
+        "47",
+        "48",
+        "49"
+      ],
+      "task_indices": [
+        119,
+        209,
+        215,
+        221
+      ],
+      "compile_timeout": 3600,
+      "num_processes": 4,
+      "grouping": "batched"
+    },
+    {
+      "run": "base_seed44",
+      "ids": [
+        "50",
+        "51",
+        "52",
+        "53"
+      ],
+      "task_indices": [
+        227,
+        233,
+        239,
+        245
+      ],
+      "compile_timeout": 3600,
+      "num_processes": 4,
+      "grouping": "batched"
+    },
+    {
+      "run": "base_seed44",
+      "ids": [
+        "60",
+        "68"
+      ],
+      "task_indices": [
+        251,
+        257
+      ],
+      "compile_timeout": 3600,
+      "num_processes": 4,
+      "grouping": "batched"
+    },
+    {
+      "run": "full_seed42",
+      "ids": [
+        "29"
+      ],
+      "task_indices": [
+        120
+      ],
+      "compile_timeout": 3600,
+      "num_processes": 4,
+      "grouping": "serial_native_build"
+    },
+    {
+      "run": "full_seed42",
+      "ids": [
+        "30"
+      ],
+      "task_indices": [
+        126
+      ],
+      "compile_timeout": 3600,
+      "num_processes": 4,
+      "grouping": "serial_native_build"
+    },
+    {
+      "run": "full_seed42",
+      "ids": [
+        "31"
+      ],
+      "task_indices": [
+        132
+      ],
+      "compile_timeout": 3600,
+      "num_processes": 4,
+      "grouping": "serial_native_build"
+    },
+    {
+      "run": "full_seed42",
+      "ids": [
+        "32"
+      ],
+      "task_indices": [
+        138
+      ],
+      "compile_timeout": 3600,
+      "num_processes": 4,
+      "grouping": "serial_native_build"
+    },
+    {
+      "run": "full_seed42",
+      "ids": [
+        "33"
+      ],
+      "task_indices": [
+        144
+      ],
+      "compile_timeout": 3600,
+      "num_processes": 4,
+      "grouping": "serial_native_build"
+    },
+    {
+      "run": "full_seed42",
+      "ids": [
+        "35"
+      ],
+      "task_indices": [
+        150
+      ],
+      "compile_timeout": 3600,
+      "num_processes": 4,
+      "grouping": "serial_native_build"
+    },
+    {
+      "run": "full_seed42",
+      "ids": [
+        "36"
+      ],
+      "task_indices": [
+        156
+      ],
+      "compile_timeout": 3600,
+      "num_processes": 4,
+      "grouping": "serial_native_build"
+    },
+    {
+      "run": "full_seed42",
+      "ids": [
+        "37"
+      ],
+      "task_indices": [
+        162
+      ],
+      "compile_timeout": 3600,
+      "num_processes": 4,
+      "grouping": "serial_native_build"
+    },
+    {
+      "run": "full_seed42",
+      "ids": [
+        "38"
+      ],
+      "task_indices": [
+        168
+      ],
+      "compile_timeout": 3600,
+      "num_processes": 4,
+      "grouping": "serial_native_build"
+    },
+    {
+      "run": "full_seed42",
+      "ids": [
+        "41"
+      ],
+      "task_indices": [
+        174
+      ],
+      "compile_timeout": 3600,
+      "num_processes": 4,
+      "grouping": "serial_native_build"
+    },
+    {
+      "run": "full_seed42",
+      "ids": [
+        "42"
+      ],
+      "task_indices": [
+        180
+      ],
+      "compile_timeout": 3600,
+      "num_processes": 4,
+      "grouping": "serial_native_build"
+    },
+    {
+      "run": "full_seed42",
+      "ids": [
+        "43"
+      ],
+      "task_indices": [
+        186
+      ],
+      "compile_timeout": 3600,
+      "num_processes": 4,
+      "grouping": "serial_native_build"
+    },
+    {
+      "run": "full_seed42",
+      "ids": [
+        "44"
+      ],
+      "task_indices": [
+        192
+      ],
+      "compile_timeout": 3600,
+      "num_processes": 4,
+      "grouping": "serial_native_build"
+    },
+    {
+      "run": "full_seed42",
+      "ids": [
+        "45"
+      ],
+      "task_indices": [
+        198
+      ],
+      "compile_timeout": 3600,
+      "num_processes": 4,
+      "grouping": "serial_native_build"
+    },
+    {
+      "run": "full_seed42",
+      "ids": [
+        "24",
+        "26",
+        "27",
+        "28"
+      ],
+      "task_indices": [
+        96,
+        102,
+        108,
+        114
+      ],
+      "compile_timeout": 3600,
+      "num_processes": 4,
+      "grouping": "batched"
+    },
+    {
+      "run": "full_seed42",
+      "ids": [
+        "47",
+        "48",
+        "49",
+        "50"
+      ],
+      "task_indices": [
+        204,
+        210,
+        216,
+        222
+      ],
+      "compile_timeout": 3600,
+      "num_processes": 4,
+      "grouping": "batched"
+    },
+    {
+      "run": "full_seed42",
+      "ids": [
+        "51",
+        "52",
+        "53",
+        "60"
+      ],
+      "task_indices": [
+        228,
+        234,
+        240,
+        246
+      ],
+      "compile_timeout": 3600,
+      "num_processes": 4,
+      "grouping": "batched"
+    },
+    {
+      "run": "full_seed42",
+      "ids": [
+        "68"
+      ],
+      "task_indices": [
+        252
+      ],
+      "compile_timeout": 3600,
+      "num_processes": 4,
+      "grouping": "batched"
+    },
+    {
+      "run": "full_seed43",
+      "ids": [
+        "29"
+      ],
+      "task_indices": [
+        121
+      ],
+      "compile_timeout": 3600,
+      "num_processes": 4,
+      "grouping": "serial_native_build"
+    },
+    {
+      "run": "full_seed43",
+      "ids": [
+        "30"
+      ],
+      "task_indices": [
+        127
+      ],
+      "compile_timeout": 3600,
+      "num_processes": 4,
+      "grouping": "serial_native_build"
+    },
+    {
+      "run": "full_seed43",
+      "ids": [
+        "31"
+      ],
+      "task_indices": [
+        133
+      ],
+      "compile_timeout": 3600,
+      "num_processes": 4,
+      "grouping": "serial_native_build"
+    },
+    {
+      "run": "full_seed43",
+      "ids": [
+        "32"
+      ],
+      "task_indices": [
+        139
+      ],
+      "compile_timeout": 3600,
+      "num_processes": 4,
+      "grouping": "serial_native_build"
+    },
+    {
+      "run": "full_seed43",
+      "ids": [
+        "33"
+      ],
+      "task_indices": [
+        145
+      ],
+      "compile_timeout": 3600,
+      "num_processes": 4,
+      "grouping": "serial_native_build"
+    },
+    {
+      "run": "full_seed43",
+      "ids": [
+        "35"
+      ],
+      "task_indices": [
+        151
+      ],
+      "compile_timeout": 3600,
+      "num_processes": 4,
+      "grouping": "serial_native_build"
+    },
+    {
+      "run": "full_seed43",
+      "ids": [
+        "36"
+      ],
+      "task_indices": [
+        157
+      ],
+      "compile_timeout": 3600,
+      "num_processes": 4,
+      "grouping": "serial_native_build"
+    },
+    {
+      "run": "full_seed43",
+      "ids": [
+        "37"
+      ],
+      "task_indices": [
+        163
+      ],
+      "compile_timeout": 3600,
+      "num_processes": 4,
+      "grouping": "serial_native_build"
+    },
+    {
+      "run": "full_seed43",
+      "ids": [
+        "38"
+      ],
+      "task_indices": [
+        169
+      ],
+      "compile_timeout": 3600,
+      "num_processes": 4,
+      "grouping": "serial_native_build"
+    },
+    {
+      "run": "full_seed43",
+      "ids": [
+        "41"
+      ],
+      "task_indices": [
+        175
+      ],
+      "compile_timeout": 3600,
+      "num_processes": 4,
+      "grouping": "serial_native_build"
+    },
+    {
+      "run": "full_seed43",
+      "ids": [
+        "42"
+      ],
+      "task_indices": [
+        181
+      ],
+      "compile_timeout": 3600,
+      "num_processes": 4,
+      "grouping": "serial_native_build"
+    },
+    {
+      "run": "full_seed43",
+      "ids": [
+        "43"
+      ],
+      "task_indices": [
+        187
+      ],
+      "compile_timeout": 3600,
+      "num_processes": 4,
+      "grouping": "serial_native_build"
+    },
+    {
+      "run": "full_seed43",
+      "ids": [
+        "44"
+      ],
+      "task_indices": [
+        193
+      ],
+      "compile_timeout": 3600,
+      "num_processes": 4,
+      "grouping": "serial_native_build"
+    },
+    {
+      "run": "full_seed43",
+      "ids": [
+        "45"
+      ],
+      "task_indices": [
+        199
+      ],
+      "compile_timeout": 3600,
+      "num_processes": 4,
+      "grouping": "serial_native_build"
+    },
+    {
+      "run": "full_seed43",
+      "ids": [
+        "24",
+        "26",
+        "27",
+        "28"
+      ],
+      "task_indices": [
+        97,
+        103,
+        109,
+        115
+      ],
+      "compile_timeout": 3600,
+      "num_processes": 4,
+      "grouping": "batched"
+    },
+    {
+      "run": "full_seed43",
+      "ids": [
+        "47",
+        "48",
+        "49",
+        "50"
+      ],
+      "task_indices": [
+        205,
+        211,
+        217,
+        223
+      ],
+      "compile_timeout": 3600,
+      "num_processes": 4,
+      "grouping": "batched"
+    },
+    {
+      "run": "full_seed43",
+      "ids": [
+        "51",
+        "52",
+        "53",
+        "60"
+      ],
+      "task_indices": [
+        229,
+        235,
+        241,
+        247
+      ],
+      "compile_timeout": 3600,
+      "num_processes": 4,
+      "grouping": "batched"
+    },
+    {
+      "run": "full_seed43",
+      "ids": [
+        "68"
+      ],
+      "task_indices": [
+        253
+      ],
+      "compile_timeout": 3600,
+      "num_processes": 4,
+      "grouping": "batched"
+    },
+    {
+      "run": "full_seed44",
+      "ids": [
+        "29"
+      ],
+      "task_indices": [
+        122
+      ],
+      "compile_timeout": 3600,
+      "num_processes": 4,
+      "grouping": "serial_native_build"
+    },
+    {
+      "run": "full_seed44",
+      "ids": [
+        "30"
+      ],
+      "task_indices": [
+        128
+      ],
+      "compile_timeout": 3600,
+      "num_processes": 4,
+      "grouping": "serial_native_build"
+    },
+    {
+      "run": "full_seed44",
+      "ids": [
+        "31"
+      ],
+      "task_indices": [
+        134
+      ],
+      "compile_timeout": 3600,
+      "num_processes": 4,
+      "grouping": "serial_native_build"
+    },
+    {
+      "run": "full_seed44",
+      "ids": [
+        "32"
+      ],
+      "task_indices": [
+        140
+      ],
+      "compile_timeout": 3600,
+      "num_processes": 4,
+      "grouping": "serial_native_build"
+    },
+    {
+      "run": "full_seed44",
+      "ids": [
+        "33"
+      ],
+      "task_indices": [
+        146
+      ],
+      "compile_timeout": 3600,
+      "num_processes": 4,
+      "grouping": "serial_native_build"
+    },
+    {
+      "run": "full_seed44",
+      "ids": [
+        "35"
+      ],
+      "task_indices": [
+        152
+      ],
+      "compile_timeout": 3600,
+      "num_processes": 4,
+      "grouping": "serial_native_build"
+    },
+    {
+      "run": "full_seed44",
+      "ids": [
+        "36"
+      ],
+      "task_indices": [
+        158
+      ],
+      "compile_timeout": 3600,
+      "num_processes": 4,
+      "grouping": "serial_native_build"
+    },
+    {
+      "run": "full_seed44",
+      "ids": [
+        "37"
+      ],
+      "task_indices": [
+        164
+      ],
+      "compile_timeout": 3600,
+      "num_processes": 4,
+      "grouping": "serial_native_build"
+    },
+    {
+      "run": "full_seed44",
+      "ids": [
+        "38"
+      ],
+      "task_indices": [
+        170
+      ],
+      "compile_timeout": 3600,
+      "num_processes": 4,
+      "grouping": "serial_native_build"
+    },
+    {
+      "run": "full_seed44",
+      "ids": [
+        "41"
+      ],
+      "task_indices": [
+        176
+      ],
+      "compile_timeout": 3600,
+      "num_processes": 4,
+      "grouping": "serial_native_build"
+    },
+    {
+      "run": "full_seed44",
+      "ids": [
+        "42"
+      ],
+      "task_indices": [
+        182
+      ],
+      "compile_timeout": 3600,
+      "num_processes": 4,
+      "grouping": "serial_native_build"
+    },
+    {
+      "run": "full_seed44",
+      "ids": [
+        "43"
+      ],
+      "task_indices": [
+        188
+      ],
+      "compile_timeout": 3600,
+      "num_processes": 4,
+      "grouping": "serial_native_build"
+    },
+    {
+      "run": "full_seed44",
+      "ids": [
+        "44"
+      ],
+      "task_indices": [
+        194
+      ],
+      "compile_timeout": 3600,
+      "num_processes": 4,
+      "grouping": "serial_native_build"
+    },
+    {
+      "run": "full_seed44",
+      "ids": [
+        "45"
+      ],
+      "task_indices": [
+        200
+      ],
+      "compile_timeout": 3600,
+      "num_processes": 4,
+      "grouping": "serial_native_build"
+    },
+    {
+      "run": "full_seed44",
+      "ids": [
+        "24",
+        "26",
+        "27",
+        "28"
+      ],
+      "task_indices": [
+        98,
+        104,
+        110,
+        116
+      ],
+      "compile_timeout": 3600,
+      "num_processes": 4,
+      "grouping": "batched"
+    },
+    {
+      "run": "full_seed44",
+      "ids": [
+        "47",
+        "48",
+        "49",
+        "50"
+      ],
+      "task_indices": [
+        206,
+        212,
+        218,
+        224
+      ],
+      "compile_timeout": 3600,
+      "num_processes": 4,
+      "grouping": "batched"
+    },
+    {
+      "run": "full_seed44",
+      "ids": [
+        "51",
+        "52",
+        "53",
+        "60"
+      ],
+      "task_indices": [
+        230,
+        236,
+        242,
+        248
+      ],
+      "compile_timeout": 3600,
+      "num_processes": 4,
+      "grouping": "batched"
+    },
+    {
+      "run": "full_seed44",
+      "ids": [
+        "68"
+      ],
+      "task_indices": [
+        254
+      ],
+      "compile_timeout": 3600,
+      "num_processes": 4,
+      "grouping": "batched"
+    }
+  ],
+  "compile_timeout_note": "Remaining attempts use the extended frozen compile limit 3600s. The 110 attempts already successful used 1200s. A pandas build measured 1054s of 1200s (job 2979), so the 1200s limit was the cause of the Error: compile results, not the patches. The limit bounds infrastructure failure only and does not alter a compile that succeeds."
+}

@@ -1,0 +1,141 @@
+{
+  "bug_id": "52",
+  "seed": 42,
+  "arm": "base",
+  "candidates": [
+    {
+      "index": 0,
+      "patch_text": "def get_new_command(command, settings):\n    if not command.is_stageable:\n        return None\n    if command.is_tracked:\n        return 'git diff'\n    else:\n        return 'git diff --staged'",
+      "patch_sha256": "57a947d79ac1e000a7b64ec4bbfbb064cf5611cf65bc2aa48c151368f4949f4e",
+      "rank_score": 160,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8850407915843882,
+      "top_p": 0.7720008604178135
+    },
+    {
+      "index": 1,
+      "patch_text": "def get_new_command(command, settings):\n    return '{} -s'.format(command.script)",
+      "patch_sha256": "2277818bacb3689a3835c6cc3acad774a778f39ce457f29247f20acb179700f5",
+      "rank_score": 156,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8850407915843882,
+      "top_p": 0.7720008604178135
+    },
+    {
+      "index": 2,
+      "patch_text": "def get_new_command(command, settings):\n    return 'git diff --staged'.format(command.script)",
+      "patch_sha256": "4dc64b34e7516ff867e64119e2e34ecfb59ccb701e307422dd4d27a50fa9265a",
+      "rank_score": 156,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7822854872415247,
+      "top_p": 0.8778568590519058
+    },
+    {
+      "index": 3,
+      "patch_text": "def get_new_command(command, settings):\n    return '{}'.format(command.script)",
+      "patch_sha256": "54abe55b8d3ef354e3ba9f82036cc8c0857ce3eeef83a763a1c9a6f3063f7bd2",
+      "rank_score": 155,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8850407915843882,
+      "top_p": 0.7720008604178135
+    },
+    {
+      "index": 4,
+      "patch_text": "def get_new_command(command, settings):\n    return '{} {}'.format(command.script, '--staged')",
+      "patch_sha256": "6ae46964443f663b744b49ab78bcb6b8b974d185de572a126ba09790633cdd8b",
+      "rank_score": 153,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.5106412196441554,
+      "top_p": 0.9620023454695296
+    },
+    {
+      "index": 5,
+      "patch_text": "def get_new_command(command, settings):\n    return command.script",
+      "patch_sha256": "216982ea35997bfb35128a2552b84e7975bfde6499ba4ddad5bee2fc4d7a0b2e",
+      "rank_score": 151,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8089233151013046,
+      "top_p": 0.9111541438766307
+    },
+    {
+      "index": 6,
+      "patch_text": "def get_new_command(command, settings):\n    return''.join([command.script, '--staged'])",
+      "patch_sha256": "1d749ba6b4c6d7ac0f815d97e28489a015e0f859f9c356fb385b990cb3597a19",
+      "rank_score": 150,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8089233151013046,
+      "top_p": 0.9111541438766307
+    },
+    {
+      "index": 7,
+      "patch_text": "def get_new_command(command, settings):\n    return command.script +'--staged'",
+      "patch_sha256": "ada2924eab8d246bdd71974baf0d8d03960f402c1d75cf84b9b3d9f17d4bd338",
+      "rank_score": 149,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8850407915843882,
+      "top_p": 0.7720008604178135
+    },
+    {
+      "index": 8,
+      "patch_text": "def get_new_command(command, settings):\n    return '{} --staged'.format(command.script)",
+      "patch_sha256": "b4666d8b46904af189d077f88c07b39028d673b75bb5781db8763927f4efd5e1",
+      "rank_score": 143,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.0,
+      "top_p": 1.0
+    },
+    {
+      "index": 9,
+      "patch_text": "def get_new_command(command, settings):\n    if command.script == 'git commit':\n        return 'git commit --amend'\n    else:\n        return '{} --staged'.format(command.script)",
+      "patch_sha256": "1d1a2d607a6f0b3b5fb5508ae622f44309e6d0157a09b4973f55877f1b62b290",
+      "rank_score": 139,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.5106412196441554,
+      "top_p": 0.9620023454695296
+    }
+  ],
+  "candidate_count": 10,
+  "retrieved_examples": [],
+  "diffusion_plan": [],
+  "static_analysis_nodes": []
+}

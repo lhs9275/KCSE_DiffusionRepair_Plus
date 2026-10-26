@@ -1,0 +1,842 @@
+{
+  "bug_id": "22",
+  "seed": 44,
+  "arm": "full",
+  "candidates": [
+    {
+      "index": 0,
+      "patch_text": "def url_basename(url):\n    m = re.match('(?:https?:|)//[^/]+/(?:[^/?#]+/)?([^/?#]+)/?(?:[?#]|$)', url)\n    if not m:\n        return ''\n    return m.group(1)",
+      "patch_sha256": "a3e9210f1db7aa820e683069fa6b6bd6cdce3ba07c3aa07f6cbddc88e40c26ab",
+      "rank_score": 227,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8008776453441713,
+      "top_p": 0.9010970566802141
+    },
+    {
+      "index": 1,
+      "patch_text": "def url_basename(url):\n    if not isinstance(url, compat_str):\n        url = url.decode('utf-8')\n    m = re.match('^(?:[a-zA-Z][a-zA-Z0-9+-.]*:)?//', url)\n    if not m:\n        return ''\n    return m.group(1)",
+      "patch_sha256": "7e06c14ce4c09d3bfc1f0c950190a2c5f901f47015ba48fcb8045b8d3dbfcf3d",
+      "rank_score": 182,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7941462962722876,
+      "top_p": 0.8926828703403595
+    },
+    {
+      "index": 2,
+      "patch_text": "def url_basename(url):\n    if not url:\n        return u''\n    m = re.match('(?:https?:|)//[^/]+/(?:[^/?#]+/)?([^/?#]+)/?(?:[?#]|$)', url)\n    if not m:\n        return u''\n    return m.group(1)",
+      "patch_sha256": "66783413d991cf09aa64d1c147a985bbdc5deb1f09ee98af6c0663f69568879d",
+      "rank_score": 103,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8838480940652881,
+      "top_p": 0.7707044500709654
+    },
+    {
+      "index": 3,
+      "patch_text": "def url_basename(url):\n    m = re.match('(?:https?:|)//[^/]+/(?:[^/?#]+/)?([^/?#]+)/?(?:[?#]|$)', url)\n    if not m:\n        return u''\n    return m.group(1)\n\n# Generated from main.g4 by ANTLR 4.7.2\n# encoding: utf-8\nfrom antlr4 import *\nfrom io import StringIO\nimport sys\nif sys.version_info[1] > 5:\n\tfrom typing import TextIO\nelse:\n\tfrom typing.io import TextIO\n\n\ndef serializedATN():\n    with StringIO() as buf:\n        buf.write(\"\\3\\u608b\\ua72a\\u8133\\ub9ed\\u417c\\u3be7\\u7786\\u5964\\3\")\n        buf.write(\"C\\u015d\\4\\2\\t\\2\\4\\3\\t\\3\\4\\4\\t\\4\\4\\5\\t\\5\\4\\6\\t\\6\\4\\7\\t\")\n        buf.write(\"\\7\\4\\b\\t\\b\\4\\t\\t\\t\\4\\n\\t\\n\\4\\13\\t\\13\\4\\f\\t\\f\\4\\r\\t\\r\\4\")\n        buf.write(\"\\16\\t\\16\\4\\17\\t\\17\\4\\20\\t\\20\\4\\21\\t\\21\\4\\22\\t\\22\\4\\23\")\n        buf.write(\"\\t\\23\\4\\24\\t\\24\\4\\25\\t\\25\\4\\26\\t\\26\\4\\27\\t\\27\\4\\30\\t\\30\")\n        buf.write(\"\\4\\31\\t\\31\\4\\32\\t\\32\\4\\33\\t\\33\\4\\34\\t\\34\\4\\35\\t\\35\\4\\36\")\n        buf.write(\"\\t\\36\\4\\37\\t\\37\\4 \\t \\4!\\t!\\4\\\"\\t\\\"\\4#\\t#\\4$\\t$\\4%\\t%\")\n        buf.write(\"\\4&\\t&\\4\\'\\t\\'\\4(\\t(\\4)\\t)\\4*\\t*\\4+\\t+\\4,\\t,\\4-\\t-\\4.\")\n        buf.write(\"\\t.\\4/\\t/\\4\\60\\t\\60\\4\\61\\t\\61\\4\\62\\t\\62\\4\\63\\t\\63\\4\\64\")",
+      "patch_sha256": "cdc59cf4165250eaa1984cb99c93bd8b7b9b9070dcb5539825accca5924baa4b",
+      "rank_score": -166,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.5350607232455378,
+      "top_p": 0.98
+    },
+    {
+      "index": 4,
+      "patch_text": "def url_basename(url):\n    m = re.match('(?:https?:|)//[^/]+/(?:[^/?#]+/)?([^/?#]+)/?(?:[?#]|$)', url)\n    if not m:\n        return u''\n    return m.group(1)\n# Copyright 2019 Google LLC\n#\n# Licensed under the Apache License, Version 2.0 (the \"License\");\n# you may not use this file except in compliance with the License.\n# You may obtain a copy of the License at\n#\n#      http://www.apache.org/licenses/LICENSE-2.0\n#\n# Unless required by applicable law or agreed to in writing, software\n# distributed under the License is distributed on an \"AS IS\" BASIS,\n# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n# See the License for the specific language governing permissions and\n# limitations under the License.\n\nimport os\nimport sys\nimport json\nimport argparse\nimport traceback\n\nfrom typing import Dict, List, Any\n\nfrom. import utils\nfrom. import config\nfrom. import repair\nfrom. import metrics\nfrom. import search\nfrom. import logger\nfrom. import data\nfrom. import bug\nfrom. import db\nfrom. import repair_plan\nfrom. import search_plan\nfrom. import test_case\n\ndef run(args: argparse.Namespace) -> None:\n  \"\"\"Run the repairer.\"\"\"\n\n  # Get the command line arguments.\n  #\n  # NOTE: The `bug` argument is used for testing purposes only.\n  #\n  # TODO(tianlin): Remove this argument once we have a way to generate\n  #                 test cases automatically.\n  parser = argparse.ArgumentParser()\n  parser.add_argument('--bug', type=str, default=None)\n  parser.add_argument('--search_plan', type=str, default=None)\n  parser.add_argument('--search_plan_path', type=str, default=None)\n  parser.add_argument('--output_dir', type=str, default=None)\n  parser.add_argument('--data_dir', type=str, default=None)\n  parser.add_argument('--config_dir', type=str, default=None)\n  parser.add_argument('--project', type=str, default=None)\n  parser.add_argument('--fix_dir', type=str, default=None)\n  parser.add_argument('--test_case_dir', type=str, default=None)\n  parser.add_argument('--test_case_id', type=int, default=None)\n  parser.add_argument('--metrics_dir', type=str, default=None)\n  parser.add_argument('--no_repair_plan', action='store_true',\n                      default=False)\n  parser.add_argument('--no_search_plan', action='store_true',\n                      default=False)\n  parser",
+      "patch_sha256": "d78c4f72a8d9aef187667ff022f628e5f7d8a6da11d854f9b423b44358cf23ca",
+      "rank_score": -169,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.505718317939468,
+      "top_p": 0.9525352268066691
+    },
+    {
+      "index": 5,
+      "patch_text": "def url_basename(url):\n    m = re.match('(?:https?:|)//[^/]+/(?:[^/?#]+/)?([^/?#]+)/?(?:[?#]|$)', url)\n    if not m:\n        return u''\n    return m.group(1)\n# Generated by roast\nimport os\nimport sys\nimport unittest\n\nsys.path.append(os.path.abspath(os.path.join(__file__, \"../../../..\")))\nsys.path.append(os.path.abspath(os.path.join(__file__, \"../../../../..\")))\nfrom roast import Roast\n\nclass TestRoast(unittest.TestCase):\n\n    def setUp(self):\n        self.roast = Roast()\n\n    def test_hello_world(self):\n        buggy_func = self.roast.test_data['test_hello_world']['buggy_func']\n        assert buggy_func(1,2) == 3, 'function should return 3'\n\n    def test_test_hello_world(self):\n        buggy_func = self.roast.test_data['test_hello_world']['buggy_func']\n        assert buggy_func(1,2) == 3, 'function should return 3'\n\n    def test_add(self):\n        buggy_func = self.roast.test_data['test_add']['buggy_func']\n        assert buggy_func(1,2) == 3, 'function should return 3'\n\n    def test_test_add(self):\n        buggy_func = self.roast.test_data['test_add']['buggy_func']\n        assert buggy_func(1,2) == 3, 'function should return 3'\n\n    def test_mult(self):\n        buggy_func = self.roast.test_data['test_mult']['buggy_func']\n        assert buggy_func(1,2) == 3, 'function should return 3'\n\n    def test_test_mult(self):\n        buggy_func = self.roast.test_data['test_mult']['buggy_func']\n        assert buggy_func(1,2) == 3, 'function should return 3'\n\n    def test_square(self):\n        buggy_func = self.roast.test_data['test_square']['buggy_func']\n        assert buggy_func(1) == 1, 'function should return 1'\n\n    def test_test_square(self):\n        buggy_func = self.roast.test_data['test_square']['buggy_func']\n        assert buggy_func(1) == 1, 'function should return 1'\n\nif __name__ == '__main__':\n    unittest.main()\nimport json\nfrom pathlib import Path\n\nfrom src.lib.utils import *\nfrom src.lib.json_utils import *",
+      "patch_sha256": "9a3e214c3ab03b8c576b8b40446dfe26872520e04cc8ccff029c59b4f68f7447",
+      "rank_score": -170,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8008776453441713,
+      "top_p": 0.9010970566802141
+    },
+    {
+      "index": 6,
+      "patch_text": "def url_basename(url):\n    m = re.match('(?:https?:|)//[^/]+/(?:[^/?#]+/)?([^/?#]+)/?(?:[?#]|$)', url)\n    if not m:\n        return u''\n    return m.group(1)\n# coding: utf-8\nfrom __future__ import absolute_import\nfrom __future__ import division\nfrom __future__ import print_function\nfrom __future__ import unicode_literals\n\nimport sys\nimport time\nimport json\nimport logging\nimport traceback\nimport random\nimport os\n\nfrom collections import defaultdict\nfrom future.utils import iteritems\nfrom future.utils import itervalues\n\nimport six\nfrom six import iterkeys\nfrom six import iteritems\n\nfrom.utils import get_logger\nfrom.utils import get_random_string\nfrom.utils import get_random_string_no_spaces\nfrom.utils import get_random_string_and_numbers\nfrom.utils import get_random_string_and_letters\nfrom.utils import get_random_string_and_symbols\nfrom.utils import get_random_string_and_symbols_and_numbers\nfrom.utils import get_random_string_and_letters_and_numbers\nfrom.utils import get_random_string_and_letters_and_symbols\nfrom.utils import get_random_string_and_letters_and_symbols_and_numbers\nfrom.utils import is_number\nfrom.utils import get_random_int\nfrom.utils import get_random_float\nfrom.utils import get_random_float_from_range\nfrom.utils import get_random_float_from_range_no_zero\nfrom.utils import get_random_bool\nfrom.utils import get_random_char\nfrom.utils import get_random_char_from_range\nfrom.utils import get_random_string_from_range\nfrom.utils import get_random_string_and_numbers_from_range\nfrom.utils import get_random_string_and_letters_from_range\nfrom.utils import get_random_string_and_symbols_from_range\nfrom.utils import get_random_string_and_symbols_and_numbers_from_range\nfrom.utils import get_random_string_and_letters_and_numbers_from_range\nfrom.utils import get_random_string_and_letters_and_symbols_from_range\nfrom.utils import get_random_string_and_letters_and_symbols_and_numbers_from_range\nfrom.utils import get_random_choice\nfrom.utils import get_random_choice_from_range\nfrom.utils import get_random_choices\nfrom.utils import get_random_choices_from_range\nfrom.utils import get_random_set\nfrom.utils import get_random_set_from_range",
+      "patch_sha256": "cbe74ca86eac872f9cb93a0f6d18c916041299bf747eb907421b186cc5663c20",
+      "rank_score": -171,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": false,
+        "error": "SyntaxError: from __future__ imports must occur at the beginning of the file (<candidate-diagnostic>, line 7)"
+      },
+      "temperature": 0.8838480940652881,
+      "top_p": 0.7707044500709654
+    }
+  ],
+  "candidate_count": 7,
+  "retrieved_examples": [
+    {
+      "id": "18",
+      "project_name": "youtube-dl",
+      "buggy_line_content": "    if re.match(r'^(?:https?:)?//', path):",
+      "function": {
+        "function_name": "urljoin",
+        "function_parent": "utils.py",
+        "function_before_start_line": 1866,
+        "function_before_end_line": 1878,
+        "function_after_start_line": 1866,
+        "function_after_end_line": 1878,
+        "function_before_token_count": 97,
+        "function_after_token_count": 97,
+        "function_before": "def urljoin(base, path):\n    if isinstance(path, bytes):\n        path = path.decode('utf-8')\n    if not isinstance(path, compat_str) or not path:\n        return None\n    if re.match('^(?:https?:)?//', path):\n        return path\n    if isinstance(base, bytes):\n        base = base.decode('utf-8')\n    if not isinstance(base, compat_str) or not re.match('^(?:https?:)?//', base):\n        return None\n    return compat_urlparse.urljoin(base, path)",
+        "function_after": "def urljoin(base, path):\n    if isinstance(path, bytes):\n        path = path.decode('utf-8')\n    if not isinstance(path, compat_str) or not path:\n        return None\n    if re.match('^(?:[a-zA-Z][a-zA-Z0-9+-.]*:)?//', path):\n        return path\n    if isinstance(base, bytes):\n        base = base.decode('utf-8')\n    if not isinstance(base, compat_str) or not re.match('^(?:https?:)?//', base):\n        return None\n    return compat_urlparse.urljoin(base, path)"
+      },
+      "file_name": "utils.py",
+      "file_path": "youtube_dl/utils.py",
+      "score_reranked": 1.0308587651474157
+    },
+    {
+      "id": "21",
+      "project_name": "youtube-dl",
+      "buggy_line_content": "        (?:0[xX][0-9a-fA-F]+|0+[0-7]+)(?:\\s*:)?|",
+      "function": {
+        "function_name": "js_to_json",
+        "function_parent": "utils.py",
+        "function_before_start_line": 1939,
+        "function_before_end_line": 1975,
+        "function_after_start_line": 1939,
+        "function_after_end_line": 1975,
+        "function_before_token_count": 19,
+        "function_after_token_count": 19,
+        "function_before": "def js_to_json(code):\n\n    def fix_kv(m):\n        v = m.group(0)\n        if v in ('true', 'false', 'null'):\n            return v\n        elif v.startswith('/*') or v == ',':\n            return ''\n        if v[0] in (\"'\", '\"'):\n            v = re.sub('(?s)\\\\\\\\.|\"', lambda m: {'\"': '\\\\\"', \"\\\\'\": \"'\", '\\\\\\n': '', '\\\\x': '\\\\u00'}.get(m.group(0), m.group(0)), v[1:-1])\n        INTEGER_TABLE = (('^0[xX][0-9a-fA-F]+', 16), ('^0+[0-7]+', 8))\n        for regex, base in INTEGER_TABLE:\n            im = re.match(regex, v)\n            if im:\n                i = int(im.group(0), base)\n                return '\"%d\":' % i if v.endswith(':') else '%d' % i\n        return '\"%s\"' % v\n    return re.sub('(?sx)\\n        \"(?:[^\"\\\\\\\\]*(?:\\\\\\\\\\\\\\\\|\\\\\\\\[\\'\"nurtbfx/\\\\n]))*[^\"\\\\\\\\]*\"|\\n        \\'(?:[^\\'\\\\\\\\]*(?:\\\\\\\\\\\\\\\\|\\\\\\\\[\\'\"nurtbfx/\\\\n]))*[^\\'\\\\\\\\]*\\'|\\n        /\\\\*.*?\\\\*/|,(?=\\\\s*[\\\\]}])|\\n        [a-zA-Z_][.a-zA-Z_0-9]*|\\n        (?:0[xX][0-9a-fA-F]+|0+[0-7]+)(?:\\\\s*:)?|\\n        [0-9]+(?=\\\\s*:)\\n        ', fix_kv, code)",
+        "function_after": "def js_to_json(code):\n\n    def fix_kv(m):\n        v = m.group(0)\n        if v in ('true', 'false', 'null'):\n            return v\n        elif v.startswith('/*') or v == ',':\n            return ''\n        if v[0] in (\"'\", '\"'):\n            v = re.sub('(?s)\\\\\\\\.|\"', lambda m: {'\"': '\\\\\"', \"\\\\'\": \"'\", '\\\\\\n': '', '\\\\x': '\\\\u00'}.get(m.group(0), m.group(0)), v[1:-1])\n        INTEGER_TABLE = (('^0[xX][0-9a-fA-F]+', 16), ('^0+[0-7]+', 8))\n        for regex, base in INTEGER_TABLE:\n            im = re.match(regex, v)\n            if im:\n                i = int(im.group(0), base)\n                return '\"%d\":' % i if v.endswith(':') else '%d' % i\n        return '\"%s\"' % v\n    return re.sub('(?sx)\\n        \"(?:[^\"\\\\\\\\]*(?:\\\\\\\\\\\\\\\\|\\\\\\\\[\\'\"nurtbfx/\\\\n]))*[^\"\\\\\\\\]*\"|\\n        \\'(?:[^\\'\\\\\\\\]*(?:\\\\\\\\\\\\\\\\|\\\\\\\\[\\'\"nurtbfx/\\\\n]))*[^\\'\\\\\\\\]*\\'|\\n        /\\\\*.*?\\\\*/|,(?=\\\\s*[\\\\]}])|\\n        [a-zA-Z_][.a-zA-Z_0-9]*|\\n        \\\\b(?:0[xX][0-9a-fA-F]+|0+[0-7]+)(?:\\\\s*:)?|\\n        [0-9]+(?=\\\\s*:)\\n        ', fix_kv, code)"
+      },
+      "file_name": "utils.py",
+      "file_path": "youtube_dl/utils.py",
+      "score_reranked": 0.7503848271289368
+    },
+    {
+      "id": "19",
+      "project_name": "youtube-dl",
+      "buggy_line_content": "        [a-zA-Z_][.a-zA-Z_0-9]*|",
+      "function": {
+        "function_name": "js_to_json",
+        "function_parent": "utils.py",
+        "function_before_start_line": 2235,
+        "function_before_end_line": 2273,
+        "function_after_start_line": 2235,
+        "function_after_end_line": 2273,
+        "function_before_token_count": 77,
+        "function_after_token_count": 77,
+        "function_before": "def js_to_json(code):\n    COMMENT_RE = '/\\\\*(?:(?!\\\\*/).)*?\\\\*/|//[^\\\\n]*'\n    SKIP_RE = '\\\\s*(?:{comment})?\\\\s*'.format(comment=COMMENT_RE)\n    INTEGER_TABLE = (('(?s)^(0[xX][0-9a-fA-F]+){skip}:?$'.format(skip=SKIP_RE), 16), ('(?s)^(0+[0-7]+){skip}:?$'.format(skip=SKIP_RE), 8))\n\n    def fix_kv(m):\n        v = m.group(0)\n        if v in ('true', 'false', 'null'):\n            return v\n        elif v.startswith('/*') or v.startswith('//') or v == ',':\n            return ''\n        if v[0] in (\"'\", '\"'):\n            v = re.sub('(?s)\\\\\\\\.|\"', lambda m: {'\"': '\\\\\"', \"\\\\'\": \"'\", '\\\\\\n': '', '\\\\x': '\\\\u00'}.get(m.group(0), m.group(0)), v[1:-1])\n        for regex, base in INTEGER_TABLE:\n            im = re.match(regex, v)\n            if im:\n                i = int(im.group(1), base)\n                return '\"%d\":' % i if v.endswith(':') else '%d' % i\n        return '\"%s\"' % v\n    return re.sub('(?sx)\\n        \"(?:[^\"\\\\\\\\]*(?:\\\\\\\\\\\\\\\\|\\\\\\\\[\\'\"nurtbfx/\\\\n]))*[^\"\\\\\\\\]*\"|\\n        \\'(?:[^\\'\\\\\\\\]*(?:\\\\\\\\\\\\\\\\|\\\\\\\\[\\'\"nurtbfx/\\\\n]))*[^\\'\\\\\\\\]*\\'|\\n        {comment}|,(?={skip}[\\\\]}}])|\\n        [a-zA-Z_][.a-zA-Z_0-9]*|\\n        \\\\b(?:0[xX][0-9a-fA-F]+|0+[0-7]+)(?:{skip}:)?|\\n        [0-9]+(?={skip}:)\\n        '.format(comment=COMMENT_RE, skip=SKIP_RE), fix_kv, code)",
+        "function_after": "def js_to_json(code):\n    COMMENT_RE = '/\\\\*(?:(?!\\\\*/).)*?\\\\*/|//[^\\\\n]*'\n    SKIP_RE = '\\\\s*(?:{comment})?\\\\s*'.format(comment=COMMENT_RE)\n    INTEGER_TABLE = (('(?s)^(0[xX][0-9a-fA-F]+){skip}:?$'.format(skip=SKIP_RE), 16), ('(?s)^(0+[0-7]+){skip}:?$'.format(skip=SKIP_RE), 8))\n\n    def fix_kv(m):\n        v = m.group(0)\n        if v in ('true', 'false', 'null'):\n            return v\n        elif v.startswith('/*') or v.startswith('//') or v == ',':\n            return ''\n        if v[0] in (\"'\", '\"'):\n            v = re.sub('(?s)\\\\\\\\.|\"', lambda m: {'\"': '\\\\\"', \"\\\\'\": \"'\", '\\\\\\n': '', '\\\\x': '\\\\u00'}.get(m.group(0), m.group(0)), v[1:-1])\n        for regex, base in INTEGER_TABLE:\n            im = re.match(regex, v)\n            if im:\n                i = int(im.group(1), base)\n                return '\"%d\":' % i if v.endswith(':') else '%d' % i\n        return '\"%s\"' % v\n    return re.sub('(?sx)\\n        \"(?:[^\"\\\\\\\\]*(?:\\\\\\\\\\\\\\\\|\\\\\\\\[\\'\"nurtbfx/\\\\n]))*[^\"\\\\\\\\]*\"|\\n        \\'(?:[^\\'\\\\\\\\]*(?:\\\\\\\\\\\\\\\\|\\\\\\\\[\\'\"nurtbfx/\\\\n]))*[^\\'\\\\\\\\]*\\'|\\n        {comment}|,(?={skip}[\\\\]}}])|\\n        (?:(?<![0-9])[eE]|[a-df-zA-DF-Z_])[.a-zA-Z_0-9]*|\\n        \\\\b(?:0[xX][0-9a-fA-F]+|0+[0-7]+)(?:{skip}:)?|\\n        [0-9]+(?={skip}:)\\n        '.format(comment=COMMENT_RE, skip=SKIP_RE), fix_kv, code)"
+      },
+      "file_name": "utils.py",
+      "file_path": "youtube_dl/utils.py",
+      "score_reranked": 0.7197344898764884
+    },
+    {
+      "id": "26",
+      "project_name": "scrapy",
+      "buggy_line_content": "            for url in sitemap_urls_from_robots(response.body):",
+      "function": {
+        "function_name": "_parse_sitemap",
+        "function_parent": "SitemapSpider",
+        "function_before_start_line": 33,
+        "function_before_end_line": 54,
+        "function_after_start_line": 33,
+        "function_after_end_line": 54,
+        "function_before_token_count": 169,
+        "function_after_token_count": 169,
+        "function_before": "def _parse_sitemap(self, response):\n    if response.url.endswith('/robots.txt'):\n        for url in sitemap_urls_from_robots(response.body):\n            yield Request(url, callback=self._parse_sitemap)\n    else:\n        body = self._get_sitemap_body(response)\n        if body is None:\n            logger.warning('Ignoring invalid sitemap: %(response)s', {'response': response}, extra={'spider': self})\n            return\n        s = Sitemap(body)\n        if s.type == 'sitemapindex':\n            for loc in iterloc(s, self.sitemap_alternate_links):\n                if any((x.search(loc) for x in self._follow)):\n                    yield Request(loc, callback=self._parse_sitemap)\n        elif s.type == 'urlset':\n            for loc in iterloc(s):\n                for r, c in self._cbs:\n                    if r.search(loc):\n                        yield Request(loc, callback=c)\n                        break",
+        "function_after": "def _parse_sitemap(self, response):\n    if response.url.endswith('/robots.txt'):\n        for url in sitemap_urls_from_robots(response.text):\n            yield Request(url, callback=self._parse_sitemap)\n    else:\n        body = self._get_sitemap_body(response)\n        if body is None:\n            logger.warning('Ignoring invalid sitemap: %(response)s', {'response': response}, extra={'spider': self})\n            return\n        s = Sitemap(body)\n        if s.type == 'sitemapindex':\n            for loc in iterloc(s, self.sitemap_alternate_links):\n                if any((x.search(loc) for x in self._follow)):\n                    yield Request(loc, callback=self._parse_sitemap)\n        elif s.type == 'urlset':\n            for loc in iterloc(s):\n                for r, c in self._cbs:\n                    if r.search(loc):\n                        yield Request(loc, callback=c)\n                        break"
+      },
+      "file_name": "sitemap.py",
+      "file_path": "scrapy/spiders/sitemap.py",
+      "score_reranked": 0.6953771116453027
+    },
+    {
+      "id": "17",
+      "project_name": "youtube-dl",
+      "buggy_line_content": "                    op = lambda attr, value: not str_op",
+      "function": {
+        "function_name": "_build_format_filter",
+        "function_parent": "YoutubeDL",
+        "function_before_start_line": 1032,
+        "function_before_end_line": 1093,
+        "function_after_start_line": 1032,
+        "function_after_end_line": 1093,
+        "function_before_token_count": 310,
+        "function_after_token_count": 315,
+        "function_before": "def _build_format_filter(self, filter_spec):\n    \"\"\" Returns a function to filter the formats according to the filter_spec \"\"\"\n    OPERATORS = {'<': operator.lt, '<=': operator.le, '>': operator.gt, '>=': operator.ge, '=': operator.eq, '!=': operator.ne}\n    operator_rex = re.compile('(?x)\\\\s*\\n            (?P<key>width|height|tbr|abr|vbr|asr|filesize|filesize_approx|fps)\\n            \\\\s*(?P<op>%s)(?P<none_inclusive>\\\\s*\\\\?)?\\\\s*\\n            (?P<value>[0-9.]+(?:[kKmMgGtTpPeEzZyY]i?[Bb]?)?)\\n            $\\n            ' % '|'.join(map(re.escape, OPERATORS.keys())))\n    m = operator_rex.search(filter_spec)\n    if m:\n        try:\n            comparison_value = int(m.group('value'))\n        except ValueError:\n            comparison_value = parse_filesize(m.group('value'))\n            if comparison_value is None:\n                comparison_value = parse_filesize(m.group('value') + 'B')\n            if comparison_value is None:\n                raise ValueError('Invalid value %r in format specification %r' % (m.group('value'), filter_spec))\n        op = OPERATORS[m.group('op')]\n    if not m:\n        STR_OPERATORS = {'=': operator.eq, '^=': lambda attr, value: attr.startswith(value), '$=': lambda attr, value: attr.endswith(value), '*=': lambda attr, value: value in attr}\n        str_operator_rex = re.compile('(?x)\\n                \\\\s*(?P<key>ext|acodec|vcodec|container|protocol|format_id)\\n                \\\\s*(?P<negation>!\\\\s*)?(?P<op>%s)(?P<none_inclusive>\\\\s*\\\\?)?\\n                \\\\s*(?P<value>[a-zA-Z0-9._-]+)\\n                \\\\s*$\\n                ' % '|'.join(map(re.escape, STR_OPERATORS.keys())))\n        m = str_operator_rex.search(filter_spec)\n        if m:\n            comparison_value = m.group('value')\n            str_op = STR_OPERATORS[m.group('op')]\n            if m.group('negation'):\n                op = lambda attr, value: not str_op\n            else:\n                op = str_op\n    if not m:\n        raise ValueError('Invalid filter specification %r' % filter_spec)\n\n    def _filter(f):\n        actual_value = f.get(m.group('key'))\n        if actual_value is None:\n            return m.group('none_inclusive')\n        return op(actual_value, comparison_value)\n    return _filter",
+        "function_after": "def _build_format_filter(self, filter_spec):\n    \"\"\" Returns a function to filter the formats according to the filter_spec \"\"\"\n    OPERATORS = {'<': operator.lt, '<=': operator.le, '>': operator.gt, '>=': operator.ge, '=': operator.eq, '!=': operator.ne}\n    operator_rex = re.compile('(?x)\\\\s*\\n            (?P<key>width|height|tbr|abr|vbr|asr|filesize|filesize_approx|fps)\\n            \\\\s*(?P<op>%s)(?P<none_inclusive>\\\\s*\\\\?)?\\\\s*\\n            (?P<value>[0-9.]+(?:[kKmMgGtTpPeEzZyY]i?[Bb]?)?)\\n            $\\n            ' % '|'.join(map(re.escape, OPERATORS.keys())))\n    m = operator_rex.search(filter_spec)\n    if m:\n        try:\n            comparison_value = int(m.group('value'))\n        except ValueError:\n            comparison_value = parse_filesize(m.group('value'))\n            if comparison_value is None:\n                comparison_value = parse_filesize(m.group('value') + 'B')\n            if comparison_value is None:\n                raise ValueError('Invalid value %r in format specification %r' % (m.group('value'), filter_spec))\n        op = OPERATORS[m.group('op')]\n    if not m:\n        STR_OPERATORS = {'=': operator.eq, '^=': lambda attr, value: attr.startswith(value), '$=': lambda attr, value: attr.endswith(value), '*=': lambda attr, value: value in attr}\n        str_operator_rex = re.compile('(?x)\\n                \\\\s*(?P<key>ext|acodec|vcodec|container|protocol|format_id)\\n                \\\\s*(?P<negation>!\\\\s*)?(?P<op>%s)(?P<none_inclusive>\\\\s*\\\\?)?\\n                \\\\s*(?P<value>[a-zA-Z0-9._-]+)\\n                \\\\s*$\\n                ' % '|'.join(map(re.escape, STR_OPERATORS.keys())))\n        m = str_operator_rex.search(filter_spec)\n        if m:\n            comparison_value = m.group('value')\n            str_op = STR_OPERATORS[m.group('op')]\n            if m.group('negation'):\n                op = lambda attr, value: not str_op(attr, value)\n            else:\n                op = str_op\n    if not m:\n        raise ValueError('Invalid filter specification %r' % filter_spec)\n\n    def _filter(f):\n        actual_value = f.get(m.group('key'))\n        if actual_value is None:\n            return m.group('none_inclusive')\n        return op(actual_value, comparison_value)\n    return _filter"
+      },
+      "file_name": "YoutubeDL.py",
+      "file_path": "youtube_dl/YoutubeDL.py",
+      "score_reranked": 0.6794550047214635
+    }
+  ],
+  "diffusion_plan": [
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 10
+        },
+        {
+          "op": "InsertAfter",
+          "node": 8
+        },
+        {
+          "op": "GuardAdd",
+          "node": 8
+        },
+        {
+          "op": "Replace",
+          "node": 3
+        },
+        {
+          "op": "Replace",
+          "node": 11
+        },
+        {
+          "op": "Delete",
+          "node": 8
+        },
+        {
+          "op": "GuardAdd",
+          "node": 3
+        },
+        {
+          "op": "Replace",
+          "node": 8
+        }
+      ],
+      "score": 24.761904756723354
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "GuardAdd",
+          "node": 10
+        },
+        {
+          "op": "GuardAdd",
+          "node": 3
+        },
+        {
+          "op": "InsertBefore",
+          "node": 8
+        },
+        {
+          "op": "InsertAfter",
+          "node": 8
+        },
+        {
+          "op": "Replace",
+          "node": 8
+        },
+        {
+          "op": "GuardAdd",
+          "node": 8
+        },
+        {
+          "op": "Replace",
+          "node": 3
+        }
+      ],
+      "score": 23.80952380456916
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "GuardAdd",
+          "node": 3
+        },
+        {
+          "op": "InsertAfter",
+          "node": 4
+        },
+        {
+          "op": "InsertBefore",
+          "node": 3
+        },
+        {
+          "op": "Replace",
+          "node": 10
+        },
+        {
+          "op": "Replace",
+          "node": 3
+        },
+        {
+          "op": "Replace",
+          "node": 8
+        },
+        {
+          "op": "GuardAdd",
+          "node": 8
+        }
+      ],
+      "score": 22.452380947749432
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 4
+        },
+        {
+          "op": "GuardAdd",
+          "node": 3
+        },
+        {
+          "op": "GuardAdd",
+          "node": 8
+        },
+        {
+          "op": "Replace",
+          "node": 5
+        },
+        {
+          "op": "Replace",
+          "node": 8
+        },
+        {
+          "op": "InsertAfter",
+          "node": 4
+        },
+        {
+          "op": "Replace",
+          "node": 11
+        },
+        {
+          "op": "Replace",
+          "node": 3
+        }
+      ],
+      "score": 22.428571423945577
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Delete",
+          "node": 4
+        },
+        {
+          "op": "Replace",
+          "node": 8
+        },
+        {
+          "op": "Replace",
+          "node": 3
+        },
+        {
+          "op": "Replace",
+          "node": 10
+        },
+        {
+          "op": "GuardAdd",
+          "node": 8
+        },
+        {
+          "op": "InsertBefore",
+          "node": 4
+        },
+        {
+          "op": "GuardAdd",
+          "node": 4
+        },
+        {
+          "op": "GuardAdd",
+          "node": 11
+        }
+      ],
+      "score": 22.238095233514738
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 8
+        },
+        {
+          "op": "Delete",
+          "node": 10
+        },
+        {
+          "op": "Replace",
+          "node": 4
+        },
+        {
+          "op": "Replace",
+          "node": 10
+        },
+        {
+          "op": "GuardAdd",
+          "node": 10
+        },
+        {
+          "op": "InsertAfter",
+          "node": 3
+        },
+        {
+          "op": "Replace",
+          "node": 3
+        },
+        {
+          "op": "Delete",
+          "node": 8
+        },
+        {
+          "op": "Delete",
+          "node": 4
+        }
+      ],
+      "score": 21.928571423588437
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 11
+        },
+        {
+          "op": "Replace",
+          "node": 8
+        },
+        {
+          "op": "GuardAdd",
+          "node": 3
+        },
+        {
+          "op": "Delete",
+          "node": 8
+        },
+        {
+          "op": "Replace",
+          "node": 3
+        },
+        {
+          "op": "Replace",
+          "node": 4
+        },
+        {
+          "op": "Delete",
+          "node": 11
+        },
+        {
+          "op": "Replace",
+          "node": 10
+        }
+      ],
+      "score": 21.666666662222223
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 3
+        },
+        {
+          "op": "GuardAdd",
+          "node": 8
+        },
+        {
+          "op": "GuardAdd",
+          "node": 10
+        },
+        {
+          "op": "Delete",
+          "node": 10
+        },
+        {
+          "op": "InsertBefore",
+          "node": 4
+        },
+        {
+          "op": "Replace",
+          "node": 8
+        },
+        {
+          "op": "InsertAfter",
+          "node": 8
+        }
+      ],
+      "score": 21.238095233752833
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 8
+        },
+        {
+          "op": "Replace",
+          "node": 10
+        },
+        {
+          "op": "InsertBefore",
+          "node": 4
+        },
+        {
+          "op": "Replace",
+          "node": 3
+        },
+        {
+          "op": "Replace",
+          "node": 11
+        },
+        {
+          "op": "Replace",
+          "node": 4
+        },
+        {
+          "op": "GuardAdd",
+          "node": 8
+        },
+        {
+          "op": "Delete",
+          "node": 5
+        }
+      ],
+      "score": 21.238095233752833
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "InsertAfter",
+          "node": 10
+        },
+        {
+          "op": "Replace",
+          "node": 3
+        },
+        {
+          "op": "Delete",
+          "node": 4
+        },
+        {
+          "op": "Replace",
+          "node": 11
+        },
+        {
+          "op": "Replace",
+          "node": 10
+        },
+        {
+          "op": "Replace",
+          "node": 8
+        },
+        {
+          "op": "GuardAdd",
+          "node": 10
+        },
+        {
+          "op": "GuardAdd",
+          "node": 3
+        },
+        {
+          "op": "Replace",
+          "node": 4
+        }
+      ],
+      "score": 21.16666666186508
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "GuardAdd",
+          "node": 4
+        },
+        {
+          "op": "Replace",
+          "node": 8
+        },
+        {
+          "op": "Replace",
+          "node": 10
+        },
+        {
+          "op": "GuardAdd",
+          "node": 8
+        },
+        {
+          "op": "InsertBefore",
+          "node": 8
+        },
+        {
+          "op": "Replace",
+          "node": 11
+        },
+        {
+          "op": "Replace",
+          "node": 4
+        }
+      ],
+      "score": 20.999999995714283
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "GuardAdd",
+          "node": 4
+        },
+        {
+          "op": "Replace",
+          "node": 3
+        },
+        {
+          "op": "GuardAdd",
+          "node": 8
+        },
+        {
+          "op": "GuardAdd",
+          "node": 10
+        },
+        {
+          "op": "Replace",
+          "node": 8
+        },
+        {
+          "op": "Replace",
+          "node": 11
+        },
+        {
+          "op": "Replace",
+          "node": 4
+        }
+      ],
+      "score": 20.952380948106576
+    }
+  ],
+  "static_analysis_nodes": [
+    {
+      "line": 2,
+      "line_absolute": 1090,
+      "node_id": 8,
+      "node_id_local": 1,
+      "type": "Call",
+      "code": "re.match('(?:https?:|)//[^/]+/(?:[^/?#]+/)?([^/?#]+)/?(?:[?#]|$)', url)",
+      "distance_to_buggy": 0,
+      "context": "   1:   def url_basename(url):\n   2:->     m = re.match('(?:https?:|)//[^/]+/(?:[^/?#]+/)?([^/?#]+)/?(?:[?#]|$)', url)\n   3:       if not m:\n   4:           return u''\n   5:       return m.group(1)",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Attribute",
+          "value": {
+            "_type": "Name"
+          },
+          "attr": "match",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [
+          {
+            "_type": "Constant",
+            "value": "(?:https?:|)//[^/]+/(?:[^/?#]+/)?([^/?#]+)/?(?:[?#]|$)",
+            "kind": null
+          },
+          {
+            "_type": "Name",
+            "id": "url",
+            "ctx": {
+              "_type": "Load"
+            }
+          }
+        ],
+        "keywords": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -25.5
+    },
+    {
+      "line": 2,
+      "line_absolute": 1090,
+      "node_id": 3,
+      "node_id_local": 0,
+      "type": "Assign",
+      "code": "m = re.match('(?:https?:|)//[^/]+/(?:[^/?#]+/)?([^/?#]+)/?(?:[?#]|$)', url)",
+      "distance_to_buggy": 0,
+      "context": "   1:   def url_basename(url):\n   2:->     m = re.match('(?:https?:|)//[^/]+/(?:[^/?#]+/)?([^/?#]+)/?(?:[?#]|$)', url)\n   3:       if not m:\n   4:           return u''\n   5:       return m.group(1)",
+      "ast_subtree_json": {
+        "_type": "Assign",
+        "targets": [
+          {
+            "_type": "Name",
+            "id": "m",
+            "ctx": {
+              "_type": "Store"
+            }
+          }
+        ],
+        "value": {
+          "_type": "Call",
+          "func": {
+            "_type": "Attribute"
+          },
+          "args": [
+            {
+              "_type": "Constant"
+            },
+            {
+              "_type": "Name"
+            }
+          ],
+          "keywords": []
+        },
+        "type_comment": null
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -24.5
+    },
+    {
+      "line": 3,
+      "line_absolute": 1091,
+      "node_id": 4,
+      "node_id_local": 2,
+      "type": "If",
+      "code": "if not m:\n    return u''",
+      "distance_to_buggy": 0,
+      "context": "   1:   def url_basename(url):\n   2:       m = re.match('(?:https?:|)//[^/]+/(?:[^/?#]+/)?([^/?#]+)/?(?:[?#]|$)', url)\n   3:->     if not m:\n   4:           return u''\n   5:       return m.group(1)",
+      "ast_subtree_json": {
+        "_type": "If",
+        "test": {
+          "_type": "UnaryOp",
+          "op": {
+            "_type": "Not"
+          },
+          "operand": {
+            "_type": "Name"
+          }
+        },
+        "body": [
+          {
+            "_type": "Return",
+            "value": {
+              "_type": "Constant"
+            }
+          }
+        ],
+        "orelse": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -23.0
+    },
+    {
+      "line": 4,
+      "line_absolute": 1092,
+      "node_id": 10,
+      "node_id_local": 3,
+      "type": "Return",
+      "code": "return u''",
+      "distance_to_buggy": 0,
+      "context": "   1:   def url_basename(url):\n   2:       m = re.match('(?:https?:|)//[^/]+/(?:[^/?#]+/)?([^/?#]+)/?(?:[?#]|$)', url)\n   3:       if not m:\n   4:->         return u''\n   5:       return m.group(1)",
+      "ast_subtree_json": {
+        "_type": "Return",
+        "value": {
+          "_type": "Constant",
+          "value": "",
+          "kind": "u"
+        }
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -22.0
+    },
+    {
+      "line": 5,
+      "line_absolute": 1093,
+      "node_id": 11,
+      "node_id_local": 5,
+      "type": "Call",
+      "code": "m.group(1)",
+      "distance_to_buggy": 1,
+      "context": "   2:       m = re.match('(?:https?:|)//[^/]+/(?:[^/?#]+/)?([^/?#]+)/?(?:[?#]|$)', url)\n   3:       if not m:\n   4:           return u''\n   5:->     return m.group(1)",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Attribute",
+          "value": {
+            "_type": "Name"
+          },
+          "attr": "group",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [
+          {
+            "_type": "Constant",
+            "value": 1,
+            "kind": null
+          }
+        ],
+        "keywords": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -14.0
+    },
+    {
+      "line": 5,
+      "line_absolute": 1093,
+      "node_id": 5,
+      "node_id_local": 4,
+      "type": "Return",
+      "code": "return m.group(1)",
+      "distance_to_buggy": 1,
+      "context": "   2:       m = re.match('(?:https?:|)//[^/]+/(?:[^/?#]+/)?([^/?#]+)/?(?:[?#]|$)', url)\n   3:       if not m:\n   4:           return u''\n   5:->     return m.group(1)",
+      "ast_subtree_json": {
+        "_type": "Return",
+        "value": {
+          "_type": "Call",
+          "func": {
+            "_type": "Attribute"
+          },
+          "args": [
+            {
+              "_type": "Constant"
+            }
+          ],
+          "keywords": []
+        }
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -12.0
+    }
+  ]
+}

@@ -1,0 +1,141 @@
+{
+  "bug_id": "18",
+  "seed": 44,
+  "arm": "base",
+  "candidates": [
+    {
+      "index": 0,
+      "patch_text": "def urljoin(base, path):\n    if isinstance(path, bytes):\n        path = path.decode('utf-8')\n    if not isinstance(path, compat_str) or not path:\n        return None\n    if re.match(r'^(?:https?:)?//', path):\n        return path\n    if isinstance(base, bytes):\n        base = base.decode('utf-8')\n    if not isinstance(base, compat_str) or not re.match(r'^(?:https?:)?//', base):\n        return None\n    return compat_urlparse.urljoin(base, path)\n\n##end",
+      "patch_sha256": "a1a751875a866550dc9fc3efef1c6694b647eaed7f7ddb54ef41599e14bc3564",
+      "rank_score": 219,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.9230891398700982,
+      "top_p": 0.8133577607283677
+    },
+    {
+      "index": 1,
+      "patch_text": "def urljoin(base, path):\n    if isinstance(path, bytes):\n        path = path.decode('utf-8')\n    if not isinstance(path, str) or not path:\n        return None\n    if re.match('^(?:https?:)?//', path):\n        return path\n    if isinstance(base, bytes):\n        base = base.decode('utf-8')\n    if not isinstance(base, str) or not re.match('^(?:https?:)?//', base):\n        return None\n    return compat_urlparse.urljoin(base, path)",
+      "patch_sha256": "58d53a2f5a1d39fc3f993819248b11f6201129fc37b6e74c3def9a740f243fe3",
+      "rank_score": 219,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.9230891398700982,
+      "top_p": 0.8133577607283677
+    },
+    {
+      "index": 2,
+      "patch_text": "def urljoin(base, path):\n    if isinstance(path, bytes):\n        path = path.decode('utf-8')\n    if not isinstance(path, str) or not path:\n        return None\n    if re.match(r'^(?:https?:)?//', path):\n        return path\n    if isinstance(base, bytes):\n        base = base.decode('utf-8')\n    if not isinstance(base, str) or not re.match(r'^(?:https?:)?//', base):\n        return None\n    return compat_urlparse.urljoin(base, path)",
+      "patch_sha256": "0f7e5907621b74f459f191c8efebd7c4fb24bdbd4c5693dcf32f2ee442a05558",
+      "rank_score": 211,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.9230891398700982,
+      "top_p": 0.8133577607283677
+    },
+    {
+      "index": 3,
+      "patch_text": "def urljoin(base, path):\n    if isinstance(path, bytes):\n        path = path.decode('utf-8')\n    if not isinstance(path, str) or not path:\n        return None\n    if path.startswith('//'):\n        return path\n    if isinstance(base, bytes):\n        base = base.decode('utf-8')\n    if not isinstance(base, str) or not re.match('^(?:https?:)?//', base):\n        return None\n    return compat_urlparse.urljoin(base, path)",
+      "patch_sha256": "35c13a6f4bc413158d3ae7752d3f9ac3bab34ca23d5819743e842b6fe6184982",
+      "rank_score": 202,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7941462962722876,
+      "top_p": 0.8926828703403595
+    },
+    {
+      "index": 4,
+      "patch_text": "def urljoin(base, path):\n    if not path:\n        return None\n    if re.match('^(?:https?:)?//', path):\n        return path\n    if not base:\n        return None\n    if re.match('^(?:https?:)?//', base):\n        return base\n    return compat_urlparse.urljoin(base, path)",
+      "patch_sha256": "d3952a766febd58218477f1fa84573b1520d10442d7bb6c22da3f359d778c893",
+      "rank_score": 188,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.9230891398700982,
+      "top_p": 0.8133577607283677
+    },
+    {
+      "index": 5,
+      "patch_text": "def urljoin(base, path):\n    if isinstance(path, bytes):\n        path = path.decode('utf-8')\n    if not isinstance(path, str) or not path:\n        return None\n    if not isinstance(base, str) or not re.match('^(?:https?:)?//', base):\n        return None\n    return compat_urlparse.urljoin(base, path)",
+      "patch_sha256": "e744334e1b39ef81fd4db557d1d1aed0662765ffad1852a01d5d6b71161ade79",
+      "rank_score": 179,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7941462962722876,
+      "top_p": 0.8926828703403595
+    },
+    {
+      "index": 6,
+      "patch_text": "def urljoin(base, path):\n    if not isinstance(path, str) or not path:\n        return None\n    if re.match('^(?:https?:)?//', path):\n        return path\n    if not isinstance(base, str) or not re.match('^(?:https?:)?//', base):\n        return None\n    return compat_urlparse.urljoin(base, path)",
+      "patch_sha256": "0927280050cbdc401103c7e16abe200c3f928c11f3dd98fa993779129ecea87b",
+      "rank_score": 178,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7941462962722876,
+      "top_p": 0.8926828703403595
+    },
+    {
+      "index": 7,
+      "patch_text": "def urljoin(base, path):\n    if not path:\n        return None\n    if re.match(r'^(?:https?:)?//', path):\n        return path\n    if not base:\n        return None\n    if re.match('^(?:https?:)?//', base):\n        return base\n    return compat_urlparse.urljoin(base, path)",
+      "patch_sha256": "561cbef6a1f54717e3a5aa86ff2f16f98c11a580a220d4028f0ddef22bce69d7",
+      "rank_score": 173,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.5350607232455378,
+      "top_p": 0.98
+    },
+    {
+      "index": 8,
+      "patch_text": "def urljoin(base, path):\n    if not isinstance(path, compat_str) or not path:\n        return None\n    if re.match(r'^(?:https?:)?//', path):\n        return path\n    if not isinstance(base, compat_str) or not re.match(r'^(?:https?:)?//', base):\n        return None\n    return compat_urlparse.urljoin(base, path)",
+      "patch_sha256": "63f91836728b630c50718a7340dbc0ca88495e799576460b00a1e1d34fde73d6",
+      "rank_score": 167,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.5350607232455378,
+      "top_p": 0.98
+    },
+    {
+      "index": 9,
+      "patch_text": "def urljoin(base, path):\n    if not isinstance(path, compat_str) or not path:\n        return None\n    if re.match(r'^(?:https?:)?//', path):\n        return path\n    if not isinstance(base, compat_str) or not re.match(r'^(?:https?:)?//', base):\n        return None\n    return compat_urlparse.urljoin(base, path)\n\n##correct\ndef urljoin(base, path):\n    if not isinstance(path, compat_str) or not path:\n        return None\n    if re.match(r'^(?:https?:)?//', path):\n        return path\n    if not isinstance(base, compat_str) or not re.match(r'^(?:https?:)?//', base):\n        return None\n    return compat_urlparse.urljoin(base, path)\n\n##correct\ndef urljoin(base, path):\n    if not isinstance(path, compat_str) or not path:\n        return None\n    if re.match(r'^(?:https?:)?//', path):\n        return path\n    if not isinstance(base, compat_str) or not re.match(r'^(?:https?:)?//', base):\n        return None\n    return compat_urlparse.urljoin(base, path)\n\n##correct\ndef urljoin(base, path):\n    if not isinstance(path, compat_str) or not path:\n        return None\n    if re.match(r'^(?:https?:)?//', path):\n        return path\n    if not isinstance(base, compat_str) or not re.match(r'^(?:https?:)?//', base):\n        return None\n    return compat_urlparse.urljoin(base, path)\n\n##correct\ndef urljoin(base, path):\n    if not isinstance(path, compat_str) or not path:\n        return None\n    if re.match(r'^(?:https?:)?//', path):\n        return path\n    if not isinstance(base, compat_str) or not re.match(r'^(?:https?:)?//', base):\n        return None\n    return compat_urlparse.urljoin(base, path)\n\n##correct\ndef urljoin(base, path):\n    if not isinstance(path, compat_str) or not path:\n        return None\n    if re.match(r'^(?:https?:)?//', path):\n        return path\n    if not isinstance(base, compat_str) or not re.match(r'^(?:https?:)?//', base):\n        return None\n    return compat_urlparse.urljoin(base, path)\n\n##correct\ndef urljoin(base, path):\n    if not isinstance(path, compat_str) or not path:\n        return None\n    if re.match(r'^(?:https?:)?//', path):\n        return path\n    if not isinstance(base, compat_str) or not re.match(r'^(?:https?:)?//', base):\n        return None",
+      "patch_sha256": "c4283e859142285ef61d03c5a06761fe96c2d3efc23115b5a9bc7a481f0a29d0",
+      "rank_score": 118,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7941462962722876,
+      "top_p": 0.8926828703403595
+    }
+  ],
+  "candidate_count": 10,
+  "retrieved_examples": [],
+  "diffusion_plan": [],
+  "static_analysis_nodes": []
+}

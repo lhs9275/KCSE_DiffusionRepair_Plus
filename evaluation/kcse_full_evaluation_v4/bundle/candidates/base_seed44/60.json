@@ -1,0 +1,24 @@
+{
+  "bug_id": "60",
+  "seed": 44,
+  "arm": "base",
+  "candidates": [
+    {
+      "index": 0,
+      "patch_text": "def create_cloned_field(field: ModelField) -> ModelField:\n    original_type = field.type_\n    if is_dataclass(original_type) and hasattr(original_type, '__pydantic_model__'):\n        original_type = original_type.__pydantic_model__\n    use_type = original_type\n    if lenient_issubclass(original_type, BaseModel):\n        original_type = cast(Type[BaseModel], original_type)\n        use_type = create_model(original_type.__name__, __config__=original_type.__config__)\n        for f in original_type.__fields__.values():\n            use_type.__fields__[f.name] = f\n    if PYDANTIC_1:\n        new_field = ModelField(name=field.name, type_=use_type, class_validators={}, default=None, required=False, model_config=BaseConfig, field_info=FieldInfo(None))\n    else:\n        new_field = ModelField(name=field.name, type_=use_type, class_validators={}, default=None, required=False, model_config=BaseConfig, schema=FieldInfo(None))\n    new_field.has_alias = field.has_alias\n    new_field.alias = field.alias\n    new_field.class_validators = field.class_validators\n    new_field.default = field.default\n    new_field.required = field.required\n    new_field.model_config = field.model_config\n    if PYDANTIC_1:\n        new_field.field_info = field.field_info\n    else:\n        new_field.schema = field.schema\n    new_field.allow_none = field.allow_none\n    new_field.validate_always = field.validate_always\n    if field.sub_fields:\n        new_field.sub_fields = [create_cloned_field(sub_field) for sub_field in field.sub_fields]\n    if field.key_field:\n        new_field.key_field = create_cloned_field(field.key_field)\n    new_field.validators = field.validators\n    if PYDANTIC_1:\n        new_field.pre_validators = field.pre_validators\n        new_field.post_validators = field.post_validators\n    else:\n        new_field.whole_pre_validators = field.whole_pre_validators\n        new_field.whole_post_validators = field.whole_post_validators\n    new_field.parse_json = field.parse_json\n    new_field.shape = field.shape\n    try:\n        new_field.populate_validators()\n    except AttributeError:\n        new_field._populate_validators()\n    return new_field",
+      "patch_sha256": "5e96af5b84dd01edb1fee75550495f8efecc7c2d3b6bd08f3312dc248b0e5aad",
+      "rank_score": 224,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.9230891398700982,
+      "top_p": 0.8133577607283677
+    }
+  ],
+  "candidate_count": 1,
+  "retrieved_examples": [],
+  "diffusion_plan": [],
+  "static_analysis_nodes": []
+}

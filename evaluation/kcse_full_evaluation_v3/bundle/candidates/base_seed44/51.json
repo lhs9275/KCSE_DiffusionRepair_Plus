@@ -1,0 +1,141 @@
+{
+  "bug_id": "51",
+  "seed": 44,
+  "arm": "base",
+  "candidates": [
+    {
+      "index": 0,
+      "patch_text": "def get_new_command(command, settings):\n    return 'open {}'.format(''.join([\n        'http://', command.script[5:]]))",
+      "patch_sha256": "e50602760b1e98b265a926928bda63a1a17419a50e18b83f4b82164ec391c50f",
+      "rank_score": 201,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.9230891398700982,
+      "top_p": 0.8133577607283677
+    },
+    {
+      "index": 1,
+      "patch_text": "def get_new_command(command, settings):\n    return 'open https://' + command.script[5:]",
+      "patch_sha256": "8340d2394eff75f1204c6246a22cffa5771377812162672bc6ce07a055c2f9f3",
+      "rank_score": 189,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.9230891398700982,
+      "top_p": 0.8133577607283677
+    },
+    {
+      "index": 2,
+      "patch_text": "def get_new_command(command, settings):\n    return 'open'+ command.script[5:]",
+      "patch_sha256": "7e9320bc7a42b036ca3fbaa01f6f01e79343991ba3792bccaf315f70c6521ac2",
+      "rank_score": 187,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.0,
+      "top_p": 1.0
+    },
+    {
+      "index": 3,
+      "patch_text": "def get_new_command(command, settings):\n    return 'open'+ command.script[7:]",
+      "patch_sha256": "05f7ee944a9ee4120b2bcbd07f7d3ae865957d12155125ce8cb59c2815d15f09",
+      "rank_score": 186,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.9230891398700982,
+      "top_p": 0.8133577607283677
+    },
+    {
+      "index": 4,
+      "patch_text": "def get_new_command(command, settings):\n    return 'open'+ command.script[4:]",
+      "patch_sha256": "be8b44a48d23fcf516da3eb83e404d2d539e4bfec356189761aee423ed977a6d",
+      "rank_score": 186,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.5350607232455378,
+      "top_p": 0.98
+    },
+    {
+      "index": 5,
+      "patch_text": "def get_new_command(command, settings):\n    return 'open'+ command.script",
+      "patch_sha256": "071af0ec948eb2231161be4bf3f16694067eca5117980212805546c2b8817216",
+      "rank_score": 186,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7793066012285085,
+      "top_p": 0.8741332515356355
+    },
+    {
+      "index": 6,
+      "patch_text": "def get_new_command(command, settings):\n    return command.script[0:4] +'http://' + command.script[5:]",
+      "patch_sha256": "7bd8233dc21080b6f9ff8e361780a558600356b591055504ee7de54cac43fa80",
+      "rank_score": 183,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.9230891398700982,
+      "top_p": 0.8133577607283677
+    },
+    {
+      "index": 7,
+      "patch_text": "def get_new_command(command, settings):\n    return command.script",
+      "patch_sha256": "216982ea35997bfb35128a2552b84e7975bfde6499ba4ddad5bee2fc4d7a0b2e",
+      "rank_score": 183,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7793066012285085,
+      "top_p": 0.8741332515356355
+    },
+    {
+      "index": 8,
+      "patch_text": "def get_new_command(command, settings):\n    if 'pbcopy' in settings.shells:\n        return 'echo'+ command.script +'| pbcopy'  # <--- BUGGY LINE\n    else:\n        return 'echo'+ command.script +'| tee /dev/stderr'",
+      "patch_sha256": "4b1a70c9196895e1d7a49f045d90cfb3535b78a2caeeed3efebf17b9cfe455eb",
+      "rank_score": 178,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.9230891398700982,
+      "top_p": 0.8133577607283677
+    },
+    {
+      "index": 9,
+      "patch_text": "def get_new_command(command, settings):\n    return command.script.replace('open ', '')",
+      "patch_sha256": "5c28788f9de1d08285f9939563450b9dc0741e9156ce70d64b9fa34c561abf5e",
+      "rank_score": 178,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7793066012285085,
+      "top_p": 0.8741332515356355
+    }
+  ],
+  "candidate_count": 10,
+  "retrieved_examples": [],
+  "diffusion_plan": [],
+  "static_analysis_nodes": []
+}

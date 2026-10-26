@@ -1,0 +1,141 @@
+{
+  "bug_id": "28",
+  "seed": 44,
+  "arm": "base",
+  "candidates": [
+    {
+      "index": 0,
+      "patch_text": "def _set_url(self, url):\n    if not isinstance(url, six.string_types):\n        raise TypeError('Request url must be str or unicode, got %s:' % type(url).__name__)\n    s = safe_url_string(url, self.encoding)\n    self._url = escape_ajax(s)\n    if '://' not in self._url:  # <--- FIXED\n        raise ValueError('Missing scheme in request url: %s' % self._url)",
+      "patch_sha256": "b42ad909313ce409835ee870b06e0970b700499e98d5cc680ce9faafc51cfeae",
+      "rank_score": 234,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.0,
+      "top_p": 1.0
+    },
+    {
+      "index": 1,
+      "patch_text": "def _set_url(self, url):\n    if not isinstance(url, six.string_types):\n        raise TypeError('Request url must be str or unicode, got %s:' % type(url).__name__)\n    s = safe_url_string(url, self.encoding)\n    self._url = escape_ajax(s)\n    if '//' in self._url:  # <--- BUGGY LINE\n        raise ValueError('Missing scheme in request url: %s' % self._url)",
+      "patch_sha256": "ceece34bee40749a8355976c2c032b4af471addc9b9a9018d30ae0f2f5db50df",
+      "rank_score": 234,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7941462962722876,
+      "top_p": 0.8926828703403595
+    },
+    {
+      "index": 2,
+      "patch_text": "def _set_url(self, url):\n    if not isinstance(url, six.string_types):\n        raise TypeError('Request url must be str or unicode, got %s:' % type(url).__name__)\n    s = safe_url_string(url, self.encoding)\n    self._url = escape_ajax(s)\n    if '//' not in self._url:\n        raise ValueError('Missing scheme in request url: %s' % self._url)",
+      "patch_sha256": "1730e67da2d8856c3594e46d0e6b4c4971e440d81c167af654ec793204e23dfd",
+      "rank_score": 234,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.9230891398700982,
+      "top_p": 0.8133577607283677
+    },
+    {
+      "index": 3,
+      "patch_text": "def _set_url(self, url):\n    if not isinstance(url, six.string_types):\n        raise TypeError('Request url must be str or unicode, got %s:' % type(url).__name__)\n    s = safe_url_string(url, self.encoding)\n    self._url = escape_ajax(s)\n    if '/' not in self._url:  # <--- FIXED LINE\n        raise ValueError('Missing scheme in request url: %s' % self._url)",
+      "patch_sha256": "e5d9cb581eba4a2472eb1ac4ca8952524e127a23f96cecd856f5887417070b59",
+      "rank_score": 234,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.9230891398700982,
+      "top_p": 0.8133577607283677
+    },
+    {
+      "index": 4,
+      "patch_text": "def _set_url(self, url):\n    if not isinstance(url, six.string_types):\n        raise TypeError('Request url must be str or unicode, got %s:' % type(url).__name__)\n    s = safe_url_string(url, self.encoding)\n    self._url = escape_ajax(s)\n    if '://' in self._url:  # <--- BUGGY LINE\n        raise ValueError('Missing scheme in request url: %s' % self._url)",
+      "patch_sha256": "85f8507b8ee701bb9e3047bf090cf2a14d4522c135a947329c374f33eab6ff33",
+      "rank_score": 234,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.5350607232455378,
+      "top_p": 0.98
+    },
+    {
+      "index": 5,
+      "patch_text": "def _set_url(self, url):\n    if not isinstance(url, six.string_types):\n        raise TypeError('Request url must be str or unicode, got %s:' % type(url).__name__)\n    s = safe_url_string(url, self.encoding)\n    self._url = escape_ajax(s)\n    if '/' in self._url:  # <--- FIXED\n        raise ValueError('Missing scheme in request url: %s' % self._url)",
+      "patch_sha256": "4d280bba44d76869e2e302d7abb0396ced9ceaa1defa0bbbd8444f277ea7694c",
+      "rank_score": 234,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8997717407145516,
+      "top_p": 0.7880127616462518
+    },
+    {
+      "index": 6,
+      "patch_text": "def _set_url(self, url):\n    if not isinstance(url, six.string_types):\n        raise TypeError('Request url must be str or unicode, got %s:' % type(url).__name__)\n    s = safe_url_string(url, self.encoding)\n    self._url = escape_ajax(s)\n    if ':' in self._url:  # <--- GUARDRAILS LINE\n        raise ValueError('Missing scheme in request url: %s' % self._url)",
+      "patch_sha256": "acbf6ac7363458a6cca2cf53c9855cba1497da702f4cb7aeea8f25b55d25aaa9",
+      "rank_score": 234,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8997717407145516,
+      "top_p": 0.7880127616462518
+    },
+    {
+      "index": 7,
+      "patch_text": "def _set_url(self, url):\n    if not isinstance(url, six.string_types):\n        raise TypeError('Request url must be str or unicode, got %s:' % type(url).__name__)\n    s = safe_url_string(url, self.encoding)\n    self._url = escape_ajax(s)\n    if not self._url.startswith('://'):  # <--- FIXED LINE\n        raise ValueError('Missing scheme in request url: %s' % self._url)",
+      "patch_sha256": "e95a0da23c27462897a33780aa8987d9a6badaf2847f44cda19a3dfc9e5120f6",
+      "rank_score": 231,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7793066012285085,
+      "top_p": 0.8741332515356355
+    },
+    {
+      "index": 8,
+      "patch_text": "def _set_url(self, url):\n    if not isinstance(url, six.string_types):\n        raise TypeError('Request url must be str or unicode, got %s:' % type(url).__name__)\n    s = safe_url_string(url, self.encoding)\n    self._url = escape_ajax(s)\n    self._url = self._url.split(\":\", 1)[0]",
+      "patch_sha256": "3b84b524dadd6e7cf9be6dfd92b365ffa592f3bde015cf294f12c1626747bb00",
+      "rank_score": 209,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7941462962722876,
+      "top_p": 0.8926828703403595
+    },
+    {
+      "index": 9,
+      "patch_text": "def _set_url(self, url):\n    if not isinstance(url, six.string_types):\n        raise TypeError('Request url must be str or unicode, got %s:' % type(url).__name__)\n    s = safe_url_string(url, self.encoding)\n    self._url = escape_ajax(s)\n    self._url = self._url.split(':', 1)[0] + ':' + self._url.split(':', 1)[1]",
+      "patch_sha256": "66da02ffc214a7dead3dd49fd5063fc7b2b9601b492d2ccc3a864651f7d62beb",
+      "rank_score": 207,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7941462962722876,
+      "top_p": 0.8926828703403595
+    }
+  ],
+  "candidate_count": 10,
+  "retrieved_examples": [],
+  "diffusion_plan": [],
+  "static_analysis_nodes": []
+}

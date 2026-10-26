@@ -1,0 +1,128 @@
+{
+  "bug_id": "7",
+  "seed": 42,
+  "arm": "base",
+  "candidates": [
+    {
+      "index": 0,
+      "patch_text": "def set_status(self, task, new_status, config=None):\n    if new_status == FAILED:\n        assert config is not None\n    if new_status == DISABLED and task.status == RUNNING:\n        return\n    if task.status == DISABLED:\n        if new_status == DONE:\n            self.re_enable(task)\n        elif task.scheduler_disable_time is not None:\n            return\n    if new_status == FAILED and not task.can_disable():\n        task.add_failure()\n        if task.has_excessive_failures():\n            task.scheduler_disable_time = time.time()\n            new_status = DISABLED\n            notifications.send_error_email('Luigi Scheduler: DISABLED {task} due to excessive failures'.format(task=task.id), '{task} failed {failures} times in the last {window} seconds, so it is being disabled for {persist} seconds'.format(failures=config.disable_failures, task=task.id, window=config.disable_window, persist=config.disable_persist))\n    elif new_status == DISABLED:\n        task.scheduler_disable_time = None\n    self._status_tasks[task.status].pop(task.id)\n    self._status_tasks[new_status][task.id] = task\n    task.status = new_status",
+      "patch_sha256": "32b15a1251e63230bc1edc676cdef9901869355fd9211182d25c47aebb787d77",
+      "rank_score": 244,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8850407915843882,
+      "top_p": 0.7720008604178135
+    },
+    {
+      "index": 1,
+      "patch_text": "def set_status(self, task, new_status, config=None):\n    if new_status == FAILED:\n        assert config is not None\n    if new_status == DISABLED and task.status == RUNNING:\n        return\n    if task.status == DISABLED:\n        if new_status == DONE:\n            self.re_enable(task)\n        elif task.scheduler_disable_time is not None:\n            return\n    if new_status == FAILED:\n        task.add_failure()\n        if task.has_excessive_failures():\n            task.scheduler_disable_time = time.time()\n            new_status = DISABLED\n            notifications.send_error_email('Luigi Scheduler: DISABLED {task} due to excessive failures'.format(task=task.id), '{task} failed {failures} times in the last {window} seconds, so it is being disabled for {persist} seconds'.format(failures=config.disable_failures, task=task.id, window=config.disable_window, persist=config.disable_persist))\n    elif new_status == DISABLED:\n        task.scheduler_disable_time = None\n    self._status_tasks[task.status].pop(task.id)\n    self._status_tasks[new_status][task.id] = task\n    task.status = new_status",
+      "patch_sha256": "4966685483f4709f19f861d44dba90aea32ce10fcdbeeacc8fd50d4bb9cc0350",
+      "rank_score": 244,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7822854872415247,
+      "top_p": 0.8778568590519058
+    },
+    {
+      "index": 2,
+      "patch_text": "def set_status(self, task, new_status, config=None):\n    if new_status == FAILED:\n        assert config is not None\n    if new_status == DISABLED and task.status == RUNNING:\n        return\n    if task.status == DISABLED:\n        if new_status == DONE:\n            self.re_enable(task)\n        elif task.scheduler_disable_time is not None:\n            return\n    if task.status == FAILED and task.can_disable():\n        task.add_failure()\n        if task.has_excessive_failures():\n            task.scheduler_disable_time = time.time()\n            new_status = DISABLED\n            notifications.send_error_email('Luigi Scheduler: DISABLED {task} due to excessive failures'.format(task=task.id), '{task} failed {failures} times in the last {window} seconds, so it is being disabled for {persist} seconds'.format(failures=config.disable_failures, task=task.id, window=config.disable_window, persist=config.disable_persist))\n    elif new_status == DISABLED:\n        task.scheduler_disable_time = None\n    self._status_tasks[task.status].pop(task.id)\n    self._status_tasks[new_status][task.id] = task\n    task.status = new_status",
+      "patch_sha256": "63eb3080da2e8732de31c7ac166bd8e646f2d4cf2a1d2848130821148ddf6441",
+      "rank_score": 244,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8250994923331102,
+      "top_p": 0.9313743654163876
+    },
+    {
+      "index": 3,
+      "patch_text": "def set_status(self, task, new_status, config=None):\n    if new_status == FAILED:\n        assert config is not None\n    if new_status == DISABLED and task.status == RUNNING:\n        return\n    if task.status == DISABLED:\n        if new_status == DONE:\n            self.re_enable(task)\n        elif task.scheduler_disable_time is not None:\n            return\n    if new_status == FAILED:\n        if task.can_disable():\n            task.add_failure()\n            if task.has_excessive_failures():\n                task.scheduler_disable_time = time.time()\n                new_status = DISABLED\n                notifications.send_error_email('Luigi Scheduler: DISABLED {task} due to excessive failures'.format(task=task.id), '{task} failed {failures} times in the last {window} seconds, so it is being disabled for {persist} seconds'.format(failures=config.disable_failures, task=task.id, window=config.disable_window, persist=config.disable_persist))\n    elif new_status == DISABLED:\n        task.scheduler_disable_time = None\n    self._status_tasks[task.status].pop(task.id)\n    self._status_tasks[new_status][task.id] = task\n    task.status = new_status",
+      "patch_sha256": "17adc6bafb03f318b2d5ef7c72f29ef3e63864ad3be343c80831071fb66047c1",
+      "rank_score": 219,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.5167519476989073,
+      "top_p": 0.9737537455748216
+    },
+    {
+      "index": 4,
+      "patch_text": "def set_status(self, task, new_status, config=None):\n    if new_status == DISABLED and task.status == RUNNING:\n        return\n    if task.status == DISABLED:\n        if new_status == DONE:\n            self.re_enable(task)\n        elif task.scheduler_disable_time is not None:\n            return\n    if new_status == FAILED and task.can_disable():\n        task.add_failure()\n        if task.has_excessive_failures():\n            task.scheduler_disable_time = time.time()\n            new_status = DISABLED\n            notifications.send_error_email('Luigi Scheduler: DISABLED {task} due to excessive failures'.format(task=task.id), '{task} failed {failures} times in the last {window} seconds, so it is being disabled for {persist} seconds'.format(failures=config.disable_failures, task=task.id, window=config.disable_window, persist=config.disable_persist))\n    elif new_status == DISABLED:\n        task.scheduler_disable_time = None\n    self._status_tasks[task.status].pop(task.id)\n    self._status_tasks[new_status][task.id] = task\n    task.status = new_status",
+      "patch_sha256": "d3e3552e456b51356fb7bed6ec83097c04c92b0f9a54ece89aa635e9e2a6d3f8",
+      "rank_score": 213,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.5106412196441554,
+      "top_p": 0.9620023454695296
+    },
+    {
+      "index": 5,
+      "patch_text": "def set_status(self, task, new_status, config=None):\n    if new_status == FAILED and config is not None:\n        task.add_failure()\n    if new_status == DISABLED and task.status == RUNNING:\n        return\n    if task.status == DISABLED:\n        if new_status == DONE:\n            self.re_enable(task)\n        elif task.scheduler_disable_time is not None:\n            return\n    if new_status == FAILED and task.can_disable():\n        task.scheduler_disable_time = time.time()\n        new_status = DISABLED\n        notifications.send_error_email('Luigi Scheduler: DISABLED {task} due to excessive failures'.format(task=task.id), '{task} failed {failures} times in the last {window} seconds, so it is being disabled for {persist} seconds'.format(failures=config.disable_failures, task=task.id, window=config.disable_window, persist=config.disable_persist))\n    elif new_status == DISABLED:\n        task.scheduler_disable_time = None\n    self._status_tasks[task.status].pop(task.id)\n    self._status_tasks[new_status][task.id] = task\n    task.status = new_status",
+      "patch_sha256": "5160ccd8811261ff7fa98fa005e1bbc6aa864c0c6d2763b73e09297ae7279b8d",
+      "rank_score": 187,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8089233151013046,
+      "top_p": 0.9111541438766307
+    },
+    {
+      "index": 6,
+      "patch_text": "def set_status(self, task, new_status, config=None):\n    if new_status == FAILED:\n        assert config is not None\n    if task.status == DISABLED:\n        if new_status == DONE:\n            self.re_enable(task)\n        elif task.scheduler_disable_time is not None:\n            return\n    if new_status == FAILED and task.can_disable():\n        task.add_failure()\n        if task.has_excessive_failures():\n            task.scheduler_disable_time = time.time()\n            new_status = DISABLED\n            notifications.send_error_email('Luigi Scheduler: DISABLED {task} due to excessive failures'.format(task=task.id), '{task} failed {failures} times in the last {window} seconds, so it is being disabled for {persist} seconds'.format(failures=config.disable_failures, task=task.id, window=config.disable_window, persist=config.disable_persist))\n    elif new_status == DISABLED:\n        task.scheduler_disable_time = None\n    self._status_tasks[task.status].pop(task.id)\n    self._status_tasks[new_status][task.id] = task\n    task.status = new_status",
+      "patch_sha256": "176cd44b09dbc9cfaebf696525563c505d086cfa342b5c7b5909bd5eec104691",
+      "rank_score": 185,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8250994923331102,
+      "top_p": 0.9313743654163876
+    },
+    {
+      "index": 7,
+      "patch_text": "def set_status(self, task, new_status, config=None):\n    if new_status == FAILED and task.can_disable():\n        task.add_failure()\n        if task.has_excessive_failures():\n            task.scheduler_disable_time = time.time()\n            new_status = DISABLED\n            notifications.send_error_email('Luigi Scheduler: DISABLED {task} due to excessive failures'.format(task=task.id), '{task} failed {failures} times in the last {window} seconds, so it is being disabled for {persist} seconds'.format(failures=config.disable_failures, task=task.id, window=config.disable_window, persist=config.disable_persist))\n    elif new_status == DISABLED:\n        task.scheduler_disable_time = None\n    self._status_tasks[task.status].pop(task.id)\n    self._status_tasks[new_status][task.id] = task\n    task.status = new_status\n## Python Code Analysis",
+      "patch_sha256": "16486381bf692de2eae9daa6dad0df3ce125997da900ecf888d15d4f7e6131f8",
+      "rank_score": 146,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8089233151013046,
+      "top_p": 0.9111541438766307
+    },
+    {
+      "index": 8,
+      "patch_text": "def set_status(self, task, new_status, config=None):\n    if new_status == FAILED:\n        assert config is not None\n    if new_status == DISABLED and task.status == RUNNING:\n        return\n    if task.status == DISABLED:\n        if new_status == DONE:\n            self.re_enable(task)\n        elif task.scheduler_disable_time is not None:\n            return\n    if new_status == FAILED and task.can_disable():\n        task.add_failure()\n        if task.has_excessive_failures():\n            task.scheduler_disable_time = time.time()\n            new_status = DISABLED\n            notifications.send_error_email('Luigi Scheduler: DISABLED {task} due to excessive failures'.format(task=task.id), '{task} failed {failures} times in the last {window} seconds, so it is being disabled for {persist} seconds'.format(failures=config.disable_failures, task=task.id, window=config.disable_window, persist=config.disable_persist))\n    elif new_status == DISABLED:\n        task.scheduler_disable_time = None\n    self._status_tasks[task.status].pop(task.id)\n    self._status_tasks[new_status][task.id] = task\n    task.status = new_status\n\non\n# 2. For all nodes, create a node-node edge with weight 1\n# 3. Create the K-core graph as the subgraph of the node-node graph,\n#    consisting only of nodes with degree at least k\n\nimport sys\nimport random\nimport math\nimport numpy\n\nfrom collections import defaultdict\nfrom copy import deepcopy\n\n\ndef kcore_graph(input_file, k, output_file):\n    '''\n    Returns a dictionary where each key is a node and its value is a list of\n    all of the nodes connected to that node.\n\n    :param input_file: The file containing the edges between nodes in the graph\n    :param k: The minimum degree for a node to be included in the k core graph\n    :param output_file: The filename for the output file\n\n    Example Usage:\n    >>> G = kcore_graph('edges.txt', 1, 'kcore_graph')\n    >>> print(G)\n    >>> print(G['a'])\n    '''\n    G = defaultdict(list)\n\n    # Load in edges from file\n    with open(input_file) as f:\n        for line in f:\n            n1, n2 = line.split()\n            G[n1].append(n2)\n            G[n2].append(n1)\n\n    # Get k core nodes\n    k_core = []\n    while True:\n        # Get list of all nodes\n        nodes = [n for n in G.keys()]\n\n        # Calculate degrees of all nodes\n        deg = {}\n        for n in nodes:\n            deg[n] = len",
+      "patch_sha256": "35c54ffabe65b4d9b246461a5052f500fa877700ad0229d6cb7394c86c0ea6da",
+      "rank_score": -239,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8089233151013046,
+      "top_p": 0.9111541438766307
+    }
+  ],
+  "candidate_count": 9,
+  "retrieved_examples": [],
+  "diffusion_plan": [],
+  "static_analysis_nodes": []
+}

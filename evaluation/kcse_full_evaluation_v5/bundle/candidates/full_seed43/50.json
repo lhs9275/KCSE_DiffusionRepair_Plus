@@ -1,0 +1,608 @@
+{
+  "bug_id": "50",
+  "seed": 43,
+  "arm": "full",
+  "candidates": [
+    {
+      "index": 0,
+      "patch_text": "def get_new_command(command, settings):\n    return re.sub('^mkdir (.*)','mkdir -p \\\\1', command.script)",
+      "patch_sha256": "6f809107172ce3f30b549570c604b78e5bf8952a5d78cddcfbb3638c8b11879f",
+      "rank_score": 169,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7704673177175924,
+      "top_p": 0.8630841471469904
+    },
+    {
+      "index": 1,
+      "patch_text": "def get_new_command(command, settings):\n    return re.sub('^tmux ([^ ]*)', 'tmux \\\\1', command.script)  # <--- BUGGY LINE",
+      "patch_sha256": "3ab849107c51740a3a2defe9d07afa7b70cca14ffa774fda1443a8f222e928d9",
+      "rank_score": 165,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7956728856928922,
+      "top_p": 0.8945911071161152
+    },
+    {
+      "index": 2,
+      "patch_text": "def get_new_command(command, settings):\n    return command.script.replace(' mkdir ','mkdir -p ')",
+      "patch_sha256": "da366d475a8ce1a3ac3e1c1951c756bdb2e7ece6366915334fc8c34e3f3a88c0",
+      "rank_score": 155,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.5051876220100471,
+      "top_p": 0.9515146577116289
+    },
+    {
+      "index": 3,
+      "patch_text": "def get_new_command(command, settings):\n    return command.script.replace(' diff','diff --staged')",
+      "patch_sha256": "515019570ab9d6b695ade33b6c398d444acc2f70ae28b911afaaa6cb7603d0c1",
+      "rank_score": 154,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7704673177175924,
+      "top_p": 0.8630841471469904
+    },
+    {
+      "index": 4,
+      "patch_text": "def get_new_command(command, settings):\n    return command.script.replace('diff', 'diff --staged')\n\n##end\n\n# Generated from grammars/Python3/Python3Parser.g4 by ANTLR 4.7.1\nfrom antlr4 import *\nif __name__ is not None and \".\" in __name__:\n    from.Python3Parser import Python3Parser\nelse:\n    from Python3Parser import Python3Parser\n\n# This class defines a complete listener for a parse tree produced by Python3Parser.\nclass Python3Listener(ParseTreeListener):\n\n    # Enter a parse tree produced by Python3Parser#single_input.\n    def enterSingle_input(self, ctx:Python3Parser.Single_inputContext):\n        pass\n\n    # Exit a parse tree produced by Python3Parser#single_input.\n    def exitSingle_input(self, ctx:Python3Parser.Single_inputContext):\n        pass\n\n\n    # Enter a parse tree produced by Python3Parser#file_input.\n    def enterFile_input(self, ctx:Python3Parser.File_inputContext):\n        pass\n\n    # Exit a parse tree produced by Python3Parser#file_input.\n    def exitFile_input(self, ctx:Python3Parser.File_inputContext):\n        pass\n\n\n    # Enter a parse tree produced by Python3Parser#eval_input.\n    def enterEval_input(self, ctx:Python3Parser.Eval_inputContext):\n        pass\n\n    # Exit a parse tree produced by Python3Parser#eval_input.\n    def exitEval_input(self, ctx:Python3Parser.Eval_inputContext):\n        pass\n\n\n    # Enter a parse tree produced by Python3Parser#decorator.\n    def enterDecorator(self, ctx:Python3Parser.DecoratorContext):\n        pass\n\n    # Exit a parse tree produced by Python3Parser#decorator.\n    def exitDecorator(self, ctx:Python3Parser.DecoratorContext):\n        pass\n\n\n    # Enter a parse tree produced by Python3Parser#decorators.\n    def enterDecorators(self, ctx:Python3Parser.DecoratorsContext):\n        pass\n\n    # Exit a parse tree produced by Python3Parser#decorators.\n    def exitDecorators(self, ctx:Python3Parser.DecoratorsContext):\n        pass\n\n\n    # Enter a parse tree produced by Python3Parser#decorated.\n    def enterDecorated(self, ctx:Python3Parser.DecoratedContext):\n        pass\n\n    # Exit a parse tree produced by Python3Parser#decorated.\n    def exitDecorated(self, ctx:Python3Parser.DecoratedContext):\n        pass\n\n\n    # Enter a parse tree produced by Python3Parser#async_funcdef.\n    def enterAsync_funcdef(self, ctx:Python3Parser.Async_funcdefContext):\n        pass\n\n    # Exit a parse tree produced by Python3Parser#async_funcdef.\n    def exitAsync_funcdef(self, ctx:Python3Parser.Async_funcdefContext):\n        pass\n\n\n    # Enter a",
+      "patch_sha256": "04a5a415ed8764cbf1f56f9fef507ca0322437e6d7b2f76b0ed7c7d7f3b872b1",
+      "rank_score": -77,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.5346552071407396,
+      "top_p": 0.98
+    }
+  ],
+  "candidate_count": 5,
+  "retrieved_examples": [
+    {
+      "id": "52",
+      "project_name": "thefuck",
+      "buggy_line_content": "    return '{} --staged'.format(command.script)",
+      "function": {
+        "function_name": "get_new_command",
+        "function_parent": "git_diff_staged.py",
+        "function_before_start_line": 12,
+        "function_before_end_line": 13,
+        "function_after_start_line": 12,
+        "function_after_end_line": 13,
+        "function_before_token_count": 16,
+        "function_after_token_count": 18,
+        "function_before": "@utils.git_support\ndef get_new_command(command, settings):\n    return '{} --staged'.format(command.script)",
+        "function_after": "@utils.git_support\ndef get_new_command(command, settings):\n    return command.script.replace(' diff', ' diff --staged')"
+      },
+      "file_name": "git_diff_staged.py",
+      "file_path": "thefuck/rules/git_diff_staged.py",
+      "score_reranked": 0.7139355429832589
+    },
+    {
+      "id": "51",
+      "project_name": "thefuck",
+      "buggy_line_content": "    return 'open http://' + command.script[5:]",
+      "function": {
+        "function_name": "get_new_command",
+        "function_parent": "open.py",
+        "function_before_start_line": 25,
+        "function_before_end_line": 26,
+        "function_after_start_line": 25,
+        "function_after_end_line": 26,
+        "function_before_token_count": 17,
+        "function_after_token_count": 18,
+        "function_before": "def get_new_command(command, settings):\n    return 'open http://' + command.script[5:]",
+        "function_after": "def get_new_command(command, settings):\n    return command.script.replace('open ', 'open http://')"
+      },
+      "file_name": "open.py",
+      "file_path": "thefuck/rules/open.py",
+      "score_reranked": 0.6830157644794634
+    },
+    {
+      "id": "5",
+      "project_name": "luigi",
+      "buggy_line_content": "            self.fs.mkdir(d)",
+      "function": {
+        "function_name": "move",
+        "function_parent": "LocalFileSystem",
+        "function_before_start_line": 86,
+        "function_before_end_line": 92,
+        "function_after_start_line": 86,
+        "function_after_end_line": 92,
+        "function_before_token_count": 71,
+        "function_after_token_count": 69,
+        "function_before": "def move(self, old_path, new_path, raise_if_exists=False):\n    if raise_if_exists and os.path.exists(new_path):\n        raise RuntimeError('Destination exists: %s' % new_path)\n    d = os.path.dirname(new_path)\n    if d and (not os.path.exists(d)):\n        self.fs.mkdir(d)\n    os.rename(old_path, new_path)",
+        "function_after": "def move(self, old_path, new_path, raise_if_exists=False):\n    if raise_if_exists and os.path.exists(new_path):\n        raise RuntimeError('Destination exists: %s' % new_path)\n    d = os.path.dirname(new_path)\n    if d and (not os.path.exists(d)):\n        self.mkdir(d)\n    os.rename(old_path, new_path)"
+      },
+      "file_name": "file.py",
+      "file_path": "luigi/file.py",
+      "score_reranked": 0.5571627974923911
+    },
+    {
+      "id": "19",
+      "project_name": "youtube-dl",
+      "buggy_line_content": "        [a-zA-Z_][.a-zA-Z_0-9]*|",
+      "function": {
+        "function_name": "js_to_json",
+        "function_parent": "utils.py",
+        "function_before_start_line": 2235,
+        "function_before_end_line": 2273,
+        "function_after_start_line": 2235,
+        "function_after_end_line": 2273,
+        "function_before_token_count": 77,
+        "function_after_token_count": 77,
+        "function_before": "def js_to_json(code):\n    COMMENT_RE = '/\\\\*(?:(?!\\\\*/).)*?\\\\*/|//[^\\\\n]*'\n    SKIP_RE = '\\\\s*(?:{comment})?\\\\s*'.format(comment=COMMENT_RE)\n    INTEGER_TABLE = (('(?s)^(0[xX][0-9a-fA-F]+){skip}:?$'.format(skip=SKIP_RE), 16), ('(?s)^(0+[0-7]+){skip}:?$'.format(skip=SKIP_RE), 8))\n\n    def fix_kv(m):\n        v = m.group(0)\n        if v in ('true', 'false', 'null'):\n            return v\n        elif v.startswith('/*') or v.startswith('//') or v == ',':\n            return ''\n        if v[0] in (\"'\", '\"'):\n            v = re.sub('(?s)\\\\\\\\.|\"', lambda m: {'\"': '\\\\\"', \"\\\\'\": \"'\", '\\\\\\n': '', '\\\\x': '\\\\u00'}.get(m.group(0), m.group(0)), v[1:-1])\n        for regex, base in INTEGER_TABLE:\n            im = re.match(regex, v)\n            if im:\n                i = int(im.group(1), base)\n                return '\"%d\":' % i if v.endswith(':') else '%d' % i\n        return '\"%s\"' % v\n    return re.sub('(?sx)\\n        \"(?:[^\"\\\\\\\\]*(?:\\\\\\\\\\\\\\\\|\\\\\\\\[\\'\"nurtbfx/\\\\n]))*[^\"\\\\\\\\]*\"|\\n        \\'(?:[^\\'\\\\\\\\]*(?:\\\\\\\\\\\\\\\\|\\\\\\\\[\\'\"nurtbfx/\\\\n]))*[^\\'\\\\\\\\]*\\'|\\n        {comment}|,(?={skip}[\\\\]}}])|\\n        [a-zA-Z_][.a-zA-Z_0-9]*|\\n        \\\\b(?:0[xX][0-9a-fA-F]+|0+[0-7]+)(?:{skip}:)?|\\n        [0-9]+(?={skip}:)\\n        '.format(comment=COMMENT_RE, skip=SKIP_RE), fix_kv, code)",
+        "function_after": "def js_to_json(code):\n    COMMENT_RE = '/\\\\*(?:(?!\\\\*/).)*?\\\\*/|//[^\\\\n]*'\n    SKIP_RE = '\\\\s*(?:{comment})?\\\\s*'.format(comment=COMMENT_RE)\n    INTEGER_TABLE = (('(?s)^(0[xX][0-9a-fA-F]+){skip}:?$'.format(skip=SKIP_RE), 16), ('(?s)^(0+[0-7]+){skip}:?$'.format(skip=SKIP_RE), 8))\n\n    def fix_kv(m):\n        v = m.group(0)\n        if v in ('true', 'false', 'null'):\n            return v\n        elif v.startswith('/*') or v.startswith('//') or v == ',':\n            return ''\n        if v[0] in (\"'\", '\"'):\n            v = re.sub('(?s)\\\\\\\\.|\"', lambda m: {'\"': '\\\\\"', \"\\\\'\": \"'\", '\\\\\\n': '', '\\\\x': '\\\\u00'}.get(m.group(0), m.group(0)), v[1:-1])\n        for regex, base in INTEGER_TABLE:\n            im = re.match(regex, v)\n            if im:\n                i = int(im.group(1), base)\n                return '\"%d\":' % i if v.endswith(':') else '%d' % i\n        return '\"%s\"' % v\n    return re.sub('(?sx)\\n        \"(?:[^\"\\\\\\\\]*(?:\\\\\\\\\\\\\\\\|\\\\\\\\[\\'\"nurtbfx/\\\\n]))*[^\"\\\\\\\\]*\"|\\n        \\'(?:[^\\'\\\\\\\\]*(?:\\\\\\\\\\\\\\\\|\\\\\\\\[\\'\"nurtbfx/\\\\n]))*[^\\'\\\\\\\\]*\\'|\\n        {comment}|,(?={skip}[\\\\]}}])|\\n        (?:(?<![0-9])[eE]|[a-df-zA-DF-Z_])[.a-zA-Z_0-9]*|\\n        \\\\b(?:0[xX][0-9a-fA-F]+|0+[0-7]+)(?:{skip}:)?|\\n        [0-9]+(?={skip}:)\\n        '.format(comment=COMMENT_RE, skip=SKIP_RE), fix_kv, code)"
+      },
+      "file_name": "utils.py",
+      "file_path": "youtube_dl/utils.py",
+      "score_reranked": 0.42647135407139136
+    },
+    {
+      "id": "21",
+      "project_name": "youtube-dl",
+      "buggy_line_content": "        (?:0[xX][0-9a-fA-F]+|0+[0-7]+)(?:\\s*:)?|",
+      "function": {
+        "function_name": "js_to_json",
+        "function_parent": "utils.py",
+        "function_before_start_line": 1939,
+        "function_before_end_line": 1975,
+        "function_after_start_line": 1939,
+        "function_after_end_line": 1975,
+        "function_before_token_count": 19,
+        "function_after_token_count": 19,
+        "function_before": "def js_to_json(code):\n\n    def fix_kv(m):\n        v = m.group(0)\n        if v in ('true', 'false', 'null'):\n            return v\n        elif v.startswith('/*') or v == ',':\n            return ''\n        if v[0] in (\"'\", '\"'):\n            v = re.sub('(?s)\\\\\\\\.|\"', lambda m: {'\"': '\\\\\"', \"\\\\'\": \"'\", '\\\\\\n': '', '\\\\x': '\\\\u00'}.get(m.group(0), m.group(0)), v[1:-1])\n        INTEGER_TABLE = (('^0[xX][0-9a-fA-F]+', 16), ('^0+[0-7]+', 8))\n        for regex, base in INTEGER_TABLE:\n            im = re.match(regex, v)\n            if im:\n                i = int(im.group(0), base)\n                return '\"%d\":' % i if v.endswith(':') else '%d' % i\n        return '\"%s\"' % v\n    return re.sub('(?sx)\\n        \"(?:[^\"\\\\\\\\]*(?:\\\\\\\\\\\\\\\\|\\\\\\\\[\\'\"nurtbfx/\\\\n]))*[^\"\\\\\\\\]*\"|\\n        \\'(?:[^\\'\\\\\\\\]*(?:\\\\\\\\\\\\\\\\|\\\\\\\\[\\'\"nurtbfx/\\\\n]))*[^\\'\\\\\\\\]*\\'|\\n        /\\\\*.*?\\\\*/|,(?=\\\\s*[\\\\]}])|\\n        [a-zA-Z_][.a-zA-Z_0-9]*|\\n        (?:0[xX][0-9a-fA-F]+|0+[0-7]+)(?:\\\\s*:)?|\\n        [0-9]+(?=\\\\s*:)\\n        ', fix_kv, code)",
+        "function_after": "def js_to_json(code):\n\n    def fix_kv(m):\n        v = m.group(0)\n        if v in ('true', 'false', 'null'):\n            return v\n        elif v.startswith('/*') or v == ',':\n            return ''\n        if v[0] in (\"'\", '\"'):\n            v = re.sub('(?s)\\\\\\\\.|\"', lambda m: {'\"': '\\\\\"', \"\\\\'\": \"'\", '\\\\\\n': '', '\\\\x': '\\\\u00'}.get(m.group(0), m.group(0)), v[1:-1])\n        INTEGER_TABLE = (('^0[xX][0-9a-fA-F]+', 16), ('^0+[0-7]+', 8))\n        for regex, base in INTEGER_TABLE:\n            im = re.match(regex, v)\n            if im:\n                i = int(im.group(0), base)\n                return '\"%d\":' % i if v.endswith(':') else '%d' % i\n        return '\"%s\"' % v\n    return re.sub('(?sx)\\n        \"(?:[^\"\\\\\\\\]*(?:\\\\\\\\\\\\\\\\|\\\\\\\\[\\'\"nurtbfx/\\\\n]))*[^\"\\\\\\\\]*\"|\\n        \\'(?:[^\\'\\\\\\\\]*(?:\\\\\\\\\\\\\\\\|\\\\\\\\[\\'\"nurtbfx/\\\\n]))*[^\\'\\\\\\\\]*\\'|\\n        /\\\\*.*?\\\\*/|,(?=\\\\s*[\\\\]}])|\\n        [a-zA-Z_][.a-zA-Z_0-9]*|\\n        \\\\b(?:0[xX][0-9a-fA-F]+|0+[0-7]+)(?:\\\\s*:)?|\\n        [0-9]+(?=\\\\s*:)\\n        ', fix_kv, code)"
+      },
+      "file_name": "utils.py",
+      "file_path": "youtube_dl/utils.py",
+      "score_reranked": 0.41424909003895644
+    }
+  ],
+  "diffusion_plan": [
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 7
+        },
+        {
+          "op": "Replace",
+          "node": 3
+        },
+        {
+          "op": "InsertBefore",
+          "node": 7
+        },
+        {
+          "op": "GuardAdd",
+          "node": 7
+        },
+        {
+          "op": "InsertBefore",
+          "node": 3
+        },
+        {
+          "op": "GuardAdd",
+          "node": 3
+        },
+        {
+          "op": "InsertAfter",
+          "node": 7
+        }
+      ],
+      "score": 45.49999992916667
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 7
+        },
+        {
+          "op": "Replace",
+          "node": 3
+        },
+        {
+          "op": "InsertBefore",
+          "node": 3
+        },
+        {
+          "op": "GuardAdd",
+          "node": 3
+        },
+        {
+          "op": "Delete",
+          "node": 7
+        },
+        {
+          "op": "GuardAdd",
+          "node": 7
+        },
+        {
+          "op": "InsertBefore",
+          "node": 7
+        }
+      ],
+      "score": 44.49999993083333
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 7
+        },
+        {
+          "op": "Replace",
+          "node": 3
+        },
+        {
+          "op": "GuardAdd",
+          "node": 3
+        },
+        {
+          "op": "Delete",
+          "node": 7
+        },
+        {
+          "op": "InsertBefore",
+          "node": 7
+        },
+        {
+          "op": "GuardAdd",
+          "node": 7
+        }
+      ],
+      "score": 40.99999993666667
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 7
+        },
+        {
+          "op": "GuardAdd",
+          "node": 7
+        },
+        {
+          "op": "Replace",
+          "node": 3
+        },
+        {
+          "op": "GuardAdd",
+          "node": 3
+        },
+        {
+          "op": "InsertBefore",
+          "node": 7
+        },
+        {
+          "op": "Delete",
+          "node": 7
+        }
+      ],
+      "score": 40.99999993666667
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 3
+        },
+        {
+          "op": "GuardAdd",
+          "node": 7
+        },
+        {
+          "op": "InsertBefore",
+          "node": 7
+        },
+        {
+          "op": "Replace",
+          "node": 7
+        },
+        {
+          "op": "InsertAfter",
+          "node": 3
+        },
+        {
+          "op": "GuardAdd",
+          "node": 3
+        }
+      ],
+      "score": 38.499999940833334
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 7
+        },
+        {
+          "op": "GuardAdd",
+          "node": 7
+        },
+        {
+          "op": "GuardAdd",
+          "node": 3
+        },
+        {
+          "op": "InsertBefore",
+          "node": 7
+        },
+        {
+          "op": "Replace",
+          "node": 3
+        },
+        {
+          "op": "Delete",
+          "node": 3
+        }
+      ],
+      "score": 37.999999941666665
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "GuardAdd",
+          "node": 7
+        },
+        {
+          "op": "Delete",
+          "node": 7
+        },
+        {
+          "op": "InsertBefore",
+          "node": 7
+        },
+        {
+          "op": "Replace",
+          "node": 7
+        },
+        {
+          "op": "Replace",
+          "node": 3
+        }
+      ],
+      "score": 36.499999943333336
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 7
+        },
+        {
+          "op": "InsertBefore",
+          "node": 7
+        },
+        {
+          "op": "GuardAdd",
+          "node": 7
+        },
+        {
+          "op": "Replace",
+          "node": 3
+        },
+        {
+          "op": "Delete",
+          "node": 7
+        }
+      ],
+      "score": 36.499999943333336
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 3
+        },
+        {
+          "op": "InsertAfter",
+          "node": 7
+        },
+        {
+          "op": "Replace",
+          "node": 7
+        },
+        {
+          "op": "GuardAdd",
+          "node": 7
+        },
+        {
+          "op": "Delete",
+          "node": 7
+        }
+      ],
+      "score": 36.499999943333336
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 3
+        },
+        {
+          "op": "Replace",
+          "node": 7
+        },
+        {
+          "op": "Delete",
+          "node": 7
+        },
+        {
+          "op": "GuardAdd",
+          "node": 7
+        },
+        {
+          "op": "InsertAfter",
+          "node": 7
+        }
+      ],
+      "score": 36.499999943333336
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 7
+        },
+        {
+          "op": "GuardAdd",
+          "node": 3
+        },
+        {
+          "op": "Delete",
+          "node": 3
+        },
+        {
+          "op": "Replace",
+          "node": 3
+        },
+        {
+          "op": "InsertBefore",
+          "node": 3
+        },
+        {
+          "op": "GuardAdd",
+          "node": 7
+        }
+      ],
+      "score": 34.4999999475
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 7
+        },
+        {
+          "op": "Replace",
+          "node": 3
+        },
+        {
+          "op": "InsertBefore",
+          "node": 7
+        },
+        {
+          "op": "GuardAdd",
+          "node": 7
+        },
+        {
+          "op": "GuardAdd",
+          "node": 3
+        }
+      ],
+      "score": 34.49999994666666
+    }
+  ],
+  "static_analysis_nodes": [
+    {
+      "line": 3,
+      "line_absolute": 14,
+      "node_id": 7,
+      "node_id_local": 1,
+      "type": "Call",
+      "code": "re.sub('^mkdir (.*)', 'mkdir -p \\\\1', command.script)",
+      "distance_to_buggy": 0,
+      "context": "   1:   @sudo_support\n   2:   def get_new_command(command, settings):\n   3:->     return re.sub('^mkdir (.*)', 'mkdir -p \\\\1', command.script)",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Attribute",
+          "value": {
+            "_type": "Name"
+          },
+          "attr": "sub",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [
+          {
+            "_type": "Constant",
+            "value": "^mkdir (.*)",
+            "kind": null
+          },
+          {
+            "_type": "Constant",
+            "value": "mkdir -p \\1",
+            "kind": null
+          },
+          {
+            "_type": "Attribute",
+            "value": {
+              "_type": "Name"
+            },
+            "attr": "script",
+            "ctx": {
+              "_type": "Load"
+            }
+          }
+        ],
+        "keywords": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -24.0
+    },
+    {
+      "line": 3,
+      "line_absolute": 14,
+      "node_id": 3,
+      "node_id_local": 0,
+      "type": "Return",
+      "code": "return re.sub('^mkdir (.*)', 'mkdir -p \\\\1', command.script)",
+      "distance_to_buggy": 0,
+      "context": "   1:   @sudo_support\n   2:   def get_new_command(command, settings):\n   3:->     return re.sub('^mkdir (.*)', 'mkdir -p \\\\1', command.script)",
+      "ast_subtree_json": {
+        "_type": "Return",
+        "value": {
+          "_type": "Call",
+          "func": {
+            "_type": "Attribute"
+          },
+          "args": [
+            {
+              "_type": "Constant"
+            },
+            {
+              "_type": "Constant"
+            },
+            {
+              "_type": "Attribute"
+            }
+          ],
+          "keywords": []
+        }
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -22.0
+    }
+  ]
+}

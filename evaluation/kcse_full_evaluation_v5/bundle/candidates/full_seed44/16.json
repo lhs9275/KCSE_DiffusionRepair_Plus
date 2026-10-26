@@ -1,0 +1,877 @@
+{
+  "bug_id": "16",
+  "seed": 44,
+  "arm": "full",
+  "candidates": [
+    {
+      "index": 0,
+      "patch_text": "def unescapeHTML(s):\n    if s is None:\n        return None\n    assert type(s) == compat_str\n    return re.sub('(&([^;]+;))', lambda m: _htmlentity_transform(m.group(1)), s)",
+      "patch_sha256": "310f8c2c0de5f8316971e889c662007ba40f5788aeb2b69e2c8db9220c7df5ec",
+      "rank_score": 227,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7941462962722876,
+      "top_p": 0.8926828703403595
+    },
+    {
+      "index": 1,
+      "patch_text": "def unescapeHTML(s):\n    if s is None:\n        return None\n    assert type(s) == compat_str\n    return re.sub('&#([^;]+;)', lambda m: _htmlentity_transform(m.group(1)), s)",
+      "patch_sha256": "80fcc265451b651dbc96f0f7c7f47558a07fd1df9489a702d1a092568a9868b7",
+      "rank_score": 217,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7941462962722876,
+      "top_p": 0.8926828703403595
+    },
+    {
+      "index": 2,
+      "patch_text": "def unescapeHTML(s):\n    if s is None:\n        return None\n    assert type(s) == compat_str\n    return re.sub('&([^;]+;)', lambda m: _htmlentity_transform(m.group(1)), s)\n\n#edit1\ndef unescapeHTML(s):\n    if s is None:\n        return None\n    assert type(s) == compat_str\n    return re.sub('&([^;]+;)', lambda m: _htmlentity_transform(m.group(1)), s)\n\n#edit2\ndef unescapeHTML(s):\n    if s is None:\n        return None\n    assert type(s) == compat_str\n    return re.sub('&([^;]+;)', lambda m: _htmlentity_transform(m.group(1)), s)\n\n#edit3\ndef unescapeHTML(s):\n    if s is None:\n        return None\n    assert type(s) == compat_str\n    return re.sub('&([^;]+;)', lambda m: _htmlentity_transform(m.group(1)), s)\n\n#edit4\ndef unescapeHTML(s):\n    if s is None:\n        return None\n    assert type(s) == compat_str\n    return re.sub('&([^;]+;)', lambda m: _htmlentity_transform(m.group(1)), s)\n\n#edit5\ndef unescapeHTML(s):\n    if s is None:\n        return None\n    assert type(s) == compat_str\n    return re.sub('&([^;]+;)', lambda m: _htmlentity_transform(m.group(1)), s)\n\n#edit6\ndef unescapeHTML(s):\n    if s is None:\n        return None\n    assert type(s) == compat_str\n    return re.sub('&([^;]+;)', lambda m: _htmlentity_transform(m.group(1)), s)\nimport sys\nsys.path.append(\"../\")\n\nimport json\nimport pandas as pd\nimport numpy as np\nimport matplotlib.pyplot as plt\nimport seaborn as sns\nfrom collections import defaultdict\nfrom src.utils import load_dataset, save_dataset\n\npd.options.display.max_rows = 1000\npd.options.display.max_columns = 1000\n\ndef plot_heatmap(data, title):\n    # sns.set(font_scale=1.5)\n    # fig, ax = plt.subplots(figsize=(16,12))\n    # sns.heatmap(data, annot=True, linewidths=.5, cmap=\"YlGnBu\", ax=ax)\n    # plt.title(title)\n    # plt.show()\n    data.to_csv(\"./data/plot/{}.csv\".format(title), sep=',', index=False)\n\n\ndef count_all(df, col):\n    # Count all rows in each column\n    data = df[col].value_",
+      "patch_sha256": "d7d77eec148f9c6bfce893db05007ee610a4919730f47d83bfb0db2aa4ac8021",
+      "rank_score": -159,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7754656341403433,
+      "top_p": 0.8693320426754291
+    }
+  ],
+  "candidate_count": 3,
+  "retrieved_examples": [
+    {
+      "id": "17",
+      "project_name": "youtube-dl",
+      "buggy_line_content": "                    op = lambda attr, value: not str_op",
+      "function": {
+        "function_name": "_build_format_filter",
+        "function_parent": "YoutubeDL",
+        "function_before_start_line": 1032,
+        "function_before_end_line": 1093,
+        "function_after_start_line": 1032,
+        "function_after_end_line": 1093,
+        "function_before_token_count": 310,
+        "function_after_token_count": 315,
+        "function_before": "def _build_format_filter(self, filter_spec):\n    \"\"\" Returns a function to filter the formats according to the filter_spec \"\"\"\n    OPERATORS = {'<': operator.lt, '<=': operator.le, '>': operator.gt, '>=': operator.ge, '=': operator.eq, '!=': operator.ne}\n    operator_rex = re.compile('(?x)\\\\s*\\n            (?P<key>width|height|tbr|abr|vbr|asr|filesize|filesize_approx|fps)\\n            \\\\s*(?P<op>%s)(?P<none_inclusive>\\\\s*\\\\?)?\\\\s*\\n            (?P<value>[0-9.]+(?:[kKmMgGtTpPeEzZyY]i?[Bb]?)?)\\n            $\\n            ' % '|'.join(map(re.escape, OPERATORS.keys())))\n    m = operator_rex.search(filter_spec)\n    if m:\n        try:\n            comparison_value = int(m.group('value'))\n        except ValueError:\n            comparison_value = parse_filesize(m.group('value'))\n            if comparison_value is None:\n                comparison_value = parse_filesize(m.group('value') + 'B')\n            if comparison_value is None:\n                raise ValueError('Invalid value %r in format specification %r' % (m.group('value'), filter_spec))\n        op = OPERATORS[m.group('op')]\n    if not m:\n        STR_OPERATORS = {'=': operator.eq, '^=': lambda attr, value: attr.startswith(value), '$=': lambda attr, value: attr.endswith(value), '*=': lambda attr, value: value in attr}\n        str_operator_rex = re.compile('(?x)\\n                \\\\s*(?P<key>ext|acodec|vcodec|container|protocol|format_id)\\n                \\\\s*(?P<negation>!\\\\s*)?(?P<op>%s)(?P<none_inclusive>\\\\s*\\\\?)?\\n                \\\\s*(?P<value>[a-zA-Z0-9._-]+)\\n                \\\\s*$\\n                ' % '|'.join(map(re.escape, STR_OPERATORS.keys())))\n        m = str_operator_rex.search(filter_spec)\n        if m:\n            comparison_value = m.group('value')\n            str_op = STR_OPERATORS[m.group('op')]\n            if m.group('negation'):\n                op = lambda attr, value: not str_op\n            else:\n                op = str_op\n    if not m:\n        raise ValueError('Invalid filter specification %r' % filter_spec)\n\n    def _filter(f):\n        actual_value = f.get(m.group('key'))\n        if actual_value is None:\n            return m.group('none_inclusive')\n        return op(actual_value, comparison_value)\n    return _filter",
+        "function_after": "def _build_format_filter(self, filter_spec):\n    \"\"\" Returns a function to filter the formats according to the filter_spec \"\"\"\n    OPERATORS = {'<': operator.lt, '<=': operator.le, '>': operator.gt, '>=': operator.ge, '=': operator.eq, '!=': operator.ne}\n    operator_rex = re.compile('(?x)\\\\s*\\n            (?P<key>width|height|tbr|abr|vbr|asr|filesize|filesize_approx|fps)\\n            \\\\s*(?P<op>%s)(?P<none_inclusive>\\\\s*\\\\?)?\\\\s*\\n            (?P<value>[0-9.]+(?:[kKmMgGtTpPeEzZyY]i?[Bb]?)?)\\n            $\\n            ' % '|'.join(map(re.escape, OPERATORS.keys())))\n    m = operator_rex.search(filter_spec)\n    if m:\n        try:\n            comparison_value = int(m.group('value'))\n        except ValueError:\n            comparison_value = parse_filesize(m.group('value'))\n            if comparison_value is None:\n                comparison_value = parse_filesize(m.group('value') + 'B')\n            if comparison_value is None:\n                raise ValueError('Invalid value %r in format specification %r' % (m.group('value'), filter_spec))\n        op = OPERATORS[m.group('op')]\n    if not m:\n        STR_OPERATORS = {'=': operator.eq, '^=': lambda attr, value: attr.startswith(value), '$=': lambda attr, value: attr.endswith(value), '*=': lambda attr, value: value in attr}\n        str_operator_rex = re.compile('(?x)\\n                \\\\s*(?P<key>ext|acodec|vcodec|container|protocol|format_id)\\n                \\\\s*(?P<negation>!\\\\s*)?(?P<op>%s)(?P<none_inclusive>\\\\s*\\\\?)?\\n                \\\\s*(?P<value>[a-zA-Z0-9._-]+)\\n                \\\\s*$\\n                ' % '|'.join(map(re.escape, STR_OPERATORS.keys())))\n        m = str_operator_rex.search(filter_spec)\n        if m:\n            comparison_value = m.group('value')\n            str_op = STR_OPERATORS[m.group('op')]\n            if m.group('negation'):\n                op = lambda attr, value: not str_op(attr, value)\n            else:\n                op = str_op\n    if not m:\n        raise ValueError('Invalid filter specification %r' % filter_spec)\n\n    def _filter(f):\n        actual_value = f.get(m.group('key'))\n        if actual_value is None:\n            return m.group('none_inclusive')\n        return op(actual_value, comparison_value)\n    return _filter"
+      },
+      "file_name": "YoutubeDL.py",
+      "file_path": "youtube_dl/YoutubeDL.py",
+      "score_reranked": 0.8583139777654964
+    },
+    {
+      "id": "21",
+      "project_name": "youtube-dl",
+      "buggy_line_content": "        (?:0[xX][0-9a-fA-F]+|0+[0-7]+)(?:\\s*:)?|",
+      "function": {
+        "function_name": "js_to_json",
+        "function_parent": "utils.py",
+        "function_before_start_line": 1939,
+        "function_before_end_line": 1975,
+        "function_after_start_line": 1939,
+        "function_after_end_line": 1975,
+        "function_before_token_count": 19,
+        "function_after_token_count": 19,
+        "function_before": "def js_to_json(code):\n\n    def fix_kv(m):\n        v = m.group(0)\n        if v in ('true', 'false', 'null'):\n            return v\n        elif v.startswith('/*') or v == ',':\n            return ''\n        if v[0] in (\"'\", '\"'):\n            v = re.sub('(?s)\\\\\\\\.|\"', lambda m: {'\"': '\\\\\"', \"\\\\'\": \"'\", '\\\\\\n': '', '\\\\x': '\\\\u00'}.get(m.group(0), m.group(0)), v[1:-1])\n        INTEGER_TABLE = (('^0[xX][0-9a-fA-F]+', 16), ('^0+[0-7]+', 8))\n        for regex, base in INTEGER_TABLE:\n            im = re.match(regex, v)\n            if im:\n                i = int(im.group(0), base)\n                return '\"%d\":' % i if v.endswith(':') else '%d' % i\n        return '\"%s\"' % v\n    return re.sub('(?sx)\\n        \"(?:[^\"\\\\\\\\]*(?:\\\\\\\\\\\\\\\\|\\\\\\\\[\\'\"nurtbfx/\\\\n]))*[^\"\\\\\\\\]*\"|\\n        \\'(?:[^\\'\\\\\\\\]*(?:\\\\\\\\\\\\\\\\|\\\\\\\\[\\'\"nurtbfx/\\\\n]))*[^\\'\\\\\\\\]*\\'|\\n        /\\\\*.*?\\\\*/|,(?=\\\\s*[\\\\]}])|\\n        [a-zA-Z_][.a-zA-Z_0-9]*|\\n        (?:0[xX][0-9a-fA-F]+|0+[0-7]+)(?:\\\\s*:)?|\\n        [0-9]+(?=\\\\s*:)\\n        ', fix_kv, code)",
+        "function_after": "def js_to_json(code):\n\n    def fix_kv(m):\n        v = m.group(0)\n        if v in ('true', 'false', 'null'):\n            return v\n        elif v.startswith('/*') or v == ',':\n            return ''\n        if v[0] in (\"'\", '\"'):\n            v = re.sub('(?s)\\\\\\\\.|\"', lambda m: {'\"': '\\\\\"', \"\\\\'\": \"'\", '\\\\\\n': '', '\\\\x': '\\\\u00'}.get(m.group(0), m.group(0)), v[1:-1])\n        INTEGER_TABLE = (('^0[xX][0-9a-fA-F]+', 16), ('^0+[0-7]+', 8))\n        for regex, base in INTEGER_TABLE:\n            im = re.match(regex, v)\n            if im:\n                i = int(im.group(0), base)\n                return '\"%d\":' % i if v.endswith(':') else '%d' % i\n        return '\"%s\"' % v\n    return re.sub('(?sx)\\n        \"(?:[^\"\\\\\\\\]*(?:\\\\\\\\\\\\\\\\|\\\\\\\\[\\'\"nurtbfx/\\\\n]))*[^\"\\\\\\\\]*\"|\\n        \\'(?:[^\\'\\\\\\\\]*(?:\\\\\\\\\\\\\\\\|\\\\\\\\[\\'\"nurtbfx/\\\\n]))*[^\\'\\\\\\\\]*\\'|\\n        /\\\\*.*?\\\\*/|,(?=\\\\s*[\\\\]}])|\\n        [a-zA-Z_][.a-zA-Z_0-9]*|\\n        \\\\b(?:0[xX][0-9a-fA-F]+|0+[0-7]+)(?:\\\\s*:)?|\\n        [0-9]+(?=\\\\s*:)\\n        ', fix_kv, code)"
+      },
+      "file_name": "utils.py",
+      "file_path": "youtube_dl/utils.py",
+      "score_reranked": 0.7950743999853571
+    },
+    {
+      "id": "22",
+      "project_name": "youtube-dl",
+      "buggy_line_content": "    m = re.match(r'(?:https?:|)//[^/]+/(?:[^/?#]+/)?([^/?#]+)/?(?:[?#]|$)', url)",
+      "function": {
+        "function_name": "url_basename",
+        "function_parent": "utils.py",
+        "function_before_start_line": 1089,
+        "function_before_end_line": 1093,
+        "function_after_start_line": 1089,
+        "function_after_end_line": 1093,
+        "function_before_token_count": 30,
+        "function_after_token_count": 30,
+        "function_before": "def url_basename(url):\n    m = re.match('(?:https?:|)//[^/]+/(?:[^/?#]+/)?([^/?#]+)/?(?:[?#]|$)', url)\n    if not m:\n        return u''\n    return m.group(1)",
+        "function_after": "def url_basename(url):\n    m = re.match('(?:https?:|)//[^/]+/(?:[^?#]+/)?([^/?#]+)/?(?:[?#]|$)', url)\n    if not m:\n        return u''\n    return m.group(1)"
+      },
+      "file_name": "utils.py",
+      "file_path": "youtube_dl/utils.py",
+      "score_reranked": 0.7708195041086924
+    },
+    {
+      "id": "19",
+      "project_name": "youtube-dl",
+      "buggy_line_content": "        [a-zA-Z_][.a-zA-Z_0-9]*|",
+      "function": {
+        "function_name": "js_to_json",
+        "function_parent": "utils.py",
+        "function_before_start_line": 2235,
+        "function_before_end_line": 2273,
+        "function_after_start_line": 2235,
+        "function_after_end_line": 2273,
+        "function_before_token_count": 77,
+        "function_after_token_count": 77,
+        "function_before": "def js_to_json(code):\n    COMMENT_RE = '/\\\\*(?:(?!\\\\*/).)*?\\\\*/|//[^\\\\n]*'\n    SKIP_RE = '\\\\s*(?:{comment})?\\\\s*'.format(comment=COMMENT_RE)\n    INTEGER_TABLE = (('(?s)^(0[xX][0-9a-fA-F]+){skip}:?$'.format(skip=SKIP_RE), 16), ('(?s)^(0+[0-7]+){skip}:?$'.format(skip=SKIP_RE), 8))\n\n    def fix_kv(m):\n        v = m.group(0)\n        if v in ('true', 'false', 'null'):\n            return v\n        elif v.startswith('/*') or v.startswith('//') or v == ',':\n            return ''\n        if v[0] in (\"'\", '\"'):\n            v = re.sub('(?s)\\\\\\\\.|\"', lambda m: {'\"': '\\\\\"', \"\\\\'\": \"'\", '\\\\\\n': '', '\\\\x': '\\\\u00'}.get(m.group(0), m.group(0)), v[1:-1])\n        for regex, base in INTEGER_TABLE:\n            im = re.match(regex, v)\n            if im:\n                i = int(im.group(1), base)\n                return '\"%d\":' % i if v.endswith(':') else '%d' % i\n        return '\"%s\"' % v\n    return re.sub('(?sx)\\n        \"(?:[^\"\\\\\\\\]*(?:\\\\\\\\\\\\\\\\|\\\\\\\\[\\'\"nurtbfx/\\\\n]))*[^\"\\\\\\\\]*\"|\\n        \\'(?:[^\\'\\\\\\\\]*(?:\\\\\\\\\\\\\\\\|\\\\\\\\[\\'\"nurtbfx/\\\\n]))*[^\\'\\\\\\\\]*\\'|\\n        {comment}|,(?={skip}[\\\\]}}])|\\n        [a-zA-Z_][.a-zA-Z_0-9]*|\\n        \\\\b(?:0[xX][0-9a-fA-F]+|0+[0-7]+)(?:{skip}:)?|\\n        [0-9]+(?={skip}:)\\n        '.format(comment=COMMENT_RE, skip=SKIP_RE), fix_kv, code)",
+        "function_after": "def js_to_json(code):\n    COMMENT_RE = '/\\\\*(?:(?!\\\\*/).)*?\\\\*/|//[^\\\\n]*'\n    SKIP_RE = '\\\\s*(?:{comment})?\\\\s*'.format(comment=COMMENT_RE)\n    INTEGER_TABLE = (('(?s)^(0[xX][0-9a-fA-F]+){skip}:?$'.format(skip=SKIP_RE), 16), ('(?s)^(0+[0-7]+){skip}:?$'.format(skip=SKIP_RE), 8))\n\n    def fix_kv(m):\n        v = m.group(0)\n        if v in ('true', 'false', 'null'):\n            return v\n        elif v.startswith('/*') or v.startswith('//') or v == ',':\n            return ''\n        if v[0] in (\"'\", '\"'):\n            v = re.sub('(?s)\\\\\\\\.|\"', lambda m: {'\"': '\\\\\"', \"\\\\'\": \"'\", '\\\\\\n': '', '\\\\x': '\\\\u00'}.get(m.group(0), m.group(0)), v[1:-1])\n        for regex, base in INTEGER_TABLE:\n            im = re.match(regex, v)\n            if im:\n                i = int(im.group(1), base)\n                return '\"%d\":' % i if v.endswith(':') else '%d' % i\n        return '\"%s\"' % v\n    return re.sub('(?sx)\\n        \"(?:[^\"\\\\\\\\]*(?:\\\\\\\\\\\\\\\\|\\\\\\\\[\\'\"nurtbfx/\\\\n]))*[^\"\\\\\\\\]*\"|\\n        \\'(?:[^\\'\\\\\\\\]*(?:\\\\\\\\\\\\\\\\|\\\\\\\\[\\'\"nurtbfx/\\\\n]))*[^\\'\\\\\\\\]*\\'|\\n        {comment}|,(?={skip}[\\\\]}}])|\\n        (?:(?<![0-9])[eE]|[a-df-zA-DF-Z_])[.a-zA-Z_0-9]*|\\n        \\\\b(?:0[xX][0-9a-fA-F]+|0+[0-7]+)(?:{skip}:)?|\\n        [0-9]+(?={skip}:)\\n        '.format(comment=COMMENT_RE, skip=SKIP_RE), fix_kv, code)"
+      },
+      "file_name": "utils.py",
+      "file_path": "youtube_dl/utils.py",
+      "score_reranked": 0.7135737721030211
+    },
+    {
+      "id": "26",
+      "project_name": "scrapy",
+      "buggy_line_content": "            for url in sitemap_urls_from_robots(response.body):",
+      "function": {
+        "function_name": "_parse_sitemap",
+        "function_parent": "SitemapSpider",
+        "function_before_start_line": 33,
+        "function_before_end_line": 54,
+        "function_after_start_line": 33,
+        "function_after_end_line": 54,
+        "function_before_token_count": 169,
+        "function_after_token_count": 169,
+        "function_before": "def _parse_sitemap(self, response):\n    if response.url.endswith('/robots.txt'):\n        for url in sitemap_urls_from_robots(response.body):\n            yield Request(url, callback=self._parse_sitemap)\n    else:\n        body = self._get_sitemap_body(response)\n        if body is None:\n            logger.warning('Ignoring invalid sitemap: %(response)s', {'response': response}, extra={'spider': self})\n            return\n        s = Sitemap(body)\n        if s.type == 'sitemapindex':\n            for loc in iterloc(s, self.sitemap_alternate_links):\n                if any((x.search(loc) for x in self._follow)):\n                    yield Request(loc, callback=self._parse_sitemap)\n        elif s.type == 'urlset':\n            for loc in iterloc(s):\n                for r, c in self._cbs:\n                    if r.search(loc):\n                        yield Request(loc, callback=c)\n                        break",
+        "function_after": "def _parse_sitemap(self, response):\n    if response.url.endswith('/robots.txt'):\n        for url in sitemap_urls_from_robots(response.text):\n            yield Request(url, callback=self._parse_sitemap)\n    else:\n        body = self._get_sitemap_body(response)\n        if body is None:\n            logger.warning('Ignoring invalid sitemap: %(response)s', {'response': response}, extra={'spider': self})\n            return\n        s = Sitemap(body)\n        if s.type == 'sitemapindex':\n            for loc in iterloc(s, self.sitemap_alternate_links):\n                if any((x.search(loc) for x in self._follow)):\n                    yield Request(loc, callback=self._parse_sitemap)\n        elif s.type == 'urlset':\n            for loc in iterloc(s):\n                for r, c in self._cbs:\n                    if r.search(loc):\n                        yield Request(loc, callback=c)\n                        break"
+      },
+      "file_name": "sitemap.py",
+      "file_path": "scrapy/spiders/sitemap.py",
+      "score_reranked": 0.501635259805247
+    }
+  ],
+  "diffusion_plan": [
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Delete",
+          "node": 10
+        },
+        {
+          "op": "Replace",
+          "node": 29
+        },
+        {
+          "op": "Replace",
+          "node": 10
+        },
+        {
+          "op": "Replace",
+          "node": 36
+        },
+        {
+          "op": "GuardAdd",
+          "node": 29
+        },
+        {
+          "op": "GuardAdd",
+          "node": 10
+        },
+        {
+          "op": "GuardAdd",
+          "node": 5
+        },
+        {
+          "op": "Replace",
+          "node": 5
+        },
+        {
+          "op": "GuardAdd",
+          "node": 8
+        }
+      ],
+      "score": 21.60714285346301
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Delete",
+          "node": 10
+        },
+        {
+          "op": "Replace",
+          "node": 29
+        },
+        {
+          "op": "Replace",
+          "node": 10
+        },
+        {
+          "op": "Replace",
+          "node": 36
+        },
+        {
+          "op": "GuardAdd",
+          "node": 29
+        },
+        {
+          "op": "Replace",
+          "node": 15
+        },
+        {
+          "op": "InsertBefore",
+          "node": 10
+        },
+        {
+          "op": "GuardAdd",
+          "node": 8
+        },
+        {
+          "op": "GuardAdd",
+          "node": 36
+        }
+      ],
+      "score": 21.196428567822068
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "GuardAdd",
+          "node": 10
+        },
+        {
+          "op": "Replace",
+          "node": 36
+        },
+        {
+          "op": "Replace",
+          "node": 15
+        },
+        {
+          "op": "GuardAdd",
+          "node": 29
+        },
+        {
+          "op": "GuardAdd",
+          "node": 15
+        },
+        {
+          "op": "Replace",
+          "node": 10
+        },
+        {
+          "op": "Replace",
+          "node": 5
+        },
+        {
+          "op": "GuardAdd",
+          "node": 36
+        }
+      ],
+      "score": 20.821428568246173
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 10
+        },
+        {
+          "op": "Replace",
+          "node": 5
+        },
+        {
+          "op": "InsertBefore",
+          "node": 10
+        },
+        {
+          "op": "Replace",
+          "node": 36
+        },
+        {
+          "op": "GuardAdd",
+          "node": 10
+        },
+        {
+          "op": "Delete",
+          "node": 29
+        },
+        {
+          "op": "Replace",
+          "node": 29
+        }
+      ],
+      "score": 20.76785713968431
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 36
+        },
+        {
+          "op": "Replace",
+          "node": 10
+        },
+        {
+          "op": "GuardAdd",
+          "node": 10
+        },
+        {
+          "op": "Replace",
+          "node": 5
+        },
+        {
+          "op": "Replace",
+          "node": 29
+        },
+        {
+          "op": "Delete",
+          "node": 29
+        },
+        {
+          "op": "Replace",
+          "node": 3
+        },
+        {
+          "op": "GuardAdd",
+          "node": 8
+        },
+        {
+          "op": "Replace",
+          "node": 15
+        },
+        {
+          "op": "GuardAdd",
+          "node": 5
+        }
+      ],
+      "score": 20.571428567933673
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 10
+        },
+        {
+          "op": "GuardAdd",
+          "node": 36
+        },
+        {
+          "op": "Replace",
+          "node": 15
+        },
+        {
+          "op": "Replace",
+          "node": 29
+        },
+        {
+          "op": "InsertBefore",
+          "node": 36
+        },
+        {
+          "op": "Replace",
+          "node": 36
+        },
+        {
+          "op": "Replace",
+          "node": 3
+        },
+        {
+          "op": "GuardAdd",
+          "node": 10
+        }
+      ],
+      "score": 20.23214285406569
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "InsertAfter",
+          "node": 10
+        },
+        {
+          "op": "Replace",
+          "node": 36
+        },
+        {
+          "op": "Replace",
+          "node": 10
+        },
+        {
+          "op": "Replace",
+          "node": 29
+        },
+        {
+          "op": "Replace",
+          "node": 8
+        },
+        {
+          "op": "Replace",
+          "node": 5
+        },
+        {
+          "op": "GuardAdd",
+          "node": 8
+        },
+        {
+          "op": "GuardAdd",
+          "node": 29
+        }
+      ],
+      "score": 20.19642856835778
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 15
+        },
+        {
+          "op": "Replace",
+          "node": 10
+        },
+        {
+          "op": "Delete",
+          "node": 29
+        },
+        {
+          "op": "Replace",
+          "node": 36
+        },
+        {
+          "op": "GuardAdd",
+          "node": 36
+        },
+        {
+          "op": "InsertAfter",
+          "node": 5
+        },
+        {
+          "op": "Replace",
+          "node": 8
+        },
+        {
+          "op": "Replace",
+          "node": 5
+        },
+        {
+          "op": "Delete",
+          "node": 15
+        },
+        {
+          "op": "Replace",
+          "node": 29
+        }
+      ],
+      "score": 20.07142856802296
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "GuardAdd",
+          "node": 8
+        },
+        {
+          "op": "Replace",
+          "node": 15
+        },
+        {
+          "op": "Replace",
+          "node": 29
+        },
+        {
+          "op": "InsertBefore",
+          "node": 15
+        },
+        {
+          "op": "InsertBefore",
+          "node": 29
+        },
+        {
+          "op": "Replace",
+          "node": 36
+        },
+        {
+          "op": "Replace",
+          "node": 10
+        },
+        {
+          "op": "GuardAdd",
+          "node": 29
+        }
+      ],
+      "score": 19.553571425615434
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 8
+        },
+        {
+          "op": "Replace",
+          "node": 10
+        },
+        {
+          "op": "Replace",
+          "node": 29
+        },
+        {
+          "op": "Replace",
+          "node": 36
+        },
+        {
+          "op": "GuardAdd",
+          "node": 29
+        },
+        {
+          "op": "InsertBefore",
+          "node": 8
+        },
+        {
+          "op": "Replace",
+          "node": 5
+        },
+        {
+          "op": "InsertAfter",
+          "node": 36
+        }
+      ],
+      "score": 19.339285711367985
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 10
+        },
+        {
+          "op": "Replace",
+          "node": 8
+        },
+        {
+          "op": "GuardAdd",
+          "node": 8
+        },
+        {
+          "op": "GuardAdd",
+          "node": 29
+        },
+        {
+          "op": "Replace",
+          "node": 15
+        },
+        {
+          "op": "InsertAfter",
+          "node": 10
+        },
+        {
+          "op": "Replace",
+          "node": 36
+        },
+        {
+          "op": "Replace",
+          "node": 5
+        }
+      ],
+      "score": 18.80357142574936
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 15
+        },
+        {
+          "op": "GuardAdd",
+          "node": 5
+        },
+        {
+          "op": "Replace",
+          "node": 8
+        },
+        {
+          "op": "Replace",
+          "node": 10
+        },
+        {
+          "op": "Delete",
+          "node": 36
+        },
+        {
+          "op": "GuardAdd",
+          "node": 29
+        },
+        {
+          "op": "Replace",
+          "node": 36
+        },
+        {
+          "op": "GuardAdd",
+          "node": 36
+        },
+        {
+          "op": "Replace",
+          "node": 5
+        }
+      ],
+      "score": 18.785714282538265
+    }
+  ],
+  "static_analysis_nodes": [
+    {
+      "line": 5,
+      "line_absolute": 597,
+      "node_id": 10,
+      "node_id_local": 4,
+      "type": "Call",
+      "code": "re.sub('&([^;]+;)', lambda m: _htmlentity_transform(m.group(1)), s)",
+      "distance_to_buggy": 0,
+      "context": "   2:       if s is None:\n   3:           return None\n   4:       assert type(s) == compat_str\n   5:->     return re.sub('&([^;]+;)', lambda m: _htmlentity_transform(m.group(1)), s)",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Attribute",
+          "value": {
+            "_type": "Name"
+          },
+          "attr": "sub",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [
+          {
+            "_type": "Constant",
+            "value": "&([^;]+;)",
+            "kind": null
+          },
+          {
+            "_type": "Lambda",
+            "args": {
+              "_type": "arguments"
+            },
+            "body": {
+              "_type": "Call"
+            }
+          },
+          {
+            "_type": "Name",
+            "id": "s",
+            "ctx": {
+              "_type": "Load"
+            }
+          }
+        ],
+        "keywords": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -25.5
+    },
+    {
+      "line": 5,
+      "line_absolute": 597,
+      "node_id": 29,
+      "node_id_local": 5,
+      "type": "Call",
+      "code": "_htmlentity_transform(m.group(1))",
+      "distance_to_buggy": 0,
+      "context": "   2:       if s is None:\n   3:           return None\n   4:       assert type(s) == compat_str\n   5:->     return re.sub('&([^;]+;)', lambda m: _htmlentity_transform(m.group(1)), s)",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Name",
+          "id": "_htmlentity_transform",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [
+          {
+            "_type": "Call",
+            "func": {
+              "_type": "Attribute"
+            },
+            "args": [
+              {
+                "_type": "Constant"
+              }
+            ],
+            "keywords": []
+          }
+        ],
+        "keywords": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -24.0
+    },
+    {
+      "line": 5,
+      "line_absolute": 597,
+      "node_id": 36,
+      "node_id_local": 6,
+      "type": "Call",
+      "code": "m.group(1)",
+      "distance_to_buggy": 0,
+      "context": "   2:       if s is None:\n   3:           return None\n   4:       assert type(s) == compat_str\n   5:->     return re.sub('&([^;]+;)', lambda m: _htmlentity_transform(m.group(1)), s)",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Attribute",
+          "value": {
+            "_type": "Name"
+          },
+          "attr": "group",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [
+          {
+            "_type": "Constant",
+            "value": 1,
+            "kind": null
+          }
+        ],
+        "keywords": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -24.0
+    },
+    {
+      "line": 5,
+      "line_absolute": 597,
+      "node_id": 5,
+      "node_id_local": 3,
+      "type": "Return",
+      "code": "return re.sub('&([^;]+;)', lambda m: _htmlentity_transform(m.group(1)), s)",
+      "distance_to_buggy": 0,
+      "context": "   2:       if s is None:\n   3:           return None\n   4:       assert type(s) == compat_str\n   5:->     return re.sub('&([^;]+;)', lambda m: _htmlentity_transform(m.group(1)), s)",
+      "ast_subtree_json": {
+        "_type": "Return",
+        "value": {
+          "_type": "Call",
+          "func": {
+            "_type": "Attribute"
+          },
+          "args": [
+            {
+              "_type": "Constant"
+            },
+            {
+              "_type": "Lambda"
+            },
+            {
+              "_type": "Name"
+            }
+          ],
+          "keywords": []
+        }
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -23.5
+    },
+    {
+      "line": 4,
+      "line_absolute": 596,
+      "node_id": 15,
+      "node_id_local": 2,
+      "type": "Call",
+      "code": "type(s)",
+      "distance_to_buggy": 1,
+      "context": "   1:   def unescapeHTML(s):\n   2:       if s is None:\n   3:           return None\n   4:->     assert type(s) == compat_str\n   5:       return re.sub('&([^;]+;)', lambda m: _htmlentity_transform(m.group(1)), s)",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Name",
+          "id": "type",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [
+          {
+            "_type": "Name",
+            "id": "s",
+            "ctx": {
+              "_type": "Load"
+            }
+          }
+        ],
+        "keywords": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -14.0
+    },
+    {
+      "line": 3,
+      "line_absolute": 595,
+      "node_id": 8,
+      "node_id_local": 1,
+      "type": "Return",
+      "code": "return None",
+      "distance_to_buggy": 2,
+      "context": "   1:   def unescapeHTML(s):\n   2:       if s is None:\n   3:->         return None\n   4:       assert type(s) == compat_str\n   5:       return re.sub('&([^;]+;)', lambda m: _htmlentity_transform(m.group(1)), s)",
+      "ast_subtree_json": {
+        "_type": "Return",
+        "value": {
+          "_type": "Constant",
+          "value": null,
+          "kind": null
+        }
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -1.0
+    },
+    {
+      "line": 2,
+      "line_absolute": 594,
+      "node_id": 3,
+      "node_id_local": 0,
+      "type": "If",
+      "code": "if s is None:\n    return None",
+      "distance_to_buggy": 3,
+      "context": "   1:   def unescapeHTML(s):\n   2:->     if s is None:\n   3:           return None\n   4:       assert type(s) == compat_str\n   5:       return re.sub('&([^;]+;)', lambda m: _htmlentity_transform(m.group(1)), s)",
+      "ast_subtree_json": {
+        "_type": "If",
+        "test": {
+          "_type": "Compare",
+          "left": {
+            "_type": "Name"
+          },
+          "ops": [
+            {
+              "_type": "Is"
+            }
+          ],
+          "comparators": [
+            {
+              "_type": "Constant"
+            }
+          ]
+        },
+        "body": [
+          {
+            "_type": "Return",
+            "value": {
+              "_type": "Constant"
+            }
+          }
+        ],
+        "orelse": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": 8.0
+    }
+  ]
+}

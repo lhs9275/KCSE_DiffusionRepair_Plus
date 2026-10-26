@@ -1,0 +1,141 @@
+{
+  "bug_id": "48",
+  "seed": 42,
+  "arm": "base",
+  "candidates": [
+    {
+      "index": 0,
+      "patch_text": "def match(command):\n    return 'push' in command.script_parts and'set-upstream' in command.output",
+      "patch_sha256": "d9df6bc9b395357529f988b7adde0168845deea84ac4126d75de231122a4b9a4",
+      "rank_score": 159,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.0,
+      "top_p": 1.0
+    },
+    {
+      "index": 1,
+      "patch_text": "def match(command):\n    return 'push' in command.script_parts and'set-upstream' not in command.output",
+      "patch_sha256": "4346daf2964548b1116be240ae4af3b323ffcd1e9c077a667ac43e25350d60dd",
+      "rank_score": 159,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8089233151013046,
+      "top_p": 0.9111541438766307
+    },
+    {
+      "index": 2,
+      "patch_text": "def match(command):\n    return 'push' in command.script_parts and 'upstream' in command.output",
+      "patch_sha256": "56648469cf36511a5c37711a1ce3cd16a9e53354adc606897b26b26d1a42fa57",
+      "rank_score": 159,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8089233151013046,
+      "top_p": 0.9111541438766307
+    },
+    {
+      "index": 3,
+      "patch_text": "def match(command):\n    return command.script_parts[0] == 'push' and'set-upstream' in command.output",
+      "patch_sha256": "87e796842aab4c5ab2d769fdfe9f36128c682647f1bccce43db7ed15e3c994b8",
+      "rank_score": 154,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8089233151013046,
+      "top_p": 0.9111541438766307
+    },
+    {
+      "index": 4,
+      "patch_text": "def match(command):\n    return 'push' in command.script_parts and 'new_branch' in command.script_parts",
+      "patch_sha256": "48926e45a866fcd41765d41f79d502e83b838b5e2d6f0876ed2746838f1269f4",
+      "rank_score": 154,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8089233151013046,
+      "top_p": 0.9111541438766307
+    },
+    {
+      "index": 5,
+      "patch_text": "def match(command):\n    return 'push' in command.script_parts and command.output!= ''",
+      "patch_sha256": "d739c6cb3f957b4caa60a5cb310590ec3912acf50955d07b19b65ae650722178",
+      "rank_score": 154,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.9374042813624712,
+      "top_p": 0.828917697133121
+    },
+    {
+      "index": 6,
+      "patch_text": "def match(command):\n    return 'push' in command.script_parts",
+      "patch_sha256": "e9ecfcc35d68664696363980a64e94eea09c33348e778f1c3a1f075a12a8abe7",
+      "rank_score": 149,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8089233151013046,
+      "top_p": 0.9111541438766307
+    },
+    {
+      "index": 7,
+      "patch_text": "def match(command):\n    return 'push' in command.script_parts and'set-upstream' in command.output\n\n##incorrect\n\ndef match(command):\n    return 'push' in command.script_parts and'set-upstream' in command.output\n\n##incorrect\n\ndef match(command):\n    return 'push' in command.script_parts and'set-upstream' in command.output\n\n##incorrect\n\ndef match(command):\n    return 'push' in command.script_parts and'set-upstream' in command.output\n\n##incorrect\n\ndef match(command):\n    return 'push' in command.script_parts and'set-upstream' in command.output\n\n##incorrect\n\ndef match(command):\n    return 'push' in command.script_parts and'set-upstream' in command.output\n\n##incorrect\n\ndef match(command):\n    return 'push' in command.script_parts and'set-upstream' in command.output\n\n##incorrect\n\ndef match(command):\n    return 'push' in command.script_parts and'set-upstream' in command.output\n\n##incorrect\n\ndef match(command):\n    return 'push' in command.script_parts and'set-upstream' in command.output\n\n##incorrect\n\ndef match(command):\n    return 'push' in command.script_parts and'set-upstream' in command.output\n\n##incorrect\n\ndef match(command):\n    return 'push' in command.script_parts and'set-upstream' in command.output\n\n##incorrect\n\ndef match(command):\n    return 'push' in command.script_parts and'set-upstream' in command.output\n\n##incorrect\n\ndef match(command):\n    return 'push' in command.script_parts and'set-upstream' in command.output\n\n##incorrect\n\ndef match(command):\n    return 'push' in command.script_parts and'set-upstream' in command.output\n\n##incorrect\n\ndef match(command):\n    return 'push' in command.script_parts and'set-upstream' in command.output\n\n##incorrect\n\ndef match(command):\n    return 'push' in command.script_parts and'set-upstream' in command.output\n\n##incorrect\n\ndef match(command):\n    return 'push' in command.script_parts and'set-upstream' in command.output\n\n##incorrect\n\ndef match(command):\n    return 'push' in command.script_parts and'set-upstream' in command.output\n\n##incorrect\n\ndef match(command):\n    return 'push' in command.script_parts and'set-upstream' in command.output\n\n##incorrect\n\ndef match(command):\n    return 'push' in command.script_parts and'set-upstream' in command.output\n\n##incorrect",
+      "patch_sha256": "ce24f0d166c3d1563eec264d41a60272e826d0a6c97d77152038a6a49abb469d",
+      "rank_score": 110,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7822854872415247,
+      "top_p": 0.8778568590519058
+    },
+    {
+      "index": 8,
+      "patch_text": "def match(command):\n  ...",
+      "patch_sha256": "3a630706c411d4578834aa20fd0ef1c73c647f1018a06c078e29c2ee7df4f996",
+      "rank_score": 53,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.9374042813624712,
+      "top_p": 0.828917697133121
+    },
+    {
+      "index": 9,
+      "patch_text": "def match(command):\n    return 'push' in command.script_parts and'set-upstream' not in command.output\n\n\n##test\nimport thefuck\nassert thefuck.run('git push -u origin master') == 'git push --set-upstream origin master'\nassert thefuck.run('git push --set-upstream origin master') == 'git push --set-upstream origin master'\nassert thefuck.run('git push --set-upstream origin master && git push --set-upstream origin master') == 'git push --set-upstream origin master && git push --set-upstream origin master'\nassert thefuck.run('git push --set-upstream origin master && git push --set-upstream origin master && git push --set-upstream origin master') == 'git push --set-upstream origin master && git push --set-upstream origin master && git push --set-upstream origin master'\nassert thefuck.run('git push --set-upstream origin master && git push --set-upstream origin master && git push --set-upstream origin master && git push --set-upstream origin master') == 'git push --set-upstream origin master && git push --set-upstream origin master && git push --set-upstream origin master && git push --set-upstream origin master'\nassert thefuck.run('git push --set-upstream origin master && git push --set-upstream origin master && git push --set-upstream origin master && git push --set-upstream origin master && git push --set-upstream origin master') == 'git push --set-upstream origin master && git push --set-upstream origin master && git push --set-upstream origin master && git push --set-upstream origin master && git push --set-upstream origin master'\nassert thefuck.run('git push --set-upstream origin master && git push --set-upstream origin master && git push --set-upstream origin master && git push --set-upstream origin master && git push --set-upstream origin master && git push --set-upstream origin master') == 'git push --set-upstream origin master && git push --set-upstream origin master && git push --set-upstream origin master && git push --set-upstream origin master && git push --set-upstream origin master && git push --set-upstream origin master'\nassert thefuck.run('git push --set-upstream origin master && git push --set-upstream origin master && git push --set-upstream origin master && git push --set-upstream origin master && git push --set-upstream origin master && git push --set-upstream origin master && git push --set-upstream origin master') == 'git push --set-upstream origin master && git push --set-upstream origin master && git push --set-upstream origin master && git push --set-upstream origin master && git push --set-upstream origin master && git push --set-upstream origin master && git push --set-upstream origin master'\nassert thef",
+      "patch_sha256": "7099677a6260762ac099652aac64b7f031e622461c2b2a2f5320665b0d578118",
+      "rank_score": -88,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8850407915843882,
+      "top_p": 0.7720008604178135
+    }
+  ],
+  "candidate_count": 10,
+  "retrieved_examples": [],
+  "diffusion_plan": [],
+  "static_analysis_nodes": []
+}

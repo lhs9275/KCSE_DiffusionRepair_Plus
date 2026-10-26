@@ -1,0 +1,653 @@
+{
+  "bug_id": "50",
+  "seed": 44,
+  "arm": "full",
+  "candidates": [
+    {
+      "index": 0,
+      "patch_text": "def get_new_command(command, settings):\n    return re.sub('^mkdir (.*)','mkdir -p \\\\1', command.script)",
+      "patch_sha256": "6f809107172ce3f30b549570c604b78e5bf8952a5d78cddcfbb3638c8b11879f",
+      "rank_score": 179,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7941462962722876,
+      "top_p": 0.8926828703403595
+    },
+    {
+      "index": 1,
+      "patch_text": "def get_new_command(command, settings):\n    return command.script.replace(' mkdir ','mkdir -p ')",
+      "patch_sha256": "da366d475a8ce1a3ac3e1c1951c756bdb2e7ece6366915334fc8c34e3f3a88c0",
+      "rank_score": 165,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7793066012285085,
+      "top_p": 0.8741332515356355
+    },
+    {
+      "index": 2,
+      "patch_text": "def get_new_command(command, settings):\n    return command.script.replace('diff', 'diff --staged')",
+      "patch_sha256": "3e265d90d40354c0dd041f62f0fb6fc22187839606bbb5040d68fdef036bd128",
+      "rank_score": 164,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7941462962722876,
+      "top_p": 0.8926828703403595
+    },
+    {
+      "index": 3,
+      "patch_text": "def get_new_command(command, settings):\n    return command.script.replace(' diff','diff --staged')",
+      "patch_sha256": "515019570ab9d6b695ade33b6c398d444acc2f70ae28b911afaaa6cb7603d0c1",
+      "rank_score": 164,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7941462962722876,
+      "top_p": 0.8926828703403595
+    },
+    {
+      "index": 4,
+      "patch_text": "def get_new_command(command, settings):\n    return re.sub('^mkdir (.*)','mkdir -p \\\\1', command.script)\n\n##correct\nclass MkdirP(object):\n\n    def load_from_json(self, data, path):\n        return path\n\n##correct\n@sudo_support\ndef get_new_command(command, settings):\n    return command.script.replace(' diff','diff --staged')\n\n##correct\ndef __init__(self, fs):\n    self._fs = fs\n\ndef mkdir(self, p):\n    \"\"\"Make the specified directory and all intermediate parent\n    directories.\n\n    :param p: the path of the directory to create\n    :type p: str\n    \"\"\"\n    if p == '':\n        raise ValueError('empty path')\n    if self._fs.exists(p):\n        raise OSError('Destination exists: %s' % p)\n    d = os.path.dirname(p)\n    if d and (not self._fs.exists(d)):\n        self.mkdir(d)\n    self._fs.mkdir(p)\n\n##correct\ndef fix_kv(v):\n    if isinstance(v, str):\n        im = VALUE_RE.match(v)\n        if im:\n            i = int(im.group(1), base)\n            return '\"%d\":' % i if v.endswith(':') else '%d' % i\n    return '\"%s\"' % v\n\ndef fix_code(code):\n    return re.sub('(?sx)\\n        \"(?:[^\"\\\\\\\\]*(?:\\\\\\\\\\\\\\\\|\\\\\\\\[\\'\"nurtbfx/\\\\n]))*[^\"\\\\\\\\]*\"|\\n        \\'(?:[^\\'\\\\\\\\]*(?:\\\\\\\\\\\\\\\\|\\\\\\\\[\\'\"nurtbfx/\\\\n]))*[^\\'\\\\\\\\]*\\'|\\n        {comment}|,(?={skip}[\\\\]}}])|\\n        [a-zA-Z_][.a-zA-Z_0-9]*|\\n        \\\\b(?:0[xX][0-9a-fA-F]+|0+[0-7]+)(?:{skip}:)?|\\n        [0-9]+(?={skip}:)\\n        '.format(comment=COMMENT_RE, skip=SKIP_RE), fix_kv, code)",
+      "patch_sha256": "e479f1a37fe39c43f056b1c1844b369565a9c15ac501782a2b08df5a6bc39bf4",
+      "rank_score": 149,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8008776453441713,
+      "top_p": 0.9010970566802141
+    },
+    {
+      "index": 5,
+      "patch_text": "def get_new_command(command, settings):\n    return re.sub('^mkdir (.*)','mkdir -p \\\\1', command.script)\n#!/usr/bin/env python\n# coding: utf-8\n\nimport os\nimport argparse\nimport re\nfrom glob import glob\n\nparser = argparse.ArgumentParser()\nparser.add_argument('-f', '--file', type=str, default='')\nparser.add_argument('-p', '--path', type=str, default='.')\nargs = parser.parse_args()\n\nif args.file:\n    input_file = args.file\n    output_file = os.path.join(os.path.dirname(input_file), 'fixed_' + os.path.basename(input_file))\nelse:\n    input_file = os.path.join(args.path, '*.md')\n    output_file = os.path.join(args.path, 'fixed.md')\n\nwith open(input_file, 'r') as f, open(output_file, 'w+') as out:\n    for line in f:\n        if '##correct' in line:\n            break\n        else:\n            out.write(line)\n\nwith open(input_file, 'r') as f, open(output_file, 'a+') as out:\n    for line in f:\n        if '##correct' in line:\n            pattern = r'(?<=##correct\\n)(\\s*\\w+\\s*=\\s*\\w+)'\n            matches = re.findall(pattern, line)\n            out.write('\\n'.join(matches))\n            break\n        else:\n            out.write(line)\nimport os\nimport shutil\nimport subprocess\nimport sys\nimport tempfile\nfrom pathlib import Path\n\nfrom hypothesis import given\n\nfrom. import pytest_helpers\nfrom. import test_files\nfrom.. import config\n\n\ndef test_config():\n    # Default config should be valid\n    assert isinstance(config.default(), dict)\n\n    # Default config should have an empty string\n    for key in ['path', 'username', 'password']:\n        assert config.default()[key] == ''\n\n\ndef test_get_config_dir():\n    # The config dir should exist\n    assert os.path.isdir(config.get_config_dir())\n\n    # The config dir should be writeable\n    with tempfile.NamedTemporaryFile(mode='w', suffix='.json') as _:\n        assert os.access(config.get_config_dir(), os.W_OK)\n\n    # The config dir should be executable\n    with tempfile.NamedTemporaryFile(mode='w', suffix='.json') as _:\n        assert os.access(config.get_config_dir(), os.X_OK)\n\n\ndef test_get_config_file():\n    # The config file should be in the config dir\n    assert config.get_config_file().startswith(config.get_config_dir())",
+      "patch_sha256": "3b5559a1f867e340c41295ad118bd6997ce1e7768cdb7c7a3bdca25fcf78e8ed",
+      "rank_score": -65,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7793066012285085,
+      "top_p": 0.8741332515356355
+    }
+  ],
+  "candidate_count": 6,
+  "retrieved_examples": [
+    {
+      "id": "52",
+      "project_name": "thefuck",
+      "buggy_line_content": "    return '{} --staged'.format(command.script)",
+      "function": {
+        "function_name": "get_new_command",
+        "function_parent": "git_diff_staged.py",
+        "function_before_start_line": 12,
+        "function_before_end_line": 13,
+        "function_after_start_line": 12,
+        "function_after_end_line": 13,
+        "function_before_token_count": 16,
+        "function_after_token_count": 18,
+        "function_before": "@utils.git_support\ndef get_new_command(command, settings):\n    return '{} --staged'.format(command.script)",
+        "function_after": "@utils.git_support\ndef get_new_command(command, settings):\n    return command.script.replace(' diff', ' diff --staged')"
+      },
+      "file_name": "git_diff_staged.py",
+      "file_path": "thefuck/rules/git_diff_staged.py",
+      "score_reranked": 0.7139355429832589
+    },
+    {
+      "id": "51",
+      "project_name": "thefuck",
+      "buggy_line_content": "    return 'open http://' + command.script[5:]",
+      "function": {
+        "function_name": "get_new_command",
+        "function_parent": "open.py",
+        "function_before_start_line": 25,
+        "function_before_end_line": 26,
+        "function_after_start_line": 25,
+        "function_after_end_line": 26,
+        "function_before_token_count": 17,
+        "function_after_token_count": 18,
+        "function_before": "def get_new_command(command, settings):\n    return 'open http://' + command.script[5:]",
+        "function_after": "def get_new_command(command, settings):\n    return command.script.replace('open ', 'open http://')"
+      },
+      "file_name": "open.py",
+      "file_path": "thefuck/rules/open.py",
+      "score_reranked": 0.6830157644794634
+    },
+    {
+      "id": "5",
+      "project_name": "luigi",
+      "buggy_line_content": "            self.fs.mkdir(d)",
+      "function": {
+        "function_name": "move",
+        "function_parent": "LocalFileSystem",
+        "function_before_start_line": 86,
+        "function_before_end_line": 92,
+        "function_after_start_line": 86,
+        "function_after_end_line": 92,
+        "function_before_token_count": 71,
+        "function_after_token_count": 69,
+        "function_before": "def move(self, old_path, new_path, raise_if_exists=False):\n    if raise_if_exists and os.path.exists(new_path):\n        raise RuntimeError('Destination exists: %s' % new_path)\n    d = os.path.dirname(new_path)\n    if d and (not os.path.exists(d)):\n        self.fs.mkdir(d)\n    os.rename(old_path, new_path)",
+        "function_after": "def move(self, old_path, new_path, raise_if_exists=False):\n    if raise_if_exists and os.path.exists(new_path):\n        raise RuntimeError('Destination exists: %s' % new_path)\n    d = os.path.dirname(new_path)\n    if d and (not os.path.exists(d)):\n        self.mkdir(d)\n    os.rename(old_path, new_path)"
+      },
+      "file_name": "file.py",
+      "file_path": "luigi/file.py",
+      "score_reranked": 0.5571627974923911
+    },
+    {
+      "id": "19",
+      "project_name": "youtube-dl",
+      "buggy_line_content": "        [a-zA-Z_][.a-zA-Z_0-9]*|",
+      "function": {
+        "function_name": "js_to_json",
+        "function_parent": "utils.py",
+        "function_before_start_line": 2235,
+        "function_before_end_line": 2273,
+        "function_after_start_line": 2235,
+        "function_after_end_line": 2273,
+        "function_before_token_count": 77,
+        "function_after_token_count": 77,
+        "function_before": "def js_to_json(code):\n    COMMENT_RE = '/\\\\*(?:(?!\\\\*/).)*?\\\\*/|//[^\\\\n]*'\n    SKIP_RE = '\\\\s*(?:{comment})?\\\\s*'.format(comment=COMMENT_RE)\n    INTEGER_TABLE = (('(?s)^(0[xX][0-9a-fA-F]+){skip}:?$'.format(skip=SKIP_RE), 16), ('(?s)^(0+[0-7]+){skip}:?$'.format(skip=SKIP_RE), 8))\n\n    def fix_kv(m):\n        v = m.group(0)\n        if v in ('true', 'false', 'null'):\n            return v\n        elif v.startswith('/*') or v.startswith('//') or v == ',':\n            return ''\n        if v[0] in (\"'\", '\"'):\n            v = re.sub('(?s)\\\\\\\\.|\"', lambda m: {'\"': '\\\\\"', \"\\\\'\": \"'\", '\\\\\\n': '', '\\\\x': '\\\\u00'}.get(m.group(0), m.group(0)), v[1:-1])\n        for regex, base in INTEGER_TABLE:\n            im = re.match(regex, v)\n            if im:\n                i = int(im.group(1), base)\n                return '\"%d\":' % i if v.endswith(':') else '%d' % i\n        return '\"%s\"' % v\n    return re.sub('(?sx)\\n        \"(?:[^\"\\\\\\\\]*(?:\\\\\\\\\\\\\\\\|\\\\\\\\[\\'\"nurtbfx/\\\\n]))*[^\"\\\\\\\\]*\"|\\n        \\'(?:[^\\'\\\\\\\\]*(?:\\\\\\\\\\\\\\\\|\\\\\\\\[\\'\"nurtbfx/\\\\n]))*[^\\'\\\\\\\\]*\\'|\\n        {comment}|,(?={skip}[\\\\]}}])|\\n        [a-zA-Z_][.a-zA-Z_0-9]*|\\n        \\\\b(?:0[xX][0-9a-fA-F]+|0+[0-7]+)(?:{skip}:)?|\\n        [0-9]+(?={skip}:)\\n        '.format(comment=COMMENT_RE, skip=SKIP_RE), fix_kv, code)",
+        "function_after": "def js_to_json(code):\n    COMMENT_RE = '/\\\\*(?:(?!\\\\*/).)*?\\\\*/|//[^\\\\n]*'\n    SKIP_RE = '\\\\s*(?:{comment})?\\\\s*'.format(comment=COMMENT_RE)\n    INTEGER_TABLE = (('(?s)^(0[xX][0-9a-fA-F]+){skip}:?$'.format(skip=SKIP_RE), 16), ('(?s)^(0+[0-7]+){skip}:?$'.format(skip=SKIP_RE), 8))\n\n    def fix_kv(m):\n        v = m.group(0)\n        if v in ('true', 'false', 'null'):\n            return v\n        elif v.startswith('/*') or v.startswith('//') or v == ',':\n            return ''\n        if v[0] in (\"'\", '\"'):\n            v = re.sub('(?s)\\\\\\\\.|\"', lambda m: {'\"': '\\\\\"', \"\\\\'\": \"'\", '\\\\\\n': '', '\\\\x': '\\\\u00'}.get(m.group(0), m.group(0)), v[1:-1])\n        for regex, base in INTEGER_TABLE:\n            im = re.match(regex, v)\n            if im:\n                i = int(im.group(1), base)\n                return '\"%d\":' % i if v.endswith(':') else '%d' % i\n        return '\"%s\"' % v\n    return re.sub('(?sx)\\n        \"(?:[^\"\\\\\\\\]*(?:\\\\\\\\\\\\\\\\|\\\\\\\\[\\'\"nurtbfx/\\\\n]))*[^\"\\\\\\\\]*\"|\\n        \\'(?:[^\\'\\\\\\\\]*(?:\\\\\\\\\\\\\\\\|\\\\\\\\[\\'\"nurtbfx/\\\\n]))*[^\\'\\\\\\\\]*\\'|\\n        {comment}|,(?={skip}[\\\\]}}])|\\n        (?:(?<![0-9])[eE]|[a-df-zA-DF-Z_])[.a-zA-Z_0-9]*|\\n        \\\\b(?:0[xX][0-9a-fA-F]+|0+[0-7]+)(?:{skip}:)?|\\n        [0-9]+(?={skip}:)\\n        '.format(comment=COMMENT_RE, skip=SKIP_RE), fix_kv, code)"
+      },
+      "file_name": "utils.py",
+      "file_path": "youtube_dl/utils.py",
+      "score_reranked": 0.42647135407139136
+    },
+    {
+      "id": "21",
+      "project_name": "youtube-dl",
+      "buggy_line_content": "        (?:0[xX][0-9a-fA-F]+|0+[0-7]+)(?:\\s*:)?|",
+      "function": {
+        "function_name": "js_to_json",
+        "function_parent": "utils.py",
+        "function_before_start_line": 1939,
+        "function_before_end_line": 1975,
+        "function_after_start_line": 1939,
+        "function_after_end_line": 1975,
+        "function_before_token_count": 19,
+        "function_after_token_count": 19,
+        "function_before": "def js_to_json(code):\n\n    def fix_kv(m):\n        v = m.group(0)\n        if v in ('true', 'false', 'null'):\n            return v\n        elif v.startswith('/*') or v == ',':\n            return ''\n        if v[0] in (\"'\", '\"'):\n            v = re.sub('(?s)\\\\\\\\.|\"', lambda m: {'\"': '\\\\\"', \"\\\\'\": \"'\", '\\\\\\n': '', '\\\\x': '\\\\u00'}.get(m.group(0), m.group(0)), v[1:-1])\n        INTEGER_TABLE = (('^0[xX][0-9a-fA-F]+', 16), ('^0+[0-7]+', 8))\n        for regex, base in INTEGER_TABLE:\n            im = re.match(regex, v)\n            if im:\n                i = int(im.group(0), base)\n                return '\"%d\":' % i if v.endswith(':') else '%d' % i\n        return '\"%s\"' % v\n    return re.sub('(?sx)\\n        \"(?:[^\"\\\\\\\\]*(?:\\\\\\\\\\\\\\\\|\\\\\\\\[\\'\"nurtbfx/\\\\n]))*[^\"\\\\\\\\]*\"|\\n        \\'(?:[^\\'\\\\\\\\]*(?:\\\\\\\\\\\\\\\\|\\\\\\\\[\\'\"nurtbfx/\\\\n]))*[^\\'\\\\\\\\]*\\'|\\n        /\\\\*.*?\\\\*/|,(?=\\\\s*[\\\\]}])|\\n        [a-zA-Z_][.a-zA-Z_0-9]*|\\n        (?:0[xX][0-9a-fA-F]+|0+[0-7]+)(?:\\\\s*:)?|\\n        [0-9]+(?=\\\\s*:)\\n        ', fix_kv, code)",
+        "function_after": "def js_to_json(code):\n\n    def fix_kv(m):\n        v = m.group(0)\n        if v in ('true', 'false', 'null'):\n            return v\n        elif v.startswith('/*') or v == ',':\n            return ''\n        if v[0] in (\"'\", '\"'):\n            v = re.sub('(?s)\\\\\\\\.|\"', lambda m: {'\"': '\\\\\"', \"\\\\'\": \"'\", '\\\\\\n': '', '\\\\x': '\\\\u00'}.get(m.group(0), m.group(0)), v[1:-1])\n        INTEGER_TABLE = (('^0[xX][0-9a-fA-F]+', 16), ('^0+[0-7]+', 8))\n        for regex, base in INTEGER_TABLE:\n            im = re.match(regex, v)\n            if im:\n                i = int(im.group(0), base)\n                return '\"%d\":' % i if v.endswith(':') else '%d' % i\n        return '\"%s\"' % v\n    return re.sub('(?sx)\\n        \"(?:[^\"\\\\\\\\]*(?:\\\\\\\\\\\\\\\\|\\\\\\\\[\\'\"nurtbfx/\\\\n]))*[^\"\\\\\\\\]*\"|\\n        \\'(?:[^\\'\\\\\\\\]*(?:\\\\\\\\\\\\\\\\|\\\\\\\\[\\'\"nurtbfx/\\\\n]))*[^\\'\\\\\\\\]*\\'|\\n        /\\\\*.*?\\\\*/|,(?=\\\\s*[\\\\]}])|\\n        [a-zA-Z_][.a-zA-Z_0-9]*|\\n        \\\\b(?:0[xX][0-9a-fA-F]+|0+[0-7]+)(?:\\\\s*:)?|\\n        [0-9]+(?=\\\\s*:)\\n        ', fix_kv, code)"
+      },
+      "file_name": "utils.py",
+      "file_path": "youtube_dl/utils.py",
+      "score_reranked": 0.41424909003895644
+    }
+  ],
+  "diffusion_plan": [
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "InsertAfter",
+          "node": 7
+        },
+        {
+          "op": "Replace",
+          "node": 7
+        },
+        {
+          "op": "Delete",
+          "node": 7
+        },
+        {
+          "op": "Replace",
+          "node": 3
+        },
+        {
+          "op": "GuardAdd",
+          "node": 7
+        },
+        {
+          "op": "InsertAfter",
+          "node": 3
+        },
+        {
+          "op": "GuardAdd",
+          "node": 3
+        },
+        {
+          "op": "Delete",
+          "node": 3
+        }
+      ],
+      "score": 47.499999925833336
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 7
+        },
+        {
+          "op": "GuardAdd",
+          "node": 7
+        },
+        {
+          "op": "Replace",
+          "node": 3
+        },
+        {
+          "op": "InsertBefore",
+          "node": 7
+        },
+        {
+          "op": "GuardAdd",
+          "node": 3
+        },
+        {
+          "op": "Delete",
+          "node": 7
+        },
+        {
+          "op": "InsertAfter",
+          "node": 3
+        }
+      ],
+      "score": 44.49999993083333
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 3
+        },
+        {
+          "op": "GuardAdd",
+          "node": 7
+        },
+        {
+          "op": "Replace",
+          "node": 7
+        },
+        {
+          "op": "Delete",
+          "node": 7
+        },
+        {
+          "op": "InsertBefore",
+          "node": 7
+        },
+        {
+          "op": "InsertAfter",
+          "node": 7
+        }
+      ],
+      "score": 43.999999931666665
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Delete",
+          "node": 7
+        },
+        {
+          "op": "Replace",
+          "node": 7
+        },
+        {
+          "op": "GuardAdd",
+          "node": 7
+        },
+        {
+          "op": "Delete",
+          "node": 3
+        },
+        {
+          "op": "InsertBefore",
+          "node": 7
+        },
+        {
+          "op": "GuardAdd",
+          "node": 3
+        },
+        {
+          "op": "Replace",
+          "node": 3
+        }
+      ],
+      "score": 43.999999931666665
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "GuardAdd",
+          "node": 7
+        },
+        {
+          "op": "GuardAdd",
+          "node": 3
+        },
+        {
+          "op": "Replace",
+          "node": 7
+        },
+        {
+          "op": "InsertBefore",
+          "node": 7
+        },
+        {
+          "op": "InsertAfter",
+          "node": 7
+        },
+        {
+          "op": "Replace",
+          "node": 3
+        }
+      ],
+      "score": 41.999999935
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 7
+        },
+        {
+          "op": "InsertAfter",
+          "node": 7
+        },
+        {
+          "op": "GuardAdd",
+          "node": 7
+        },
+        {
+          "op": "Replace",
+          "node": 3
+        },
+        {
+          "op": "Delete",
+          "node": 7
+        },
+        {
+          "op": "GuardAdd",
+          "node": 3
+        }
+      ],
+      "score": 40.99999993666667
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "GuardAdd",
+          "node": 3
+        },
+        {
+          "op": "InsertAfter",
+          "node": 3
+        },
+        {
+          "op": "InsertBefore",
+          "node": 3
+        },
+        {
+          "op": "GuardAdd",
+          "node": 7
+        },
+        {
+          "op": "Replace",
+          "node": 3
+        },
+        {
+          "op": "Replace",
+          "node": 7
+        },
+        {
+          "op": "Delete",
+          "node": 7
+        }
+      ],
+      "score": 40.99999993666667
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 3
+        },
+        {
+          "op": "Replace",
+          "node": 7
+        },
+        {
+          "op": "Delete",
+          "node": 7
+        },
+        {
+          "op": "GuardAdd",
+          "node": 7
+        },
+        {
+          "op": "InsertBefore",
+          "node": 3
+        },
+        {
+          "op": "InsertAfter",
+          "node": 7
+        }
+      ],
+      "score": 40.4999999375
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "InsertAfter",
+          "node": 3
+        },
+        {
+          "op": "GuardAdd",
+          "node": 3
+        },
+        {
+          "op": "Replace",
+          "node": 3
+        },
+        {
+          "op": "Replace",
+          "node": 7
+        },
+        {
+          "op": "GuardAdd",
+          "node": 7
+        },
+        {
+          "op": "InsertBefore",
+          "node": 7
+        }
+      ],
+      "score": 38.499999940833334
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "InsertAfter",
+          "node": 7
+        },
+        {
+          "op": "GuardAdd",
+          "node": 3
+        },
+        {
+          "op": "Delete",
+          "node": 3
+        },
+        {
+          "op": "Replace",
+          "node": 7
+        },
+        {
+          "op": "Replace",
+          "node": 3
+        },
+        {
+          "op": "GuardAdd",
+          "node": 7
+        }
+      ],
+      "score": 37.999999941666665
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 7
+        },
+        {
+          "op": "GuardAdd",
+          "node": 3
+        },
+        {
+          "op": "Replace",
+          "node": 3
+        },
+        {
+          "op": "Delete",
+          "node": 7
+        },
+        {
+          "op": "GuardAdd",
+          "node": 7
+        },
+        {
+          "op": "InsertAfter",
+          "node": 3
+        }
+      ],
+      "score": 37.4999999425
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "GuardAdd",
+          "node": 3
+        },
+        {
+          "op": "Replace",
+          "node": 3
+        },
+        {
+          "op": "Replace",
+          "node": 7
+        },
+        {
+          "op": "Delete",
+          "node": 3
+        },
+        {
+          "op": "Delete",
+          "node": 7
+        },
+        {
+          "op": "GuardAdd",
+          "node": 7
+        }
+      ],
+      "score": 36.999999943333336
+    }
+  ],
+  "static_analysis_nodes": [
+    {
+      "line": 3,
+      "line_absolute": 14,
+      "node_id": 7,
+      "node_id_local": 1,
+      "type": "Call",
+      "code": "re.sub('^mkdir (.*)', 'mkdir -p \\\\1', command.script)",
+      "distance_to_buggy": 0,
+      "context": "   1:   @sudo_support\n   2:   def get_new_command(command, settings):\n   3:->     return re.sub('^mkdir (.*)', 'mkdir -p \\\\1', command.script)",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Attribute",
+          "value": {
+            "_type": "Name"
+          },
+          "attr": "sub",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [
+          {
+            "_type": "Constant",
+            "value": "^mkdir (.*)",
+            "kind": null
+          },
+          {
+            "_type": "Constant",
+            "value": "mkdir -p \\1",
+            "kind": null
+          },
+          {
+            "_type": "Attribute",
+            "value": {
+              "_type": "Name"
+            },
+            "attr": "script",
+            "ctx": {
+              "_type": "Load"
+            }
+          }
+        ],
+        "keywords": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -24.0
+    },
+    {
+      "line": 3,
+      "line_absolute": 14,
+      "node_id": 3,
+      "node_id_local": 0,
+      "type": "Return",
+      "code": "return re.sub('^mkdir (.*)', 'mkdir -p \\\\1', command.script)",
+      "distance_to_buggy": 0,
+      "context": "   1:   @sudo_support\n   2:   def get_new_command(command, settings):\n   3:->     return re.sub('^mkdir (.*)', 'mkdir -p \\\\1', command.script)",
+      "ast_subtree_json": {
+        "_type": "Return",
+        "value": {
+          "_type": "Call",
+          "func": {
+            "_type": "Attribute"
+          },
+          "args": [
+            {
+              "_type": "Constant"
+            },
+            {
+              "_type": "Constant"
+            },
+            {
+              "_type": "Attribute"
+            }
+          ],
+          "keywords": []
+        }
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -22.0
+    }
+  ]
+}

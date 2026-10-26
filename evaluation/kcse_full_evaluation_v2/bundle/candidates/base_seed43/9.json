@@ -1,0 +1,102 @@
+{
+  "bug_id": "9",
+  "seed": 43,
+  "arm": "base",
+  "candidates": [
+    {
+      "index": 0,
+      "patch_text": "def table_exists(self, table, database='default', partition=None):\n    if partition is None:\n        stdout = run_hive_cmd('use {0}; show tables like \"{1}\";'.format(database, table))\n        return stdout is not None and table in stdout\n    else:\n        stdout = run_hive_cmd('use %s; show partitions %s partition\\n                                (%s)' % (database, table, self.partition_spec(partition)))\n        if stdout:\n            return True\n        else:\n            return False",
+      "patch_sha256": "9b96f326217f95199a9a64253774569358e106c79e94611f1bb41de2beac389e",
+      "rank_score": 244,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7704673177175924,
+      "top_p": 0.8630841471469904
+    },
+    {
+      "index": 1,
+      "patch_text": "def table_exists(self, table, database='default', partition=None):\n    if partition is None:\n        stdout = run_hive_cmd('use {0}; show tables like \"{1}\";'.format(database, table))\n        return stdout!= '' and table in stdout  # <--- BUGGY LINE\n    else:\n        stdout = run_hive_cmd('use %s; show partitions %s partition\\n                                (%s)' % (database, table, self.partition_spec(partition)))\n        if stdout:\n            return True\n        else:\n            return False",
+      "patch_sha256": "f7a1e0d0109ee54d23dd3604814bdf16241d629b6f3c627e35e9c7fab755ab44",
+      "rank_score": 244,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7704673177175924,
+      "top_p": 0.8630841471469904
+    },
+    {
+      "index": 2,
+      "patch_text": "def table_exists(self, table, database='default', partition=None):\n    if partition is None:\n        stdout = run_hive_cmd('use {0}; show tables like \"{1}\";'.format(database, table))\n        return table in stdout  # <--- BUGGY LINE\n    else:\n        stdout = run_hive_cmd('use %s; show partitions %s partition\\n                                (%s)' % (database, table, self.partition_spec(partition)))\n        if stdout:\n            return True\n        else:\n            return False",
+      "patch_sha256": "b78d39c0cfb87da32320c184c7022b8769b7f8027e877a8a3099f5a64700f238",
+      "rank_score": 244,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8030069698746244,
+      "top_p": 0.9037587123432804
+    },
+    {
+      "index": 3,
+      "patch_text": "def table_exists(self, table, database='default', partition=None):\n    if partition is None:\n        stdout = run_hive_cmd('use {0}; show tables like \"{1}\";'.format(database, table))\n        return table in stdout\n    else:\n        stdout = run_hive_cmd('use %s; show partitions %s partition\\n                                (%s)' % (database, table, self.partition_spec(partition)))\n        return stdout",
+      "patch_sha256": "e0c7c33225c4f44b5738e6b2833a9a4407e91a25738ebe6cf4f4f10fdd3e053c",
+      "rank_score": 203,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.934442110146087,
+      "top_p": 0.8256979458109642
+    },
+    {
+      "index": 4,
+      "patch_text": "def table_exists(self, table, database='default', partition=None):\n    if partition is None:\n        stdout = run_hive_cmd('use {0}; show tables like \"{1}\";'.format(database, table))\n        return stdout is not None and table in stdout\n    else:\n        stdout = run_hive_cmd('use %s; show partitions %s partition\\n                                (%s)' % (database, table, self.partition_spec(partition)))\n        return stdout is not None",
+      "patch_sha256": "f00e0949576700c50959a2a00b8f4c7d204c5608480b4c9b7668b07f7b498c11",
+      "rank_score": 203,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7976020643090617,
+      "top_p": 0.8970025803863271
+    },
+    {
+      "index": 5,
+      "patch_text": "def table_exists(self, table, database='default', partition=None):\n    if partition is None:\n        stdout = run_hive_cmd('use {0}; show tables like \"{1}\";'.format(database, table))\n        return stdout and table in stdout\n    else:\n        stdout = run_hive_cmd('use %s; show partitions %s partition\\n                                (%s)' % (database, table, self.partition_spec(partition)))\n        if stdout:\n            return True\n        else:\n            return False\n\n##correct\ndef table_exists(self, table, database='default', partition=None):\n    if partition is None:\n        stdout = run_hive_cmd('use {0}; show tables like \"{1}\";'.format(database, table))\n        return stdout and table in stdout\n    else:\n        stdout = run_hive_cmd('use %s; show partitions %s partition\\n                                (%s)' % (database, table, self.partition_spec(partition)))\n        if stdout:\n            return True\n        else:\n            return False\n\n##correct\ndef table_exists(self, table, database='default', partition=None):\n    if partition is None:\n        stdout = run_hive_cmd('use {0}; show tables like \"{1}\";'.format(database, table))\n        return stdout and table in stdout\n    else:\n        stdout = run_hive_cmd('use %s; show partitions %s partition\\n                                (%s)' % (database, table, self.partition_spec(partition)))\n        if stdout:\n            return True\n        else:\n            return False\n\n##correct\ndef table_exists(self, table, database='default', partition=None):\n    if partition is None:\n        stdout = run_hive_cmd('use {0}; show tables like \"{1}\";'.format(database, table))\n        return stdout and table in stdout\n    else:\n        stdout = run_hive_cmd('use %s; show partitions %s partition\\n                                (%s)' % (database, table, self.partition_spec(partition)))\n        if stdout:\n            return True\n        else:\n            return False\n\n##correct\ndef table_exists(self, table, database='default', partition=None):\n    if partition is None:\n        stdout = run_hive_cmd('use {0}; show tables like \"{1}\";'.format(database, table))\n        return stdout and table in stdout\n    else:\n        stdout = run_hive_cmd('use %s; show partitions %s partition\\n                                (%s)' % (database, table, self.partition_spec(partition)))\n        if stdout:\n            return True\n        else:\n            return False\n\n##correct\ndef table_exists(self, table, database='default', partition=None):\n    if partition is None:\n        stdout = run_hive_cmd('use {0}; show tables like \"{1}\";'.format(database, table))\n        return stdout and table in stdout\n    else:\n        stdout = run_hive",
+      "patch_sha256": "ab79492cf98e104ecde75c5204f525db4cb7f9ee3abcab97f9832a8f83c33600",
+      "rank_score": 23,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7704673177175924,
+      "top_p": 0.8630841471469904
+    },
+    {
+      "index": 6,
+      "patch_text": "def table_exists(self, table, database='default', partition=None):\n    if partition is None:\n        stdout = run_hive_cmd('use {0}; show tables like \"{1}\";'.format(database, table))\n        return stdout and table in stdout\n    else:\n        stdout = run_hive_cmd('use %s; show partitions %s partition\\n                                (%s)' % (database, table, self.partition_spec(partition)))\n        if stdout:\n            return True\n        else:\n            return False\n##end\n\n\n\n##test\nfrom nose.tools import assert_equal\nfrom luigi.contrib.hive import HiveTableTask, table_exists\n\nclass TableExistsTest(HiveTableTask):\n    def __init__(self, table, database, *args, **kwargs):\n        self.table = table\n        self.database = database\n        self.partition = None\n        super(TableExistsTest, self).__init__(*args, **kwargs)\n\nclass TestTableExists(object):\n\n    @classmethod\n    def setup_class(cls):\n        cls.table = 'foo'\n        cls.database = 'bar'\n\n    @classmethod\n    def teardown_class(cls):\n        pass\n\n    def test_table_exists_true(self):\n        assert_equal(True, table_exists(TableExistsTest(self.table, self.database), self.table, self.database))\n\n    def test_table_exists_false(self):\n        assert_equal(False, table_exists(TableExistsTest(self.table, self.database), 'notable', self.database))\n\n    def test_table_exists_with_partition(self):\n        assert_equal(False, table_exists(TableExistsTest(self.table, self.database, None, None), self.table, self.database, {'a':1}))\n\n    def test_table_exists_with_partition_true(self):\n        assert_equal(True, table_exists(TableExistsTest(self.table, self.database, None, None), self.table, self.database, {'a':2}))\n##end\n\n#!/usr/bin/env python\nimport sys\nfrom datetime import datetime\nfrom optparse import OptionParser\n\nimport requests\n\nfrom utils.utils import get_commits_from_api\n\n# Get the date of the latest commit on master branch.\ndef get_latest_commit_date():\n    commits = get_commits_from_api(\"https://api.github.com/repos/{owner}/{repo}/commits\".format(owner=\"nltk\", repo=\"nltk\"))\n    return datetime.strptime(commits[0][\"commit\"][\"author\"][\"date\"], \"%Y-%m-%dT%H:%M:%SZ\")\n\ndef main():\n    # Parse command-line arguments.\n    parser = OptionParser()\n    parser.add_option(\"-o\", \"--owner\", dest=\"owner\", default=\"nltk\",\n                      help=\"owner of the github repository.\")\n    parser.add_",
+      "patch_sha256": "9fedf769d8bc5bdbb0ad2947767d3f0e9313dcee3fcb6ca58f64b98a48b12b74",
+      "rank_score": -176,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8030069698746244,
+      "top_p": 0.9037587123432804
+    }
+  ],
+  "candidate_count": 7,
+  "retrieved_examples": [],
+  "diffusion_plan": [],
+  "static_analysis_nodes": []
+}

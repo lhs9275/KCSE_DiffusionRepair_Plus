@@ -1,0 +1,23 @@
+{
+  "schema": "kcse_original_method_full_v1",
+  "status": "frozen_before_generation",
+  "task_count": 258,
+  "bug_count": 43,
+  "arms": [
+    "full",
+    "base"
+  ],
+  "seeds": [
+    42,
+    43,
+    44
+  ],
+  "target_candidates_max": 10,
+  "greedy_calls": 1,
+  "sampling_attempts_max": 100,
+  "batch_size": 8,
+  "max_new_tokens": 640,
+  "performance_based_stopping": false,
+  "pilot_performance_used_for_configuration": false,
+  "eligibility_sha256": "6fb8d7bc38e8a1be4fe757c6c095af20d80e3ce74c1df6b240491d1f61713dd1"
+}

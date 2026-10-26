@@ -1,0 +1,50 @@
+{
+  "bug_id": "49",
+  "seed": 43,
+  "arm": "base",
+  "candidates": [
+    {
+      "index": 0,
+      "patch_text": "def get_new_command(command):\n    return replace_argument(command.script, 'push', 'push -f')",
+      "patch_sha256": "28ff51e211ef67547b9f618f35bf51fe99345460108b77d3d4f6a9a5e5edbb31",
+      "rank_score": 158,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7704673177175924,
+      "top_p": 0.8630841471469904
+    },
+    {
+      "index": 1,
+      "patch_text": "def get_new_command(command):\n    return replace_argument(command.script, 'pull', 'pull --rebase')  # <--- BUGGY LINE",
+      "patch_sha256": "10895d939bb315b4339a578ce2beb98610c08d8e878a8c78ca64232d65f0647d",
+      "rank_score": 156,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.5321867729008602,
+      "top_p": 0.98
+    },
+    {
+      "index": 2,
+      "patch_text": "def get_new_command(command):\n    return replace_argument(command.script, 'push', 'push --force')",
+      "patch_sha256": "7de032244bf1c77fe82d0327b62311fd65423f7de4f247b70a65598d803a9b13",
+      "rank_score": 145,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.0,
+      "top_p": 1.0
+    }
+  ],
+  "candidate_count": 3,
+  "retrieved_examples": [],
+  "diffusion_plan": [],
+  "static_analysis_nodes": []
+}

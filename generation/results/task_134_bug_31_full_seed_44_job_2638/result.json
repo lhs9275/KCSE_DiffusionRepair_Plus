@@ -1,0 +1,1111 @@
+{
+  "bug_id": "31",
+  "seed": 44,
+  "arm": "full",
+  "candidates": [
+    {
+      "index": 0,
+      "patch_text": "def _get_series_list(self, others):\n    \"\"\"\n        Auxiliary function for :meth:`str.cat`. Turn potentially mixed input\n        into a list of Series (elements without an index must match the length\n        of the calling Series/Index).\n\n        Parameters\n        ----------\n        others : Series, DataFrame, np.ndarray, list-like or list-like of\n            Objects that are either Series, Index or np.ndarray (1-dim).\n\n        Returns\n        -------\n        list of Series\n            Others transformed into list of Series.\n        \"\"\"\n    from pandas import Series, DataFrame\n    idx = self._orig if isinstance(self._orig, ABCIndexClass) else self._orig.index\n    if isinstance(others, ABCSeries):\n        return [others]\n    elif isinstance(others, ABCIndexClass):\n        return [Series(others._values, index=others)]  # <--- BUG\n    elif isinstance(others, ABCDataFrame):\n        return [others[x] for x in others]\n    elif isinstance(others, np.ndarray) and others.ndim == 2:\n        others = DataFrame(others, index=idx)\n        return [others[x] for x in others]\n    elif is_list_like(others, allow_sets=False):\n        others = list(others)\n        if all((isinstance(x, (ABCSeries, ABCIndexClass)) or (isinstance(x, np.ndarray) and x.ndim == 1) for x in others)):\n            los = []\n            while others:\n                los = los + self._get_series_list(others.pop(0))\n            return los\n        elif all((not is_list_like(x) for x in others)):\n            return [Series(others, index=idx)]\n\n# Testcase source code:\n# File: pandas/tests/strings/test_string_methods.py\n# --- before\n# +++ after\n# @@ -272,9 +272,9 @@\n#          index=idx)\n#          result = others[x]\n#      if isinstance(others, (ABCIndexClass, np.ndarray)) and \\\n#              others.ndim == 1:\n#          result = Series(others, index=idx)\n#      return result\n#  -def _get_series_list(self, others):\n#      \"\"\"\n#          Auxiliary function for :meth:`str.cat`. Turn potentially mixed input\n#          into a list of Series (elements without an index must match the length\n#          of the calling Series/Index).\n#\n#          Parameters\n#          ----------\n#          others : Series, DataFrame, np.ndarray, list-like or list-like of\n#                  Objects that are either Series, Index or np.ndarray (1-dim).\n#\n#          Returns\n#          -------\n#          list of Series\n#              Others transformed into list of Series.\n#          \"\"\"\n#      from pandas import Series, DataFrame\n#",
+      "patch_sha256": "d2e365a37d19dd1b8520899e371ab95d7dea47536cb8c6843781331d256ff849",
+      "rank_score": -9,
+      "plan_ok": false,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.9560266782037877,
+      "top_p": 0.8491594328302041
+    },
+    {
+      "index": 1,
+      "patch_text": "def _get_series_list(self, others):\n    \"\"\"\n        Auxiliary function for :meth:`str.cat`. Turn potentially mixed input\n        into a list of Series (elements without an index must match the length\n        of the calling Series/Index).\n\n        Parameters\n        ----------\n        others : Series, DataFrame, np.ndarray, list-like or list-like of\n            Objects that are either Series, Index or np.ndarray (1-dim).\n\n        Returns\n        -------\n        list of Series\n            Others transformed into list of Series.\n        \"\"\"\n    from pandas import Series, DataFrame\n    idx = self._orig if isinstance(self._orig, ABCIndexClass) else self._orig.index\n    if isinstance(others, ABCSeries):\n        return [others]\n    elif isinstance(others, ABCIndexClass):\n        return [Series(others._values, index=others)]\n    elif isinstance(others, ABCDataFrame):\n        return [others[x] for x in others]\n    elif isinstance(others, np.ndarray) and others.ndim == 2:\n        others = DataFrame(others, index=idx)\n        return [others[x] for x in others]\n    elif is_list_like(others, allow_sets=False):\n        others = list(others)\n        if all((isinstance(x, (ABCSeries, ABCIndexClass)) or (isinstance(x, np.ndarray) and x.ndim == 1) for x in others)):\n            los = []\n            while others:\n                los = los + self._get_series_list(others.pop(0))\n            return los\n        elif all((not is_list_like(x) for x in others)):\n            return [Series(others, index=idx)]\n    raise TypeError('others must be Series, Index, DataFrame, np.ndarrary or list-like (either containing only strings or containing only objects of type Series/Index/np.ndarray[1-dim])')\ndef _get_series_list(self, others):\n    \"\"\"\n        Auxiliary function for :meth:`str.cat`. Turn potentially mixed input\n        into a list of Series (elements without an index must match the length\n        of the calling Series/Index).\n\n        Parameters\n        ----------\n        others : Series, DataFrame, np.ndarray, list-like or list-like of\n            Objects that are either Series, Index or np.ndarray (1-dim).\n\n        Returns\n        -------\n        list of Series\n            Others transformed into list of Series.\n        \"\"\"\n    from pandas import Series, DataFrame\n    idx = self._orig if isinstance(self._orig, ABCIndexClass) else self._orig.index\n    if isinstance(others, ABCSeries):\n        return [others]\n    elif isinstance(others, ABCIndexClass):\n        return [Series(others._values, index=others)]\n    elif isinstance(others, ABCDataFrame):\n        return [others[x] for x in others]\n    elif isinstance(others, np.ndarray) and others.ndim == 2:\n        others = DataFrame(others, index=idx)",
+      "patch_sha256": "0b35d92daa5cbddfa1d467ecf3eb3abc0244b762b132b7956cccb8a65f34aba4",
+      "rank_score": -126,
+      "plan_ok": false,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8008776453441713,
+      "top_p": 0.9010970566802141
+    }
+  ],
+  "candidate_count": 2,
+  "retrieved_examples": [
+    {
+      "id": "35",
+      "project_name": "pandas",
+      "buggy_line_content": "                return self._get_values(key)",
+      "function": {
+        "function_name": "_get_with",
+        "function_parent": "Series",
+        "function_before_start_line": 884,
+        "function_before_end_line": 935,
+        "function_after_start_line": 884,
+        "function_after_end_line": 935,
+        "function_before_token_count": 254,
+        "function_after_token_count": 254,
+        "function_before": "def _get_with(self, key):\n    if isinstance(key, slice):\n        return self._slice(key)\n    elif isinstance(key, ABCDataFrame):\n        raise TypeError('Indexing a Series with DataFrame is not supported, use the appropriate DataFrame column')\n    elif isinstance(key, tuple):\n        try:\n            return self._get_values_tuple(key)\n        except ValueError:\n            if len(key) == 1:\n                key = key[0]\n                if isinstance(key, slice):\n                    return self._get_values(key)\n            raise\n    if not isinstance(key, (list, np.ndarray, Series, Index)):\n        key = list(key)\n    if isinstance(key, Index):\n        key_type = key.inferred_type\n    else:\n        key_type = lib.infer_dtype(key, skipna=False)\n    if key_type == 'integer':\n        if self.index.is_integer() or self.index.is_floating():\n            return self.loc[key]\n        elif isinstance(self.index, IntervalIndex):\n            indexer = self.index.get_indexer_for(key)\n            return self.iloc[indexer]\n        else:\n            return self._get_values(key)\n    if isinstance(key, (list, tuple)):\n        if len(key) == 1 and isinstance(key[0], slice):\n            return self._get_values(key)\n        return self.loc[key]\n    return self.reindex(key)",
+        "function_after": "def _get_with(self, key):\n    if isinstance(key, slice):\n        return self._slice(key)\n    elif isinstance(key, ABCDataFrame):\n        raise TypeError('Indexing a Series with DataFrame is not supported, use the appropriate DataFrame column')\n    elif isinstance(key, tuple):\n        try:\n            return self._get_values_tuple(key)\n        except ValueError:\n            if len(key) == 1:\n                key = key[0]\n                if isinstance(key, slice):\n                    return self._get_values(key)\n            raise\n    if not isinstance(key, (list, np.ndarray, Series, Index)):\n        key = list(key)\n    if isinstance(key, Index):\n        key_type = key.inferred_type\n    else:\n        key_type = lib.infer_dtype(key, skipna=False)\n    if key_type == 'integer':\n        if self.index.is_integer() or self.index.is_floating():\n            return self.loc[key]\n        elif isinstance(self.index, IntervalIndex):\n            indexer = self.index.get_indexer_for(key)\n            return self.iloc[indexer]\n        else:\n            return self.iloc[key]\n    if isinstance(key, (list, tuple)):\n        if len(key) == 1 and isinstance(key[0], slice):\n            return self._get_values(key)\n        return self.loc[key]\n    return self.reindex(key)"
+      },
+      "file_name": "series.py",
+      "file_path": "pandas/core/series.py",
+      "score_reranked": 0.7554739453105879
+    },
+    {
+      "id": "40",
+      "project_name": "pandas",
+      "buggy_line_content": "            result = Series(result, index=labels)",
+      "function": {
+        "function_name": "_reduce",
+        "function_parent": "DataFrame",
+        "function_before_start_line": 7903,
+        "function_before_end_line": 8017,
+        "function_after_start_line": 7903,
+        "function_after_end_line": 8017,
+        "function_before_token_count": 489,
+        "function_after_token_count": 491,
+        "function_before": "def _reduce(self, op, name, axis=0, skipna=True, numeric_only=None, filter_type=None, **kwds):\n    if axis is None and filter_type == 'bool':\n        labels = None\n        constructor = None\n    else:\n        axis = self._get_axis_number(axis)\n        labels = self._get_agg_axis(axis)\n        constructor = self._constructor\n\n    def f(x):\n        return op(x, axis=axis, skipna=skipna, **kwds)\n\n    def _get_data(axis_matters):\n        if filter_type is None or filter_type == 'numeric':\n            data = self._get_numeric_data()\n        elif filter_type == 'bool':\n            if axis_matters:\n                data = self._get_bool_data() if axis == 0 else self\n            else:\n                data = self._get_bool_data()\n        else:\n            msg = f'Generating numeric_only data with filter_type {filter_type} not supported.'\n            raise NotImplementedError(msg)\n        return data\n    if numeric_only is not None and axis in [0, 1]:\n        df = self\n        if numeric_only is True:\n            df = _get_data(axis_matters=True)\n        if axis == 1:\n            df = df.T\n            axis = 0\n        out_dtype = 'bool' if filter_type == 'bool' else None\n        res = df._data.reduce(op, axis=1, skipna=skipna, **kwds)\n        assert isinstance(res, dict)\n        if len(res):\n            assert len(res) == max(list(res.keys())) + 1, res.keys()\n        out = df._constructor_sliced(res, index=range(len(res)), dtype=out_dtype)\n        out.index = df.columns\n        return out\n    if numeric_only is None:\n        values = self.values\n        try:\n            result = f(values)\n            if filter_type == 'bool' and is_object_dtype(values) and (axis is None):\n                result = np.bool_(result)\n        except TypeError:\n            if filter_type is None and axis == 0:\n                from pandas.core.apply import frame_apply\n                opa = frame_apply(self, func=f, result_type='expand', ignore_failures=True)\n                result = opa.get_result()\n                if result.ndim == self.ndim:\n                    result = result.iloc[0]\n                return result\n            data = _get_data(axis_matters=False)\n            with np.errstate(all='ignore'):\n                result = f(data.values)\n            labels = data._get_agg_axis(axis)\n    else:\n        if numeric_only:\n            data = _get_data(axis_matters=True)\n            values = data.values\n            labels = data._get_agg_axis(axis)\n        else:\n            values = self.values\n        result = f(values)\n    if hasattr(result, 'dtype') and is_object_dtype(result.dtype):\n        try:\n            if filter_type is None or filter_type == 'numeric':\n                result = result.astype(np.float64)\n            elif filter_type == 'bool' and notna(result).all():\n                result = result.astype(np.bool_)\n        except (ValueError, TypeError):\n            if axis == 0:\n                result = coerce_to_dtypes(result, self.dtypes)\n    if constructor is not None:\n        result = Series(result, index=labels)\n    return result",
+        "function_after": "def _reduce(self, op, name, axis=0, skipna=True, numeric_only=None, filter_type=None, **kwds):\n    if axis is None and filter_type == 'bool':\n        labels = None\n        constructor = None\n    else:\n        axis = self._get_axis_number(axis)\n        labels = self._get_agg_axis(axis)\n        constructor = self._constructor\n\n    def f(x):\n        return op(x, axis=axis, skipna=skipna, **kwds)\n\n    def _get_data(axis_matters):\n        if filter_type is None or filter_type == 'numeric':\n            data = self._get_numeric_data()\n        elif filter_type == 'bool':\n            if axis_matters:\n                data = self._get_bool_data() if axis == 0 else self\n            else:\n                data = self._get_bool_data()\n        else:\n            msg = f'Generating numeric_only data with filter_type {filter_type} not supported.'\n            raise NotImplementedError(msg)\n        return data\n    if numeric_only is not None and axis in [0, 1]:\n        df = self\n        if numeric_only is True:\n            df = _get_data(axis_matters=True)\n        if axis == 1:\n            df = df.T\n            axis = 0\n        out_dtype = 'bool' if filter_type == 'bool' else None\n        res = df._data.reduce(op, axis=1, skipna=skipna, **kwds)\n        assert isinstance(res, dict)\n        if len(res):\n            assert len(res) == max(list(res.keys())) + 1, res.keys()\n        out = df._constructor_sliced(res, index=range(len(res)), dtype=out_dtype)\n        out.index = df.columns\n        return out\n    if numeric_only is None:\n        values = self.values\n        try:\n            result = f(values)\n            if filter_type == 'bool' and is_object_dtype(values) and (axis is None):\n                result = np.bool_(result)\n        except TypeError:\n            if filter_type is None and axis == 0:\n                from pandas.core.apply import frame_apply\n                opa = frame_apply(self, func=f, result_type='expand', ignore_failures=True)\n                result = opa.get_result()\n                if result.ndim == self.ndim:\n                    result = result.iloc[0]\n                return result\n            data = _get_data(axis_matters=False)\n            with np.errstate(all='ignore'):\n                result = f(data.values)\n            labels = data._get_agg_axis(axis)\n    else:\n        if numeric_only:\n            data = _get_data(axis_matters=True)\n            values = data.values\n            labels = data._get_agg_axis(axis)\n        else:\n            values = self.values\n        result = f(values)\n    if hasattr(result, 'dtype') and is_object_dtype(result.dtype):\n        try:\n            if filter_type is None or filter_type == 'numeric':\n                result = result.astype(np.float64)\n            elif filter_type == 'bool' and notna(result).all():\n                result = result.astype(np.bool_)\n        except (ValueError, TypeError):\n            if axis == 0:\n                result = coerce_to_dtypes(result, self.dtypes)\n    if constructor is not None:\n        result = self._constructor_sliced(result, index=labels)\n    return result"
+      },
+      "file_name": "frame.py",
+      "file_path": "pandas/core/frame.py",
+      "score_reranked": 0.7117427441887392
+    },
+    {
+      "id": "37",
+      "project_name": "pandas",
+      "buggy_line_content": "                elif is_integer(i) and not ax.holds_integer():",
+      "function": {
+        "function_name": "_convert_key",
+        "function_parent": "_AtIndexer",
+        "function_before_start_line": 2110,
+        "function_before_end_line": 2133,
+        "function_after_start_line": 2110,
+        "function_after_end_line": 2133,
+        "function_before_token_count": 82,
+        "function_after_token_count": 90,
+        "function_before": "def _convert_key(self, key, is_setter: bool=False):\n    \"\"\"\n        Require they keys to be the same type as the index. (so we don't\n        fallback)\n        \"\"\"\n    if is_setter:\n        return list(key)\n    for ax, i in zip(self.obj.axes, key):\n        if ax.is_integer():\n            if not is_integer(i):\n                raise ValueError('At based indexing on an integer index can only have integer indexers')\n        elif is_integer(i) and not ax.holds_integer():\n            raise ValueError('At based indexing on an non-integer index can only have non-integer indexers')\n    return key",
+        "function_after": "def _convert_key(self, key, is_setter: bool=False):\n    \"\"\"\n        Require they keys to be the same type as the index. (so we don't\n        fallback)\n        \"\"\"\n    if is_setter:\n        return list(key)\n    for ax, i in zip(self.obj.axes, key):\n        if ax.is_integer():\n            if not is_integer(i):\n                raise ValueError('At based indexing on an integer index can only have integer indexers')\n        elif is_integer(i) and (not (ax.holds_integer() or ax.is_floating())):\n            raise ValueError('At based indexing on an non-integer index can only have non-integer indexers')\n    return key"
+      },
+      "file_name": "indexing.py",
+      "file_path": "pandas/core/indexing.py",
+      "score_reranked": 0.5024634791223999
+    },
+    {
+      "id": "39",
+      "project_name": "pandas",
+      "buggy_line_content": "            except (TypeError, ValueError):",
+      "function": {
+        "function_name": "_try_convert_data",
+        "function_parent": "Parser",
+        "function_before_start_line": 886,
+        "function_before_end_line": 958,
+        "function_after_start_line": 886,
+        "function_after_end_line": 958,
+        "function_before_token_count": 277,
+        "function_after_token_count": 279,
+        "function_before": "def _try_convert_data(self, name, data, use_dtypes=True, convert_dates=True):\n    \"\"\"\n        Try to parse a ndarray like into a column by inferring dtype.\n        \"\"\"\n    if use_dtypes:\n        if not self.dtype:\n            return (data, False)\n        elif self.dtype is True:\n            pass\n        else:\n            dtype = self.dtype.get(name) if isinstance(self.dtype, dict) else self.dtype\n            if dtype is not None:\n                try:\n                    dtype = np.dtype(dtype)\n                    return (data.astype(dtype), True)\n                except (TypeError, ValueError):\n                    return (data, False)\n    if convert_dates:\n        new_data, result = self._try_convert_to_date(data)\n        if result:\n            return (new_data, True)\n    result = False\n    if data.dtype == 'object':\n        try:\n            data = data.astype('float64')\n            result = True\n        except (TypeError, ValueError):\n            pass\n    if data.dtype.kind == 'f':\n        if data.dtype != 'float64':\n            try:\n                data = data.astype('float64')\n                result = True\n            except (TypeError, ValueError):\n                pass\n    if len(data) and (data.dtype == 'float' or data.dtype == 'object'):\n        try:\n            new_data = data.astype('int64')\n            if (new_data == data).all():\n                data = new_data\n                result = True\n        except (TypeError, ValueError):\n            pass\n    if data.dtype == 'int':\n        try:\n            data = data.astype('int64')\n            result = True\n        except (TypeError, ValueError):\n            pass\n    return (data, result)",
+        "function_after": "def _try_convert_data(self, name, data, use_dtypes=True, convert_dates=True):\n    \"\"\"\n        Try to parse a ndarray like into a column by inferring dtype.\n        \"\"\"\n    if use_dtypes:\n        if not self.dtype:\n            return (data, False)\n        elif self.dtype is True:\n            pass\n        else:\n            dtype = self.dtype.get(name) if isinstance(self.dtype, dict) else self.dtype\n            if dtype is not None:\n                try:\n                    dtype = np.dtype(dtype)\n                    return (data.astype(dtype), True)\n                except (TypeError, ValueError):\n                    return (data, False)\n    if convert_dates:\n        new_data, result = self._try_convert_to_date(data)\n        if result:\n            return (new_data, True)\n    result = False\n    if data.dtype == 'object':\n        try:\n            data = data.astype('float64')\n            result = True\n        except (TypeError, ValueError):\n            pass\n    if data.dtype.kind == 'f':\n        if data.dtype != 'float64':\n            try:\n                data = data.astype('float64')\n                result = True\n            except (TypeError, ValueError):\n                pass\n    if len(data) and (data.dtype == 'float' or data.dtype == 'object'):\n        try:\n            new_data = data.astype('int64')\n            if (new_data == data).all():\n                data = new_data\n                result = True\n        except (TypeError, ValueError, OverflowError):\n            pass\n    if data.dtype == 'int':\n        try:\n            data = data.astype('int64')\n            result = True\n        except (TypeError, ValueError):\n            pass\n    return (data, result)"
+      },
+      "file_name": "_json.py",
+      "file_path": "pandas/io/json/_json.py",
+      "score_reranked": 0.4891498055088191
+    },
+    {
+      "id": "42",
+      "project_name": "pandas",
+      "buggy_line_content": "                result = result.unstack(val)",
+      "function": {
+        "function_name": "_unstack_multiple",
+        "function_parent": "reshape.py",
+        "function_before_start_line": 312,
+        "function_before_end_line": 390,
+        "function_after_start_line": 312,
+        "function_after_end_line": 390,
+        "function_before_token_count": 491,
+        "function_after_token_count": 495,
+        "function_before": "def _unstack_multiple(data, clocs, fill_value=None):\n    if len(clocs) == 0:\n        return data\n    index = data.index\n    clocs = [index._get_level_number(i) for i in clocs]\n    rlocs = [i for i in range(index.nlevels) if i not in clocs]\n    clevels = [index.levels[i] for i in clocs]\n    ccodes = [index.codes[i] for i in clocs]\n    cnames = [index.names[i] for i in clocs]\n    rlevels = [index.levels[i] for i in rlocs]\n    rcodes = [index.codes[i] for i in rlocs]\n    rnames = [index.names[i] for i in rlocs]\n    shape = [len(x) for x in clevels]\n    group_index = get_group_index(ccodes, shape, sort=False, xnull=False)\n    comp_ids, obs_ids = compress_group_index(group_index, sort=False)\n    recons_codes = decons_obs_group_ids(comp_ids, obs_ids, shape, ccodes, xnull=False)\n    if rlocs == []:\n        dummy_index = Index(obs_ids, name='__placeholder__')\n    else:\n        dummy_index = MultiIndex(levels=rlevels + [obs_ids], codes=rcodes + [comp_ids], names=rnames + ['__placeholder__'], verify_integrity=False)\n    if isinstance(data, Series):\n        dummy = data.copy()\n        dummy.index = dummy_index\n        unstacked = dummy.unstack('__placeholder__', fill_value=fill_value)\n        new_levels = clevels\n        new_names = cnames\n        new_codes = recons_codes\n    else:\n        if isinstance(data.columns, MultiIndex):\n            result = data\n            for i in range(len(clocs)):\n                val = clocs[i]\n                result = result.unstack(val)\n                clocs = [v if i > v else v - 1 for v in clocs]\n            return result\n        dummy = data.copy()\n        dummy.index = dummy_index\n        unstacked = dummy.unstack('__placeholder__', fill_value=fill_value)\n        if isinstance(unstacked, Series):\n            unstcols = unstacked.index\n        else:\n            unstcols = unstacked.columns\n        new_levels = [unstcols.levels[0]] + clevels\n        new_names = [data.columns.name] + cnames\n        new_codes = [unstcols.codes[0]]\n        for rec in recons_codes:\n            new_codes.append(rec.take(unstcols.codes[-1]))\n    new_columns = MultiIndex(levels=new_levels, codes=new_codes, names=new_names, verify_integrity=False)\n    if isinstance(unstacked, Series):\n        unstacked.index = new_columns\n    else:\n        unstacked.columns = new_columns\n    return unstacked",
+        "function_after": "def _unstack_multiple(data, clocs, fill_value=None):\n    if len(clocs) == 0:\n        return data\n    index = data.index\n    clocs = [index._get_level_number(i) for i in clocs]\n    rlocs = [i for i in range(index.nlevels) if i not in clocs]\n    clevels = [index.levels[i] for i in clocs]\n    ccodes = [index.codes[i] for i in clocs]\n    cnames = [index.names[i] for i in clocs]\n    rlevels = [index.levels[i] for i in rlocs]\n    rcodes = [index.codes[i] for i in rlocs]\n    rnames = [index.names[i] for i in rlocs]\n    shape = [len(x) for x in clevels]\n    group_index = get_group_index(ccodes, shape, sort=False, xnull=False)\n    comp_ids, obs_ids = compress_group_index(group_index, sort=False)\n    recons_codes = decons_obs_group_ids(comp_ids, obs_ids, shape, ccodes, xnull=False)\n    if rlocs == []:\n        dummy_index = Index(obs_ids, name='__placeholder__')\n    else:\n        dummy_index = MultiIndex(levels=rlevels + [obs_ids], codes=rcodes + [comp_ids], names=rnames + ['__placeholder__'], verify_integrity=False)\n    if isinstance(data, Series):\n        dummy = data.copy()\n        dummy.index = dummy_index\n        unstacked = dummy.unstack('__placeholder__', fill_value=fill_value)\n        new_levels = clevels\n        new_names = cnames\n        new_codes = recons_codes\n    else:\n        if isinstance(data.columns, MultiIndex):\n            result = data\n            for i in range(len(clocs)):\n                val = clocs[i]\n                result = result.unstack(val, fill_value=fill_value)\n                clocs = [v if i > v else v - 1 for v in clocs]\n            return result\n        dummy = data.copy()\n        dummy.index = dummy_index\n        unstacked = dummy.unstack('__placeholder__', fill_value=fill_value)\n        if isinstance(unstacked, Series):\n            unstcols = unstacked.index\n        else:\n            unstcols = unstacked.columns\n        new_levels = [unstcols.levels[0]] + clevels\n        new_names = [data.columns.name] + cnames\n        new_codes = [unstcols.codes[0]]\n        for rec in recons_codes:\n            new_codes.append(rec.take(unstcols.codes[-1]))\n    new_columns = MultiIndex(levels=new_levels, codes=new_codes, names=new_names, verify_integrity=False)\n    if isinstance(unstacked, Series):\n        unstacked.index = new_columns\n    else:\n        unstacked.columns = new_columns\n    return unstacked"
+      },
+      "file_name": "reshape.py",
+      "file_path": "pandas/core/reshape/reshape.py",
+      "score_reranked": 0.48478777095123754
+    }
+  ],
+  "diffusion_plan": [
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 89
+        },
+        {
+          "op": "Replace",
+          "node": 117
+        },
+        {
+          "op": "Replace",
+          "node": 91
+        },
+        {
+          "op": "InsertBefore",
+          "node": 72
+        },
+        {
+          "op": "Replace",
+          "node": 70
+        },
+        {
+          "op": "Replace",
+          "node": 72
+        },
+        {
+          "op": "Replace",
+          "node": 180
+        },
+        {
+          "op": "Replace",
+          "node": 87
+        },
+        {
+          "op": "GuardAdd",
+          "node": 91
+        },
+        {
+          "op": "Delete",
+          "node": 87
+        },
+        {
+          "op": "Replace",
+          "node": 118
+        }
+      ],
+      "score": 18.472727271138844
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Delete",
+          "node": 89
+        },
+        {
+          "op": "Replace",
+          "node": 117
+        },
+        {
+          "op": "Replace",
+          "node": 89
+        },
+        {
+          "op": "Replace",
+          "node": 87
+        },
+        {
+          "op": "Replace",
+          "node": 118
+        },
+        {
+          "op": "GuardAdd",
+          "node": 91
+        },
+        {
+          "op": "GuardAdd",
+          "node": 89
+        },
+        {
+          "op": "Replace",
+          "node": 70
+        },
+        {
+          "op": "GuardAdd",
+          "node": 70
+        },
+        {
+          "op": "GuardAdd",
+          "node": 87
+        },
+        {
+          "op": "Replace",
+          "node": 72
+        }
+      ],
+      "score": 17.98181818027438
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 118
+        },
+        {
+          "op": "InsertAfter",
+          "node": 91
+        },
+        {
+          "op": "Replace",
+          "node": 87
+        },
+        {
+          "op": "GuardAdd",
+          "node": 89
+        },
+        {
+          "op": "Replace",
+          "node": 70
+        },
+        {
+          "op": "Replace",
+          "node": 89
+        },
+        {
+          "op": "Replace",
+          "node": 117
+        },
+        {
+          "op": "Replace",
+          "node": 180
+        },
+        {
+          "op": "Delete",
+          "node": 91
+        },
+        {
+          "op": "GuardAdd",
+          "node": 72
+        },
+        {
+          "op": "Replace",
+          "node": 72
+        }
+      ],
+      "score": 17.845454543923143
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 117
+        },
+        {
+          "op": "Replace",
+          "node": 72
+        },
+        {
+          "op": "Replace",
+          "node": 89
+        },
+        {
+          "op": "InsertBefore",
+          "node": 89
+        },
+        {
+          "op": "InsertAfter",
+          "node": 91
+        },
+        {
+          "op": "Replace",
+          "node": 91
+        },
+        {
+          "op": "Replace",
+          "node": 70
+        },
+        {
+          "op": "GuardAdd",
+          "node": 72
+        }
+      ],
+      "score": 16.790909089655372
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "GuardAdd",
+          "node": 72
+        },
+        {
+          "op": "Replace",
+          "node": 72
+        },
+        {
+          "op": "Replace",
+          "node": 91
+        },
+        {
+          "op": "Replace",
+          "node": 117
+        },
+        {
+          "op": "InsertBefore",
+          "node": 91
+        },
+        {
+          "op": "Replace",
+          "node": 180
+        },
+        {
+          "op": "Replace",
+          "node": 89
+        },
+        {
+          "op": "Replace",
+          "node": 87
+        },
+        {
+          "op": "GuardAdd",
+          "node": 91
+        }
+      ],
+      "score": 16.554545453131404
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 89
+        },
+        {
+          "op": "Delete",
+          "node": 117
+        },
+        {
+          "op": "Replace",
+          "node": 87
+        },
+        {
+          "op": "Replace",
+          "node": 118
+        },
+        {
+          "op": "GuardAdd",
+          "node": 118
+        },
+        {
+          "op": "InsertAfter",
+          "node": 72
+        },
+        {
+          "op": "Replace",
+          "node": 72
+        },
+        {
+          "op": "Replace",
+          "node": 70
+        },
+        {
+          "op": "Delete",
+          "node": 91
+        },
+        {
+          "op": "Replace",
+          "node": 91
+        }
+      ],
+      "score": 16.472727271320664
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 72
+        },
+        {
+          "op": "Replace",
+          "node": 91
+        },
+        {
+          "op": "Replace",
+          "node": 117
+        },
+        {
+          "op": "Replace",
+          "node": 87
+        },
+        {
+          "op": "GuardAdd",
+          "node": 72
+        },
+        {
+          "op": "InsertAfter",
+          "node": 72
+        },
+        {
+          "op": "Replace",
+          "node": 197
+        },
+        {
+          "op": "Delete",
+          "node": 72
+        },
+        {
+          "op": "Replace",
+          "node": 118
+        },
+        {
+          "op": "Replace",
+          "node": 180
+        }
+      ],
+      "score": 16.418181816780166
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 87
+        },
+        {
+          "op": "Replace",
+          "node": 91
+        },
+        {
+          "op": "Replace",
+          "node": 72
+        },
+        {
+          "op": "Replace",
+          "node": 118
+        },
+        {
+          "op": "GuardAdd",
+          "node": 91
+        },
+        {
+          "op": "Replace",
+          "node": 89
+        },
+        {
+          "op": "GuardAdd",
+          "node": 72
+        },
+        {
+          "op": "GuardAdd",
+          "node": 197
+        }
+      ],
+      "score": 16.32727272606116
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 72
+        },
+        {
+          "op": "Replace",
+          "node": 70
+        },
+        {
+          "op": "InsertAfter",
+          "node": 87
+        },
+        {
+          "op": "InsertBefore",
+          "node": 72
+        },
+        {
+          "op": "Replace",
+          "node": 118
+        },
+        {
+          "op": "Replace",
+          "node": 91
+        },
+        {
+          "op": "Replace",
+          "node": 90
+        },
+        {
+          "op": "GuardAdd",
+          "node": 72
+        },
+        {
+          "op": "GuardAdd",
+          "node": 91
+        }
+      ],
+      "score": 15.90909090773554
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "InsertAfter",
+          "node": 72
+        },
+        {
+          "op": "Replace",
+          "node": 197
+        },
+        {
+          "op": "Replace",
+          "node": 87
+        },
+        {
+          "op": "Replace",
+          "node": 91
+        },
+        {
+          "op": "Replace",
+          "node": 72
+        },
+        {
+          "op": "Replace",
+          "node": 117
+        },
+        {
+          "op": "Replace",
+          "node": 70
+        },
+        {
+          "op": "GuardAdd",
+          "node": 117
+        }
+      ],
+      "score": 15.690909089755372
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 87
+        },
+        {
+          "op": "Replace",
+          "node": 72
+        },
+        {
+          "op": "GuardAdd",
+          "node": 72
+        },
+        {
+          "op": "GuardAdd",
+          "node": 91
+        },
+        {
+          "op": "Replace",
+          "node": 89
+        },
+        {
+          "op": "Replace",
+          "node": 90
+        },
+        {
+          "op": "InsertAfter",
+          "node": 72
+        },
+        {
+          "op": "Replace",
+          "node": 180
+        }
+      ],
+      "score": 15.672727271575207
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 89
+        },
+        {
+          "op": "Replace",
+          "node": 180
+        },
+        {
+          "op": "Replace",
+          "node": 87
+        },
+        {
+          "op": "Replace",
+          "node": 91
+        },
+        {
+          "op": "Replace",
+          "node": 197
+        },
+        {
+          "op": "Replace",
+          "node": 72
+        },
+        {
+          "op": "Replace",
+          "node": 70
+        },
+        {
+          "op": "GuardAdd",
+          "node": 91
+        }
+      ],
+      "score": 15.599999998854546
+    }
+  ],
+  "static_analysis_nodes": [
+    {
+      "line": 28,
+      "line_absolute": 2300,
+      "node_id": 72,
+      "node_id_local": 17,
+      "type": "If",
+      "code": "if is_list_like(others, allow_sets=False):\n    others = list(others)\n    if all((isinstance(x, (ABCSeries, ABCIndexClass)) or (isinstance(x, np.ndarray) and x.ndim == 1) for x in others)):\n        los = []\n        while others:\n            los = los + self._get_series_list(others.pop(0))\n        return los\n    elif all((not is_list_like(x) for x in others)):\n        return [Series(others, index=idx)]",
+      "distance_to_buggy": 0,
+      "context": "  25:       elif isinstance(others, np.ndarray) and others.ndim == 2:\n  26:           others = DataFrame(others, index=idx)\n  27:           return [others[x] for x in others]\n  28:->     elif is_list_like(others, allow_sets=False):\n  29:           others = list(others)\n  30:           if all((isinstance(x, (ABCSeries, ABCIndexClass)) or (isinstance(x, np.ndarray) and x.ndim == 1) for x in others)):\n  31:               los = []",
+      "ast_subtree_json": {
+        "_type": "If",
+        "test": {
+          "_type": "Call",
+          "func": {
+            "_type": "Name"
+          },
+          "args": [
+            {
+              "_type": "Name"
+            }
+          ],
+          "keywords": [
+            {
+              "_type": "keyword"
+            }
+          ]
+        },
+        "body": [
+          {
+            "_type": "Assign",
+            "targets": [
+              {
+                "_type": "Name"
+              }
+            ],
+            "value": {
+              "_type": "Call"
+            },
+            "type_comment": null
+          },
+          {
+            "_type": "If",
+            "test": {
+              "_type": "Call"
+            },
+            "body": [
+              {
+                "_type": "Assign"
+              },
+              {
+                "_type": "While"
+              },
+              {
+                "_type": "Return"
+              }
+            ],
+            "orelse": [
+              {
+                "_type": "If"
+              }
+            ]
+          }
+        ],
+        "orelse": []
+      },
+      "reason": "Appending to deque without checking order requirements",
+      "reranker_score": -46.4
+    },
+    {
+      "line": 30,
+      "line_absolute": 2302,
+      "node_id": 91,
+      "node_id_local": 21,
+      "type": "If",
+      "code": "if all((isinstance(x, (ABCSeries, ABCIndexClass)) or (isinstance(x, np.ndarray) and x.ndim == 1) for x in others)):\n    los = []\n    while others:\n        los = los + self._get_series_list(others.pop(0))\n    return los\nelif all((not is_list_like(x) for x in others)):\n    return [Series(others, index=idx)]",
+      "distance_to_buggy": 0,
+      "context": "  27:           return [others[x] for x in others]\n  28:       elif is_list_like(others, allow_sets=False):\n  29:           others = list(others)\n  30:->         if all((isinstance(x, (ABCSeries, ABCIndexClass)) or (isinstance(x, np.ndarray) and x.ndim == 1) for x in others)):\n  31:               los = []\n  32:               while others:\n  33:                   los = los + self._get_series_list(others.pop(0))",
+      "ast_subtree_json": {
+        "_type": "If",
+        "test": {
+          "_type": "Call",
+          "func": {
+            "_type": "Name"
+          },
+          "args": [
+            {
+              "_type": "GeneratorExp"
+            }
+          ],
+          "keywords": []
+        },
+        "body": [
+          {
+            "_type": "Assign",
+            "targets": [
+              {
+                "_type": "Name"
+              }
+            ],
+            "value": {
+              "_type": "List"
+            },
+            "type_comment": null
+          },
+          {
+            "_type": "While",
+            "test": {
+              "_type": "Name"
+            },
+            "body": [
+              {
+                "_type": "Assign"
+              }
+            ],
+            "orelse": []
+          },
+          {
+            "_type": "Return",
+            "value": {
+              "_type": "Name"
+            }
+          }
+        ],
+        "orelse": [
+          {
+            "_type": "If",
+            "test": {
+              "_type": "Call"
+            },
+            "body": [
+              {
+                "_type": "Return"
+              }
+            ],
+            "orelse": []
+          }
+        ]
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -26.4
+    },
+    {
+      "line": 26,
+      "line_absolute": 2298,
+      "node_id": 87,
+      "node_id_local": 15,
+      "type": "Call",
+      "code": "DataFrame(others, index=idx)",
+      "distance_to_buggy": 0,
+      "context": "  23:       elif isinstance(others, ABCDataFrame):\n  24:           return [others[x] for x in others]\n  25:       elif isinstance(others, np.ndarray) and others.ndim == 2:\n  26:->         others = DataFrame(others, index=idx)\n  27:           return [others[x] for x in others]\n  28:       elif is_list_like(others, allow_sets=False):\n  29:           others = list(others)",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Name",
+          "id": "DataFrame",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [
+          {
+            "_type": "Name",
+            "id": "others",
+            "ctx": {
+              "_type": "Load"
+            }
+          }
+        ],
+        "keywords": [
+          {
+            "_type": "keyword",
+            "arg": "index",
+            "value": {
+              "_type": "Name"
+            }
+          }
+        ]
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -25.0
+    },
+    {
+      "line": 26,
+      "line_absolute": 2298,
+      "node_id": 70,
+      "node_id_local": 14,
+      "type": "Assign",
+      "code": "others = DataFrame(others, index=idx)",
+      "distance_to_buggy": 0,
+      "context": "  23:       elif isinstance(others, ABCDataFrame):\n  24:           return [others[x] for x in others]\n  25:       elif isinstance(others, np.ndarray) and others.ndim == 2:\n  26:->         others = DataFrame(others, index=idx)\n  27:           return [others[x] for x in others]\n  28:       elif is_list_like(others, allow_sets=False):\n  29:           others = list(others)",
+      "ast_subtree_json": {
+        "_type": "Assign",
+        "targets": [
+          {
+            "_type": "Name",
+            "id": "others",
+            "ctx": {
+              "_type": "Store"
+            }
+          }
+        ],
+        "value": {
+          "_type": "Call",
+          "func": {
+            "_type": "Name"
+          },
+          "args": [
+            {
+              "_type": "Name"
+            }
+          ],
+          "keywords": [
+            {
+              "_type": "keyword"
+            }
+          ]
+        },
+        "type_comment": null
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -24.0
+    },
+    {
+      "line": 28,
+      "line_absolute": 2300,
+      "node_id": 89,
+      "node_id_local": 18,
+      "type": "Call",
+      "code": "is_list_like(others, allow_sets=False)",
+      "distance_to_buggy": 0,
+      "context": "  25:       elif isinstance(others, np.ndarray) and others.ndim == 2:\n  26:           others = DataFrame(others, index=idx)\n  27:           return [others[x] for x in others]\n  28:->     elif is_list_like(others, allow_sets=False):\n  29:           others = list(others)\n  30:           if all((isinstance(x, (ABCSeries, ABCIndexClass)) or (isinstance(x, np.ndarray) and x.ndim == 1) for x in others)):\n  31:               los = []",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Name",
+          "id": "is_list_like",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [
+          {
+            "_type": "Name",
+            "id": "others",
+            "ctx": {
+              "_type": "Load"
+            }
+          }
+        ],
+        "keywords": [
+          {
+            "_type": "keyword",
+            "arg": "allow_sets",
+            "value": {
+              "_type": "Constant"
+            }
+          }
+        ]
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -24.0
+    },
+    {
+      "line": 29,
+      "line_absolute": 2301,
+      "node_id": 117,
+      "node_id_local": 20,
+      "type": "Call",
+      "code": "list(others)",
+      "distance_to_buggy": 0,
+      "context": "  26:           others = DataFrame(others, index=idx)\n  27:           return [others[x] for x in others]\n  28:       elif is_list_like(others, allow_sets=False):\n  29:->         others = list(others)\n  30:           if all((isinstance(x, (ABCSeries, ABCIndexClass)) or (isinstance(x, np.ndarray) and x.ndim == 1) for x in others)):\n  31:               los = []\n  32:               while others:",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Name",
+          "id": "list",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [
+          {
+            "_type": "Name",
+            "id": "others",
+            "ctx": {
+              "_type": "Load"
+            }
+          }
+        ],
+        "keywords": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -24.0
+    },
+    {
+      "line": 30,
+      "line_absolute": 2302,
+      "node_id": 118,
+      "node_id_local": 22,
+      "type": "Call",
+      "code": "all((isinstance(x, (ABCSeries, ABCIndexClass)) or (isinstance(x, np.ndarray) and x.ndim == 1) for x in others))",
+      "distance_to_buggy": 0,
+      "context": "  27:           return [others[x] for x in others]\n  28:       elif is_list_like(others, allow_sets=False):\n  29:           others = list(others)\n  30:->         if all((isinstance(x, (ABCSeries, ABCIndexClass)) or (isinstance(x, np.ndarray) and x.ndim == 1) for x in others)):\n  31:               los = []\n  32:               while others:\n  33:                   los = los + self._get_series_list(others.pop(0))",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Name",
+          "id": "all",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [
+          {
+            "_type": "GeneratorExp",
+            "elt": {
+              "_type": "BoolOp"
+            },
+            "generators": [
+              {
+                "_type": "comprehension"
+              }
+            ]
+          }
+        ],
+        "keywords": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -24.0
+    },
+    {
+      "line": 30,
+      "line_absolute": 2302,
+      "node_id": 180,
+      "node_id_local": 23,
+      "type": "Call",
+      "code": "isinstance(x, (ABCSeries, ABCIndexClass))",
+      "distance_to_buggy": 0,
+      "context": "  27:           return [others[x] for x in others]\n  28:       elif is_list_like(others, allow_sets=False):\n  29:           others = list(others)\n  30:->         if all((isinstance(x, (ABCSeries, ABCIndexClass)) or (isinstance(x, np.ndarray) and x.ndim == 1) for x in others)):\n  31:               los = []\n  32:               while others:\n  33:                   los = los + self._get_series_list(others.pop(0))",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Name",
+          "id": "isinstance",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [
+          {
+            "_type": "Name",
+            "id": "x",
+            "ctx": {
+              "_type": "Load"
+            }
+          },
+          {
+            "_type": "Tuple",
+            "elts": [
+              {
+                "_type": "Name"
+              },
+              {
+                "_type": "Name"
+              }
+            ],
+            "ctx": {
+              "_type": "Load"
+            }
+          }
+        ],
+        "keywords": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -24.0
+    },
+    {
+      "line": 30,
+      "line_absolute": 2302,
+      "node_id": 197,
+      "node_id_local": 24,
+      "type": "Call",
+      "code": "isinstance(x, np.ndarray)",
+      "distance_to_buggy": 0,
+      "context": "  27:           return [others[x] for x in others]\n  28:       elif is_list_like(others, allow_sets=False):\n  29:           others = list(others)\n  30:->         if all((isinstance(x, (ABCSeries, ABCIndexClass)) or (isinstance(x, np.ndarray) and x.ndim == 1) for x in others)):\n  31:               los = []\n  32:               while others:\n  33:                   los = los + self._get_series_list(others.pop(0))",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Name",
+          "id": "isinstance",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [
+          {
+            "_type": "Name",
+            "id": "x",
+            "ctx": {
+              "_type": "Load"
+            }
+          },
+          {
+            "_type": "Attribute",
+            "value": {
+              "_type": "Name"
+            },
+            "attr": "ndarray",
+            "ctx": {
+              "_type": "Load"
+            }
+          }
+        ],
+        "keywords": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -24.0
+    },
+    {
+      "line": 29,
+      "line_absolute": 2301,
+      "node_id": 90,
+      "node_id_local": 19,
+      "type": "Assign",
+      "code": "others = list(others)",
+      "distance_to_buggy": 0,
+      "context": "  26:           others = DataFrame(others, index=idx)\n  27:           return [others[x] for x in others]\n  28:       elif is_list_like(others, allow_sets=False):\n  29:->         others = list(others)\n  30:           if all((isinstance(x, (ABCSeries, ABCIndexClass)) or (isinstance(x, np.ndarray) and x.ndim == 1) for x in others)):\n  31:               los = []\n  32:               while others:",
+      "ast_subtree_json": {
+        "_type": "Assign",
+        "targets": [
+          {
+            "_type": "Name",
+            "id": "others",
+            "ctx": {
+              "_type": "Store"
+            }
+          }
+        ],
+        "value": {
+          "_type": "Call",
+          "func": {
+            "_type": "Name"
+          },
+          "args": [
+            {
+              "_type": "Name"
+            }
+          ],
+          "keywords": []
+        },
+        "type_comment": null
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -23.0
+    }
+  ]
+}

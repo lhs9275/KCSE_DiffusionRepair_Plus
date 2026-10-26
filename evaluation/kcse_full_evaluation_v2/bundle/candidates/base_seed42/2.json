@@ -1,0 +1,102 @@
+{
+  "bug_id": "2",
+  "seed": 42,
+  "arm": "base",
+  "candidates": [
+    {
+      "index": 0,
+      "patch_text": "def register_named_middleware(self, middleware, route_names, attach_to='request'):\n    if attach_to =='request':\n        for _rn in route_names:\n            if _rn not in self.named_request_middleware:\n                self.named_request_middleware[_rn] = deque()\n            if middleware not in self.named_request_middleware[_rn]:\n                self.named_request_middleware[_rn].appendleft(middleware)\n    if attach_to =='response':\n        for _rn in route_names:\n            if _rn not in self.named_response_middleware:\n                self.named_response_middleware[_rn] = deque()\n            if middleware not in self.named_response_middleware[_rn]:\n                self.named_response_middleware[_rn].appendleft(middleware)",
+      "patch_sha256": "b0dc34a227b6b903160bb5b939de9d80ed03ebf2898516f56460aa35ba7d3ac2",
+      "rank_score": 219,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8850407915843882,
+      "top_p": 0.7720008604178135
+    },
+    {
+      "index": 1,
+      "patch_text": "def register_named_middleware(self, middleware, route_names, attach_to='request'):\n    if attach_to =='request':\n        for _rn in route_names:\n            if _rn not in self.named_request_middleware:\n                self.named_request_middleware[_rn] = deque()\n            if middleware not in self.named_request_middleware[_rn]:\n                self.named_request_middleware[_rn].append(middleware)\n    if attach_to =='response':\n        for _rn in route_names:\n            if _rn not in self.named_response_middleware:\n                self.named_response_middleware[_rn] = deque()\n            if middleware not in self.named_response_middleware[_rn]:\n                self.named_response_middleware[_rn].append(middleware)",
+      "patch_sha256": "eadd138af41371af95eb21924b601ffd7f552b2def5123bd28554c3fd550683d",
+      "rank_score": 204,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8089233151013046,
+      "top_p": 0.9111541438766307
+    },
+    {
+      "index": 2,
+      "patch_text": "def register_named_middleware(self, middleware, route_names, attach_to='request'):\n    if attach_to =='request':\n        for _rn in route_names:\n            if _rn not in self.named_request_middleware:\n                self.named_request_middleware[_rn] = deque()\n            if middleware not in self.named_request_middleware[_rn]:\n                self.named_request_middleware[_rn].append(middleware)\n    elif attach_to =='response':\n        for _rn in route_names:\n            if _rn not in self.named_response_middleware:\n                self.named_response_middleware[_rn] = deque()\n            if middleware not in self.named_response_middleware[_rn]:\n                self.named_response_middleware[_rn].append(middleware)",
+      "patch_sha256": "09c0d37a58b6ae6549caba44ae16c02a98e16f0d1a5f451373e08c8d04879025",
+      "rank_score": 204,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8895986980815249,
+      "top_p": 0.7769551066103534
+    },
+    {
+      "index": 3,
+      "patch_text": "def register_named_middleware(self, middleware, route_names, attach_to='request'):\n    if attach_to =='request':\n        for _rn in route_names:\n            if _rn not in self.named_request_middleware:\n                self.named_request_middleware[_rn] = deque()\n            self.named_request_middleware[_rn].append(middleware)\n    if attach_to =='response':\n        for _rn in route_names:\n            if _rn not in self.named_response_middleware:\n                self.named_response_middleware[_rn] = deque()\n            self.named_response_middleware[_rn].append(middleware)",
+      "patch_sha256": "103445e449b58ade2a30ca02570f8299de12785d9f693194c649903cc0152291",
+      "rank_score": 185,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7822854872415247,
+      "top_p": 0.8778568590519058
+    },
+    {
+      "index": 4,
+      "patch_text": "def register_named_middleware(self, middleware, route_names, attach_to='request'):\n    if attach_to =='request':\n        for _rn in route_names:\n            if _rn not in self.named_request_middleware:\n                self.named_request_middleware[_rn] = deque()\n            if middleware not in self.named_request_middleware[_rn]:\n                self.named_request_middleware[_rn].append(middleware)\n    if attach_to =='response':\n        for _rn in route_names:\n            if _rn not in self.named_response_middleware:\n                self.named_response_middleware[_rn] = deque()\n            if middleware not in self.named_response_middleware[_rn]:\n                self.named_response_middleware[_rn].append(middleware)\n\n##end\n##context\n\n##end\n##end\n##correct\ndef register_named_middleware(self, middleware, route_names, attach_to='request'):\n    if attach_to =='request':\n        for _rn in route_names:\n            if _rn not in self.named_request_middleware:\n                self.named_request_middleware[_rn] = deque()\n            if middleware not in self.named_request_middleware[_rn]:\n                self.named_request_middleware[_rn].append(middleware)\n    if attach_to =='response':\n        for _rn in route_names:\n            if _rn not in self.named_response_middleware:\n                self.named_response_middleware[_rn] = deque()\n            if middleware not in self.named_response_middleware[_rn]:\n                self.named_response_middleware[_rn].append(middleware)\n\n##end\n##context\n\n##end\n##end\n##correct\ndef register_named_middleware(self, middleware, route_names, attach_to='request'):\n    if attach_to =='request':\n        for _rn in route_names:\n            if _rn not in self.named_request_middleware:\n                self.named_request_middleware[_rn] = deque()\n            if middleware not in self.named_request_middleware[_rn]:\n                self.named_request_middleware[_rn].append(middleware)\n    if attach_to =='response':\n        for _rn in route_names:\n            if _rn not in self.named_response_middleware:\n                self.named_response_middleware[_rn] = deque()\n            if middleware not in self.named_response_middleware[_rn]:\n                self.named_response_middleware[_rn].append(middleware)\n\n##end\n##context\n\n##end\n##end\n##correct\ndef register_named_middleware(self, middleware, route_names, attach_to='request'):\n    if attach_to =='request':\n        for _rn in route_names:\n            if _rn not in self.named_request_middleware:\n                self.named_request_middleware[_rn] = deque()",
+      "patch_sha256": "78991184fd6041fd8c77aceff3ae8f08cd003abdf03621285336930aaa465598",
+      "rank_score": 130,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.5273506986767932,
+      "top_p": 0.98
+    },
+    {
+      "index": 5,
+      "patch_text": "def register_named_middleware(self, middleware, route_names, attach_to='request'):\n    if attach_to =='request':\n        for _rn in route_names:\n            if _rn not in self.named_request_middleware:\n                self.named_request_middleware[_rn] = deque()\n            if middleware not in self.named_request_middleware[_rn]:\n                self.named_request_middleware[_rn].append(middleware)\n    if attach_to =='response':\n        for _rn in route_names:\n            if _rn not in self.named_response_middleware:\n                self.named_response_middleware[_rn] = deque()\n            if middleware not in self.named_response_middleware[_rn]:\n                self.named_response_middleware[_rn].append(middleware)\n\n##end\n\n##correct\ndef register_named_middleware(self, middleware, route_names, attach_to='request'):\n    if attach_to =='request':\n        for _rn in route_names:\n            if _rn not in self.named_request_middleware:\n                self.named_request_middleware[_rn] = deque()\n            if middleware not in self.named_request_middleware[_rn]:\n                self.named_request_middleware[_rn].append(middleware)\n    if attach_to =='response':\n        for _rn in route_names:\n            if _rn not in self.named_response_middleware:\n                self.named_response_middleware[_rn] = deque()\n            if middleware not in self.named_response_middleware[_rn]:\n                self.named_response_middleware[_rn].append(middleware)\n\n##end\n\n##correct\ndef register_named_middleware(self, middleware, route_names, attach_to='request'):\n    if attach_to =='request':\n        for _rn in route_names:\n            if _rn not in self.named_request_middleware:\n                self.named_request_middleware[_rn] = deque()\n            if middleware not in self.named_request_middleware[_rn]:\n                self.named_request_middleware[_rn].append(middleware)\n    if attach_to =='response':\n        for _rn in route_names:\n            if _rn not in self.named_response_middleware:\n                self.named_response_middleware[_rn] = deque()\n            if middleware not in self.named_response_middleware[_rn]:\n                self.named_response_middleware[_rn].append(middleware)\n\n##end\n\n##correct\ndef register_named_middleware(self, middleware, route_names, attach_to='request'):\n    if attach_to =='request':\n        for _rn in route_names:\n            if _rn not in self.named_request_middleware:\n                self.named_request_middleware[_rn] = deque()\n            if middleware not in self.named_request_middleware[_rn]:\n                self.named_request_middleware[_rn].append",
+      "patch_sha256": "4708a3e1ee4e3ccbd0843488efd67628575a09b999d1227189b0e0685abbd3c2",
+      "rank_score": 129,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.5273506986767932,
+      "top_p": 0.98
+    },
+    {
+      "index": 6,
+      "patch_text": "def register_named_middleware(self, middleware, route_names, attach_to='request'):\n    if attach_to =='request':\n        for _rn in route_names:\n            if _rn not in self.named_request_middleware:\n                self.named_request_middleware[_rn] = deque()\n            if middleware not in self.named_request_middleware[_rn]:\n                self.named_request_middleware[_rn].append(middleware)\n    if attach_to =='response':\n        for _rn in route_names:\n            if _rn not in self.named_response_middleware:\n                self.named_response_middleware[_rn] = deque()\n            if middleware not in self.named_response_middleware[_rn]:\n                self.named_response_middleware[_rn].append(middleware)  # <--- BUGGY LINE\n\n##end/tests/test_autopep8.py\nfrom pathlib import Path\nimport os\nimport pytest\n\nfrom utils import get_buggy_files\n\nimport autopep8\n\nfrom.utils import test_dir, run_autopep8, run_fix, write_file\n\n\ndef test_buggy_autopep8():\n    bugs = get_buggy_files(autopep8)\n\n    for bug in bugs:\n        assert len(bug.fixes) == 1\n\n\ndef test_autopep8():\n    assert autopep8.fix_code('import sys') == \"import sys\\n\"\n    assert autopep8.fix_code('import sys') == \"import sys\\n\"\n    assert autopep8.fix_code('import sys') == \"import sys\\n\"\n    assert autopep8.fix_code(\"x = (1, 2, 3)\") == \"x = (1, 2, 3)\\n\"\n    assert autopep8.fix_code(\"x = (1, 2, 3)\") == \"x = (1, 2, 3)\\n\"\n    assert autopep8.fix_code(\"x = (1, 2, 3)\") == \"x = (1, 2, 3)\\n\"\n    assert autopep8.fix_code(\"if a > 10:\\n    pass\") == \"if a > 10:\\n    pass\\n\"\n    assert autopep8.fix_code(\"if a > 10:\\n    pass\") == \"if a > 10:\\n    pass\\n\"\n    assert autopep8.fix_code(\"if a > 10:\\n    pass\") == \"if a > 10:\\n    pass\\n\"\n    assert autopep8.fix_code(\"try:\\n    raise ValueError\") == \"try:\\n    raise ValueError\\n\"\n    assert autopep8.fix_code(\"try:\\n    raise ValueError\") == \"try:\\n    raise ValueError\\n\"\n    assert autopep8.fix_",
+      "patch_sha256": "ec8bcdffc79035bb96f3ec0c400cbbfcc7abdd8dc5fab0fe9ca17978a59e7ecf",
+      "rank_score": -67,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8895986980815249,
+      "top_p": 0.7769551066103534
+    }
+  ],
+  "candidate_count": 7,
+  "retrieved_examples": [],
+  "diffusion_plan": [],
+  "static_analysis_nodes": []
+}

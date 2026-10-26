@@ -1,0 +1,1032 @@
+{
+  "bug_id": "45",
+  "seed": 43,
+  "arm": "full",
+  "candidates": [
+    {
+      "index": 0,
+      "patch_text": "def _isna_old(obj):\n    \"\"\"\n    Detect missing values, treating None, NaN, INF, -INF as null.\n\n    Parameters\n    ----------\n    arr: ndarray or object value\n\n    Returns\n    -------\n    boolean ndarray or boolean\n    \"\"\"\n    if is_scalar(obj):\n        return libmissing.checknull_old(obj)\n    elif isinstance(obj, type):\n        return False\n    elif isinstance(obj, (ABCSeries, np.ndarray, ABCIndexClass)):\n        return _isna_ndarraylike_old(obj)\n    elif isinstance(obj, list):\n        return _isna_ndarraylike_old(np.asarray(obj, dtype=object))\n    elif hasattr(obj, '__array__'):\n        return _isna_ndarraylike_old(np.asarray(obj))\n    else:\n        return obj is None\n\n##end\n##analysis",
+      "patch_sha256": "0edbf074ef672af13c667649348f911919c6feca646ece728f42727c40b7d2c5",
+      "rank_score": 203,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.934442110146087,
+      "top_p": 0.8256979458109642
+    }
+  ],
+  "candidate_count": 1,
+  "retrieved_examples": [
+    {
+      "id": "30",
+      "project_name": "pandas",
+      "buggy_line_content": "        if isinstance(new, np.ndarray) and len(new) == len(mask):",
+      "function": {
+        "function_name": "putmask",
+        "function_parent": "ExtensionBlock",
+        "function_before_start_line": 1590,
+        "function_before_end_line": 1608,
+        "function_after_start_line": 1590,
+        "function_after_end_line": 1608,
+        "function_before_token_count": 116,
+        "function_after_token_count": 120,
+        "function_before": "def putmask(self, mask, new, inplace: bool=False, axis: int=0, transpose: bool=False) -> List['Block']:\n    \"\"\"\n        See Block.putmask.__doc__\n        \"\"\"\n    inplace = validate_bool_kwarg(inplace, 'inplace')\n    mask = _extract_bool_array(mask)\n    new_values = self.values if inplace else self.values.copy()\n    if isinstance(new, np.ndarray) and len(new) == len(mask):\n        new = new[mask]\n    mask = _safe_reshape(mask, new_values.shape)\n    new_values[mask] = new\n    return [self.make_block(values=new_values)]",
+        "function_after": "def putmask(self, mask, new, inplace: bool=False, axis: int=0, transpose: bool=False) -> List['Block']:\n    \"\"\"\n        See Block.putmask.__doc__\n        \"\"\"\n    inplace = validate_bool_kwarg(inplace, 'inplace')\n    mask = _extract_bool_array(mask)\n    new_values = self.values if inplace else self.values.copy()\n    if isinstance(new, (np.ndarray, ExtensionArray)) and len(new) == len(mask):\n        new = new[mask]\n    mask = _safe_reshape(mask, new_values.shape)\n    new_values[mask] = new\n    return [self.make_block(values=new_values)]"
+      },
+      "file_name": "blocks.py",
+      "file_path": "pandas/core/internals/blocks.py",
+      "score_reranked": 0.7804284397578388
+    },
+    {
+      "id": "37",
+      "project_name": "pandas",
+      "buggy_line_content": "                elif is_integer(i) and not ax.holds_integer():",
+      "function": {
+        "function_name": "_convert_key",
+        "function_parent": "_AtIndexer",
+        "function_before_start_line": 2110,
+        "function_before_end_line": 2133,
+        "function_after_start_line": 2110,
+        "function_after_end_line": 2133,
+        "function_before_token_count": 82,
+        "function_after_token_count": 90,
+        "function_before": "def _convert_key(self, key, is_setter: bool=False):\n    \"\"\"\n        Require they keys to be the same type as the index. (so we don't\n        fallback)\n        \"\"\"\n    if is_setter:\n        return list(key)\n    for ax, i in zip(self.obj.axes, key):\n        if ax.is_integer():\n            if not is_integer(i):\n                raise ValueError('At based indexing on an integer index can only have integer indexers')\n        elif is_integer(i) and not ax.holds_integer():\n            raise ValueError('At based indexing on an non-integer index can only have non-integer indexers')\n    return key",
+        "function_after": "def _convert_key(self, key, is_setter: bool=False):\n    \"\"\"\n        Require they keys to be the same type as the index. (so we don't\n        fallback)\n        \"\"\"\n    if is_setter:\n        return list(key)\n    for ax, i in zip(self.obj.axes, key):\n        if ax.is_integer():\n            if not is_integer(i):\n                raise ValueError('At based indexing on an integer index can only have integer indexers')\n        elif is_integer(i) and (not (ax.holds_integer() or ax.is_floating())):\n            raise ValueError('At based indexing on an non-integer index can only have non-integer indexers')\n    return key"
+      },
+      "file_name": "indexing.py",
+      "file_path": "pandas/core/indexing.py",
+      "score_reranked": 0.7747017991687688
+    },
+    {
+      "id": "31",
+      "project_name": "pandas",
+      "buggy_line_content": "            return [Series(others._values, index=others)]",
+      "function": {
+        "function_name": "_get_series_list",
+        "function_parent": "StringMethods",
+        "function_before_start_line": 2273,
+        "function_before_end_line": 2328,
+        "function_after_start_line": 2273,
+        "function_after_end_line": 2328,
+        "function_before_token_count": 232,
+        "function_after_token_count": 232,
+        "function_before": "def _get_series_list(self, others):\n    \"\"\"\n        Auxiliary function for :meth:`str.cat`. Turn potentially mixed input\n        into a list of Series (elements without an index must match the length\n        of the calling Series/Index).\n\n        Parameters\n        ----------\n        others : Series, DataFrame, np.ndarray, list-like or list-like of\n            Objects that are either Series, Index or np.ndarray (1-dim).\n\n        Returns\n        -------\n        list of Series\n            Others transformed into list of Series.\n        \"\"\"\n    from pandas import Series, DataFrame\n    idx = self._orig if isinstance(self._orig, ABCIndexClass) else self._orig.index\n    if isinstance(others, ABCSeries):\n        return [others]\n    elif isinstance(others, ABCIndexClass):\n        return [Series(others._values, index=others)]\n    elif isinstance(others, ABCDataFrame):\n        return [others[x] for x in others]\n    elif isinstance(others, np.ndarray) and others.ndim == 2:\n        others = DataFrame(others, index=idx)\n        return [others[x] for x in others]\n    elif is_list_like(others, allow_sets=False):\n        others = list(others)\n        if all((isinstance(x, (ABCSeries, ABCIndexClass)) or (isinstance(x, np.ndarray) and x.ndim == 1) for x in others)):\n            los = []\n            while others:\n                los = los + self._get_series_list(others.pop(0))\n            return los\n        elif all((not is_list_like(x) for x in others)):\n            return [Series(others, index=idx)]\n    raise TypeError('others must be Series, Index, DataFrame, np.ndarrary or list-like (either containing only strings or containing only objects of type Series/Index/np.ndarray[1-dim])')",
+        "function_after": "def _get_series_list(self, others):\n    \"\"\"\n        Auxiliary function for :meth:`str.cat`. Turn potentially mixed input\n        into a list of Series (elements without an index must match the length\n        of the calling Series/Index).\n\n        Parameters\n        ----------\n        others : Series, DataFrame, np.ndarray, list-like or list-like of\n            Objects that are either Series, Index or np.ndarray (1-dim).\n\n        Returns\n        -------\n        list of Series\n            Others transformed into list of Series.\n        \"\"\"\n    from pandas import Series, DataFrame\n    idx = self._orig if isinstance(self._orig, ABCIndexClass) else self._orig.index\n    if isinstance(others, ABCSeries):\n        return [others]\n    elif isinstance(others, ABCIndexClass):\n        return [Series(others._values, index=idx)]\n    elif isinstance(others, ABCDataFrame):\n        return [others[x] for x in others]\n    elif isinstance(others, np.ndarray) and others.ndim == 2:\n        others = DataFrame(others, index=idx)\n        return [others[x] for x in others]\n    elif is_list_like(others, allow_sets=False):\n        others = list(others)\n        if all((isinstance(x, (ABCSeries, ABCIndexClass)) or (isinstance(x, np.ndarray) and x.ndim == 1) for x in others)):\n            los = []\n            while others:\n                los = los + self._get_series_list(others.pop(0))\n            return los\n        elif all((not is_list_like(x) for x in others)):\n            return [Series(others, index=idx)]\n    raise TypeError('others must be Series, Index, DataFrame, np.ndarrary or list-like (either containing only strings or containing only objects of type Series/Index/np.ndarray[1-dim])')"
+      },
+      "file_name": "strings.py",
+      "file_path": "pandas/core/strings.py",
+      "score_reranked": 0.6468372847995861
+    },
+    {
+      "id": "39",
+      "project_name": "pandas",
+      "buggy_line_content": "            except (TypeError, ValueError):",
+      "function": {
+        "function_name": "_try_convert_data",
+        "function_parent": "Parser",
+        "function_before_start_line": 886,
+        "function_before_end_line": 958,
+        "function_after_start_line": 886,
+        "function_after_end_line": 958,
+        "function_before_token_count": 277,
+        "function_after_token_count": 279,
+        "function_before": "def _try_convert_data(self, name, data, use_dtypes=True, convert_dates=True):\n    \"\"\"\n        Try to parse a ndarray like into a column by inferring dtype.\n        \"\"\"\n    if use_dtypes:\n        if not self.dtype:\n            return (data, False)\n        elif self.dtype is True:\n            pass\n        else:\n            dtype = self.dtype.get(name) if isinstance(self.dtype, dict) else self.dtype\n            if dtype is not None:\n                try:\n                    dtype = np.dtype(dtype)\n                    return (data.astype(dtype), True)\n                except (TypeError, ValueError):\n                    return (data, False)\n    if convert_dates:\n        new_data, result = self._try_convert_to_date(data)\n        if result:\n            return (new_data, True)\n    result = False\n    if data.dtype == 'object':\n        try:\n            data = data.astype('float64')\n            result = True\n        except (TypeError, ValueError):\n            pass\n    if data.dtype.kind == 'f':\n        if data.dtype != 'float64':\n            try:\n                data = data.astype('float64')\n                result = True\n            except (TypeError, ValueError):\n                pass\n    if len(data) and (data.dtype == 'float' or data.dtype == 'object'):\n        try:\n            new_data = data.astype('int64')\n            if (new_data == data).all():\n                data = new_data\n                result = True\n        except (TypeError, ValueError):\n            pass\n    if data.dtype == 'int':\n        try:\n            data = data.astype('int64')\n            result = True\n        except (TypeError, ValueError):\n            pass\n    return (data, result)",
+        "function_after": "def _try_convert_data(self, name, data, use_dtypes=True, convert_dates=True):\n    \"\"\"\n        Try to parse a ndarray like into a column by inferring dtype.\n        \"\"\"\n    if use_dtypes:\n        if not self.dtype:\n            return (data, False)\n        elif self.dtype is True:\n            pass\n        else:\n            dtype = self.dtype.get(name) if isinstance(self.dtype, dict) else self.dtype\n            if dtype is not None:\n                try:\n                    dtype = np.dtype(dtype)\n                    return (data.astype(dtype), True)\n                except (TypeError, ValueError):\n                    return (data, False)\n    if convert_dates:\n        new_data, result = self._try_convert_to_date(data)\n        if result:\n            return (new_data, True)\n    result = False\n    if data.dtype == 'object':\n        try:\n            data = data.astype('float64')\n            result = True\n        except (TypeError, ValueError):\n            pass\n    if data.dtype.kind == 'f':\n        if data.dtype != 'float64':\n            try:\n                data = data.astype('float64')\n                result = True\n            except (TypeError, ValueError):\n                pass\n    if len(data) and (data.dtype == 'float' or data.dtype == 'object'):\n        try:\n            new_data = data.astype('int64')\n            if (new_data == data).all():\n                data = new_data\n                result = True\n        except (TypeError, ValueError, OverflowError):\n            pass\n    if data.dtype == 'int':\n        try:\n            data = data.astype('int64')\n            result = True\n        except (TypeError, ValueError):\n            pass\n    return (data, result)"
+      },
+      "file_name": "_json.py",
+      "file_path": "pandas/io/json/_json.py",
+      "score_reranked": 0.6291489110835399
+    },
+    {
+      "id": "32",
+      "project_name": "pandas",
+      "buggy_line_content": "            except (ValueError, OverflowError):",
+      "function": {
+        "function_name": "_try_convert_to_date",
+        "function_parent": "Parser",
+        "function_before_start_line": 953,
+        "function_before_end_line": 988,
+        "function_after_start_line": 953,
+        "function_after_end_line": 988,
+        "function_before_token_count": 154,
+        "function_after_token_count": 156,
+        "function_before": "def _try_convert_to_date(self, data):\n    \"\"\"\n        Try to parse a ndarray like into a date column.\n\n        Try to coerce object in epoch/iso formats and integer/float in epoch\n        formats. Return a boolean if parsing was successful.\n        \"\"\"\n    if not len(data):\n        return (data, False)\n    new_data = data\n    if new_data.dtype == 'object':\n        try:\n            new_data = data.astype('int64')\n        except (TypeError, ValueError, OverflowError):\n            pass\n    if issubclass(new_data.dtype.type, np.number):\n        in_range = isna(new_data._values) | (new_data > self.min_stamp) | (new_data._values == iNaT)\n        if not in_range.all():\n            return (data, False)\n    date_units = (self.date_unit,) if self.date_unit else self._STAMP_UNITS\n    for date_unit in date_units:\n        try:\n            new_data = to_datetime(new_data, errors='raise', unit=date_unit)\n        except (ValueError, OverflowError):\n            continue\n        return (new_data, True)\n    return (data, False)",
+        "function_after": "def _try_convert_to_date(self, data):\n    \"\"\"\n        Try to parse a ndarray like into a date column.\n\n        Try to coerce object in epoch/iso formats and integer/float in epoch\n        formats. Return a boolean if parsing was successful.\n        \"\"\"\n    if not len(data):\n        return (data, False)\n    new_data = data\n    if new_data.dtype == 'object':\n        try:\n            new_data = data.astype('int64')\n        except (TypeError, ValueError, OverflowError):\n            pass\n    if issubclass(new_data.dtype.type, np.number):\n        in_range = isna(new_data._values) | (new_data > self.min_stamp) | (new_data._values == iNaT)\n        if not in_range.all():\n            return (data, False)\n    date_units = (self.date_unit,) if self.date_unit else self._STAMP_UNITS\n    for date_unit in date_units:\n        try:\n            new_data = to_datetime(new_data, errors='raise', unit=date_unit)\n        except (ValueError, OverflowError, TypeError):\n            continue\n        return (new_data, True)\n    return (data, False)"
+      },
+      "file_name": "_json.py",
+      "file_path": "pandas/io/json/_json.py",
+      "score_reranked": 0.6200555804470382
+    }
+  ],
+  "diffusion_plan": [
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 39
+        },
+        {
+          "op": "Replace",
+          "node": 25
+        },
+        {
+          "op": "GuardAdd",
+          "node": 39
+        },
+        {
+          "op": "GuardAdd",
+          "node": 50
+        },
+        {
+          "op": "Replace",
+          "node": 79
+        },
+        {
+          "op": "Replace",
+          "node": 51
+        },
+        {
+          "op": "Replace",
+          "node": 26
+        },
+        {
+          "op": "Replace",
+          "node": 65
+        },
+        {
+          "op": "Delete",
+          "node": 79
+        },
+        {
+          "op": "Delete",
+          "node": 50
+        },
+        {
+          "op": "Replace",
+          "node": 40
+        }
+      ],
+      "score": 17.763636362112397
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 79
+        },
+        {
+          "op": "Replace",
+          "node": 50
+        },
+        {
+          "op": "Replace",
+          "node": 52
+        },
+        {
+          "op": "Replace",
+          "node": 26
+        },
+        {
+          "op": "Replace",
+          "node": 39
+        },
+        {
+          "op": "Delete",
+          "node": 40
+        },
+        {
+          "op": "GuardAdd",
+          "node": 39
+        },
+        {
+          "op": "Replace",
+          "node": 65
+        },
+        {
+          "op": "InsertBefore",
+          "node": 51
+        },
+        {
+          "op": "GuardAdd",
+          "node": 51
+        },
+        {
+          "op": "GuardAdd",
+          "node": 79
+        }
+      ],
+      "score": 16.999999998545455
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 25
+        },
+        {
+          "op": "GuardAdd",
+          "node": 25
+        },
+        {
+          "op": "Replace",
+          "node": 39
+        },
+        {
+          "op": "Delete",
+          "node": 25
+        },
+        {
+          "op": "GuardAdd",
+          "node": 51
+        },
+        {
+          "op": "GuardAdd",
+          "node": 26
+        },
+        {
+          "op": "Replace",
+          "node": 79
+        },
+        {
+          "op": "GuardAdd",
+          "node": 50
+        },
+        {
+          "op": "Replace",
+          "node": 50
+        },
+        {
+          "op": "Replace",
+          "node": 51
+        }
+      ],
+      "score": 16.472727271320664
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 51
+        },
+        {
+          "op": "Replace",
+          "node": 39
+        },
+        {
+          "op": "GuardAdd",
+          "node": 65
+        },
+        {
+          "op": "Replace",
+          "node": 50
+        },
+        {
+          "op": "Replace",
+          "node": 65
+        },
+        {
+          "op": "Replace",
+          "node": 26
+        },
+        {
+          "op": "Replace",
+          "node": 25
+        },
+        {
+          "op": "InsertBefore",
+          "node": 50
+        }
+      ],
+      "score": 16.409090907871903
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 50
+        },
+        {
+          "op": "Replace",
+          "node": 51
+        },
+        {
+          "op": "GuardAdd",
+          "node": 26
+        },
+        {
+          "op": "Replace",
+          "node": 26
+        },
+        {
+          "op": "Replace",
+          "node": 39
+        },
+        {
+          "op": "GuardAdd",
+          "node": 50
+        },
+        {
+          "op": "InsertAfter",
+          "node": 26
+        },
+        {
+          "op": "Replace",
+          "node": 65
+        },
+        {
+          "op": "GuardAdd",
+          "node": 79
+        },
+        {
+          "op": "Replace",
+          "node": 79
+        }
+      ],
+      "score": 16.309090907699176
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 25
+        },
+        {
+          "op": "GuardAdd",
+          "node": 50
+        },
+        {
+          "op": "Replace",
+          "node": 79
+        },
+        {
+          "op": "Replace",
+          "node": 26
+        },
+        {
+          "op": "Replace",
+          "node": 50
+        },
+        {
+          "op": "GuardAdd",
+          "node": 79
+        },
+        {
+          "op": "Replace",
+          "node": 65
+        },
+        {
+          "op": "Replace",
+          "node": 39
+        },
+        {
+          "op": "Replace",
+          "node": 51
+        }
+      ],
+      "score": 15.854545453195044
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 65
+        },
+        {
+          "op": "Replace",
+          "node": 50
+        },
+        {
+          "op": "GuardAdd",
+          "node": 39
+        },
+        {
+          "op": "InsertBefore",
+          "node": 50
+        },
+        {
+          "op": "Replace",
+          "node": 26
+        },
+        {
+          "op": "Replace",
+          "node": 39
+        },
+        {
+          "op": "Replace",
+          "node": 40
+        },
+        {
+          "op": "Replace",
+          "node": 52
+        },
+        {
+          "op": "Replace",
+          "node": 25
+        },
+        {
+          "op": "Delete",
+          "node": 39
+        }
+      ],
+      "score": 15.754545453204134
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 39
+        },
+        {
+          "op": "Replace",
+          "node": 65
+        },
+        {
+          "op": "Replace",
+          "node": 50
+        },
+        {
+          "op": "Replace",
+          "node": 40
+        },
+        {
+          "op": "Replace",
+          "node": 51
+        },
+        {
+          "op": "GuardAdd",
+          "node": 39
+        },
+        {
+          "op": "Delete",
+          "node": 39
+        },
+        {
+          "op": "Replace",
+          "node": 25
+        },
+        {
+          "op": "Replace",
+          "node": 26
+        }
+      ],
+      "score": 15.690909089573555
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "GuardAdd",
+          "node": 39
+        },
+        {
+          "op": "Replace",
+          "node": 39
+        },
+        {
+          "op": "Delete",
+          "node": 26
+        },
+        {
+          "op": "Replace",
+          "node": 50
+        },
+        {
+          "op": "Replace",
+          "node": 51
+        },
+        {
+          "op": "GuardAdd",
+          "node": 26
+        },
+        {
+          "op": "GuardAdd",
+          "node": 79
+        },
+        {
+          "op": "Replace",
+          "node": 65
+        },
+        {
+          "op": "GuardAdd",
+          "node": 25
+        },
+        {
+          "op": "Replace",
+          "node": 41
+        }
+      ],
+      "score": 15.618181816852893
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 26
+        },
+        {
+          "op": "Replace",
+          "node": 25
+        },
+        {
+          "op": "Replace",
+          "node": 79
+        },
+        {
+          "op": "GuardAdd",
+          "node": 65
+        },
+        {
+          "op": "Replace",
+          "node": 50
+        },
+        {
+          "op": "Replace",
+          "node": 39
+        },
+        {
+          "op": "InsertBefore",
+          "node": 50
+        },
+        {
+          "op": "GuardAdd",
+          "node": 79
+        }
+      ],
+      "score": 15.590909089764464
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 25
+        },
+        {
+          "op": "Replace",
+          "node": 51
+        },
+        {
+          "op": "GuardAdd",
+          "node": 26
+        },
+        {
+          "op": "Delete",
+          "node": 51
+        },
+        {
+          "op": "Replace",
+          "node": 39
+        },
+        {
+          "op": "InsertBefore",
+          "node": 39
+        },
+        {
+          "op": "Replace",
+          "node": 50
+        },
+        {
+          "op": "GuardAdd",
+          "node": 39
+        },
+        {
+          "op": "Replace",
+          "node": 40
+        }
+      ],
+      "score": 15.545454544132234
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 25
+        },
+        {
+          "op": "Replace",
+          "node": 39
+        },
+        {
+          "op": "Replace",
+          "node": 40
+        },
+        {
+          "op": "Replace",
+          "node": 51
+        },
+        {
+          "op": "Replace",
+          "node": 50
+        },
+        {
+          "op": "Replace",
+          "node": 79
+        },
+        {
+          "op": "GuardAdd",
+          "node": 65
+        },
+        {
+          "op": "Replace",
+          "node": 26
+        }
+      ],
+      "score": 15.16363636253058
+    }
+  ],
+  "static_analysis_nodes": [
+    {
+      "line": 19,
+      "line_absolute": 178,
+      "node_id": 39,
+      "node_id_local": 11,
+      "type": "Call",
+      "code": "isinstance(obj, (ABCSeries, np.ndarray, ABCIndexClass))",
+      "distance_to_buggy": 0,
+      "context": "  16:           raise NotImplementedError('isna is not defined for MultiIndex')\n  17:       elif isinstance(obj, type):\n  18:           return False\n  19:->     elif isinstance(obj, (ABCSeries, np.ndarray, ABCIndexClass)):\n  20:           return _isna_ndarraylike_old(obj)\n  21:       elif isinstance(obj, ABCGeneric):\n  22:           return obj._constructor(obj._data.isna(func=_isna_old))",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Name",
+          "id": "isinstance",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [
+          {
+            "_type": "Name",
+            "id": "obj",
+            "ctx": {
+              "_type": "Load"
+            }
+          },
+          {
+            "_type": "Tuple",
+            "elts": [
+              {
+                "_type": "Name"
+              },
+              {
+                "_type": "Attribute"
+              },
+              {
+                "_type": "Name"
+              }
+            ],
+            "ctx": {
+              "_type": "Load"
+            }
+          }
+        ],
+        "keywords": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -24.0
+    },
+    {
+      "line": 20,
+      "line_absolute": 179,
+      "node_id": 50,
+      "node_id_local": 13,
+      "type": "Call",
+      "code": "_isna_ndarraylike_old(obj)",
+      "distance_to_buggy": 0,
+      "context": "  17:       elif isinstance(obj, type):\n  18:           return False\n  19:       elif isinstance(obj, (ABCSeries, np.ndarray, ABCIndexClass)):\n  20:->         return _isna_ndarraylike_old(obj)\n  21:       elif isinstance(obj, ABCGeneric):\n  22:           return obj._constructor(obj._data.isna(func=_isna_old))\n  23:       elif isinstance(obj, list):",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Name",
+          "id": "_isna_ndarraylike_old",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [
+          {
+            "_type": "Name",
+            "id": "obj",
+            "ctx": {
+              "_type": "Load"
+            }
+          }
+        ],
+        "keywords": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -24.0
+    },
+    {
+      "line": 21,
+      "line_absolute": 180,
+      "node_id": 51,
+      "node_id_local": 15,
+      "type": "Call",
+      "code": "isinstance(obj, ABCGeneric)",
+      "distance_to_buggy": 0,
+      "context": "  18:           return False\n  19:       elif isinstance(obj, (ABCSeries, np.ndarray, ABCIndexClass)):\n  20:           return _isna_ndarraylike_old(obj)\n  21:->     elif isinstance(obj, ABCGeneric):\n  22:           return obj._constructor(obj._data.isna(func=_isna_old))\n  23:       elif isinstance(obj, list):\n  24:           return _isna_ndarraylike_old(np.asarray(obj, dtype=object))",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Name",
+          "id": "isinstance",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [
+          {
+            "_type": "Name",
+            "id": "obj",
+            "ctx": {
+              "_type": "Load"
+            }
+          },
+          {
+            "_type": "Name",
+            "id": "ABCGeneric",
+            "ctx": {
+              "_type": "Load"
+            }
+          }
+        ],
+        "keywords": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -24.0
+    },
+    {
+      "line": 22,
+      "line_absolute": 181,
+      "node_id": 65,
+      "node_id_local": 17,
+      "type": "Call",
+      "code": "obj._constructor(obj._data.isna(func=_isna_old))",
+      "distance_to_buggy": 0,
+      "context": "  19:       elif isinstance(obj, (ABCSeries, np.ndarray, ABCIndexClass)):\n  20:           return _isna_ndarraylike_old(obj)\n  21:       elif isinstance(obj, ABCGeneric):\n  22:->         return obj._constructor(obj._data.isna(func=_isna_old))\n  23:       elif isinstance(obj, list):\n  24:           return _isna_ndarraylike_old(np.asarray(obj, dtype=object))\n  25:       elif hasattr(obj, '__array__'):",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Attribute",
+          "value": {
+            "_type": "Name"
+          },
+          "attr": "_constructor",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [
+          {
+            "_type": "Call",
+            "func": {
+              "_type": "Attribute"
+            },
+            "args": [],
+            "keywords": [
+              {
+                "_type": "keyword"
+              }
+            ]
+          }
+        ],
+        "keywords": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -24.0
+    },
+    {
+      "line": 22,
+      "line_absolute": 181,
+      "node_id": 79,
+      "node_id_local": 18,
+      "type": "Call",
+      "code": "obj._data.isna(func=_isna_old)",
+      "distance_to_buggy": 0,
+      "context": "  19:       elif isinstance(obj, (ABCSeries, np.ndarray, ABCIndexClass)):\n  20:           return _isna_ndarraylike_old(obj)\n  21:       elif isinstance(obj, ABCGeneric):\n  22:->         return obj._constructor(obj._data.isna(func=_isna_old))\n  23:       elif isinstance(obj, list):\n  24:           return _isna_ndarraylike_old(np.asarray(obj, dtype=object))\n  25:       elif hasattr(obj, '__array__'):",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Attribute",
+          "value": {
+            "_type": "Attribute"
+          },
+          "attr": "isna",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [],
+        "keywords": [
+          {
+            "_type": "keyword",
+            "arg": "func",
+            "value": {
+              "_type": "Name"
+            }
+          }
+        ]
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -24.0
+    },
+    {
+      "line": 18,
+      "line_absolute": 177,
+      "node_id": 25,
+      "node_id_local": 9,
+      "type": "Return",
+      "code": "return False",
+      "distance_to_buggy": 0,
+      "context": "  15:       elif isinstance(obj, ABCMultiIndex):\n  16:           raise NotImplementedError('isna is not defined for MultiIndex')\n  17:       elif isinstance(obj, type):\n  18:->         return False\n  19:       elif isinstance(obj, (ABCSeries, np.ndarray, ABCIndexClass)):\n  20:           return _isna_ndarraylike_old(obj)\n  21:       elif isinstance(obj, ABCGeneric):",
+      "ast_subtree_json": {
+        "_type": "Return",
+        "value": {
+          "_type": "Constant",
+          "value": false,
+          "kind": null
+        }
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -22.0
+    },
+    {
+      "line": 19,
+      "line_absolute": 178,
+      "node_id": 26,
+      "node_id_local": 10,
+      "type": "If",
+      "code": "if isinstance(obj, (ABCSeries, np.ndarray, ABCIndexClass)):\n    return _isna_ndarraylike_old(obj)\nelif isinstance(obj, ABCGeneric):\n    return obj._constructor(obj._data.isna(func=_isna_old))\nelif isinstance(obj, list):\n    return _isna_ndarraylike_old(np.asarray(obj, dtype=object))\nelif hasattr(obj, '__array__'):\n    return _isna_ndarraylike_old(np.asarray(obj))\nelse:\n    return obj is None",
+      "distance_to_buggy": 0,
+      "context": "  16:           raise NotImplementedError('isna is not defined for MultiIndex')\n  17:       elif isinstance(obj, type):\n  18:           return False\n  19:->     elif isinstance(obj, (ABCSeries, np.ndarray, ABCIndexClass)):\n  20:           return _isna_ndarraylike_old(obj)\n  21:       elif isinstance(obj, ABCGeneric):\n  22:           return obj._constructor(obj._data.isna(func=_isna_old))",
+      "ast_subtree_json": {
+        "_type": "If",
+        "test": {
+          "_type": "Call",
+          "func": {
+            "_type": "Name"
+          },
+          "args": [
+            {
+              "_type": "Name"
+            },
+            {
+              "_type": "Tuple"
+            }
+          ],
+          "keywords": []
+        },
+        "body": [
+          {
+            "_type": "Return",
+            "value": {
+              "_type": "Call"
+            }
+          }
+        ],
+        "orelse": [
+          {
+            "_type": "If",
+            "test": {
+              "_type": "Call"
+            },
+            "body": [
+              {
+                "_type": "Return"
+              }
+            ],
+            "orelse": [
+              {
+                "_type": "If"
+              }
+            ]
+          }
+        ]
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -22.0
+    },
+    {
+      "line": 20,
+      "line_absolute": 179,
+      "node_id": 40,
+      "node_id_local": 12,
+      "type": "Return",
+      "code": "return _isna_ndarraylike_old(obj)",
+      "distance_to_buggy": 0,
+      "context": "  17:       elif isinstance(obj, type):\n  18:           return False\n  19:       elif isinstance(obj, (ABCSeries, np.ndarray, ABCIndexClass)):\n  20:->         return _isna_ndarraylike_old(obj)\n  21:       elif isinstance(obj, ABCGeneric):\n  22:           return obj._constructor(obj._data.isna(func=_isna_old))\n  23:       elif isinstance(obj, list):",
+      "ast_subtree_json": {
+        "_type": "Return",
+        "value": {
+          "_type": "Call",
+          "func": {
+            "_type": "Name"
+          },
+          "args": [
+            {
+              "_type": "Name"
+            }
+          ],
+          "keywords": []
+        }
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -22.0
+    },
+    {
+      "line": 21,
+      "line_absolute": 180,
+      "node_id": 41,
+      "node_id_local": 14,
+      "type": "If",
+      "code": "if isinstance(obj, ABCGeneric):\n    return obj._constructor(obj._data.isna(func=_isna_old))\nelif isinstance(obj, list):\n    return _isna_ndarraylike_old(np.asarray(obj, dtype=object))\nelif hasattr(obj, '__array__'):\n    return _isna_ndarraylike_old(np.asarray(obj))\nelse:\n    return obj is None",
+      "distance_to_buggy": 0,
+      "context": "  18:           return False\n  19:       elif isinstance(obj, (ABCSeries, np.ndarray, ABCIndexClass)):\n  20:           return _isna_ndarraylike_old(obj)\n  21:->     elif isinstance(obj, ABCGeneric):\n  22:           return obj._constructor(obj._data.isna(func=_isna_old))\n  23:       elif isinstance(obj, list):\n  24:           return _isna_ndarraylike_old(np.asarray(obj, dtype=object))",
+      "ast_subtree_json": {
+        "_type": "If",
+        "test": {
+          "_type": "Call",
+          "func": {
+            "_type": "Name"
+          },
+          "args": [
+            {
+              "_type": "Name"
+            },
+            {
+              "_type": "Name"
+            }
+          ],
+          "keywords": []
+        },
+        "body": [
+          {
+            "_type": "Return",
+            "value": {
+              "_type": "Call"
+            }
+          }
+        ],
+        "orelse": [
+          {
+            "_type": "If",
+            "test": {
+              "_type": "Call"
+            },
+            "body": [
+              {
+                "_type": "Return"
+              }
+            ],
+            "orelse": [
+              {
+                "_type": "If"
+              }
+            ]
+          }
+        ]
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -22.0
+    },
+    {
+      "line": 22,
+      "line_absolute": 181,
+      "node_id": 52,
+      "node_id_local": 16,
+      "type": "Return",
+      "code": "return obj._constructor(obj._data.isna(func=_isna_old))",
+      "distance_to_buggy": 0,
+      "context": "  19:       elif isinstance(obj, (ABCSeries, np.ndarray, ABCIndexClass)):\n  20:           return _isna_ndarraylike_old(obj)\n  21:       elif isinstance(obj, ABCGeneric):\n  22:->         return obj._constructor(obj._data.isna(func=_isna_old))\n  23:       elif isinstance(obj, list):\n  24:           return _isna_ndarraylike_old(np.asarray(obj, dtype=object))\n  25:       elif hasattr(obj, '__array__'):",
+      "ast_subtree_json": {
+        "_type": "Return",
+        "value": {
+          "_type": "Call",
+          "func": {
+            "_type": "Attribute"
+          },
+          "args": [
+            {
+              "_type": "Call"
+            }
+          ],
+          "keywords": []
+        }
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -22.0
+    }
+  ]
+}

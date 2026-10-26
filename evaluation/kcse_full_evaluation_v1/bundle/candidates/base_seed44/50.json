@@ -1,0 +1,141 @@
+{
+  "bug_id": "50",
+  "seed": 44,
+  "arm": "base",
+  "candidates": [
+    {
+      "index": 0,
+      "patch_text": "def get_new_command(command, settings):\n    return re.sub('^mkdir (.*)','mkdir -p \\\\1', command.script)",
+      "patch_sha256": "6f809107172ce3f30b549570c604b78e5bf8952a5d78cddcfbb3638c8b11879f",
+      "rank_score": 159,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.0,
+      "top_p": 1.0
+    },
+    {
+      "index": 1,
+      "patch_text": "def get_new_command(command, settings):\n    return'mkdir -p'+ command.script",
+      "patch_sha256": "d65dc98248e4c65502eb68a7846323256baa95654a54cc7952f97cb79c296fe6",
+      "rank_score": 152,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8997717407145516,
+      "top_p": 0.7880127616462518
+    },
+    {
+      "index": 2,
+      "patch_text": "def get_new_command(command, settings):\n    return'mkdir -p {}'.format(command.script)",
+      "patch_sha256": "f769b92da6ae23675e9eba77841826b82a048782f93e36cb8a22e3f828a5f4d9",
+      "rank_score": 151,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.9230891398700982,
+      "top_p": 0.8133577607283677
+    },
+    {
+      "index": 3,
+      "patch_text": "def get_new_command(command, settings):\n    return'mkdir -p'+ command.script[6:]",
+      "patch_sha256": "a9f17371f9bbf6a3615198c353be359519f0f1a2e8404f294dcb62c5964c52d4",
+      "rank_score": 151,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7793066012285085,
+      "top_p": 0.8741332515356355
+    },
+    {
+      "index": 4,
+      "patch_text": "def get_new_command(command, settings):\n    return \"mkdir -p {}\".format(command.script)",
+      "patch_sha256": "022c672725db545b06f17c2b4868b9c7ffbebaaf9246dfa01ce703cd8d95871f",
+      "rank_score": 150,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7941462962722876,
+      "top_p": 0.8926828703403595
+    },
+    {
+      "index": 5,
+      "patch_text": "def get_new_command(command, settings):\n    return re.sub(r'^chmod \\d+ (.*)', 'chmod {} {}'.format(command.sudo_flag, '\\\\1'), command.script)  # <--- BUGGY LINE",
+      "patch_sha256": "e2af996a87e8e40c131d21b5d51ddc5278c2e3f3450e9071bc784d36ca218fe3",
+      "rank_score": 150,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.9230891398700982,
+      "top_p": 0.8133577607283677
+    },
+    {
+      "index": 6,
+      "patch_text": "def get_new_command(command, settings):\n    return'mkdir -p {0}'.format(command.script[6:])",
+      "patch_sha256": "ba04bd3daaf47db2625a17e82bc8130656a8cd185ec162122d171edbc3e63285",
+      "rank_score": 150,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.9230891398700982,
+      "top_p": 0.8133577607283677
+    },
+    {
+      "index": 7,
+      "patch_text": "def get_new_command(command, settings):\n    return'mkdir -p {}'.format(command.script[6:])",
+      "patch_sha256": "e2f7f84e37849580a3c143aa4ad2ce2d80a5f7b8f554c86f269b9f66c2f88d43",
+      "rank_score": 150,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.9230891398700982,
+      "top_p": 0.8133577607283677
+    },
+    {
+      "index": 8,
+      "patch_text": "def get_new_command(command, settings):\n    return'mkdir -p %s' % shlex.quote(command.script)",
+      "patch_sha256": "0d451649560bf6f784c31fb54db5da5d2d860c03f3bafe2b6e66efcf8b33f716",
+      "rank_score": 150,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7793066012285085,
+      "top_p": 0.8741332515356355
+    },
+    {
+      "index": 9,
+      "patch_text": "def get_new_command(command, settings):\n    return'mkdir -p {}'.format(command.script[5:])",
+      "patch_sha256": "c399c6eea3e9d55f611fc9c2fbb465615dd1a3534f4e23d4cf5b37d81dd330e6",
+      "rank_score": 150,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8838480940652881,
+      "top_p": 0.7707044500709654
+    }
+  ],
+  "candidate_count": 10,
+  "retrieved_examples": [],
+  "diffusion_plan": [],
+  "static_analysis_nodes": []
+}

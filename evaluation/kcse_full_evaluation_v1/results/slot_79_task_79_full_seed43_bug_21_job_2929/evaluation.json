@@ -1,0 +1,144 @@
+{
+  "21": {
+    "status": "Success",
+    "nucleus_sampling_flags": [
+      "Fail"
+    ],
+    "test_evidence": [
+      {
+        "target_file_before_test_sha256": "961a35bdef9ee46864e7789ace2a3563ce6eea7d83dda7ca7f4624f56a5e98b3",
+        "bytecode_removed_before_test": [],
+        "command": [
+          "bugsinpy-test"
+        ],
+        "cwd": "/output/workspaces/ws_21_10_jvlrw_va/youtube-dl_36/youtube-dl",
+        "stdout": "python -m unittest -q test.test_utils.TestUtil.test_js_to_json_realworld\nRUN EVERY COMMAND\n0\n\n\n/output/workspaces/ws_21_10_jvlrw_va/youtube-dl_36/youtube-dl/youtube_dl/extractor/douyutv.py:104: SyntaxWarning: \"is not\" with a literal. Did you mean \"!=\"?\n  if error_code is not 0:\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stderr": "",
+        "returncode": 0,
+        "timed_out": false,
+        "flag": "Plausible",
+        "import_root": "/output/workspaces/ws_21_10_jvlrw_va/youtube-dl_36/youtube-dl",
+        "pythonpath": "/output/workspaces/ws_21_10_jvlrw_va/youtube-dl_36/youtube-dl",
+        "raw_test_flag": "Plausible",
+        "target_file_after_test_sha256": "961a35bdef9ee46864e7789ace2a3563ce6eea7d83dda7ca7f4624f56a5e98b3",
+        "test_preserved_target_file": true,
+        "target_file_sha256": "961a35bdef9ee46864e7789ace2a3563ce6eea7d83dda7ca7f4624f56a5e98b3",
+        "stage": "fixed_control",
+        "bug_id": "21",
+        "candidate_index": null,
+        "patch_sha256": null
+      },
+      {
+        "target_file_before_test_sha256": "382761e0ac8e0f383bc90dbb9553087fb3db561b3b4fe9804cc688cca67abe9b",
+        "bytecode_removed_before_test": [],
+        "command": [
+          "bugsinpy-test"
+        ],
+        "cwd": "/output/workspaces/ws_21_10_jvlrw_va/youtube-dl_36/youtube-dl",
+        "stdout": "python -m unittest -q test.test_utils.TestUtil.test_js_to_json_realworld\nRUN EVERY COMMAND\n0\n\n\n/output/workspaces/ws_21_10_jvlrw_va/youtube-dl_36/youtube-dl/youtube_dl/extractor/douyutv.py:104: SyntaxWarning: \"is not\" with a literal. Did you mean \"!=\"?\n  if error_code is not 0:\n======================================================================\nFAIL: test_js_to_json_realworld (test.test_utils.TestUtil)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/output/workspaces/ws_21_10_jvlrw_va/youtube-dl_36/youtube-dl/test/test_utils.py\", line 644, in test_js_to_json_realworld\n    self.assertEqual(js_to_json(inp), '''{\"foo\":101}''')\nAssertionError: '{\"foo\":11}' != '{\"foo\":101}'\n- {\"foo\":11}\n+ {\"foo\":101}\n?         +\n\n\n----------------------------------------------------------------------\nRan 1 test in 0.001s\n\nFAILED (failures=1)\n",
+        "stderr": "",
+        "returncode": 0,
+        "timed_out": false,
+        "flag": "Fail",
+        "import_root": "/output/workspaces/ws_21_10_jvlrw_va/youtube-dl_36/youtube-dl",
+        "pythonpath": "/output/workspaces/ws_21_10_jvlrw_va/youtube-dl_36/youtube-dl",
+        "raw_test_flag": "Fail",
+        "target_file_after_test_sha256": "382761e0ac8e0f383bc90dbb9553087fb3db561b3b4fe9804cc688cca67abe9b",
+        "test_preserved_target_file": true,
+        "candidate_input_sha256": "d97f9bf998a1346407f9aa5faaeddfe3dbc9f8409951eb4551719cd98d1ccf7c",
+        "target_file_before_sha256": "961a35bdef9ee46864e7789ace2a3563ce6eea7d83dda7ca7f4624f56a5e98b3",
+        "executed_function_sha256": "e4d43d4a518b759e181b1087931f6fa987ad219c51a77a2e17b46cba20a7611e",
+        "target_file_during_test_sha256": "382761e0ac8e0f383bc90dbb9553087fb3db561b3b4fe9804cc688cca67abe9b",
+        "target_file_after_restore_sha256": "961a35bdef9ee46864e7789ace2a3563ce6eea7d83dda7ca7f4624f56a5e98b3",
+        "restore_integrity": true,
+        "restore_returncode": 0,
+        "restore_exception": null,
+        "bytecode_removed_after_restore": [],
+        "cache_cleanup_exception": null,
+        "stage": "buggy_control",
+        "bug_id": "21",
+        "candidate_index": null,
+        "patch_sha256": "d97f9bf998a1346407f9aa5faaeddfe3dbc9f8409951eb4551719cd98d1ccf7c"
+      },
+      {
+        "target_file_before_test_sha256": "961a35bdef9ee46864e7789ace2a3563ce6eea7d83dda7ca7f4624f56a5e98b3",
+        "bytecode_removed_before_test": [],
+        "command": [
+          "bugsinpy-test"
+        ],
+        "cwd": "/output/workspaces/ws_21_10_jvlrw_va/youtube-dl_36/youtube-dl",
+        "stdout": "python -m unittest -q test.test_utils.TestUtil.test_js_to_json_realworld\nRUN EVERY COMMAND\n0\n\n\n/output/workspaces/ws_21_10_jvlrw_va/youtube-dl_36/youtube-dl/youtube_dl/extractor/douyutv.py:104: SyntaxWarning: \"is not\" with a literal. Did you mean \"!=\"?\n  if error_code is not 0:\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+        "stderr": "",
+        "returncode": 0,
+        "timed_out": false,
+        "flag": "Plausible",
+        "import_root": "/output/workspaces/ws_21_10_jvlrw_va/youtube-dl_36/youtube-dl",
+        "pythonpath": "/output/workspaces/ws_21_10_jvlrw_va/youtube-dl_36/youtube-dl",
+        "raw_test_flag": "Plausible",
+        "target_file_after_test_sha256": "961a35bdef9ee46864e7789ace2a3563ce6eea7d83dda7ca7f4624f56a5e98b3",
+        "test_preserved_target_file": true,
+        "target_file_sha256": "961a35bdef9ee46864e7789ace2a3563ce6eea7d83dda7ca7f4624f56a5e98b3",
+        "matches_initial_fixed_file": true,
+        "stage": "restored_fixed_control",
+        "bug_id": "21",
+        "candidate_index": null,
+        "patch_sha256": null
+      },
+      {
+        "target_file_before_test_sha256": "31f28ba0b7785a9527640a6be1da216b418d1bc988189419c7694599d3361d47",
+        "bytecode_removed_before_test": [],
+        "command": [
+          "bugsinpy-test"
+        ],
+        "cwd": "/output/workspaces/ws_21_10_jvlrw_va/youtube-dl_36/youtube-dl",
+        "stdout": "python -m unittest -q test.test_utils.TestUtil.test_js_to_json_realworld\nRUN EVERY COMMAND\n0\n\n\n/output/workspaces/ws_21_10_jvlrw_va/youtube-dl_36/youtube-dl/youtube_dl/extractor/douyutv.py:104: SyntaxWarning: \"is not\" with a literal. Did you mean \"!=\"?\n  if error_code is not 0:\n======================================================================\nERROR: test_js_to_json_realworld (test.test_utils.TestUtil)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/output/workspaces/ws_21_10_jvlrw_va/youtube-dl_36/youtube-dl/test/test_utils.py\", line 615, in test_js_to_json_realworld\n    self.assertEqual(js_to_json(inp), '''{\n  File \"/output/workspaces/ws_21_10_jvlrw_va/youtube-dl_36/youtube-dl/youtube_dl/utils.py\", line 1956, in js_to_json\n    return re.sub('(?sx)\\n        \"(?:[^\"\\\\\\\\]*(?:\\\\\\\\\\\\\\\\|\\\\\\\\[\\'\"nurtbfx/\\\\n]))*[^\"\\\\\\\\]*\"|\\n        \\'(?:[^\\'\\\\\\\\]*(?:\\\\\\\\\\\\\\\\|\\\\\\\\[\\'\"nurtbfx/\\\\n]))*[^\\'\\\\\\\\]*\\'|\\n        {comment}|,(?={skip}[\\\\]}])|\\n        [a-zA-Z_][.a-zA-Z_0-9]*|\\n        \\\\b(?:0[xX][0-9a-fA-F]+|0+[0-7]+)(?:{skip}:)?|\\n        [0-9]+(?={skip}:)\\n        '.format(comment=COMMENT_RE, skip=SKIP_RE), fix_kv, code)\nNameError: name 'COMMENT_RE' is not defined\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (errors=1)\n",
+        "stderr": "",
+        "returncode": 0,
+        "timed_out": false,
+        "flag": "Fail",
+        "import_root": "/output/workspaces/ws_21_10_jvlrw_va/youtube-dl_36/youtube-dl",
+        "pythonpath": "/output/workspaces/ws_21_10_jvlrw_va/youtube-dl_36/youtube-dl",
+        "raw_test_flag": "Error: test_execution",
+        "target_file_after_test_sha256": "31f28ba0b7785a9527640a6be1da216b418d1bc988189419c7694599d3361d47",
+        "test_preserved_target_file": true,
+        "candidate_input_sha256": "3d65b787de413718b88fea638f22f4a9ac8e55d081a0a0c171b2209978b5ebf6",
+        "target_file_before_sha256": "961a35bdef9ee46864e7789ace2a3563ce6eea7d83dda7ca7f4624f56a5e98b3",
+        "executed_function_sha256": "513a48fde5be8491ebf56fbe9add966231a71973ee2a4401803e32c42c0a0955",
+        "target_file_during_test_sha256": "31f28ba0b7785a9527640a6be1da216b418d1bc988189419c7694599d3361d47",
+        "target_file_after_restore_sha256": "961a35bdef9ee46864e7789ace2a3563ce6eea7d83dda7ca7f4624f56a5e98b3",
+        "restore_integrity": true,
+        "raw_flag": "Error: test_execution",
+        "classification": "candidate_failure",
+        "exception": "NameError",
+        "target_file": "youtube_dl/utils.py",
+        "source_line": "return re.sub('(?sx)\\n        \"(?:[^\"\\\\\\\\]*(?:\\\\\\\\\\\\\\\\|\\\\\\\\[\\'\"nurtbfx/\\\\n]))*[^\"\\\\\\\\]*\"|\\n        \\'(?:[^\\'\\\\\\\\]*(?:\\\\\\\\\\\\\\\\|\\\\\\\\[\\'\"nurtbfx/\\\\n]))*[^\\'\\\\\\\\]*\\'|\\n        {comment}|,(?={skip}[\\\\]}])|\\n        [a-zA-Z_][.a-zA-Z_0-9]*|\\n        \\\\b(?:0[xX][0-9a-fA-F]+|0+[0-7]+)(?:{skip}:)?|\\n        [0-9]+(?={skip}:)\\n        '.format(comment=COMMENT_RE, skip=SKIP_RE), fix_kv, code)",
+        "traceback_line": 1956,
+        "fixed_control_passed": true,
+        "patch_line_range": [
+          1939,
+          1956
+        ],
+        "restore_returncode": 0,
+        "restore_exception": null,
+        "bytecode_removed_after_restore": [],
+        "cache_cleanup_exception": null,
+        "stage": "candidate",
+        "bug_id": "21",
+        "candidate_index": 0,
+        "patch_sha256": "3d65b787de413718b88fea638f22f4a9ac8e55d081a0a0c171b2209978b5ebf6"
+      }
+    ],
+    "benchmark_identity": {
+      "project": "youtube-dl",
+      "metadata_bugsinpy_id": "36",
+      "resolved_bugsinpy_id": "36",
+      "metadata_fix_commit": "47212f7bcbd59af40f91796562a6b72ba0439ac4",
+      "fixed_commit_id": "47212f7bcbd59af40f91796562a6b72ba0439ac4",
+      "buggy_commit_id": "4c93ee8d14dc081d413304d2d2eb694cb62cc71a",
+      "test_file": "test/test_utils.py",
+      "bug_info_sha256": "8439e2af4ac44138b5f77b03d4a188f74a8e8933ef1dd79feaad5b5b8f34f7a1",
+      "run_test_sha256": "4a64957e0233fa3c86df20d4d4b4f76bbb1ddb27c86aba5b3e82edc25d5a9f3c"
+    },
+    "result_file_sha256": "1f38c542588886d9e871b543a46eeac1c78a3081b4e1cec5e855e9b269eb5952"
+  }
+}

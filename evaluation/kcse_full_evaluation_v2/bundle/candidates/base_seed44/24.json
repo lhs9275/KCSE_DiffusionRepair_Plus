@@ -1,0 +1,141 @@
+{
+  "bug_id": "24",
+  "seed": 44,
+  "arm": "base",
+  "candidates": [
+    {
+      "index": 0,
+      "patch_text": "def map_obj_to_commands(updates, module, warnings):\n    commands = list()\n    want, have = updates\n\n    def needs_update(x):\n        return want.get(x) is not None and want.get(x)!= have.get(x)\n\n    def add(cmd):\n        if'management api http-commands' not in commands:\n            commands.insert(0,'management api http-commands')\n        commands.append(cmd)\n    if any((needs_update('http'), needs_update('http_port'))):\n        if want['http'] is False:\n            add('no protocol http')\n        elif have['http'] is False and want['http'] in (False, None):\n            warnings.append('protocol http is not enabled, not configuring http port value')\n        else:\n            port = want['http_port'] or 80\n            add('protocol http port %s' % port)\n    if any((needs_update('https'), needs_update('https_port'))):\n        if want['https'] is False:\n            add('no protocol https')\n        elif have['https'] is False and want['https'] in (False, None):\n            warnings.append('protocol https is not enabled, not configuring https port value')\n        else:\n            port = want['https_port'] or 443\n            add('protocol https port %s' % port)\n    if any((needs_update('local_http'), needs_update('local_http_port'))):\n        if want['local_http'] is False:\n            add('no protocol http localhost')\n        elif have['local_http'] is False and want['local_http'] in (False, None):\n            warnings.append('protocol local_http is not enabled, not configuring local_http port value')\n        else:\n            port = want['local_http_port'] or 8080\n            add('protocol http localhost port %s' % port)\n    if any((needs_update('socket'), needs_update('socket'))):\n        if want['socket'] is False:\n            add('no protocol unix-socket')\n        else:\n            add('protocol unix-socket')\n    if needs_update('state') and needs_update('vrf'):\n        if want['state'] =='stopped':\n            add('shutdown')\n        elif want['state'] =='started':\n            add('no shutdown')\n    if needs_update('vrf'):\n        add('vrf %s' % want['vrf'])\n        if want['state'] =='stopped':\n            add('shutdown')\n        elif want['state'] =='started':\n            add('no shutdown')\n    return commands",
+      "patch_sha256": "c4f314bae6cbb09c704852808edad98c7cf27bd63f5a26703b1c73f5a662959f",
+      "rank_score": 233,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.0,
+      "top_p": 1.0
+    },
+    {
+      "index": 1,
+      "patch_text": "def map_obj_to_commands(updates, module, warnings):\n    commands = list()\n    want, have = updates\n\n    def needs_update(x):\n        return want.get(x) is not None and want.get(x)!= have.get(x)\n\n    def add(cmd):\n        if'management api http-commands' not in commands:\n            commands.insert(0,'management api http-commands')\n        commands.append(cmd)\n    if any((needs_update('http'), needs_update('http_port'))):\n        if want['http'] is False:\n            add('no protocol http')\n        elif have['http'] is False and want['http'] in (False, None):\n            warnings.append('protocol http is not enabled, not configuring http port value')\n        else:\n            port = want['http_port'] or 80\n            add('protocol http port %s' % port)\n    if any((needs_update('https'), needs_update('https_port'))):\n        if want['https'] is False:\n            add('no protocol https')\n        elif have['https'] is False and want['https'] in (False, None):\n            warnings.append('protocol https is not enabled, not configuring https port value')\n        else:\n            port = want['https_port'] or 443\n            add('protocol https port %s' % port)\n    if any((needs_update('local_http'), needs_update('local_http_port'))):\n        if want['local_http'] is False:\n            add('no protocol http localhost')\n        elif have['local_http'] is False and want['local_http'] in (False, None):\n            warnings.append('protocol local_http is not enabled, not configuring local_http port value')\n        else:\n            port = want['local_http_port'] or 8080\n            add('protocol http localhost port %s' % port)\n    if any((needs_update('socket'), needs_update('socket'))):\n        if want['socket'] is False:\n            add('no protocol unix-socket')\n        else:\n            add('protocol unix-socket')\n    if needs_update('state'):\n        if want['state'] =='stopped':\n            add('shutdown')\n        elif want['state'] =='started':\n            add('no shutdown')\n    if needs_update('vrf'):\n        add('vrf %s' % want['vrf'])\n        if want['state'] =='stopped':\n            add('shutdown')\n        elif want['state'] =='started':\n            add('no shutdown')\n    return commands",
+      "patch_sha256": "45d553ad8d0543194feb84a65bad94dec7df8280c83ec865684595b5fec75cda",
+      "rank_score": 233,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7941462962722876,
+      "top_p": 0.8926828703403595
+    },
+    {
+      "index": 2,
+      "patch_text": "def map_obj_to_commands(updates, module, warnings):\n    commands = list()\n    want, have = updates\n\n    def needs_update(x):\n        return want.get(x) is not None and want.get(x)!= have.get(x)\n\n    def add(cmd):\n        if'management api http-commands' not in commands:\n            commands.insert(0,'management api http-commands')\n        commands.append(cmd)\n    if any((needs_update('http'), needs_update('http_port'))):\n        if want['http'] is False:\n            add('no protocol http')\n        elif have['http'] is False and want['http'] in (False, None):\n            warnings.append('protocol http is not enabled, not configuring http port value')\n        else:\n            port = want['http_port'] or 80\n            add('protocol http port %s' % port)\n    if any((needs_update('https'), needs_update('https_port'))):\n        if want['https'] is False:\n            add('no protocol https')\n        elif have['https'] is False and want['https'] in (False, None):\n            warnings.append('protocol https is not enabled, not configuring https port value')\n        else:\n            port = want['https_port'] or 443\n            add('protocol https port %s' % port)\n    if any((needs_update('local_http'), needs_update('local_http_port'))):\n        if want['local_http'] is False:\n            add('no protocol http localhost')\n        elif have['local_http'] is False and want['local_http'] in (False, None):\n            warnings.append('protocol local_http is not enabled, not configuring local_http port value')\n        else:\n            port = want['local_http_port'] or 8080\n            add('protocol http localhost port %s' % port)\n    if any((needs_update('socket'), needs_update('socket'))):\n        if want['socket'] is False:\n            add('no protocol unix-socket')\n        else:\n            add('protocol unix-socket')\n    if needs_update('vrf') and not needs_update('state'):  # <--- BUGGY LINE\n        if want['state'] =='stopped':\n            add('shutdown')\n        elif want['state'] =='started':\n            add('no shutdown')\n    if needs_update('vrf'):\n        add('vrf %s' % want['vrf'])\n        if want['state'] =='stopped':\n            add('shutdown')\n        elif want['state'] =='started':\n            add('no shutdown')\n    return commands",
+      "patch_sha256": "1bd98c02ef848c79891cf226b2ac4d588aace2a7e9fcbe885244da8057342614",
+      "rank_score": 233,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.9560266782037877,
+      "top_p": 0.8491594328302041
+    },
+    {
+      "index": 3,
+      "patch_text": "def map_obj_to_commands(updates, module, warnings):\n    commands = list()\n    want, have = updates\n\n    def needs_update(x):\n        return want.get(x) is not None and want.get(x)!= have.get(x)\n\n    def add(cmd):\n        if'management api http-commands' not in commands:\n            commands.insert(0,'management api http-commands')\n        commands.append(cmd)\n    if any((needs_update('http'), needs_update('http_port'))):\n        if want['http'] is False:\n            add('no protocol http')\n        elif have['http'] is False and want['http'] in (False, None):\n            warnings.append('protocol http is not enabled, not configuring http port value')\n        else:\n            port = want['http_port'] or 80\n            add('protocol http port %s' % port)\n    if any((needs_update('https'), needs_update('https_port'))):\n        if want['https'] is False:\n            add('no protocol https')\n        elif have['https'] is False and want['https'] in (False, None):\n            warnings.append('protocol https is not enabled, not configuring https port value')\n        else:\n            port = want['https_port'] or 443\n            add('protocol https port %s' % port)\n    if any((needs_update('local_http'), needs_update('local_http_port'))):\n        if want['local_http'] is False:\n            add('no protocol http localhost')\n        elif have['local_http'] is False and want['local_http'] in (False, None):\n            warnings.append('protocol local_http is not enabled, not configuring local_http port value')\n        else:\n            port = want['local_http_port'] or 8080\n            add('protocol http localhost port %s' % port)\n    if any((needs_update('socket'), needs_update('socket'))):\n        if want['socket'] is False:\n            add('no protocol unix-socket')\n        else:\n            add('protocol unix-socket')\n    if needs_update('state') and needs_update('vrf'):\n        if want['state'] =='stopped':\n            add('shutdown')\n        elif want['state'] =='started':\n            add('no shutdown')\n    if needs_update('vrf'):\n        add('vrf %s' % want['vrf'])\n        if want['state'] =='stopped':\n            add('shutdown')\n        elif want['state'] =='started':\n            add('no shutdown')\n    return commands/bug_fix_suggestions/ansible/lib/ansible/modules/network/nxos/nxos_acl_interfaces.py\n#!/usr/bin/python\n#\n# This file is part of Ansible\n#\n# Ansible is free software: you can redistribute it and/or modify\n# it under the terms of the GNU General Public License as published",
+      "patch_sha256": "221823763ba1613135bd0fb793ee263bec7e949a353bfdefeaaeb623ceb3d7e3",
+      "rank_score": 232,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8997717407145516,
+      "top_p": 0.7880127616462518
+    },
+    {
+      "index": 4,
+      "patch_text": "def map_obj_to_commands(updates, module, warnings):\n    commands = list()\n    want, have = updates\n\n    def needs_update(x):\n        return want.get(x) is not None and want.get(x)!= have.get(x)\n\n    def add(cmd):\n        if'management api http-commands' not in commands:\n            commands.insert(0,'management api http-commands')\n        commands.append(cmd)\n    if any((needs_update('http'), needs_update('http_port'))):\n        if want['http'] is False:\n            add('no protocol http')\n        elif have['http'] is False and want['http'] in (False, None):\n            warnings.append('protocol http is not enabled, not configuring http port value')\n        else:\n            port = want['http_port'] or 80\n            add('protocol http port %s' % port)\n    if any((needs_update('https'), needs_update('https_port'))):\n        if want['https'] is False:\n            add('no protocol https')\n        elif have['https'] is False and want['https'] in (False, None):\n            warnings.append('protocol https is not enabled, not configuring https port value')\n        else:\n            port = want['https_port'] or 443\n            add('protocol https port %s' % port)\n    if any((needs_update('local_http'), needs_update('local_http_port'))):\n        if want['local_http'] is False:\n            add('no protocol http localhost')\n        elif have['local_http'] is False and want['local_http'] in (False, None):\n            warnings.append('protocol local_http is not enabled, not configuring local_http port value')\n        else:\n            port = want['local_http_port'] or 8080\n            add('protocol http localhost port %s' % port)\n    if any((needs_update('socket'), needs_update('socket'))):\n        if want['socket'] is False:\n            add('no protocol unix-socket')\n        else:\n            add('protocol unix-socket')\n    if any((needs_update('state'), needs_update('vrf'))):\n        if want['state'] =='stopped':\n            add('shutdown')\n        elif want['state'] =='started':\n            add('no shutdown')\n    if needs_update('vrf'):\n        add('vrf %s' % want['vrf'])\n    return commands",
+      "patch_sha256": "82578deeec7f3b17af7dc338ae2fa2e0eb1a2d167d0f8bfb7b7c77864c0f843a",
+      "rank_score": 232,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8008776453441713,
+      "top_p": 0.9010970566802141
+    },
+    {
+      "index": 5,
+      "patch_text": "def map_obj_to_commands(updates, module, warnings):\n    commands = list()\n    want, have = updates\n\n    def needs_update(x):\n        return want.get(x) is not None and want.get(x)!= have.get(x)\n\n    def add(cmd):\n        if'management api http-commands' not in commands:\n            commands.insert(0,'management api http-commands')\n        commands.append(cmd)\n    if any((needs_update('http'), needs_update('http_port'))):\n        if want['http'] is False:\n            add('no protocol http')\n        elif have['http'] is False and want['http'] in (False, None):\n            warnings.append('protocol http is not enabled, not configuring http port value')\n        else:\n            port = want['http_port'] or 80\n            add('protocol http port %s' % port)\n    if any((needs_update('https'), needs_update('https_port'))):\n        if want['https'] is False:\n            add('no protocol https')\n        elif have['https'] is False and want['https'] in (False, None):\n            warnings.append('protocol https is not enabled, not configuring https port value')\n        else:\n            port = want['https_port'] or 443\n            add('protocol https port %s' % port)\n    if any((needs_update('local_http'), needs_update('local_http_port'))):\n        if want['local_http'] is False:\n            add('no protocol http localhost')\n        elif have['local_http'] is False and want['local_http'] in (False, None):\n            warnings.append('protocol local_http is not enabled, not configuring local_http port value')\n        else:\n            port = want['local_http_port'] or 8080\n            add('protocol http localhost port %s' % port)\n    if any((needs_update('socket'), needs_update('socket'))):\n        if want['socket'] is False:\n            add('no protocol unix-socket')\n        else:\n            add('protocol unix-socket')\n    if needs_update('vrf'):\n        add('vrf %s' % want['vrf'])\n        if want['state'] =='stopped':\n            add('shutdown')\n        elif want['state'] =='started':\n            add('no shutdown')\n    return commands",
+      "patch_sha256": "0b0a051fb3f10f2a2fd23b231803c9b9bad24eb6dfa08698513bf6e91835c4af",
+      "rank_score": 231,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7941462962722876,
+      "top_p": 0.8926828703403595
+    },
+    {
+      "index": 6,
+      "patch_text": "def map_obj_to_commands(updates, module, warnings):\n    commands = list()\n    want, have = updates\n\n    def needs_update(x):\n        return want.get(x) is not None and want.get(x)!= have.get(x)\n\n    def add(cmd):\n        if'management api http-commands' not in commands:\n            commands.insert(0,'management api http-commands')\n        commands.append(cmd)\n    if any((needs_update('http'), needs_update('http_port'))):\n        if want['http'] is False:\n            add('no protocol http')\n        elif have['http'] is False and want['http'] in (False, None):\n            warnings.append('protocol http is not enabled, not configuring http port value')\n        else:\n            port = want['http_port'] or 80\n            add('protocol http port %s' % port)\n    if any((needs_update('https'), needs_update('https_port'))):\n        if want['https'] is False:\n            add('no protocol https')\n        elif have['https'] is False and want['https'] in (False, None):\n            warnings.append('protocol https is not enabled, not configuring https port value')\n        else:\n            port = want['https_port'] or 443\n            add('protocol https port %s' % port)\n    if any((needs_update('local_http'), needs_update('local_http_port'))):\n        if want['local_http'] is False:\n            add('no protocol http localhost')\n        elif have['local_http'] is False and want['local_http'] in (False, None):\n            warnings.append('protocol local_http is not enabled, not configuring local_http port value')\n        else:\n            port = want['local_http_port'] or 8080\n            add('protocol http localhost port %s' % port)\n    if any((needs_update('socket'), needs_update('socket'))):\n        if want['socket'] is False:\n            add('no protocol unix-socket')\n        else:\n            add('protocol unix-socket')\n    if needs_update('state') and not needs_update('state') and need_update('vrf'):\n        if want['state'] =='stopped':\n            add('shutdown')\n        elif want['state'] =='started':\n            add('no shutdown')\n    if needs_update('vrf'):\n        add('vrf %s' % want['vrf'])\n        if want['state'] =='stopped':\n            add('shutdown')\n        elif want['state'] =='started':\n            add('no shutdown')\n    return commands\n\n\n# ---\n\n##correct\ndef map_obj_to_commands(updates, module, warnings):\n    commands = list()\n    want, have = updates\n\n    def needs_update(x):\n        return want.get(x) is not None and want.get(x)!= have.get(x)",
+      "patch_sha256": "83d143db43c9a961d9faa55d73a0e5bea12f23d9789b421d92961b4fd98b350f",
+      "rank_score": 219,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8008776453441713,
+      "top_p": 0.9010970566802141
+    },
+    {
+      "index": 7,
+      "patch_text": "def map_obj_to_commands(updates, module, warnings):\n    commands = list()\n    want, have = updates\n\n    def needs_update(x):\n        return want.get(x) is not None and want.get(x)!= have.get(x)\n\n    def add(cmd):\n        if'management api http-commands' not in commands:\n            commands.insert(0,'management api http-commands')\n        commands.append(cmd)\n    if any((needs_update('http'), needs_update('http_port'))):\n        if want['http'] is False:\n            add('no protocol http')\n        elif have['http'] is False and want['http'] in (False, None):\n            warnings.append('protocol http is not enabled, not configuring http port value')\n        else:\n            port = want['http_port'] or 80\n            add('protocol http port %s' % port)\n    if any((needs_update('https'), needs_update('https_port'))):\n        if want['https'] is False:\n            add('no protocol https')\n        elif have['https'] is False and want['https'] in (False, None):\n            warnings.append('protocol https is not enabled, not configuring https port value')\n        else:\n            port = want['https_port'] or 443\n            add('protocol https port %s' % port)\n    if any((needs_update('local_http'), needs_update('local_http_port'))):\n        if want['local_http'] is False:\n            add('no protocol http localhost')\n        elif have['local_http'] is False and want['local_http'] in (False, None):\n            warnings.append('protocol local_http is not enabled, not configuring local_http port value')\n        else:\n            port = want['local_http_port'] or 8080\n            add('protocol http localhost port %s' % port)\n    if any((needs_update('socket'), needs_update('socket'))):\n        if want['socket'] is False:\n            add('no protocol unix-socket')\n        else:\n            add('protocol unix-socket')\n    if needs_update('state') and not needs_update('vrf'):\n        if want['state'] =='stopped':\n            add('shutdown')\n        elif want['state'] =='started':\n            add('no shutdown')\n    if needs_update('vrf'):\n        add('vrf %s' % want['vrf'])\n        if want['state'] =='stopped':\n            add('shutdown')\n        elif want['state'] =='started':\n            add('no shutdown')\n    return commands",
+      "patch_sha256": "c4c539a8e13f609c196e105199d0551dcb193aa365055d306754e88b18db7ab0",
+      "rank_score": 203,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7941462962722876,
+      "top_p": 0.8926828703403595
+    },
+    {
+      "index": 8,
+      "patch_text": "def map_obj_to_commands(updates, module, warnings):\n    commands = list()\n    want, have = updates\n\n    def needs_update(x):\n        return want.get(x) is not None and want.get(x)!= have.get(x)\n\n    def add(cmd):\n        if'management api http-commands' not in commands:\n            commands.insert(0,'management api http-commands')\n        commands.append(cmd)\n    if any((needs_update('http'), needs_update('http_port'))):\n        if want['http'] is False:\n            add('no protocol http')\n        elif have['http'] is False and want['http'] in (False, None):\n            warnings.append('protocol http is not enabled, not configuring http port value')\n        else:\n            port = want['http_port'] or 80\n            add('protocol http port %s' % port)\n    if any((needs_update('https'), needs_update('https_port'))):\n        if want['https'] is False:\n            add('no protocol https')\n        elif have['https'] is False and want['https'] in (False, None):\n            warnings.append('protocol https is not enabled, not configuring https port value')\n        else:\n            port = want['https_port'] or 443\n            add('protocol https port %s' % port)\n    if any((needs_update('local_http'), needs_update('local_http_port'))):\n        if want['local_http'] is False:\n            add('no protocol http localhost')\n        elif have['local_http'] is False and want['local_http'] in (False, None):\n            warnings.append('protocol local_http is not enabled, not configuring local_http port value')\n        else:\n            port = want['local_http_port'] or 8080\n            add('protocol http localhost port %s' % port)\n    if any((needs_update('socket'), needs_update('socket'))):\n        if want['socket'] is False:\n            add('no protocol unix-socket')\n        else:\n            add('protocol unix-socket')\n    if needs_update('state') and needs_update('vrf'):\n        if want['state'] =='stopped':\n            add('shutdown')\n        elif want['state'] =='started':\n            add('no shutdown')\n    if needs_update('vrf'):\n        add('vrf %s' % want['vrf'])\n        if want['state'] =='stopped':\n            add('shutdown')\n        elif want['state'] =='started':\n            add('no shutdown')\n    return commands/src/scripts/run_analysis_on_bug.py\nfrom src.data import *\nfrom src.analyzer import *\nimport json\nimport sys\nimport os\n\n\nif __name__ == '__main__':\n    args = sys.argv[1:]\n    project_name = args[0]\n    bug_id = args[1]",
+      "patch_sha256": "4d238867c19cd4be9231b52009d7f318c030f2515dcd1c43bf6fc6256d6403ff",
+      "rank_score": 19,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.9230891398700982,
+      "top_p": 0.8133577607283677
+    },
+    {
+      "index": 9,
+      "patch_text": "def map_obj_to_commands(updates, module, warnings):\n    commands = list()\n    want, have = updates\n\n    def needs_update(x):\n        return want.get(x) is not None and want.get(x)!= have.get(x)\n\n    def add(cmd):\n        if'management api http-commands' not in commands:\n            commands.insert(0,'management api http-commands')\n        commands.append(cmd)\n    if any((needs_update('http'), needs_update('http_port'))):\n        if want['http'] is False:\n            add('no protocol http')\n        elif have['http'] is False and want['http'] in (False, None):\n            warnings.append('protocol http is not enabled, not configuring http port value')\n        else:\n            port = want['http_port'] or 80\n            add('protocol http port %s' % port)\n    if any((needs_update('https'), needs_update('https_port'))):\n        if want['https'] is False:\n            add('no protocol https')\n        elif have['https'] is False and want['https'] in (False, None):\n            warnings.append('protocol https is not enabled, not configuring https port value')\n        else:\n            port = want['https_port'] or 443\n            add('protocol https port %s' % port)\n    if any((needs_update('local_http'), needs_update('local_http_port'))):\n        if want['local_http'] is False:\n            add('no protocol http localhost')\n        elif have['local_http'] is False and want['local_http'] in (False, None):\n            warnings.append('protocol local_http is not enabled, not configuring local_http port value')\n        else:\n            port = want['local_http_port'] or 8080\n            add('protocol http localhost port %s' % port)\n    if any((needs_update('socket'), needs_update('socket'))):\n        if want['socket'] is False:\n            add('no protocol unix-socket')\n        else:\n            add('protocol unix-socket')\n    if needs_update('state') and needs_update('vrf'):  # <--- BUGGY LINE\n        if want['state'] =='stopped':\n            add('shutdown')\n        elif want['state'] =='started':\n            add('no shutdown')\n    if needs_update('vrf'):\n        add('vrf %s' % want['vrf'])\n        if want['state'] =='stopped':\n            add('shutdown')\n        elif want['state'] =='started':\n            add('no shutdown')\n    return commands\n\nimport os\nimport sys\nfrom pathlib import Path\n\nsys.path.append(str(Path(__file__).parent))\n\nimport pytest\nfrom pycodestyle import StyleGuide\nfrom style_checker.style_checker import StyleChecker\nfrom style_checker.style_checker_util import get_",
+      "patch_sha256": "a9d2e52be4dc50e9e5bfd16a118e4a0b6e45d0c6aa6fd055fdebdfc6314be9a9",
+      "rank_score": 19,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.505718317939468,
+      "top_p": 0.9525352268066691
+    }
+  ],
+  "candidate_count": 10,
+  "retrieved_examples": [],
+  "diffusion_plan": [],
+  "static_analysis_nodes": []
+}

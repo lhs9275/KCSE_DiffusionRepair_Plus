@@ -1,0 +1,1150 @@
+{
+  "bug_id": "3",
+  "seed": 43,
+  "arm": "full",
+  "candidates": [
+    {
+      "index": 0,
+      "patch_text": "def copy(self, cursor, f):\n    \"\"\"\n        Defines copying from s3 into redshift.\n\n        If both key-based and role-based credentials are provided, role-based will be used.\n        \"\"\"\n    logger.info('Inserting file: %s', f)\n    if self.columns:\n        colnames = ','.join([x[0] for x in self.columns])\n        colnames = '({})'.format(colnames)\n    else:\n        colnames = ''\n    cursor.execute(\"\\n         COPY {table} {colnames} from '{source}'\\n         CREDENTIALS '{creds}'\\n         {options}\\n         ;\".format(table=self.table, colnames=colnames, source=f, creds=self._credentials(), options=self.copy_options))",
+      "patch_sha256": "2eb453382cc9de94e8fe6006da94d2b74123eb0def642dcff5d16c852a910659",
+      "rank_score": 231,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.5051876220100471,
+      "top_p": 0.9515146577116289
+    },
+    {
+      "index": 1,
+      "patch_text": "def copy(self, cursor, f):\n    \"\"\"\n        Defines copying from s3 into redshift.\n\n        If both key-based and role-based credentials are provided, role-based will be used.\n        \"\"\"\n    logger.info('Inserting file: %s', f)\n    colnames = ','.join([x[0] for x in self.columns])\n    colnames = '({})'.format(colnames)\n    cursor.execute(\"\\n         COPY {table} {colnames} from '{source}'\\n         CREDENTIALS '{creds}'\\n         {options}\\n         ;\".format(table=self.table, colnames=colnames, source=f, creds=self._credentials(), options=self.copy_options))",
+      "patch_sha256": "a22d03904ec54e6d8911593e1f5ffe309fa9e912ef097c632f3dcb3d653967fb",
+      "rank_score": 230,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7704673177175924,
+      "top_p": 0.8630841471469904
+    },
+    {
+      "index": 2,
+      "patch_text": "def copy(self, cursor, f):\n    \"\"\"\n        Defines copying from s3 into redshift.\n\n        If both key-based and role-based credentials are provided, role-based will be used.\n        \"\"\"\n    logger.info('Inserting file: %s', f)\n    colnames = '({})'.format(self.columns)\n    cursor.execute(\"\\n         COPY {table} {colnames} from '{source}'\\n         CREDENTIALS '{creds}'\\n         {options}\\n         ;\".format(table=self.table, colnames=colnames, source=f, creds=self._credentials(), options=self.copy_options))",
+      "patch_sha256": "e44b0b01ed3c537b94148831f83ef7400dce6ccd25163e57f49e958039f36db3",
+      "rank_score": 229,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7956728856928922,
+      "top_p": 0.8945911071161152
+    },
+    {
+      "index": 3,
+      "patch_text": "def copy(self, cursor, f):\n    \"\"\"\n        Defines copying from s3 into redshift.\n\n        If both key-based and role-based credentials are provided, role-based will be used.\n        \"\"\"\n    logger.info('Inserting file: %s', f)\n    if len(self.columns) > 0:\n        colnames = ','.join([x[0] for x in self.columns])\n        colnames = '({})'.format(colnames)\n    cursor.execute(\"\\n         COPY {table} {colnames} from '{source}'\\n         CREDENTIALS '{creds}'\\n         {options}\\n         ;\".format(table=self.table, colnames=colnames, source=f, creds=self._credentials(), options=self.copy_options))",
+      "patch_sha256": "6029794d504908d70aa6b09b3b3b399c85e044baddebbe7f1151eea4d3a1eb03",
+      "rank_score": 226,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7704673177175924,
+      "top_p": 0.8630841471469904
+    },
+    {
+      "index": 4,
+      "patch_text": "def copy(self, cursor, f):\n    \"\"\"\n        Defines copying from s3 into redshift.\n\n        If both key-based and role-based credentials are provided, role-based will be used.\n        \"\"\"\n    logger.info('Inserting file: %s', f)\n    colnames = '({})'.format(','.join([x[0] for x in self.columns]))\n    cursor.execute(\"\\n         COPY {table} {colnames} from '{source}'\\n         CREDENTIALS '{creds}'\\n         {options}\\n         ;\".format(table=self.table, colnames=colnames, source=f, creds=self._credentials(), options=self.copy_options))",
+      "patch_sha256": "baec98282bf75251995d54b4020170e1a60f1d2ad5c691cb1ae46dc7b7e241be",
+      "rank_score": 224,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7956728856928922,
+      "top_p": 0.8945911071161152
+    },
+    {
+      "index": 5,
+      "patch_text": "def copy(self, cursor, f):\n    \"\"\"\n        Defines copying from s3 into redshift.\n\n        If both key-based and role-based credentials are provided, role-based will be used.\n        \"\"\"\n    logger.info('Inserting file: %s', f)\n    if len(self.columns) > 0:\n        colnames = ','.join([x[0] for x in self.columns])\n        colnames = '({})'.format(colnames)\n    else:\n        colnames = ''\n    cursor.execute(\"\\n         COPY {table} {colnames} from '{source}'\\n         CREDENTIALS '{creds}'\\n         {options}\\n         ;\".format(table=self.table, colnames=colnames, source=f, creds=self._credentials(), options=self.copy_options))",
+      "patch_sha256": "d223d5b3876ccab7002b82726cb3da331883886973451981bc044b28627fa095",
+      "rank_score": 213,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7704673177175924,
+      "top_p": 0.8630841471469904
+    },
+    {
+      "index": 6,
+      "patch_text": "def copy(self, cursor, f):\n    \"\"\"\n        Defines copying from s3 into redshift.\n\n        If both key-based and role-based credentials are provided, role-based will be used.\n        \"\"\"\n    logger.info('Inserting file: %s', f)\n    colnames = ','.join([x[0] for x in self.columns])\n    colnames = '({})'.format(colnames)\n    cursor.execute(\"\\n         COPY {table} {colnames} from '{source}'\\n         CREDENTIALS '{creds}'\\n         {options}\\n         ;\".format(table=self.table, colnames=colnames, source=f, creds=self._credentials(), options=self.copy_options))\n\n# Generated by roast on 2018-05-07 21:59:28.692944\n\nfrom roast.main import Roast\nfrom roast.repair import Repair\n\nimport astor\nimport ast\nimport sys\nimport json\nimport os\nimport logging\n\n# set up logging\nlogger = logging.getLogger(__name__)\nlogging.basicConfig(level=logging.DEBUG, format='%(asctime)s %(message)s')\n\n# parse command line args\nargs = sys.argv[1:]\n\n# run roast\nr = Roast(args)\nr.run()\n\n# get test results\nresults = r.results\n\n# get test results\nresults = r.results\n\n# get test results\nresults = r.results\n\n# get test results\nresults = r.results\n\n# get test results\nresults = r.results\n\n# get test results\nresults = r.results\n\n# get test results\nresults = r.results\n\n# get test results\nresults = r.results\n\n# get test results\nresults = r.results\n\n# get test results\nresults = r.results\n\n# get test results\nresults = r.results\n\n# get test results\nresults = r.results\n\n# get test results\nresults = r.results\n\n# get test results\nresults = r.results\n\n# get test results\nresults = r.results\n\n# get test results\nresults = r.results\n\n# get test results\nresults = r.results\n\n# get test results\nresults = r.results\n\n# get test results\nresults = r.results\n\n# get test results\nresults = r.results\n\n# get test results\nresults = r.results\n\n# get test results\nresults = r.results\n\n# get test results\nresults = r.results\n\n# get test results\nresults = r.results\n\n# get test results\nresults = r.results\n\n# get test results\nresults = r.results\n\n# get test results\nresults = r.results\n\n# get test results",
+      "patch_sha256": "ffb3879348a6fabc330f09d7e533dc61c480d5b74e9c56c617a3538a308603a6",
+      "rank_score": -40,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.49999693569381287,
+      "top_p": 0.9415325686419478
+    },
+    {
+      "index": 7,
+      "patch_text": "def copy(self, cursor, f):\n    \"\"\"\n        Defines copying from s3 into redshift.\n\n        If both key-based and role-based credentials are provided, role-based will be used.\n        \"\"\"\n    logger.info('Inserting file: %s', f)\n    colnames = ','.join([x[0] for x in self.columns])\n    colnames = '({})'.format(colnames)\n    cursor.execute(\"\\n         COPY {table} {colnames} from '{source}'\\n         CREDENTIALS '{creds}'\\n         {options}\\n         ;\".format(table=self.table, colnames=colnames, source=f, creds=self._credentials(), options=self.copy_options))\n\n\nimport logging\nfrom typing import Dict, Tuple\n\nfrom utils.log import get_logger\n\nlogger = get_logger(__name__)\n\n\nclass RepairPlan:\n\n    def __init__(self, repair_plan_dict: Dict[str, Tuple]):\n        self.repair_plan_dict = repair_plan_dict\n\n    @staticmethod\n    def _get_plan(edit_list: Dict[str, Tuple]):\n        return edit_list[\"edit\"]\n\n    @staticmethod\n    def _get_line_num(edit_list: Dict[str, Tuple]):\n        return edit_list[\"node\"]\n\n    @staticmethod\n    def _get_edit_type(edit_list: Dict[str, Tuple]):\n        return edit_list[\"type\"]\n\n    def get_plan(self, node: int):\n        return self.repair_plan_dict[str(node)]\n\n    def get_edit_type(self, node: int):\n        return self.repair_plan_dict[str(node)][1]\n\n    def get_line_num(self, node: int):\n        return self.repair_plan_dict[str(node)][0]\nfrom typing import List, Set, Tuple, Union\n\nfrom src.utils.helpers import get_parent_child_dict\nfrom src.utils.log import get_logger\nfrom src.utils.types import ASTNode, NodeType\n\nlogger = get_logger(__name__)\n\n\nclass ASTGraph:\n    def __init__(self, ast_nodes: List[ASTNode]):\n        self.ast_nodes = ast_nodes\n        self.parent_child_dict = get_parent_child_dict(ast_nodes)\n        self.children_of_root = set(self.parent_child_dict[self.ast_nodes[0]])\n        self.parents_of_root = set()\n        for node in self.children_of_root:\n            self.parents_of_root.add(self.ast_nodes[0])\n\n    def get_parent_nodes(self, node: ASTNode) -> Set[Union[ASTNode, NodeType]]:\n        if node.node_type in [NodeType.FUNCTION, NodeType.CLASS]:\n            return set",
+      "patch_sha256": "1c90ea59737532d95ecf4cd78f21fc8ea8168f66b8370cdbf6da60ac5f33f8f3",
+      "rank_score": -45,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7704673177175924,
+      "top_p": 0.8630841471469904
+    },
+    {
+      "index": 8,
+      "patch_text": "def copy(self, cursor, f):\n    \"\"\"\n        Defines copying from s3 into redshift.\n\n        If both key-based and role-based credentials are provided, role-based will be used.\n        \"\"\"\n    logger.info('Inserting file: %s', f)\n    if len(self.columns) > 0:\n        colnames = ','.join([x[0] for x in self.columns])\n        colnames = '({})'.format(colnames)\n    cursor.execute(\"\\n         COPY {table} {colnames} from '{source}'\\n         CREDENTIALS '{creds}'\\n         {options}\\n         ;\".format(table=self.table, colnames=colnames, source=f, creds=self._credentials(), options=self.copy_options))\n\n\n#\n# Copyright (c) Microsoft Corporation. All rights reserved.\n# Licensed under the MIT License.\n#\n\nfrom typing import List, Dict, Set\n\nfrom.repairnator_commons import RepairnatorConfig\nfrom.repairnator_commons import RepairnatorConfigEntry\nfrom.repairnator_commons import RepairnatorConfigEntryType\nfrom.repairnator_commons import RepairnatorConfigEntryValue\nfrom.repairnator_commons import RepairnatorConfiguration\nfrom.repairnator_commons import RepairnatorConfigurationEntry\nfrom.repairnator_commons import RepairnatorConfigurationEntryType\nfrom.repairnator_commons import RepairnatorConfigurationEntryValue\nfrom.repairnator_commons import RepairnatorConfigurationType\nfrom.repairnator_commons import RepairnatorConfigurationValue\n\n\nclass RepairnatorConfigEntryFactory(object):\n\n    @staticmethod\n    def create_config_entry(\n        entry_type: RepairnatorConfigEntryType,\n        value: RepairnatorConfigEntryValue\n    ) -> RepairnatorConfigEntry:\n        return RepairnatorConfigEntry(entry_type, value)\n\n\nclass RepairnatorConfigurationEntryFactory(object):\n\n    @staticmethod\n    def create_configuration_entry(\n        entry_type: RepairnatorConfigurationEntryType,\n        value: RepairnatorConfigurationEntryValue\n    ) -> RepairnatorConfigurationEntry:\n        return RepairnatorConfigurationEntry(entry_type, value)\n\n\nclass RepairnatorConfigFactory(object):\n\n    @staticmethod\n    def create_config(\n        config_entries: List[RepairnatorConfigEntry],\n        config_type: RepairnatorConfigEntryType\n    ) -> RepairnatorConfig:\n        return RepairnatorConfig(config_entries, config_type)\n\n\nclass RepairnatorConfigurationFactory(object):\n\n    @staticmethod\n    def create_configuration(\n        configuration_entries: List[RepairnatorConfigurationEntry],\n        configuration_type: RepairnatorConfigurationType\n    ) -> RepairnatorConfiguration:\n        return RepairnatorConfiguration",
+      "patch_sha256": "e224803db88221820197456240b8ab79a08e096aacd9b67ac8d6c7ec4cc598cf",
+      "rank_score": -51,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.5051876220100471,
+      "top_p": 0.9515146577116289
+    },
+    {
+      "index": 9,
+      "patch_text": "def copy(self, cursor, f):\n    \"\"\"\n        Defines copying from s3 into redshift.\n\n        If both key-based and role-based credentials are provided, role-based will be used.\n        \"\"\"\n    logger.info('Inserting file: %s', f)\n    if len(self.columns) > 0:\n        colnames = ','.join([x[0] for x in self.columns])\n        colnames = '({})'.format(colnames)\n    cursor.execute(\"\\n         COPY {table} {colnames} from '{source}'\\n         CREDENTIALS '{creds}'\\n         {options}\\n         ;\".format(table=self.table, colnames=colnames, source=f, creds=self._credentials(), options=self.copy_options))\n\nimport logging\nimport os\nimport random\nimport sys\nfrom collections import Counter\n\nimport torch\nfrom torch import nn\n\nfrom.models import TransformerLM\n\nlogging.basicConfig(\n    stream=sys.stdout,\n    format=\"%(asctime)s [%(levelname)s] %(message)s\",\n    level=logging.INFO,\n)\n\nif __name__ == \"__main__\":\n    model = TransformerLM(\n        d_model=2048, nhead=8, num_encoder_layers=1, num_decoder_layers=1, dim_feedforward=2048\n    )\n    model.load_state_dict(torch.load(\"./models/pytorch_model.bin\"))\n\n    print(model)\n\n    device = \"cuda\" if torch.cuda.is_available() else \"cpu\"\n    model.to(device)\n    model.eval()\n\n    src_sentence = \"The dog barked.\"\n    src_tokens = src_sentence.split()\n    src_tokens += [\"<eos>\"]\n\n    tensor_src_tokens = torch.LongTensor(\n        [[model.src_tokenizer.token_to_id(tok) for tok in src_tokens]]\n    ).to(device)\n\n    enc_outputs, dec_outputs = model(tensor_src_tokens)\n    logits = dec_outputs.data[-1, :, :]\n\n    top_k = min(len(src_tokens), 10)\n    probs, tokens = logits[0].topk(top_k)\n\n    selected_tokens = []\n    for prob, token in zip(probs, tokens):\n        selected_tokens.append(model.tgt_tokenizer.id_to_token(token.item()))\n\n    random.shuffle(selected_tokens)\n    for i, tok in enumerate(selected_tokens):\n        print(f\"{i + 1}: {tok}\")\n# This code is part of https://github.com/facebookresearch/DeepFix\n#\n# MIT License\n#\n# Copyright (c)  2020\n#\n# Permission is hereby granted, free of charge, to any person obtaining a copy\n# of this",
+      "patch_sha256": "e360479efa9bcb5fa73b4916fb386ac1c399e1da22f1ab59987827a7cbf7d211",
+      "rank_score": -127,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7970041106218376,
+      "top_p": 0.896255138277297
+    }
+  ],
+  "candidate_count": 10,
+  "retrieved_examples": [
+    {
+      "id": "36",
+      "project_name": "pandas",
+      "buggy_line_content": "            self.df = df",
+      "function": {
+        "function_name": "__init__",
+        "function_parent": "ExcelFormatter",
+        "function_before_start_line": 372,
+        "function_before_end_line": 414,
+        "function_after_start_line": 372,
+        "function_after_end_line": 414,
+        "function_before_token_count": 240,
+        "function_after_token_count": 247,
+        "function_before": "def __init__(self, df, na_rep: str='', float_format: Optional[str]=None, cols: Optional[Sequence[Label]]=None, header: Union[Sequence[Label], bool]=True, index: bool=True, index_label: Optional[Union[Label, Sequence[Label]]]=None, merge_cells: bool=False, inf_rep: str='inf', style_converter: Optional[Callable]=None):\n    self.rowcounter = 0\n    self.na_rep = na_rep\n    if hasattr(df, 'render'):\n        self.styler = df\n        df = df.data\n        if style_converter is None:\n            style_converter = CSSToExcelConverter()\n        self.style_converter = style_converter\n    else:\n        self.styler = None\n    self.df = df\n    if cols is not None:\n        if not len(Index(cols) & df.columns):\n            raise KeyError('passes columns are not ALL present dataframe')\n        if len(Index(cols) & df.columns) != len(cols):\n            raise KeyError(\"Not all names specified in 'columns' are found\")\n        self.df = df\n    self.columns = self.df.columns\n    self.float_format = float_format\n    self.index = index\n    self.index_label = index_label\n    self.header = header\n    self.merge_cells = merge_cells\n    self.inf_rep = inf_rep",
+        "function_after": "def __init__(self, df, na_rep: str='', float_format: Optional[str]=None, cols: Optional[Sequence[Label]]=None, header: Union[Sequence[Label], bool]=True, index: bool=True, index_label: Optional[Union[Label, Sequence[Label]]]=None, merge_cells: bool=False, inf_rep: str='inf', style_converter: Optional[Callable]=None):\n    self.rowcounter = 0\n    self.na_rep = na_rep\n    if hasattr(df, 'render'):\n        self.styler = df\n        df = df.data\n        if style_converter is None:\n            style_converter = CSSToExcelConverter()\n        self.style_converter = style_converter\n    else:\n        self.styler = None\n    self.df = df\n    if cols is not None:\n        if not len(Index(cols) & df.columns):\n            raise KeyError('passes columns are not ALL present dataframe')\n        if len(Index(cols) & df.columns) != len(cols):\n            raise KeyError(\"Not all names specified in 'columns' are found\")\n        self.df = df.reindex(columns=cols)\n    self.columns = self.df.columns\n    self.float_format = float_format\n    self.index = index\n    self.index_label = index_label\n    self.header = header\n    self.merge_cells = merge_cells\n    self.inf_rep = inf_rep"
+      },
+      "file_name": "excel.py",
+      "file_path": "pandas/io/formats/excel.py",
+      "score_reranked": 0.9627788424070646
+    },
+    {
+      "id": "28",
+      "project_name": "scrapy",
+      "buggy_line_content": "        if ':' not in self._url:",
+      "function": {
+        "function_name": "_set_url",
+        "function_parent": "Request",
+        "function_before_start_line": 62,
+        "function_before_end_line": 70,
+        "function_after_start_line": 62,
+        "function_after_end_line": 70,
+        "function_before_token_count": 65,
+        "function_after_token_count": 79,
+        "function_before": "def _set_url(self, url):\n    if not isinstance(url, six.string_types):\n        raise TypeError('Request url must be str or unicode, got %s:' % type(url).__name__)\n    s = safe_url_string(url, self.encoding)\n    self._url = escape_ajax(s)\n    if ':' not in self._url:\n        raise ValueError('Missing scheme in request url: %s' % self._url)",
+        "function_after": "def _set_url(self, url):\n    if not isinstance(url, six.string_types):\n        raise TypeError('Request url must be str or unicode, got %s:' % type(url).__name__)\n    s = safe_url_string(url, self.encoding)\n    self._url = escape_ajax(s)\n    if '://' not in self._url and (not self._url.startswith('data:')):\n        raise ValueError('Missing scheme in request url: %s' % self._url)"
+      },
+      "file_name": "__init__.py",
+      "file_path": "scrapy/http/request/__init__.py",
+      "score_reranked": 0.8344690955783134
+    },
+    {
+      "id": "30",
+      "project_name": "pandas",
+      "buggy_line_content": "        if isinstance(new, np.ndarray) and len(new) == len(mask):",
+      "function": {
+        "function_name": "putmask",
+        "function_parent": "ExtensionBlock",
+        "function_before_start_line": 1590,
+        "function_before_end_line": 1608,
+        "function_after_start_line": 1590,
+        "function_after_end_line": 1608,
+        "function_before_token_count": 116,
+        "function_after_token_count": 120,
+        "function_before": "def putmask(self, mask, new, inplace: bool=False, axis: int=0, transpose: bool=False) -> List['Block']:\n    \"\"\"\n        See Block.putmask.__doc__\n        \"\"\"\n    inplace = validate_bool_kwarg(inplace, 'inplace')\n    mask = _extract_bool_array(mask)\n    new_values = self.values if inplace else self.values.copy()\n    if isinstance(new, np.ndarray) and len(new) == len(mask):\n        new = new[mask]\n    mask = _safe_reshape(mask, new_values.shape)\n    new_values[mask] = new\n    return [self.make_block(values=new_values)]",
+        "function_after": "def putmask(self, mask, new, inplace: bool=False, axis: int=0, transpose: bool=False) -> List['Block']:\n    \"\"\"\n        See Block.putmask.__doc__\n        \"\"\"\n    inplace = validate_bool_kwarg(inplace, 'inplace')\n    mask = _extract_bool_array(mask)\n    new_values = self.values if inplace else self.values.copy()\n    if isinstance(new, (np.ndarray, ExtensionArray)) and len(new) == len(mask):\n        new = new[mask]\n    mask = _safe_reshape(mask, new_values.shape)\n    new_values[mask] = new\n    return [self.make_block(values=new_values)]"
+      },
+      "file_name": "blocks.py",
+      "file_path": "pandas/core/internals/blocks.py",
+      "score_reranked": 0.7427196457960049
+    },
+    {
+      "id": "44",
+      "project_name": "pandas",
+      "buggy_line_content": "                left_keys = [self.left.index.values]",
+      "function": {
+        "function_name": "_get_merge_keys",
+        "function_parent": "_MergeOperation",
+        "function_before_start_line": 924,
+        "function_before_end_line": 1038,
+        "function_after_start_line": 924,
+        "function_after_end_line": 1038,
+        "function_before_token_count": 560,
+        "function_after_token_count": 560,
+        "function_before": "def _get_merge_keys(self):\n    \"\"\"\n        Note: has side effects (copy/delete key columns)\n\n        Parameters\n        ----------\n        left\n        right\n        on\n\n        Returns\n        -------\n        left_keys, right_keys\n        \"\"\"\n    left_keys = []\n    right_keys = []\n    join_names = []\n    right_drop = []\n    left_drop = []\n    left, right = (self.left, self.right)\n    is_lkey = lambda x: is_array_like(x) and len(x) == len(left)\n    is_rkey = lambda x: is_array_like(x) and len(x) == len(right)\n    if _any(self.left_on) and _any(self.right_on):\n        for lk, rk in zip(self.left_on, self.right_on):\n            if is_lkey(lk):\n                left_keys.append(lk)\n                if is_rkey(rk):\n                    right_keys.append(rk)\n                    join_names.append(None)\n                elif rk is not None:\n                    right_keys.append(right._get_label_or_level_values(rk))\n                    join_names.append(rk)\n                else:\n                    right_keys.append(right.index)\n                    join_names.append(right.index.name)\n            else:\n                if not is_rkey(rk):\n                    if rk is not None:\n                        right_keys.append(right._get_label_or_level_values(rk))\n                    else:\n                        right_keys.append(right.index)\n                    if lk is not None and lk == rk:\n                        if len(left) > 0:\n                            right_drop.append(rk)\n                        else:\n                            left_drop.append(lk)\n                else:\n                    right_keys.append(rk)\n                if lk is not None:\n                    left_keys.append(left._get_label_or_level_values(lk))\n                    join_names.append(lk)\n                else:\n                    left_keys.append(left.index)\n                    join_names.append(left.index.name)\n    elif _any(self.left_on):\n        for k in self.left_on:\n            if is_lkey(k):\n                left_keys.append(k)\n                join_names.append(None)\n            else:\n                left_keys.append(left._get_label_or_level_values(k))\n                join_names.append(k)\n        if isinstance(self.right.index, MultiIndex):\n            right_keys = [lev._values.take(lev_codes) for lev, lev_codes in zip(self.right.index.levels, self.right.index.codes)]\n        else:\n            right_keys = [self.right.index._values]\n    elif _any(self.right_on):\n        for k in self.right_on:\n            if is_rkey(k):\n                right_keys.append(k)\n                join_names.append(None)\n            else:\n                right_keys.append(right._get_label_or_level_values(k))\n                join_names.append(k)\n        if isinstance(self.left.index, MultiIndex):\n            left_keys = [lev._values.take(lev_codes) for lev, lev_codes in zip(self.left.index.levels, self.left.index.codes)]\n        else:\n            left_keys = [self.left.index.values]\n    if left_drop:\n        self.left = self.left._drop_labels_or_levels(left_drop)\n    if right_drop:\n        self.right = self.right._drop_labels_or_levels(right_drop)\n    return (left_keys, right_keys, join_names)",
+        "function_after": "def _get_merge_keys(self):\n    \"\"\"\n        Note: has side effects (copy/delete key columns)\n\n        Parameters\n        ----------\n        left\n        right\n        on\n\n        Returns\n        -------\n        left_keys, right_keys\n        \"\"\"\n    left_keys = []\n    right_keys = []\n    join_names = []\n    right_drop = []\n    left_drop = []\n    left, right = (self.left, self.right)\n    is_lkey = lambda x: is_array_like(x) and len(x) == len(left)\n    is_rkey = lambda x: is_array_like(x) and len(x) == len(right)\n    if _any(self.left_on) and _any(self.right_on):\n        for lk, rk in zip(self.left_on, self.right_on):\n            if is_lkey(lk):\n                left_keys.append(lk)\n                if is_rkey(rk):\n                    right_keys.append(rk)\n                    join_names.append(None)\n                elif rk is not None:\n                    right_keys.append(right._get_label_or_level_values(rk))\n                    join_names.append(rk)\n                else:\n                    right_keys.append(right.index)\n                    join_names.append(right.index.name)\n            else:\n                if not is_rkey(rk):\n                    if rk is not None:\n                        right_keys.append(right._get_label_or_level_values(rk))\n                    else:\n                        right_keys.append(right.index)\n                    if lk is not None and lk == rk:\n                        if len(left) > 0:\n                            right_drop.append(rk)\n                        else:\n                            left_drop.append(lk)\n                else:\n                    right_keys.append(rk)\n                if lk is not None:\n                    left_keys.append(left._get_label_or_level_values(lk))\n                    join_names.append(lk)\n                else:\n                    left_keys.append(left.index)\n                    join_names.append(left.index.name)\n    elif _any(self.left_on):\n        for k in self.left_on:\n            if is_lkey(k):\n                left_keys.append(k)\n                join_names.append(None)\n            else:\n                left_keys.append(left._get_label_or_level_values(k))\n                join_names.append(k)\n        if isinstance(self.right.index, MultiIndex):\n            right_keys = [lev._values.take(lev_codes) for lev, lev_codes in zip(self.right.index.levels, self.right.index.codes)]\n        else:\n            right_keys = [self.right.index._values]\n    elif _any(self.right_on):\n        for k in self.right_on:\n            if is_rkey(k):\n                right_keys.append(k)\n                join_names.append(None)\n            else:\n                right_keys.append(right._get_label_or_level_values(k))\n                join_names.append(k)\n        if isinstance(self.left.index, MultiIndex):\n            left_keys = [lev._values.take(lev_codes) for lev, lev_codes in zip(self.left.index.levels, self.left.index.codes)]\n        else:\n            left_keys = [self.left.index._values]\n    if left_drop:\n        self.left = self.left._drop_labels_or_levels(left_drop)\n    if right_drop:\n        self.right = self.right._drop_labels_or_levels(right_drop)\n    return (left_keys, right_keys, join_names)"
+      },
+      "file_name": "merge.py",
+      "file_path": "pandas/core/reshape/merge.py",
+      "score_reranked": 0.7058485428872989
+    },
+    {
+      "id": "39",
+      "project_name": "pandas",
+      "buggy_line_content": "            except (TypeError, ValueError):",
+      "function": {
+        "function_name": "_try_convert_data",
+        "function_parent": "Parser",
+        "function_before_start_line": 886,
+        "function_before_end_line": 958,
+        "function_after_start_line": 886,
+        "function_after_end_line": 958,
+        "function_before_token_count": 277,
+        "function_after_token_count": 279,
+        "function_before": "def _try_convert_data(self, name, data, use_dtypes=True, convert_dates=True):\n    \"\"\"\n        Try to parse a ndarray like into a column by inferring dtype.\n        \"\"\"\n    if use_dtypes:\n        if not self.dtype:\n            return (data, False)\n        elif self.dtype is True:\n            pass\n        else:\n            dtype = self.dtype.get(name) if isinstance(self.dtype, dict) else self.dtype\n            if dtype is not None:\n                try:\n                    dtype = np.dtype(dtype)\n                    return (data.astype(dtype), True)\n                except (TypeError, ValueError):\n                    return (data, False)\n    if convert_dates:\n        new_data, result = self._try_convert_to_date(data)\n        if result:\n            return (new_data, True)\n    result = False\n    if data.dtype == 'object':\n        try:\n            data = data.astype('float64')\n            result = True\n        except (TypeError, ValueError):\n            pass\n    if data.dtype.kind == 'f':\n        if data.dtype != 'float64':\n            try:\n                data = data.astype('float64')\n                result = True\n            except (TypeError, ValueError):\n                pass\n    if len(data) and (data.dtype == 'float' or data.dtype == 'object'):\n        try:\n            new_data = data.astype('int64')\n            if (new_data == data).all():\n                data = new_data\n                result = True\n        except (TypeError, ValueError):\n            pass\n    if data.dtype == 'int':\n        try:\n            data = data.astype('int64')\n            result = True\n        except (TypeError, ValueError):\n            pass\n    return (data, result)",
+        "function_after": "def _try_convert_data(self, name, data, use_dtypes=True, convert_dates=True):\n    \"\"\"\n        Try to parse a ndarray like into a column by inferring dtype.\n        \"\"\"\n    if use_dtypes:\n        if not self.dtype:\n            return (data, False)\n        elif self.dtype is True:\n            pass\n        else:\n            dtype = self.dtype.get(name) if isinstance(self.dtype, dict) else self.dtype\n            if dtype is not None:\n                try:\n                    dtype = np.dtype(dtype)\n                    return (data.astype(dtype), True)\n                except (TypeError, ValueError):\n                    return (data, False)\n    if convert_dates:\n        new_data, result = self._try_convert_to_date(data)\n        if result:\n            return (new_data, True)\n    result = False\n    if data.dtype == 'object':\n        try:\n            data = data.astype('float64')\n            result = True\n        except (TypeError, ValueError):\n            pass\n    if data.dtype.kind == 'f':\n        if data.dtype != 'float64':\n            try:\n                data = data.astype('float64')\n                result = True\n            except (TypeError, ValueError):\n                pass\n    if len(data) and (data.dtype == 'float' or data.dtype == 'object'):\n        try:\n            new_data = data.astype('int64')\n            if (new_data == data).all():\n                data = new_data\n                result = True\n        except (TypeError, ValueError, OverflowError):\n            pass\n    if data.dtype == 'int':\n        try:\n            data = data.astype('int64')\n            result = True\n        except (TypeError, ValueError):\n            pass\n    return (data, result)"
+      },
+      "file_name": "_json.py",
+      "file_path": "pandas/io/json/_json.py",
+      "score_reranked": 0.6387065143607824
+    }
+  ],
+  "diffusion_plan": [
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 29
+        },
+        {
+          "op": "Replace",
+          "node": 18
+        },
+        {
+          "op": "Replace",
+          "node": 27
+        },
+        {
+          "op": "InsertBefore",
+          "node": 6
+        },
+        {
+          "op": "Replace",
+          "node": 5
+        },
+        {
+          "op": "Replace",
+          "node": 16
+        },
+        {
+          "op": "Replace",
+          "node": 12
+        },
+        {
+          "op": "GuardAdd",
+          "node": 6
+        },
+        {
+          "op": "GuardAdd",
+          "node": 27
+        },
+        {
+          "op": "InsertBefore",
+          "node": 23
+        },
+        {
+          "op": "GuardAdd",
+          "node": 23
+        },
+        {
+          "op": "GuardAdd",
+          "node": 29
+        }
+      ],
+      "score": 19.172727271075207
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 27
+        },
+        {
+          "op": "Replace",
+          "node": 12
+        },
+        {
+          "op": "InsertAfter",
+          "node": 6
+        },
+        {
+          "op": "Replace",
+          "node": 17
+        },
+        {
+          "op": "GuardAdd",
+          "node": 27
+        },
+        {
+          "op": "Replace",
+          "node": 6
+        },
+        {
+          "op": "GuardAdd",
+          "node": 23
+        },
+        {
+          "op": "Replace",
+          "node": 16
+        }
+      ],
+      "score": 16.654545453304134
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "GuardAdd",
+          "node": 12
+        },
+        {
+          "op": "Replace",
+          "node": 12
+        },
+        {
+          "op": "Delete",
+          "node": 6
+        },
+        {
+          "op": "Replace",
+          "node": 16
+        },
+        {
+          "op": "GuardAdd",
+          "node": 6
+        },
+        {
+          "op": "Replace",
+          "node": 23
+        },
+        {
+          "op": "GuardAdd",
+          "node": 29
+        },
+        {
+          "op": "Replace",
+          "node": 27
+        }
+      ],
+      "score": 16.309090907880993
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 29
+        },
+        {
+          "op": "Replace",
+          "node": 23
+        },
+        {
+          "op": "GuardAdd",
+          "node": 6
+        },
+        {
+          "op": "InsertBefore",
+          "node": 16
+        },
+        {
+          "op": "GuardAdd",
+          "node": 27
+        },
+        {
+          "op": "Replace",
+          "node": 5
+        },
+        {
+          "op": "Replace",
+          "node": 12
+        },
+        {
+          "op": "Replace",
+          "node": 27
+        },
+        {
+          "op": "Replace",
+          "node": 6
+        }
+      ],
+      "score": 16.1909090895281
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "GuardAdd",
+          "node": 27
+        },
+        {
+          "op": "GuardAdd",
+          "node": 23
+        },
+        {
+          "op": "Replace",
+          "node": 6
+        },
+        {
+          "op": "Replace",
+          "node": 27
+        },
+        {
+          "op": "Replace",
+          "node": 29
+        },
+        {
+          "op": "Delete",
+          "node": 17
+        },
+        {
+          "op": "Replace",
+          "node": 23
+        },
+        {
+          "op": "Replace",
+          "node": 12
+        }
+      ],
+      "score": 16.181818180619835
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "GuardAdd",
+          "node": 6
+        },
+        {
+          "op": "Replace",
+          "node": 6
+        },
+        {
+          "op": "GuardAdd",
+          "node": 23
+        },
+        {
+          "op": "Delete",
+          "node": 6
+        },
+        {
+          "op": "GuardAdd",
+          "node": 5
+        },
+        {
+          "op": "GuardAdd",
+          "node": 29
+        },
+        {
+          "op": "Replace",
+          "node": 12
+        },
+        {
+          "op": "GuardAdd",
+          "node": 27
+        },
+        {
+          "op": "Replace",
+          "node": 16
+        }
+      ],
+      "score": 15.927272725915703
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 17
+        },
+        {
+          "op": "GuardAdd",
+          "node": 23
+        },
+        {
+          "op": "GuardAdd",
+          "node": 6
+        },
+        {
+          "op": "Replace",
+          "node": 5
+        },
+        {
+          "op": "Replace",
+          "node": 23
+        },
+        {
+          "op": "Replace",
+          "node": 12
+        },
+        {
+          "op": "GuardAdd",
+          "node": 18
+        },
+        {
+          "op": "InsertAfter",
+          "node": 6
+        },
+        {
+          "op": "Replace",
+          "node": 27
+        },
+        {
+          "op": "GuardAdd",
+          "node": 29
+        },
+        {
+          "op": "Replace",
+          "node": 31
+        }
+      ],
+      "score": 15.90909090773554
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 12
+        },
+        {
+          "op": "Replace",
+          "node": 23
+        },
+        {
+          "op": "GuardAdd",
+          "node": 27
+        },
+        {
+          "op": "GuardAdd",
+          "node": 23
+        },
+        {
+          "op": "Delete",
+          "node": 23
+        },
+        {
+          "op": "Replace",
+          "node": 16
+        },
+        {
+          "op": "Replace",
+          "node": 6
+        }
+      ],
+      "score": 15.74545454429587
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 6
+        },
+        {
+          "op": "Delete",
+          "node": 6
+        },
+        {
+          "op": "InsertBefore",
+          "node": 31
+        },
+        {
+          "op": "Replace",
+          "node": 23
+        },
+        {
+          "op": "Replace",
+          "node": 16
+        },
+        {
+          "op": "Replace",
+          "node": 29
+        },
+        {
+          "op": "GuardAdd",
+          "node": 16
+        },
+        {
+          "op": "InsertBefore",
+          "node": 6
+        }
+      ],
+      "score": 15.590909089764464
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 23
+        },
+        {
+          "op": "Replace",
+          "node": 5
+        },
+        {
+          "op": "GuardAdd",
+          "node": 6
+        },
+        {
+          "op": "Delete",
+          "node": 23
+        },
+        {
+          "op": "Replace",
+          "node": 16
+        },
+        {
+          "op": "Replace",
+          "node": 6
+        },
+        {
+          "op": "GuardAdd",
+          "node": 27
+        }
+      ],
+      "score": 15.490909089773554
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 23
+        },
+        {
+          "op": "Replace",
+          "node": 16
+        },
+        {
+          "op": "Replace",
+          "node": 6
+        },
+        {
+          "op": "Replace",
+          "node": 29
+        },
+        {
+          "op": "Replace",
+          "node": 27
+        },
+        {
+          "op": "Replace",
+          "node": 12
+        },
+        {
+          "op": "GuardAdd",
+          "node": 16
+        }
+      ],
+      "score": 15.16363636253058
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 5
+        },
+        {
+          "op": "Replace",
+          "node": 6
+        },
+        {
+          "op": "Replace",
+          "node": 16
+        },
+        {
+          "op": "Delete",
+          "node": 6
+        },
+        {
+          "op": "Replace",
+          "node": 18
+        },
+        {
+          "op": "Replace",
+          "node": 29
+        },
+        {
+          "op": "Replace",
+          "node": 23
+        },
+        {
+          "op": "GuardAdd",
+          "node": 27
+        }
+      ],
+      "score": 15.127272726170249
+    }
+  ],
+  "static_analysis_nodes": [
+    {
+      "line": 9,
+      "line_absolute": 356,
+      "node_id": 6,
+      "node_id_local": 2,
+      "type": "If",
+      "code": "if len(self.columns) > 0:\n    colnames = ','.join([x[0] for x in self.columns])\n    colnames = '({})'.format(colnames)",
+      "distance_to_buggy": 0,
+      "context": "   6:           \"\"\"\n   7:       logger.info('Inserting file: %s', f)\n   8:       colnames = ''\n   9:->     if len(self.columns) > 0:\n  10:           colnames = ','.join([x[0] for x in self.columns])\n  11:           colnames = '({})'.format(colnames)\n  12:       cursor.execute(\"\\n         COPY {table} {colnames} from '{source}'\\n         CREDENTIALS '{creds}'\\n         {options}\\n         ;\".format(table=self.table, colnames=colnames, source=f, creds=self._credentials(), options=self.copy_options))",
+      "ast_subtree_json": {
+        "_type": "If",
+        "test": {
+          "_type": "Compare",
+          "left": {
+            "_type": "Call"
+          },
+          "ops": [
+            {
+              "_type": "Gt"
+            }
+          ],
+          "comparators": [
+            {
+              "_type": "Constant"
+            }
+          ]
+        },
+        "body": [
+          {
+            "_type": "Assign",
+            "targets": [
+              {
+                "_type": "Name"
+              }
+            ],
+            "value": {
+              "_type": "Call"
+            },
+            "type_comment": null
+          },
+          {
+            "_type": "Assign",
+            "targets": [
+              {
+                "_type": "Name"
+              }
+            ],
+            "value": {
+              "_type": "Call"
+            },
+            "type_comment": null
+          }
+        ],
+        "orelse": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -26.0
+    },
+    {
+      "line": 9,
+      "line_absolute": 356,
+      "node_id": 23,
+      "node_id_local": 3,
+      "type": "Call",
+      "code": "len(self.columns)",
+      "distance_to_buggy": 0,
+      "context": "   6:           \"\"\"\n   7:       logger.info('Inserting file: %s', f)\n   8:       colnames = ''\n   9:->     if len(self.columns) > 0:\n  10:           colnames = ','.join([x[0] for x in self.columns])\n  11:           colnames = '({})'.format(colnames)\n  12:       cursor.execute(\"\\n         COPY {table} {colnames} from '{source}'\\n         CREDENTIALS '{creds}'\\n         {options}\\n         ;\".format(table=self.table, colnames=colnames, source=f, creds=self._credentials(), options=self.copy_options))",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Name",
+          "id": "len",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [
+          {
+            "_type": "Attribute",
+            "value": {
+              "_type": "Name"
+            },
+            "attr": "columns",
+            "ctx": {
+              "_type": "Load"
+            }
+          }
+        ],
+        "keywords": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -25.5
+    },
+    {
+      "line": 10,
+      "line_absolute": 357,
+      "node_id": 27,
+      "node_id_local": 5,
+      "type": "Call",
+      "code": "','.join([x[0] for x in self.columns])",
+      "distance_to_buggy": 0,
+      "context": "   7:       logger.info('Inserting file: %s', f)\n   8:       colnames = ''\n   9:       if len(self.columns) > 0:\n  10:->         colnames = ','.join([x[0] for x in self.columns])\n  11:           colnames = '({})'.format(colnames)\n  12:       cursor.execute(\"\\n         COPY {table} {colnames} from '{source}'\\n         CREDENTIALS '{creds}'\\n         {options}\\n         ;\".format(table=self.table, colnames=colnames, source=f, creds=self._credentials(), options=self.copy_options))",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Attribute",
+          "value": {
+            "_type": "Constant"
+          },
+          "attr": "join",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [
+          {
+            "_type": "ListComp",
+            "elt": {
+              "_type": "Subscript"
+            },
+            "generators": [
+              {
+                "_type": "comprehension"
+              }
+            ]
+          }
+        ],
+        "keywords": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -25.5
+    },
+    {
+      "line": 10,
+      "line_absolute": 357,
+      "node_id": 16,
+      "node_id_local": 4,
+      "type": "Assign",
+      "code": "colnames = ','.join([x[0] for x in self.columns])",
+      "distance_to_buggy": 0,
+      "context": "   7:       logger.info('Inserting file: %s', f)\n   8:       colnames = ''\n   9:       if len(self.columns) > 0:\n  10:->         colnames = ','.join([x[0] for x in self.columns])\n  11:           colnames = '({})'.format(colnames)\n  12:       cursor.execute(\"\\n         COPY {table} {colnames} from '{source}'\\n         CREDENTIALS '{creds}'\\n         {options}\\n         ;\".format(table=self.table, colnames=colnames, source=f, creds=self._credentials(), options=self.copy_options))",
+      "ast_subtree_json": {
+        "_type": "Assign",
+        "targets": [
+          {
+            "_type": "Name",
+            "id": "colnames",
+            "ctx": {
+              "_type": "Store"
+            }
+          }
+        ],
+        "value": {
+          "_type": "Call",
+          "func": {
+            "_type": "Attribute"
+          },
+          "args": [
+            {
+              "_type": "ListComp"
+            }
+          ],
+          "keywords": []
+        },
+        "type_comment": null
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -24.5
+    },
+    {
+      "line": 7,
+      "line_absolute": 354,
+      "node_id": 12,
+      "node_id_local": 0,
+      "type": "Call",
+      "code": "logger.info('Inserting file: %s', f)",
+      "distance_to_buggy": 0,
+      "context": "   4:   \n   5:           If both key-based and role-based credentials are provided, role-based will be used.\n   6:           \"\"\"\n   7:->     logger.info('Inserting file: %s', f)\n   8:       colnames = ''\n   9:       if len(self.columns) > 0:\n  10:           colnames = ','.join([x[0] for x in self.columns])",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Attribute",
+          "value": {
+            "_type": "Name"
+          },
+          "attr": "info",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [
+          {
+            "_type": "Constant",
+            "value": "Inserting file: %s",
+            "kind": null
+          },
+          {
+            "_type": "Name",
+            "id": "f",
+            "ctx": {
+              "_type": "Load"
+            }
+          }
+        ],
+        "keywords": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -24.0
+    },
+    {
+      "line": 11,
+      "line_absolute": 358,
+      "node_id": 29,
+      "node_id_local": 7,
+      "type": "Call",
+      "code": "'({})'.format(colnames)",
+      "distance_to_buggy": 0,
+      "context": "   8:       colnames = ''\n   9:       if len(self.columns) > 0:\n  10:           colnames = ','.join([x[0] for x in self.columns])\n  11:->         colnames = '({})'.format(colnames)\n  12:       cursor.execute(\"\\n         COPY {table} {colnames} from '{source}'\\n         CREDENTIALS '{creds}'\\n         {options}\\n         ;\".format(table=self.table, colnames=colnames, source=f, creds=self._credentials(), options=self.copy_options))",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Attribute",
+          "value": {
+            "_type": "Constant"
+          },
+          "attr": "format",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [
+          {
+            "_type": "Name",
+            "id": "colnames",
+            "ctx": {
+              "_type": "Load"
+            }
+          }
+        ],
+        "keywords": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -24.0
+    },
+    {
+      "line": 8,
+      "line_absolute": 355,
+      "node_id": 5,
+      "node_id_local": 1,
+      "type": "Assign",
+      "code": "colnames = ''",
+      "distance_to_buggy": 0,
+      "context": "   5:           If both key-based and role-based credentials are provided, role-based will be used.\n   6:           \"\"\"\n   7:       logger.info('Inserting file: %s', f)\n   8:->     colnames = ''\n   9:       if len(self.columns) > 0:\n  10:           colnames = ','.join([x[0] for x in self.columns])\n  11:           colnames = '({})'.format(colnames)",
+      "ast_subtree_json": {
+        "_type": "Assign",
+        "targets": [
+          {
+            "_type": "Name",
+            "id": "colnames",
+            "ctx": {
+              "_type": "Store"
+            }
+          }
+        ],
+        "value": {
+          "_type": "Constant",
+          "value": "",
+          "kind": null
+        },
+        "type_comment": null
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -23.0
+    },
+    {
+      "line": 11,
+      "line_absolute": 358,
+      "node_id": 17,
+      "node_id_local": 6,
+      "type": "Assign",
+      "code": "colnames = '({})'.format(colnames)",
+      "distance_to_buggy": 0,
+      "context": "   8:       colnames = ''\n   9:       if len(self.columns) > 0:\n  10:           colnames = ','.join([x[0] for x in self.columns])\n  11:->         colnames = '({})'.format(colnames)\n  12:       cursor.execute(\"\\n         COPY {table} {colnames} from '{source}'\\n         CREDENTIALS '{creds}'\\n         {options}\\n         ;\".format(table=self.table, colnames=colnames, source=f, creds=self._credentials(), options=self.copy_options))",
+      "ast_subtree_json": {
+        "_type": "Assign",
+        "targets": [
+          {
+            "_type": "Name",
+            "id": "colnames",
+            "ctx": {
+              "_type": "Store"
+            }
+          }
+        ],
+        "value": {
+          "_type": "Call",
+          "func": {
+            "_type": "Attribute"
+          },
+          "args": [
+            {
+              "_type": "Name"
+            }
+          ],
+          "keywords": []
+        },
+        "type_comment": null
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|system|>...",
+      "reranker_score": -23.0
+    },
+    {
+      "line": 12,
+      "line_absolute": 359,
+      "node_id": 18,
+      "node_id_local": 8,
+      "type": "Call",
+      "code": "cursor.execute(\"\\n         COPY {table} {colnames} from '{source}'\\n         CREDENTIALS '{creds}'\\n         {options}\\n         ;\".format(table=self.table, colnames=colnames, source=f, creds=self._credentials(), options=self.copy_options))",
+      "distance_to_buggy": 1,
+      "context": "   9:       if len(self.columns) > 0:\n  10:           colnames = ','.join([x[0] for x in self.columns])\n  11:           colnames = '({})'.format(colnames)\n  12:->     cursor.execute(\"\\n         COPY {table} {colnames} from '{source}'\\n         CREDENTIALS '{creds}'\\n         {options}\\n         ;\".format(table=self.table, colnames=colnames, source=f, creds=self._credentials(), options=self.copy_options))",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Attribute",
+          "value": {
+            "_type": "Name"
+          },
+          "attr": "execute",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [
+          {
+            "_type": "Call",
+            "func": {
+              "_type": "Attribute"
+            },
+            "args": [],
+            "keywords": [
+              {
+                "_type": "keyword"
+              },
+              {
+                "_type": "keyword"
+              },
+              {
+                "_type": "keyword"
+              },
+              {
+                "_type": "keyword"
+              },
+              {
+                "_type": "keyword"
+              }
+            ]
+          }
+        ],
+        "keywords": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -14.0
+    },
+    {
+      "line": 12,
+      "line_absolute": 359,
+      "node_id": 31,
+      "node_id_local": 9,
+      "type": "Call",
+      "code": "\"\\n         COPY {table} {colnames} from '{source}'\\n         CREDENTIALS '{creds}'\\n         {options}\\n         ;\".format(table=self.table, colnames=colnames, source=f, creds=self._credentials(), options=self.copy_options)",
+      "distance_to_buggy": 1,
+      "context": "   9:       if len(self.columns) > 0:\n  10:           colnames = ','.join([x[0] for x in self.columns])\n  11:           colnames = '({})'.format(colnames)\n  12:->     cursor.execute(\"\\n         COPY {table} {colnames} from '{source}'\\n         CREDENTIALS '{creds}'\\n         {options}\\n         ;\".format(table=self.table, colnames=colnames, source=f, creds=self._credentials(), options=self.copy_options))",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Attribute",
+          "value": {
+            "_type": "Constant"
+          },
+          "attr": "format",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [],
+        "keywords": [
+          {
+            "_type": "keyword",
+            "arg": "table",
+            "value": {
+              "_type": "Attribute"
+            }
+          },
+          {
+            "_type": "keyword",
+            "arg": "colnames",
+            "value": {
+              "_type": "Name"
+            }
+          },
+          {
+            "_type": "keyword",
+            "arg": "source",
+            "value": {
+              "_type": "Name"
+            }
+          },
+          {
+            "_type": "keyword",
+            "arg": "creds",
+            "value": {
+              "_type": "Call"
+            }
+          },
+          {
+            "_type": "keyword",
+            "arg": "options",
+            "value": {
+              "_type": "Attribute"
+            }
+          }
+        ]
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -14.0
+    }
+  ]
+}

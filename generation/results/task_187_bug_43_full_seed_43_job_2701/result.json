@@ -1,0 +1,1070 @@
+{
+  "bug_id": "43",
+  "seed": 43,
+  "arm": "full",
+  "candidates": [
+    {
+      "index": 0,
+      "patch_text": "def get_indexer_non_unique(self, target):\n    target = ensure_index(target)\n    pself, ptarget = self._maybe_promote(target)\n    if pself is not self or ptarget is not target:\n        return pself.get_indexer_non_unique(ptarget)\n    if is_categorical(target):\n        tgt_values = np.asarray(target)\n    elif (self.is_all_dates or (not self.is_all_dates and self.is_all_datetime64)):\n        tgt_values = target.asi8\n    else:\n        tgt_values = target._ndarray_values\n    indexer, missing = self._engine.get_indexer_non_unique(tgt_values)\n    return (ensure_platform_int(indexer), missing)",
+      "patch_sha256": "c27fdb1ec9725b4d899b3db8231698f10e9af4582047e573cef62c9e0a4e77f4",
+      "rank_score": 228,
+      "plan_ok": false,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8030069698746244,
+      "top_p": 0.9037587123432804
+    },
+    {
+      "index": 1,
+      "patch_text": "def get_indexer_non_unique(self, target):\n    target = ensure_index(target)\n    pself, ptarget = self._maybe_promote(target)\n    if pself is not self or ptarget is not target:\n        return pself.get_indexer_non_unique(ptarget)\n    if is_categorical(target):\n        tgt_values = np.asarray(target)\n    elif self.is_all_dates:\n        tgt_values = target.asi8\n    else:\n        tgt_values = target._ndarray_values\n    indexer, missing = self._engine.get_indexer_non_unique(tgt_values)\n    return (ensure_platform_int(indexer), missing)",
+      "patch_sha256": "56c2dd0ed47dc01b7659e936adefb3a33bf0518face5d99d0a456d428679b3f9",
+      "rank_score": 211,
+      "plan_ok": false,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7704673177175924,
+      "top_p": 0.8630841471469904
+    },
+    {
+      "index": 2,
+      "patch_text": "def get_indexer_non_unique(self, target):\n    target = ensure_index(target)\n    pself, ptarget = self._maybe_promote(target)\n    if pself is not self or ptarget is not target:\n        return pself.get_indexer_non_unique(ptarget)\n    if is_categorical(target):\n        tgt_values = np.asarray(target)\n    else:\n        if self.is_all_dates:\n            tgt_values = target.asi8\n        else:\n            tgt_values = target._ndarray_values\n    indexer, missing = self._engine.get_indexer_non_unique(tgt_values)\n    return (ensure_platform_int(indexer), missing)\n\n##correct\nclass DataFrame(DataFrameMixin, NDFrame):\n    \"\"\"\n    Two-dimensional, size-mutable, potentially heterogeneous tabular data\n    structure with labeled axes (rows and columns).\n\n    DataFrame object represents a rectangular table of data and contains an\n    ordered collection of columns, each of which can be a different value type\n    (numeric, string, boolean, etc.). The DataFrame has row and column indices\n    and is designed for handling relational data, which is a common source of\n    data inefficiencies in other languages.\n\n    The best way to think of a ``DataFrame`` as a dict of ``Series``, which\n    share the same index.\n\n    To create a ``DataFrame``, you can pass a dict of tuples:\n\n    >>> df = pd.DataFrame({\n   ...     'A': (1, 2, 3),\n   ...     'B': ('a', 'b', 'c'),\n   ... })\n    >>> df\n       A  B\n    0  1  a\n    1  2  b\n    2  3  c\n\n    If you pass a list of tuples instead of a dict, the dtypes of the\n    ``DataFrame.columns`` will be inferred:\n\n    >>> df = pd.DataFrame([('a', 1, 2), ('b', 3, 4)],\n   ...                   columns=['string', 'A', 'B'])\n    >>> df\n      string  A  B\n    0      a  1  2\n    1      b  3  4\n\n    For performance reasons, ``DataFrame`` does not allow columns to be\n    assigned with slices, lists, or other sequence types.\n\n    See the :ref:`basics.assign` section for more details.\n\n    Parameters\n    ----------\n    data : ndarray (structured or homogeneous), Iterable, dict, or DataFrame\n    index : Index or array-like\n    columns : Index or array-like\n    dtype : dtype, optional\n    copy : boolean, default False\n        Copy data from `data`\n    \"\"\"\n\n##correct\ndef get_indexer_non_unique(self, target):\n    target = ensure_index(target)\n    pself, ptarget = self._maybe_promote(target)\n    if pself is not self or ptarget is not target:\n        return pself.get_indexer_non_unique(ptarget)",
+      "patch_sha256": "bf6bac75412cb60eb58bbd31027efc8b421bbab37f525fdb38d26ff9e84183ea",
+      "rank_score": 52,
+      "plan_ok": false,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8030069698746244,
+      "top_p": 0.9037587123432804
+    },
+    {
+      "index": 3,
+      "patch_text": "def get_indexer_non_unique(self, target):\n    target = ensure_index(target)\n    pself, ptarget = self._maybe_promote(target)\n    if pself is not self or ptarget is not target:\n        return pself.get_indexer_non_unique(ptarget)\n    if is_categorical(target):\n        tgt_values = np.asarray(target)\n    elif self.is_all_dates:\n        tgt_values = target.asi8\n    else:\n        tgt_values = target._ndarray_values\n    indexer, missing = self._engine.get_indexer_non_unique(tgt_values)\n    return (ensure_platform_int(indexer), missing)\n\n##end\n\n\nimport json\nimport os\nimport pickle\nimport shutil\nimport sys\nfrom collections import defaultdict\nfrom pathlib import Path\n\nimport numpy as np\nimport torch\nfrom tqdm import tqdm\n\nsys.path.append(os.path.join(os.path.dirname(__file__), \"..\"))\nfrom dataset import Dataset\nfrom model import Model\n\n# from utils import get_model_path, get_model_version_path, load_model_from_checkpoint, get_model_path, get_model_version_path\nfrom utils import get_model_version_path, get_model_path, load_model_from_checkpoint, get_model_path, get_model_version_path\n\n# from utils import get_model_path, get_model_version_path, load_model_from_checkpoint\n\nfrom utils import get_model_path, get_model_version_path, load_model_from_checkpoint\n\n\ndef evaluate(model, dataset, device):\n    model.eval()\n    correct = 0\n    total = 0\n\n    with torch.no_grad():\n        for batch_idx, (data, target) in enumerate(dataset):\n            data, target = data.to(device), target.to(device)\n            output = model(data)\n            _, predicted = torch.max(output.data, 1)\n            total += target.size(0)\n            correct += (predicted == target).sum().item()\n\n    print(\"Accuracy:\", 100 * correct / total)\n\n\ndef main():\n    if len(sys.argv) < 3:\n        print(\"Usage: python eval.py [model_path] [dataset_path]\")\n        exit()\n\n    model_path = sys.argv[1]\n    dataset_path = sys.argv[2]\n\n    device = \"cuda\" if torch.cuda.is_available() else \"cpu\"\n\n    model = load_model_from_checkpoint(model_path)\n    model.to(device)\n\n    dataset = Dataset(dataset_path)\n    dataset.preprocess()\n\n    evaluate(model, dataset, device)\n\n\nif __name__ == \"__main__\":\n    main()\nimport json\nimport os\nimport pickle",
+      "patch_sha256": "134d508a1cba7aab190b90c28ebb239419ccdb2ab913f52ce6c1198b1e8b5823",
+      "rank_score": -142,
+      "plan_ok": false,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.49999693569381287,
+      "top_p": 0.9415325686419478
+    },
+    {
+      "index": 4,
+      "patch_text": "def get_indexer_non_unique(self, target):\n    target = ensure_index(target)\n    pself, ptarget = self._maybe_promote(target)\n    if pself is not self or ptarget is not target:\n        return pself.get_indexer_non_unique(ptarget)\n    if is_categorical(target):\n        tgt_values = np.asarray(target)\n    elif self.is_all_dates:\n        tgt_values = target.asi8\n    else:\n        tgt_values = target._ndarray_values\n    indexer, missing = self._engine.get_indexer_non_unique(tgt_values)\n    return (ensure_platform_int(indexer), missing)\n\nimport os\nimport json\nfrom tqdm import tqdm\n\nfrom utils import read_data\n\nclass DataManager(object):\n    \"\"\"\n    Manages data loading for the experiment\n    \"\"\"\n    def __init__(self, data_dir, file_prefix=''):\n        \"\"\"\n        Load dataset\n        :param data_dir: Path to the dataset folder\n        :param file_prefix: Prefix for the files\n        \"\"\"\n        self.data_dir = data_dir\n        self.file_prefix = file_prefix\n\n        self.train_filename = self.file_prefix + 'train.csv'\n        self.valid_filename = self.file_prefix + 'valid.csv'\n        self.test_filename = self.file_prefix + 'test.csv'\n\n        self.train = self.load_dataset(os.path.join(data_dir, self.train_filename))\n        self.valid = self.load_dataset(os.path.join(data_dir, self.valid_filename))\n        self.test = self.load_dataset(os.path.join(data_dir, self.test_filename))\n\n    def load_dataset(self, filename):\n        \"\"\"\n        Loads the dataset\n        :param filename: Name of the file\n        :return: List of lines\n        \"\"\"\n        print('Loading {}...'.format(filename))\n        with open(filename) as f:\n            data = [json.loads(l) for l in tqdm(f)]\n        print('Loaded {} examples'.format(len(data)))\n        return data\n\"\"\"\nA module for generating patches.\n\"\"\"\nimport os\nimport json\nimport argparse\nfrom itertools import chain\nfrom collections import Counter\n\nimport numpy as np\nimport pandas as pd\nfrom sklearn.metrics import f1_score\n\nfrom datasets import DataManager\nfrom model import Model\n\ndef generate_patches(model, patches_dir, data_manager, num_examples=100):\n    \"\"\"\n    Generates patches\n    :param model: Model\n    :param patches_dir: Directory for saving patches\n    :param data_manager: Dataset\n    :param num_examples: Number of patches per example\n    \"\"\"\n    num_examples = min(num_examples, len(data_manager.test))\n\n    test = data_",
+      "patch_sha256": "24f1f8312fe6b09eed760b50d7b45a6e5610a37d257b2a63e6d3f63b1e3a6a55",
+      "rank_score": -224,
+      "plan_ok": false,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7970041106218376,
+      "top_p": 0.896255138277297
+    }
+  ],
+  "candidate_count": 5,
+  "retrieved_examples": [
+    {
+      "id": "37",
+      "project_name": "pandas",
+      "buggy_line_content": "                elif is_integer(i) and not ax.holds_integer():",
+      "function": {
+        "function_name": "_convert_key",
+        "function_parent": "_AtIndexer",
+        "function_before_start_line": 2110,
+        "function_before_end_line": 2133,
+        "function_after_start_line": 2110,
+        "function_after_end_line": 2133,
+        "function_before_token_count": 82,
+        "function_after_token_count": 90,
+        "function_before": "def _convert_key(self, key, is_setter: bool=False):\n    \"\"\"\n        Require they keys to be the same type as the index. (so we don't\n        fallback)\n        \"\"\"\n    if is_setter:\n        return list(key)\n    for ax, i in zip(self.obj.axes, key):\n        if ax.is_integer():\n            if not is_integer(i):\n                raise ValueError('At based indexing on an integer index can only have integer indexers')\n        elif is_integer(i) and not ax.holds_integer():\n            raise ValueError('At based indexing on an non-integer index can only have non-integer indexers')\n    return key",
+        "function_after": "def _convert_key(self, key, is_setter: bool=False):\n    \"\"\"\n        Require they keys to be the same type as the index. (so we don't\n        fallback)\n        \"\"\"\n    if is_setter:\n        return list(key)\n    for ax, i in zip(self.obj.axes, key):\n        if ax.is_integer():\n            if not is_integer(i):\n                raise ValueError('At based indexing on an integer index can only have integer indexers')\n        elif is_integer(i) and (not (ax.holds_integer() or ax.is_floating())):\n            raise ValueError('At based indexing on an non-integer index can only have non-integer indexers')\n    return key"
+      },
+      "file_name": "indexing.py",
+      "file_path": "pandas/core/indexing.py",
+      "score_reranked": 0.731365097242426
+    },
+    {
+      "id": "36",
+      "project_name": "pandas",
+      "buggy_line_content": "            self.df = df",
+      "function": {
+        "function_name": "__init__",
+        "function_parent": "ExcelFormatter",
+        "function_before_start_line": 372,
+        "function_before_end_line": 414,
+        "function_after_start_line": 372,
+        "function_after_end_line": 414,
+        "function_before_token_count": 240,
+        "function_after_token_count": 247,
+        "function_before": "def __init__(self, df, na_rep: str='', float_format: Optional[str]=None, cols: Optional[Sequence[Label]]=None, header: Union[Sequence[Label], bool]=True, index: bool=True, index_label: Optional[Union[Label, Sequence[Label]]]=None, merge_cells: bool=False, inf_rep: str='inf', style_converter: Optional[Callable]=None):\n    self.rowcounter = 0\n    self.na_rep = na_rep\n    if hasattr(df, 'render'):\n        self.styler = df\n        df = df.data\n        if style_converter is None:\n            style_converter = CSSToExcelConverter()\n        self.style_converter = style_converter\n    else:\n        self.styler = None\n    self.df = df\n    if cols is not None:\n        if not len(Index(cols) & df.columns):\n            raise KeyError('passes columns are not ALL present dataframe')\n        if len(Index(cols) & df.columns) != len(cols):\n            raise KeyError(\"Not all names specified in 'columns' are found\")\n        self.df = df\n    self.columns = self.df.columns\n    self.float_format = float_format\n    self.index = index\n    self.index_label = index_label\n    self.header = header\n    self.merge_cells = merge_cells\n    self.inf_rep = inf_rep",
+        "function_after": "def __init__(self, df, na_rep: str='', float_format: Optional[str]=None, cols: Optional[Sequence[Label]]=None, header: Union[Sequence[Label], bool]=True, index: bool=True, index_label: Optional[Union[Label, Sequence[Label]]]=None, merge_cells: bool=False, inf_rep: str='inf', style_converter: Optional[Callable]=None):\n    self.rowcounter = 0\n    self.na_rep = na_rep\n    if hasattr(df, 'render'):\n        self.styler = df\n        df = df.data\n        if style_converter is None:\n            style_converter = CSSToExcelConverter()\n        self.style_converter = style_converter\n    else:\n        self.styler = None\n    self.df = df\n    if cols is not None:\n        if not len(Index(cols) & df.columns):\n            raise KeyError('passes columns are not ALL present dataframe')\n        if len(Index(cols) & df.columns) != len(cols):\n            raise KeyError(\"Not all names specified in 'columns' are found\")\n        self.df = df.reindex(columns=cols)\n    self.columns = self.df.columns\n    self.float_format = float_format\n    self.index = index\n    self.index_label = index_label\n    self.header = header\n    self.merge_cells = merge_cells\n    self.inf_rep = inf_rep"
+      },
+      "file_name": "excel.py",
+      "file_path": "pandas/io/formats/excel.py",
+      "score_reranked": 0.7277155728238293
+    },
+    {
+      "id": "39",
+      "project_name": "pandas",
+      "buggy_line_content": "            except (TypeError, ValueError):",
+      "function": {
+        "function_name": "_try_convert_data",
+        "function_parent": "Parser",
+        "function_before_start_line": 886,
+        "function_before_end_line": 958,
+        "function_after_start_line": 886,
+        "function_after_end_line": 958,
+        "function_before_token_count": 277,
+        "function_after_token_count": 279,
+        "function_before": "def _try_convert_data(self, name, data, use_dtypes=True, convert_dates=True):\n    \"\"\"\n        Try to parse a ndarray like into a column by inferring dtype.\n        \"\"\"\n    if use_dtypes:\n        if not self.dtype:\n            return (data, False)\n        elif self.dtype is True:\n            pass\n        else:\n            dtype = self.dtype.get(name) if isinstance(self.dtype, dict) else self.dtype\n            if dtype is not None:\n                try:\n                    dtype = np.dtype(dtype)\n                    return (data.astype(dtype), True)\n                except (TypeError, ValueError):\n                    return (data, False)\n    if convert_dates:\n        new_data, result = self._try_convert_to_date(data)\n        if result:\n            return (new_data, True)\n    result = False\n    if data.dtype == 'object':\n        try:\n            data = data.astype('float64')\n            result = True\n        except (TypeError, ValueError):\n            pass\n    if data.dtype.kind == 'f':\n        if data.dtype != 'float64':\n            try:\n                data = data.astype('float64')\n                result = True\n            except (TypeError, ValueError):\n                pass\n    if len(data) and (data.dtype == 'float' or data.dtype == 'object'):\n        try:\n            new_data = data.astype('int64')\n            if (new_data == data).all():\n                data = new_data\n                result = True\n        except (TypeError, ValueError):\n            pass\n    if data.dtype == 'int':\n        try:\n            data = data.astype('int64')\n            result = True\n        except (TypeError, ValueError):\n            pass\n    return (data, result)",
+        "function_after": "def _try_convert_data(self, name, data, use_dtypes=True, convert_dates=True):\n    \"\"\"\n        Try to parse a ndarray like into a column by inferring dtype.\n        \"\"\"\n    if use_dtypes:\n        if not self.dtype:\n            return (data, False)\n        elif self.dtype is True:\n            pass\n        else:\n            dtype = self.dtype.get(name) if isinstance(self.dtype, dict) else self.dtype\n            if dtype is not None:\n                try:\n                    dtype = np.dtype(dtype)\n                    return (data.astype(dtype), True)\n                except (TypeError, ValueError):\n                    return (data, False)\n    if convert_dates:\n        new_data, result = self._try_convert_to_date(data)\n        if result:\n            return (new_data, True)\n    result = False\n    if data.dtype == 'object':\n        try:\n            data = data.astype('float64')\n            result = True\n        except (TypeError, ValueError):\n            pass\n    if data.dtype.kind == 'f':\n        if data.dtype != 'float64':\n            try:\n                data = data.astype('float64')\n                result = True\n            except (TypeError, ValueError):\n                pass\n    if len(data) and (data.dtype == 'float' or data.dtype == 'object'):\n        try:\n            new_data = data.astype('int64')\n            if (new_data == data).all():\n                data = new_data\n                result = True\n        except (TypeError, ValueError, OverflowError):\n            pass\n    if data.dtype == 'int':\n        try:\n            data = data.astype('int64')\n            result = True\n        except (TypeError, ValueError):\n            pass\n    return (data, result)"
+      },
+      "file_name": "_json.py",
+      "file_path": "pandas/io/json/_json.py",
+      "score_reranked": 0.5856253659798103
+    },
+    {
+      "id": "6",
+      "project_name": "luigi",
+      "buggy_line_content": "            elif task.scheduler_disable_time is not None:",
+      "function": {
+        "function_name": "set_status",
+        "function_parent": "SimpleTaskState",
+        "function_before_start_line": 393,
+        "function_before_end_line": 427,
+        "function_after_start_line": 393,
+        "function_after_end_line": 427,
+        "function_before_token_count": 192,
+        "function_after_token_count": 196,
+        "function_before": "def set_status(self, task, new_status, config=None):\n    if new_status == FAILED:\n        assert config is not None\n    if new_status == DISABLED and task.status == RUNNING:\n        return\n    if task.status == DISABLED:\n        if new_status == DONE:\n            self.re_enable(task)\n        elif task.scheduler_disable_time is not None:\n            return\n    if new_status == FAILED and task.can_disable() and (task.status != DISABLED):\n        task.add_failure()\n        if task.has_excessive_failures():\n            task.scheduler_disable_time = time.time()\n            new_status = DISABLED\n            notifications.send_error_email('Luigi Scheduler: DISABLED {task} due to excessive failures'.format(task=task.id), '{task} failed {failures} times in the last {window} seconds, so it is being disabled for {persist} seconds'.format(failures=config.disable_failures, task=task.id, window=config.disable_window, persist=config.disable_persist))\n    elif new_status == DISABLED:\n        task.scheduler_disable_time = None\n    self._status_tasks[task.status].pop(task.id)\n    self._status_tasks[new_status][task.id] = task\n    task.status = new_status",
+        "function_after": "def set_status(self, task, new_status, config=None):\n    if new_status == FAILED:\n        assert config is not None\n    if new_status == DISABLED and task.status == RUNNING:\n        return\n    if task.status == DISABLED:\n        if new_status == DONE:\n            self.re_enable(task)\n        elif task.scheduler_disable_time is not None and new_status != DISABLED:\n            return\n    if new_status == FAILED and task.can_disable() and (task.status != DISABLED):\n        task.add_failure()\n        if task.has_excessive_failures():\n            task.scheduler_disable_time = time.time()\n            new_status = DISABLED\n            notifications.send_error_email('Luigi Scheduler: DISABLED {task} due to excessive failures'.format(task=task.id), '{task} failed {failures} times in the last {window} seconds, so it is being disabled for {persist} seconds'.format(failures=config.disable_failures, task=task.id, window=config.disable_window, persist=config.disable_persist))\n    elif new_status == DISABLED:\n        task.scheduler_disable_time = None\n    self._status_tasks[task.status].pop(task.id)\n    self._status_tasks[new_status][task.id] = task\n    task.status = new_status"
+      },
+      "file_name": "scheduler.py",
+      "file_path": "luigi/scheduler.py",
+      "score_reranked": 0.5521475371580613
+    },
+    {
+      "id": "28",
+      "project_name": "scrapy",
+      "buggy_line_content": "        if ':' not in self._url:",
+      "function": {
+        "function_name": "_set_url",
+        "function_parent": "Request",
+        "function_before_start_line": 62,
+        "function_before_end_line": 70,
+        "function_after_start_line": 62,
+        "function_after_end_line": 70,
+        "function_before_token_count": 65,
+        "function_after_token_count": 79,
+        "function_before": "def _set_url(self, url):\n    if not isinstance(url, six.string_types):\n        raise TypeError('Request url must be str or unicode, got %s:' % type(url).__name__)\n    s = safe_url_string(url, self.encoding)\n    self._url = escape_ajax(s)\n    if ':' not in self._url:\n        raise ValueError('Missing scheme in request url: %s' % self._url)",
+        "function_after": "def _set_url(self, url):\n    if not isinstance(url, six.string_types):\n        raise TypeError('Request url must be str or unicode, got %s:' % type(url).__name__)\n    s = safe_url_string(url, self.encoding)\n    self._url = escape_ajax(s)\n    if '://' not in self._url and (not self._url.startswith('data:')):\n        raise ValueError('Missing scheme in request url: %s' % self._url)"
+      },
+      "file_name": "__init__.py",
+      "file_path": "scrapy/http/request/__init__.py",
+      "score_reranked": 0.5430167720014987
+    }
+  ],
+  "diffusion_plan": [
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 41
+        },
+        {
+          "op": "Replace",
+          "node": 20
+        },
+        {
+          "op": "GuardAdd",
+          "node": 18
+        },
+        {
+          "op": "InsertBefore",
+          "node": 20
+        },
+        {
+          "op": "GuardAdd",
+          "node": 17
+        },
+        {
+          "op": "GuardAdd",
+          "node": 20
+        },
+        {
+          "op": "Replace",
+          "node": 18
+        },
+        {
+          "op": "Replace",
+          "node": 19
+        },
+        {
+          "op": "Replace",
+          "node": 6
+        },
+        {
+          "op": "Delete",
+          "node": 18
+        }
+      ],
+      "score": 17.381818180328928
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 43
+        },
+        {
+          "op": "Replace",
+          "node": 20
+        },
+        {
+          "op": "Replace",
+          "node": 41
+        },
+        {
+          "op": "InsertBefore",
+          "node": 17
+        },
+        {
+          "op": "Replace",
+          "node": 19
+        },
+        {
+          "op": "Replace",
+          "node": 18
+        },
+        {
+          "op": "GuardAdd",
+          "node": 18
+        },
+        {
+          "op": "GuardAdd",
+          "node": 41
+        },
+        {
+          "op": "InsertBefore",
+          "node": 20
+        },
+        {
+          "op": "GuardAdd",
+          "node": 22
+        },
+        {
+          "op": "GuardAdd",
+          "node": 43
+        }
+      ],
+      "score": 16.918181816734712
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "GuardAdd",
+          "node": 37
+        },
+        {
+          "op": "Replace",
+          "node": 41
+        },
+        {
+          "op": "Replace",
+          "node": 18
+        },
+        {
+          "op": "GuardAdd",
+          "node": 41
+        },
+        {
+          "op": "GuardAdd",
+          "node": 18
+        },
+        {
+          "op": "Replace",
+          "node": 43
+        },
+        {
+          "op": "Replace",
+          "node": 19
+        },
+        {
+          "op": "Delete",
+          "node": 6
+        }
+      ],
+      "score": 16.65454545330413
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 37
+        },
+        {
+          "op": "Replace",
+          "node": 19
+        },
+        {
+          "op": "Replace",
+          "node": 18
+        },
+        {
+          "op": "Replace",
+          "node": 43
+        },
+        {
+          "op": "Replace",
+          "node": 20
+        },
+        {
+          "op": "Replace",
+          "node": 41
+        },
+        {
+          "op": "InsertBefore",
+          "node": 41
+        },
+        {
+          "op": "GuardAdd",
+          "node": 18
+        }
+      ],
+      "score": 16.590909089673556
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 18
+        },
+        {
+          "op": "Replace",
+          "node": 6
+        },
+        {
+          "op": "GuardAdd",
+          "node": 6
+        },
+        {
+          "op": "Delete",
+          "node": 6
+        },
+        {
+          "op": "Replace",
+          "node": 17
+        },
+        {
+          "op": "GuardAdd",
+          "node": 41
+        },
+        {
+          "op": "GuardAdd",
+          "node": 20
+        },
+        {
+          "op": "Replace",
+          "node": 20
+        },
+        {
+          "op": "Replace",
+          "node": 37
+        },
+        {
+          "op": "Replace",
+          "node": 19
+        }
+      ],
+      "score": 16.309090907699176
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 18
+        },
+        {
+          "op": "GuardAdd",
+          "node": 41
+        },
+        {
+          "op": "Replace",
+          "node": 19
+        },
+        {
+          "op": "Replace",
+          "node": 41
+        },
+        {
+          "op": "Replace",
+          "node": 17
+        },
+        {
+          "op": "Replace",
+          "node": 6
+        },
+        {
+          "op": "Replace",
+          "node": 20
+        },
+        {
+          "op": "InsertBefore",
+          "node": 20
+        }
+      ],
+      "score": 16.272727271520665
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 37
+        },
+        {
+          "op": "Replace",
+          "node": 20
+        },
+        {
+          "op": "GuardAdd",
+          "node": 41
+        },
+        {
+          "op": "Replace",
+          "node": 18
+        },
+        {
+          "op": "GuardAdd",
+          "node": 44
+        },
+        {
+          "op": "GuardAdd",
+          "node": 6
+        },
+        {
+          "op": "GuardAdd",
+          "node": 18
+        },
+        {
+          "op": "Replace",
+          "node": 41
+        }
+      ],
+      "score": 16.181818180619835
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 18
+        },
+        {
+          "op": "Replace",
+          "node": 41
+        },
+        {
+          "op": "Replace",
+          "node": 37
+        },
+        {
+          "op": "GuardAdd",
+          "node": 18
+        },
+        {
+          "op": "Replace",
+          "node": 6
+        },
+        {
+          "op": "Replace",
+          "node": 17
+        },
+        {
+          "op": "Replace",
+          "node": 19
+        },
+        {
+          "op": "Replace",
+          "node": 43
+        }
+      ],
+      "score": 16.054545453358678
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "GuardAdd",
+          "node": 18
+        },
+        {
+          "op": "Replace",
+          "node": 18
+        },
+        {
+          "op": "Delete",
+          "node": 17
+        },
+        {
+          "op": "Replace",
+          "node": 19
+        },
+        {
+          "op": "GuardAdd",
+          "node": 6
+        },
+        {
+          "op": "GuardAdd",
+          "node": 20
+        },
+        {
+          "op": "GuardAdd",
+          "node": 43
+        },
+        {
+          "op": "Replace",
+          "node": 41
+        }
+      ],
+      "score": 15.963636362457851
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 18
+        },
+        {
+          "op": "Replace",
+          "node": 20
+        },
+        {
+          "op": "GuardAdd",
+          "node": 41
+        },
+        {
+          "op": "Replace",
+          "node": 41
+        },
+        {
+          "op": "GuardAdd",
+          "node": 37
+        },
+        {
+          "op": "Delete",
+          "node": 37
+        },
+        {
+          "op": "Replace",
+          "node": 19
+        },
+        {
+          "op": "Replace",
+          "node": 6
+        }
+      ],
+      "score": 15.945454544277688
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 17
+        },
+        {
+          "op": "Delete",
+          "node": 6
+        },
+        {
+          "op": "InsertBefore",
+          "node": 44
+        },
+        {
+          "op": "Replace",
+          "node": 41
+        },
+        {
+          "op": "Replace",
+          "node": 19
+        },
+        {
+          "op": "GuardAdd",
+          "node": 43
+        },
+        {
+          "op": "Replace",
+          "node": 18
+        },
+        {
+          "op": "GuardAdd",
+          "node": 19
+        },
+        {
+          "op": "Replace",
+          "node": 20
+        },
+        {
+          "op": "InsertBefore",
+          "node": 6
+        },
+        {
+          "op": "Delete",
+          "node": 17
+        }
+      ],
+      "score": 15.599999998672729
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 20
+        },
+        {
+          "op": "GuardAdd",
+          "node": 37
+        },
+        {
+          "op": "GuardAdd",
+          "node": 6
+        },
+        {
+          "op": "Replace",
+          "node": 37
+        },
+        {
+          "op": "Replace",
+          "node": 18
+        },
+        {
+          "op": "GuardAdd",
+          "node": 20
+        },
+        {
+          "op": "InsertAfter",
+          "node": 6
+        },
+        {
+          "op": "Replace",
+          "node": 43
+        },
+        {
+          "op": "GuardAdd",
+          "node": 43
+        },
+        {
+          "op": "Replace",
+          "node": 44
+        },
+        {
+          "op": "Replace",
+          "node": 19
+        }
+      ],
+      "score": 15.581818180492562
+    }
+  ],
+  "static_analysis_nodes": [
+    {
+      "line": 7,
+      "line_absolute": 4552,
+      "node_id": 18,
+      "node_id_local": 8,
+      "type": "Call",
+      "code": "is_categorical(target)",
+      "distance_to_buggy": 0,
+      "context": "   4:       pself, ptarget = self._maybe_promote(target)\n   5:       if pself is not self or ptarget is not target:\n   6:           return pself.get_indexer_non_unique(ptarget)\n   7:->     if is_categorical(target):\n   8:           tgt_values = np.asarray(target)\n   9:       elif self.is_all_dates:\n  10:           tgt_values = target.asi8",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Name",
+          "id": "is_categorical",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [
+          {
+            "_type": "Name",
+            "id": "target",
+            "ctx": {
+              "_type": "Load"
+            }
+          }
+        ],
+        "keywords": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -24.0
+    },
+    {
+      "line": 8,
+      "line_absolute": 4553,
+      "node_id": 41,
+      "node_id_local": 10,
+      "type": "Call",
+      "code": "np.asarray(target)",
+      "distance_to_buggy": 0,
+      "context": "   5:       if pself is not self or ptarget is not target:\n   6:           return pself.get_indexer_non_unique(ptarget)\n   7:       if is_categorical(target):\n   8:->         tgt_values = np.asarray(target)\n   9:       elif self.is_all_dates:\n  10:           tgt_values = target.asi8\n  11:       else:",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Attribute",
+          "value": {
+            "_type": "Name"
+          },
+          "attr": "asarray",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [
+          {
+            "_type": "Name",
+            "id": "target",
+            "ctx": {
+              "_type": "Load"
+            }
+          }
+        ],
+        "keywords": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -24.0
+    },
+    {
+      "line": 7,
+      "line_absolute": 4552,
+      "node_id": 6,
+      "node_id_local": 7,
+      "type": "If",
+      "code": "if is_categorical(target):\n    tgt_values = np.asarray(target)\nelif self.is_all_dates:\n    tgt_values = target.asi8\nelse:\n    tgt_values = target._ndarray_values",
+      "distance_to_buggy": 0,
+      "context": "   4:       pself, ptarget = self._maybe_promote(target)\n   5:       if pself is not self or ptarget is not target:\n   6:           return pself.get_indexer_non_unique(ptarget)\n   7:->     if is_categorical(target):\n   8:           tgt_values = np.asarray(target)\n   9:       elif self.is_all_dates:\n  10:           tgt_values = target.asi8",
+      "ast_subtree_json": {
+        "_type": "If",
+        "test": {
+          "_type": "Call",
+          "func": {
+            "_type": "Name"
+          },
+          "args": [
+            {
+              "_type": "Name"
+            }
+          ],
+          "keywords": []
+        },
+        "body": [
+          {
+            "_type": "Assign",
+            "targets": [
+              {
+                "_type": "Name"
+              }
+            ],
+            "value": {
+              "_type": "Call"
+            },
+            "type_comment": null
+          }
+        ],
+        "orelse": [
+          {
+            "_type": "If",
+            "test": {
+              "_type": "Attribute"
+            },
+            "body": [
+              {
+                "_type": "Assign"
+              }
+            ],
+            "orelse": [
+              {
+                "_type": "Assign"
+              }
+            ]
+          }
+        ]
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -23.0
+    },
+    {
+      "line": 8,
+      "line_absolute": 4553,
+      "node_id": 19,
+      "node_id_local": 9,
+      "type": "Assign",
+      "code": "tgt_values = np.asarray(target)",
+      "distance_to_buggy": 0,
+      "context": "   5:       if pself is not self or ptarget is not target:\n   6:           return pself.get_indexer_non_unique(ptarget)\n   7:       if is_categorical(target):\n   8:->         tgt_values = np.asarray(target)\n   9:       elif self.is_all_dates:\n  10:           tgt_values = target.asi8\n  11:       else:",
+      "ast_subtree_json": {
+        "_type": "Assign",
+        "targets": [
+          {
+            "_type": "Name",
+            "id": "tgt_values",
+            "ctx": {
+              "_type": "Store"
+            }
+          }
+        ],
+        "value": {
+          "_type": "Call",
+          "func": {
+            "_type": "Attribute"
+          },
+          "args": [
+            {
+              "_type": "Name"
+            }
+          ],
+          "keywords": []
+        },
+        "type_comment": null
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -23.0
+    },
+    {
+      "line": 9,
+      "line_absolute": 4554,
+      "node_id": 20,
+      "node_id_local": 11,
+      "type": "If",
+      "code": "if self.is_all_dates:\n    tgt_values = target.asi8\nelse:\n    tgt_values = target._ndarray_values",
+      "distance_to_buggy": 0,
+      "context": "   6:           return pself.get_indexer_non_unique(ptarget)\n   7:       if is_categorical(target):\n   8:           tgt_values = np.asarray(target)\n   9:->     elif self.is_all_dates:\n  10:           tgt_values = target.asi8\n  11:       else:\n  12:           tgt_values = target._ndarray_values",
+      "ast_subtree_json": {
+        "_type": "If",
+        "test": {
+          "_type": "Attribute",
+          "value": {
+            "_type": "Name"
+          },
+          "attr": "is_all_dates",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "body": [
+          {
+            "_type": "Assign",
+            "targets": [
+              {
+                "_type": "Name"
+              }
+            ],
+            "value": {
+              "_type": "Attribute"
+            },
+            "type_comment": null
+          }
+        ],
+        "orelse": [
+          {
+            "_type": "Assign",
+            "targets": [
+              {
+                "_type": "Name"
+              }
+            ],
+            "value": {
+              "_type": "Attribute"
+            },
+            "type_comment": null
+          }
+        ]
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -23.0
+    },
+    {
+      "line": 10,
+      "line_absolute": 4555,
+      "node_id": 43,
+      "node_id_local": 12,
+      "type": "Assign",
+      "code": "tgt_values = target.asi8",
+      "distance_to_buggy": 0,
+      "context": "   7:       if is_categorical(target):\n   8:           tgt_values = np.asarray(target)\n   9:       elif self.is_all_dates:\n  10:->         tgt_values = target.asi8\n  11:       else:\n  12:           tgt_values = target._ndarray_values\n  13:       indexer, missing = self._engine.get_indexer_non_unique(tgt_values)",
+      "ast_subtree_json": {
+        "_type": "Assign",
+        "targets": [
+          {
+            "_type": "Name",
+            "id": "tgt_values",
+            "ctx": {
+              "_type": "Store"
+            }
+          }
+        ],
+        "value": {
+          "_type": "Attribute",
+          "value": {
+            "_type": "Name"
+          },
+          "attr": "asi8",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "type_comment": null
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|system|>...",
+      "reranker_score": -23.0
+    },
+    {
+      "line": 6,
+      "line_absolute": 4551,
+      "node_id": 37,
+      "node_id_local": 6,
+      "type": "Call",
+      "code": "pself.get_indexer_non_unique(ptarget)",
+      "distance_to_buggy": 1,
+      "context": "   3:       target = ensure_index(target)\n   4:       pself, ptarget = self._maybe_promote(target)\n   5:       if pself is not self or ptarget is not target:\n   6:->         return pself.get_indexer_non_unique(ptarget)\n   7:       if is_categorical(target):\n   8:           tgt_values = np.asarray(target)\n   9:       elif self.is_all_dates:",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Attribute",
+          "value": {
+            "_type": "Name"
+          },
+          "attr": "get_indexer_non_unique",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [
+          {
+            "_type": "Name",
+            "id": "ptarget",
+            "ctx": {
+              "_type": "Load"
+            }
+          }
+        ],
+        "keywords": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -15.0
+    },
+    {
+      "line": 6,
+      "line_absolute": 4551,
+      "node_id": 17,
+      "node_id_local": 5,
+      "type": "Return",
+      "code": "return pself.get_indexer_non_unique(ptarget)",
+      "distance_to_buggy": 1,
+      "context": "   3:       target = ensure_index(target)\n   4:       pself, ptarget = self._maybe_promote(target)\n   5:       if pself is not self or ptarget is not target:\n   6:->         return pself.get_indexer_non_unique(ptarget)\n   7:       if is_categorical(target):\n   8:           tgt_values = np.asarray(target)\n   9:       elif self.is_all_dates:",
+      "ast_subtree_json": {
+        "_type": "Return",
+        "value": {
+          "_type": "Call",
+          "func": {
+            "_type": "Attribute"
+          },
+          "args": [
+            {
+              "_type": "Name"
+            }
+          ],
+          "keywords": []
+        }
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -13.0
+    },
+    {
+      "line": 12,
+      "line_absolute": 4557,
+      "node_id": 44,
+      "node_id_local": 13,
+      "type": "Assign",
+      "code": "tgt_values = target._ndarray_values",
+      "distance_to_buggy": 1,
+      "context": "   9:       elif self.is_all_dates:\n  10:           tgt_values = target.asi8\n  11:       else:\n  12:->         tgt_values = target._ndarray_values\n  13:       indexer, missing = self._engine.get_indexer_non_unique(tgt_values)\n  14:       return (ensure_platform_int(indexer), missing)",
+      "ast_subtree_json": {
+        "_type": "Assign",
+        "targets": [
+          {
+            "_type": "Name",
+            "id": "tgt_values",
+            "ctx": {
+              "_type": "Store"
+            }
+          }
+        ],
+        "value": {
+          "_type": "Attribute",
+          "value": {
+            "_type": "Name"
+          },
+          "attr": "_ndarray_values",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "type_comment": null
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -13.0
+    },
+    {
+      "line": 13,
+      "line_absolute": 4558,
+      "node_id": 22,
+      "node_id_local": 15,
+      "type": "Call",
+      "code": "self._engine.get_indexer_non_unique(tgt_values)",
+      "distance_to_buggy": 2,
+      "context": "  10:           tgt_values = target.asi8\n  11:       else:\n  12:           tgt_values = target._ndarray_values\n  13:->     indexer, missing = self._engine.get_indexer_non_unique(tgt_values)\n  14:       return (ensure_platform_int(indexer), missing)",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Attribute",
+          "value": {
+            "_type": "Attribute"
+          },
+          "attr": "get_indexer_non_unique",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [
+          {
+            "_type": "Name",
+            "id": "tgt_values",
+            "ctx": {
+              "_type": "Load"
+            }
+          }
+        ],
+        "keywords": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -5.0
+    }
+  ]
+}

@@ -1,0 +1,1122 @@
+{
+  "bug_id": "28",
+  "seed": 43,
+  "arm": "full",
+  "candidates": [
+    {
+      "index": 0,
+      "patch_text": "def _set_url(self, url):\n    if ':' not in url:\n        raise ValueError('Missing scheme in request url: %s' % url)\n    self._url = url",
+      "patch_sha256": "9c3e9ec661edbdbebbd498d805cc2fa844c3cf393b42becf9520c663a4d27fb5",
+      "rank_score": 192,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.5346552071407396,
+      "top_p": 0.98
+    },
+    {
+      "index": 1,
+      "patch_text": "def _set_url(self, url):\n    if ':' not in url:\n        raise ValueError('Missing scheme in request url: %s' % url)\n    self._url = escape_ajax(url)\n\n# Corrected: 17170922\n# Planned edits: 6\n# Edit1: Replace node=14\n# Edit2: GuardAdd node=19\n# Edit3: GuardAdd node=5\n# Edit4: Replace node=19\n# Edit5: Replace node=18\n# Edit6: Replace node=5\n# Planned fixes: 6\n# Fixes: 6\n# Repairer: \n# Author: \n# Committer: \n# Repo: scrapy\n# Filename: scrapy/http/request/__init__.py\n# Buggy line: 69\n# Fix line: 69\n# Comment: # <--- BUGGY LINE\n# Patch type: replace\n# Scores: 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.000",
+      "patch_sha256": "01b07491ecac2fe7e49567db00cf3de936d7116744703539de824b631d10491e",
+      "rank_score": 162,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7976020643090617,
+      "top_p": 0.8970025803863271
+    },
+    {
+      "index": 2,
+      "patch_text": "def _set_url(self, url):\n    s = safe_url_string(url, self.encoding)\n    self._url = escape_ajax(s)\n    if ':' not in self._url:\n        raise ValueError('Missing scheme in request url: %s' % self._url)\n\n##correct\ndef _set_url(self, url):\n    self._url = escape_ajax(s)\n    if ':' not in self._url:\n        raise ValueError('Missing scheme in request url: %s' % self._url)\n\n##correct\ndef _set_url(self, url):\n    self._url = escape_ajax(s)\n    if ':' not in self._url:\n        raise ValueError('Missing scheme in request url: %s' % self._url)\n\n##correct\ndef _set_url(self, url):\n    if ':' not in self._url:\n        raise ValueError('Missing scheme in request url: %s' % self._url)\n    self._url = escape_ajax(s)\n\n##correct\ndef _set_url(self, url):\n    if ':' not in self._url:\n        raise ValueError('Missing scheme in request url: %s' % self._url)\n    self._url = escape_ajax(s)\n\n##correct\ndef _set_url(self, url):\n    if ':' not in self._url:\n        raise ValueError('Missing scheme in request url: %s' % self._url)\n    self._url = escape_ajax(s)\n    if ':' not in self._url:\n        raise ValueError('Missing scheme in request url: %s' % self._url)\n\n##correct\ndef _set_url(self, url):\n    self._url = escape_ajax(s)\n    if ':' not in self._url:\n        raise ValueError('Missing scheme in request url: %s' % self._url)\n    if ':' not in self._url:\n        raise ValueError('Missing scheme in request url: %s' % self._url)\n\n##correct\ndef _set_url(self, url):\n    self._url = escape_ajax(s)\n    if ':' not in self._url:\n        raise ValueError('Missing scheme in request url: %s' % self._url)\n    if ':' not in self._url:\n        raise ValueError('Missing scheme in request url: %s' % self._url)\n\n##correct\ndef _set_url(self, url):\n    self._url = escape_ajax(s)\n    if ':' not in self._url:\n        raise ValueError('Missing scheme in request url: %s' % self._url)\n    if ':' not in self._url:\n        raise ValueError('Missing scheme in request url: %s' % self._url)\n    if ':' not in self._url:\n        raise ValueError('Missing scheme in request url: %s' % self._url)\n\n##correct\ndef _set_url(self, url):\n    self._",
+      "patch_sha256": "8766a8a8c54877ce14579fc23b21a3909106b4a181ec020461a32343b83497e6",
+      "rank_score": 111,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7970041106218376,
+      "top_p": 0.896255138277297
+    },
+    {
+      "index": 3,
+      "patch_text": "def _set_url(self, url):\n    if not isinstance(url, six.string_types):\n        raise TypeError('Request url must be str or unicode, got %s:' % type(url).__name__)\n    s = safe_url_string(url, self.encoding)\n    self._url = escape_ajax(s)\n    if ':' not in self._url:\n        raise ValueError('Missing scheme in request url: %s' % self._url)\n\n\n##correct\n\ndef _parse_sitemap(self, response):\n    if response.url.endswith('/robots.txt'):\n        for url in sitemap_urls_from_robots(response.body):\n            yield Request(url, callback=self._parse_sitemap)\n    else:\n        body = self._get_sitemap_body(response)\n\n##correct\n\nclass DataFrameFormatter(object):\n    def __init__(self, df, columns=None, index=None, float_format=None):\n        if columns is None:\n            columns = df.columns\n        elif not columns:\n            raise KeyError('columns is empty')\n        elif len(Index(columns) & df.columns)!= len(columns):\n            raise KeyError(\"Not all names specified in 'columns' are found\")\n        self.df = df\n        self.columns = self.df.columns\n        self.float_format = float_format\n        self.index = index\n\n    def get_formatted_values(self):\n        if self.columns is None:\n            return []\n        elif len(self.columns) == 1:\n            col = self.columns[0]\n            formatter = get_formatter(self.df[col])\n            values = formatter(self.df[col], self.float_format)\n            return [values]\n        else:\n            formatter = get_formatter(self.df[self.columns])\n            return [formatter(self.df[col], self.float_format) for col in self.columns]\n\n    def get_formatted_column_values(self):\n        return [v for v in self.get_formatted_values()]\n\n    def get_formatted_index_values(self):\n        return [v for v in self.get_formatted_values()]\n\n##correct\n\nclass DataFrameFormatter(object):\n    def __init__(self, df, columns=None, index=None, float_format=None):\n        if columns is None:\n            columns = df.columns\n        elif not columns:\n            raise KeyError('columns is empty')\n        elif len(Index(columns) & df.columns)!= len(columns):\n            raise KeyError(\"Not all names specified in 'columns' are found\")\n        self.df = df\n        self.columns = self.df.columns\n        self.float_format = float_format\n        self.index = index\n\n    def get_formatted_values(self):\n        if self.columns is None:\n            return []\n        elif len(self.columns) == 1:\n            col = self.columns[0]",
+      "patch_sha256": "d981df501a0e7be310ad3a54540fcdb36697676aa2f55a3982b9b2a35d310c22",
+      "rank_score": 29,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.934442110146087,
+      "top_p": 0.8256979458109642
+    },
+    {
+      "index": 4,
+      "patch_text": "def _set_url(self, url):\n    if not isinstance(url, six.string_types):\n        raise TypeError('Request url must be str or unicode, got %s:' % type(url).__name__)\n    s = safe_url_string(url, self.encoding)\n    self._url = escape_ajax(s)\n    if ':' not in self._url:\n        raise ValueError('Missing scheme in request url: %s' % self._url)\n# Copyright (C) 2020-2021 University of Massachusetts Amherst.\n# This file is part of the DeepFix project.\n# author:, \n\nimport os\nimport sys\nimport json\nimport time\nimport shutil\nimport argparse\nimport traceback\nimport multiprocessing\nimport subprocess\n\nimport utils\nimport config as cfg\nimport log\n\n# TODO: change this to use the new version of the test suite\ndef run_test_suite(path_to_test_suite, args):\n    \"\"\"\n    Run the test suite on the given path.\n    :param path_to_test_suite: The path to the test suite.\n    :param args: The arguments passed from the command line.\n    \"\"\"\n\n    # Check if the given path is a directory containing test suites.\n    if not os.path.isdir(path_to_test_suite):\n        log.error(\"The given path is not a directory.\")\n        sys.exit(1)\n\n    # Get all the test suite paths in the given directory.\n    test_suites = [os.path.join(path_to_test_suite, f) for f in os.listdir(path_to_test_suite)]\n\n    # Filter out non-directories.\n    test_suites = list(filter(lambda x: os.path.isdir(x), test_suites))\n\n    # Get all the test suite names.\n    test_suite_names = list(map(lambda x: os.path.basename(x), test_suites))\n\n    # Print the test suite names.\n    log.info(\"Test suite names:\")\n    for name in test_suite_names:\n        log.info(name)\n\n    # Get the test suite to run.\n    if args.test_suite is None:\n        log.info(\"No test suite specified, running all test suites.\")\n        test_suites_to_run = test_suites\n    else:\n        test_suite_to_run = [os.path.join(path_to_test_suite, args.test_suite)]\n\n    # Run the test suites.\n    for test_suite in test_suites_to_run:\n\n        # Get the name of the test suite.\n        test_suite_name = os.path.basename(test_suite)\n\n        # Print the name of the test suite.\n        log.info(\"Running test suite: {}\".format(test_suite_name))\n\n        # Get all the test cases",
+      "patch_sha256": "b734febe6db3bb06fe6a1aab5408a058df608c0598072f114a98985bced38030",
+      "rank_score": -167,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.5051876220100471,
+      "top_p": 0.9515146577116289
+    },
+    {
+      "index": 5,
+      "patch_text": "def _set_url(self, url):\n    if not isinstance(url, six.string_types):\n        raise TypeError('Request url must be str or unicode, got %s:' % type(url).__name__)\n    s = safe_url_string(url, self.encoding)\n    self._url = escape_ajax(s)\n    if ':' not in self._url:\n        raise ValueError('Missing scheme in request url: %s' % self._url)\n# Copyright (C) 2020. All rights reserved.\n# Licensed under the MIT License.\n# See LICENSE file in the project root for full license information.\n\nimport unittest\n\nfrom utils import get_output, get_correct_output, get_context, get_buggy_line\n\n\nclass Test(unittest.TestCase):\n    def test(self):\n        output = get_output(\"tests/data/test_026.py\")\n        buggy_line = get_buggy_line(output)\n        context = get_context(output)\n\n        correct_output = get_correct_output(\"tests/data/test_026.py\")\n        self.assertEqual(correct_output, output)\n\n\nif __name__ == \"__main__\":\n    unittest.main()\n# Copyright (C) 2020. All rights reserved.\n# Licensed under the MIT License.\n# See LICENSE file in the project root for full license information.\n\nimport unittest\n\nfrom utils import get_output, get_correct_output, get_context, get_buggy_line\n\n\nclass Test(unittest.TestCase):\n    def test(self):\n        output = get_output(\"tests/data/test_023.py\")\n        buggy_line = get_buggy_line(output)\n        context = get_context(output)\n\n        correct_output = get_correct_output(\"tests/data/test_023.py\")\n        self.assertEqual(correct_output, output)\n\n\nif __name__ == \"__main__\":\n    unittest.main()\n# Copyright (C) 2020. All rights reserved.\n# Licensed under the MIT License.\n# See LICENSE file in the project root for full license information.\n\nimport unittest\n\nfrom utils import get_output, get_correct_output, get_context, get_buggy_line\n\n\nclass Test(unittest.TestCase):\n    def test(self):\n        output = get_output(\"tests/data/test_027.py\")\n        buggy_line = get_buggy_line(output)\n        context = get_context(output)\n\n        correct_output = get_correct_output(\"tests/data/test_027.py\")\n        self.assertEqual(correct_output, output)\n\n\nif __name__ == \"__main__\":\n    unittest.main()\n# Copyright (C) 2020. All rights reserved",
+      "patch_sha256": "ca0030ee4d80d5a853f03da4bd86e94bb51f9018c5dabc063ede20d91e41ed65",
+      "rank_score": -167,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.9106067765084201,
+      "top_p": 0.7997899744656741
+    },
+    {
+      "index": 6,
+      "patch_text": "def _set_url(self, url):\n    if not isinstance(url, six.string_types):\n        raise TypeError('Request url must be str or unicode, got %s:' % type(url).__name__)\n    s = safe_url_string(url, self.encoding)\n    self._url = escape_ajax(s)\n    if ':' not in self._url:\n        raise ValueError('Missing scheme in request url: %s' % self._url)\n\n##test0\nfrom scrapy.http import Request\nfrom scrapy.utils.url import safe_url_string, escape_ajax\nimport unittest\nimport six\n\nclass TestRequest(unittest.TestCase):\n\n    def test_set_url(self):\n        r = Request('http://www.example.com/')\n        self.assertEqual(r._url, 'http://www.example.com/')\n\n        r = Request('http://www.example.com/', meta={'dont_merge': True})\n        self.assertEqual(r._url, 'http://www.example.com/')\n\n        r = Request('http://www.example.com/', encoding='latin-1')\n        self.assertEqual(r._url, 'http://www.example.com/')\n\n        r = Request('http://www.example.com/', encoding='iso-8859-1')\n        self.assertEqual(r._url, 'http://www.example.com/')\n\n        r = Request('http://www.example.com/', dont_filter=True)\n        self.assertEqual(r._url, 'http://www.example.com/')\n\n        r = Request('http://www.example.com/', priority=1.2)\n        self.assertEqual(r._url, 'http://www.example.com/')\n\n        r = Request('http://www.example.com/', headers={'foo': 'bar'})\n        self.assertEqual(r._url, 'http://www.example.com/')\n\n        r = Request('http://www.example.com/', meta={'foo': 'bar'})\n        self.assertEqual(r._url, 'http://www.example.com/')\n\n        r = Request('http://www.example.com/', method='GET')\n        self.assertEqual(r._url, 'http://www.example.com/')\n\n        r = Request('http://www.example.com/', body=b'hello')\n        self.assertEqual(r._url, 'http://www.example.com/')\n\n        r = Request('http://www.example.com/', callback=lambda x: None)\n        self.assertEqual(r._url, 'http://www.example.com/')\n\n        r = Request('http://www.example.com/', dont_filter=False)\n        self.assertEqual(r._url, 'http://www.example.com/')\n\n        r = Request('http://www.example.com/', cookies={'foo': 'bar'})\n        self.assertEqual(r._url, 'http://www.example.com/')",
+      "patch_sha256": "244fe5e9ea25c801b3f63ee4650e2baee483e3060f03d402aef93adb600ff76d",
+      "rank_score": -170,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.9106067765084201,
+      "top_p": 0.7997899744656741
+    }
+  ],
+  "candidate_count": 7,
+  "retrieved_examples": [
+    {
+      "id": "26",
+      "project_name": "scrapy",
+      "buggy_line_content": "            for url in sitemap_urls_from_robots(response.body):",
+      "function": {
+        "function_name": "_parse_sitemap",
+        "function_parent": "SitemapSpider",
+        "function_before_start_line": 33,
+        "function_before_end_line": 54,
+        "function_after_start_line": 33,
+        "function_after_end_line": 54,
+        "function_before_token_count": 169,
+        "function_after_token_count": 169,
+        "function_before": "def _parse_sitemap(self, response):\n    if response.url.endswith('/robots.txt'):\n        for url in sitemap_urls_from_robots(response.body):\n            yield Request(url, callback=self._parse_sitemap)\n    else:\n        body = self._get_sitemap_body(response)\n        if body is None:\n            logger.warning('Ignoring invalid sitemap: %(response)s', {'response': response}, extra={'spider': self})\n            return\n        s = Sitemap(body)\n        if s.type == 'sitemapindex':\n            for loc in iterloc(s, self.sitemap_alternate_links):\n                if any((x.search(loc) for x in self._follow)):\n                    yield Request(loc, callback=self._parse_sitemap)\n        elif s.type == 'urlset':\n            for loc in iterloc(s):\n                for r, c in self._cbs:\n                    if r.search(loc):\n                        yield Request(loc, callback=c)\n                        break",
+        "function_after": "def _parse_sitemap(self, response):\n    if response.url.endswith('/robots.txt'):\n        for url in sitemap_urls_from_robots(response.text):\n            yield Request(url, callback=self._parse_sitemap)\n    else:\n        body = self._get_sitemap_body(response)\n        if body is None:\n            logger.warning('Ignoring invalid sitemap: %(response)s', {'response': response}, extra={'spider': self})\n            return\n        s = Sitemap(body)\n        if s.type == 'sitemapindex':\n            for loc in iterloc(s, self.sitemap_alternate_links):\n                if any((x.search(loc) for x in self._follow)):\n                    yield Request(loc, callback=self._parse_sitemap)\n        elif s.type == 'urlset':\n            for loc in iterloc(s):\n                for r, c in self._cbs:\n                    if r.search(loc):\n                        yield Request(loc, callback=c)\n                        break"
+      },
+      "file_name": "sitemap.py",
+      "file_path": "scrapy/spiders/sitemap.py",
+      "score_reranked": 0.7379314624035342
+    },
+    {
+      "id": "36",
+      "project_name": "pandas",
+      "buggy_line_content": "            self.df = df",
+      "function": {
+        "function_name": "__init__",
+        "function_parent": "ExcelFormatter",
+        "function_before_start_line": 372,
+        "function_before_end_line": 414,
+        "function_after_start_line": 372,
+        "function_after_end_line": 414,
+        "function_before_token_count": 240,
+        "function_after_token_count": 247,
+        "function_before": "def __init__(self, df, na_rep: str='', float_format: Optional[str]=None, cols: Optional[Sequence[Label]]=None, header: Union[Sequence[Label], bool]=True, index: bool=True, index_label: Optional[Union[Label, Sequence[Label]]]=None, merge_cells: bool=False, inf_rep: str='inf', style_converter: Optional[Callable]=None):\n    self.rowcounter = 0\n    self.na_rep = na_rep\n    if hasattr(df, 'render'):\n        self.styler = df\n        df = df.data\n        if style_converter is None:\n            style_converter = CSSToExcelConverter()\n        self.style_converter = style_converter\n    else:\n        self.styler = None\n    self.df = df\n    if cols is not None:\n        if not len(Index(cols) & df.columns):\n            raise KeyError('passes columns are not ALL present dataframe')\n        if len(Index(cols) & df.columns) != len(cols):\n            raise KeyError(\"Not all names specified in 'columns' are found\")\n        self.df = df\n    self.columns = self.df.columns\n    self.float_format = float_format\n    self.index = index\n    self.index_label = index_label\n    self.header = header\n    self.merge_cells = merge_cells\n    self.inf_rep = inf_rep",
+        "function_after": "def __init__(self, df, na_rep: str='', float_format: Optional[str]=None, cols: Optional[Sequence[Label]]=None, header: Union[Sequence[Label], bool]=True, index: bool=True, index_label: Optional[Union[Label, Sequence[Label]]]=None, merge_cells: bool=False, inf_rep: str='inf', style_converter: Optional[Callable]=None):\n    self.rowcounter = 0\n    self.na_rep = na_rep\n    if hasattr(df, 'render'):\n        self.styler = df\n        df = df.data\n        if style_converter is None:\n            style_converter = CSSToExcelConverter()\n        self.style_converter = style_converter\n    else:\n        self.styler = None\n    self.df = df\n    if cols is not None:\n        if not len(Index(cols) & df.columns):\n            raise KeyError('passes columns are not ALL present dataframe')\n        if len(Index(cols) & df.columns) != len(cols):\n            raise KeyError(\"Not all names specified in 'columns' are found\")\n        self.df = df.reindex(columns=cols)\n    self.columns = self.df.columns\n    self.float_format = float_format\n    self.index = index\n    self.index_label = index_label\n    self.header = header\n    self.merge_cells = merge_cells\n    self.inf_rep = inf_rep"
+      },
+      "file_name": "excel.py",
+      "file_path": "pandas/io/formats/excel.py",
+      "score_reranked": 0.6065869821431166
+    },
+    {
+      "id": "39",
+      "project_name": "pandas",
+      "buggy_line_content": "            except (TypeError, ValueError):",
+      "function": {
+        "function_name": "_try_convert_data",
+        "function_parent": "Parser",
+        "function_before_start_line": 886,
+        "function_before_end_line": 958,
+        "function_after_start_line": 886,
+        "function_after_end_line": 958,
+        "function_before_token_count": 277,
+        "function_after_token_count": 279,
+        "function_before": "def _try_convert_data(self, name, data, use_dtypes=True, convert_dates=True):\n    \"\"\"\n        Try to parse a ndarray like into a column by inferring dtype.\n        \"\"\"\n    if use_dtypes:\n        if not self.dtype:\n            return (data, False)\n        elif self.dtype is True:\n            pass\n        else:\n            dtype = self.dtype.get(name) if isinstance(self.dtype, dict) else self.dtype\n            if dtype is not None:\n                try:\n                    dtype = np.dtype(dtype)\n                    return (data.astype(dtype), True)\n                except (TypeError, ValueError):\n                    return (data, False)\n    if convert_dates:\n        new_data, result = self._try_convert_to_date(data)\n        if result:\n            return (new_data, True)\n    result = False\n    if data.dtype == 'object':\n        try:\n            data = data.astype('float64')\n            result = True\n        except (TypeError, ValueError):\n            pass\n    if data.dtype.kind == 'f':\n        if data.dtype != 'float64':\n            try:\n                data = data.astype('float64')\n                result = True\n            except (TypeError, ValueError):\n                pass\n    if len(data) and (data.dtype == 'float' or data.dtype == 'object'):\n        try:\n            new_data = data.astype('int64')\n            if (new_data == data).all():\n                data = new_data\n                result = True\n        except (TypeError, ValueError):\n            pass\n    if data.dtype == 'int':\n        try:\n            data = data.astype('int64')\n            result = True\n        except (TypeError, ValueError):\n            pass\n    return (data, result)",
+        "function_after": "def _try_convert_data(self, name, data, use_dtypes=True, convert_dates=True):\n    \"\"\"\n        Try to parse a ndarray like into a column by inferring dtype.\n        \"\"\"\n    if use_dtypes:\n        if not self.dtype:\n            return (data, False)\n        elif self.dtype is True:\n            pass\n        else:\n            dtype = self.dtype.get(name) if isinstance(self.dtype, dict) else self.dtype\n            if dtype is not None:\n                try:\n                    dtype = np.dtype(dtype)\n                    return (data.astype(dtype), True)\n                except (TypeError, ValueError):\n                    return (data, False)\n    if convert_dates:\n        new_data, result = self._try_convert_to_date(data)\n        if result:\n            return (new_data, True)\n    result = False\n    if data.dtype == 'object':\n        try:\n            data = data.astype('float64')\n            result = True\n        except (TypeError, ValueError):\n            pass\n    if data.dtype.kind == 'f':\n        if data.dtype != 'float64':\n            try:\n                data = data.astype('float64')\n                result = True\n            except (TypeError, ValueError):\n                pass\n    if len(data) and (data.dtype == 'float' or data.dtype == 'object'):\n        try:\n            new_data = data.astype('int64')\n            if (new_data == data).all():\n                data = new_data\n                result = True\n        except (TypeError, ValueError, OverflowError):\n            pass\n    if data.dtype == 'int':\n        try:\n            data = data.astype('int64')\n            result = True\n        except (TypeError, ValueError):\n            pass\n    return (data, result)"
+      },
+      "file_name": "_json.py",
+      "file_path": "pandas/io/json/_json.py",
+      "score_reranked": 0.5699383222796466
+    },
+    {
+      "id": "20",
+      "project_name": "youtube-dl",
+      "buggy_line_content": "            for f in ('_type', 'url', 'ie_key'):",
+      "function": {
+        "function_name": "process_ie_result",
+        "function_parent": "YoutubeDL",
+        "function_before_start_line": 820,
+        "function_before_end_line": 1005,
+        "function_after_start_line": 820,
+        "function_after_end_line": 1005,
+        "function_before_token_count": 871,
+        "function_after_token_count": 877,
+        "function_before": "def process_ie_result(self, ie_result, download=True, extra_info={}):\n    \"\"\"\n        Take the result of the ie(may be modified) and resolve all unresolved\n        references (URLs, playlist items).\n\n        It will also download the videos if 'download'.\n        Returns the resolved ie_result.\n        \"\"\"\n    result_type = ie_result.get('_type', 'video')\n    if result_type in ('url', 'url_transparent'):\n        ie_result['url'] = sanitize_url(ie_result['url'])\n        extract_flat = self.params.get('extract_flat', False)\n        if extract_flat == 'in_playlist' and 'playlist' in extra_info or extract_flat is True:\n            if self.params.get('forcejson', False):\n                self.to_stdout(json.dumps(ie_result))\n            return ie_result\n    if result_type == 'video':\n        self.add_extra_info(ie_result, extra_info)\n        return self.process_video_result(ie_result, download=download)\n    elif result_type == 'url':\n        return self.extract_info(ie_result['url'], download, ie_key=ie_result.get('ie_key'), extra_info=extra_info)\n    elif result_type == 'url_transparent':\n        info = self.extract_info(ie_result['url'], ie_key=ie_result.get('ie_key'), extra_info=extra_info, download=False, process=False)\n        if not info:\n            return info\n        force_properties = dict(((k, v) for k, v in ie_result.items() if v is not None))\n        for f in ('_type', 'url', 'ie_key'):\n            if f in force_properties:\n                del force_properties[f]\n        new_result = info.copy()\n        new_result.update(force_properties)\n        if new_result.get('_type') == 'url':\n            new_result['_type'] = 'url_transparent'\n        return self.process_ie_result(new_result, download=download, extra_info=extra_info)\n    elif result_type in ('playlist', 'multi_video'):\n        playlist = ie_result.get('title') or ie_result.get('id')\n        self.to_screen('[download] Downloading playlist: %s' % playlist)\n        playlist_results = []\n        playliststart = self.params.get('playliststart', 1) - 1\n        playlistend = self.params.get('playlistend')\n        if playlistend == -1:\n            playlistend = None\n        playlistitems_str = self.params.get('playlist_items')\n        playlistitems = None\n        if playlistitems_str is not None:\n\n            def iter_playlistitems(format):\n                for string_segment in format.split(','):\n                    if '-' in string_segment:\n                        start, end = string_segment.split('-')\n                        for item in range(int(start), int(end) + 1):\n                            yield int(item)\n                    else:\n                        yield int(string_segment)\n            playlistitems = iter_playlistitems(playlistitems_str)\n        ie_entries = ie_result['entries']\n        if isinstance(ie_entries, list):\n            n_all_entries = len(ie_entries)\n            if playlistitems:\n                entries = [ie_entries[i - 1] for i in playlistitems if -n_all_entries <= i - 1 < n_all_entries]\n            else:\n                entries = ie_entries[playliststart:playlistend]\n            n_entries = len(entries)\n            self.to_screen('[%s] playlist %s: Collected %d video ids (downloading %d of them)' % (ie_result['extractor'], playlist, n_all_entries, n_entries))\n        elif isinstance(ie_entries, PagedList):\n            if playlistitems:\n                entries = []\n                for item in playlistitems:\n                    entries.extend(ie_entries.getslice(item - 1, item))\n            else:\n                entries = ie_entries.getslice(playliststart, playlistend)\n            n_entries = len(entries)\n            self.to_screen('[%s] playlist %s: Downloading %d videos' % (ie_result['extractor'], playlist, n_entries))\n        else:\n            if playlistitems:\n                entry_list = list(ie_entries)\n                entries = [entry_list[i - 1] for i in playlistitems]\n            else:\n                entries = list(itertools.islice(ie_entries, playliststart, playlistend))\n            n_entries = len(entries)\n            self.to_screen('[%s] playlist %s: Downloading %d videos' % (ie_result['extractor'], playlist, n_entries))\n        if self.params.get('playlistreverse', False):\n            entries = entries[::-1]\n        if self.params.get('playlistrandom', False):\n            random.shuffle(entries)\n        x_forwarded_for = ie_result.get('__x_forwarded_for_ip')\n        for i, entry in enumerate(entries, 1):\n            self.to_screen('[download] Downloading video %s of %s' % (i, n_entries))\n            if x_forwarded_for:\n                entry['__x_forwarded_for_ip'] = x_forwarded_for\n            extra = {'n_entries': n_entries, 'playlist': playlist, 'playlist_id': ie_result.get('id'), 'playlist_title': ie_result.get('title'), 'playlist_index': i + playliststart, 'extractor': ie_result['extractor'], 'webpage_url': ie_result['webpage_url'], 'webpage_url_basename': url_basename(ie_result['webpage_url']), 'extractor_key': ie_result['extractor_key']}\n            reason = self._match_entry(entry, incomplete=True)\n            if reason is not None:\n                self.to_screen('[download] ' + reason)\n                continue\n            entry_result = self.process_ie_result(entry, download=download, extra_info=extra)\n            playlist_results.append(entry_result)\n        ie_result['entries'] = playlist_results\n        self.to_screen('[download] Finished downloading playlist: %s' % playlist)\n        return ie_result\n    elif result_type == 'compat_list':\n        self.report_warning('Extractor %s returned a compat_list result. It needs to be updated.' % ie_result.get('extractor'))\n\n        def _fixup(r):\n            self.add_extra_info(r, {'extractor': ie_result['extractor'], 'webpage_url': ie_result['webpage_url'], 'webpage_url_basename': url_basename(ie_result['webpage_url']), 'extractor_key': ie_result['extractor_key']})\n            return r\n        ie_result['entries'] = [self.process_ie_result(_fixup(r), download, extra_info) for r in ie_result['entries']]\n        return ie_result\n    else:\n        raise Exception('Invalid result type: %s' % result_type)",
+        "function_after": "def process_ie_result(self, ie_result, download=True, extra_info={}):\n    \"\"\"\n        Take the result of the ie(may be modified) and resolve all unresolved\n        references (URLs, playlist items).\n\n        It will also download the videos if 'download'.\n        Returns the resolved ie_result.\n        \"\"\"\n    result_type = ie_result.get('_type', 'video')\n    if result_type in ('url', 'url_transparent'):\n        ie_result['url'] = sanitize_url(ie_result['url'])\n        extract_flat = self.params.get('extract_flat', False)\n        if extract_flat == 'in_playlist' and 'playlist' in extra_info or extract_flat is True:\n            if self.params.get('forcejson', False):\n                self.to_stdout(json.dumps(ie_result))\n            return ie_result\n    if result_type == 'video':\n        self.add_extra_info(ie_result, extra_info)\n        return self.process_video_result(ie_result, download=download)\n    elif result_type == 'url':\n        return self.extract_info(ie_result['url'], download, ie_key=ie_result.get('ie_key'), extra_info=extra_info)\n    elif result_type == 'url_transparent':\n        info = self.extract_info(ie_result['url'], ie_key=ie_result.get('ie_key'), extra_info=extra_info, download=False, process=False)\n        if not info:\n            return info\n        force_properties = dict(((k, v) for k, v in ie_result.items() if v is not None))\n        for f in ('_type', 'url', 'id', 'extractor', 'extractor_key', 'ie_key'):\n            if f in force_properties:\n                del force_properties[f]\n        new_result = info.copy()\n        new_result.update(force_properties)\n        if new_result.get('_type') == 'url':\n            new_result['_type'] = 'url_transparent'\n        return self.process_ie_result(new_result, download=download, extra_info=extra_info)\n    elif result_type in ('playlist', 'multi_video'):\n        playlist = ie_result.get('title') or ie_result.get('id')\n        self.to_screen('[download] Downloading playlist: %s' % playlist)\n        playlist_results = []\n        playliststart = self.params.get('playliststart', 1) - 1\n        playlistend = self.params.get('playlistend')\n        if playlistend == -1:\n            playlistend = None\n        playlistitems_str = self.params.get('playlist_items')\n        playlistitems = None\n        if playlistitems_str is not None:\n\n            def iter_playlistitems(format):\n                for string_segment in format.split(','):\n                    if '-' in string_segment:\n                        start, end = string_segment.split('-')\n                        for item in range(int(start), int(end) + 1):\n                            yield int(item)\n                    else:\n                        yield int(string_segment)\n            playlistitems = iter_playlistitems(playlistitems_str)\n        ie_entries = ie_result['entries']\n        if isinstance(ie_entries, list):\n            n_all_entries = len(ie_entries)\n            if playlistitems:\n                entries = [ie_entries[i - 1] for i in playlistitems if -n_all_entries <= i - 1 < n_all_entries]\n            else:\n                entries = ie_entries[playliststart:playlistend]\n            n_entries = len(entries)\n            self.to_screen('[%s] playlist %s: Collected %d video ids (downloading %d of them)' % (ie_result['extractor'], playlist, n_all_entries, n_entries))\n        elif isinstance(ie_entries, PagedList):\n            if playlistitems:\n                entries = []\n                for item in playlistitems:\n                    entries.extend(ie_entries.getslice(item - 1, item))\n            else:\n                entries = ie_entries.getslice(playliststart, playlistend)\n            n_entries = len(entries)\n            self.to_screen('[%s] playlist %s: Downloading %d videos' % (ie_result['extractor'], playlist, n_entries))\n        else:\n            if playlistitems:\n                entry_list = list(ie_entries)\n                entries = [entry_list[i - 1] for i in playlistitems]\n            else:\n                entries = list(itertools.islice(ie_entries, playliststart, playlistend))\n            n_entries = len(entries)\n            self.to_screen('[%s] playlist %s: Downloading %d videos' % (ie_result['extractor'], playlist, n_entries))\n        if self.params.get('playlistreverse', False):\n            entries = entries[::-1]\n        if self.params.get('playlistrandom', False):\n            random.shuffle(entries)\n        x_forwarded_for = ie_result.get('__x_forwarded_for_ip')\n        for i, entry in enumerate(entries, 1):\n            self.to_screen('[download] Downloading video %s of %s' % (i, n_entries))\n            if x_forwarded_for:\n                entry['__x_forwarded_for_ip'] = x_forwarded_for\n            extra = {'n_entries': n_entries, 'playlist': playlist, 'playlist_id': ie_result.get('id'), 'playlist_title': ie_result.get('title'), 'playlist_index': i + playliststart, 'extractor': ie_result['extractor'], 'webpage_url': ie_result['webpage_url'], 'webpage_url_basename': url_basename(ie_result['webpage_url']), 'extractor_key': ie_result['extractor_key']}\n            reason = self._match_entry(entry, incomplete=True)\n            if reason is not None:\n                self.to_screen('[download] ' + reason)\n                continue\n            entry_result = self.process_ie_result(entry, download=download, extra_info=extra)\n            playlist_results.append(entry_result)\n        ie_result['entries'] = playlist_results\n        self.to_screen('[download] Finished downloading playlist: %s' % playlist)\n        return ie_result\n    elif result_type == 'compat_list':\n        self.report_warning('Extractor %s returned a compat_list result. It needs to be updated.' % ie_result.get('extractor'))\n\n        def _fixup(r):\n            self.add_extra_info(r, {'extractor': ie_result['extractor'], 'webpage_url': ie_result['webpage_url'], 'webpage_url_basename': url_basename(ie_result['webpage_url']), 'extractor_key': ie_result['extractor_key']})\n            return r\n        ie_result['entries'] = [self.process_ie_result(_fixup(r), download, extra_info) for r in ie_result['entries']]\n        return ie_result\n    else:\n        raise Exception('Invalid result type: %s' % result_type)"
+      },
+      "file_name": "YoutubeDL.py",
+      "file_path": "youtube_dl/YoutubeDL.py",
+      "score_reranked": 0.5627977519595204
+    },
+    {
+      "id": "32",
+      "project_name": "pandas",
+      "buggy_line_content": "            except (ValueError, OverflowError):",
+      "function": {
+        "function_name": "_try_convert_to_date",
+        "function_parent": "Parser",
+        "function_before_start_line": 953,
+        "function_before_end_line": 988,
+        "function_after_start_line": 953,
+        "function_after_end_line": 988,
+        "function_before_token_count": 154,
+        "function_after_token_count": 156,
+        "function_before": "def _try_convert_to_date(self, data):\n    \"\"\"\n        Try to parse a ndarray like into a date column.\n\n        Try to coerce object in epoch/iso formats and integer/float in epoch\n        formats. Return a boolean if parsing was successful.\n        \"\"\"\n    if not len(data):\n        return (data, False)\n    new_data = data\n    if new_data.dtype == 'object':\n        try:\n            new_data = data.astype('int64')\n        except (TypeError, ValueError, OverflowError):\n            pass\n    if issubclass(new_data.dtype.type, np.number):\n        in_range = isna(new_data._values) | (new_data > self.min_stamp) | (new_data._values == iNaT)\n        if not in_range.all():\n            return (data, False)\n    date_units = (self.date_unit,) if self.date_unit else self._STAMP_UNITS\n    for date_unit in date_units:\n        try:\n            new_data = to_datetime(new_data, errors='raise', unit=date_unit)\n        except (ValueError, OverflowError):\n            continue\n        return (new_data, True)\n    return (data, False)",
+        "function_after": "def _try_convert_to_date(self, data):\n    \"\"\"\n        Try to parse a ndarray like into a date column.\n\n        Try to coerce object in epoch/iso formats and integer/float in epoch\n        formats. Return a boolean if parsing was successful.\n        \"\"\"\n    if not len(data):\n        return (data, False)\n    new_data = data\n    if new_data.dtype == 'object':\n        try:\n            new_data = data.astype('int64')\n        except (TypeError, ValueError, OverflowError):\n            pass\n    if issubclass(new_data.dtype.type, np.number):\n        in_range = isna(new_data._values) | (new_data > self.min_stamp) | (new_data._values == iNaT)\n        if not in_range.all():\n            return (data, False)\n    date_units = (self.date_unit,) if self.date_unit else self._STAMP_UNITS\n    for date_unit in date_units:\n        try:\n            new_data = to_datetime(new_data, errors='raise', unit=date_unit)\n        except (ValueError, OverflowError, TypeError):\n            continue\n        return (new_data, True)\n    return (data, False)"
+      },
+      "file_name": "_json.py",
+      "file_path": "pandas/io/json/_json.py",
+      "score_reranked": 0.5501512537406137
+    }
+  ],
+  "diffusion_plan": [
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 14
+        },
+        {
+          "op": "GuardAdd",
+          "node": 19
+        },
+        {
+          "op": "GuardAdd",
+          "node": 5
+        },
+        {
+          "op": "Replace",
+          "node": 19
+        },
+        {
+          "op": "Replace",
+          "node": 18
+        },
+        {
+          "op": "Replace",
+          "node": 5
+        },
+        {
+          "op": "Replace",
+          "node": 6
+        },
+        {
+          "op": "GuardAdd",
+          "node": 14
+        },
+        {
+          "op": "InsertAfter",
+          "node": 5
+        },
+        {
+          "op": "Replace",
+          "node": 31
+        },
+        {
+          "op": "GuardAdd",
+          "node": 31
+        },
+        {
+          "op": "Replace",
+          "node": 63
+        },
+        {
+          "op": "Replace",
+          "node": 12
+        }
+      ],
+      "score": 20.24545454370496
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 31
+        },
+        {
+          "op": "Replace",
+          "node": 14
+        },
+        {
+          "op": "GuardAdd",
+          "node": 6
+        },
+        {
+          "op": "InsertBefore",
+          "node": 14
+        },
+        {
+          "op": "Replace",
+          "node": 5
+        },
+        {
+          "op": "GuardAdd",
+          "node": 14
+        },
+        {
+          "op": "Replace",
+          "node": 6
+        },
+        {
+          "op": "Replace",
+          "node": 19
+        },
+        {
+          "op": "Replace",
+          "node": 4
+        },
+        {
+          "op": "Delete",
+          "node": 6
+        }
+      ],
+      "score": 17.87272727119339
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 31
+        },
+        {
+          "op": "Replace",
+          "node": 6
+        },
+        {
+          "op": "InsertBefore",
+          "node": 31
+        },
+        {
+          "op": "Replace",
+          "node": 12
+        },
+        {
+          "op": "GuardAdd",
+          "node": 14
+        },
+        {
+          "op": "InsertBefore",
+          "node": 6
+        },
+        {
+          "op": "Replace",
+          "node": 5
+        },
+        {
+          "op": "GuardAdd",
+          "node": 5
+        },
+        {
+          "op": "GuardAdd",
+          "node": 31
+        }
+      ],
+      "score": 17.645454543941323
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 14
+        },
+        {
+          "op": "GuardAdd",
+          "node": 6
+        },
+        {
+          "op": "GuardAdd",
+          "node": 31
+        },
+        {
+          "op": "Replace",
+          "node": 12
+        },
+        {
+          "op": "Replace",
+          "node": 31
+        },
+        {
+          "op": "Replace",
+          "node": 5
+        },
+        {
+          "op": "Replace",
+          "node": 4
+        },
+        {
+          "op": "Replace",
+          "node": 6
+        },
+        {
+          "op": "InsertBefore",
+          "node": 14
+        }
+      ],
+      "score": 17.309090907608265
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 31
+        },
+        {
+          "op": "Delete",
+          "node": 6
+        },
+        {
+          "op": "InsertAfter",
+          "node": 5
+        },
+        {
+          "op": "Replace",
+          "node": 12
+        },
+        {
+          "op": "Replace",
+          "node": 6
+        },
+        {
+          "op": "GuardAdd",
+          "node": 31
+        },
+        {
+          "op": "Replace",
+          "node": 5
+        },
+        {
+          "op": "GuardAdd",
+          "node": 14
+        }
+      ],
+      "score": 17.299999998700002
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 31
+        },
+        {
+          "op": "Replace",
+          "node": 14
+        },
+        {
+          "op": "Replace",
+          "node": 19
+        },
+        {
+          "op": "Replace",
+          "node": 5
+        },
+        {
+          "op": "Delete",
+          "node": 6
+        },
+        {
+          "op": "Replace",
+          "node": 6
+        },
+        {
+          "op": "GuardAdd",
+          "node": 5
+        },
+        {
+          "op": "InsertBefore",
+          "node": 14
+        },
+        {
+          "op": "GuardAdd",
+          "node": 14
+        },
+        {
+          "op": "GuardAdd",
+          "node": 63
+        }
+      ],
+      "score": 16.90909090764463
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 31
+        },
+        {
+          "op": "Replace",
+          "node": 4
+        },
+        {
+          "op": "GuardAdd",
+          "node": 4
+        },
+        {
+          "op": "Replace",
+          "node": 63
+        },
+        {
+          "op": "Replace",
+          "node": 14
+        },
+        {
+          "op": "GuardAdd",
+          "node": 19
+        },
+        {
+          "op": "Replace",
+          "node": 12
+        },
+        {
+          "op": "InsertBefore",
+          "node": 19
+        },
+        {
+          "op": "Delete",
+          "node": 14
+        },
+        {
+          "op": "Replace",
+          "node": 18
+        },
+        {
+          "op": "Replace",
+          "node": 6
+        },
+        {
+          "op": "GuardAdd",
+          "node": 5
+        }
+      ],
+      "score": 16.727272725842976
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "GuardAdd",
+          "node": 6
+        },
+        {
+          "op": "Delete",
+          "node": 5
+        },
+        {
+          "op": "Replace",
+          "node": 12
+        },
+        {
+          "op": "GuardAdd",
+          "node": 4
+        },
+        {
+          "op": "GuardAdd",
+          "node": 14
+        },
+        {
+          "op": "GuardAdd",
+          "node": 31
+        },
+        {
+          "op": "Replace",
+          "node": 31
+        },
+        {
+          "op": "InsertAfter",
+          "node": 6
+        }
+      ],
+      "score": 16.627272726033887
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 31
+        },
+        {
+          "op": "Replace",
+          "node": 14
+        },
+        {
+          "op": "Replace",
+          "node": 6
+        },
+        {
+          "op": "Replace",
+          "node": 19
+        },
+        {
+          "op": "Delete",
+          "node": 6
+        },
+        {
+          "op": "Replace",
+          "node": 4
+        },
+        {
+          "op": "Replace",
+          "node": 5
+        },
+        {
+          "op": "GuardAdd",
+          "node": 6
+        }
+      ],
+      "score": 16.599999998763636
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 5
+        },
+        {
+          "op": "Replace",
+          "node": 4
+        },
+        {
+          "op": "Replace",
+          "node": 3
+        },
+        {
+          "op": "GuardAdd",
+          "node": 4
+        },
+        {
+          "op": "Delete",
+          "node": 4
+        },
+        {
+          "op": "GuardAdd",
+          "node": 19
+        },
+        {
+          "op": "GuardAdd",
+          "node": 5
+        },
+        {
+          "op": "Replace",
+          "node": 63
+        },
+        {
+          "op": "Replace",
+          "node": 31
+        },
+        {
+          "op": "GuardAdd",
+          "node": 14
+        },
+        {
+          "op": "Replace",
+          "node": 14
+        },
+        {
+          "op": "Replace",
+          "node": 12
+        }
+      ],
+      "score": 16.509090907680992
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 18
+        },
+        {
+          "op": "Replace",
+          "node": 19
+        },
+        {
+          "op": "Replace",
+          "node": 14
+        },
+        {
+          "op": "GuardAdd",
+          "node": 31
+        },
+        {
+          "op": "Replace",
+          "node": 5
+        },
+        {
+          "op": "Replace",
+          "node": 6
+        },
+        {
+          "op": "GuardAdd",
+          "node": 63
+        },
+        {
+          "op": "GuardAdd",
+          "node": 4
+        },
+        {
+          "op": "GuardAdd",
+          "node": 6
+        },
+        {
+          "op": "Replace",
+          "node": 31
+        }
+      ],
+      "score": 16.345454544059507
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 5
+        },
+        {
+          "op": "Replace",
+          "node": 31
+        },
+        {
+          "op": "Replace",
+          "node": 63
+        },
+        {
+          "op": "Replace",
+          "node": 12
+        },
+        {
+          "op": "GuardAdd",
+          "node": 63
+        },
+        {
+          "op": "Replace",
+          "node": 14
+        },
+        {
+          "op": "Replace",
+          "node": 6
+        },
+        {
+          "op": "GuardAdd",
+          "node": 31
+        }
+      ],
+      "score": 15.999999998818183
+    }
+  ],
+  "static_analysis_nodes": [
+    {
+      "line": 7,
+      "line_absolute": 68,
+      "node_id": 31,
+      "node_id_local": 9,
+      "type": "Call",
+      "code": "ValueError('Missing scheme in request url: %s' % self._url)",
+      "distance_to_buggy": 0,
+      "context": "   4:       s = safe_url_string(url, self.encoding)\n   5:       self._url = escape_ajax(s)\n   6:       if ':' not in self._url:\n   7:->         raise ValueError('Missing scheme in request url: %s' % self._url)",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Name",
+          "id": "ValueError",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [
+          {
+            "_type": "BinOp",
+            "left": {
+              "_type": "Constant"
+            },
+            "op": {
+              "_type": "Mod"
+            },
+            "right": {
+              "_type": "Attribute"
+            }
+          }
+        ],
+        "keywords": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -24.0
+    },
+    {
+      "line": 6,
+      "line_absolute": 67,
+      "node_id": 6,
+      "node_id_local": 8,
+      "type": "If",
+      "code": "if ':' not in self._url:\n    raise ValueError('Missing scheme in request url: %s' % self._url)",
+      "distance_to_buggy": 0,
+      "context": "   3:           raise TypeError('Request url must be str or unicode, got %s:' % type(url).__name__)\n   4:       s = safe_url_string(url, self.encoding)\n   5:       self._url = escape_ajax(s)\n   6:->     if ':' not in self._url:\n   7:           raise ValueError('Missing scheme in request url: %s' % self._url)",
+      "ast_subtree_json": {
+        "_type": "If",
+        "test": {
+          "_type": "Compare",
+          "left": {
+            "_type": "Constant"
+          },
+          "ops": [
+            {
+              "_type": "NotIn"
+            }
+          ],
+          "comparators": [
+            {
+              "_type": "Attribute"
+            }
+          ]
+        },
+        "body": [
+          {
+            "_type": "Raise",
+            "exc": {
+              "_type": "Call"
+            },
+            "cause": null
+          }
+        ],
+        "orelse": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|system|>...",
+      "reranker_score": -23.0
+    },
+    {
+      "line": 5,
+      "line_absolute": 66,
+      "node_id": 14,
+      "node_id_local": 7,
+      "type": "Call",
+      "code": "escape_ajax(s)",
+      "distance_to_buggy": 1,
+      "context": "   2:       if not isinstance(url, six.string_types):\n   3:           raise TypeError('Request url must be str or unicode, got %s:' % type(url).__name__)\n   4:       s = safe_url_string(url, self.encoding)\n   5:->     self._url = escape_ajax(s)\n   6:       if ':' not in self._url:\n   7:           raise ValueError('Missing scheme in request url: %s' % self._url)",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Name",
+          "id": "escape_ajax",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [
+          {
+            "_type": "Name",
+            "id": "s",
+            "ctx": {
+              "_type": "Load"
+            }
+          }
+        ],
+        "keywords": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -14.0
+    },
+    {
+      "line": 5,
+      "line_absolute": 66,
+      "node_id": 5,
+      "node_id_local": 6,
+      "type": "Assign",
+      "code": "self._url = escape_ajax(s)",
+      "distance_to_buggy": 1,
+      "context": "   2:       if not isinstance(url, six.string_types):\n   3:           raise TypeError('Request url must be str or unicode, got %s:' % type(url).__name__)\n   4:       s = safe_url_string(url, self.encoding)\n   5:->     self._url = escape_ajax(s)\n   6:       if ':' not in self._url:\n   7:           raise ValueError('Missing scheme in request url: %s' % self._url)",
+      "ast_subtree_json": {
+        "_type": "Assign",
+        "targets": [
+          {
+            "_type": "Attribute",
+            "value": {
+              "_type": "Name"
+            },
+            "attr": "_url",
+            "ctx": {
+              "_type": "Store"
+            }
+          }
+        ],
+        "value": {
+          "_type": "Call",
+          "func": {
+            "_type": "Name"
+          },
+          "args": [
+            {
+              "_type": "Name"
+            }
+          ],
+          "keywords": []
+        },
+        "type_comment": null
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|system|>...",
+      "reranker_score": -13.0
+    },
+    {
+      "line": 4,
+      "line_absolute": 65,
+      "node_id": 12,
+      "node_id_local": 5,
+      "type": "Call",
+      "code": "safe_url_string(url, self.encoding)",
+      "distance_to_buggy": 2,
+      "context": "   1:   def _set_url(self, url):\n   2:       if not isinstance(url, six.string_types):\n   3:           raise TypeError('Request url must be str or unicode, got %s:' % type(url).__name__)\n   4:->     s = safe_url_string(url, self.encoding)\n   5:       self._url = escape_ajax(s)\n   6:       if ':' not in self._url:\n   7:           raise ValueError('Missing scheme in request url: %s' % self._url)",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Name",
+          "id": "safe_url_string",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [
+          {
+            "_type": "Name",
+            "id": "url",
+            "ctx": {
+              "_type": "Load"
+            }
+          },
+          {
+            "_type": "Attribute",
+            "value": {
+              "_type": "Name"
+            },
+            "attr": "encoding",
+            "ctx": {
+              "_type": "Load"
+            }
+          }
+        ],
+        "keywords": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|system|>...",
+      "reranker_score": -4.0
+    },
+    {
+      "line": 4,
+      "line_absolute": 65,
+      "node_id": 4,
+      "node_id_local": 4,
+      "type": "Assign",
+      "code": "s = safe_url_string(url, self.encoding)",
+      "distance_to_buggy": 2,
+      "context": "   1:   def _set_url(self, url):\n   2:       if not isinstance(url, six.string_types):\n   3:           raise TypeError('Request url must be str or unicode, got %s:' % type(url).__name__)\n   4:->     s = safe_url_string(url, self.encoding)\n   5:       self._url = escape_ajax(s)\n   6:       if ':' not in self._url:\n   7:           raise ValueError('Missing scheme in request url: %s' % self._url)",
+      "ast_subtree_json": {
+        "_type": "Assign",
+        "targets": [
+          {
+            "_type": "Name",
+            "id": "s",
+            "ctx": {
+              "_type": "Store"
+            }
+          }
+        ],
+        "value": {
+          "_type": "Call",
+          "func": {
+            "_type": "Name"
+          },
+          "args": [
+            {
+              "_type": "Name"
+            },
+            {
+              "_type": "Attribute"
+            }
+          ],
+          "keywords": []
+        },
+        "type_comment": null
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -3.0
+    },
+    {
+      "line": 3,
+      "line_absolute": 64,
+      "node_id": 19,
+      "node_id_local": 2,
+      "type": "Call",
+      "code": "TypeError('Request url must be str or unicode, got %s:' % type(url).__name__)",
+      "distance_to_buggy": 3,
+      "context": "   1:   def _set_url(self, url):\n   2:       if not isinstance(url, six.string_types):\n   3:->         raise TypeError('Request url must be str or unicode, got %s:' % type(url).__name__)\n   4:       s = safe_url_string(url, self.encoding)\n   5:       self._url = escape_ajax(s)\n   6:       if ':' not in self._url:",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Name",
+          "id": "TypeError",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [
+          {
+            "_type": "BinOp",
+            "left": {
+              "_type": "Constant"
+            },
+            "op": {
+              "_type": "Mod"
+            },
+            "right": {
+              "_type": "Attribute"
+            }
+          }
+        ],
+        "keywords": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": 6.0
+    },
+    {
+      "line": 3,
+      "line_absolute": 64,
+      "node_id": 63,
+      "node_id_local": 3,
+      "type": "Call",
+      "code": "type(url)",
+      "distance_to_buggy": 3,
+      "context": "   1:   def _set_url(self, url):\n   2:       if not isinstance(url, six.string_types):\n   3:->         raise TypeError('Request url must be str or unicode, got %s:' % type(url).__name__)\n   4:       s = safe_url_string(url, self.encoding)\n   5:       self._url = escape_ajax(s)\n   6:       if ':' not in self._url:",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Name",
+          "id": "type",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [
+          {
+            "_type": "Name",
+            "id": "url",
+            "ctx": {
+              "_type": "Load"
+            }
+          }
+        ],
+        "keywords": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": 6.0
+    },
+    {
+      "line": 2,
+      "line_absolute": 63,
+      "node_id": 18,
+      "node_id_local": 1,
+      "type": "Call",
+      "code": "isinstance(url, six.string_types)",
+      "distance_to_buggy": 4,
+      "context": "   1:   def _set_url(self, url):\n   2:->     if not isinstance(url, six.string_types):\n   3:           raise TypeError('Request url must be str or unicode, got %s:' % type(url).__name__)\n   4:       s = safe_url_string(url, self.encoding)\n   5:       self._url = escape_ajax(s)",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Name",
+          "id": "isinstance",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [
+          {
+            "_type": "Name",
+            "id": "url",
+            "ctx": {
+              "_type": "Load"
+            }
+          },
+          {
+            "_type": "Attribute",
+            "value": {
+              "_type": "Name"
+            },
+            "attr": "string_types",
+            "ctx": {
+              "_type": "Load"
+            }
+          }
+        ],
+        "keywords": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|system|>...",
+      "reranker_score": 16.0
+    },
+    {
+      "line": 2,
+      "line_absolute": 63,
+      "node_id": 3,
+      "node_id_local": 0,
+      "type": "If",
+      "code": "if not isinstance(url, six.string_types):\n    raise TypeError('Request url must be str or unicode, got %s:' % type(url).__name__)",
+      "distance_to_buggy": 4,
+      "context": "   1:   def _set_url(self, url):\n   2:->     if not isinstance(url, six.string_types):\n   3:           raise TypeError('Request url must be str or unicode, got %s:' % type(url).__name__)\n   4:       s = safe_url_string(url, self.encoding)\n   5:       self._url = escape_ajax(s)",
+      "ast_subtree_json": {
+        "_type": "If",
+        "test": {
+          "_type": "UnaryOp",
+          "op": {
+            "_type": "Not"
+          },
+          "operand": {
+            "_type": "Call"
+          }
+        },
+        "body": [
+          {
+            "_type": "Raise",
+            "exc": {
+              "_type": "Call"
+            },
+            "cause": null
+          }
+        ],
+        "orelse": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": 17.0
+    }
+  ]
+}

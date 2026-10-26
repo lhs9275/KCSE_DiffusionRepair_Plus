@@ -1,0 +1,141 @@
+{
+  "bug_id": "48",
+  "seed": 44,
+  "arm": "base",
+  "candidates": [
+    {
+      "index": 0,
+      "patch_text": "def match(command):\n    return ('push' in command.script_parts\n            and'set-upstream' in command.output)",
+      "patch_sha256": "fd9eae983702e8a3aee3e26e26653cc27ccb78eac57976529e2ed2fb75f93ca3",
+      "rank_score": 201,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.9230891398700982,
+      "top_p": 0.8133577607283677
+    },
+    {
+      "index": 1,
+      "patch_text": "def match(command):\n    return ('push' in command.script_parts\n            and'set-upstream' not in command.script_parts)",
+      "patch_sha256": "63540dfcac104cfe4ae127b728f6f9091898b61cd550f0a156bfb3917e437f25",
+      "rank_score": 198,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.9230891398700982,
+      "top_p": 0.8133577607283677
+    },
+    {
+      "index": 2,
+      "patch_text": "def match(command):\n    return ('git push --set-upstream origin HEAD' in command.script\n            or 'git push -u origin HEAD' in command.script) and 'fatal: The current branch master has no upstream branch.' in command.output",
+      "patch_sha256": "0f76a90e7533d2f7f66d26c5aaa2ba6cf6f391631beb7df6f2336ab373273e54",
+      "rank_score": 167,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7793066012285085,
+      "top_p": 0.8741332515356355
+    },
+    {
+      "index": 3,
+      "patch_text": "def match(command):\n    return 'push' in command.script_parts and'set-upstream' in command.output",
+      "patch_sha256": "d9df6bc9b395357529f988b7adde0168845deea84ac4126d75de231122a4b9a4",
+      "rank_score": 159,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.0,
+      "top_p": 1.0
+    },
+    {
+      "index": 4,
+      "patch_text": "def match(command):\n    return 'push' in command.script_parts and'set-upstream' not in command.output",
+      "patch_sha256": "4346daf2964548b1116be240ae4af3b323ffcd1e9c077a667ac43e25350d60dd",
+      "rank_score": 159,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7941462962722876,
+      "top_p": 0.8926828703403595
+    },
+    {
+      "index": 5,
+      "patch_text": "def match(command):\n    return 'push' in command.script_parts and 'upstream' in command.output",
+      "patch_sha256": "56648469cf36511a5c37711a1ce3cd16a9e53354adc606897b26b26d1a42fa57",
+      "rank_score": 159,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.9230891398700982,
+      "top_p": 0.8133577607283677
+    },
+    {
+      "index": 6,
+      "patch_text": "def match(command):\n    return ('push' in command.script_parts) and ('set-upstream' in command.output)",
+      "patch_sha256": "7d996012c378795f5f5cd1b4fb3401a6efacf3fbdca4ca842b066ed589182fc1",
+      "rank_score": 159,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7793066012285085,
+      "top_p": 0.8741332515356355
+    },
+    {
+      "index": 7,
+      "patch_text": "def match(command):\n    return 'push' in command.script_parts and'remote repository' in command.output",
+      "patch_sha256": "ec18d63111d039e087c81b55d2b1f408565ea8d62c0ec3dd96f06f810d6f00df",
+      "rank_score": 154,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7941462962722876,
+      "top_p": 0.8926828703403595
+    },
+    {
+      "index": 8,
+      "patch_text": "def match(command):\n    return 'push' in command.script_parts",
+      "patch_sha256": "e9ecfcc35d68664696363980a64e94eea09c33348e778f1c3a1f075a12a8abe7",
+      "rank_score": 149,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.5350607232455378,
+      "top_p": 0.98
+    },
+    {
+      "index": 9,
+      "patch_text": "def match(command):\n    return 'git commit --allow-empty' in command.script_parts  # <--- BUGGY LINE",
+      "patch_sha256": "6cb6de38bec346f93f8b0184e065cfba75b090a24c7da93c5969ba2501a93b4b",
+      "rank_score": 144,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.5350607232455378,
+      "top_p": 0.98
+    }
+  ],
+  "candidate_count": 10,
+  "retrieved_examples": [],
+  "diffusion_plan": [],
+  "static_analysis_nodes": []
+}

@@ -1,0 +1,1048 @@
+{
+  "bug_id": "27",
+  "seed": 43,
+  "arm": "full",
+  "candidates": [
+    {
+      "index": 0,
+      "patch_text": "def request_httprepr(request):\n    \"\"\"Return the raw HTTP representation (as bytes) of the given request.\n    This is provided only for reference since it's not the actual stream of\n    bytes that will be send when performing the request (that's controlled\n    by Twisted).\n    \"\"\"\n    parsed = urlparse_cached(request)\n    path = urlunparse(('', '', parsed.path or '/', parsed.params, parsed.query, ''))\n    s = to_bytes(request.method) + b''+ to_bytes(path) + b' HTTP/1.1\\r\\n'\n    s += b'Host:'+ to_bytes(parsed.hostname) + b'\\r\\n'\n    if request.headers:\n        s += request.headers.to_string() + b'\\r\\n'\n    s += b'\\r\\n'\n    s += request.body\n    return s",
+      "patch_sha256": "0b2cce7bc45651ec0151227712a87e7c7cd3ab75640e81ba87b4ef3e29875f71",
+      "rank_score": 236,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7704673177175924,
+      "top_p": 0.8630841471469904
+    },
+    {
+      "index": 1,
+      "patch_text": "def request_httprepr(request):\n    parsed = urlparse_cached(request)\n    path = urlunparse(('', '', parsed.path or '/', parsed.params, parsed.query, ''))\n    s = to_bytes(request.method) + b''+ to_bytes(path) + b' HTTP/1.1\\r\\n'\n    s += b'Host:'+ to_bytes(parsed.hostname) + b'\\r\\n'\n    if request.headers:\n        s += request.headers.to_string() + b'\\r\\n'\n    s += b'\\r\\n'\n    s += request.body\n    return s",
+      "patch_sha256": "b8cb7af46e62d85dba0030dabf50a0eb27b66ee698048f5922a49aad3b457374",
+      "rank_score": 185,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7704673177175924,
+      "top_p": 0.8630841471469904
+    },
+    {
+      "index": 2,
+      "patch_text": "def request_httprepr(request):\n    parsed = urlparse_cached(request)\n    path = urlunparse(('', '', parsed.path or '/', parsed.params, parsed.query, ''))\n    s = to_bytes(request.method) + b''+ to_bytes(path) + b' HTTP/1.1\\r\\n'\n    if request.headers:\n        s += request.headers.to_string() + b'\\r\\n'\n    s += b'\\r\\n'\n    s += request.body\n    return s",
+      "patch_sha256": "3af73b11c2d74582d2fdf80f366daa4e43e073296d81f0d71c3b149fd26e6020",
+      "rank_score": 181,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7704673177175924,
+      "top_p": 0.8630841471469904
+    },
+    {
+      "index": 3,
+      "patch_text": "def request_httprepr(request):\n    parsed = urlparse_cached(request)\n    path = urlunparse(('', '', parsed.path or '/', parsed.params, parsed.query, ''))\n    s = to_bytes(request.method) + b''+ to_bytes(path) + b' HTTP/1.1\\r\\n'\n    if parsed.hostname:\n        s += b'Host:'+ to_bytes(parsed.hostname) + b'\\r\\n'\n    if request.headers:\n        s += request.headers.to_string() + b'\\r\\n'\n    s += b'\\r\\n'\n    s += request.body\n    return s",
+      "patch_sha256": "31ebf8f1b0416a587101c1b4edb4df41b146370723f2e8abcb3ead4bfbac6758",
+      "rank_score": 177,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8030069698746244,
+      "top_p": 0.9037587123432804
+    },
+    {
+      "index": 4,
+      "patch_text": "def request_httprepr(request):\n    \"\"\"Return the raw HTTP representation (as bytes) of the given request.\n    This is provided only for reference since it's not the actual stream of\n    bytes that will be send when performing the request (that's controlled\n    by Twisted).\n    \"\"\"\n    parsed = urlparse_cached(request)\n    path = urlunparse(('', '', parsed.path or '/', parsed.params, parsed.query, ''))\n    s = to_bytes(request.method) + b''+ to_bytes(path) + b' HTTP/1.1\\r\\n'\n    s += b'Host:'+ to_bytes(parsed.hostname) + b'\\r\\n'\n    if request.headers:\n        s += request.headers.to_string() + b'\\r\\n'\n    s += b'\\r\\n'\n    s += request.body\n    return s\n# Generated from python/Python3Parser.g4 by ANTLR 4.9.2\nfrom antlr4 import *\nif __name__ is not None and \".\" in __name__:\n    from.Python3Parser import Python3Parser\nelse:\n    from Python3Parser import Python3Parser\n\n# This class defines a complete generic visitor for a parse tree produced by Python3Parser.\n\nclass Python3Visitor(ParseTreeVisitor):\n\n    # Visit a parse tree produced by Python3Parser#single_input.\n    def visitSingle_input(self, ctx:Python3Parser.Single_inputContext):\n        return self.visitChildren(ctx)\n\n\n    # Visit a parse tree produced by Python3Parser#file_input.\n    def visitFile_input(self, ctx:Python3Parser.File_inputContext):\n        return self.visitChildren(ctx)\n\n\n    # Visit a parse tree produced by Python3Parser#eval_input.\n    def visitEval_input(self, ctx:Python3Parser.Eval_inputContext):\n        return self.visitChildren(ctx)\n\n\n    # Visit a parse tree produced by Python3Parser#decorator.\n    def visitDecorator(self, ctx:Python3Parser.DecoratorContext):\n        return self.visitChildren(ctx)\n\n\n    # Visit a parse tree produced by Python3Parser#decorators.\n    def visitDecorators(self, ctx:Python3Parser.DecoratorsContext):\n        return self.visitChildren(ctx)\n\n\n    # Visit a parse tree produced by Python3Parser#decorated.\n    def visitDecorated(self, ctx:Python3Parser.DecoratedContext):\n        return self.visitChildren(ctx)\n\n\n    # Visit a parse tree produced by Python3Parser#async_funcdef.\n    def visitAsync_funcdef(self, ctx:Python3Parser.Async_funcdefContext):\n        return self.visitChildren(ctx)\n\n\n    # Visit a parse tree produced by Python3Parser#funcdef.\n    def visitFuncdef(self, ctx:Python3Parser.FuncdefContext):\n        return self.visitChildren(ctx)\n\n\n    # Visit a parse tree",
+      "patch_sha256": "ab88d6c7a84382df353d49105e8b91401428672100bace00867e4398a2bb0424",
+      "rank_score": -34,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.49999693569381287,
+      "top_p": 0.9415325686419478
+    },
+    {
+      "index": 5,
+      "patch_text": "def request_httprepr(request):\n    \"\"\"Return the raw HTTP representation (as bytes) of the given request.\n    This is provided only for reference since it's not the actual stream of\n    bytes that will be send when performing the request (that's controlled\n    by Twisted).\n    \"\"\"\n    parsed = urlparse_cached(request)\n    path = urlunparse(('', '', parsed.path or '/', parsed.params, parsed.query, ''))\n    s = to_bytes(request.method) + b''+ to_bytes(path) + b' HTTP/1.1\\r\\n'\n    s += b'Host:'+ to_bytes(parsed.hostname) + b'\\r\\n'\n    if request.headers:\n        s += request.headers.to_string() + b'\\r\\n'\n    s += b'\\r\\n'\n    s += request.body\n    return s\nimport re\nfrom copy import deepcopy\nfrom typing import Dict, List, Union\n\nfrom autocoder.utils.helpers import get_function_body, get_function_name\nfrom autocoder.utils.helpers import get_class_body, get_class_name\nfrom autocoder.utils.helpers import get_var_name, get_var_type, get_var_value\nfrom autocoder.utils.helpers import get_node_code, get_node_line\nfrom autocoder.utils.helpers import get_node_children, get_node_parent\nfrom autocoder.utils.helpers import get_function_parameters, get_function_return_type\nfrom autocoder.utils.helpers import get_class_properties, get_class_methods\nfrom autocoder.utils.helpers import get_function_arguments\nfrom autocoder.utils.helpers import get_class_properties, get_class_methods\nfrom autocoder.utils.helpers import get_class_name\nfrom autocoder.utils.helpers import is_var_global\nfrom autocoder.utils.helpers import is_class_property, is_class_method\nfrom autocoder.utils.helpers import get_func_params_dict, get_func_return_type\nfrom autocoder.utils.helpers import get_func_arguments, get_func_params_dict\nfrom autocoder.utils.helpers import get_class_properties, get_class_methods\nfrom autocoder.utils.helpers import get_class_params_dict, get_class_return_type\nfrom autocoder.utils.helpers import get_class_arguments, get_class_params_dict\nfrom autocoder.utils.helpers import get_node_name, get_node_type\nfrom autocoder.utils.helpers import get_node_name, get_node_type\nfrom autocoder.utils.helpers import is_variable, is_func_argument, is_class_argument\nfrom autocoder.utils.helpers import is_func_param, is_class_",
+      "patch_sha256": "ac3234d66d5d06d05587370299dd043f1bf191cab0162cf414d386fe77e2020a",
+      "rank_score": -39,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.9198728361131365,
+      "top_p": 0.8098617783838441
+    },
+    {
+      "index": 6,
+      "patch_text": "def request_httprepr(request):\n    parsed = urlparse_cached(request)\n    path = urlunparse(('', '', parsed.path or '/', parsed.params, parsed.query, ''))\n    s = to_bytes(request.method) + b''+ to_bytes(path) + b' HTTP/1.1\\r\\n'\n    s += b'Host:'+ to_bytes(parsed.hostname) + b'\\r\\n'\n    if request.headers:\n        s += request.headers.to_string() + b'\\r\\n'\n    s += b'\\r\\n'\n    s += request.body\n    return s\n# Generated from /home/pwn/projects/AI_Code_Fixing/code_fixing/grammar/PythonGrammar.g4 by ANTLR 4.9.2\nfrom antlr4 import *\nif __name__ is not None and \".\" in __name__:\n    from.PythonGrammarParser import PythonGrammarParser\nelse:\n    from PythonGrammarParser import PythonGrammarParser\n\n# This class defines a complete generic visitor for a parse tree produced by PythonGrammarParser.\n\nclass PythonGrammarVisitor(ParseTreeVisitor):\n\n    # Visit a parse tree produced by PythonGrammarParser#file_input.\n    def visitFile_input(self, ctx:PythonGrammarParser.File_inputContext):\n        return self.visitChildren(ctx)\n\n\n    # Visit a parse tree produced by PythonGrammarParser#eval_input.\n    def visitEval_input(self, ctx:PythonGrammarParser.Eval_inputContext):\n        return self.visitChildren(ctx)\n\n\n    # Visit a parse tree produced by PythonGrammarParser#decorator.\n    def visitDecorator(self, ctx:PythonGrammarParser.DecoratorContext):\n        return self.visitChildren(ctx)\n\n\n    # Visit a parse tree produced by PythonGrammarParser#decorators.\n    def visitDecorators(self, ctx:PythonGrammarParser.DecoratorsContext):\n        return self.visitChildren(ctx)\n\n\n    # Visit a parse tree produced by PythonGrammarParser#decorated.\n    def visitDecorated(self, ctx:PythonGrammarParser.DecoratedContext):\n        return self.visitChildren(ctx)\n\n\n    # Visit a parse tree produced by PythonGrammarParser#funcdef.\n    def visitFuncdef(self, ctx:PythonGrammarParser.FuncdefContext):\n        return self.visitChildren(ctx)\n\n\n    # Visit a parse tree produced by PythonGrammarParser#async_funcdef.\n    def visitAsync_funcdef(self, ctx:PythonGrammarParser.Async_funcdefContext):\n        return self.visitChildren(ctx)\n\n\n    # Visit a parse tree produced by PythonGrammarParser#parameters.\n    def visitParameters(self, ctx:PythonGrammarParser.ParametersContext):\n        return self.visitChildren(ctx)\n\n\n    # Visit a parse tree produced by PythonGrammarParser#typedargslist.\n    def visitTypedargslist(self, ctx:PythonGrammarParser.TypedargslistContext):\n        return self.visitChildren(ctx)",
+      "patch_sha256": "5d00b3965d36c2b5597504f692af45c8d04e1ed74da65f0a99f3e0763f4aa217",
+      "rank_score": -65,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7956728856928922,
+      "top_p": 0.8945911071161152
+    }
+  ],
+  "candidate_count": 7,
+  "retrieved_examples": [
+    {
+      "id": "26",
+      "project_name": "scrapy",
+      "buggy_line_content": "            for url in sitemap_urls_from_robots(response.body):",
+      "function": {
+        "function_name": "_parse_sitemap",
+        "function_parent": "SitemapSpider",
+        "function_before_start_line": 33,
+        "function_before_end_line": 54,
+        "function_after_start_line": 33,
+        "function_after_end_line": 54,
+        "function_before_token_count": 169,
+        "function_after_token_count": 169,
+        "function_before": "def _parse_sitemap(self, response):\n    if response.url.endswith('/robots.txt'):\n        for url in sitemap_urls_from_robots(response.body):\n            yield Request(url, callback=self._parse_sitemap)\n    else:\n        body = self._get_sitemap_body(response)\n        if body is None:\n            logger.warning('Ignoring invalid sitemap: %(response)s', {'response': response}, extra={'spider': self})\n            return\n        s = Sitemap(body)\n        if s.type == 'sitemapindex':\n            for loc in iterloc(s, self.sitemap_alternate_links):\n                if any((x.search(loc) for x in self._follow)):\n                    yield Request(loc, callback=self._parse_sitemap)\n        elif s.type == 'urlset':\n            for loc in iterloc(s):\n                for r, c in self._cbs:\n                    if r.search(loc):\n                        yield Request(loc, callback=c)\n                        break",
+        "function_after": "def _parse_sitemap(self, response):\n    if response.url.endswith('/robots.txt'):\n        for url in sitemap_urls_from_robots(response.text):\n            yield Request(url, callback=self._parse_sitemap)\n    else:\n        body = self._get_sitemap_body(response)\n        if body is None:\n            logger.warning('Ignoring invalid sitemap: %(response)s', {'response': response}, extra={'spider': self})\n            return\n        s = Sitemap(body)\n        if s.type == 'sitemapindex':\n            for loc in iterloc(s, self.sitemap_alternate_links):\n                if any((x.search(loc) for x in self._follow)):\n                    yield Request(loc, callback=self._parse_sitemap)\n        elif s.type == 'urlset':\n            for loc in iterloc(s):\n                for r, c in self._cbs:\n                    if r.search(loc):\n                        yield Request(loc, callback=c)\n                        break"
+      },
+      "file_name": "sitemap.py",
+      "file_path": "scrapy/spiders/sitemap.py",
+      "score_reranked": 0.5624177290350111
+    },
+    {
+      "id": "21",
+      "project_name": "youtube-dl",
+      "buggy_line_content": "        (?:0[xX][0-9a-fA-F]+|0+[0-7]+)(?:\\s*:)?|",
+      "function": {
+        "function_name": "js_to_json",
+        "function_parent": "utils.py",
+        "function_before_start_line": 1939,
+        "function_before_end_line": 1975,
+        "function_after_start_line": 1939,
+        "function_after_end_line": 1975,
+        "function_before_token_count": 19,
+        "function_after_token_count": 19,
+        "function_before": "def js_to_json(code):\n\n    def fix_kv(m):\n        v = m.group(0)\n        if v in ('true', 'false', 'null'):\n            return v\n        elif v.startswith('/*') or v == ',':\n            return ''\n        if v[0] in (\"'\", '\"'):\n            v = re.sub('(?s)\\\\\\\\.|\"', lambda m: {'\"': '\\\\\"', \"\\\\'\": \"'\", '\\\\\\n': '', '\\\\x': '\\\\u00'}.get(m.group(0), m.group(0)), v[1:-1])\n        INTEGER_TABLE = (('^0[xX][0-9a-fA-F]+', 16), ('^0+[0-7]+', 8))\n        for regex, base in INTEGER_TABLE:\n            im = re.match(regex, v)\n            if im:\n                i = int(im.group(0), base)\n                return '\"%d\":' % i if v.endswith(':') else '%d' % i\n        return '\"%s\"' % v\n    return re.sub('(?sx)\\n        \"(?:[^\"\\\\\\\\]*(?:\\\\\\\\\\\\\\\\|\\\\\\\\[\\'\"nurtbfx/\\\\n]))*[^\"\\\\\\\\]*\"|\\n        \\'(?:[^\\'\\\\\\\\]*(?:\\\\\\\\\\\\\\\\|\\\\\\\\[\\'\"nurtbfx/\\\\n]))*[^\\'\\\\\\\\]*\\'|\\n        /\\\\*.*?\\\\*/|,(?=\\\\s*[\\\\]}])|\\n        [a-zA-Z_][.a-zA-Z_0-9]*|\\n        (?:0[xX][0-9a-fA-F]+|0+[0-7]+)(?:\\\\s*:)?|\\n        [0-9]+(?=\\\\s*:)\\n        ', fix_kv, code)",
+        "function_after": "def js_to_json(code):\n\n    def fix_kv(m):\n        v = m.group(0)\n        if v in ('true', 'false', 'null'):\n            return v\n        elif v.startswith('/*') or v == ',':\n            return ''\n        if v[0] in (\"'\", '\"'):\n            v = re.sub('(?s)\\\\\\\\.|\"', lambda m: {'\"': '\\\\\"', \"\\\\'\": \"'\", '\\\\\\n': '', '\\\\x': '\\\\u00'}.get(m.group(0), m.group(0)), v[1:-1])\n        INTEGER_TABLE = (('^0[xX][0-9a-fA-F]+', 16), ('^0+[0-7]+', 8))\n        for regex, base in INTEGER_TABLE:\n            im = re.match(regex, v)\n            if im:\n                i = int(im.group(0), base)\n                return '\"%d\":' % i if v.endswith(':') else '%d' % i\n        return '\"%s\"' % v\n    return re.sub('(?sx)\\n        \"(?:[^\"\\\\\\\\]*(?:\\\\\\\\\\\\\\\\|\\\\\\\\[\\'\"nurtbfx/\\\\n]))*[^\"\\\\\\\\]*\"|\\n        \\'(?:[^\\'\\\\\\\\]*(?:\\\\\\\\\\\\\\\\|\\\\\\\\[\\'\"nurtbfx/\\\\n]))*[^\\'\\\\\\\\]*\\'|\\n        /\\\\*.*?\\\\*/|,(?=\\\\s*[\\\\]}])|\\n        [a-zA-Z_][.a-zA-Z_0-9]*|\\n        \\\\b(?:0[xX][0-9a-fA-F]+|0+[0-7]+)(?:\\\\s*:)?|\\n        [0-9]+(?=\\\\s*:)\\n        ', fix_kv, code)"
+      },
+      "file_name": "utils.py",
+      "file_path": "youtube_dl/utils.py",
+      "score_reranked": 0.5005086607439982
+    },
+    {
+      "id": "22",
+      "project_name": "youtube-dl",
+      "buggy_line_content": "    m = re.match(r'(?:https?:|)//[^/]+/(?:[^/?#]+/)?([^/?#]+)/?(?:[?#]|$)', url)",
+      "function": {
+        "function_name": "url_basename",
+        "function_parent": "utils.py",
+        "function_before_start_line": 1089,
+        "function_before_end_line": 1093,
+        "function_after_start_line": 1089,
+        "function_after_end_line": 1093,
+        "function_before_token_count": 30,
+        "function_after_token_count": 30,
+        "function_before": "def url_basename(url):\n    m = re.match('(?:https?:|)//[^/]+/(?:[^/?#]+/)?([^/?#]+)/?(?:[?#]|$)', url)\n    if not m:\n        return u''\n    return m.group(1)",
+        "function_after": "def url_basename(url):\n    m = re.match('(?:https?:|)//[^/]+/(?:[^?#]+/)?([^/?#]+)/?(?:[?#]|$)', url)\n    if not m:\n        return u''\n    return m.group(1)"
+      },
+      "file_name": "utils.py",
+      "file_path": "youtube_dl/utils.py",
+      "score_reranked": 0.47688477403297136
+    },
+    {
+      "id": "39",
+      "project_name": "pandas",
+      "buggy_line_content": "            except (TypeError, ValueError):",
+      "function": {
+        "function_name": "_try_convert_data",
+        "function_parent": "Parser",
+        "function_before_start_line": 886,
+        "function_before_end_line": 958,
+        "function_after_start_line": 886,
+        "function_after_end_line": 958,
+        "function_before_token_count": 277,
+        "function_after_token_count": 279,
+        "function_before": "def _try_convert_data(self, name, data, use_dtypes=True, convert_dates=True):\n    \"\"\"\n        Try to parse a ndarray like into a column by inferring dtype.\n        \"\"\"\n    if use_dtypes:\n        if not self.dtype:\n            return (data, False)\n        elif self.dtype is True:\n            pass\n        else:\n            dtype = self.dtype.get(name) if isinstance(self.dtype, dict) else self.dtype\n            if dtype is not None:\n                try:\n                    dtype = np.dtype(dtype)\n                    return (data.astype(dtype), True)\n                except (TypeError, ValueError):\n                    return (data, False)\n    if convert_dates:\n        new_data, result = self._try_convert_to_date(data)\n        if result:\n            return (new_data, True)\n    result = False\n    if data.dtype == 'object':\n        try:\n            data = data.astype('float64')\n            result = True\n        except (TypeError, ValueError):\n            pass\n    if data.dtype.kind == 'f':\n        if data.dtype != 'float64':\n            try:\n                data = data.astype('float64')\n                result = True\n            except (TypeError, ValueError):\n                pass\n    if len(data) and (data.dtype == 'float' or data.dtype == 'object'):\n        try:\n            new_data = data.astype('int64')\n            if (new_data == data).all():\n                data = new_data\n                result = True\n        except (TypeError, ValueError):\n            pass\n    if data.dtype == 'int':\n        try:\n            data = data.astype('int64')\n            result = True\n        except (TypeError, ValueError):\n            pass\n    return (data, result)",
+        "function_after": "def _try_convert_data(self, name, data, use_dtypes=True, convert_dates=True):\n    \"\"\"\n        Try to parse a ndarray like into a column by inferring dtype.\n        \"\"\"\n    if use_dtypes:\n        if not self.dtype:\n            return (data, False)\n        elif self.dtype is True:\n            pass\n        else:\n            dtype = self.dtype.get(name) if isinstance(self.dtype, dict) else self.dtype\n            if dtype is not None:\n                try:\n                    dtype = np.dtype(dtype)\n                    return (data.astype(dtype), True)\n                except (TypeError, ValueError):\n                    return (data, False)\n    if convert_dates:\n        new_data, result = self._try_convert_to_date(data)\n        if result:\n            return (new_data, True)\n    result = False\n    if data.dtype == 'object':\n        try:\n            data = data.astype('float64')\n            result = True\n        except (TypeError, ValueError):\n            pass\n    if data.dtype.kind == 'f':\n        if data.dtype != 'float64':\n            try:\n                data = data.astype('float64')\n                result = True\n            except (TypeError, ValueError):\n                pass\n    if len(data) and (data.dtype == 'float' or data.dtype == 'object'):\n        try:\n            new_data = data.astype('int64')\n            if (new_data == data).all():\n                data = new_data\n                result = True\n        except (TypeError, ValueError, OverflowError):\n            pass\n    if data.dtype == 'int':\n        try:\n            data = data.astype('int64')\n            result = True\n        except (TypeError, ValueError):\n            pass\n    return (data, result)"
+      },
+      "file_name": "_json.py",
+      "file_path": "pandas/io/json/_json.py",
+      "score_reranked": 0.45119500670248514
+    },
+    {
+      "id": "19",
+      "project_name": "youtube-dl",
+      "buggy_line_content": "        [a-zA-Z_][.a-zA-Z_0-9]*|",
+      "function": {
+        "function_name": "js_to_json",
+        "function_parent": "utils.py",
+        "function_before_start_line": 2235,
+        "function_before_end_line": 2273,
+        "function_after_start_line": 2235,
+        "function_after_end_line": 2273,
+        "function_before_token_count": 77,
+        "function_after_token_count": 77,
+        "function_before": "def js_to_json(code):\n    COMMENT_RE = '/\\\\*(?:(?!\\\\*/).)*?\\\\*/|//[^\\\\n]*'\n    SKIP_RE = '\\\\s*(?:{comment})?\\\\s*'.format(comment=COMMENT_RE)\n    INTEGER_TABLE = (('(?s)^(0[xX][0-9a-fA-F]+){skip}:?$'.format(skip=SKIP_RE), 16), ('(?s)^(0+[0-7]+){skip}:?$'.format(skip=SKIP_RE), 8))\n\n    def fix_kv(m):\n        v = m.group(0)\n        if v in ('true', 'false', 'null'):\n            return v\n        elif v.startswith('/*') or v.startswith('//') or v == ',':\n            return ''\n        if v[0] in (\"'\", '\"'):\n            v = re.sub('(?s)\\\\\\\\.|\"', lambda m: {'\"': '\\\\\"', \"\\\\'\": \"'\", '\\\\\\n': '', '\\\\x': '\\\\u00'}.get(m.group(0), m.group(0)), v[1:-1])\n        for regex, base in INTEGER_TABLE:\n            im = re.match(regex, v)\n            if im:\n                i = int(im.group(1), base)\n                return '\"%d\":' % i if v.endswith(':') else '%d' % i\n        return '\"%s\"' % v\n    return re.sub('(?sx)\\n        \"(?:[^\"\\\\\\\\]*(?:\\\\\\\\\\\\\\\\|\\\\\\\\[\\'\"nurtbfx/\\\\n]))*[^\"\\\\\\\\]*\"|\\n        \\'(?:[^\\'\\\\\\\\]*(?:\\\\\\\\\\\\\\\\|\\\\\\\\[\\'\"nurtbfx/\\\\n]))*[^\\'\\\\\\\\]*\\'|\\n        {comment}|,(?={skip}[\\\\]}}])|\\n        [a-zA-Z_][.a-zA-Z_0-9]*|\\n        \\\\b(?:0[xX][0-9a-fA-F]+|0+[0-7]+)(?:{skip}:)?|\\n        [0-9]+(?={skip}:)\\n        '.format(comment=COMMENT_RE, skip=SKIP_RE), fix_kv, code)",
+        "function_after": "def js_to_json(code):\n    COMMENT_RE = '/\\\\*(?:(?!\\\\*/).)*?\\\\*/|//[^\\\\n]*'\n    SKIP_RE = '\\\\s*(?:{comment})?\\\\s*'.format(comment=COMMENT_RE)\n    INTEGER_TABLE = (('(?s)^(0[xX][0-9a-fA-F]+){skip}:?$'.format(skip=SKIP_RE), 16), ('(?s)^(0+[0-7]+){skip}:?$'.format(skip=SKIP_RE), 8))\n\n    def fix_kv(m):\n        v = m.group(0)\n        if v in ('true', 'false', 'null'):\n            return v\n        elif v.startswith('/*') or v.startswith('//') or v == ',':\n            return ''\n        if v[0] in (\"'\", '\"'):\n            v = re.sub('(?s)\\\\\\\\.|\"', lambda m: {'\"': '\\\\\"', \"\\\\'\": \"'\", '\\\\\\n': '', '\\\\x': '\\\\u00'}.get(m.group(0), m.group(0)), v[1:-1])\n        for regex, base in INTEGER_TABLE:\n            im = re.match(regex, v)\n            if im:\n                i = int(im.group(1), base)\n                return '\"%d\":' % i if v.endswith(':') else '%d' % i\n        return '\"%s\"' % v\n    return re.sub('(?sx)\\n        \"(?:[^\"\\\\\\\\]*(?:\\\\\\\\\\\\\\\\|\\\\\\\\[\\'\"nurtbfx/\\\\n]))*[^\"\\\\\\\\]*\"|\\n        \\'(?:[^\\'\\\\\\\\]*(?:\\\\\\\\\\\\\\\\|\\\\\\\\[\\'\"nurtbfx/\\\\n]))*[^\\'\\\\\\\\]*\\'|\\n        {comment}|,(?={skip}[\\\\]}}])|\\n        (?:(?<![0-9])[eE]|[a-df-zA-DF-Z_])[.a-zA-Z_0-9]*|\\n        \\\\b(?:0[xX][0-9a-fA-F]+|0+[0-7]+)(?:{skip}:)?|\\n        [0-9]+(?={skip}:)\\n        '.format(comment=COMMENT_RE, skip=SKIP_RE), fix_kv, code)"
+      },
+      "file_name": "utils.py",
+      "file_path": "youtube_dl/utils.py",
+      "score_reranked": 0.44398504152096313
+    }
+  ],
+  "diffusion_plan": [
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 85
+        },
+        {
+          "op": "Replace",
+          "node": 68
+        },
+        {
+          "op": "InsertAfter",
+          "node": 17
+        },
+        {
+          "op": "Replace",
+          "node": 15
+        },
+        {
+          "op": "GuardAdd",
+          "node": 85
+        },
+        {
+          "op": "Replace",
+          "node": 17
+        },
+        {
+          "op": "Replace",
+          "node": 5
+        },
+        {
+          "op": "GuardAdd",
+          "node": 17
+        }
+      ],
+      "score": 17.327272725970246
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 85
+        },
+        {
+          "op": "Replace",
+          "node": 17
+        },
+        {
+          "op": "Replace",
+          "node": 71
+        },
+        {
+          "op": "Replace",
+          "node": 15
+        },
+        {
+          "op": "GuardAdd",
+          "node": 85
+        },
+        {
+          "op": "Replace",
+          "node": 5
+        },
+        {
+          "op": "GuardAdd",
+          "node": 17
+        },
+        {
+          "op": "Replace",
+          "node": 74
+        }
+      ],
+      "score": 16.599999998763636
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 85
+        },
+        {
+          "op": "Replace",
+          "node": 68
+        },
+        {
+          "op": "GuardAdd",
+          "node": 17
+        },
+        {
+          "op": "InsertBefore",
+          "node": 68
+        },
+        {
+          "op": "GuardAdd",
+          "node": 8
+        },
+        {
+          "op": "GuardAdd",
+          "node": 68
+        },
+        {
+          "op": "Replace",
+          "node": 74
+        },
+        {
+          "op": "Replace",
+          "node": 17
+        },
+        {
+          "op": "Replace",
+          "node": 5
+        }
+      ],
+      "score": 16.309090907699172
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 85
+        },
+        {
+          "op": "Replace",
+          "node": 68
+        },
+        {
+          "op": "Replace",
+          "node": 74
+        },
+        {
+          "op": "Replace",
+          "node": 5
+        },
+        {
+          "op": "InsertBefore",
+          "node": 8
+        },
+        {
+          "op": "Replace",
+          "node": 17
+        },
+        {
+          "op": "GuardAdd",
+          "node": 15
+        },
+        {
+          "op": "InsertBefore",
+          "node": 71
+        },
+        {
+          "op": "GuardAdd",
+          "node": 71
+        },
+        {
+          "op": "GuardAdd",
+          "node": 85
+        }
+      ],
+      "score": 16.227272725888433
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "GuardAdd",
+          "node": 8
+        },
+        {
+          "op": "Replace",
+          "node": 5
+        },
+        {
+          "op": "GuardAdd",
+          "node": 68
+        },
+        {
+          "op": "Replace",
+          "node": 15
+        },
+        {
+          "op": "Replace",
+          "node": 85
+        },
+        {
+          "op": "Replace",
+          "node": 17
+        },
+        {
+          "op": "Replace",
+          "node": 71
+        },
+        {
+          "op": "Replace",
+          "node": 74
+        },
+        {
+          "op": "Replace",
+          "node": 6
+        },
+        {
+          "op": "Delete",
+          "node": 85
+        },
+        {
+          "op": "Delete",
+          "node": 68
+        }
+      ],
+      "score": 16.090909089537192
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 85
+        },
+        {
+          "op": "Replace",
+          "node": 71
+        },
+        {
+          "op": "Replace",
+          "node": 68
+        },
+        {
+          "op": "GuardAdd",
+          "node": 68
+        },
+        {
+          "op": "Replace",
+          "node": 74
+        },
+        {
+          "op": "Replace",
+          "node": 17
+        },
+        {
+          "op": "GuardAdd",
+          "node": 71
+        }
+      ],
+      "score": 15.727272726115704
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 85
+        },
+        {
+          "op": "Replace",
+          "node": 68
+        },
+        {
+          "op": "GuardAdd",
+          "node": 8
+        },
+        {
+          "op": "Replace",
+          "node": 17
+        },
+        {
+          "op": "Replace",
+          "node": 8
+        },
+        {
+          "op": "GuardAdd",
+          "node": 68
+        },
+        {
+          "op": "Replace",
+          "node": 71
+        },
+        {
+          "op": "GuardAdd",
+          "node": 5
+        }
+      ],
+      "score": 15.690909089755372
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "GuardAdd",
+          "node": 17
+        },
+        {
+          "op": "Replace",
+          "node": 17
+        },
+        {
+          "op": "Delete",
+          "node": 8
+        },
+        {
+          "op": "Replace",
+          "node": 68
+        },
+        {
+          "op": "GuardAdd",
+          "node": 5
+        },
+        {
+          "op": "Replace",
+          "node": 71
+        },
+        {
+          "op": "GuardAdd",
+          "node": 85
+        },
+        {
+          "op": "Replace",
+          "node": 85
+        },
+        {
+          "op": "Replace",
+          "node": 15
+        }
+      ],
+      "score": 15.636363635033057
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 85
+        },
+        {
+          "op": "InsertBefore",
+          "node": 71
+        },
+        {
+          "op": "Replace",
+          "node": 71
+        },
+        {
+          "op": "Replace",
+          "node": 68
+        },
+        {
+          "op": "Replace",
+          "node": 17
+        },
+        {
+          "op": "Replace",
+          "node": 4
+        },
+        {
+          "op": "GuardAdd",
+          "node": 85
+        },
+        {
+          "op": "GuardAdd",
+          "node": 74
+        },
+        {
+          "op": "Delete",
+          "node": 68
+        }
+      ],
+      "score": 15.42727272596116
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 17
+        },
+        {
+          "op": "Replace",
+          "node": 85
+        },
+        {
+          "op": "Replace",
+          "node": 68
+        },
+        {
+          "op": "Replace",
+          "node": 71
+        },
+        {
+          "op": "Replace",
+          "node": 5
+        },
+        {
+          "op": "Replace",
+          "node": 8
+        },
+        {
+          "op": "GuardAdd",
+          "node": 17
+        }
+      ],
+      "score": 15.345454544332233
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 71
+        },
+        {
+          "op": "Replace",
+          "node": 17
+        },
+        {
+          "op": "Replace",
+          "node": 15
+        },
+        {
+          "op": "Replace",
+          "node": 85
+        },
+        {
+          "op": "Replace",
+          "node": 68
+        },
+        {
+          "op": "Replace",
+          "node": 74
+        },
+        {
+          "op": "GuardAdd",
+          "node": 17
+        }
+      ],
+      "score": 15.345454544332233
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 8
+        },
+        {
+          "op": "Replace",
+          "node": 17
+        },
+        {
+          "op": "Replace",
+          "node": 74
+        },
+        {
+          "op": "Replace",
+          "node": 85
+        },
+        {
+          "op": "Replace",
+          "node": 68
+        },
+        {
+          "op": "GuardAdd",
+          "node": 85
+        },
+        {
+          "op": "Replace",
+          "node": 15
+        },
+        {
+          "op": "Replace",
+          "node": 5
+        },
+        {
+          "op": "Replace",
+          "node": 71
+        }
+      ],
+      "score": 15.254545453249587
+    }
+  ],
+  "static_analysis_nodes": [
+    {
+      "line": 8,
+      "line_absolute": 80,
+      "node_id": 17,
+      "node_id_local": 3,
+      "type": "Call",
+      "code": "urlunparse(('', '', parsed.path or '/', parsed.params, parsed.query, ''))",
+      "distance_to_buggy": 0,
+      "context": "   5:       by Twisted).\n   6:       \"\"\"\n   7:       parsed = urlparse_cached(request)\n   8:->     path = urlunparse(('', '', parsed.path or '/', parsed.params, parsed.query, ''))\n   9:       s = to_bytes(request.method) + b' ' + to_bytes(path) + b' HTTP/1.1\\r\\n'\n  10:       s += b'Host: ' + to_bytes(parsed.hostname) + b'\\r\\n'\n  11:       if request.headers:",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Name",
+          "id": "urlunparse",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [
+          {
+            "_type": "Tuple",
+            "elts": [
+              {
+                "_type": "Constant"
+              },
+              {
+                "_type": "Constant"
+              },
+              {
+                "_type": "BoolOp"
+              },
+              {
+                "_type": "Attribute"
+              },
+              {
+                "_type": "Attribute"
+              },
+              {
+                "_type": "Constant"
+              }
+            ],
+            "ctx": {
+              "_type": "Load"
+            }
+          }
+        ],
+        "keywords": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -24.0
+    },
+    {
+      "line": 9,
+      "line_absolute": 81,
+      "node_id": 85,
+      "node_id_local": 5,
+      "type": "Call",
+      "code": "to_bytes(request.method)",
+      "distance_to_buggy": 0,
+      "context": "   6:       \"\"\"\n   7:       parsed = urlparse_cached(request)\n   8:       path = urlunparse(('', '', parsed.path or '/', parsed.params, parsed.query, ''))\n   9:->     s = to_bytes(request.method) + b' ' + to_bytes(path) + b' HTTP/1.1\\r\\n'\n  10:       s += b'Host: ' + to_bytes(parsed.hostname) + b'\\r\\n'\n  11:       if request.headers:\n  12:           s += request.headers.to_string() + b'\\r\\n'",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Name",
+          "id": "to_bytes",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [
+          {
+            "_type": "Attribute",
+            "value": {
+              "_type": "Name"
+            },
+            "attr": "method",
+            "ctx": {
+              "_type": "Load"
+            }
+          }
+        ],
+        "keywords": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|system|>...",
+      "reranker_score": -24.0
+    },
+    {
+      "line": 9,
+      "line_absolute": 81,
+      "node_id": 68,
+      "node_id_local": 6,
+      "type": "Call",
+      "code": "to_bytes(path)",
+      "distance_to_buggy": 0,
+      "context": "   6:       \"\"\"\n   7:       parsed = urlparse_cached(request)\n   8:       path = urlunparse(('', '', parsed.path or '/', parsed.params, parsed.query, ''))\n   9:->     s = to_bytes(request.method) + b' ' + to_bytes(path) + b' HTTP/1.1\\r\\n'\n  10:       s += b'Host: ' + to_bytes(parsed.hostname) + b'\\r\\n'\n  11:       if request.headers:\n  12:           s += request.headers.to_string() + b'\\r\\n'",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Name",
+          "id": "to_bytes",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [
+          {
+            "_type": "Name",
+            "id": "path",
+            "ctx": {
+              "_type": "Load"
+            }
+          }
+        ],
+        "keywords": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|system|>...",
+      "reranker_score": -24.0
+    },
+    {
+      "line": 10,
+      "line_absolute": 82,
+      "node_id": 71,
+      "node_id_local": 7,
+      "type": "Call",
+      "code": "to_bytes(parsed.hostname)",
+      "distance_to_buggy": 0,
+      "context": "   7:       parsed = urlparse_cached(request)\n   8:       path = urlunparse(('', '', parsed.path or '/', parsed.params, parsed.query, ''))\n   9:       s = to_bytes(request.method) + b' ' + to_bytes(path) + b' HTTP/1.1\\r\\n'\n  10:->     s += b'Host: ' + to_bytes(parsed.hostname) + b'\\r\\n'\n  11:       if request.headers:\n  12:           s += request.headers.to_string() + b'\\r\\n'\n  13:       s += b'\\r\\n'",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Name",
+          "id": "to_bytes",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [
+          {
+            "_type": "Attribute",
+            "value": {
+              "_type": "Name"
+            },
+            "attr": "hostname",
+            "ctx": {
+              "_type": "Load"
+            }
+          }
+        ],
+        "keywords": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -24.0
+    },
+    {
+      "line": 12,
+      "line_absolute": 84,
+      "node_id": 74,
+      "node_id_local": 9,
+      "type": "Call",
+      "code": "request.headers.to_string()",
+      "distance_to_buggy": 0,
+      "context": "   9:       s = to_bytes(request.method) + b' ' + to_bytes(path) + b' HTTP/1.1\\r\\n'\n  10:       s += b'Host: ' + to_bytes(parsed.hostname) + b'\\r\\n'\n  11:       if request.headers:\n  12:->         s += request.headers.to_string() + b'\\r\\n'\n  13:       s += b'\\r\\n'\n  14:       s += request.body\n  15:       return s",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Attribute",
+          "value": {
+            "_type": "Attribute"
+          },
+          "attr": "to_string",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [],
+        "keywords": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -24.0
+    },
+    {
+      "line": 8,
+      "line_absolute": 80,
+      "node_id": 5,
+      "node_id_local": 2,
+      "type": "Assign",
+      "code": "path = urlunparse(('', '', parsed.path or '/', parsed.params, parsed.query, ''))",
+      "distance_to_buggy": 0,
+      "context": "   5:       by Twisted).\n   6:       \"\"\"\n   7:       parsed = urlparse_cached(request)\n   8:->     path = urlunparse(('', '', parsed.path or '/', parsed.params, parsed.query, ''))\n   9:       s = to_bytes(request.method) + b' ' + to_bytes(path) + b' HTTP/1.1\\r\\n'\n  10:       s += b'Host: ' + to_bytes(parsed.hostname) + b'\\r\\n'\n  11:       if request.headers:",
+      "ast_subtree_json": {
+        "_type": "Assign",
+        "targets": [
+          {
+            "_type": "Name",
+            "id": "path",
+            "ctx": {
+              "_type": "Store"
+            }
+          }
+        ],
+        "value": {
+          "_type": "Call",
+          "func": {
+            "_type": "Name"
+          },
+          "args": [
+            {
+              "_type": "Tuple"
+            }
+          ],
+          "keywords": []
+        },
+        "type_comment": null
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|system|>...",
+      "reranker_score": -23.0
+    },
+    {
+      "line": 11,
+      "line_absolute": 83,
+      "node_id": 8,
+      "node_id_local": 8,
+      "type": "If",
+      "code": "if request.headers:\n    s += request.headers.to_string() + b'\\r\\n'",
+      "distance_to_buggy": 0,
+      "context": "   8:       path = urlunparse(('', '', parsed.path or '/', parsed.params, parsed.query, ''))\n   9:       s = to_bytes(request.method) + b' ' + to_bytes(path) + b' HTTP/1.1\\r\\n'\n  10:       s += b'Host: ' + to_bytes(parsed.hostname) + b'\\r\\n'\n  11:->     if request.headers:\n  12:           s += request.headers.to_string() + b'\\r\\n'\n  13:       s += b'\\r\\n'\n  14:       s += request.body",
+      "ast_subtree_json": {
+        "_type": "If",
+        "test": {
+          "_type": "Attribute",
+          "value": {
+            "_type": "Name"
+          },
+          "attr": "headers",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "body": [
+          {
+            "_type": "AugAssign",
+            "target": {
+              "_type": "Name"
+            },
+            "op": {
+              "_type": "Add"
+            },
+            "value": {
+              "_type": "BinOp"
+            }
+          }
+        ],
+        "orelse": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -23.0
+    },
+    {
+      "line": 7,
+      "line_absolute": 79,
+      "node_id": 15,
+      "node_id_local": 1,
+      "type": "Call",
+      "code": "urlparse_cached(request)",
+      "distance_to_buggy": 1,
+      "context": "   4:       bytes that will be send when performing the request (that's controlled\n   5:       by Twisted).\n   6:       \"\"\"\n   7:->     parsed = urlparse_cached(request)\n   8:       path = urlunparse(('', '', parsed.path or '/', parsed.params, parsed.query, ''))\n   9:       s = to_bytes(request.method) + b' ' + to_bytes(path) + b' HTTP/1.1\\r\\n'\n  10:       s += b'Host: ' + to_bytes(parsed.hostname) + b'\\r\\n'",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Name",
+          "id": "urlparse_cached",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [
+          {
+            "_type": "Name",
+            "id": "request",
+            "ctx": {
+              "_type": "Load"
+            }
+          }
+        ],
+        "keywords": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -14.0
+    },
+    {
+      "line": 7,
+      "line_absolute": 79,
+      "node_id": 4,
+      "node_id_local": 0,
+      "type": "Assign",
+      "code": "parsed = urlparse_cached(request)",
+      "distance_to_buggy": 1,
+      "context": "   4:       bytes that will be send when performing the request (that's controlled\n   5:       by Twisted).\n   6:       \"\"\"\n   7:->     parsed = urlparse_cached(request)\n   8:       path = urlunparse(('', '', parsed.path or '/', parsed.params, parsed.query, ''))\n   9:       s = to_bytes(request.method) + b' ' + to_bytes(path) + b' HTTP/1.1\\r\\n'\n  10:       s += b'Host: ' + to_bytes(parsed.hostname) + b'\\r\\n'",
+      "ast_subtree_json": {
+        "_type": "Assign",
+        "targets": [
+          {
+            "_type": "Name",
+            "id": "parsed",
+            "ctx": {
+              "_type": "Store"
+            }
+          }
+        ],
+        "value": {
+          "_type": "Call",
+          "func": {
+            "_type": "Name"
+          },
+          "args": [
+            {
+              "_type": "Name"
+            }
+          ],
+          "keywords": []
+        },
+        "type_comment": null
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -13.0
+    },
+    {
+      "line": 9,
+      "line_absolute": 81,
+      "node_id": 6,
+      "node_id_local": 4,
+      "type": "Assign",
+      "code": "s = to_bytes(request.method) + b' ' + to_bytes(path) + b' HTTP/1.1\\r\\n'",
+      "distance_to_buggy": 0,
+      "context": "   6:       \"\"\"\n   7:       parsed = urlparse_cached(request)\n   8:       path = urlunparse(('', '', parsed.path or '/', parsed.params, parsed.query, ''))\n   9:->     s = to_bytes(request.method) + b' ' + to_bytes(path) + b' HTTP/1.1\\r\\n'\n  10:       s += b'Host: ' + to_bytes(parsed.hostname) + b'\\r\\n'\n  11:       if request.headers:\n  12:           s += request.headers.to_string() + b'\\r\\n'",
+      "ast_subtree_json": {
+        "_type": "Assign",
+        "targets": [
+          {
+            "_type": "Name",
+            "id": "s",
+            "ctx": {
+              "_type": "Store"
+            }
+          }
+        ],
+        "value": {
+          "_type": "BinOp",
+          "left": {
+            "_type": "BinOp"
+          },
+          "op": {
+            "_type": "Add"
+          },
+          "right": {
+            "_type": "Constant"
+          }
+        },
+        "type_comment": null
+      },
+      "reason": "No valid JSON. Raw: \"\"\" import json import sys from typing import List, Dict, Any from pycparser import c_ast, parse_file from pycparser.c_ast import NodeVisitor, Node # TODO: Add more types of bugs BUG_TYPES = [\"Run...",
+      "reranker_score": 1.0
+    }
+  ]
+}

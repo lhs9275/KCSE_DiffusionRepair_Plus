@@ -1,0 +1,141 @@
+{
+  "bug_id": "5",
+  "seed": 42,
+  "arm": "base",
+  "candidates": [
+    {
+      "index": 0,
+      "patch_text": "def move(self, old_path, new_path, raise_if_exists=False):\n    if os.path.exists(new_path):\n        raise RuntimeError('Destination exists: %s' % new_path)\n    d = os.path.dirname(new_path)\n    if d and (not os.path.exists(d)):\n        self.fs.mkdir(d)\n    os.rename(old_path, new_path)",
+      "patch_sha256": "39bd2c76e3075ee3fdbbacb7d8cf97e87fa9a039cf2be67e71b30a8872a67b27",
+      "rank_score": 203,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8250994923331102,
+      "top_p": 0.9313743654163876
+    },
+    {
+      "index": 1,
+      "patch_text": "def move(self, old_path, new_path, raise_if_exists=False):\n    if raise_if_exists and os.path.exists(new_path):\n        raise RuntimeError('Destination exists: %s' % new_path)\n    d = os.path.dirname(new_path)\n    if d:\n        self.fs.mkdir(d)\n    os.rename(old_path, new_path)",
+      "patch_sha256": "070515a4ad66d49f7982bfa2249078a9db468c939412c53a29f097a7b9c46cdd",
+      "rank_score": 202,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8850407915843882,
+      "top_p": 0.7720008604178135
+    },
+    {
+      "index": 2,
+      "patch_text": "def move(self, old_path, new_path, raise_if_exists=False):\n    if raise_if_exists and os.path.exists(new_path):\n        raise RuntimeError('Destination exists: %s' % new_path)\n    if not os.path.exists(os.path.dirname(new_path)):\n        os.makedirs(os.path.dirname(new_path))\n    os.rename(old_path, new_path)",
+      "patch_sha256": "f0e5dd62d57b7f53cbb25f2769e7a6d1bf9082287661cc8e580e43fc195a900e",
+      "rank_score": 201,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8850407915843882,
+      "top_p": 0.7720008604178135
+    },
+    {
+      "index": 3,
+      "patch_text": "def move(self, old_path, new_path, raise_if_exists=False):\n    if raise_if_exists and os.path.exists(new_path):\n        raise RuntimeError('Destination exists: %s' % new_path)\n    if not os.path.isdir(os.path.dirname(new_path)):\n        os.makedirs(os.path.dirname(new_path))\n    os.rename(old_path, new_path)",
+      "patch_sha256": "f1c598fc0576fc68404ce5c53e6d223fbf71fbb9eb6703a7a344035ee3f2e300",
+      "rank_score": 201,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7822854872415247,
+      "top_p": 0.8778568590519058
+    },
+    {
+      "index": 4,
+      "patch_text": "def move(self, old_path, new_path, raise_if_exists=False):\n    if raise_if_exists and os.path.exists(new_path):\n        raise RuntimeError('Destination exists: %s' % new_path)\n    d = os.path.dirname(new_path)\n    if d and not os.path.exists(d):\n        self.fs.mkdir(d)\n    os.rename(old_path, new_path)",
+      "patch_sha256": "08576d99cdf76725211032acddb34642a48720c0e127e85204add31cfc7bbf04",
+      "rank_score": 201,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.9374042813624712,
+      "top_p": 0.828917697133121
+    },
+    {
+      "index": 5,
+      "patch_text": "def move(self, old_path, new_path, raise_if_exists=False):\n    if raise_if_exists and os.path.exists(new_path):\n        raise RuntimeError('Destination exists: %s' % new_path)\n    os.rename(old_path, new_path)",
+      "patch_sha256": "08d7eb61049095f6fa0765735faa662a2c0d52fa6c77ff3ca0c6417df563092e",
+      "rank_score": 192,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.5273506986767932,
+      "top_p": 0.98
+    },
+    {
+      "index": 6,
+      "patch_text": "def move(self, old_path, new_path, raise_if_exists=False):\n    if raise_if_exists and os.path.exists(new_path):\n        raise RuntimeError('Destination exists: %s' % new_path)\n    d = os.path.dirname(new_path)\n    self.fs.mkdir(d)\n    os.rename(old_path, new_path)",
+      "patch_sha256": "1c22cb83a367979094e37f3bc6fef2fe7cd1fb0a73c6ce675582e59f4afdfdc0",
+      "rank_score": 187,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7822854872415247,
+      "top_p": 0.8778568590519058
+    },
+    {
+      "index": 7,
+      "patch_text": "def move(self, old_path, new_path, raise_if_exists=False):\n    d = os.path.dirname(new_path)\n    if d and (not os.path.exists(d)):\n        self.fs.mkdir(d)\n    os.rename(old_path, new_path)",
+      "patch_sha256": "f6a8ec511541e37ffee69461e05e7ce0cb98eca4fe37ebae1258bec3d5275c5c",
+      "rank_score": 167,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8089233151013046,
+      "top_p": 0.9111541438766307
+    },
+    {
+      "index": 8,
+      "patch_text": "def move(self, old_path, new_path, raise_if_exists=False):\n    d = os.path.dirname(new_path)\n    if d and (not self.fs.exists(d)):\n        self.fs.mkdir(d)\n    os.rename(old_path, new_path)",
+      "patch_sha256": "69ba2f314e6737e9685159ac5821243a7083dd6b4652b632c2c78594bb8db98f",
+      "rank_score": 166,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8250994923331102,
+      "top_p": 0.9313743654163876
+    },
+    {
+      "index": 9,
+      "patch_text": "def move(self, old_path, new_path, raise_if_exists=False):\n    if raise_if_exists and os.path.exists(new_path):\n        raise RuntimeError('Destination exists: %s' % new_path)\n    d = os.path.dirname(new_path)\n    if not os.path.exists(d):\n        self.fs.mkdir(d)\n    os.rename(old_path, new_path)\n\n##end\n##file\n\n##file\n\n##file\n\n##file\n\n##file\n\n##file\n\n##file\n\n##file\n\n##file\n\n##file\n\n##file\n\n##file\n\n##file\n\n##file\n\n##file\n\n##file\n\n##file\n\n##file\n\n##file\n\n##file\n\n##file\n\n##file\n\n##file\n\n##file\n\n##file\n\n##file\n\n##file\n\n##file\n\n##file\n\n##file\n\n##file\n\n##file\n\n##file\n\n##file\n\n##file\n\n##file\n\n##file\n\n##file\n\n##file\n\n##file\n\n##file\n\n##file\n\n##file\n\n##file\n\n##file\n\n##file\n\n##file\n\n##file\n\n##file\n\n##file\n\n##file\n\n##file\n\n##file\n\n##file\n\n##file\n\n##file\n\n##file\n\n##file\n\n##file\n\n##file\n\n##file\n\n##file\n\n##file\n\n##file\n\n##file\n\n##file\n\n##file\n\n##file\n\n##file\n\n##file\n\n##file\n\n##file\n\n##file\n\n##file\n\n##file\n\n##file\n\n##file\n\n##file\n\n##file\n\n##file\n\n##file\n\n##file\n\n##file\n\n##file\n\n##file\n\n##file\n\n##file\n\n##file\n\n##file\n\n##file\n\n##file\n\n##file\n\n##file\n\n##file\n\n##file\n\n##file\n\n##file\n\n##file\n\n##file\n\n##file\n\n##file\n\n##file\n\n##file\n\n##file\n\n##file\n\n##file\n\n##file\n\n##file\n\n##file\n\n##file\n\n##file\n\n##file\n\n##file\n\n##file\n\n##file\n\n##file\n\n##file\n\n##file\n\n##file\n\n##file\n\n##file\n\n##file\n\n##file\n\n##file\n\n##file\n\n##file\n\n##file\n\n##file\n\n##file\n\n##file\n\n##file\n\n##file\n\n##file\n\n##file",
+      "patch_sha256": "6d809cf349372ed86980dea50050505696facebc7686aa4ad4b5666c3110138f",
+      "rank_score": 126,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.5106412196441554,
+      "top_p": 0.9620023454695296
+    }
+  ],
+  "candidate_count": 10,
+  "retrieved_examples": [],
+  "diffusion_plan": [],
+  "static_analysis_nodes": []
+}

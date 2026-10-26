@@ -1,0 +1,141 @@
+{
+  "bug_id": "4",
+  "seed": 42,
+  "arm": "base",
+  "candidates": [
+    {
+      "index": 0,
+      "patch_text": "def get_pending_tasks(self, state):\n    \"\"\"\n        Get PENDING (and RUNNING) tasks for this worker.\n\n        You have to pass in the state for optimization reasons.\n        \"\"\"\n    if len(self.tasks) < state.num_pending_tasks():\n        return six.moves.filter(lambda task: task.status in [PENDING, RUNNING], self.tasks)\n    else:\n        return self.tasks",
+      "patch_sha256": "f2810f54b7ee96c5ccf2245298aec43a4084ba90c2c8c5e2a95c3402ad31a029",
+      "rank_score": 242,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8850407915843882,
+      "top_p": 0.7720008604178135
+    },
+    {
+      "index": 1,
+      "patch_text": "def get_pending_tasks(self, state):\n    \"\"\"\n        Get PENDING (and RUNNING) tasks for this worker.\n\n        You have to pass in the state for optimization reasons.\n        \"\"\"\n    if len(self.tasks) < state.num_pending_tasks():\n        return six.moves.filter(lambda task: task.status in [PENDING, RUNNING], self.tasks)\n    else:\n        return list(state.get_pending_tasks())",
+      "patch_sha256": "abe8c02cf73763243f141b913e0cd2a0c4c03cf7666018b6e0d5cac8b3a67aba",
+      "rank_score": 241,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.9374042813624712,
+      "top_p": 0.828917697133121
+    },
+    {
+      "index": 2,
+      "patch_text": "def get_pending_tasks(self, state):\n    \"\"\"\n        Get PENDING (and RUNNING) tasks for this worker.\n\n        You have to pass in the state for optimization reasons.\n        \"\"\"\n    if len(self.tasks) < state.num_pending_tasks():\n        return list(six.moves.filter(lambda task: task.status in [PENDING, RUNNING], self.tasks))\n    else:\n        return list(state.get_pending_tasks())",
+      "patch_sha256": "fa1b82698923d618d6026f5829a0248e9e3ddd4018484f717dc28639bf2ae44e",
+      "rank_score": 230,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7822854872415247,
+      "top_p": 0.8778568590519058
+    },
+    {
+      "index": 3,
+      "patch_text": "def get_pending_tasks(self, state):\n    \"\"\"\n        Get PENDING (and RUNNING) tasks for this worker.\n\n        You have to pass in the state for optimization reasons.\n        \"\"\"\n    if len(self.tasks) < state.num_pending_tasks():\n        return list(six.moves.filter(lambda task: task.status in [PENDING, RUNNING], self.tasks))\n    else:\n        return state.get_pending_tasks()",
+      "patch_sha256": "1f4b92cdda0bf3eaacd080571c265fdc0642d8815a40012441b92d1629c75861",
+      "rank_score": 214,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.5106412196441554,
+      "top_p": 0.9620023454695296
+    },
+    {
+      "index": 4,
+      "patch_text": "def get_pending_tasks(self, state):\n    \"\"\"\n        Get PENDING (and RUNNING) tasks for this worker.\n\n        You have to pass in the state for optimization reasons.\n        \"\"\"\n    if len(self.tasks) < state.num_pending_tasks():\n        return list(filter(lambda task: task.status in [PENDING, RUNNING], self.tasks))\n    else:\n        return state.get_pending_tasks()\n\n## Task Description",
+      "patch_sha256": "118273971bff9abb033f33062e9a3406b709d50d604fe750242e1e70da67da1b",
+      "rank_score": 213,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.5106412196441554,
+      "top_p": 0.9620023454695296
+    },
+    {
+      "index": 5,
+      "patch_text": "def get_pending_tasks(self, state):\n    \"\"\"\n        Get PENDING (and RUNNING) tasks for this worker.\n\n        You have to pass in the state for optimization reasons.\n        \"\"\"\n    return list(six.moves.filter(lambda task: task.status in [PENDING, RUNNING], self.tasks))",
+      "patch_sha256": "b70031b2b4d0fd4ccf7628676878e1532cf2cde372d88cb7bf49eeedd92de6b4",
+      "rank_score": 199,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8850407915843882,
+      "top_p": 0.7720008604178135
+    },
+    {
+      "index": 6,
+      "patch_text": "def get_pending_tasks(self, state):\n    \"\"\"\n        Get PENDING (and RUNNING) tasks for this worker.\n\n        You have to pass in the state for optimization reasons.\n        \"\"\"\n    return list(state.get_pending_tasks())",
+      "patch_sha256": "8e8e89b23a98b9ea25dc76559515c2fc081d3b936cf280a43158d5e3253d1c2e",
+      "rank_score": 195,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8850407915843882,
+      "top_p": 0.7720008604178135
+    },
+    {
+      "index": 7,
+      "patch_text": "def get_pending_tasks(self, state):\n    \"\"\"\n        Get PENDING (and RUNNING) tasks for this worker.\n\n        You have to pass in the state for optimization reasons.\n        \"\"\"\n    if len(self.tasks) >= state.num_pending_tasks():\n        return state.get_pending_tasks()",
+      "patch_sha256": "84bf180753c6bc25422aa3ec466747d8743eda5e576046074b876a7ae67fd213",
+      "rank_score": 178,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.9374042813624712,
+      "top_p": 0.828917697133121
+    },
+    {
+      "index": 8,
+      "patch_text": "def get_pending_tasks(self, state):\n    \"\"\"\n        Get PENDING (and RUNNING) tasks for this worker.\n\n        You have to pass in the state for optimization reasons.\n        \"\"\"\n    return state.get_pending_tasks()\n\n\n## Plagiarism Checker Report",
+      "patch_sha256": "97f45fc0b66b3edaf9a82a2939ce3c75f180d6d575bef83c4699f0b1a16837db",
+      "rank_score": 177,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8089233151013046,
+      "top_p": 0.9111541438766307
+    },
+    {
+      "index": 9,
+      "patch_text": "def get_pending_tasks(self, state):\n    \"\"\"\n        Get PENDING (and RUNNING) tasks for this worker.\n\n        You have to pass in the state for optimization reasons.\n        \"\"\"\n    if len(self.tasks) < state.num_pending_tasks():\n        return list(filter(lambda task: task.status in [PENDING, RUNNING], self.tasks))\n    else:\n        return state.get_pending_tasks()\n\n##correct\nclass Scheduler(object):\n    def __init__(self, workflow):\n        self.workflow = workflow\n        self._pending_tasks = []\n        self.running_task_ids = set()\n\n    @property\n    def pending_tasks(self):\n        return self._pending_tasks\n\n    def _pending_task_ids(self):\n        return set(map(lambda task: task.task_id, self.pending_tasks))\n\n    def add_pending_task(self, task):\n        self._pending_tasks.append(task)\n        self.running_task_ids.add(task.task_id)\n\n    def remove_pending_task(self, task):\n        self._pending_tasks.remove(task)\n        self.running_task_ids.remove(task.task_id)\n\n##correct\ndef get_pending_tasks(self, state):\n    \"\"\"\n        Get PENDING (and RUNNING) tasks for this worker.\n\n        You have to pass in the state for optimization reasons.\n        \"\"\"\n    if len(self.tasks) < state.num_pending_tasks():\n        return list(filter(lambda task: task.status in [PENDING, RUNNING], self.tasks))\n    else:\n        return state.get_pending_tasks()\n\n##correct\nclass Scheduler(object):\n    def __init__(self, workflow):\n        self.workflow = workflow\n        self._pending_tasks = []\n        self.running_task_ids = set()\n\n    @property\n    def pending_tasks(self):\n        return self._pending_tasks\n\n    def _pending_task_ids(self):\n        return set(map(lambda task: task.task_id, self.pending_tasks))\n\n    def add_pending_task(self, task):\n        self._pending_tasks.append(task)\n        self.running_task_ids.add(task.task_id)\n\n    def remove_pending_task(self, task):\n        self._pending_tasks.remove(task)\n        self.running_task_ids.remove(task.task_id)\n\n##correct\ndef get_pending_tasks(self, state):\n    \"\"\"\n        Get PENDING (and RUNNING) tasks for this worker.\n\n        You have to pass in the state for optimization reasons.\n        \"\"\"\n    if len(self.tasks) < state.num_pending_tasks():\n        return list(filter(lambda task: task.status in [PENDING, RUNNING], self.tasks))\n    else:\n        return state.get_pending_tasks()",
+      "patch_sha256": "84cc29204a6b5c4edbde601e2925e343eb0ae0c35126bceb735aebcfb2fe7efc",
+      "rank_score": 130,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8089233151013046,
+      "top_p": 0.9111541438766307
+    }
+  ],
+  "candidate_count": 10,
+  "retrieved_examples": [],
+  "diffusion_plan": [],
+  "static_analysis_nodes": []
+}

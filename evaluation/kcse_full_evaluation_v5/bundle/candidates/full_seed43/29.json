@@ -1,0 +1,952 @@
+{
+  "bug_id": "29",
+  "seed": 43,
+  "arm": "full",
+  "candidates": [
+    {
+      "index": 0,
+      "patch_text": "def is_string_dtype(arr_or_dtype) -> bool:\n    \"\"\"\n    Check whether the provided array or dtype is of the string dtype.\n\n    Parameters\n    ----------\n    arr_or_dtype : array-like\n        The array or dtype to check.\n\n    Returns\n    -------\n    boolean\n        Whether or not the array or dtype is of the string dtype.\n\n    Examples\n    --------\n    >>> is_string_dtype(str)\n    True\n    >>> is_string_dtype(object)\n    True\n    >>> is_string_dtype(int)\n    False\n    >>>\n    >>> is_string_dtype(np.array(['a', 'b']))\n    True\n    >>> is_string_dtype(pd.Series([1, 2]))\n    False\n    \"\"\"\n\n    def condition(dtype) -> bool:\n        return dtype.kind in ('O', 'S', 'U') and (not is_excluded_dtype(dtype))\n\n    def is_excluded_dtype(dtype) -> bool:\n        \"\"\"\n        These have kind = \"O\" but aren't string dtypes so need to be explicitly excluded\n        \"\"\"\n        return (\n            (is_period_dtype(dtype) or is_interval_dtype(dtype))\n        )\n    return _is_dtype(arr_or_dtype, condition)",
+      "patch_sha256": "9f2d9e4aaa33ba329a5daf04bf7aa3cb305bfa1f91c2a464a7e0b0b8a89cce5b",
+      "rank_score": 256,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8030069698746244,
+      "top_p": 0.9037587123432804
+    },
+    {
+      "index": 1,
+      "patch_text": "def is_string_dtype(arr_or_dtype) -> bool:\n    \"\"\"\n    Check whether the provided array or dtype is of the string dtype.\n\n    Parameters\n    ----------\n    arr_or_dtype : array-like\n        The array or dtype to check.\n\n    Returns\n    -------\n    boolean\n        Whether or not the array or dtype is of the string dtype.\n\n    Examples\n    --------\n    >>> is_string_dtype(str)\n    True\n    >>> is_string_dtype(object)\n    True\n    >>> is_string_dtype(int)\n    False\n    >>>\n    >>> is_string_dtype(np.array(['a', 'b']))\n    True\n    >>> is_string_dtype(pd.Series([1, 2]))\n    False\n    \"\"\"\n\n    def condition(dtype) -> bool:\n        return dtype.kind in ('O', 'S', 'U') and (not is_excluded_dtype(dtype))\n\n    def is_excluded_dtype(dtype) -> bool:\n        \"\"\"\n        These have kind = \"O\" but aren't string dtypes so need to be explicitly excluded\n        \"\"\"\n        return (\n            dtype.kind == 'O' and\n            not is_period_dtype(dtype) and\n            not is_interval_dtype(dtype)\n        )\n    return _is_dtype(arr_or_dtype, condition)",
+      "patch_sha256": "d2f334546f2ced8e8fd243c64403b345f31a5a2e6aef073b2ab56ac53ed1b83c",
+      "rank_score": 255,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.9198728361131365,
+      "top_p": 0.8098617783838441
+    },
+    {
+      "index": 2,
+      "patch_text": "def is_string_dtype(arr_or_dtype) -> bool:\n    \"\"\"\n    Check whether the provided array or dtype is of the string dtype.\n\n    Parameters\n    ----------\n    arr_or_dtype : array-like\n        The array or dtype to check.\n\n    Returns\n    -------\n    boolean\n        Whether or not the array or dtype is of the string dtype.\n\n    Examples\n    --------\n    >>> is_string_dtype(str)\n    True\n    >>> is_string_dtype(object)\n    True\n    >>> is_string_dtype(int)\n    False\n    >>>\n    >>> is_string_dtype(np.array(['a', 'b']))\n    True\n    >>> is_string_dtype(pd.Series([1, 2]))\n    False\n    \"\"\"\n\n    def condition(dtype) -> bool:\n        return dtype.kind in ('O', 'S', 'U') and (not is_excluded_dtype(dtype))\n\n    def is_excluded_dtype(dtype) -> bool:\n        \"\"\"\n        These have kind = \"O\" but aren't string dtypes so need to be explicitly excluded\n        \"\"\"\n        return any((is_excluded(dtype) for is_excluded in (is_period_dtype, is_interval_dtype)))\n    return _is_dtype(arr_or_dtype, condition)",
+      "patch_sha256": "87a99523f4a30a8e53aef45ed99d6431ec9a2e629fd81914e6b12b7eafd01d1d",
+      "rank_score": 246,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7704673177175924,
+      "top_p": 0.8630841471469904
+    },
+    {
+      "index": 3,
+      "patch_text": "def is_string_dtype(arr_or_dtype) -> bool:\n    \"\"\"\n    Check whether the provided array or dtype is of the string dtype.\n\n    Parameters\n    ----------\n    arr_or_dtype : array-like\n        The array or dtype to check.\n\n    Returns\n    -------\n    boolean\n        Whether or not the array or dtype is of the string dtype.\n\n    Examples\n    --------\n    >>> is_string_dtype(str)\n    True\n    >>> is_string_dtype(object)\n    True\n    >>> is_string_dtype(int)\n    False\n    >>>\n    >>> is_string_dtype(np.array(['a', 'b']))\n    True\n    >>> is_string_dtype(pd.Series([1, 2]))\n    False\n    \"\"\"\n\n    def condition(dtype) -> bool:\n        return dtype.kind in ('O', 'S', 'U') and (not is_excluded_dtype(dtype))\n\n    def is_excluded_dtype(dtype) -> bool:\n        \"\"\"\n        These have kind = \"O\" but aren't string dtypes so need to be explicitly excluded\n        \"\"\"\n        is_excluded_checks = (is_period_dtype, is_interval_dtype)  # <-- REPAIR HERE\n        return any((is_excluded(dtype) for is_excluded in is_excluded_checks))\n    return _is_dtype(arr_or_dtype, condition)\n\nimport os\nimport sys\nimport json\nimport argparse\nimport time\nfrom copy import deepcopy\n\nsys.path.append(os.path.abspath('./'))\nsys.path.append(os.path.abspath('./repairnator/'))\nsys.path.append(os.path.abspath('./repairnator/repairnator/'))\nsys.path.append(os.path.abspath('./repairnator/repairnator/github/'))\nsys.path.append(os.path.abspath('./repairnator/repairnator/github/fixstorage/'))\nsys.path.append(os.path.abspath('./repairnator/repairnator/github/fixstorage/data/'))\nsys.path.append(os.path.abspath('./repairnator/repairnator/github/fixstorage/data/json/'))\nsys.path.append(os.path.abspath('./repairnator/repairnator/github/fixstorage/data/raw/'))\nsys.path.append(os.path.abspath('./repairnator/repairnator/github/fixstorage/data/csv/'))\nsys.path.append(os.path.abspath('./repairnator/repairnator/github/fixstorage/data/xml/'))\nsys.path.append(os.path.abspath('./repairnator/repairnator/github/fixstorage/data/text/'))\nsys.path.append(os.path.abspath('./repairnator/repairnator/github/fixstorage/data/txt/'))\nsys.path.append",
+      "patch_sha256": "65018e2f7fa0438d86eefc206abbf960479e07440bcfe14d76fd7da4839db324",
+      "rank_score": -12,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7704673177175924,
+      "top_p": 0.8630841471469904
+    },
+    {
+      "index": 4,
+      "patch_text": "def is_string_dtype(arr_or_dtype) -> bool:\n    \"\"\"\n    Check whether the provided array or dtype is of the string dtype.\n\n    Parameters\n    ----------\n    arr_or_dtype : array-like\n        The array or dtype to check.\n\n    Returns\n    -------\n    boolean\n        Whether or not the array or dtype is of the string dtype.\n\n    Examples\n    --------\n    >>> is_string_dtype(str)\n    True\n    >>> is_string_dtype(object)\n    True\n    >>> is_string_dtype(int)\n    False\n    >>>\n    >>> is_string_dtype(np.array(['a', 'b']))\n    True\n    >>> is_string_dtype(pd.Series([1, 2]))\n    False\n    \"\"\"\n\n    def condition(dtype) -> bool:\n        return dtype.kind in ('O', 'S', 'U') and (not is_excluded_dtype(dtype))\n\n    def is_excluded_dtype(dtype) -> bool:\n        \"\"\"\n        These have kind = \"O\" but aren't string dtypes so need to be explicitly excluded\n        \"\"\"\n        is_excluded_checks = (is_period_dtype, is_interval_dtype)\n        return any((is_excluded(dtype) for is_excluded in is_excluded_checks))\n    return _is_dtype(arr_or_dtype, condition)\nimport os\nimport json\n\nfrom utils import *\n\nimport pandas as pd\nimport numpy as np\n\nfrom sklearn.metrics import mean_squared_error\nfrom math import sqrt\n\nimport matplotlib.pyplot as plt\n\nimport warnings\nwarnings.filterwarnings(\"ignore\")\n\n\nclass Baseline:\n    def __init__(self, train_data, test_data, params):\n        self.train_data = train_data\n        self.test_data = test_data\n        self.params = params\n\n    def run(self, model_name):\n\n        # fit baseline\n        history = self.train_model()\n\n        # predict values\n        y_pred = self.predict()\n\n        # calculate root mean squared error\n        mse = mean_squared_error(self.test_data, y_pred)\n        rmse = sqrt(mse)\n\n        # save model\n        self.save_model(model_name, history, rmse)\n\n\n    def train_model(self):\n        return None\n\n    def predict(self):\n        return None\n\n    def save_model(self, model_name, history, rmse):\n\n        path = './results/{}/'.format(model_name)\n\n        if not os.path.exists(path):\n            os.mkdir(path)\n\n        data = {\n            'history': history,\n            'rmse': rmse\n        }\n\n        # write the results\n        with open(path+'baseline_results.json', 'w') as fp:\n            json.dump(data, fp)\n\n\nclass LinearRegression(Baseline):\n    def train_model(self):\n        X = self.train_data.drop('y', axis=1)\n        y = self",
+      "patch_sha256": "f005a170de348aede054e7412e5d6b11a2a8d6af985dd2a261558b752675d65f",
+      "rank_score": -162,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7970041106218376,
+      "top_p": 0.896255138277297
+    },
+    {
+      "index": 5,
+      "patch_text": "def is_string_dtype(arr_or_dtype) -> bool:\n    \"\"\"\n    Check whether the provided array or dtype is of the string dtype.\n\n    Parameters\n    ----------\n    arr_or_dtype : array-like\n        The array or dtype to check.\n\n    Returns\n    -------\n    boolean\n        Whether or not the array or dtype is of the string dtype.\n\n    Examples\n    --------\n    >>> is_string_dtype(str)\n    True\n    >>> is_string_dtype(object)\n    True\n    >>> is_string_dtype(int)\n    False\n    >>>\n    >>> is_string_dtype(np.array(['a', 'b']))\n    True\n    >>> is_string_dtype(pd.Series([1, 2]))\n    False\n    \"\"\"\n\n    def condition(dtype) -> bool:\n        return dtype.kind in ('O', 'S', 'U') and (not is_excluded_dtype(dtype))\n\n    def is_excluded_dtype(dtype) -> bool:\n        \"\"\"\n        These have kind = \"O\" but aren't string dtypes so need to be explicitly excluded\n        \"\"\"\n        is_excluded_checks = (is_period_dtype, is_interval_dtype)\n        any((is_excluded(dtype) for is_excluded in is_excluded_checks))\n        return any((is_excluded(dtype) for is_excluded in is_excluded_checks))\n    return _is_dtype(arr_or_dtype, condition)\nimport json\nimport numpy as np\nimport torch\nfrom collections import Counter\n\nfrom utils import read_data\nfrom utils import tokenize\nfrom utils import normalize_text\nfrom utils import get_dataset\nfrom utils import filter_rare_tokens\n\nimport argparse\nparser = argparse.ArgumentParser()\nparser.add_argument('--save_dir', type=str, default='data/')\nparser.add_argument('--mode', type=str, default='train')\nparser.add_argument('--vocab_size', type=int, default=10000)\nargs = parser.parse_args()\n\ndataset = get_dataset('imdb', save_dir=args.save_dir, mode=args.mode)\n\nif args.mode == 'train':\n    all_text = dataset.train_data.text\n    all_labels = dataset.train_data.label\n    counter = Counter()\n    for text, label in zip(all_text, all_labels):\n        tokenized_text = tokenize(text)\n        counter.update(tokenized_text)\n\n    tokens = list(map(lambda x: x[0], counter.most_common(args.vocab_size)))\n    vocab = {'<PAD>': 0, '<UNK>': 1}\n    for token in tokens:\n        vocab[token] = len(vocab)\n\n    token_to_id = {token: id for id, token in vocab.items()}\n    word_count = len(vocab)\n    print('word count:', word_count)\n\n    vocab",
+      "patch_sha256": "7b756e8635f938df6cc51fec7d7b9ad5ffee1a4d2a868afae1009cc08abd0549",
+      "rank_score": -213,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.934442110146087,
+      "top_p": 0.8256979458109642
+    }
+  ],
+  "candidate_count": 6,
+  "retrieved_examples": [
+    {
+      "id": "39",
+      "project_name": "pandas",
+      "buggy_line_content": "            except (TypeError, ValueError):",
+      "function": {
+        "function_name": "_try_convert_data",
+        "function_parent": "Parser",
+        "function_before_start_line": 886,
+        "function_before_end_line": 958,
+        "function_after_start_line": 886,
+        "function_after_end_line": 958,
+        "function_before_token_count": 277,
+        "function_after_token_count": 279,
+        "function_before": "def _try_convert_data(self, name, data, use_dtypes=True, convert_dates=True):\n    \"\"\"\n        Try to parse a ndarray like into a column by inferring dtype.\n        \"\"\"\n    if use_dtypes:\n        if not self.dtype:\n            return (data, False)\n        elif self.dtype is True:\n            pass\n        else:\n            dtype = self.dtype.get(name) if isinstance(self.dtype, dict) else self.dtype\n            if dtype is not None:\n                try:\n                    dtype = np.dtype(dtype)\n                    return (data.astype(dtype), True)\n                except (TypeError, ValueError):\n                    return (data, False)\n    if convert_dates:\n        new_data, result = self._try_convert_to_date(data)\n        if result:\n            return (new_data, True)\n    result = False\n    if data.dtype == 'object':\n        try:\n            data = data.astype('float64')\n            result = True\n        except (TypeError, ValueError):\n            pass\n    if data.dtype.kind == 'f':\n        if data.dtype != 'float64':\n            try:\n                data = data.astype('float64')\n                result = True\n            except (TypeError, ValueError):\n                pass\n    if len(data) and (data.dtype == 'float' or data.dtype == 'object'):\n        try:\n            new_data = data.astype('int64')\n            if (new_data == data).all():\n                data = new_data\n                result = True\n        except (TypeError, ValueError):\n            pass\n    if data.dtype == 'int':\n        try:\n            data = data.astype('int64')\n            result = True\n        except (TypeError, ValueError):\n            pass\n    return (data, result)",
+        "function_after": "def _try_convert_data(self, name, data, use_dtypes=True, convert_dates=True):\n    \"\"\"\n        Try to parse a ndarray like into a column by inferring dtype.\n        \"\"\"\n    if use_dtypes:\n        if not self.dtype:\n            return (data, False)\n        elif self.dtype is True:\n            pass\n        else:\n            dtype = self.dtype.get(name) if isinstance(self.dtype, dict) else self.dtype\n            if dtype is not None:\n                try:\n                    dtype = np.dtype(dtype)\n                    return (data.astype(dtype), True)\n                except (TypeError, ValueError):\n                    return (data, False)\n    if convert_dates:\n        new_data, result = self._try_convert_to_date(data)\n        if result:\n            return (new_data, True)\n    result = False\n    if data.dtype == 'object':\n        try:\n            data = data.astype('float64')\n            result = True\n        except (TypeError, ValueError):\n            pass\n    if data.dtype.kind == 'f':\n        if data.dtype != 'float64':\n            try:\n                data = data.astype('float64')\n                result = True\n            except (TypeError, ValueError):\n                pass\n    if len(data) and (data.dtype == 'float' or data.dtype == 'object'):\n        try:\n            new_data = data.astype('int64')\n            if (new_data == data).all():\n                data = new_data\n                result = True\n        except (TypeError, ValueError, OverflowError):\n            pass\n    if data.dtype == 'int':\n        try:\n            data = data.astype('int64')\n            result = True\n        except (TypeError, ValueError):\n            pass\n    return (data, result)"
+      },
+      "file_name": "_json.py",
+      "file_path": "pandas/io/json/_json.py",
+      "score_reranked": 0.5086019865716391
+    },
+    {
+      "id": "32",
+      "project_name": "pandas",
+      "buggy_line_content": "            except (ValueError, OverflowError):",
+      "function": {
+        "function_name": "_try_convert_to_date",
+        "function_parent": "Parser",
+        "function_before_start_line": 953,
+        "function_before_end_line": 988,
+        "function_after_start_line": 953,
+        "function_after_end_line": 988,
+        "function_before_token_count": 154,
+        "function_after_token_count": 156,
+        "function_before": "def _try_convert_to_date(self, data):\n    \"\"\"\n        Try to parse a ndarray like into a date column.\n\n        Try to coerce object in epoch/iso formats and integer/float in epoch\n        formats. Return a boolean if parsing was successful.\n        \"\"\"\n    if not len(data):\n        return (data, False)\n    new_data = data\n    if new_data.dtype == 'object':\n        try:\n            new_data = data.astype('int64')\n        except (TypeError, ValueError, OverflowError):\n            pass\n    if issubclass(new_data.dtype.type, np.number):\n        in_range = isna(new_data._values) | (new_data > self.min_stamp) | (new_data._values == iNaT)\n        if not in_range.all():\n            return (data, False)\n    date_units = (self.date_unit,) if self.date_unit else self._STAMP_UNITS\n    for date_unit in date_units:\n        try:\n            new_data = to_datetime(new_data, errors='raise', unit=date_unit)\n        except (ValueError, OverflowError):\n            continue\n        return (new_data, True)\n    return (data, False)",
+        "function_after": "def _try_convert_to_date(self, data):\n    \"\"\"\n        Try to parse a ndarray like into a date column.\n\n        Try to coerce object in epoch/iso formats and integer/float in epoch\n        formats. Return a boolean if parsing was successful.\n        \"\"\"\n    if not len(data):\n        return (data, False)\n    new_data = data\n    if new_data.dtype == 'object':\n        try:\n            new_data = data.astype('int64')\n        except (TypeError, ValueError, OverflowError):\n            pass\n    if issubclass(new_data.dtype.type, np.number):\n        in_range = isna(new_data._values) | (new_data > self.min_stamp) | (new_data._values == iNaT)\n        if not in_range.all():\n            return (data, False)\n    date_units = (self.date_unit,) if self.date_unit else self._STAMP_UNITS\n    for date_unit in date_units:\n        try:\n            new_data = to_datetime(new_data, errors='raise', unit=date_unit)\n        except (ValueError, OverflowError, TypeError):\n            continue\n        return (new_data, True)\n    return (data, False)"
+      },
+      "file_name": "_json.py",
+      "file_path": "pandas/io/json/_json.py",
+      "score_reranked": 0.5050823202631246
+    },
+    {
+      "id": "43",
+      "project_name": "pandas",
+      "buggy_line_content": "        elif self.is_all_dates:",
+      "function": {
+        "function_name": "get_indexer_non_unique",
+        "function_parent": "Index",
+        "function_before_start_line": 4546,
+        "function_before_end_line": 4560,
+        "function_after_start_line": 4546,
+        "function_after_end_line": 4560,
+        "function_before_token_count": 91,
+        "function_after_token_count": 95,
+        "function_before": "@Appender(_index_shared_docs['get_indexer_non_unique'] % _index_doc_kwargs)\ndef get_indexer_non_unique(self, target):\n    target = ensure_index(target)\n    pself, ptarget = self._maybe_promote(target)\n    if pself is not self or ptarget is not target:\n        return pself.get_indexer_non_unique(ptarget)\n    if is_categorical(target):\n        tgt_values = np.asarray(target)\n    elif self.is_all_dates:\n        tgt_values = target.asi8\n    else:\n        tgt_values = target._ndarray_values\n    indexer, missing = self._engine.get_indexer_non_unique(tgt_values)\n    return (ensure_platform_int(indexer), missing)",
+        "function_after": "@Appender(_index_shared_docs['get_indexer_non_unique'] % _index_doc_kwargs)\ndef get_indexer_non_unique(self, target):\n    target = ensure_index(target)\n    pself, ptarget = self._maybe_promote(target)\n    if pself is not self or ptarget is not target:\n        return pself.get_indexer_non_unique(ptarget)\n    if is_categorical(target):\n        tgt_values = np.asarray(target)\n    elif self.is_all_dates and target.is_all_dates:\n        tgt_values = target.asi8\n    else:\n        tgt_values = target._ndarray_values\n    indexer, missing = self._engine.get_indexer_non_unique(tgt_values)\n    return (ensure_platform_int(indexer), missing)"
+      },
+      "file_name": "base.py",
+      "file_path": "pandas/core/indexes/base.py",
+      "score_reranked": 0.4505665529650778
+    },
+    {
+      "id": "28",
+      "project_name": "scrapy",
+      "buggy_line_content": "        if ':' not in self._url:",
+      "function": {
+        "function_name": "_set_url",
+        "function_parent": "Request",
+        "function_before_start_line": 62,
+        "function_before_end_line": 70,
+        "function_after_start_line": 62,
+        "function_after_end_line": 70,
+        "function_before_token_count": 65,
+        "function_after_token_count": 79,
+        "function_before": "def _set_url(self, url):\n    if not isinstance(url, six.string_types):\n        raise TypeError('Request url must be str or unicode, got %s:' % type(url).__name__)\n    s = safe_url_string(url, self.encoding)\n    self._url = escape_ajax(s)\n    if ':' not in self._url:\n        raise ValueError('Missing scheme in request url: %s' % self._url)",
+        "function_after": "def _set_url(self, url):\n    if not isinstance(url, six.string_types):\n        raise TypeError('Request url must be str or unicode, got %s:' % type(url).__name__)\n    s = safe_url_string(url, self.encoding)\n    self._url = escape_ajax(s)\n    if '://' not in self._url and (not self._url.startswith('data:')):\n        raise ValueError('Missing scheme in request url: %s' % self._url)"
+      },
+      "file_name": "__init__.py",
+      "file_path": "scrapy/http/request/__init__.py",
+      "score_reranked": 0.34010432550872466
+    },
+    {
+      "id": "21",
+      "project_name": "youtube-dl",
+      "buggy_line_content": "        (?:0[xX][0-9a-fA-F]+|0+[0-7]+)(?:\\s*:)?|",
+      "function": {
+        "function_name": "js_to_json",
+        "function_parent": "utils.py",
+        "function_before_start_line": 1939,
+        "function_before_end_line": 1975,
+        "function_after_start_line": 1939,
+        "function_after_end_line": 1975,
+        "function_before_token_count": 19,
+        "function_after_token_count": 19,
+        "function_before": "def js_to_json(code):\n\n    def fix_kv(m):\n        v = m.group(0)\n        if v in ('true', 'false', 'null'):\n            return v\n        elif v.startswith('/*') or v == ',':\n            return ''\n        if v[0] in (\"'\", '\"'):\n            v = re.sub('(?s)\\\\\\\\.|\"', lambda m: {'\"': '\\\\\"', \"\\\\'\": \"'\", '\\\\\\n': '', '\\\\x': '\\\\u00'}.get(m.group(0), m.group(0)), v[1:-1])\n        INTEGER_TABLE = (('^0[xX][0-9a-fA-F]+', 16), ('^0+[0-7]+', 8))\n        for regex, base in INTEGER_TABLE:\n            im = re.match(regex, v)\n            if im:\n                i = int(im.group(0), base)\n                return '\"%d\":' % i if v.endswith(':') else '%d' % i\n        return '\"%s\"' % v\n    return re.sub('(?sx)\\n        \"(?:[^\"\\\\\\\\]*(?:\\\\\\\\\\\\\\\\|\\\\\\\\[\\'\"nurtbfx/\\\\n]))*[^\"\\\\\\\\]*\"|\\n        \\'(?:[^\\'\\\\\\\\]*(?:\\\\\\\\\\\\\\\\|\\\\\\\\[\\'\"nurtbfx/\\\\n]))*[^\\'\\\\\\\\]*\\'|\\n        /\\\\*.*?\\\\*/|,(?=\\\\s*[\\\\]}])|\\n        [a-zA-Z_][.a-zA-Z_0-9]*|\\n        (?:0[xX][0-9a-fA-F]+|0+[0-7]+)(?:\\\\s*:)?|\\n        [0-9]+(?=\\\\s*:)\\n        ', fix_kv, code)",
+        "function_after": "def js_to_json(code):\n\n    def fix_kv(m):\n        v = m.group(0)\n        if v in ('true', 'false', 'null'):\n            return v\n        elif v.startswith('/*') or v == ',':\n            return ''\n        if v[0] in (\"'\", '\"'):\n            v = re.sub('(?s)\\\\\\\\.|\"', lambda m: {'\"': '\\\\\"', \"\\\\'\": \"'\", '\\\\\\n': '', '\\\\x': '\\\\u00'}.get(m.group(0), m.group(0)), v[1:-1])\n        INTEGER_TABLE = (('^0[xX][0-9a-fA-F]+', 16), ('^0+[0-7]+', 8))\n        for regex, base in INTEGER_TABLE:\n            im = re.match(regex, v)\n            if im:\n                i = int(im.group(0), base)\n                return '\"%d\":' % i if v.endswith(':') else '%d' % i\n        return '\"%s\"' % v\n    return re.sub('(?sx)\\n        \"(?:[^\"\\\\\\\\]*(?:\\\\\\\\\\\\\\\\|\\\\\\\\[\\'\"nurtbfx/\\\\n]))*[^\"\\\\\\\\]*\"|\\n        \\'(?:[^\\'\\\\\\\\]*(?:\\\\\\\\\\\\\\\\|\\\\\\\\[\\'\"nurtbfx/\\\\n]))*[^\\'\\\\\\\\]*\\'|\\n        /\\\\*.*?\\\\*/|,(?=\\\\s*[\\\\]}])|\\n        [a-zA-Z_][.a-zA-Z_0-9]*|\\n        \\\\b(?:0[xX][0-9a-fA-F]+|0+[0-7]+)(?:\\\\s*:)?|\\n        [0-9]+(?=\\\\s*:)\\n        ', fix_kv, code)"
+      },
+      "file_name": "utils.py",
+      "file_path": "youtube_dl/utils.py",
+      "score_reranked": 0.33835927199703464
+    }
+  ],
+  "diffusion_plan": [
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 52
+        },
+        {
+          "op": "Replace",
+          "node": 27
+        },
+        {
+          "op": "Replace",
+          "node": 48
+        },
+        {
+          "op": "Replace",
+          "node": 11
+        },
+        {
+          "op": "Replace",
+          "node": 15
+        },
+        {
+          "op": "Replace",
+          "node": 18
+        },
+        {
+          "op": "Replace",
+          "node": 16
+        },
+        {
+          "op": "GuardAdd",
+          "node": 15
+        },
+        {
+          "op": "GuardAdd",
+          "node": 48
+        },
+        {
+          "op": "InsertBefore",
+          "node": 27
+        },
+        {
+          "op": "GuardAdd",
+          "node": 27
+        },
+        {
+          "op": "GuardAdd",
+          "node": 52
+        }
+      ],
+      "score": 22.58333333033565
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 18
+        },
+        {
+          "op": "GuardAdd",
+          "node": 27
+        },
+        {
+          "op": "GuardAdd",
+          "node": 15
+        },
+        {
+          "op": "Replace",
+          "node": 27
+        },
+        {
+          "op": "Replace",
+          "node": 15
+        },
+        {
+          "op": "Replace",
+          "node": 16
+        },
+        {
+          "op": "Replace",
+          "node": 52
+        },
+        {
+          "op": "GuardAdd",
+          "node": 52
+        }
+      ],
+      "score": 20.499999997569446
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "GuardAdd",
+          "node": 15
+        },
+        {
+          "op": "Replace",
+          "node": 6
+        },
+        {
+          "op": "GuardAdd",
+          "node": 27
+        },
+        {
+          "op": "Replace",
+          "node": 15
+        },
+        {
+          "op": "Replace",
+          "node": 52
+        },
+        {
+          "op": "Replace",
+          "node": 27
+        },
+        {
+          "op": "Delete",
+          "node": 52
+        },
+        {
+          "op": "Delete",
+          "node": 27
+        },
+        {
+          "op": "Replace",
+          "node": 18
+        }
+      ],
+      "score": 19.555555552978397
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 15
+        },
+        {
+          "op": "Replace",
+          "node": 6
+        },
+        {
+          "op": "GuardAdd",
+          "node": 6
+        },
+        {
+          "op": "Delete",
+          "node": 6
+        },
+        {
+          "op": "GuardAdd",
+          "node": 27
+        },
+        {
+          "op": "GuardAdd",
+          "node": 15
+        },
+        {
+          "op": "Replace",
+          "node": 52
+        },
+        {
+          "op": "GuardAdd",
+          "node": 18
+        },
+        {
+          "op": "Replace",
+          "node": 27
+        },
+        {
+          "op": "Replace",
+          "node": 18
+        }
+      ],
+      "score": 19.555555552978397
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 6
+        },
+        {
+          "op": "GuardAdd",
+          "node": 6
+        },
+        {
+          "op": "Replace",
+          "node": 52
+        },
+        {
+          "op": "GuardAdd",
+          "node": 11
+        },
+        {
+          "op": "Replace",
+          "node": 27
+        },
+        {
+          "op": "GuardAdd",
+          "node": 27
+        },
+        {
+          "op": "Replace",
+          "node": 18
+        },
+        {
+          "op": "InsertBefore",
+          "node": 48
+        },
+        {
+          "op": "Delete",
+          "node": 27
+        },
+        {
+          "op": "Replace",
+          "node": 16
+        },
+        {
+          "op": "GuardAdd",
+          "node": 15
+        }
+      ],
+      "score": 19.36111110856096
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "GuardAdd",
+          "node": 52
+        },
+        {
+          "op": "GuardAdd",
+          "node": 27
+        },
+        {
+          "op": "Replace",
+          "node": 15
+        },
+        {
+          "op": "GuardAdd",
+          "node": 48
+        },
+        {
+          "op": "Replace",
+          "node": 52
+        },
+        {
+          "op": "Delete",
+          "node": 27
+        },
+        {
+          "op": "Replace",
+          "node": 27
+        },
+        {
+          "op": "Replace",
+          "node": 16
+        }
+      ],
+      "score": 19.333333331064814
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 52
+        },
+        {
+          "op": "InsertBefore",
+          "node": 27
+        },
+        {
+          "op": "Replace",
+          "node": 18
+        },
+        {
+          "op": "Replace",
+          "node": 6
+        },
+        {
+          "op": "GuardAdd",
+          "node": 52
+        },
+        {
+          "op": "Replace",
+          "node": 16
+        },
+        {
+          "op": "GuardAdd",
+          "node": 27
+        },
+        {
+          "op": "Delete",
+          "node": 18
+        }
+      ],
+      "score": 19.05555555332562
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 16
+        },
+        {
+          "op": "Replace",
+          "node": 27
+        },
+        {
+          "op": "Delete",
+          "node": 52
+        },
+        {
+          "op": "Replace",
+          "node": 52
+        },
+        {
+          "op": "Replace",
+          "node": 18
+        },
+        {
+          "op": "Replace",
+          "node": 6
+        },
+        {
+          "op": "GuardAdd",
+          "node": 52
+        },
+        {
+          "op": "Replace",
+          "node": 15
+        }
+      ],
+      "score": 18.999999997777778
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 52
+        },
+        {
+          "op": "Replace",
+          "node": 18
+        },
+        {
+          "op": "GuardAdd",
+          "node": 15
+        },
+        {
+          "op": "Replace",
+          "node": 15
+        },
+        {
+          "op": "GuardAdd",
+          "node": 27
+        },
+        {
+          "op": "Replace",
+          "node": 16
+        },
+        {
+          "op": "Replace",
+          "node": 27
+        },
+        {
+          "op": "GuardAdd",
+          "node": 11
+        }
+      ],
+      "score": 18.499999997847222
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Delete",
+          "node": 48
+        },
+        {
+          "op": "GuardAdd",
+          "node": 27
+        },
+        {
+          "op": "Replace",
+          "node": 52
+        },
+        {
+          "op": "Replace",
+          "node": 15
+        },
+        {
+          "op": "Replace",
+          "node": 18
+        },
+        {
+          "op": "Replace",
+          "node": 6
+        },
+        {
+          "op": "Replace",
+          "node": 27
+        },
+        {
+          "op": "Replace",
+          "node": 16
+        }
+      ],
+      "score": 18.08333333123843
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 15
+        },
+        {
+          "op": "InsertBefore",
+          "node": 52
+        },
+        {
+          "op": "Replace",
+          "node": 27
+        },
+        {
+          "op": "Replace",
+          "node": 18
+        },
+        {
+          "op": "Replace",
+          "node": 52
+        },
+        {
+          "op": "GuardAdd",
+          "node": 18
+        },
+        {
+          "op": "InsertBefore",
+          "node": 11
+        },
+        {
+          "op": "Delete",
+          "node": 15
+        }
+      ],
+      "score": 17.972222220142747
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 27
+        },
+        {
+          "op": "Replace",
+          "node": 16
+        },
+        {
+          "op": "GuardAdd",
+          "node": 6
+        },
+        {
+          "op": "Replace",
+          "node": 15
+        },
+        {
+          "op": "Delete",
+          "node": 27
+        },
+        {
+          "op": "Replace",
+          "node": 18
+        },
+        {
+          "op": "GuardAdd",
+          "node": 27
+        },
+        {
+          "op": "GuardAdd",
+          "node": 48
+        }
+      ],
+      "score": 17.63888888685571
+    }
+  ],
+  "static_analysis_nodes": [
+    {
+      "line": 38,
+      "line_absolute": 603,
+      "node_id": 27,
+      "node_id_local": 4,
+      "type": "Call",
+      "code": "any((is_excluded(dtype) for is_excluded in is_excluded_checks))",
+      "distance_to_buggy": 0,
+      "context": "  35:           These have kind = \"O\" but aren't string dtypes so need to be explicitly excluded\n  36:           \"\"\"\n  37:           is_excluded_checks = (is_period_dtype, is_interval_dtype)\n  38:->         return any((is_excluded(dtype) for is_excluded in is_excluded_checks))\n  39:       return _is_dtype(arr_or_dtype, condition)",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Name",
+          "id": "any",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [
+          {
+            "_type": "GeneratorExp",
+            "elt": {
+              "_type": "Call"
+            },
+            "generators": [
+              {
+                "_type": "comprehension"
+              }
+            ]
+          }
+        ],
+        "keywords": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -24.0
+    },
+    {
+      "line": 38,
+      "line_absolute": 603,
+      "node_id": 52,
+      "node_id_local": 5,
+      "type": "Call",
+      "code": "is_excluded(dtype)",
+      "distance_to_buggy": 0,
+      "context": "  35:           These have kind = \"O\" but aren't string dtypes so need to be explicitly excluded\n  36:           \"\"\"\n  37:           is_excluded_checks = (is_period_dtype, is_interval_dtype)\n  38:->         return any((is_excluded(dtype) for is_excluded in is_excluded_checks))\n  39:       return _is_dtype(arr_or_dtype, condition)",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Name",
+          "id": "is_excluded",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [
+          {
+            "_type": "Name",
+            "id": "dtype",
+            "ctx": {
+              "_type": "Load"
+            }
+          }
+        ],
+        "keywords": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -24.0
+    },
+    {
+      "line": 39,
+      "line_absolute": 604,
+      "node_id": 18,
+      "node_id_local": 7,
+      "type": "Call",
+      "code": "_is_dtype(arr_or_dtype, condition)",
+      "distance_to_buggy": 0,
+      "context": "  36:           \"\"\"\n  37:           is_excluded_checks = (is_period_dtype, is_interval_dtype)\n  38:           return any((is_excluded(dtype) for is_excluded in is_excluded_checks))\n  39:->     return _is_dtype(arr_or_dtype, condition)",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Name",
+          "id": "_is_dtype",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [
+          {
+            "_type": "Name",
+            "id": "arr_or_dtype",
+            "ctx": {
+              "_type": "Load"
+            }
+          },
+          {
+            "_type": "Name",
+            "id": "condition",
+            "ctx": {
+              "_type": "Load"
+            }
+          }
+        ],
+        "keywords": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -24.0
+    },
+    {
+      "line": 37,
+      "line_absolute": 602,
+      "node_id": 15,
+      "node_id_local": 2,
+      "type": "Assign",
+      "code": "is_excluded_checks = (is_period_dtype, is_interval_dtype)",
+      "distance_to_buggy": 0,
+      "context": "  34:           \"\"\"\n  35:           These have kind = \"O\" but aren't string dtypes so need to be explicitly excluded\n  36:           \"\"\"\n  37:->         is_excluded_checks = (is_period_dtype, is_interval_dtype)\n  38:           return any((is_excluded(dtype) for is_excluded in is_excluded_checks))\n  39:       return _is_dtype(arr_or_dtype, condition)",
+      "ast_subtree_json": {
+        "_type": "Assign",
+        "targets": [
+          {
+            "_type": "Name",
+            "id": "is_excluded_checks",
+            "ctx": {
+              "_type": "Store"
+            }
+          }
+        ],
+        "value": {
+          "_type": "Tuple",
+          "elts": [
+            {
+              "_type": "Name"
+            },
+            {
+              "_type": "Name"
+            }
+          ],
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "type_comment": null
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -23.0
+    },
+    {
+      "line": 38,
+      "line_absolute": 603,
+      "node_id": 16,
+      "node_id_local": 3,
+      "type": "Return",
+      "code": "return any((is_excluded(dtype) for is_excluded in is_excluded_checks))",
+      "distance_to_buggy": 0,
+      "context": "  35:           These have kind = \"O\" but aren't string dtypes so need to be explicitly excluded\n  36:           \"\"\"\n  37:           is_excluded_checks = (is_period_dtype, is_interval_dtype)\n  38:->         return any((is_excluded(dtype) for is_excluded in is_excluded_checks))\n  39:       return _is_dtype(arr_or_dtype, condition)",
+      "ast_subtree_json": {
+        "_type": "Return",
+        "value": {
+          "_type": "Call",
+          "func": {
+            "_type": "Name"
+          },
+          "args": [
+            {
+              "_type": "GeneratorExp"
+            }
+          ],
+          "keywords": []
+        }
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -22.0
+    },
+    {
+      "line": 39,
+      "line_absolute": 604,
+      "node_id": 6,
+      "node_id_local": 6,
+      "type": "Return",
+      "code": "return _is_dtype(arr_or_dtype, condition)",
+      "distance_to_buggy": 0,
+      "context": "  36:           \"\"\"\n  37:           is_excluded_checks = (is_period_dtype, is_interval_dtype)\n  38:           return any((is_excluded(dtype) for is_excluded in is_excluded_checks))\n  39:->     return _is_dtype(arr_or_dtype, condition)",
+      "ast_subtree_json": {
+        "_type": "Return",
+        "value": {
+          "_type": "Call",
+          "func": {
+            "_type": "Name"
+          },
+          "args": [
+            {
+              "_type": "Name"
+            },
+            {
+              "_type": "Name"
+            }
+          ],
+          "keywords": []
+        }
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -22.0
+    },
+    {
+      "line": 31,
+      "line_absolute": 596,
+      "node_id": 48,
+      "node_id_local": 1,
+      "type": "Call",
+      "code": "is_excluded_dtype(dtype)",
+      "distance_to_buggy": 4,
+      "context": "  28:       \"\"\"\n  29:   \n  30:       def condition(dtype) -> bool:\n  31:->         return dtype.kind in ('O', 'S', 'U') and (not is_excluded_dtype(dtype))\n  32:   \n  33:       def is_excluded_dtype(dtype) -> bool:\n  34:           \"\"\"",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Name",
+          "id": "is_excluded_dtype",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [
+          {
+            "_type": "Name",
+            "id": "dtype",
+            "ctx": {
+              "_type": "Load"
+            }
+          }
+        ],
+        "keywords": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": 16.0
+    },
+    {
+      "line": 31,
+      "line_absolute": 596,
+      "node_id": 11,
+      "node_id_local": 0,
+      "type": "Return",
+      "code": "return dtype.kind in ('O', 'S', 'U') and (not is_excluded_dtype(dtype))",
+      "distance_to_buggy": 4,
+      "context": "  28:       \"\"\"\n  29:   \n  30:       def condition(dtype) -> bool:\n  31:->         return dtype.kind in ('O', 'S', 'U') and (not is_excluded_dtype(dtype))\n  32:   \n  33:       def is_excluded_dtype(dtype) -> bool:\n  34:           \"\"\"",
+      "ast_subtree_json": {
+        "_type": "Return",
+        "value": {
+          "_type": "BoolOp",
+          "op": {
+            "_type": "And"
+          },
+          "values": [
+            {
+              "_type": "Compare"
+            },
+            {
+              "_type": "UnaryOp"
+            }
+          ]
+        }
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": 18.0
+    }
+  ]
+}

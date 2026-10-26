@@ -1,0 +1,1054 @@
+{
+  "bug_id": "24",
+  "seed": 42,
+  "arm": "full",
+  "candidates": [
+    {
+      "index": 0,
+      "patch_text": "def map_obj_to_commands(updates, module, warnings):\n    commands = list()\n    want, have = updates\n\n    def needs_update(x):\n        return want.get(x) is not None and want.get(x)!= have.get(x)\n\n    def add(cmd):\n        if'management api http-commands' not in commands:\n            commands.insert(0,'management api http-commands')\n        commands.append(cmd)\n    if any((needs_update('http'), needs_update('http_port'))):\n        if want['http'] is False:\n            add('no protocol http')\n        elif have['http'] is False and want['http'] in (False, None):\n            warnings.append('protocol http is not enabled, not configuring http port value')\n        else:\n            port = want['http_port'] or 80\n            add('protocol http port %s' % port)\n    if any((needs_update('https'), needs_update('https_port'))):\n        if want['https'] is False:\n            add('no protocol https')\n        elif have['https'] is False and want['https'] in (False, None):\n            warnings.append('protocol https is not enabled, not configuring https port value')\n        else:\n            port = want['https_port'] or 443\n            add('protocol https port %s' % port)\n    if any((needs_update('local_http'), needs_update('local_http_port'))):\n        if want['local_http'] is False:\n            add('no protocol http localhost')\n        elif have['local_http'] is False and want['local_http'] in (False, None):\n            warnings.append('protocol local_http is not enabled, not configuring local_http port value')\n        else:\n            port = want['local_http_port'] or 8080\n            add('protocol http localhost port %s' % port)\n    if any((needs_update('socket'), needs_update('socket'))):\n        if want['socket'] is False:\n            add('no protocol unix-socket')\n        else:\n            add('protocol unix-socket')\n    if needs_update('state') and needs_update('vrf'):  # <--- BUGGY LINE\n        if want['state'] =='stopped':\n            add('shutdown')\n        elif want['state'] =='started':\n            add('no shutdown')\n    if needs_update('vrf'):\n        add('vrf %s' % want['vrf'])\n        if want['state'] =='stopped':\n            add('shutdown')\n        elif want['state'] =='started':\n            add('no shutdown')\n    return commands\n\n# This is the generated output file for the \"ansible-2020-04-14-877-g3f8142882\" benchmark run.\n#\n# To view this output in a web browser, copy this file to your desktop and open it with the",
+      "patch_sha256": "c0574ce5c4582a1d78d4a52134d12328d11e6490375782b52243e506d8f07d01",
+      "rank_score": 235,
+      "plan_ok": false,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8089233151013046,
+      "top_p": 0.9111541438766307
+    },
+    {
+      "index": 1,
+      "patch_text": "def map_obj_to_commands(updates, module, warnings):\n    commands = list()\n    want, have = updates\n\n    def needs_update(x):\n        return want.get(x) is not None and want.get(x)!= have.get(x)\n\n    def add(cmd):\n        if'management api http-commands' not in commands:\n            commands.insert(0,'management api http-commands')\n        commands.append(cmd)\n    if any((needs_update('http'), needs_update('http_port'))):\n        if want['http'] is False:\n            add('no protocol http')\n        elif have['http'] is False and want['http'] in (False, None):\n            warnings.append('protocol http is not enabled, not configuring http port value')\n        else:\n            port = want['http_port'] or 80\n            add('protocol http port %s' % port)\n    if any((needs_update('https'), needs_update('https_port'))):\n        if want['https'] is False:\n            add('no protocol https')\n        elif have['https'] is False and want['https'] in (False, None):\n            warnings.append('protocol https is not enabled, not configuring https port value')\n        else:\n            port = want['https_port'] or 443\n            add('protocol https port %s' % port)\n    if any((needs_update('local_http'), needs_update('local_http_port'))):\n        if want['local_http'] is False:\n            add('no protocol http localhost')\n        elif have['local_http'] is False and want['local_http'] in (False, None):\n            warnings.append('protocol local_http is not enabled, not configuring local_http port value')\n        else:\n            port = want['local_http_port'] or 8080\n            add('protocol http localhost port %s' % port)\n    if any((needs_update('socket'), needs_update('socket'))):\n        if want['socket'] is False:\n            add('no protocol unix-socket')\n        else:\n            add('protocol unix-socket')\n    if needs_update('state'):\n        if want['state'] =='stopped':\n            add('shutdown')\n        elif want['state'] =='started':\n            add('no shutdown')\n    if needs_update('vrf'):\n        add('vrf %s' % want['vrf'])\n        if want['state'] =='stopped':\n            add('shutdown')\n        elif want['state'] =='started':\n            add('no shutdown')\n    return commands",
+      "patch_sha256": "45d553ad8d0543194feb84a65bad94dec7df8280c83ec865684595b5fec75cda",
+      "rank_score": 235,
+      "plan_ok": false,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8089233151013046,
+      "top_p": 0.9111541438766307
+    },
+    {
+      "index": 2,
+      "patch_text": "def map_obj_to_commands(updates, module, warnings):\n    commands = list()\n    want, have = updates\n\n    def needs_update(x):\n        return want.get(x) is not None and want.get(x)!= have.get(x)\n\n    def add(cmd):\n        if'management api http-commands' not in commands:\n            commands.insert(0,'management api http-commands')\n        commands.append(cmd)\n    if any((needs_update('http'), needs_update('http_port'))):\n        if want['http'] is False:\n            add('no protocol http')\n        elif have['http'] is False and want['http'] in (False, None):\n            warnings.append('protocol http is not enabled, not configuring http port value')\n        else:\n            port = want['http_port'] or 80\n            add('protocol http port %s' % port)\n    if any((needs_update('https'), needs_update('https_port'))):\n        if want['https'] is False:\n            add('no protocol https')\n        elif have['https'] is False and want['https'] in (False, None):\n            warnings.append('protocol https is not enabled, not configuring https port value')\n        else:\n            port = want['https_port'] or 443\n            add('protocol https port %s' % port)\n    if any((needs_update('local_http'), needs_update('local_http_port'))):\n        if want['local_http'] is False:\n            add('no protocol http localhost')\n        elif have['local_http'] is False and want['local_http'] in (False, None):\n            warnings.append('protocol local_http is not enabled, not configuring local_http port value')\n        else:\n            port = want['local_http_port'] or 8080\n            add('protocol http localhost port %s' % port)\n    if any((needs_update('socket'), needs_update('socket'))):\n        if want['socket'] is False:\n            add('no protocol unix-socket')\n        else:\n            add('protocol unix-socket')\n    if needs_update('vrf'):\n        add('vrf %s' % want['vrf'])\n        if want['state'] =='stopped':\n            add('shutdown')\n        elif want['state'] =='started':\n            add('no shutdown')\n    return commands",
+      "patch_sha256": "0b0a051fb3f10f2a2fd23b231803c9b9bad24eb6dfa08698513bf6e91835c4af",
+      "rank_score": 233,
+      "plan_ok": false,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8850407915843882,
+      "top_p": 0.7720008604178135
+    },
+    {
+      "index": 3,
+      "patch_text": "def map_obj_to_commands(updates, module, warnings):\n    commands = list()\n    want, have = updates\n\n    def needs_update(x):\n        return want.get(x) is not None and want.get(x)!= have.get(x)\n\n    def add(cmd):\n        if'management api http-commands' not in commands:\n            commands.insert(0,'management api http-commands')\n        commands.append(cmd)\n    if any((needs_update('http'), needs_update('http_port'))):\n        if want['http'] is False:\n            add('no protocol http')\n        elif have['http'] is False and want['http'] in (False, None):\n            warnings.append('protocol http is not enabled, not configuring http port value')\n        else:\n            port = want['http_port'] or 80\n            add('protocol http port %s' % port)\n    if any((needs_update('https'), needs_update('https_port'))):\n        if want['https'] is False:\n            add('no protocol https')\n        elif have['https'] is False and want['https'] in (False, None):\n            warnings.append('protocol https is not enabled, not configuring https port value')\n        else:\n            port = want['https_port'] or 443\n            add('protocol https port %s' % port)\n    if any((needs_update('local_http'), needs_update('local_http_port'))):\n        if want['local_http'] is False:\n            add('no protocol http localhost')\n        elif have['local_http'] is False and want['local_http'] in (False, None):\n            warnings.append('protocol local_http is not enabled, not configuring local_http port value')\n        else:\n            port = want['local_http_port'] or 8080\n            add('protocol http localhost port %s' % port)\n    if any((needs_update('socket'), needs_update('socket'))):\n        if want['socket'] is False:\n            add('no protocol unix-socket')\n        else:\n            add('protocol unix-socket')\n    if needs_update('state') and not needs_update('vrf'):\n        if want['state'] =='stopped':\n            add('shutdown')\n        elif want['state'] =='started':\n            add('no shutdown')\n    if needs_update('vrf'):\n        add('vrf %s' % want['vrf'])\n        if want['state'] =='stopped':\n            add('shutdown')\n        elif want['state'] =='started':\n            add('no shutdown')\n    return commands",
+      "patch_sha256": "c4c539a8e13f609c196e105199d0551dcb193aa365055d306754e88b18db7ab0",
+      "rank_score": 205,
+      "plan_ok": false,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8850407915843882,
+      "top_p": 0.7720008604178135
+    },
+    {
+      "index": 4,
+      "patch_text": "def map_obj_to_commands(updates, module, warnings):\n    commands = list()\n    want, have = updates\n\n    def needs_update(x):\n        return want.get(x) is not None and want.get(x)!= have.get(x)\n\n    def add(cmd):\n        if'management api http-commands' not in commands:\n            commands.insert(0,'management api http-commands')\n        commands.append(cmd)\n    if any((needs_update('http'), needs_update('http_port'))):\n        if want['http'] is False:\n            add('no protocol http')\n        elif have['http'] is False and want['http'] in (False, None):\n            warnings.append('protocol http is not enabled, not configuring http port value')\n        else:\n            port = want['http_port'] or 80\n            add('protocol http port %s' % port)\n    if any((needs_update('https'), needs_update('https_port'))):\n        if want['https'] is False:\n            add('no protocol https')\n        elif have['https'] is False and want['https'] in (False, None):\n            warnings.append('protocol https is not enabled, not configuring https port value')\n        else:\n            port = want['https_port'] or 443\n            add('protocol https port %s' % port)\n    if any((needs_update('local_http'), needs_update('local_http_port'))):\n        if want['local_http'] is False:\n            add('no protocol http localhost')\n        elif have['local_http'] is False and want['local_http'] in (False, None):\n            warnings.append('protocol local_http is not enabled, not configuring local_http port value')\n        else:\n            port = want['local_http_port'] or 8080\n            add('protocol http localhost port %s' % port)\n    if any((needs_update('socket'), needs_update('socket'))):\n        if want['socket'] is False:\n            add('no protocol unix-socket')\n        else:\n            add('protocol unix-socket')\n    if needs_update('state') and not needs_update('vrf'):\n        if want['state'] =='stopped':\n            add('shutdown')\n        elif want['state'] =='started':\n            add('no shutdown')\n    if needs_update('vrf'):\n        add('vrf %s' % want['vrf'])\n        if want['state'] =='stopped':\n            add('shutdown')\n        elif want['state'] =='started':\n            add('no shutdown')\n    return commands\nimport os\nimport sys\nimport time\nfrom pathlib import Path\n\nfrom tqdm import tqdm\n\nfrom. import utils\n\n\nclass TestRunner:\n    def __init__(self, test_dir):\n        self.test_dir = test_dir\n        self.test_cases = utils.load_json_files(self.test_dir)",
+      "patch_sha256": "ce5dc4051ef24126ca728722fe81167589175b1484dfda2ddc2981528716aa85",
+      "rank_score": -9,
+      "plan_ok": false,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.5167519476989073,
+      "top_p": 0.9737537455748216
+    },
+    {
+      "index": 5,
+      "patch_text": "def map_obj_to_commands(updates, module, warnings):\n    commands = list()\n    want, have = updates\n\n    def needs_update(x):\n        return want.get(x) is not None and want.get(x)!= have.get(x)\n\n    def add(cmd):\n        if'management api http-commands' not in commands:\n            commands.insert(0,'management api http-commands')\n        commands.append(cmd)\n    if any((needs_update('http'), needs_update('http_port'))):\n        if want['http'] is False:\n            add('no protocol http')\n        elif have['http'] is False and want['http'] in (False, None):\n            warnings.append('protocol http is not enabled, not configuring http port value')\n        else:\n            port = want['http_port'] or 80\n            add('protocol http port %s' % port)\n    if any((needs_update('https'), needs_update('https_port'))):\n        if want['https'] is False:\n            add('no protocol https')\n        elif have['https'] is False and want['https'] in (False, None):\n            warnings.append('protocol https is not enabled, not configuring https port value')\n        else:\n            port = want['https_port'] or 443\n            add('protocol https port %s' % port)\n    if any((needs_update('local_http'), needs_update('local_http_port'))):\n        if want['local_http'] is False:\n            add('no protocol http localhost')\n        elif have['local_http'] is False and want['local_http'] in (False, None):\n            warnings.append('protocol local_http is not enabled, not configuring local_http port value')\n        else:\n            port = want['local_http_port'] or 8080\n            add('protocol http localhost port %s' % port)\n    if any((needs_update('socket'), needs_update('socket'))):\n        if want['socket'] is False:\n            add('no protocol unix-socket')\n        else:\n            add('protocol unix-socket')\n    if needs_update('state') and not needs_update('vrf'):\n        if want['state'] =='stopped':\n            add('shutdown')\n        elif want['state'] =='started':\n            add('no shutdown')\n    if needs_update('vrf'):\n        add('vrf %s' % want['vrf'])\n        if want['state'] =='stopped':\n            add('shutdown')\n        elif want['state'] =='started':\n            add('no shutdown')\n    return commands\nimport os\nimport sys\nfrom pathlib import Path\nfrom collections import defaultdict\n\nimport numpy as np\nimport pandas as pd\nfrom tqdm import tqdm\n\nfrom utils import read_jsonl\nfrom utils import write_jsonl\nfrom utils import get_bug_id\nfrom utils import get_project_name\nfrom utils import get_function",
+      "patch_sha256": "6ef5a6971ea5c5d898320c057eb50d305f1cd0935e09fe16dcac15ef2967ed41",
+      "rank_score": -10,
+      "plan_ok": false,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.5106412196441554,
+      "top_p": 0.9620023454695296
+    },
+    {
+      "index": 6,
+      "patch_text": "def map_obj_to_commands(updates, module, warnings):\n    commands = list()\n    want, have = updates\n\n    def needs_update(x):\n        return want.get(x) is not None and want.get(x)!= have.get(x)\n\n    def add(cmd):\n        if'management api http-commands' not in commands:\n            commands.insert(0,'management api http-commands')\n        commands.append(cmd)\n    if any((needs_update('http'), needs_update('http_port'))):\n        if want['http'] is False:\n            add('no protocol http')\n        elif have['http'] is False and want['http'] in (False, None):\n            warnings.append('protocol http is not enabled, not configuring http port value')\n        else:\n            port = want['http_port'] or 80\n            add('protocol http port %s' % port)\n    if any((needs_update('https'), needs_update('https_port'))):\n        if want['https'] is False:\n            add('no protocol https')\n        elif have['https'] is False and want['https'] in (False, None):\n            warnings.append('protocol https is not enabled, not configuring https port value')\n        else:\n            port = want['https_port'] or 443\n            add('protocol https port %s' % port)\n    if any((needs_update('local_http'), needs_update('local_http_port'))):\n        if want['local_http'] is False:\n            add('no protocol http localhost')\n        elif have['local_http'] is False and want['local_http'] in (False, None):\n            warnings.append('protocol local_http is not enabled, not configuring local_http port value')\n        else:\n            port = want['local_http_port'] or 8080\n            add('protocol http localhost port %s' % port)\n    if any((needs_update('socket'), needs_update('socket'))):\n        if want['socket'] is False:\n            add('no protocol unix-socket')\n        else:\n            add('protocol unix-socket')\n    if needs_update('state') and not needs_update('vrf'):\n        if want['state'] =='stopped':\n            add('shutdown')\n        elif want['state'] =='started':\n            add('no shutdown')\n    if needs_update('vrf'):\n        add('vrf %s' % want['vrf'])\n        if want['state'] =='stopped':\n            add('shutdown')\n        elif want['state'] =='started':\n            add('no shutdown')\n    return commands\n# -*- coding: utf-8 -*-\nfrom __future__ import unicode_literals\n\nimport logging\n\nfrom django.db import models\nfrom django.utils.translation import ugettext_lazy as _\n\nfrom.base import BaseModel\nfrom.mixins import UserCreatedMixin, UserUpdatedMixin\n\nlogger = logging.getLogger(__name__)",
+      "patch_sha256": "01df65e6c10c4be314e12765cbc20b395e24a062830be352a032559c24aaf809",
+      "rank_score": -10,
+      "plan_ok": false,
+      "compile_diagnostic": {
+        "ok": false,
+        "error": "SyntaxError: from __future__ imports must occur at the beginning of the file (<candidate-diagnostic>, line 54)"
+      },
+      "temperature": 0.5202227799850999,
+      "top_p": 0.98
+    },
+    {
+      "index": 7,
+      "patch_text": "def map_obj_to_commands(updates, module, warnings):\n    commands = list()\n    want, have = updates\n\n    def needs_update(x):\n        return want.get(x) is not None and want.get(x)!= have.get(x)\n\n    def add(cmd):\n        if'management api http-commands' not in commands:\n            commands.insert(0,'management api http-commands')\n        commands.append(cmd)\n    if any((needs_update('http'), needs_update('http_port'))):\n        if want['http'] is False:\n            add('no protocol http')\n        elif have['http'] is False and want['http'] in (False, None):\n            warnings.append('protocol http is not enabled, not configuring http port value')\n        else:\n            port = want['http_port'] or 80\n            add('protocol http port %s' % port)\n    if any((needs_update('https'), needs_update('https_port'))):\n        if want['https'] is False:\n            add('no protocol https')\n        elif have['https'] is False and want['https'] in (False, None):\n            warnings.append('protocol https is not enabled, not configuring https port value')\n        else:\n            port = want['https_port'] or 443\n            add('protocol https port %s' % port)\n    if any((needs_update('local_http'), needs_update('local_http_port'))):\n        if want['local_http'] is False:\n            add('no protocol http localhost')\n        elif have['local_http'] is False and want['local_http'] in (False, None):\n            warnings.append('protocol local_http is not enabled, not configuring local_http port value')\n        else:\n            port = want['local_http_port'] or 8080\n            add('protocol http localhost port %s' % port)\n    if any((needs_update('socket'), needs_update('socket'))):\n        if want['socket'] is False:\n            add('no protocol unix-socket')\n        else:\n            add('protocol unix-socket')\n    if needs_update('state') and not needs_update('vrf'):\n        if want['state'] =='stopped':\n            add('shutdown')\n        elif want['state'] =='started':\n            add('no shutdown')\n    if needs_update('vrf'):\n        add('vrf %s' % want['vrf'])\n        if want['state'] =='stopped':\n            add('shutdown')\n        elif want['state'] =='started':\n            add('no shutdown')\n    return commands\n\n# -*- coding: utf-8 -*-\nimport re\nimport json\nimport ast\nfrom collections import defaultdict\nfrom typing import List, Dict, Tuple\nimport numpy as np\nimport pandas as pd\nimport pickle\nfrom utils import get_buggy_line_number, get_function_signature, get_code_block, get_project",
+      "patch_sha256": "c8297d3b09eab8f432681c6b910c9d53131471b773e5254462695555674deaef",
+      "rank_score": -10,
+      "plan_ok": false,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.5202227799850999,
+      "top_p": 0.98
+    }
+  ],
+  "candidate_count": 8,
+  "retrieved_examples": [
+    {
+      "id": "28",
+      "project_name": "scrapy",
+      "buggy_line_content": "        if ':' not in self._url:",
+      "function": {
+        "function_name": "_set_url",
+        "function_parent": "Request",
+        "function_before_start_line": 62,
+        "function_before_end_line": 70,
+        "function_after_start_line": 62,
+        "function_after_end_line": 70,
+        "function_before_token_count": 65,
+        "function_after_token_count": 79,
+        "function_before": "def _set_url(self, url):\n    if not isinstance(url, six.string_types):\n        raise TypeError('Request url must be str or unicode, got %s:' % type(url).__name__)\n    s = safe_url_string(url, self.encoding)\n    self._url = escape_ajax(s)\n    if ':' not in self._url:\n        raise ValueError('Missing scheme in request url: %s' % self._url)",
+        "function_after": "def _set_url(self, url):\n    if not isinstance(url, six.string_types):\n        raise TypeError('Request url must be str or unicode, got %s:' % type(url).__name__)\n    s = safe_url_string(url, self.encoding)\n    self._url = escape_ajax(s)\n    if '://' not in self._url and (not self._url.startswith('data:')):\n        raise ValueError('Missing scheme in request url: %s' % self._url)"
+      },
+      "file_name": "__init__.py",
+      "file_path": "scrapy/http/request/__init__.py",
+      "score_reranked": 0.6479506044564785
+    },
+    {
+      "id": "37",
+      "project_name": "pandas",
+      "buggy_line_content": "                elif is_integer(i) and not ax.holds_integer():",
+      "function": {
+        "function_name": "_convert_key",
+        "function_parent": "_AtIndexer",
+        "function_before_start_line": 2110,
+        "function_before_end_line": 2133,
+        "function_after_start_line": 2110,
+        "function_after_end_line": 2133,
+        "function_before_token_count": 82,
+        "function_after_token_count": 90,
+        "function_before": "def _convert_key(self, key, is_setter: bool=False):\n    \"\"\"\n        Require they keys to be the same type as the index. (so we don't\n        fallback)\n        \"\"\"\n    if is_setter:\n        return list(key)\n    for ax, i in zip(self.obj.axes, key):\n        if ax.is_integer():\n            if not is_integer(i):\n                raise ValueError('At based indexing on an integer index can only have integer indexers')\n        elif is_integer(i) and not ax.holds_integer():\n            raise ValueError('At based indexing on an non-integer index can only have non-integer indexers')\n    return key",
+        "function_after": "def _convert_key(self, key, is_setter: bool=False):\n    \"\"\"\n        Require they keys to be the same type as the index. (so we don't\n        fallback)\n        \"\"\"\n    if is_setter:\n        return list(key)\n    for ax, i in zip(self.obj.axes, key):\n        if ax.is_integer():\n            if not is_integer(i):\n                raise ValueError('At based indexing on an integer index can only have integer indexers')\n        elif is_integer(i) and (not (ax.holds_integer() or ax.is_floating())):\n            raise ValueError('At based indexing on an non-integer index can only have non-integer indexers')\n    return key"
+      },
+      "file_name": "indexing.py",
+      "file_path": "pandas/core/indexing.py",
+      "score_reranked": 0.5946332422993063
+    },
+    {
+      "id": "39",
+      "project_name": "pandas",
+      "buggy_line_content": "            except (TypeError, ValueError):",
+      "function": {
+        "function_name": "_try_convert_data",
+        "function_parent": "Parser",
+        "function_before_start_line": 886,
+        "function_before_end_line": 958,
+        "function_after_start_line": 886,
+        "function_after_end_line": 958,
+        "function_before_token_count": 277,
+        "function_after_token_count": 279,
+        "function_before": "def _try_convert_data(self, name, data, use_dtypes=True, convert_dates=True):\n    \"\"\"\n        Try to parse a ndarray like into a column by inferring dtype.\n        \"\"\"\n    if use_dtypes:\n        if not self.dtype:\n            return (data, False)\n        elif self.dtype is True:\n            pass\n        else:\n            dtype = self.dtype.get(name) if isinstance(self.dtype, dict) else self.dtype\n            if dtype is not None:\n                try:\n                    dtype = np.dtype(dtype)\n                    return (data.astype(dtype), True)\n                except (TypeError, ValueError):\n                    return (data, False)\n    if convert_dates:\n        new_data, result = self._try_convert_to_date(data)\n        if result:\n            return (new_data, True)\n    result = False\n    if data.dtype == 'object':\n        try:\n            data = data.astype('float64')\n            result = True\n        except (TypeError, ValueError):\n            pass\n    if data.dtype.kind == 'f':\n        if data.dtype != 'float64':\n            try:\n                data = data.astype('float64')\n                result = True\n            except (TypeError, ValueError):\n                pass\n    if len(data) and (data.dtype == 'float' or data.dtype == 'object'):\n        try:\n            new_data = data.astype('int64')\n            if (new_data == data).all():\n                data = new_data\n                result = True\n        except (TypeError, ValueError):\n            pass\n    if data.dtype == 'int':\n        try:\n            data = data.astype('int64')\n            result = True\n        except (TypeError, ValueError):\n            pass\n    return (data, result)",
+        "function_after": "def _try_convert_data(self, name, data, use_dtypes=True, convert_dates=True):\n    \"\"\"\n        Try to parse a ndarray like into a column by inferring dtype.\n        \"\"\"\n    if use_dtypes:\n        if not self.dtype:\n            return (data, False)\n        elif self.dtype is True:\n            pass\n        else:\n            dtype = self.dtype.get(name) if isinstance(self.dtype, dict) else self.dtype\n            if dtype is not None:\n                try:\n                    dtype = np.dtype(dtype)\n                    return (data.astype(dtype), True)\n                except (TypeError, ValueError):\n                    return (data, False)\n    if convert_dates:\n        new_data, result = self._try_convert_to_date(data)\n        if result:\n            return (new_data, True)\n    result = False\n    if data.dtype == 'object':\n        try:\n            data = data.astype('float64')\n            result = True\n        except (TypeError, ValueError):\n            pass\n    if data.dtype.kind == 'f':\n        if data.dtype != 'float64':\n            try:\n                data = data.astype('float64')\n                result = True\n            except (TypeError, ValueError):\n                pass\n    if len(data) and (data.dtype == 'float' or data.dtype == 'object'):\n        try:\n            new_data = data.astype('int64')\n            if (new_data == data).all():\n                data = new_data\n                result = True\n        except (TypeError, ValueError, OverflowError):\n            pass\n    if data.dtype == 'int':\n        try:\n            data = data.astype('int64')\n            result = True\n        except (TypeError, ValueError):\n            pass\n    return (data, result)"
+      },
+      "file_name": "_json.py",
+      "file_path": "pandas/io/json/_json.py",
+      "score_reranked": 0.5785095233512487
+    },
+    {
+      "id": "32",
+      "project_name": "pandas",
+      "buggy_line_content": "            except (ValueError, OverflowError):",
+      "function": {
+        "function_name": "_try_convert_to_date",
+        "function_parent": "Parser",
+        "function_before_start_line": 953,
+        "function_before_end_line": 988,
+        "function_after_start_line": 953,
+        "function_after_end_line": 988,
+        "function_before_token_count": 154,
+        "function_after_token_count": 156,
+        "function_before": "def _try_convert_to_date(self, data):\n    \"\"\"\n        Try to parse a ndarray like into a date column.\n\n        Try to coerce object in epoch/iso formats and integer/float in epoch\n        formats. Return a boolean if parsing was successful.\n        \"\"\"\n    if not len(data):\n        return (data, False)\n    new_data = data\n    if new_data.dtype == 'object':\n        try:\n            new_data = data.astype('int64')\n        except (TypeError, ValueError, OverflowError):\n            pass\n    if issubclass(new_data.dtype.type, np.number):\n        in_range = isna(new_data._values) | (new_data > self.min_stamp) | (new_data._values == iNaT)\n        if not in_range.all():\n            return (data, False)\n    date_units = (self.date_unit,) if self.date_unit else self._STAMP_UNITS\n    for date_unit in date_units:\n        try:\n            new_data = to_datetime(new_data, errors='raise', unit=date_unit)\n        except (ValueError, OverflowError):\n            continue\n        return (new_data, True)\n    return (data, False)",
+        "function_after": "def _try_convert_to_date(self, data):\n    \"\"\"\n        Try to parse a ndarray like into a date column.\n\n        Try to coerce object in epoch/iso formats and integer/float in epoch\n        formats. Return a boolean if parsing was successful.\n        \"\"\"\n    if not len(data):\n        return (data, False)\n    new_data = data\n    if new_data.dtype == 'object':\n        try:\n            new_data = data.astype('int64')\n        except (TypeError, ValueError, OverflowError):\n            pass\n    if issubclass(new_data.dtype.type, np.number):\n        in_range = isna(new_data._values) | (new_data > self.min_stamp) | (new_data._values == iNaT)\n        if not in_range.all():\n            return (data, False)\n    date_units = (self.date_unit,) if self.date_unit else self._STAMP_UNITS\n    for date_unit in date_units:\n        try:\n            new_data = to_datetime(new_data, errors='raise', unit=date_unit)\n        except (ValueError, OverflowError, TypeError):\n            continue\n        return (new_data, True)\n    return (data, False)"
+      },
+      "file_name": "_json.py",
+      "file_path": "pandas/io/json/_json.py",
+      "score_reranked": 0.5479130521437542
+    },
+    {
+      "id": "21",
+      "project_name": "youtube-dl",
+      "buggy_line_content": "        (?:0[xX][0-9a-fA-F]+|0+[0-7]+)(?:\\s*:)?|",
+      "function": {
+        "function_name": "js_to_json",
+        "function_parent": "utils.py",
+        "function_before_start_line": 1939,
+        "function_before_end_line": 1975,
+        "function_after_start_line": 1939,
+        "function_after_end_line": 1975,
+        "function_before_token_count": 19,
+        "function_after_token_count": 19,
+        "function_before": "def js_to_json(code):\n\n    def fix_kv(m):\n        v = m.group(0)\n        if v in ('true', 'false', 'null'):\n            return v\n        elif v.startswith('/*') or v == ',':\n            return ''\n        if v[0] in (\"'\", '\"'):\n            v = re.sub('(?s)\\\\\\\\.|\"', lambda m: {'\"': '\\\\\"', \"\\\\'\": \"'\", '\\\\\\n': '', '\\\\x': '\\\\u00'}.get(m.group(0), m.group(0)), v[1:-1])\n        INTEGER_TABLE = (('^0[xX][0-9a-fA-F]+', 16), ('^0+[0-7]+', 8))\n        for regex, base in INTEGER_TABLE:\n            im = re.match(regex, v)\n            if im:\n                i = int(im.group(0), base)\n                return '\"%d\":' % i if v.endswith(':') else '%d' % i\n        return '\"%s\"' % v\n    return re.sub('(?sx)\\n        \"(?:[^\"\\\\\\\\]*(?:\\\\\\\\\\\\\\\\|\\\\\\\\[\\'\"nurtbfx/\\\\n]))*[^\"\\\\\\\\]*\"|\\n        \\'(?:[^\\'\\\\\\\\]*(?:\\\\\\\\\\\\\\\\|\\\\\\\\[\\'\"nurtbfx/\\\\n]))*[^\\'\\\\\\\\]*\\'|\\n        /\\\\*.*?\\\\*/|,(?=\\\\s*[\\\\]}])|\\n        [a-zA-Z_][.a-zA-Z_0-9]*|\\n        (?:0[xX][0-9a-fA-F]+|0+[0-7]+)(?:\\\\s*:)?|\\n        [0-9]+(?=\\\\s*:)\\n        ', fix_kv, code)",
+        "function_after": "def js_to_json(code):\n\n    def fix_kv(m):\n        v = m.group(0)\n        if v in ('true', 'false', 'null'):\n            return v\n        elif v.startswith('/*') or v == ',':\n            return ''\n        if v[0] in (\"'\", '\"'):\n            v = re.sub('(?s)\\\\\\\\.|\"', lambda m: {'\"': '\\\\\"', \"\\\\'\": \"'\", '\\\\\\n': '', '\\\\x': '\\\\u00'}.get(m.group(0), m.group(0)), v[1:-1])\n        INTEGER_TABLE = (('^0[xX][0-9a-fA-F]+', 16), ('^0+[0-7]+', 8))\n        for regex, base in INTEGER_TABLE:\n            im = re.match(regex, v)\n            if im:\n                i = int(im.group(0), base)\n                return '\"%d\":' % i if v.endswith(':') else '%d' % i\n        return '\"%s\"' % v\n    return re.sub('(?sx)\\n        \"(?:[^\"\\\\\\\\]*(?:\\\\\\\\\\\\\\\\|\\\\\\\\[\\'\"nurtbfx/\\\\n]))*[^\"\\\\\\\\]*\"|\\n        \\'(?:[^\\'\\\\\\\\]*(?:\\\\\\\\\\\\\\\\|\\\\\\\\[\\'\"nurtbfx/\\\\n]))*[^\\'\\\\\\\\]*\\'|\\n        /\\\\*.*?\\\\*/|,(?=\\\\s*[\\\\]}])|\\n        [a-zA-Z_][.a-zA-Z_0-9]*|\\n        \\\\b(?:0[xX][0-9a-fA-F]+|0+[0-7]+)(?:\\\\s*:)?|\\n        [0-9]+(?=\\\\s*:)\\n        ', fix_kv, code)"
+      },
+      "file_name": "utils.py",
+      "file_path": "youtube_dl/utils.py",
+      "score_reranked": 0.48098054174922605
+    }
+  ],
+  "diffusion_plan": [
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 80
+        },
+        {
+          "op": "GuardAdd",
+          "node": 38
+        },
+        {
+          "op": "GuardAdd",
+          "node": 80
+        },
+        {
+          "op": "Replace",
+          "node": 12
+        },
+        {
+          "op": "Replace",
+          "node": 257
+        },
+        {
+          "op": "Replace",
+          "node": 83
+        },
+        {
+          "op": "Replace",
+          "node": 13
+        },
+        {
+          "op": "GuardAdd",
+          "node": 83
+        },
+        {
+          "op": "Replace",
+          "node": 38
+        },
+        {
+          "op": "Replace",
+          "node": 36
+        }
+      ],
+      "score": 17.52727272577025
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 83
+        },
+        {
+          "op": "GuardAdd",
+          "node": 36
+        },
+        {
+          "op": "Replace",
+          "node": 38
+        },
+        {
+          "op": "Replace",
+          "node": 80
+        },
+        {
+          "op": "GuardAdd",
+          "node": 83
+        },
+        {
+          "op": "GuardAdd",
+          "node": 80
+        },
+        {
+          "op": "Replace",
+          "node": 158
+        },
+        {
+          "op": "InsertBefore",
+          "node": 83
+        }
+      ],
+      "score": 17.36363636233058
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 80
+        },
+        {
+          "op": "Replace",
+          "node": 158
+        },
+        {
+          "op": "Replace",
+          "node": 83
+        },
+        {
+          "op": "InsertAfter",
+          "node": 83
+        },
+        {
+          "op": "Replace",
+          "node": 38
+        },
+        {
+          "op": "Replace",
+          "node": 244
+        },
+        {
+          "op": "GuardAdd",
+          "node": 38
+        },
+        {
+          "op": "GuardAdd",
+          "node": 158
+        }
+      ],
+      "score": 16.527272726042977
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Delete",
+          "node": 257
+        },
+        {
+          "op": "Delete",
+          "node": 80
+        },
+        {
+          "op": "Replace",
+          "node": 80
+        },
+        {
+          "op": "Replace",
+          "node": 158
+        },
+        {
+          "op": "Replace",
+          "node": 257
+        },
+        {
+          "op": "Delete",
+          "node": 158
+        },
+        {
+          "op": "Replace",
+          "node": 83
+        },
+        {
+          "op": "Replace",
+          "node": 38
+        },
+        {
+          "op": "GuardAdd",
+          "node": 257
+        },
+        {
+          "op": "Replace",
+          "node": 36
+        }
+      ],
+      "score": 16.472727271320664
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 83
+        },
+        {
+          "op": "Replace",
+          "node": 80
+        },
+        {
+          "op": "GuardAdd",
+          "node": 38
+        },
+        {
+          "op": "Replace",
+          "node": 257
+        },
+        {
+          "op": "Replace",
+          "node": 158
+        },
+        {
+          "op": "Replace",
+          "node": 38
+        },
+        {
+          "op": "InsertBefore",
+          "node": 38
+        }
+      ],
+      "score": 16.136363635169424
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 80
+        },
+        {
+          "op": "Delete",
+          "node": 83
+        },
+        {
+          "op": "Replace",
+          "node": 38
+        },
+        {
+          "op": "Replace",
+          "node": 83
+        },
+        {
+          "op": "GuardAdd",
+          "node": 257
+        },
+        {
+          "op": "Replace",
+          "node": 158
+        },
+        {
+          "op": "Replace",
+          "node": 36
+        },
+        {
+          "op": "Replace",
+          "node": 12
+        },
+        {
+          "op": "InsertAfter",
+          "node": 80
+        }
+      ],
+      "score": 15.690909089573555
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 80
+        },
+        {
+          "op": "Replace",
+          "node": 83
+        },
+        {
+          "op": "Replace",
+          "node": 158
+        },
+        {
+          "op": "Delete",
+          "node": 158
+        },
+        {
+          "op": "GuardAdd",
+          "node": 38
+        },
+        {
+          "op": "Replace",
+          "node": 38
+        },
+        {
+          "op": "Replace",
+          "node": 257
+        }
+      ],
+      "score": 15.563636362494217
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 158
+        },
+        {
+          "op": "Replace",
+          "node": 80
+        },
+        {
+          "op": "GuardAdd",
+          "node": 80
+        },
+        {
+          "op": "Replace",
+          "node": 12
+        },
+        {
+          "op": "Replace",
+          "node": 38
+        },
+        {
+          "op": "Replace",
+          "node": 83
+        },
+        {
+          "op": "Replace",
+          "node": 36
+        }
+      ],
+      "score": 15.345454544332233
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 257
+        },
+        {
+          "op": "Replace",
+          "node": 83
+        },
+        {
+          "op": "Replace",
+          "node": 80
+        },
+        {
+          "op": "Replace",
+          "node": 158
+        },
+        {
+          "op": "GuardAdd",
+          "node": 80
+        },
+        {
+          "op": "Replace",
+          "node": 38
+        },
+        {
+          "op": "Replace",
+          "node": 13
+        }
+      ],
+      "score": 15.345454544332233
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 38
+        },
+        {
+          "op": "Replace",
+          "node": 80
+        },
+        {
+          "op": "Replace",
+          "node": 83
+        },
+        {
+          "op": "Replace",
+          "node": 36
+        },
+        {
+          "op": "Replace",
+          "node": 257
+        },
+        {
+          "op": "Replace",
+          "node": 12
+        },
+        {
+          "op": "Replace",
+          "node": 77
+        },
+        {
+          "op": "GuardAdd",
+          "node": 80
+        }
+      ],
+      "score": 15.345454544332233
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 38
+        },
+        {
+          "op": "Replace",
+          "node": 12
+        },
+        {
+          "op": "Replace",
+          "node": 83
+        },
+        {
+          "op": "Replace",
+          "node": 36
+        },
+        {
+          "op": "InsertAfter",
+          "node": 12
+        },
+        {
+          "op": "GuardAdd",
+          "node": 12
+        },
+        {
+          "op": "Replace",
+          "node": 80
+        },
+        {
+          "op": "Replace",
+          "node": 257
+        },
+        {
+          "op": "Delete",
+          "node": 257
+        },
+        {
+          "op": "InsertBefore",
+          "node": 158
+        }
+      ],
+      "score": 15.290909089609919
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 38
+        },
+        {
+          "op": "Replace",
+          "node": 80
+        },
+        {
+          "op": "InsertAfter",
+          "node": 83
+        },
+        {
+          "op": "Replace",
+          "node": 36
+        },
+        {
+          "op": "Replace",
+          "node": 83
+        },
+        {
+          "op": "Replace",
+          "node": 257
+        },
+        {
+          "op": "Replace",
+          "node": 12
+        },
+        {
+          "op": "Replace",
+          "node": 158
+        },
+        {
+          "op": "GuardAdd",
+          "node": 12
+        }
+      ],
+      "score": 15.199999998709092
+    }
+  ],
+  "static_analysis_nodes": [
+    {
+      "line": 47,
+      "line_absolute": 265,
+      "node_id": 80,
+      "node_id_local": 56,
+      "type": "Call",
+      "code": "add('vrf %s' % want['vrf'])",
+      "distance_to_buggy": 0,
+      "context": "  44:           elif want['state'] == 'started':\n  45:               add('no shutdown')\n  46:       if needs_update('vrf'):\n  47:->         add('vrf %s' % want['vrf'])\n  48:           if want['state'] == 'stopped':\n  49:               add('shutdown')\n  50:           elif want['state'] == 'started':",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Name",
+          "id": "add",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [
+          {
+            "_type": "BinOp",
+            "left": {
+              "_type": "Constant"
+            },
+            "op": {
+              "_type": "Mod"
+            },
+            "right": {
+              "_type": "Subscript"
+            }
+          }
+        ],
+        "keywords": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -25.5
+    },
+    {
+      "line": 48,
+      "line_absolute": 266,
+      "node_id": 38,
+      "node_id_local": 57,
+      "type": "If",
+      "code": "if want['state'] == 'stopped':\n    add('shutdown')\nelif want['state'] == 'started':\n    add('no shutdown')",
+      "distance_to_buggy": 0,
+      "context": "  45:               add('no shutdown')\n  46:       if needs_update('vrf'):\n  47:           add('vrf %s' % want['vrf'])\n  48:->         if want['state'] == 'stopped':\n  49:               add('shutdown')\n  50:           elif want['state'] == 'started':\n  51:               add('no shutdown')",
+      "ast_subtree_json": {
+        "_type": "If",
+        "test": {
+          "_type": "Compare",
+          "left": {
+            "_type": "Subscript"
+          },
+          "ops": [
+            {
+              "_type": "Eq"
+            }
+          ],
+          "comparators": [
+            {
+              "_type": "Constant"
+            }
+          ]
+        },
+        "body": [
+          {
+            "_type": "Expr",
+            "value": {
+              "_type": "Call"
+            }
+          }
+        ],
+        "orelse": [
+          {
+            "_type": "If",
+            "test": {
+              "_type": "Compare"
+            },
+            "body": [
+              {
+                "_type": "Expr"
+              }
+            ],
+            "orelse": []
+          }
+        ]
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -24.5
+    },
+    {
+      "line": 50,
+      "line_absolute": 268,
+      "node_id": 83,
+      "node_id_local": 59,
+      "type": "If",
+      "code": "if want['state'] == 'started':\n    add('no shutdown')",
+      "distance_to_buggy": 0,
+      "context": "  47:           add('vrf %s' % want['vrf'])\n  48:           if want['state'] == 'stopped':\n  49:               add('shutdown')\n  50:->         elif want['state'] == 'started':\n  51:               add('no shutdown')\n  52:       return commands",
+      "ast_subtree_json": {
+        "_type": "If",
+        "test": {
+          "_type": "Compare",
+          "left": {
+            "_type": "Subscript"
+          },
+          "ops": [
+            {
+              "_type": "Eq"
+            }
+          ],
+          "comparators": [
+            {
+              "_type": "Constant"
+            }
+          ]
+        },
+        "body": [
+          {
+            "_type": "Expr",
+            "value": {
+              "_type": "Call"
+            }
+          }
+        ],
+        "orelse": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -24.5
+    },
+    {
+      "line": 49,
+      "line_absolute": 267,
+      "node_id": 158,
+      "node_id_local": 58,
+      "type": "Call",
+      "code": "add('shutdown')",
+      "distance_to_buggy": 0,
+      "context": "  46:       if needs_update('vrf'):\n  47:           add('vrf %s' % want['vrf'])\n  48:           if want['state'] == 'stopped':\n  49:->             add('shutdown')\n  50:           elif want['state'] == 'started':\n  51:               add('no shutdown')\n  52:       return commands",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Name",
+          "id": "add",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [
+          {
+            "_type": "Constant",
+            "value": "shutdown",
+            "kind": null
+          }
+        ],
+        "keywords": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -24.0
+    },
+    {
+      "line": 51,
+      "line_absolute": 269,
+      "node_id": 257,
+      "node_id_local": 60,
+      "type": "Call",
+      "code": "add('no shutdown')",
+      "distance_to_buggy": 0,
+      "context": "  48:           if want['state'] == 'stopped':\n  49:               add('shutdown')\n  50:           elif want['state'] == 'started':\n  51:->             add('no shutdown')\n  52:       return commands",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Name",
+          "id": "add",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [
+          {
+            "_type": "Constant",
+            "value": "no shutdown",
+            "kind": null
+          }
+        ],
+        "keywords": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -24.0
+    },
+    {
+      "line": 46,
+      "line_absolute": 264,
+      "node_id": 12,
+      "node_id_local": 54,
+      "type": "If",
+      "code": "if needs_update('vrf'):\n    add('vrf %s' % want['vrf'])\n    if want['state'] == 'stopped':\n        add('shutdown')\n    elif want['state'] == 'started':\n        add('no shutdown')",
+      "distance_to_buggy": 1,
+      "context": "  43:               add('shutdown')\n  44:           elif want['state'] == 'started':\n  45:               add('no shutdown')\n  46:->     if needs_update('vrf'):\n  47:           add('vrf %s' % want['vrf'])\n  48:           if want['state'] == 'stopped':\n  49:               add('shutdown')",
+      "ast_subtree_json": {
+        "_type": "If",
+        "test": {
+          "_type": "Call",
+          "func": {
+            "_type": "Name"
+          },
+          "args": [
+            {
+              "_type": "Constant"
+            }
+          ],
+          "keywords": []
+        },
+        "body": [
+          {
+            "_type": "Expr",
+            "value": {
+              "_type": "Call"
+            }
+          },
+          {
+            "_type": "If",
+            "test": {
+              "_type": "Compare"
+            },
+            "body": [
+              {
+                "_type": "Expr"
+              }
+            ],
+            "orelse": [
+              {
+                "_type": "If"
+              }
+            ]
+          }
+        ],
+        "orelse": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -14.5
+    },
+    {
+      "line": 46,
+      "line_absolute": 264,
+      "node_id": 36,
+      "node_id_local": 55,
+      "type": "Call",
+      "code": "needs_update('vrf')",
+      "distance_to_buggy": 1,
+      "context": "  43:               add('shutdown')\n  44:           elif want['state'] == 'started':\n  45:               add('no shutdown')\n  46:->     if needs_update('vrf'):\n  47:           add('vrf %s' % want['vrf'])\n  48:           if want['state'] == 'stopped':\n  49:               add('shutdown')",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Name",
+          "id": "needs_update",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [
+          {
+            "_type": "Constant",
+            "value": "vrf",
+            "kind": null
+          }
+        ],
+        "keywords": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -14.0
+    },
+    {
+      "line": 52,
+      "line_absolute": 270,
+      "node_id": 13,
+      "node_id_local": 61,
+      "type": "Return",
+      "code": "return commands",
+      "distance_to_buggy": 1,
+      "context": "  49:               add('shutdown')\n  50:           elif want['state'] == 'started':\n  51:               add('no shutdown')\n  52:->     return commands",
+      "ast_subtree_json": {
+        "_type": "Return",
+        "value": {
+          "_type": "Name",
+          "id": "commands",
+          "ctx": {
+            "_type": "Load"
+          }
+        }
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -12.0
+    },
+    {
+      "line": 45,
+      "line_absolute": 263,
+      "node_id": 244,
+      "node_id_local": 53,
+      "type": "Call",
+      "code": "add('no shutdown')",
+      "distance_to_buggy": 2,
+      "context": "  42:           if want['state'] == 'stopped':\n  43:               add('shutdown')\n  44:           elif want['state'] == 'started':\n  45:->             add('no shutdown')\n  46:       if needs_update('vrf'):\n  47:           add('vrf %s' % want['vrf'])\n  48:           if want['state'] == 'stopped':",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Name",
+          "id": "add",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [
+          {
+            "_type": "Constant",
+            "value": "no shutdown",
+            "kind": null
+          }
+        ],
+        "keywords": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -4.0
+    },
+    {
+      "line": 44,
+      "line_absolute": 262,
+      "node_id": 77,
+      "node_id_local": 52,
+      "type": "If",
+      "code": "if want['state'] == 'started':\n    add('no shutdown')",
+      "distance_to_buggy": 3,
+      "context": "  41:       if needs_update('state') and not needs_update('vrf'):\n  42:           if want['state'] == 'stopped':\n  43:               add('shutdown')\n  44:->         elif want['state'] == 'started':\n  45:               add('no shutdown')\n  46:       if needs_update('vrf'):\n  47:           add('vrf %s' % want['vrf'])",
+      "ast_subtree_json": {
+        "_type": "If",
+        "test": {
+          "_type": "Compare",
+          "left": {
+            "_type": "Subscript"
+          },
+          "ops": [
+            {
+              "_type": "Eq"
+            }
+          ],
+          "comparators": [
+            {
+              "_type": "Constant"
+            }
+          ]
+        },
+        "body": [
+          {
+            "_type": "Expr",
+            "value": {
+              "_type": "Call"
+            }
+          }
+        ],
+        "orelse": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|system|>...",
+      "reranker_score": 5.5
+    }
+  ]
+}

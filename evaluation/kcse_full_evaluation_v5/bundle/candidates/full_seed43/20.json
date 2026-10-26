@@ -1,0 +1,1082 @@
+{
+  "bug_id": "20",
+  "seed": 43,
+  "arm": "full",
+  "candidates": [
+    {
+      "index": 0,
+      "patch_text": "def process_ie_result(self, ie_result, download=True, extra_info={}):\n    \"\"\"\n    Take the result of the ie(may be modified) and resolve all unresolved\n    references (URLs, playlist items).\n\n    It will also download the videos if 'download'.\n    Returns the resolved ie_result.\n    \"\"\"\n    result_type = ie_result.get('_type', 'video')\n    if result_type in ('url', 'url_transparent'):\n        ie_result['url'] = sanitize_url(ie_result['url'])\n        extract_flat = self.params.get('extract_flat', False)\n        if extract_flat == 'in_playlist' and 'playlist' in extra_info or extract_flat is True:\n            if self.params.get('forcejson', False):\n                self.to_stdout(json.dumps(ie_result))\n            return ie_result\n    if result_type == 'video':\n        self.add_extra_info(ie_result, extra_info)\n        return self.process_video_result(ie_result, download=download)\n    elif result_type == 'url':\n        return self.extract_info(ie_result['url'], download, ie_key=ie_result.get('ie_key'), extra_info=extra_info)\n    elif result_type == 'url_transparent':\n        info = self.extract_info(ie_result['url'], ie_key=ie_result.get('ie_key'), extra_info=extra_info, download=False, process=False)\n        if not info:\n            return info\n        force_properties = dict(((k, v) for k, v in ie_result.items() if v is not None))\n        for f in ('_type', 'url', 'ie_key'):\n            if f in force_properties:\n                del force_properties[f]\n        new_result = info.copy()\n        new_result.update(force_properties)\n        if new_result.get('_type') == 'url':\n            new_result['_type'] = 'url_transparent'\n        return self.process_ie_result(new_result, download=download, extra_info=extra_info)\n    elif result_type in ('playlist','multi_video'):\n        playlist = ie_result.get('title') or ie_result.get('id')\n        self.to_screen('[download] Downloading playlist: %s' % playlist)\n        playlist_results = []\n        playliststart = self.params.get('playliststart', 1) - 1\n        playlistend = self.params.get('playlistend')\n        if playlistend == -1:\n            playlistend = None\n        playlistitems_str = self.params.get('playlist_items')\n        if playlistitems_str is not None:\n            playlistitems = iter_playlistitems(playlistitems_str)\n        else:\n            playlistitems = None\n        ie_entries = ie_",
+      "patch_sha256": "a489a387e9cea4a2639ecf41da061200738f8946a5648251edc85db2d5cf8255",
+      "rank_score": 134,
+      "plan_ok": false,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7970041106218376,
+      "top_p": 0.896255138277297
+    },
+    {
+      "index": 1,
+      "patch_text": "def process_ie_result(self, ie_result, download=True, extra_info={}):\n    \"\"\"\n        Take the result of the ie(may be modified) and resolve all unresolved\n        references (URLs, playlist items).\n\n        It will also download the videos if 'download'.\n        Returns the resolved ie_result.\n        \"\"\"\n    result_type = ie_result.get('_type', 'video')\n    if result_type in ('url', 'url_transparent'):\n        ie_result['url'] = sanitize_url(ie_result['url'])\n        extract_flat = self.params.get('extract_flat', False)\n        if extract_flat == 'in_playlist' and 'playlist' in extra_info or extract_flat is True:\n            if self.params.get('forcejson', False):\n                self.to_stdout(json.dumps(ie_result))\n            return ie_result\n    if result_type == 'video':\n        self.add_extra_info(ie_result, extra_info)\n        return self.process_video_result(ie_result, download=download)\n    elif result_type == 'url':\n        return self.extract_info(ie_result['url'], download, ie_key=ie_result.get('ie_key'), extra_info=extra_info)\n    elif result_type == 'url_transparent':\n        info = self.extract_info(ie_result['url'], ie_key=ie_result.get('ie_key'), extra_info=extra_info, download=False, process=False)\n        if not info:\n            return info\n        force_properties = dict(((k, v) for k, v in ie_result.items() if v is not None))\n        for f in ('_type', 'url', 'ie_key'):\n            if f in force_properties:\n                del force_properties[f]\n        new_result = info.copy()\n        new_result.update(force_properties)\n        if new_result.get('_type') == 'url':\n            new_result['_type'] = 'url_transparent'\n        return self.process_ie_result(new_result, download=download, extra_info=extra_info)\n    elif result_type in ('playlist','multi_video'):\n        playlist = ie_result.get('title') or ie_result.get('id')\n        self.to_screen('[download] Downloading playlist: %s' % playlist)\n        playlist_results = []\n        playliststart = self.params.get('playliststart', 1) - 1\n        playlistend = self.params.get('playlistend')\n        if playlistend == -1:\n            playlistend = None\n        playlistitems_str = self.params.get('playlist_items')\n        if playlistitems_str is not None:\n            playlistitems = list(map(int, playlistitems_str.split(',')))\n        else:\n            playlistitems = None",
+      "patch_sha256": "55bc94cba75c988d24bd151f712f8f689c0976871c538331bdeee4f6fd8a8441",
+      "rank_score": 134,
+      "plan_ok": false,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.9198728361131365,
+      "top_p": 0.8098617783838441
+    }
+  ],
+  "candidate_count": 2,
+  "retrieved_examples": [
+    {
+      "id": "26",
+      "project_name": "scrapy",
+      "buggy_line_content": "            for url in sitemap_urls_from_robots(response.body):",
+      "function": {
+        "function_name": "_parse_sitemap",
+        "function_parent": "SitemapSpider",
+        "function_before_start_line": 33,
+        "function_before_end_line": 54,
+        "function_after_start_line": 33,
+        "function_after_end_line": 54,
+        "function_before_token_count": 169,
+        "function_after_token_count": 169,
+        "function_before": "def _parse_sitemap(self, response):\n    if response.url.endswith('/robots.txt'):\n        for url in sitemap_urls_from_robots(response.body):\n            yield Request(url, callback=self._parse_sitemap)\n    else:\n        body = self._get_sitemap_body(response)\n        if body is None:\n            logger.warning('Ignoring invalid sitemap: %(response)s', {'response': response}, extra={'spider': self})\n            return\n        s = Sitemap(body)\n        if s.type == 'sitemapindex':\n            for loc in iterloc(s, self.sitemap_alternate_links):\n                if any((x.search(loc) for x in self._follow)):\n                    yield Request(loc, callback=self._parse_sitemap)\n        elif s.type == 'urlset':\n            for loc in iterloc(s):\n                for r, c in self._cbs:\n                    if r.search(loc):\n                        yield Request(loc, callback=c)\n                        break",
+        "function_after": "def _parse_sitemap(self, response):\n    if response.url.endswith('/robots.txt'):\n        for url in sitemap_urls_from_robots(response.text):\n            yield Request(url, callback=self._parse_sitemap)\n    else:\n        body = self._get_sitemap_body(response)\n        if body is None:\n            logger.warning('Ignoring invalid sitemap: %(response)s', {'response': response}, extra={'spider': self})\n            return\n        s = Sitemap(body)\n        if s.type == 'sitemapindex':\n            for loc in iterloc(s, self.sitemap_alternate_links):\n                if any((x.search(loc) for x in self._follow)):\n                    yield Request(loc, callback=self._parse_sitemap)\n        elif s.type == 'urlset':\n            for loc in iterloc(s):\n                for r, c in self._cbs:\n                    if r.search(loc):\n                        yield Request(loc, callback=c)\n                        break"
+      },
+      "file_name": "sitemap.py",
+      "file_path": "scrapy/spiders/sitemap.py",
+      "score_reranked": 0.8610514513749932
+    },
+    {
+      "id": "28",
+      "project_name": "scrapy",
+      "buggy_line_content": "        if ':' not in self._url:",
+      "function": {
+        "function_name": "_set_url",
+        "function_parent": "Request",
+        "function_before_start_line": 62,
+        "function_before_end_line": 70,
+        "function_after_start_line": 62,
+        "function_after_end_line": 70,
+        "function_before_token_count": 65,
+        "function_after_token_count": 79,
+        "function_before": "def _set_url(self, url):\n    if not isinstance(url, six.string_types):\n        raise TypeError('Request url must be str or unicode, got %s:' % type(url).__name__)\n    s = safe_url_string(url, self.encoding)\n    self._url = escape_ajax(s)\n    if ':' not in self._url:\n        raise ValueError('Missing scheme in request url: %s' % self._url)",
+        "function_after": "def _set_url(self, url):\n    if not isinstance(url, six.string_types):\n        raise TypeError('Request url must be str or unicode, got %s:' % type(url).__name__)\n    s = safe_url_string(url, self.encoding)\n    self._url = escape_ajax(s)\n    if '://' not in self._url and (not self._url.startswith('data:')):\n        raise ValueError('Missing scheme in request url: %s' % self._url)"
+      },
+      "file_name": "__init__.py",
+      "file_path": "scrapy/http/request/__init__.py",
+      "score_reranked": 0.795726656527008
+    },
+    {
+      "id": "22",
+      "project_name": "youtube-dl",
+      "buggy_line_content": "    m = re.match(r'(?:https?:|)//[^/]+/(?:[^/?#]+/)?([^/?#]+)/?(?:[?#]|$)', url)",
+      "function": {
+        "function_name": "url_basename",
+        "function_parent": "utils.py",
+        "function_before_start_line": 1089,
+        "function_before_end_line": 1093,
+        "function_after_start_line": 1089,
+        "function_after_end_line": 1093,
+        "function_before_token_count": 30,
+        "function_after_token_count": 30,
+        "function_before": "def url_basename(url):\n    m = re.match('(?:https?:|)//[^/]+/(?:[^/?#]+/)?([^/?#]+)/?(?:[?#]|$)', url)\n    if not m:\n        return u''\n    return m.group(1)",
+        "function_after": "def url_basename(url):\n    m = re.match('(?:https?:|)//[^/]+/(?:[^?#]+/)?([^/?#]+)/?(?:[?#]|$)', url)\n    if not m:\n        return u''\n    return m.group(1)"
+      },
+      "file_name": "utils.py",
+      "file_path": "youtube_dl/utils.py",
+      "score_reranked": 0.7828670109253029
+    },
+    {
+      "id": "21",
+      "project_name": "youtube-dl",
+      "buggy_line_content": "        (?:0[xX][0-9a-fA-F]+|0+[0-7]+)(?:\\s*:)?|",
+      "function": {
+        "function_name": "js_to_json",
+        "function_parent": "utils.py",
+        "function_before_start_line": 1939,
+        "function_before_end_line": 1975,
+        "function_after_start_line": 1939,
+        "function_after_end_line": 1975,
+        "function_before_token_count": 19,
+        "function_after_token_count": 19,
+        "function_before": "def js_to_json(code):\n\n    def fix_kv(m):\n        v = m.group(0)\n        if v in ('true', 'false', 'null'):\n            return v\n        elif v.startswith('/*') or v == ',':\n            return ''\n        if v[0] in (\"'\", '\"'):\n            v = re.sub('(?s)\\\\\\\\.|\"', lambda m: {'\"': '\\\\\"', \"\\\\'\": \"'\", '\\\\\\n': '', '\\\\x': '\\\\u00'}.get(m.group(0), m.group(0)), v[1:-1])\n        INTEGER_TABLE = (('^0[xX][0-9a-fA-F]+', 16), ('^0+[0-7]+', 8))\n        for regex, base in INTEGER_TABLE:\n            im = re.match(regex, v)\n            if im:\n                i = int(im.group(0), base)\n                return '\"%d\":' % i if v.endswith(':') else '%d' % i\n        return '\"%s\"' % v\n    return re.sub('(?sx)\\n        \"(?:[^\"\\\\\\\\]*(?:\\\\\\\\\\\\\\\\|\\\\\\\\[\\'\"nurtbfx/\\\\n]))*[^\"\\\\\\\\]*\"|\\n        \\'(?:[^\\'\\\\\\\\]*(?:\\\\\\\\\\\\\\\\|\\\\\\\\[\\'\"nurtbfx/\\\\n]))*[^\\'\\\\\\\\]*\\'|\\n        /\\\\*.*?\\\\*/|,(?=\\\\s*[\\\\]}])|\\n        [a-zA-Z_][.a-zA-Z_0-9]*|\\n        (?:0[xX][0-9a-fA-F]+|0+[0-7]+)(?:\\\\s*:)?|\\n        [0-9]+(?=\\\\s*:)\\n        ', fix_kv, code)",
+        "function_after": "def js_to_json(code):\n\n    def fix_kv(m):\n        v = m.group(0)\n        if v in ('true', 'false', 'null'):\n            return v\n        elif v.startswith('/*') or v == ',':\n            return ''\n        if v[0] in (\"'\", '\"'):\n            v = re.sub('(?s)\\\\\\\\.|\"', lambda m: {'\"': '\\\\\"', \"\\\\'\": \"'\", '\\\\\\n': '', '\\\\x': '\\\\u00'}.get(m.group(0), m.group(0)), v[1:-1])\n        INTEGER_TABLE = (('^0[xX][0-9a-fA-F]+', 16), ('^0+[0-7]+', 8))\n        for regex, base in INTEGER_TABLE:\n            im = re.match(regex, v)\n            if im:\n                i = int(im.group(0), base)\n                return '\"%d\":' % i if v.endswith(':') else '%d' % i\n        return '\"%s\"' % v\n    return re.sub('(?sx)\\n        \"(?:[^\"\\\\\\\\]*(?:\\\\\\\\\\\\\\\\|\\\\\\\\[\\'\"nurtbfx/\\\\n]))*[^\"\\\\\\\\]*\"|\\n        \\'(?:[^\\'\\\\\\\\]*(?:\\\\\\\\\\\\\\\\|\\\\\\\\[\\'\"nurtbfx/\\\\n]))*[^\\'\\\\\\\\]*\\'|\\n        /\\\\*.*?\\\\*/|,(?=\\\\s*[\\\\]}])|\\n        [a-zA-Z_][.a-zA-Z_0-9]*|\\n        \\\\b(?:0[xX][0-9a-fA-F]+|0+[0-7]+)(?:\\\\s*:)?|\\n        [0-9]+(?=\\\\s*:)\\n        ', fix_kv, code)"
+      },
+      "file_name": "utils.py",
+      "file_path": "youtube_dl/utils.py",
+      "score_reranked": 0.7663416141632406
+    },
+    {
+      "id": "39",
+      "project_name": "pandas",
+      "buggy_line_content": "            except (TypeError, ValueError):",
+      "function": {
+        "function_name": "_try_convert_data",
+        "function_parent": "Parser",
+        "function_before_start_line": 886,
+        "function_before_end_line": 958,
+        "function_after_start_line": 886,
+        "function_after_end_line": 958,
+        "function_before_token_count": 277,
+        "function_after_token_count": 279,
+        "function_before": "def _try_convert_data(self, name, data, use_dtypes=True, convert_dates=True):\n    \"\"\"\n        Try to parse a ndarray like into a column by inferring dtype.\n        \"\"\"\n    if use_dtypes:\n        if not self.dtype:\n            return (data, False)\n        elif self.dtype is True:\n            pass\n        else:\n            dtype = self.dtype.get(name) if isinstance(self.dtype, dict) else self.dtype\n            if dtype is not None:\n                try:\n                    dtype = np.dtype(dtype)\n                    return (data.astype(dtype), True)\n                except (TypeError, ValueError):\n                    return (data, False)\n    if convert_dates:\n        new_data, result = self._try_convert_to_date(data)\n        if result:\n            return (new_data, True)\n    result = False\n    if data.dtype == 'object':\n        try:\n            data = data.astype('float64')\n            result = True\n        except (TypeError, ValueError):\n            pass\n    if data.dtype.kind == 'f':\n        if data.dtype != 'float64':\n            try:\n                data = data.astype('float64')\n                result = True\n            except (TypeError, ValueError):\n                pass\n    if len(data) and (data.dtype == 'float' or data.dtype == 'object'):\n        try:\n            new_data = data.astype('int64')\n            if (new_data == data).all():\n                data = new_data\n                result = True\n        except (TypeError, ValueError):\n            pass\n    if data.dtype == 'int':\n        try:\n            data = data.astype('int64')\n            result = True\n        except (TypeError, ValueError):\n            pass\n    return (data, result)",
+        "function_after": "def _try_convert_data(self, name, data, use_dtypes=True, convert_dates=True):\n    \"\"\"\n        Try to parse a ndarray like into a column by inferring dtype.\n        \"\"\"\n    if use_dtypes:\n        if not self.dtype:\n            return (data, False)\n        elif self.dtype is True:\n            pass\n        else:\n            dtype = self.dtype.get(name) if isinstance(self.dtype, dict) else self.dtype\n            if dtype is not None:\n                try:\n                    dtype = np.dtype(dtype)\n                    return (data.astype(dtype), True)\n                except (TypeError, ValueError):\n                    return (data, False)\n    if convert_dates:\n        new_data, result = self._try_convert_to_date(data)\n        if result:\n            return (new_data, True)\n    result = False\n    if data.dtype == 'object':\n        try:\n            data = data.astype('float64')\n            result = True\n        except (TypeError, ValueError):\n            pass\n    if data.dtype.kind == 'f':\n        if data.dtype != 'float64':\n            try:\n                data = data.astype('float64')\n                result = True\n            except (TypeError, ValueError):\n                pass\n    if len(data) and (data.dtype == 'float' or data.dtype == 'object'):\n        try:\n            new_data = data.astype('int64')\n            if (new_data == data).all():\n                data = new_data\n                result = True\n        except (TypeError, ValueError, OverflowError):\n            pass\n    if data.dtype == 'int':\n        try:\n            data = data.astype('int64')\n            result = True\n        except (TypeError, ValueError):\n            pass\n    return (data, result)"
+      },
+      "file_name": "_json.py",
+      "file_path": "pandas/io/json/_json.py",
+      "score_reranked": 0.644171426711582
+    }
+  ],
+  "diffusion_plan": [
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 145
+        },
+        {
+          "op": "Replace",
+          "node": 144
+        },
+        {
+          "op": "GuardAdd",
+          "node": 145
+        },
+        {
+          "op": "Replace",
+          "node": 146
+        },
+        {
+          "op": "Delete",
+          "node": 145
+        },
+        {
+          "op": "GuardAdd",
+          "node": 231
+        },
+        {
+          "op": "GuardAdd",
+          "node": 146
+        },
+        {
+          "op": "Replace",
+          "node": 351
+        },
+        {
+          "op": "Replace",
+          "node": 233
+        },
+        {
+          "op": "GuardAdd",
+          "node": 148
+        },
+        {
+          "op": "Replace",
+          "node": 229
+        },
+        {
+          "op": "Replace",
+          "node": 231
+        },
+        {
+          "op": "Replace",
+          "node": 148
+        }
+      ],
+      "score": 19.4909090892281
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "GuardAdd",
+          "node": 147
+        },
+        {
+          "op": "Replace",
+          "node": 147
+        },
+        {
+          "op": "Delete",
+          "node": 146
+        },
+        {
+          "op": "Replace",
+          "node": 148
+        },
+        {
+          "op": "Replace",
+          "node": 231
+        },
+        {
+          "op": "GuardAdd",
+          "node": 145
+        },
+        {
+          "op": "Replace",
+          "node": 229
+        },
+        {
+          "op": "GuardAdd",
+          "node": 233
+        },
+        {
+          "op": "Replace",
+          "node": 233
+        },
+        {
+          "op": "Replace",
+          "node": 145
+        },
+        {
+          "op": "Replace",
+          "node": 146
+        }
+      ],
+      "score": 18.472727271138844
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 148
+        },
+        {
+          "op": "GuardAdd",
+          "node": 231
+        },
+        {
+          "op": "GuardAdd",
+          "node": 146
+        },
+        {
+          "op": "Replace",
+          "node": 144
+        },
+        {
+          "op": "Replace",
+          "node": 231
+        },
+        {
+          "op": "Replace",
+          "node": 147
+        },
+        {
+          "op": "Replace",
+          "node": 229
+        },
+        {
+          "op": "InsertAfter",
+          "node": 145
+        },
+        {
+          "op": "Replace",
+          "node": 233
+        },
+        {
+          "op": "GuardAdd",
+          "node": 233
+        },
+        {
+          "op": "Replace",
+          "node": 479
+        }
+      ],
+      "score": 16.627272725852066
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 146
+        },
+        {
+          "op": "GuardAdd",
+          "node": 229
+        },
+        {
+          "op": "Delete",
+          "node": 145
+        },
+        {
+          "op": "GuardAdd",
+          "node": 144
+        },
+        {
+          "op": "GuardAdd",
+          "node": 233
+        },
+        {
+          "op": "Replace",
+          "node": 147
+        },
+        {
+          "op": "Replace",
+          "node": 233
+        },
+        {
+          "op": "Replace",
+          "node": 148
+        },
+        {
+          "op": "GuardAdd",
+          "node": 145
+        },
+        {
+          "op": "GuardAdd",
+          "node": 148
+        }
+      ],
+      "score": 16.163636362257854
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 351
+        },
+        {
+          "op": "Replace",
+          "node": 229
+        },
+        {
+          "op": "Replace",
+          "node": 233
+        },
+        {
+          "op": "Replace",
+          "node": 145
+        },
+        {
+          "op": "Replace",
+          "node": 146
+        },
+        {
+          "op": "Replace",
+          "node": 144
+        },
+        {
+          "op": "Replace",
+          "node": 148
+        },
+        {
+          "op": "Replace",
+          "node": 147
+        },
+        {
+          "op": "GuardAdd",
+          "node": 146
+        },
+        {
+          "op": "InsertBefore",
+          "node": 229
+        },
+        {
+          "op": "GuardAdd",
+          "node": 231
+        }
+      ],
+      "score": 16.145454544077687
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 351
+        },
+        {
+          "op": "Replace",
+          "node": 233
+        },
+        {
+          "op": "Replace",
+          "node": 231
+        },
+        {
+          "op": "Replace",
+          "node": 146
+        },
+        {
+          "op": "InsertBefore",
+          "node": 148
+        },
+        {
+          "op": "GuardAdd",
+          "node": 233
+        },
+        {
+          "op": "Replace",
+          "node": 147
+        },
+        {
+          "op": "Replace",
+          "node": 145
+        }
+      ],
+      "score": 16.118181816989257
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 229
+        },
+        {
+          "op": "Replace",
+          "node": 146
+        },
+        {
+          "op": "GuardAdd",
+          "node": 233
+        },
+        {
+          "op": "Replace",
+          "node": 148
+        },
+        {
+          "op": "Replace",
+          "node": 233
+        },
+        {
+          "op": "Replace",
+          "node": 144
+        },
+        {
+          "op": "Replace",
+          "node": 147
+        },
+        {
+          "op": "InsertBefore",
+          "node": 148
+        }
+      ],
+      "score": 16.118181816989257
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "GuardAdd",
+          "node": 146
+        },
+        {
+          "op": "Replace",
+          "node": 145
+        },
+        {
+          "op": "GuardAdd",
+          "node": 148
+        },
+        {
+          "op": "Replace",
+          "node": 146
+        },
+        {
+          "op": "Replace",
+          "node": 351
+        },
+        {
+          "op": "Replace",
+          "node": 231
+        },
+        {
+          "op": "Replace",
+          "node": 233
+        },
+        {
+          "op": "Delete",
+          "node": 148
+        },
+        {
+          "op": "Replace",
+          "node": 148
+        }
+      ],
+      "score": 16.10909090771736
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 233
+        },
+        {
+          "op": "Delete",
+          "node": 147
+        },
+        {
+          "op": "InsertAfter",
+          "node": 146
+        },
+        {
+          "op": "Replace",
+          "node": 148
+        },
+        {
+          "op": "Replace",
+          "node": 147
+        },
+        {
+          "op": "Replace",
+          "node": 146
+        },
+        {
+          "op": "GuardAdd",
+          "node": 231
+        },
+        {
+          "op": "Replace",
+          "node": 145
+        }
+      ],
+      "score": 16.01818181699835
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 233
+        },
+        {
+          "op": "Replace",
+          "node": 145
+        },
+        {
+          "op": "Replace",
+          "node": 479
+        },
+        {
+          "op": "Replace",
+          "node": 144
+        },
+        {
+          "op": "GuardAdd",
+          "node": 145
+        },
+        {
+          "op": "Replace",
+          "node": 229
+        },
+        {
+          "op": "Replace",
+          "node": 148
+        },
+        {
+          "op": "InsertBefore",
+          "node": 233
+        },
+        {
+          "op": "Delete",
+          "node": 148
+        },
+        {
+          "op": "Replace",
+          "node": 147
+        },
+        {
+          "op": "GuardAdd",
+          "node": 146
+        }
+      ],
+      "score": 15.963636362276034
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 233
+        },
+        {
+          "op": "Replace",
+          "node": 147
+        },
+        {
+          "op": "Replace",
+          "node": 148
+        },
+        {
+          "op": "GuardAdd",
+          "node": 231
+        },
+        {
+          "op": "InsertBefore",
+          "node": 147
+        },
+        {
+          "op": "Replace",
+          "node": 146
+        },
+        {
+          "op": "GuardAdd",
+          "node": 145
+        },
+        {
+          "op": "GuardAdd",
+          "node": 233
+        },
+        {
+          "op": "Replace",
+          "node": 145
+        }
+      ],
+      "score": 15.927272725915703
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 231
+        },
+        {
+          "op": "Replace",
+          "node": 146
+        },
+        {
+          "op": "Replace",
+          "node": 145
+        },
+        {
+          "op": "Replace",
+          "node": 229
+        },
+        {
+          "op": "Delete",
+          "node": 231
+        },
+        {
+          "op": "Replace",
+          "node": 148
+        },
+        {
+          "op": "Replace",
+          "node": 147
+        },
+        {
+          "op": "Replace",
+          "node": 233
+        },
+        {
+          "op": "GuardAdd",
+          "node": 233
+        }
+      ],
+      "score": 15.90909090773554
+    }
+  ],
+  "static_analysis_nodes": [
+    {
+      "line": 43,
+      "line_absolute": 862,
+      "node_id": 233,
+      "node_id_local": 53,
+      "type": "Call",
+      "code": "self.params.get('playlist_items')",
+      "distance_to_buggy": 0,
+      "context": "  40:           playlistend = self.params.get('playlistend')\n  41:           if playlistend == -1:\n  42:               playlistend = None\n  43:->         playlistitems_str = self.params.get('playlist_items')\n  44:           playlistitems = None\n  45:           if playlistitems_str is not None:\n  46:   ",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Attribute",
+          "value": {
+            "_type": "Attribute"
+          },
+          "attr": "get",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [
+          {
+            "_type": "Constant",
+            "value": "playlist_items",
+            "kind": null
+          }
+        ],
+        "keywords": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -25.2
+    },
+    {
+      "line": 45,
+      "line_absolute": 864,
+      "node_id": 148,
+      "node_id_local": 55,
+      "type": "If",
+      "code": "if playlistitems_str is not None:\n\n    def iter_playlistitems(format):\n        for string_segment in format.split(','):\n            if '-' in string_segment:\n                start, end = string_segment.split('-')\n                for item in range(int(start), int(end) + 1):\n                    yield int(item)\n            else:\n                yield int(string_segment)\n    playlistitems = iter_playlistitems(playlistitems_str)",
+      "distance_to_buggy": 0,
+      "context": "  42:               playlistend = None\n  43:           playlistitems_str = self.params.get('playlist_items')\n  44:           playlistitems = None\n  45:->         if playlistitems_str is not None:\n  46:   \n  47:               def iter_playlistitems(format):\n  48:                   for string_segment in format.split(','):",
+      "ast_subtree_json": {
+        "_type": "If",
+        "test": {
+          "_type": "Compare",
+          "left": {
+            "_type": "Name"
+          },
+          "ops": [
+            {
+              "_type": "IsNot"
+            }
+          ],
+          "comparators": [
+            {
+              "_type": "Constant"
+            }
+          ]
+        },
+        "body": [
+          {
+            "_type": "FunctionDef",
+            "name": "iter_playlistitems",
+            "args": {
+              "_type": "arguments"
+            },
+            "body": [
+              {
+                "_type": "For"
+              }
+            ],
+            "decorator_list": [],
+            "returns": null,
+            "type_comment": null,
+            "type_params": []
+          },
+          {
+            "_type": "Assign",
+            "targets": [
+              {
+                "_type": "Name"
+              }
+            ],
+            "value": {
+              "_type": "Call"
+            },
+            "type_comment": null
+          }
+        ],
+        "orelse": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -24.8
+    },
+    {
+      "line": 43,
+      "line_absolute": 862,
+      "node_id": 146,
+      "node_id_local": 52,
+      "type": "Assign",
+      "code": "playlistitems_str = self.params.get('playlist_items')",
+      "distance_to_buggy": 0,
+      "context": "  40:           playlistend = self.params.get('playlistend')\n  41:           if playlistend == -1:\n  42:               playlistend = None\n  43:->         playlistitems_str = self.params.get('playlist_items')\n  44:           playlistitems = None\n  45:           if playlistitems_str is not None:\n  46:   ",
+      "ast_subtree_json": {
+        "_type": "Assign",
+        "targets": [
+          {
+            "_type": "Name",
+            "id": "playlistitems_str",
+            "ctx": {
+              "_type": "Store"
+            }
+          }
+        ],
+        "value": {
+          "_type": "Call",
+          "func": {
+            "_type": "Attribute"
+          },
+          "args": [
+            {
+              "_type": "Constant"
+            }
+          ],
+          "keywords": []
+        },
+        "type_comment": null
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -24.2
+    },
+    {
+      "line": 42,
+      "line_absolute": 861,
+      "node_id": 231,
+      "node_id_local": 51,
+      "type": "Assign",
+      "code": "playlistend = None",
+      "distance_to_buggy": 0,
+      "context": "  39:           playliststart = self.params.get('playliststart', 1) - 1\n  40:           playlistend = self.params.get('playlistend')\n  41:           if playlistend == -1:\n  42:->             playlistend = None\n  43:           playlistitems_str = self.params.get('playlist_items')\n  44:           playlistitems = None\n  45:           if playlistitems_str is not None:",
+      "ast_subtree_json": {
+        "_type": "Assign",
+        "targets": [
+          {
+            "_type": "Name",
+            "id": "playlistend",
+            "ctx": {
+              "_type": "Store"
+            }
+          }
+        ],
+        "value": {
+          "_type": "Constant",
+          "value": null,
+          "kind": null
+        },
+        "type_comment": null
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -22.0
+    },
+    {
+      "line": 44,
+      "line_absolute": 863,
+      "node_id": 147,
+      "node_id_local": 54,
+      "type": "Assign",
+      "code": "playlistitems = None",
+      "distance_to_buggy": 0,
+      "context": "  41:           if playlistend == -1:\n  42:               playlistend = None\n  43:           playlistitems_str = self.params.get('playlist_items')\n  44:->         playlistitems = None\n  45:           if playlistitems_str is not None:\n  46:   \n  47:               def iter_playlistitems(format):",
+      "ast_subtree_json": {
+        "_type": "Assign",
+        "targets": [
+          {
+            "_type": "Name",
+            "id": "playlistitems",
+            "ctx": {
+              "_type": "Store"
+            }
+          }
+        ],
+        "value": {
+          "_type": "Constant",
+          "value": null,
+          "kind": null
+        },
+        "type_comment": null
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -22.0
+    },
+    {
+      "line": 41,
+      "line_absolute": 860,
+      "node_id": 145,
+      "node_id_local": 50,
+      "type": "If",
+      "code": "if playlistend == -1:\n    playlistend = None",
+      "distance_to_buggy": 1,
+      "context": "  38:           playlist_results = []\n  39:           playliststart = self.params.get('playliststart', 1) - 1\n  40:           playlistend = self.params.get('playlistend')\n  41:->         if playlistend == -1:\n  42:               playlistend = None\n  43:           playlistitems_str = self.params.get('playlist_items')\n  44:           playlistitems = None",
+      "ast_subtree_json": {
+        "_type": "If",
+        "test": {
+          "_type": "Compare",
+          "left": {
+            "_type": "Name"
+          },
+          "ops": [
+            {
+              "_type": "Eq"
+            }
+          ],
+          "comparators": [
+            {
+              "_type": "UnaryOp"
+            }
+          ]
+        },
+        "body": [
+          {
+            "_type": "Assign",
+            "targets": [
+              {
+                "_type": "Name"
+              }
+            ],
+            "value": {
+              "_type": "Constant"
+            },
+            "type_comment": null
+          }
+        ],
+        "orelse": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -12.0
+    },
+    {
+      "line": 40,
+      "line_absolute": 859,
+      "node_id": 229,
+      "node_id_local": 49,
+      "type": "Call",
+      "code": "self.params.get('playlistend')",
+      "distance_to_buggy": 2,
+      "context": "  37:           self.to_screen('[download] Downloading playlist: %s' % playlist)\n  38:           playlist_results = []\n  39:           playliststart = self.params.get('playliststart', 1) - 1\n  40:->         playlistend = self.params.get('playlistend')\n  41:           if playlistend == -1:\n  42:               playlistend = None\n  43:           playlistitems_str = self.params.get('playlist_items')",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Attribute",
+          "value": {
+            "_type": "Attribute"
+          },
+          "attr": "get",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [
+          {
+            "_type": "Constant",
+            "value": "playlistend",
+            "kind": null
+          }
+        ],
+        "keywords": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|system|>...",
+      "reranker_score": -5.2
+    },
+    {
+      "line": 48,
+      "line_absolute": 867,
+      "node_id": 351,
+      "node_id_local": 56,
+      "type": "For",
+      "code": "for string_segment in format.split(','):\n    if '-' in string_segment:\n        start, end = string_segment.split('-')\n        for item in range(int(start), int(end) + 1):\n            yield int(item)\n    else:\n        yield int(string_segment)",
+      "distance_to_buggy": 2,
+      "context": "  45:           if playlistitems_str is not None:\n  46:   \n  47:               def iter_playlistitems(format):\n  48:->                 for string_segment in format.split(','):\n  49:                       if '-' in string_segment:\n  50:                           start, end = string_segment.split('-')\n  51:                           for item in range(int(start), int(end) + 1):",
+      "ast_subtree_json": {
+        "_type": "For",
+        "target": {
+          "_type": "Name",
+          "id": "string_segment",
+          "ctx": {
+            "_type": "Store"
+          }
+        },
+        "iter": {
+          "_type": "Call",
+          "func": {
+            "_type": "Attribute"
+          },
+          "args": [
+            {
+              "_type": "Constant"
+            }
+          ],
+          "keywords": []
+        },
+        "body": [
+          {
+            "_type": "If",
+            "test": {
+              "_type": "Compare"
+            },
+            "body": [
+              {
+                "_type": "Assign"
+              },
+              {
+                "_type": "For"
+              }
+            ],
+            "orelse": [
+              {
+                "_type": "Expr"
+              }
+            ]
+          }
+        ],
+        "orelse": [],
+        "type_comment": null
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -4.8
+    },
+    {
+      "line": 40,
+      "line_absolute": 859,
+      "node_id": 144,
+      "node_id_local": 48,
+      "type": "Assign",
+      "code": "playlistend = self.params.get('playlistend')",
+      "distance_to_buggy": 2,
+      "context": "  37:           self.to_screen('[download] Downloading playlist: %s' % playlist)\n  38:           playlist_results = []\n  39:           playliststart = self.params.get('playliststart', 1) - 1\n  40:->         playlistend = self.params.get('playlistend')\n  41:           if playlistend == -1:\n  42:               playlistend = None\n  43:           playlistitems_str = self.params.get('playlist_items')",
+      "ast_subtree_json": {
+        "_type": "Assign",
+        "targets": [
+          {
+            "_type": "Name",
+            "id": "playlistend",
+            "ctx": {
+              "_type": "Store"
+            }
+          }
+        ],
+        "value": {
+          "_type": "Call",
+          "func": {
+            "_type": "Attribute"
+          },
+          "args": [
+            {
+              "_type": "Constant"
+            }
+          ],
+          "keywords": []
+        },
+        "type_comment": null
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|system|>...",
+      "reranker_score": -4.2
+    },
+    {
+      "line": 48,
+      "line_absolute": 867,
+      "node_id": 479,
+      "node_id_local": 57,
+      "type": "Call",
+      "code": "format.split(',')",
+      "distance_to_buggy": 2,
+      "context": "  45:           if playlistitems_str is not None:\n  46:   \n  47:               def iter_playlistitems(format):\n  48:->                 for string_segment in format.split(','):\n  49:                       if '-' in string_segment:\n  50:                           start, end = string_segment.split('-')\n  51:                           for item in range(int(start), int(end) + 1):",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Attribute",
+          "value": {
+            "_type": "Name"
+          },
+          "attr": "split",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [
+          {
+            "_type": "Constant",
+            "value": ",",
+            "kind": null
+          }
+        ],
+        "keywords": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -4.0
+    }
+  ]
+}

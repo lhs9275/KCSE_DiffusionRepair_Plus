@@ -1,0 +1,1007 @@
+{
+  "bug_id": "28",
+  "seed": 44,
+  "arm": "full",
+  "candidates": [
+    {
+      "index": 0,
+      "patch_text": "def _set_url(self, url):\n    if not isinstance(url, six.string_types):\n        raise TypeError('Request url must be str or unicode, got %s:' % type(url).__name__)\n    s = safe_url_string(url, self.encoding)\n    self._url = escape_ajax(s)",
+      "patch_sha256": "a5d61520c1807c0cb0d5959176ebd80e058f47cc414c4d762ef5dca0c39d1955",
+      "rank_score": 220,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7941462962722876,
+      "top_p": 0.8926828703403595
+    },
+    {
+      "index": 1,
+      "patch_text": "def _set_url(self, url):\n    s = safe_url_string(url, self.encoding)\n    self._url = s",
+      "patch_sha256": "e93ccef37ad93d8d181f9a1e6392176f5e75974ea0dfb7021f8998838b6f4ac8",
+      "rank_score": 198,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.79221930055189,
+      "top_p": 0.8902741256898625
+    },
+    {
+      "index": 2,
+      "patch_text": "def _set_url(self, url):\n    if not isinstance(url, six.string_types):\n        raise TypeError('Request url must be str or unicode, got %s:' % type(url).__name__)\n    s = safe_url_string(url, self.encoding)\n    self._url = escape_ajax(s)\n    if ':' not in self._url:  # <--- BUGGY LINE\n        raise ValueError('Missing scheme in request url: %s' % self._url)\nimport json\n\nfrom django.test import TestCase\nfrom rest_framework.test import APIClient\n\nfrom api.models import Problem, User\nfrom api.views import ProblemViewSet, UserViewSet\n\n\nclass TestProblemViewSet(TestCase):\n    def setUp(self):\n        self.client = APIClient()\n\n    def test_get_problems(self):\n        url = '/api/problems/'\n        data = {'name': 'test_name',\n                'description': 'test_description'}\n\n        # Create a user\n        user = User.objects.create_user('user_name', '', '')\n\n        # Create a problem\n        problem = Problem.objects.create(name=data['name'],\n                                         description=data['description'],\n                                         owner=user)\n\n        # Create a second user\n        user = User.objects.create_user('user_name', '', '')\n\n        # Create a second problem\n        problem = Problem.objects.create(name=data['name'],\n                                         description=data['description'],\n                                         owner=user)\n\n        response = self.client.get(url)\n        self.assertEqual(response.status_code, 200)\n        self.assertEqual(len(json.loads(response.content)), 2)\n\n    def test_create_problem(self):\n        url = '/api/problems/'\n        data = {'name': 'test_name',\n                'description': 'test_description'}\n\n        # Create a user\n        user = User.objects.create_user('user_name', '', '')\n\n        # Create a problem\n        response = self.client.post(url, data)\n        self.assertEqual(response.status_code, 201)\n\n        response = self.client.get(url)\n        self.assertEqual(response.status_code, 200)\n        self.assertEqual(len(json.loads(response.content)), 1)\n\n\nclass TestUserViewSet(TestCase):\n    def setUp(self):\n        self.client = APIClient()\n\n    def test_get_users(self):\n        url = '/api/users/'\n        data = {'username': 'test_username',\n                'email': 'test_email',\n                'password': ''}\n\n        # Create a user\n        user = User.objects.create_user(**data)\n\n        # Create a second user\n        user = User.objects.create_user('test_username2', '', '')\n\n        response = self.client",
+      "patch_sha256": "d3e481b15fc735af2872bbc49341ca15869c28b0d3717d902c50a5e5fe9361c7",
+      "rank_score": -77,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.9230891398700982,
+      "top_p": 0.8133577607283677
+    },
+    {
+      "index": 3,
+      "patch_text": "def _set_url(self, url):\n    if not isinstance(url, six.string_types):\n        raise TypeError('Request url must be str or unicode, got %s:' % type(url).__name__)\n    s = safe_url_string(url, self.encoding)\n    self._url = escape_ajax(s)\n    if ':' not in self._url:\n        raise ValueError('Missing scheme in request url: %s' % self._url)\n\n\nimport json\nimport logging\nimport os\nimport sys\nimport time\nfrom pathlib import Path\n\nimport matplotlib\nimport torch\nimport yaml\nfrom easydict import EasyDict as edict\nfrom scipy.stats import mode\nfrom sklearn.metrics import roc_auc_score, accuracy_score\n\nmatplotlib.use('Agg')\nimport matplotlib.pyplot as plt\nfrom matplotlib.font_manager import FontProperties\n\nfrom cogdl.utils import load_json, save_json, set_logger\n\n# from cogdl.utils import load_json, save_json, set_logger\nfrom cogdl.tasks import BaseTask, register_task\n\nlogger = logging.getLogger(__name__)\nfont = FontProperties(fname=os.path.join(os.path.dirname(__file__),'sourcehan-regular.ttf'))\n\n\n@register_task('graphprop')\nclass GraphProp(BaseTask):\n\n    @classmethod\n    def setup_parser(cls, parser):\n        parser.add_argument('--dataset', type=str, default='MUTAG')\n        parser.add_argument('--mode', type=str, default='train')\n        parser.add_argument('--n-run', type=int, default=5)\n        parser.add_argument('--device', type=int, default=0)\n        parser.add_argument('--epochs', type=int, default=1000)\n        parser.add_argument('--lr', type=float, default=0.01)\n        parser.add_argument('--batch-size', type=int, default=64)\n        parser.add_argument('--hidden-dim', type=int, default=16)\n        parser.add_argument('--n-layers', type=int, default=2)\n        parser.add_argument('--dropout', type=float, default=0.)\n        parser.add_argument('--patience', type=int, default=100)\n        parser.add_argument('--num-workers', type=int, default=0)\n        parser.add_argument('--seed', type=int, default=10)\n        parser.add_argument('--early-stopping', type=bool, default=True)\n\n    def __init__(self, args):\n        super().__init__()\n        self.args = args\n\n        # Load dataset\n        data = load_json(os.path.join(args.dataset_dir, args.dataset, f'{args.mode}.json'))\n        self.dataset = data",
+      "patch_sha256": "2d12b2d9101813132e8d645884f360b8ff1a8f535e55dff459e1fefd553efd2d",
+      "rank_score": -178,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7941462962722876,
+      "top_p": 0.8926828703403595
+    }
+  ],
+  "candidate_count": 4,
+  "retrieved_examples": [
+    {
+      "id": "26",
+      "project_name": "scrapy",
+      "buggy_line_content": "            for url in sitemap_urls_from_robots(response.body):",
+      "function": {
+        "function_name": "_parse_sitemap",
+        "function_parent": "SitemapSpider",
+        "function_before_start_line": 33,
+        "function_before_end_line": 54,
+        "function_after_start_line": 33,
+        "function_after_end_line": 54,
+        "function_before_token_count": 169,
+        "function_after_token_count": 169,
+        "function_before": "def _parse_sitemap(self, response):\n    if response.url.endswith('/robots.txt'):\n        for url in sitemap_urls_from_robots(response.body):\n            yield Request(url, callback=self._parse_sitemap)\n    else:\n        body = self._get_sitemap_body(response)\n        if body is None:\n            logger.warning('Ignoring invalid sitemap: %(response)s', {'response': response}, extra={'spider': self})\n            return\n        s = Sitemap(body)\n        if s.type == 'sitemapindex':\n            for loc in iterloc(s, self.sitemap_alternate_links):\n                if any((x.search(loc) for x in self._follow)):\n                    yield Request(loc, callback=self._parse_sitemap)\n        elif s.type == 'urlset':\n            for loc in iterloc(s):\n                for r, c in self._cbs:\n                    if r.search(loc):\n                        yield Request(loc, callback=c)\n                        break",
+        "function_after": "def _parse_sitemap(self, response):\n    if response.url.endswith('/robots.txt'):\n        for url in sitemap_urls_from_robots(response.text):\n            yield Request(url, callback=self._parse_sitemap)\n    else:\n        body = self._get_sitemap_body(response)\n        if body is None:\n            logger.warning('Ignoring invalid sitemap: %(response)s', {'response': response}, extra={'spider': self})\n            return\n        s = Sitemap(body)\n        if s.type == 'sitemapindex':\n            for loc in iterloc(s, self.sitemap_alternate_links):\n                if any((x.search(loc) for x in self._follow)):\n                    yield Request(loc, callback=self._parse_sitemap)\n        elif s.type == 'urlset':\n            for loc in iterloc(s):\n                for r, c in self._cbs:\n                    if r.search(loc):\n                        yield Request(loc, callback=c)\n                        break"
+      },
+      "file_name": "sitemap.py",
+      "file_path": "scrapy/spiders/sitemap.py",
+      "score_reranked": 0.7379314624035342
+    },
+    {
+      "id": "36",
+      "project_name": "pandas",
+      "buggy_line_content": "            self.df = df",
+      "function": {
+        "function_name": "__init__",
+        "function_parent": "ExcelFormatter",
+        "function_before_start_line": 372,
+        "function_before_end_line": 414,
+        "function_after_start_line": 372,
+        "function_after_end_line": 414,
+        "function_before_token_count": 240,
+        "function_after_token_count": 247,
+        "function_before": "def __init__(self, df, na_rep: str='', float_format: Optional[str]=None, cols: Optional[Sequence[Label]]=None, header: Union[Sequence[Label], bool]=True, index: bool=True, index_label: Optional[Union[Label, Sequence[Label]]]=None, merge_cells: bool=False, inf_rep: str='inf', style_converter: Optional[Callable]=None):\n    self.rowcounter = 0\n    self.na_rep = na_rep\n    if hasattr(df, 'render'):\n        self.styler = df\n        df = df.data\n        if style_converter is None:\n            style_converter = CSSToExcelConverter()\n        self.style_converter = style_converter\n    else:\n        self.styler = None\n    self.df = df\n    if cols is not None:\n        if not len(Index(cols) & df.columns):\n            raise KeyError('passes columns are not ALL present dataframe')\n        if len(Index(cols) & df.columns) != len(cols):\n            raise KeyError(\"Not all names specified in 'columns' are found\")\n        self.df = df\n    self.columns = self.df.columns\n    self.float_format = float_format\n    self.index = index\n    self.index_label = index_label\n    self.header = header\n    self.merge_cells = merge_cells\n    self.inf_rep = inf_rep",
+        "function_after": "def __init__(self, df, na_rep: str='', float_format: Optional[str]=None, cols: Optional[Sequence[Label]]=None, header: Union[Sequence[Label], bool]=True, index: bool=True, index_label: Optional[Union[Label, Sequence[Label]]]=None, merge_cells: bool=False, inf_rep: str='inf', style_converter: Optional[Callable]=None):\n    self.rowcounter = 0\n    self.na_rep = na_rep\n    if hasattr(df, 'render'):\n        self.styler = df\n        df = df.data\n        if style_converter is None:\n            style_converter = CSSToExcelConverter()\n        self.style_converter = style_converter\n    else:\n        self.styler = None\n    self.df = df\n    if cols is not None:\n        if not len(Index(cols) & df.columns):\n            raise KeyError('passes columns are not ALL present dataframe')\n        if len(Index(cols) & df.columns) != len(cols):\n            raise KeyError(\"Not all names specified in 'columns' are found\")\n        self.df = df.reindex(columns=cols)\n    self.columns = self.df.columns\n    self.float_format = float_format\n    self.index = index\n    self.index_label = index_label\n    self.header = header\n    self.merge_cells = merge_cells\n    self.inf_rep = inf_rep"
+      },
+      "file_name": "excel.py",
+      "file_path": "pandas/io/formats/excel.py",
+      "score_reranked": 0.6065869821431166
+    },
+    {
+      "id": "39",
+      "project_name": "pandas",
+      "buggy_line_content": "            except (TypeError, ValueError):",
+      "function": {
+        "function_name": "_try_convert_data",
+        "function_parent": "Parser",
+        "function_before_start_line": 886,
+        "function_before_end_line": 958,
+        "function_after_start_line": 886,
+        "function_after_end_line": 958,
+        "function_before_token_count": 277,
+        "function_after_token_count": 279,
+        "function_before": "def _try_convert_data(self, name, data, use_dtypes=True, convert_dates=True):\n    \"\"\"\n        Try to parse a ndarray like into a column by inferring dtype.\n        \"\"\"\n    if use_dtypes:\n        if not self.dtype:\n            return (data, False)\n        elif self.dtype is True:\n            pass\n        else:\n            dtype = self.dtype.get(name) if isinstance(self.dtype, dict) else self.dtype\n            if dtype is not None:\n                try:\n                    dtype = np.dtype(dtype)\n                    return (data.astype(dtype), True)\n                except (TypeError, ValueError):\n                    return (data, False)\n    if convert_dates:\n        new_data, result = self._try_convert_to_date(data)\n        if result:\n            return (new_data, True)\n    result = False\n    if data.dtype == 'object':\n        try:\n            data = data.astype('float64')\n            result = True\n        except (TypeError, ValueError):\n            pass\n    if data.dtype.kind == 'f':\n        if data.dtype != 'float64':\n            try:\n                data = data.astype('float64')\n                result = True\n            except (TypeError, ValueError):\n                pass\n    if len(data) and (data.dtype == 'float' or data.dtype == 'object'):\n        try:\n            new_data = data.astype('int64')\n            if (new_data == data).all():\n                data = new_data\n                result = True\n        except (TypeError, ValueError):\n            pass\n    if data.dtype == 'int':\n        try:\n            data = data.astype('int64')\n            result = True\n        except (TypeError, ValueError):\n            pass\n    return (data, result)",
+        "function_after": "def _try_convert_data(self, name, data, use_dtypes=True, convert_dates=True):\n    \"\"\"\n        Try to parse a ndarray like into a column by inferring dtype.\n        \"\"\"\n    if use_dtypes:\n        if not self.dtype:\n            return (data, False)\n        elif self.dtype is True:\n            pass\n        else:\n            dtype = self.dtype.get(name) if isinstance(self.dtype, dict) else self.dtype\n            if dtype is not None:\n                try:\n                    dtype = np.dtype(dtype)\n                    return (data.astype(dtype), True)\n                except (TypeError, ValueError):\n                    return (data, False)\n    if convert_dates:\n        new_data, result = self._try_convert_to_date(data)\n        if result:\n            return (new_data, True)\n    result = False\n    if data.dtype == 'object':\n        try:\n            data = data.astype('float64')\n            result = True\n        except (TypeError, ValueError):\n            pass\n    if data.dtype.kind == 'f':\n        if data.dtype != 'float64':\n            try:\n                data = data.astype('float64')\n                result = True\n            except (TypeError, ValueError):\n                pass\n    if len(data) and (data.dtype == 'float' or data.dtype == 'object'):\n        try:\n            new_data = data.astype('int64')\n            if (new_data == data).all():\n                data = new_data\n                result = True\n        except (TypeError, ValueError, OverflowError):\n            pass\n    if data.dtype == 'int':\n        try:\n            data = data.astype('int64')\n            result = True\n        except (TypeError, ValueError):\n            pass\n    return (data, result)"
+      },
+      "file_name": "_json.py",
+      "file_path": "pandas/io/json/_json.py",
+      "score_reranked": 0.5699383222796466
+    },
+    {
+      "id": "20",
+      "project_name": "youtube-dl",
+      "buggy_line_content": "            for f in ('_type', 'url', 'ie_key'):",
+      "function": {
+        "function_name": "process_ie_result",
+        "function_parent": "YoutubeDL",
+        "function_before_start_line": 820,
+        "function_before_end_line": 1005,
+        "function_after_start_line": 820,
+        "function_after_end_line": 1005,
+        "function_before_token_count": 871,
+        "function_after_token_count": 877,
+        "function_before": "def process_ie_result(self, ie_result, download=True, extra_info={}):\n    \"\"\"\n        Take the result of the ie(may be modified) and resolve all unresolved\n        references (URLs, playlist items).\n\n        It will also download the videos if 'download'.\n        Returns the resolved ie_result.\n        \"\"\"\n    result_type = ie_result.get('_type', 'video')\n    if result_type in ('url', 'url_transparent'):\n        ie_result['url'] = sanitize_url(ie_result['url'])\n        extract_flat = self.params.get('extract_flat', False)\n        if extract_flat == 'in_playlist' and 'playlist' in extra_info or extract_flat is True:\n            if self.params.get('forcejson', False):\n                self.to_stdout(json.dumps(ie_result))\n            return ie_result\n    if result_type == 'video':\n        self.add_extra_info(ie_result, extra_info)\n        return self.process_video_result(ie_result, download=download)\n    elif result_type == 'url':\n        return self.extract_info(ie_result['url'], download, ie_key=ie_result.get('ie_key'), extra_info=extra_info)\n    elif result_type == 'url_transparent':\n        info = self.extract_info(ie_result['url'], ie_key=ie_result.get('ie_key'), extra_info=extra_info, download=False, process=False)\n        if not info:\n            return info\n        force_properties = dict(((k, v) for k, v in ie_result.items() if v is not None))\n        for f in ('_type', 'url', 'ie_key'):\n            if f in force_properties:\n                del force_properties[f]\n        new_result = info.copy()\n        new_result.update(force_properties)\n        if new_result.get('_type') == 'url':\n            new_result['_type'] = 'url_transparent'\n        return self.process_ie_result(new_result, download=download, extra_info=extra_info)\n    elif result_type in ('playlist', 'multi_video'):\n        playlist = ie_result.get('title') or ie_result.get('id')\n        self.to_screen('[download] Downloading playlist: %s' % playlist)\n        playlist_results = []\n        playliststart = self.params.get('playliststart', 1) - 1\n        playlistend = self.params.get('playlistend')\n        if playlistend == -1:\n            playlistend = None\n        playlistitems_str = self.params.get('playlist_items')\n        playlistitems = None\n        if playlistitems_str is not None:\n\n            def iter_playlistitems(format):\n                for string_segment in format.split(','):\n                    if '-' in string_segment:\n                        start, end = string_segment.split('-')\n                        for item in range(int(start), int(end) + 1):\n                            yield int(item)\n                    else:\n                        yield int(string_segment)\n            playlistitems = iter_playlistitems(playlistitems_str)\n        ie_entries = ie_result['entries']\n        if isinstance(ie_entries, list):\n            n_all_entries = len(ie_entries)\n            if playlistitems:\n                entries = [ie_entries[i - 1] for i in playlistitems if -n_all_entries <= i - 1 < n_all_entries]\n            else:\n                entries = ie_entries[playliststart:playlistend]\n            n_entries = len(entries)\n            self.to_screen('[%s] playlist %s: Collected %d video ids (downloading %d of them)' % (ie_result['extractor'], playlist, n_all_entries, n_entries))\n        elif isinstance(ie_entries, PagedList):\n            if playlistitems:\n                entries = []\n                for item in playlistitems:\n                    entries.extend(ie_entries.getslice(item - 1, item))\n            else:\n                entries = ie_entries.getslice(playliststart, playlistend)\n            n_entries = len(entries)\n            self.to_screen('[%s] playlist %s: Downloading %d videos' % (ie_result['extractor'], playlist, n_entries))\n        else:\n            if playlistitems:\n                entry_list = list(ie_entries)\n                entries = [entry_list[i - 1] for i in playlistitems]\n            else:\n                entries = list(itertools.islice(ie_entries, playliststart, playlistend))\n            n_entries = len(entries)\n            self.to_screen('[%s] playlist %s: Downloading %d videos' % (ie_result['extractor'], playlist, n_entries))\n        if self.params.get('playlistreverse', False):\n            entries = entries[::-1]\n        if self.params.get('playlistrandom', False):\n            random.shuffle(entries)\n        x_forwarded_for = ie_result.get('__x_forwarded_for_ip')\n        for i, entry in enumerate(entries, 1):\n            self.to_screen('[download] Downloading video %s of %s' % (i, n_entries))\n            if x_forwarded_for:\n                entry['__x_forwarded_for_ip'] = x_forwarded_for\n            extra = {'n_entries': n_entries, 'playlist': playlist, 'playlist_id': ie_result.get('id'), 'playlist_title': ie_result.get('title'), 'playlist_index': i + playliststart, 'extractor': ie_result['extractor'], 'webpage_url': ie_result['webpage_url'], 'webpage_url_basename': url_basename(ie_result['webpage_url']), 'extractor_key': ie_result['extractor_key']}\n            reason = self._match_entry(entry, incomplete=True)\n            if reason is not None:\n                self.to_screen('[download] ' + reason)\n                continue\n            entry_result = self.process_ie_result(entry, download=download, extra_info=extra)\n            playlist_results.append(entry_result)\n        ie_result['entries'] = playlist_results\n        self.to_screen('[download] Finished downloading playlist: %s' % playlist)\n        return ie_result\n    elif result_type == 'compat_list':\n        self.report_warning('Extractor %s returned a compat_list result. It needs to be updated.' % ie_result.get('extractor'))\n\n        def _fixup(r):\n            self.add_extra_info(r, {'extractor': ie_result['extractor'], 'webpage_url': ie_result['webpage_url'], 'webpage_url_basename': url_basename(ie_result['webpage_url']), 'extractor_key': ie_result['extractor_key']})\n            return r\n        ie_result['entries'] = [self.process_ie_result(_fixup(r), download, extra_info) for r in ie_result['entries']]\n        return ie_result\n    else:\n        raise Exception('Invalid result type: %s' % result_type)",
+        "function_after": "def process_ie_result(self, ie_result, download=True, extra_info={}):\n    \"\"\"\n        Take the result of the ie(may be modified) and resolve all unresolved\n        references (URLs, playlist items).\n\n        It will also download the videos if 'download'.\n        Returns the resolved ie_result.\n        \"\"\"\n    result_type = ie_result.get('_type', 'video')\n    if result_type in ('url', 'url_transparent'):\n        ie_result['url'] = sanitize_url(ie_result['url'])\n        extract_flat = self.params.get('extract_flat', False)\n        if extract_flat == 'in_playlist' and 'playlist' in extra_info or extract_flat is True:\n            if self.params.get('forcejson', False):\n                self.to_stdout(json.dumps(ie_result))\n            return ie_result\n    if result_type == 'video':\n        self.add_extra_info(ie_result, extra_info)\n        return self.process_video_result(ie_result, download=download)\n    elif result_type == 'url':\n        return self.extract_info(ie_result['url'], download, ie_key=ie_result.get('ie_key'), extra_info=extra_info)\n    elif result_type == 'url_transparent':\n        info = self.extract_info(ie_result['url'], ie_key=ie_result.get('ie_key'), extra_info=extra_info, download=False, process=False)\n        if not info:\n            return info\n        force_properties = dict(((k, v) for k, v in ie_result.items() if v is not None))\n        for f in ('_type', 'url', 'id', 'extractor', 'extractor_key', 'ie_key'):\n            if f in force_properties:\n                del force_properties[f]\n        new_result = info.copy()\n        new_result.update(force_properties)\n        if new_result.get('_type') == 'url':\n            new_result['_type'] = 'url_transparent'\n        return self.process_ie_result(new_result, download=download, extra_info=extra_info)\n    elif result_type in ('playlist', 'multi_video'):\n        playlist = ie_result.get('title') or ie_result.get('id')\n        self.to_screen('[download] Downloading playlist: %s' % playlist)\n        playlist_results = []\n        playliststart = self.params.get('playliststart', 1) - 1\n        playlistend = self.params.get('playlistend')\n        if playlistend == -1:\n            playlistend = None\n        playlistitems_str = self.params.get('playlist_items')\n        playlistitems = None\n        if playlistitems_str is not None:\n\n            def iter_playlistitems(format):\n                for string_segment in format.split(','):\n                    if '-' in string_segment:\n                        start, end = string_segment.split('-')\n                        for item in range(int(start), int(end) + 1):\n                            yield int(item)\n                    else:\n                        yield int(string_segment)\n            playlistitems = iter_playlistitems(playlistitems_str)\n        ie_entries = ie_result['entries']\n        if isinstance(ie_entries, list):\n            n_all_entries = len(ie_entries)\n            if playlistitems:\n                entries = [ie_entries[i - 1] for i in playlistitems if -n_all_entries <= i - 1 < n_all_entries]\n            else:\n                entries = ie_entries[playliststart:playlistend]\n            n_entries = len(entries)\n            self.to_screen('[%s] playlist %s: Collected %d video ids (downloading %d of them)' % (ie_result['extractor'], playlist, n_all_entries, n_entries))\n        elif isinstance(ie_entries, PagedList):\n            if playlistitems:\n                entries = []\n                for item in playlistitems:\n                    entries.extend(ie_entries.getslice(item - 1, item))\n            else:\n                entries = ie_entries.getslice(playliststart, playlistend)\n            n_entries = len(entries)\n            self.to_screen('[%s] playlist %s: Downloading %d videos' % (ie_result['extractor'], playlist, n_entries))\n        else:\n            if playlistitems:\n                entry_list = list(ie_entries)\n                entries = [entry_list[i - 1] for i in playlistitems]\n            else:\n                entries = list(itertools.islice(ie_entries, playliststart, playlistend))\n            n_entries = len(entries)\n            self.to_screen('[%s] playlist %s: Downloading %d videos' % (ie_result['extractor'], playlist, n_entries))\n        if self.params.get('playlistreverse', False):\n            entries = entries[::-1]\n        if self.params.get('playlistrandom', False):\n            random.shuffle(entries)\n        x_forwarded_for = ie_result.get('__x_forwarded_for_ip')\n        for i, entry in enumerate(entries, 1):\n            self.to_screen('[download] Downloading video %s of %s' % (i, n_entries))\n            if x_forwarded_for:\n                entry['__x_forwarded_for_ip'] = x_forwarded_for\n            extra = {'n_entries': n_entries, 'playlist': playlist, 'playlist_id': ie_result.get('id'), 'playlist_title': ie_result.get('title'), 'playlist_index': i + playliststart, 'extractor': ie_result['extractor'], 'webpage_url': ie_result['webpage_url'], 'webpage_url_basename': url_basename(ie_result['webpage_url']), 'extractor_key': ie_result['extractor_key']}\n            reason = self._match_entry(entry, incomplete=True)\n            if reason is not None:\n                self.to_screen('[download] ' + reason)\n                continue\n            entry_result = self.process_ie_result(entry, download=download, extra_info=extra)\n            playlist_results.append(entry_result)\n        ie_result['entries'] = playlist_results\n        self.to_screen('[download] Finished downloading playlist: %s' % playlist)\n        return ie_result\n    elif result_type == 'compat_list':\n        self.report_warning('Extractor %s returned a compat_list result. It needs to be updated.' % ie_result.get('extractor'))\n\n        def _fixup(r):\n            self.add_extra_info(r, {'extractor': ie_result['extractor'], 'webpage_url': ie_result['webpage_url'], 'webpage_url_basename': url_basename(ie_result['webpage_url']), 'extractor_key': ie_result['extractor_key']})\n            return r\n        ie_result['entries'] = [self.process_ie_result(_fixup(r), download, extra_info) for r in ie_result['entries']]\n        return ie_result\n    else:\n        raise Exception('Invalid result type: %s' % result_type)"
+      },
+      "file_name": "YoutubeDL.py",
+      "file_path": "youtube_dl/YoutubeDL.py",
+      "score_reranked": 0.5627977519595204
+    },
+    {
+      "id": "32",
+      "project_name": "pandas",
+      "buggy_line_content": "            except (ValueError, OverflowError):",
+      "function": {
+        "function_name": "_try_convert_to_date",
+        "function_parent": "Parser",
+        "function_before_start_line": 953,
+        "function_before_end_line": 988,
+        "function_after_start_line": 953,
+        "function_after_end_line": 988,
+        "function_before_token_count": 154,
+        "function_after_token_count": 156,
+        "function_before": "def _try_convert_to_date(self, data):\n    \"\"\"\n        Try to parse a ndarray like into a date column.\n\n        Try to coerce object in epoch/iso formats and integer/float in epoch\n        formats. Return a boolean if parsing was successful.\n        \"\"\"\n    if not len(data):\n        return (data, False)\n    new_data = data\n    if new_data.dtype == 'object':\n        try:\n            new_data = data.astype('int64')\n        except (TypeError, ValueError, OverflowError):\n            pass\n    if issubclass(new_data.dtype.type, np.number):\n        in_range = isna(new_data._values) | (new_data > self.min_stamp) | (new_data._values == iNaT)\n        if not in_range.all():\n            return (data, False)\n    date_units = (self.date_unit,) if self.date_unit else self._STAMP_UNITS\n    for date_unit in date_units:\n        try:\n            new_data = to_datetime(new_data, errors='raise', unit=date_unit)\n        except (ValueError, OverflowError):\n            continue\n        return (new_data, True)\n    return (data, False)",
+        "function_after": "def _try_convert_to_date(self, data):\n    \"\"\"\n        Try to parse a ndarray like into a date column.\n\n        Try to coerce object in epoch/iso formats and integer/float in epoch\n        formats. Return a boolean if parsing was successful.\n        \"\"\"\n    if not len(data):\n        return (data, False)\n    new_data = data\n    if new_data.dtype == 'object':\n        try:\n            new_data = data.astype('int64')\n        except (TypeError, ValueError, OverflowError):\n            pass\n    if issubclass(new_data.dtype.type, np.number):\n        in_range = isna(new_data._values) | (new_data > self.min_stamp) | (new_data._values == iNaT)\n        if not in_range.all():\n            return (data, False)\n    date_units = (self.date_unit,) if self.date_unit else self._STAMP_UNITS\n    for date_unit in date_units:\n        try:\n            new_data = to_datetime(new_data, errors='raise', unit=date_unit)\n        except (ValueError, OverflowError, TypeError):\n            continue\n        return (new_data, True)\n    return (data, False)"
+      },
+      "file_name": "_json.py",
+      "file_path": "pandas/io/json/_json.py",
+      "score_reranked": 0.5501512537406137
+    }
+  ],
+  "diffusion_plan": [
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 14
+        },
+        {
+          "op": "Replace",
+          "node": 12
+        },
+        {
+          "op": "Delete",
+          "node": 31
+        },
+        {
+          "op": "Replace",
+          "node": 6
+        },
+        {
+          "op": "Replace",
+          "node": 31
+        },
+        {
+          "op": "GuardAdd",
+          "node": 31
+        },
+        {
+          "op": "InsertAfter",
+          "node": 5
+        },
+        {
+          "op": "Replace",
+          "node": 5
+        },
+        {
+          "op": "Delete",
+          "node": 14
+        },
+        {
+          "op": "Replace",
+          "node": 19
+        },
+        {
+          "op": "Delete",
+          "node": 6
+        }
+      ],
+      "score": 19.336363634696696
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 6
+        },
+        {
+          "op": "GuardAdd",
+          "node": 5
+        },
+        {
+          "op": "Replace",
+          "node": 14
+        },
+        {
+          "op": "Replace",
+          "node": 12
+        },
+        {
+          "op": "InsertAfter",
+          "node": 6
+        },
+        {
+          "op": "GuardAdd",
+          "node": 14
+        },
+        {
+          "op": "Replace",
+          "node": 31
+        },
+        {
+          "op": "Replace",
+          "node": 5
+        }
+      ],
+      "score": 17.445454544141324
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "GuardAdd",
+          "node": 5
+        },
+        {
+          "op": "InsertAfter",
+          "node": 6
+        },
+        {
+          "op": "InsertBefore",
+          "node": 5
+        },
+        {
+          "op": "Replace",
+          "node": 31
+        },
+        {
+          "op": "Replace",
+          "node": 5
+        },
+        {
+          "op": "Replace",
+          "node": 19
+        },
+        {
+          "op": "Replace",
+          "node": 14
+        },
+        {
+          "op": "GuardAdd",
+          "node": 14
+        }
+      ],
+      "score": 16.181818180619835
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 5
+        },
+        {
+          "op": "GuardAdd",
+          "node": 6
+        },
+        {
+          "op": "Replace",
+          "node": 6
+        },
+        {
+          "op": "GuardAdd",
+          "node": 12
+        },
+        {
+          "op": "Replace",
+          "node": 14
+        },
+        {
+          "op": "Replace",
+          "node": 12
+        },
+        {
+          "op": "GuardAdd",
+          "node": 5
+        },
+        {
+          "op": "Replace",
+          "node": 19
+        }
+      ],
+      "score": 15.836363635196696
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "GuardAdd",
+          "node": 12
+        },
+        {
+          "op": "Replace",
+          "node": 31
+        },
+        {
+          "op": "Replace",
+          "node": 14
+        },
+        {
+          "op": "Replace",
+          "node": 12
+        },
+        {
+          "op": "Replace",
+          "node": 6
+        },
+        {
+          "op": "Replace",
+          "node": 4
+        },
+        {
+          "op": "GuardAdd",
+          "node": 31
+        }
+      ],
+      "score": 15.472727271593389
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Delete",
+          "node": 12
+        },
+        {
+          "op": "Replace",
+          "node": 31
+        },
+        {
+          "op": "GuardAdd",
+          "node": 19
+        },
+        {
+          "op": "GuardAdd",
+          "node": 12
+        },
+        {
+          "op": "GuardAdd",
+          "node": 5
+        },
+        {
+          "op": "Replace",
+          "node": 5
+        },
+        {
+          "op": "GuardAdd",
+          "node": 6
+        },
+        {
+          "op": "Replace",
+          "node": 12
+        }
+      ],
+      "score": 15.090909089809918
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "InsertAfter",
+          "node": 31
+        },
+        {
+          "op": "GuardAdd",
+          "node": 3
+        },
+        {
+          "op": "Delete",
+          "node": 6
+        },
+        {
+          "op": "Replace",
+          "node": 63
+        },
+        {
+          "op": "Replace",
+          "node": 31
+        },
+        {
+          "op": "Replace",
+          "node": 14
+        },
+        {
+          "op": "Replace",
+          "node": 18
+        },
+        {
+          "op": "Replace",
+          "node": 5
+        },
+        {
+          "op": "GuardAdd",
+          "node": 4
+        },
+        {
+          "op": "Replace",
+          "node": 6
+        }
+      ],
+      "score": 14.909090907826446
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 31
+        },
+        {
+          "op": "Replace",
+          "node": 19
+        },
+        {
+          "op": "Delete",
+          "node": 19
+        },
+        {
+          "op": "Replace",
+          "node": 12
+        },
+        {
+          "op": "Replace",
+          "node": 5
+        },
+        {
+          "op": "GuardAdd",
+          "node": 4
+        },
+        {
+          "op": "Replace",
+          "node": 6
+        },
+        {
+          "op": "Delete",
+          "node": 31
+        }
+      ],
+      "score": 14.8909090898281
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "InsertAfter",
+          "node": 6
+        },
+        {
+          "op": "Replace",
+          "node": 63
+        },
+        {
+          "op": "Replace",
+          "node": 18
+        },
+        {
+          "op": "Replace",
+          "node": 5
+        },
+        {
+          "op": "Replace",
+          "node": 31
+        },
+        {
+          "op": "Replace",
+          "node": 4
+        },
+        {
+          "op": "Replace",
+          "node": 6
+        },
+        {
+          "op": "GuardAdd",
+          "node": 5
+        }
+      ],
+      "score": 14.75454545347686
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 12
+        },
+        {
+          "op": "Replace",
+          "node": 4
+        },
+        {
+          "op": "GuardAdd",
+          "node": 19
+        },
+        {
+          "op": "GuardAdd",
+          "node": 31
+        },
+        {
+          "op": "Replace",
+          "node": 14
+        },
+        {
+          "op": "GuardAdd",
+          "node": 14
+        },
+        {
+          "op": "Replace",
+          "node": 31
+        }
+      ],
+      "score": 14.654545453485952
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 31
+        },
+        {
+          "op": "Delete",
+          "node": 14
+        },
+        {
+          "op": "Replace",
+          "node": 14
+        },
+        {
+          "op": "Replace",
+          "node": 63
+        },
+        {
+          "op": "GuardAdd",
+          "node": 6
+        },
+        {
+          "op": "Replace",
+          "node": 5
+        },
+        {
+          "op": "GuardAdd",
+          "node": 14
+        }
+      ],
+      "score": 14.636363635305786
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "GuardAdd",
+          "node": 4
+        },
+        {
+          "op": "Replace",
+          "node": 18
+        },
+        {
+          "op": "Replace",
+          "node": 4
+        },
+        {
+          "op": "Replace",
+          "node": 14
+        },
+        {
+          "op": "Replace",
+          "node": 19
+        },
+        {
+          "op": "Replace",
+          "node": 31
+        },
+        {
+          "op": "GuardAdd",
+          "node": 31
+        },
+        {
+          "op": "Replace",
+          "node": 12
+        }
+      ],
+      "score": 14.54545454440496
+    }
+  ],
+  "static_analysis_nodes": [
+    {
+      "line": 7,
+      "line_absolute": 68,
+      "node_id": 31,
+      "node_id_local": 9,
+      "type": "Call",
+      "code": "ValueError('Missing scheme in request url: %s' % self._url)",
+      "distance_to_buggy": 0,
+      "context": "   4:       s = safe_url_string(url, self.encoding)\n   5:       self._url = escape_ajax(s)\n   6:       if ':' not in self._url:\n   7:->         raise ValueError('Missing scheme in request url: %s' % self._url)",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Name",
+          "id": "ValueError",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [
+          {
+            "_type": "BinOp",
+            "left": {
+              "_type": "Constant"
+            },
+            "op": {
+              "_type": "Mod"
+            },
+            "right": {
+              "_type": "Attribute"
+            }
+          }
+        ],
+        "keywords": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -24.0
+    },
+    {
+      "line": 6,
+      "line_absolute": 67,
+      "node_id": 6,
+      "node_id_local": 8,
+      "type": "If",
+      "code": "if ':' not in self._url:\n    raise ValueError('Missing scheme in request url: %s' % self._url)",
+      "distance_to_buggy": 0,
+      "context": "   3:           raise TypeError('Request url must be str or unicode, got %s:' % type(url).__name__)\n   4:       s = safe_url_string(url, self.encoding)\n   5:       self._url = escape_ajax(s)\n   6:->     if ':' not in self._url:\n   7:           raise ValueError('Missing scheme in request url: %s' % self._url)",
+      "ast_subtree_json": {
+        "_type": "If",
+        "test": {
+          "_type": "Compare",
+          "left": {
+            "_type": "Constant"
+          },
+          "ops": [
+            {
+              "_type": "NotIn"
+            }
+          ],
+          "comparators": [
+            {
+              "_type": "Attribute"
+            }
+          ]
+        },
+        "body": [
+          {
+            "_type": "Raise",
+            "exc": {
+              "_type": "Call"
+            },
+            "cause": null
+          }
+        ],
+        "orelse": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|system|>...",
+      "reranker_score": -23.0
+    },
+    {
+      "line": 5,
+      "line_absolute": 66,
+      "node_id": 14,
+      "node_id_local": 7,
+      "type": "Call",
+      "code": "escape_ajax(s)",
+      "distance_to_buggy": 1,
+      "context": "   2:       if not isinstance(url, six.string_types):\n   3:           raise TypeError('Request url must be str or unicode, got %s:' % type(url).__name__)\n   4:       s = safe_url_string(url, self.encoding)\n   5:->     self._url = escape_ajax(s)\n   6:       if ':' not in self._url:\n   7:           raise ValueError('Missing scheme in request url: %s' % self._url)",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Name",
+          "id": "escape_ajax",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [
+          {
+            "_type": "Name",
+            "id": "s",
+            "ctx": {
+              "_type": "Load"
+            }
+          }
+        ],
+        "keywords": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -14.0
+    },
+    {
+      "line": 5,
+      "line_absolute": 66,
+      "node_id": 5,
+      "node_id_local": 6,
+      "type": "Assign",
+      "code": "self._url = escape_ajax(s)",
+      "distance_to_buggy": 1,
+      "context": "   2:       if not isinstance(url, six.string_types):\n   3:           raise TypeError('Request url must be str or unicode, got %s:' % type(url).__name__)\n   4:       s = safe_url_string(url, self.encoding)\n   5:->     self._url = escape_ajax(s)\n   6:       if ':' not in self._url:\n   7:           raise ValueError('Missing scheme in request url: %s' % self._url)",
+      "ast_subtree_json": {
+        "_type": "Assign",
+        "targets": [
+          {
+            "_type": "Attribute",
+            "value": {
+              "_type": "Name"
+            },
+            "attr": "_url",
+            "ctx": {
+              "_type": "Store"
+            }
+          }
+        ],
+        "value": {
+          "_type": "Call",
+          "func": {
+            "_type": "Name"
+          },
+          "args": [
+            {
+              "_type": "Name"
+            }
+          ],
+          "keywords": []
+        },
+        "type_comment": null
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|system|>...",
+      "reranker_score": -13.0
+    },
+    {
+      "line": 4,
+      "line_absolute": 65,
+      "node_id": 12,
+      "node_id_local": 5,
+      "type": "Call",
+      "code": "safe_url_string(url, self.encoding)",
+      "distance_to_buggy": 2,
+      "context": "   1:   def _set_url(self, url):\n   2:       if not isinstance(url, six.string_types):\n   3:           raise TypeError('Request url must be str or unicode, got %s:' % type(url).__name__)\n   4:->     s = safe_url_string(url, self.encoding)\n   5:       self._url = escape_ajax(s)\n   6:       if ':' not in self._url:\n   7:           raise ValueError('Missing scheme in request url: %s' % self._url)",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Name",
+          "id": "safe_url_string",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [
+          {
+            "_type": "Name",
+            "id": "url",
+            "ctx": {
+              "_type": "Load"
+            }
+          },
+          {
+            "_type": "Attribute",
+            "value": {
+              "_type": "Name"
+            },
+            "attr": "encoding",
+            "ctx": {
+              "_type": "Load"
+            }
+          }
+        ],
+        "keywords": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|system|>...",
+      "reranker_score": -4.0
+    },
+    {
+      "line": 4,
+      "line_absolute": 65,
+      "node_id": 4,
+      "node_id_local": 4,
+      "type": "Assign",
+      "code": "s = safe_url_string(url, self.encoding)",
+      "distance_to_buggy": 2,
+      "context": "   1:   def _set_url(self, url):\n   2:       if not isinstance(url, six.string_types):\n   3:           raise TypeError('Request url must be str or unicode, got %s:' % type(url).__name__)\n   4:->     s = safe_url_string(url, self.encoding)\n   5:       self._url = escape_ajax(s)\n   6:       if ':' not in self._url:\n   7:           raise ValueError('Missing scheme in request url: %s' % self._url)",
+      "ast_subtree_json": {
+        "_type": "Assign",
+        "targets": [
+          {
+            "_type": "Name",
+            "id": "s",
+            "ctx": {
+              "_type": "Store"
+            }
+          }
+        ],
+        "value": {
+          "_type": "Call",
+          "func": {
+            "_type": "Name"
+          },
+          "args": [
+            {
+              "_type": "Name"
+            },
+            {
+              "_type": "Attribute"
+            }
+          ],
+          "keywords": []
+        },
+        "type_comment": null
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -3.0
+    },
+    {
+      "line": 3,
+      "line_absolute": 64,
+      "node_id": 19,
+      "node_id_local": 2,
+      "type": "Call",
+      "code": "TypeError('Request url must be str or unicode, got %s:' % type(url).__name__)",
+      "distance_to_buggy": 3,
+      "context": "   1:   def _set_url(self, url):\n   2:       if not isinstance(url, six.string_types):\n   3:->         raise TypeError('Request url must be str or unicode, got %s:' % type(url).__name__)\n   4:       s = safe_url_string(url, self.encoding)\n   5:       self._url = escape_ajax(s)\n   6:       if ':' not in self._url:",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Name",
+          "id": "TypeError",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [
+          {
+            "_type": "BinOp",
+            "left": {
+              "_type": "Constant"
+            },
+            "op": {
+              "_type": "Mod"
+            },
+            "right": {
+              "_type": "Attribute"
+            }
+          }
+        ],
+        "keywords": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": 6.0
+    },
+    {
+      "line": 3,
+      "line_absolute": 64,
+      "node_id": 63,
+      "node_id_local": 3,
+      "type": "Call",
+      "code": "type(url)",
+      "distance_to_buggy": 3,
+      "context": "   1:   def _set_url(self, url):\n   2:       if not isinstance(url, six.string_types):\n   3:->         raise TypeError('Request url must be str or unicode, got %s:' % type(url).__name__)\n   4:       s = safe_url_string(url, self.encoding)\n   5:       self._url = escape_ajax(s)\n   6:       if ':' not in self._url:",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Name",
+          "id": "type",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [
+          {
+            "_type": "Name",
+            "id": "url",
+            "ctx": {
+              "_type": "Load"
+            }
+          }
+        ],
+        "keywords": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": 6.0
+    },
+    {
+      "line": 2,
+      "line_absolute": 63,
+      "node_id": 18,
+      "node_id_local": 1,
+      "type": "Call",
+      "code": "isinstance(url, six.string_types)",
+      "distance_to_buggy": 4,
+      "context": "   1:   def _set_url(self, url):\n   2:->     if not isinstance(url, six.string_types):\n   3:           raise TypeError('Request url must be str or unicode, got %s:' % type(url).__name__)\n   4:       s = safe_url_string(url, self.encoding)\n   5:       self._url = escape_ajax(s)",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Name",
+          "id": "isinstance",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [
+          {
+            "_type": "Name",
+            "id": "url",
+            "ctx": {
+              "_type": "Load"
+            }
+          },
+          {
+            "_type": "Attribute",
+            "value": {
+              "_type": "Name"
+            },
+            "attr": "string_types",
+            "ctx": {
+              "_type": "Load"
+            }
+          }
+        ],
+        "keywords": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|system|>...",
+      "reranker_score": 16.0
+    },
+    {
+      "line": 2,
+      "line_absolute": 63,
+      "node_id": 3,
+      "node_id_local": 0,
+      "type": "If",
+      "code": "if not isinstance(url, six.string_types):\n    raise TypeError('Request url must be str or unicode, got %s:' % type(url).__name__)",
+      "distance_to_buggy": 4,
+      "context": "   1:   def _set_url(self, url):\n   2:->     if not isinstance(url, six.string_types):\n   3:           raise TypeError('Request url must be str or unicode, got %s:' % type(url).__name__)\n   4:       s = safe_url_string(url, self.encoding)\n   5:       self._url = escape_ajax(s)",
+      "ast_subtree_json": {
+        "_type": "If",
+        "test": {
+          "_type": "UnaryOp",
+          "op": {
+            "_type": "Not"
+          },
+          "operand": {
+            "_type": "Call"
+          }
+        },
+        "body": [
+          {
+            "_type": "Raise",
+            "exc": {
+              "_type": "Call"
+            },
+            "cause": null
+          }
+        ],
+        "orelse": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": 17.0
+    }
+  ]
+}

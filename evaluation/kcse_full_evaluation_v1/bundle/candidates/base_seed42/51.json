@@ -1,0 +1,141 @@
+{
+  "bug_id": "51",
+  "seed": 42,
+  "arm": "base",
+  "candidates": [
+    {
+      "index": 0,
+      "patch_text": "def get_new_command(command, settings):\n    return 'open https://' + command.script[5:]",
+      "patch_sha256": "8340d2394eff75f1204c6246a22cffa5771377812162672bc6ce07a055c2f9f3",
+      "rank_score": 189,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8089233151013046,
+      "top_p": 0.9111541438766307
+    },
+    {
+      "index": 1,
+      "patch_text": "def get_new_command(command, settings):\n    if not command.script:\n        return None\n    return 'open'+ command.script[5:]",
+      "patch_sha256": "88bae6d71a4ea35bc25016dd881d944006cfb600dc1ed03c7817c27ae89330ee",
+      "rank_score": 189,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8850407915843882,
+      "top_p": 0.7720008604178135
+    },
+    {
+      "index": 2,
+      "patch_text": "def get_new_command(command, settings):\n    return 'open'+ command.script[5:]",
+      "patch_sha256": "7e9320bc7a42b036ca3fbaa01f6f01e79343991ba3792bccaf315f70c6521ac2",
+      "rank_score": 187,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.0,
+      "top_p": 1.0
+    },
+    {
+      "index": 3,
+      "patch_text": "def get_new_command(command, settings):\n    return 'open'+ command.script",
+      "patch_sha256": "071af0ec948eb2231161be4bf3f16694067eca5117980212805546c2b8817216",
+      "rank_score": 186,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8089233151013046,
+      "top_p": 0.9111541438766307
+    },
+    {
+      "index": 4,
+      "patch_text": "def get_new_command(command, settings):\n    return 'open'+ command.script[4:]",
+      "patch_sha256": "be8b44a48d23fcf516da3eb83e404d2d539e4bfec356189761aee423ed977a6d",
+      "rank_score": 186,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8850407915843882,
+      "top_p": 0.7720008604178135
+    },
+    {
+      "index": 5,
+      "patch_text": "def get_new_command(command, settings):\n    return 'open {}'.format(command.script)",
+      "patch_sha256": "b811b5f1957bd23a96fbdd814c4bbc856cfc85805284e9ac086b0d98987307d0",
+      "rank_score": 183,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8089233151013046,
+      "top_p": 0.9111541438766307
+    },
+    {
+      "index": 6,
+      "patch_text": "def get_new_command(command, settings):\n    if command.script[:4] == 'open':\n        return 'open http://' + command.script[5:]\n    else:\n        return 'open https://www.google.com/' + command.script",
+      "patch_sha256": "e1cd554199c468a0ac2711137ed3a534b135521a2d9c65ef5bcc7b3265b98d9d",
+      "rank_score": 153,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8850407915843882,
+      "top_p": 0.7720008604178135
+    },
+    {
+      "index": 7,
+      "patch_text": "def get_new_command(command, settings):\n    if command.script.startswith('open http://'):\n        return command.script\n    elif command.script.startswith('open https://'):\n        return command.script\n    else:\n        return 'open http://' + command.script[5:]",
+      "patch_sha256": "28c2f3b4bec31c787ad2b9e9d1dc8972a6a23ae1b966f06645f7709102d9110f",
+      "rank_score": 118,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8850407915843882,
+      "top_p": 0.7720008604178135
+    },
+    {
+      "index": 8,
+      "patch_text": "def get_new_command(command, settings):\n    if 'http' in command.script[:5]:\n        return command.script\n\n    return 'open http://' + command.script[5:]",
+      "patch_sha256": "d8ffb1819ee7b4da23bd7d0a908fbb494534723f05facddb8ff9865c33ee3378",
+      "rank_score": 73,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8089233151013046,
+      "top_p": 0.9111541438766307
+    },
+    {
+      "index": 9,
+      "patch_text": "def get_new_command(command, settings):\n    if command.script.startswith('open'):\n        return command.script\n    return 'open http://' + command.script[5:]",
+      "patch_sha256": "6cf69a38048f6f2996f3c34b060fbf3216c2556054b83f54fc3646247539ceaa",
+      "rank_score": 72,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8850407915843882,
+      "top_p": 0.7720008604178135
+    }
+  ],
+  "candidate_count": 10,
+  "retrieved_examples": [],
+  "diffusion_plan": [],
+  "static_analysis_nodes": []
+}

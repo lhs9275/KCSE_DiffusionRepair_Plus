@@ -1,0 +1,905 @@
+{
+  "bug_id": "4",
+  "seed": 42,
+  "arm": "full",
+  "candidates": [
+    {
+      "index": 0,
+      "patch_text": "def get_pending_tasks(self, state):\n    if len(self.tasks) < state.num_pending_tasks():\n        return six.moves.filter(lambda task: task.status in [PENDING, RUNNING], self.tasks)\n    else:\n        state.get_pending_tasks()",
+      "patch_sha256": "a23477f0842c102fc60dd0fc89e37e28705dfa15d41ee7b3c7acfdb613d4d7ab",
+      "rank_score": 186,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8089233151013046,
+      "top_p": 0.9111541438766307
+    },
+    {
+      "index": 1,
+      "patch_text": "def get_pending_tasks(self, state):\n    if len(self.tasks) < state.num_pending_tasks():\n        return six.moves.filter(lambda task: task.status in [PENDING, RUNNING], self.tasks)\n    else:\n        return state.get_pending_tasks()\n\n\n\n## Dataset",
+      "patch_sha256": "73d55e0a9e61f9c9e9753337f3b32eda65f930ecea61e1695f1e7b97a9df7f92",
+      "rank_score": 180,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.5273506986767932,
+      "top_p": 0.98
+    },
+    {
+      "index": 2,
+      "patch_text": "def get_pending_tasks(self, state):\n    \"\"\"\n        Get PENDING (and RUNNING) tasks for this worker.\n\n        You have to pass in the state for optimization reasons.\n        \"\"\"\n    if len(self.tasks) < state.num_pending_tasks():\n        return six.moves.filter(lambda task: task.status in [PENDING, RUNNING], self.tasks)\n    else:\n        return state.get_pending_tasks()\n\n# Repair: Delete node=10\n# Plan:\n# 1. Delete node=10\n# 2. GuardAdd node=14\n# 3. Replace node=14\n# 4. GuardAdd node=15\n# 5. Replace node=15\n# 6. GuardAdd node=10\n\n#edit1: Delete node=10\n#edit2: GuardAdd node=14\n#edit3: Replace node=14\n#edit4: GuardAdd node=15\n#edit5: Replace node=15\n#edit6: GuardAdd node=10\n\n##correct\ndef get_pending_tasks(self, state):\n    \"\"\"\n        Get PENDING (and RUNNING) tasks for this worker.\n\n        You have to pass in the state for optimization reasons.\n        \"\"\"\n    if len(self.tasks) < state.num_pending_tasks():\n        return six.moves.filter(lambda task: task.status in [PENDING, RUNNING], self.tasks)\n    else:\n        return state.get_pending_tasks()\n\n# Repair: GuardAdd node=14\n# Plan:\n# 1. GuardAdd node=14\n# 2. Replace node=14\n# 3. GuardAdd node=15\n# 4. Replace node=15\n# 5. GuardAdd node=10\n\n#edit1: GuardAdd node=14\n#edit2: Replace node=14\n#edit3: GuardAdd node=15\n#edit4: Replace node=15\n#edit5: GuardAdd node=10\n\n##correct\ndef get_pending_tasks(self, state):\n    \"\"\"\n        Get PENDING (and RUNNING) tasks for this worker.\n\n        You have to pass in the state for optimization reasons.\n        \"\"\"\n    if len(self.tasks) < state.num_pending_tasks():\n        return six.moves.filter(lambda task: task.status in [PENDING, RUNNING], self.tasks)\n    else:\n        return state.get_pending_tasks()\n\n# Repair: Replace node=14\n# Plan:\n# 1. Replace node=14\n# 2. GuardAdd node=15\n# 3. Replace node=15\n# 4. GuardAdd node=10\n\n#edit1: Replace node=14\n#edit2: GuardAdd node=",
+      "patch_sha256": "15ea858e5570440cd3d92f566409442ed7cce8a813bba3e278f46e8625b8f3e6",
+      "rank_score": 32,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7822854872415247,
+      "top_p": 0.8778568590519058
+    },
+    {
+      "index": 3,
+      "patch_text": "def get_pending_tasks(self, state):\n    \"\"\"\n        Get PENDING (and RUNNING) tasks for this worker.\n\n        You have to pass in the state for optimization reasons.\n        \"\"\"\n    if len(self.tasks) < state.num_pending_tasks():\n        return six.moves.filter(lambda task: task.status in [PENDING, RUNNING], self.tasks)\n    else:\n        return state.get_pending_tasks()\n\n# edit1: Delete node=10\n# edit2: GuardAdd node=14\n# edit3: Replace node=14\n# edit4: GuardAdd node=15\n# edit5: Replace node=15\n# edit6: GuardAdd node=10\n\ndef get_pending_tasks(self, state):\n    \"\"\"\n        Get PENDING (and RUNNING) tasks for this worker.\n\n        You have to pass in the state for optimization reasons.\n        \"\"\"\n    if len(self.tasks) < state.num_pending_tasks():\n        return six.moves.filter(lambda task: task.status in [PENDING, RUNNING], self.tasks)\n    else:\n        return state.get_pending_tasks()\n\n# edit1: Delete node=10\n# edit2: GuardAdd node=14\n# edit3: Replace node=14\n# edit4: GuardAdd node=15\n# edit5: Replace node=15\n# edit6: GuardAdd node=10\n\ndef get_pending_tasks(self, state):\n    \"\"\"\n        Get PENDING (and RUNNING) tasks for this worker.\n\n        You have to pass in the state for optimization reasons.\n        \"\"\"\n    if len(self.tasks) < state.num_pending_tasks():\n        return six.moves.filter(lambda task: task.status in [PENDING, RUNNING], self.tasks)\n    else:\n        return state.get_pending_tasks()\n\n# edit1: Delete node=10\n# edit2: GuardAdd node=14\n# edit3: Replace node=14\n# edit4: GuardAdd node=15\n# edit5: Replace node=15\n# edit6: GuardAdd node=10\n\ndef get_pending_tasks(self, state):\n    \"\"\"\n        Get PENDING (and RUNNING) tasks for this worker.\n\n        You have to pass in the state for optimization reasons.\n        \"\"\"\n    if len(self.tasks) < state.num_pending_tasks():\n        return six.moves.filter(lambda task: task.status in [PENDING, RUNNING], self.tasks)\n    else:\n        return state.get_pending_tasks()\n\n# edit1: Delete node=10\n# edit2: GuardAdd node=14\n# edit3: Replace node=14\n# edit4: GuardAdd node=15\n# edit5: Replace node=15\n# edit6:",
+      "patch_sha256": "94428437df9104a83dac2486c5377026afda0a075d25dc5175be35047bedb45d",
+      "rank_score": 27,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7696983020597673,
+      "top_p": 0.8621228775747091
+    },
+    {
+      "index": 4,
+      "patch_text": "def get_pending_tasks(self, state):\n    \"\"\"\n        Get PENDING (and RUNNING) tasks for this worker.\n\n        You have to pass in the state for optimization reasons.\n        \"\"\"\n    if len(self.tasks) < state.num_pending_tasks():\n        return six.moves.filter(lambda task: task.status in [PENDING, RUNNING], self.tasks)\n    else:\n        return state.get_pending_tasks()\n#!/usr/bin/env python\n# coding: utf-8\nfrom functools import reduce\nimport operator\nimport re\nfrom typing import Tuple\n\nfrom.base import BaseTransformer\nfrom..base import BaseTransform\nfrom..utils import utils\nfrom..transform import Transform\n\n\nclass ReplacementTransformer(BaseTransformer):\n    \"\"\"\n    \"\"\"\n\n    def __init__(self):\n        super().__init__()\n        self.name ='replacement'\n\n    def transform(self, data: str,\n                  transforms: [BaseTransform],\n                  file_path: str = None,\n                  project_path: str = None,\n                  file_content: str = None) -> Tuple[str, int]:\n        # sort transform by line number asc\n        sorted_transforms = sorted(\n            transforms, key=lambda t: t.start_line)\n\n        # init a replacement map with empty string,\n        # it will be used to replace all content of a file\n        # then it will be filled with real value\n        replacement_map = {}\n        for transform in sorted_transforms:\n            content = ''\n            if file_path is not None:\n                content = file_content.split('\\n')[\n                    transform.start_line - 1]\n            elif project_path is not None:\n                content = file_content.split('\\n')[\n                    transform.start_line - 1]\n\n            if transform.replacement is not None:\n                if isinstance(transform.replacement, Transform):\n                    if transform.replacement.content is not None:\n                        content = transform.replacement.content\n                    else:\n                        # get file content from project path\n                        # if content is not None, it mean\n                        # there are other transform before it\n                        # so it's safe to get file content\n                        content = utils.get_file_content_from_project_path(\n                            project_path=project_path,\n                            file_path=transform.replacement.file_path)\n                else:\n                    content = transform.replacement\n            replacement_map[transform.id] = content\n\n        # do replacement for each line in file content\n        # because sometimes transform's replacement is from other\n        # file, and we need to get its content to replace\n        # the original content\n        file_content = list(map(lambda x: replacement_map.get(x),\n                                filter(\n                                    lambda x: x in replacement_map.keys(),\n                                    range(1, len(file_content.split('\\n')) + 1))))\n        file_content = '\\n'.join(file_content)\n\n        # delete redundant replacement\n        # if one transform is replaced by another\n        # e",
+      "patch_sha256": "66b8ff6d8d081db8544a9b5c56fb682959818bfa4cbbe7f8e6f76a12fed4baca",
+      "rank_score": -176,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8250994923331102,
+      "top_p": 0.9313743654163876
+    },
+    {
+      "index": 5,
+      "patch_text": "def get_pending_tasks(self, state):\n    \"\"\"\n        Get PENDING (and RUNNING) tasks for this worker.\n\n        You have to pass in the state for optimization reasons.\n        \"\"\"\n    if len(self.tasks) < state.num_pending_tasks():\n        return six.moves.filter(lambda task: task.status in [PENDING, RUNNING], self.tasks)\n    else:\n        return state.get_pending_tasks()\nimport os\nimport sys\n\nfrom. import cli\nfrom. import github\nfrom. import utils\n\nsys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))\nfrom api.core import *\nfrom api.db import *\nfrom api.models import *\nfrom api.utils import *\n\ndef main():\n    utils.init_db()\n\n    # create a session to access db\n    s = Session()\n\n    # load all data from the database\n    tasks = s.query(Task).all()\n    contexts = s.query(Context).all()\n    task_contexts = s.query(TaskContext).all()\n    contexts_by_task = {}\n    for tc in task_contexts:\n        if tc.task not in contexts_by_task:\n            contexts_by_task[tc.task] = []\n        contexts_by_task[tc.task].append(tc.context)\n\n    # save all data to file\n    cli.save_data(tasks, contexts, contexts_by_task)\n\n    # close the session\n    s.close()\n\nif __name__ == \"__main__\":\n    main()\nimport re\nimport os\nimport sys\n\nfrom. import cli\nfrom. import utils\n\nsys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))\nfrom api.core import *\nfrom api.db import *\nfrom api.models import *\nfrom api.utils import *\n\ndef main():\n    utils.init_db()\n\n    # create a session to access db\n    s = Session()\n\n    # load all data from the database\n    tasks = s.query(Task).all()\n    contexts = s.query(Context).all()\n    task_contexts = s.query(TaskContext).all()\n    contexts_by_task = {}\n    for tc in task_contexts:\n        if tc.task not in contexts_by_task:\n            contexts_by_task[tc.task] = []\n        contexts_by_task[tc.task].append(tc.context)\n\n    # get the raw files of each task\n    raw_files = {}\n    for t in tasks:\n        path = os.path.join(\"raw\", t.project, \"fix\", \"%d.md\" % t.bug_id)\n        with open(path, \"r\") as f:\n            raw_files[t] = f.read()\n\n    #",
+      "patch_sha256": "3d7280831758d834fb6cdcfc0f7cc25a2510987091c16b5d0a0eec1f9abde29a",
+      "rank_score": -176,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8895986980815249,
+      "top_p": 0.7769551066103534
+    },
+    {
+      "index": 6,
+      "patch_text": "def get_pending_tasks(self, state):\n    \"\"\"\n        Get PENDING (and RUNNING) tasks for this worker.\n\n        You have to pass in the state for optimization reasons.\n        \"\"\"\n    if len(self.tasks) < state.num_pending_tasks():\n        return six.moves.filter(lambda task: task.status in [PENDING, RUNNING], self.tasks)\n    else:\n        return state.get_pending_tasks()\n\n##end\n ##correct: End of task-specific output.\n##correct: Start of context-specific output.\n\n##correct: Start of static analysis hints.\n\n##correct: Start of similar fix examples.\n\n##correct: End of similar fix examples.\n\n##correct: End of context-specific output.\n    def __init__(self,\n                 max_workers: int = 1,\n                 max_runs: int = 100,\n                 timeout: float = 0.1,\n                 interval: float = 0.01):\n        \"\"\"Initialize the worker pool with a given maximum number of workers and a timeout.\n\n        :param max_workers: The maximum number of workers.\n        :param max_runs: The maximum number of runs per worker.\n        :param timeout: The maximum timeout per run.\n        :param interval: The time interval between two runs.\n        \"\"\"\n        self.max_workers = max_workers\n        self.max_runs = max_runs\n        self.timeout = timeout\n        self.interval = interval\n        self.pool = []\n\n    def create_pool(self):\n        \"\"\"Create a new pool of workers.\"\"\"\n        while len(self.pool) < self.max_workers:\n            self.pool.append(Worker(max_runs=self.max_runs,\n                                    timeout=self.timeout,\n                                    interval=self.interval))\n\n    def delete_pool(self):\n        \"\"\"Delete all workers in the pool.\"\"\"\n        for worker in self.pool:\n            worker.delete()\n        self.pool = []\n\n    def run_pool(self):\n        \"\"\"Run all workers in the pool.\"\"\"\n        for worker in self.pool:\n            worker.run()\n\n    def wait_pool(self):\n        \"\"\"Wait for all workers in the pool.\"\"\"\n        for worker in self.pool:\n            worker.wait()\n\n    def run(self):\n        \"\"\"Create a new pool, run the pool, and wait for the pool to finish.\"\"\"\n        self.create_pool()\n        self.run_pool()\n        self.wait_pool()\n\"\"\"The main class of the experiment package.\"\"\"\nfrom typing import Any\nimport asyncio\nfrom datetime import datetime, timedelta\nfrom functools import partial\nfrom pathlib import Path\nfrom pprint import pprint\nimport random\nimport re\nimport string\nimport sys\nimport time\nimport traceback\n\nfrom tqdm import tqdm\n\nfrom.code_utils import read_code, write_code\nfrom.code_utils import CodeDiff\nfrom.constants import CODE_DIR\nfrom.constants import GU",
+      "patch_sha256": "a514284a08abf310bf7dd2e35cbffcb4d81739288970902881b81ec3ada89aad",
+      "rank_score": -178,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8992917549455451,
+      "top_p": 0.7874910379842883
+    }
+  ],
+  "candidate_count": 7,
+  "retrieved_examples": [
+    {
+      "id": "10",
+      "project_name": "luigi",
+      "buggy_line_content": "            in_workers = assistant or worker in task.workers",
+      "function": {
+        "function_name": "get_work",
+        "function_parent": "CentralPlannerScheduler",
+        "function_before_start_line": 624,
+        "function_before_end_line": 708,
+        "function_after_start_line": 624,
+        "function_after_end_line": 708,
+        "function_before_token_count": 494,
+        "function_after_token_count": 500,
+        "function_before": "def get_work(self, worker, host=None, assistant=False, **kwargs):\n    self.update(worker, {'host': host})\n    if assistant:\n        self.add_worker(worker, [('assistant', assistant)])\n    best_task = None\n    locally_pending_tasks = 0\n    running_tasks = []\n    used_resources = self._used_resources()\n    greedy_resources = collections.defaultdict(int)\n    n_unique_pending = 0\n    greedy_workers = dict(((worker.id, worker.info.get('workers', 1)) for worker in self._state.get_active_workers()))\n    tasks = list(self._state.get_pending_tasks())\n    tasks.sort(key=self._rank(), reverse=True)\n    for task in tasks:\n        in_workers = assistant or worker in task.workers\n        if task.status == 'RUNNING' and in_workers:\n            other_worker = self._state.get_worker(task.worker_running)\n            more_info = {'task_id': task.id, 'worker': str(other_worker)}\n            if other_worker is not None:\n                more_info.update(other_worker.info)\n                running_tasks.append(more_info)\n        if task.status == PENDING and in_workers:\n            locally_pending_tasks += 1\n            if len(task.workers) == 1 and (not assistant):\n                n_unique_pending += 1\n        if task.status == RUNNING and task.worker_running in greedy_workers:\n            greedy_workers[task.worker_running] -= 1\n            for resource, amount in six.iteritems(task.resources or {}):\n                greedy_resources[resource] += amount\n        if not best_task and self._schedulable(task) and self._has_resources(task.resources, greedy_resources):\n            if in_workers and self._has_resources(task.resources, used_resources):\n                best_task = task\n            else:\n                workers = itertools.chain(task.workers, [worker]) if assistant else task.workers\n                for task_worker in workers:\n                    if greedy_workers.get(task_worker, 0) > 0:\n                        greedy_workers[task_worker] -= 1\n                        for resource, amount in six.iteritems(task.resources or {}):\n                            greedy_resources[resource] += amount\n                        break\n    reply = {'n_pending_tasks': locally_pending_tasks, 'running_tasks': running_tasks, 'task_id': None, 'n_unique_pending': n_unique_pending}\n    if best_task:\n        self._state.set_status(best_task, RUNNING, self._config)\n        best_task.worker_running = worker\n        best_task.time_running = time.time()\n        self._update_task_history(best_task.id, RUNNING, host=host)\n        reply['task_id'] = best_task.id\n        reply['task_family'] = best_task.family\n        reply['task_module'] = getattr(best_task, 'module', None)\n        reply['task_params'] = best_task.params\n    return reply",
+        "function_after": "def get_work(self, worker, host=None, assistant=False, **kwargs):\n    self.update(worker, {'host': host})\n    if assistant:\n        self.add_worker(worker, [('assistant', assistant)])\n    best_task = None\n    locally_pending_tasks = 0\n    running_tasks = []\n    used_resources = self._used_resources()\n    greedy_resources = collections.defaultdict(int)\n    n_unique_pending = 0\n    greedy_workers = dict(((worker.id, worker.info.get('workers', 1)) for worker in self._state.get_active_workers()))\n    tasks = list(self._state.get_pending_tasks())\n    tasks.sort(key=self._rank(), reverse=True)\n    for task in tasks:\n        in_workers = assistant and task.workers or worker in task.workers\n        if task.status == 'RUNNING' and in_workers:\n            other_worker = self._state.get_worker(task.worker_running)\n            more_info = {'task_id': task.id, 'worker': str(other_worker)}\n            if other_worker is not None:\n                more_info.update(other_worker.info)\n                running_tasks.append(more_info)\n        if task.status == PENDING and in_workers:\n            locally_pending_tasks += 1\n            if len(task.workers) == 1 and (not assistant):\n                n_unique_pending += 1\n        if task.status == RUNNING and task.worker_running in greedy_workers:\n            greedy_workers[task.worker_running] -= 1\n            for resource, amount in six.iteritems(task.resources or {}):\n                greedy_resources[resource] += amount\n        if not best_task and self._schedulable(task) and self._has_resources(task.resources, greedy_resources):\n            if in_workers and self._has_resources(task.resources, used_resources):\n                best_task = task\n            else:\n                workers = itertools.chain(task.workers, [worker]) if assistant else task.workers\n                for task_worker in workers:\n                    if greedy_workers.get(task_worker, 0) > 0:\n                        greedy_workers[task_worker] -= 1\n                        for resource, amount in six.iteritems(task.resources or {}):\n                            greedy_resources[resource] += amount\n                        break\n    reply = {'n_pending_tasks': locally_pending_tasks, 'running_tasks': running_tasks, 'task_id': None, 'n_unique_pending': n_unique_pending}\n    if best_task:\n        self._state.set_status(best_task, RUNNING, self._config)\n        best_task.worker_running = worker\n        best_task.time_running = time.time()\n        self._update_task_history(best_task.id, RUNNING, host=host)\n        reply['task_id'] = best_task.id\n        reply['task_family'] = best_task.family\n        reply['task_module'] = getattr(best_task, 'module', None)\n        reply['task_params'] = best_task.params\n    return reply"
+      },
+      "file_name": "scheduler.py",
+      "file_path": "luigi/scheduler.py",
+      "score_reranked": 0.6398347008177584
+    },
+    {
+      "id": "11",
+      "project_name": "luigi",
+      "buggy_line_content": "        positional_params = [(n, p) for n, p in params if p.significant]",
+      "function": {
+        "function_name": "get_param_values",
+        "function_parent": "Task",
+        "function_before_start_line": 314,
+        "function_before_end_line": 363,
+        "function_after_start_line": 314,
+        "function_after_end_line": 363,
+        "function_before_token_count": 237,
+        "function_after_token_count": 238,
+        "function_before": "@classmethod\ndef get_param_values(cls, params, args, kwargs):\n    \"\"\"\n        Get the values of the parameters from the args and kwargs.\n\n        :param params: list of (param_name, Parameter).\n        :param args: positional arguments\n        :param kwargs: keyword arguments.\n        :returns: list of `(name, value)` tuples, one for each parameter.\n        \"\"\"\n    result = {}\n    params_dict = dict(params)\n    task_name = cls.task_family\n    exc_desc = '%s[args=%s, kwargs=%s]' % (task_name, args, kwargs)\n    positional_params = [(n, p) for n, p in params if p.significant]\n    for i, arg in enumerate(args):\n        if i >= len(positional_params):\n            raise parameter.UnknownParameterException('%s: takes at most %d parameters (%d given)' % (exc_desc, len(positional_params), len(args)))\n        param_name, param_obj = positional_params[i]\n        result[param_name] = arg\n    for param_name, arg in six.iteritems(kwargs):\n        if param_name in result:\n            raise parameter.DuplicateParameterException('%s: parameter %s was already set as a positional parameter' % (exc_desc, param_name))\n        if param_name not in params_dict:\n            raise parameter.UnknownParameterException('%s: unknown parameter %s' % (exc_desc, param_name))\n        result[param_name] = arg\n    for param_name, param_obj in params:\n        if param_name not in result:\n            if not param_obj.has_task_value(task_name, param_name):\n                raise parameter.MissingParameterException(\"%s: requires the '%s' parameter to be set\" % (exc_desc, param_name))\n            result[param_name] = param_obj.task_value(task_name, param_name)\n\n    def list_to_tuple(x):\n        \"\"\" Make tuples out of lists and sets to allow hashing \"\"\"\n        if isinstance(x, list) or isinstance(x, set):\n            return tuple(x)\n        else:\n            return x\n    return [(param_name, list_to_tuple(result[param_name])) for param_name, param_obj in params]",
+        "function_after": "@classmethod\ndef get_param_values(cls, params, args, kwargs):\n    \"\"\"\n        Get the values of the parameters from the args and kwargs.\n\n        :param params: list of (param_name, Parameter).\n        :param args: positional arguments\n        :param kwargs: keyword arguments.\n        :returns: list of `(name, value)` tuples, one for each parameter.\n        \"\"\"\n    result = {}\n    params_dict = dict(params)\n    task_name = cls.task_family\n    exc_desc = '%s[args=%s, kwargs=%s]' % (task_name, args, kwargs)\n    positional_params = [(n, p) for n, p in params if not p.is_global]\n    for i, arg in enumerate(args):\n        if i >= len(positional_params):\n            raise parameter.UnknownParameterException('%s: takes at most %d parameters (%d given)' % (exc_desc, len(positional_params), len(args)))\n        param_name, param_obj = positional_params[i]\n        result[param_name] = arg\n    for param_name, arg in six.iteritems(kwargs):\n        if param_name in result:\n            raise parameter.DuplicateParameterException('%s: parameter %s was already set as a positional parameter' % (exc_desc, param_name))\n        if param_name not in params_dict:\n            raise parameter.UnknownParameterException('%s: unknown parameter %s' % (exc_desc, param_name))\n        result[param_name] = arg\n    for param_name, param_obj in params:\n        if param_name not in result:\n            if not param_obj.has_task_value(task_name, param_name):\n                raise parameter.MissingParameterException(\"%s: requires the '%s' parameter to be set\" % (exc_desc, param_name))\n            result[param_name] = param_obj.task_value(task_name, param_name)\n\n    def list_to_tuple(x):\n        \"\"\" Make tuples out of lists and sets to allow hashing \"\"\"\n        if isinstance(x, list) or isinstance(x, set):\n            return tuple(x)\n        else:\n            return x\n    return [(param_name, list_to_tuple(result[param_name])) for param_name, param_obj in params]"
+      },
+      "file_name": "task.py",
+      "file_path": "luigi/task.py",
+      "score_reranked": 0.6292044313552976
+    },
+    {
+      "id": "24",
+      "project_name": "ansible",
+      "buggy_line_content": "    if needs_update('state') and not needs_update('vrf'):",
+      "function": {
+        "function_name": "map_obj_to_commands",
+        "function_parent": "eos_eapi.py",
+        "function_before_start_line": 219,
+        "function_before_end_line": 282,
+        "function_after_start_line": 219,
+        "function_after_end_line": 282,
+        "function_before_token_count": 347,
+        "function_after_token_count": 341,
+        "function_before": "def map_obj_to_commands(updates, module, warnings):\n    commands = list()\n    want, have = updates\n\n    def needs_update(x):\n        return want.get(x) is not None and want.get(x) != have.get(x)\n\n    def add(cmd):\n        if 'management api http-commands' not in commands:\n            commands.insert(0, 'management api http-commands')\n        commands.append(cmd)\n    if any((needs_update('http'), needs_update('http_port'))):\n        if want['http'] is False:\n            add('no protocol http')\n        elif have['http'] is False and want['http'] in (False, None):\n            warnings.append('protocol http is not enabled, not configuring http port value')\n        else:\n            port = want['http_port'] or 80\n            add('protocol http port %s' % port)\n    if any((needs_update('https'), needs_update('https_port'))):\n        if want['https'] is False:\n            add('no protocol https')\n        elif have['https'] is False and want['https'] in (False, None):\n            warnings.append('protocol https is not enabled, not configuring https port value')\n        else:\n            port = want['https_port'] or 443\n            add('protocol https port %s' % port)\n    if any((needs_update('local_http'), needs_update('local_http_port'))):\n        if want['local_http'] is False:\n            add('no protocol http localhost')\n        elif have['local_http'] is False and want['local_http'] in (False, None):\n            warnings.append('protocol local_http is not enabled, not configuring local_http port value')\n        else:\n            port = want['local_http_port'] or 8080\n            add('protocol http localhost port %s' % port)\n    if any((needs_update('socket'), needs_update('socket'))):\n        if want['socket'] is False:\n            add('no protocol unix-socket')\n        else:\n            add('protocol unix-socket')\n    if needs_update('state') and not needs_update('vrf'):\n        if want['state'] == 'stopped':\n            add('shutdown')\n        elif want['state'] == 'started':\n            add('no shutdown')\n    if needs_update('vrf'):\n        add('vrf %s' % want['vrf'])\n        if want['state'] == 'stopped':\n            add('shutdown')\n        elif want['state'] == 'started':\n            add('no shutdown')\n    return commands",
+        "function_after": "def map_obj_to_commands(updates, module, warnings):\n    commands = list()\n    want, have = updates\n\n    def needs_update(x):\n        return want.get(x) is not None and want.get(x) != have.get(x)\n\n    def add(cmd):\n        if 'management api http-commands' not in commands:\n            commands.insert(0, 'management api http-commands')\n        commands.append(cmd)\n    if any((needs_update('http'), needs_update('http_port'))):\n        if want['http'] is False:\n            add('no protocol http')\n        elif have['http'] is False and want['http'] in (False, None):\n            warnings.append('protocol http is not enabled, not configuring http port value')\n        else:\n            port = want['http_port'] or 80\n            add('protocol http port %s' % port)\n    if any((needs_update('https'), needs_update('https_port'))):\n        if want['https'] is False:\n            add('no protocol https')\n        elif have['https'] is False and want['https'] in (False, None):\n            warnings.append('protocol https is not enabled, not configuring https port value')\n        else:\n            port = want['https_port'] or 443\n            add('protocol https port %s' % port)\n    if any((needs_update('local_http'), needs_update('local_http_port'))):\n        if want['local_http'] is False:\n            add('no protocol http localhost')\n        elif have['local_http'] is False and want['local_http'] in (False, None):\n            warnings.append('protocol local_http is not enabled, not configuring local_http port value')\n        else:\n            port = want['local_http_port'] or 8080\n            add('protocol http localhost port %s' % port)\n    if any((needs_update('socket'), needs_update('socket'))):\n        if want['socket'] is False:\n            add('no protocol unix-socket')\n        else:\n            add('protocol unix-socket')\n    if needs_update('state'):\n        if want['state'] == 'stopped':\n            add('shutdown')\n        elif want['state'] == 'started':\n            add('no shutdown')\n    if needs_update('vrf'):\n        add('vrf %s' % want['vrf'])\n        if want['state'] == 'stopped':\n            add('shutdown')\n        elif want['state'] == 'started':\n            add('no shutdown')\n    return commands"
+      },
+      "file_name": "eos_eapi.py",
+      "file_path": "lib/ansible/modules/network/eos/eos_eapi.py",
+      "score_reranked": 0.6107134033524022
+    },
+    {
+      "id": "39",
+      "project_name": "pandas",
+      "buggy_line_content": "            except (TypeError, ValueError):",
+      "function": {
+        "function_name": "_try_convert_data",
+        "function_parent": "Parser",
+        "function_before_start_line": 886,
+        "function_before_end_line": 958,
+        "function_after_start_line": 886,
+        "function_after_end_line": 958,
+        "function_before_token_count": 277,
+        "function_after_token_count": 279,
+        "function_before": "def _try_convert_data(self, name, data, use_dtypes=True, convert_dates=True):\n    \"\"\"\n        Try to parse a ndarray like into a column by inferring dtype.\n        \"\"\"\n    if use_dtypes:\n        if not self.dtype:\n            return (data, False)\n        elif self.dtype is True:\n            pass\n        else:\n            dtype = self.dtype.get(name) if isinstance(self.dtype, dict) else self.dtype\n            if dtype is not None:\n                try:\n                    dtype = np.dtype(dtype)\n                    return (data.astype(dtype), True)\n                except (TypeError, ValueError):\n                    return (data, False)\n    if convert_dates:\n        new_data, result = self._try_convert_to_date(data)\n        if result:\n            return (new_data, True)\n    result = False\n    if data.dtype == 'object':\n        try:\n            data = data.astype('float64')\n            result = True\n        except (TypeError, ValueError):\n            pass\n    if data.dtype.kind == 'f':\n        if data.dtype != 'float64':\n            try:\n                data = data.astype('float64')\n                result = True\n            except (TypeError, ValueError):\n                pass\n    if len(data) and (data.dtype == 'float' or data.dtype == 'object'):\n        try:\n            new_data = data.astype('int64')\n            if (new_data == data).all():\n                data = new_data\n                result = True\n        except (TypeError, ValueError):\n            pass\n    if data.dtype == 'int':\n        try:\n            data = data.astype('int64')\n            result = True\n        except (TypeError, ValueError):\n            pass\n    return (data, result)",
+        "function_after": "def _try_convert_data(self, name, data, use_dtypes=True, convert_dates=True):\n    \"\"\"\n        Try to parse a ndarray like into a column by inferring dtype.\n        \"\"\"\n    if use_dtypes:\n        if not self.dtype:\n            return (data, False)\n        elif self.dtype is True:\n            pass\n        else:\n            dtype = self.dtype.get(name) if isinstance(self.dtype, dict) else self.dtype\n            if dtype is not None:\n                try:\n                    dtype = np.dtype(dtype)\n                    return (data.astype(dtype), True)\n                except (TypeError, ValueError):\n                    return (data, False)\n    if convert_dates:\n        new_data, result = self._try_convert_to_date(data)\n        if result:\n            return (new_data, True)\n    result = False\n    if data.dtype == 'object':\n        try:\n            data = data.astype('float64')\n            result = True\n        except (TypeError, ValueError):\n            pass\n    if data.dtype.kind == 'f':\n        if data.dtype != 'float64':\n            try:\n                data = data.astype('float64')\n                result = True\n            except (TypeError, ValueError):\n                pass\n    if len(data) and (data.dtype == 'float' or data.dtype == 'object'):\n        try:\n            new_data = data.astype('int64')\n            if (new_data == data).all():\n                data = new_data\n                result = True\n        except (TypeError, ValueError, OverflowError):\n            pass\n    if data.dtype == 'int':\n        try:\n            data = data.astype('int64')\n            result = True\n        except (TypeError, ValueError):\n            pass\n    return (data, result)"
+      },
+      "file_name": "_json.py",
+      "file_path": "pandas/io/json/_json.py",
+      "score_reranked": 0.5246278993910788
+    },
+    {
+      "id": "32",
+      "project_name": "pandas",
+      "buggy_line_content": "            except (ValueError, OverflowError):",
+      "function": {
+        "function_name": "_try_convert_to_date",
+        "function_parent": "Parser",
+        "function_before_start_line": 953,
+        "function_before_end_line": 988,
+        "function_after_start_line": 953,
+        "function_after_end_line": 988,
+        "function_before_token_count": 154,
+        "function_after_token_count": 156,
+        "function_before": "def _try_convert_to_date(self, data):\n    \"\"\"\n        Try to parse a ndarray like into a date column.\n\n        Try to coerce object in epoch/iso formats and integer/float in epoch\n        formats. Return a boolean if parsing was successful.\n        \"\"\"\n    if not len(data):\n        return (data, False)\n    new_data = data\n    if new_data.dtype == 'object':\n        try:\n            new_data = data.astype('int64')\n        except (TypeError, ValueError, OverflowError):\n            pass\n    if issubclass(new_data.dtype.type, np.number):\n        in_range = isna(new_data._values) | (new_data > self.min_stamp) | (new_data._values == iNaT)\n        if not in_range.all():\n            return (data, False)\n    date_units = (self.date_unit,) if self.date_unit else self._STAMP_UNITS\n    for date_unit in date_units:\n        try:\n            new_data = to_datetime(new_data, errors='raise', unit=date_unit)\n        except (ValueError, OverflowError):\n            continue\n        return (new_data, True)\n    return (data, False)",
+        "function_after": "def _try_convert_to_date(self, data):\n    \"\"\"\n        Try to parse a ndarray like into a date column.\n\n        Try to coerce object in epoch/iso formats and integer/float in epoch\n        formats. Return a boolean if parsing was successful.\n        \"\"\"\n    if not len(data):\n        return (data, False)\n    new_data = data\n    if new_data.dtype == 'object':\n        try:\n            new_data = data.astype('int64')\n        except (TypeError, ValueError, OverflowError):\n            pass\n    if issubclass(new_data.dtype.type, np.number):\n        in_range = isna(new_data._values) | (new_data > self.min_stamp) | (new_data._values == iNaT)\n        if not in_range.all():\n            return (data, False)\n    date_units = (self.date_unit,) if self.date_unit else self._STAMP_UNITS\n    for date_unit in date_units:\n        try:\n            new_data = to_datetime(new_data, errors='raise', unit=date_unit)\n        except (ValueError, OverflowError, TypeError):\n            continue\n        return (new_data, True)\n    return (data, False)"
+      },
+      "file_name": "_json.py",
+      "file_path": "pandas/io/json/_json.py",
+      "score_reranked": 0.5223415398927208
+    }
+  ],
+  "diffusion_plan": [
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Delete",
+          "node": 10
+        },
+        {
+          "op": "GuardAdd",
+          "node": 14
+        },
+        {
+          "op": "Replace",
+          "node": 14
+        },
+        {
+          "op": "GuardAdd",
+          "node": 15
+        },
+        {
+          "op": "Replace",
+          "node": 15
+        },
+        {
+          "op": "GuardAdd",
+          "node": 10
+        },
+        {
+          "op": "Replace",
+          "node": 11
+        },
+        {
+          "op": "Replace",
+          "node": 9
+        },
+        {
+          "op": "Replace",
+          "node": 10
+        }
+      ],
+      "score": 21.78571428200255
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "GuardAdd",
+          "node": 10
+        },
+        {
+          "op": "Replace",
+          "node": 14
+        },
+        {
+          "op": "Replace",
+          "node": 10
+        },
+        {
+          "op": "InsertBefore",
+          "node": 10
+        },
+        {
+          "op": "GuardAdd",
+          "node": 14
+        },
+        {
+          "op": "Replace",
+          "node": 15
+        },
+        {
+          "op": "GuardAdd",
+          "node": 9
+        },
+        {
+          "op": "GuardAdd",
+          "node": 4
+        },
+        {
+          "op": "Replace",
+          "node": 4
+        },
+        {
+          "op": "Replace",
+          "node": 11
+        }
+      ],
+      "score": 21.642857139170918
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "GuardAdd",
+          "node": 15
+        },
+        {
+          "op": "Replace",
+          "node": 4
+        },
+        {
+          "op": "Replace",
+          "node": 15
+        },
+        {
+          "op": "Replace",
+          "node": 9
+        },
+        {
+          "op": "GuardAdd",
+          "node": 14
+        },
+        {
+          "op": "Replace",
+          "node": 14
+        },
+        {
+          "op": "Replace",
+          "node": 10
+        },
+        {
+          "op": "Replace",
+          "node": 11
+        }
+      ],
+      "score": 20.67857142541454
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 14
+        },
+        {
+          "op": "InsertAfter",
+          "node": 14
+        },
+        {
+          "op": "Replace",
+          "node": 15
+        },
+        {
+          "op": "InsertBefore",
+          "node": 10
+        },
+        {
+          "op": "GuardAdd",
+          "node": 15
+        },
+        {
+          "op": "Replace",
+          "node": 11
+        },
+        {
+          "op": "Replace",
+          "node": 10
+        },
+        {
+          "op": "InsertAfter",
+          "node": 4
+        }
+      ],
+      "score": 20.53571428258291
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 10
+        },
+        {
+          "op": "Replace",
+          "node": 14
+        },
+        {
+          "op": "Replace",
+          "node": 13
+        },
+        {
+          "op": "Replace",
+          "node": 9
+        },
+        {
+          "op": "Replace",
+          "node": 15
+        },
+        {
+          "op": "GuardAdd",
+          "node": 15
+        },
+        {
+          "op": "Replace",
+          "node": 4
+        },
+        {
+          "op": "InsertAfter",
+          "node": 10
+        }
+      ],
+      "score": 20.32142856833546
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 10
+        },
+        {
+          "op": "Replace",
+          "node": 15
+        },
+        {
+          "op": "Replace",
+          "node": 9
+        },
+        {
+          "op": "Replace",
+          "node": 14
+        },
+        {
+          "op": "GuardAdd",
+          "node": 14
+        },
+        {
+          "op": "InsertAfter",
+          "node": 15
+        },
+        {
+          "op": "InsertAfter",
+          "node": 10
+        }
+      ],
+      "score": 20.23214285406569
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 10
+        },
+        {
+          "op": "Replace",
+          "node": 14
+        },
+        {
+          "op": "InsertAfter",
+          "node": 14
+        },
+        {
+          "op": "GuardAdd",
+          "node": 9
+        },
+        {
+          "op": "Replace",
+          "node": 15
+        },
+        {
+          "op": "Replace",
+          "node": 4
+        },
+        {
+          "op": "GuardAdd",
+          "node": 4
+        },
+        {
+          "op": "GuardAdd",
+          "node": 10
+        }
+      ],
+      "score": 20.19642856835778
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "GuardAdd",
+          "node": 15
+        },
+        {
+          "op": "GuardAdd",
+          "node": 4
+        },
+        {
+          "op": "Replace",
+          "node": 15
+        },
+        {
+          "op": "GuardAdd",
+          "node": 9
+        },
+        {
+          "op": "Replace",
+          "node": 14
+        },
+        {
+          "op": "Replace",
+          "node": 10
+        },
+        {
+          "op": "GuardAdd",
+          "node": 11
+        },
+        {
+          "op": "InsertAfter",
+          "node": 14
+        }
+      ],
+      "score": 20.089285711234055
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "GuardAdd",
+          "node": 10
+        },
+        {
+          "op": "Replace",
+          "node": 10
+        },
+        {
+          "op": "Delete",
+          "node": 4
+        },
+        {
+          "op": "Replace",
+          "node": 14
+        },
+        {
+          "op": "Replace",
+          "node": 9
+        },
+        {
+          "op": "InsertAfter",
+          "node": 4
+        },
+        {
+          "op": "GuardAdd",
+          "node": 4
+        },
+        {
+          "op": "Replace",
+          "node": 13
+        },
+        {
+          "op": "Replace",
+          "node": 15
+        },
+        {
+          "op": "Delete",
+          "node": 15
+        }
+      ],
+      "score": 19.874999996629466
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 10
+        },
+        {
+          "op": "GuardAdd",
+          "node": 11
+        },
+        {
+          "op": "GuardAdd",
+          "node": 14
+        },
+        {
+          "op": "InsertBefore",
+          "node": 9
+        },
+        {
+          "op": "Replace",
+          "node": 14
+        },
+        {
+          "op": "GuardAdd",
+          "node": 10
+        },
+        {
+          "op": "Replace",
+          "node": 15
+        },
+        {
+          "op": "GuardAdd",
+          "node": 4
+        }
+      ],
+      "score": 19.71428571130102
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 15
+        },
+        {
+          "op": "Replace",
+          "node": 14
+        },
+        {
+          "op": "Replace",
+          "node": 10
+        },
+        {
+          "op": "Replace",
+          "node": 4
+        },
+        {
+          "op": "GuardAdd",
+          "node": 15
+        },
+        {
+          "op": "Replace",
+          "node": 9
+        },
+        {
+          "op": "GuardAdd",
+          "node": 9
+        }
+      ],
+      "score": 19.32142856851403
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "GuardAdd",
+          "node": 14
+        },
+        {
+          "op": "Delete",
+          "node": 15
+        },
+        {
+          "op": "Replace",
+          "node": 15
+        },
+        {
+          "op": "Replace",
+          "node": 9
+        },
+        {
+          "op": "Delete",
+          "node": 9
+        },
+        {
+          "op": "GuardAdd",
+          "node": 10
+        },
+        {
+          "op": "Replace",
+          "node": 10
+        }
+      ],
+      "score": 19.14285713997449
+    }
+  ],
+  "static_analysis_nodes": [
+    {
+      "line": 10,
+      "line_absolute": 304,
+      "node_id": 15,
+      "node_id_local": 6,
+      "type": "Call",
+      "code": "state.get_pending_tasks()",
+      "distance_to_buggy": 0,
+      "context": "   7:       if len(self.tasks) < state.num_pending_tasks():\n   8:           return six.moves.filter(lambda task: task.status in [PENDING, RUNNING], self.tasks)\n   9:       else:\n  10:->         return state.get_pending_tasks()",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Attribute",
+          "value": {
+            "_type": "Name"
+          },
+          "attr": "get_pending_tasks",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [],
+        "keywords": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -24.0
+    },
+    {
+      "line": 10,
+      "line_absolute": 304,
+      "node_id": 10,
+      "node_id_local": 5,
+      "type": "Return",
+      "code": "return state.get_pending_tasks()",
+      "distance_to_buggy": 0,
+      "context": "   7:       if len(self.tasks) < state.num_pending_tasks():\n   8:           return six.moves.filter(lambda task: task.status in [PENDING, RUNNING], self.tasks)\n   9:       else:\n  10:->         return state.get_pending_tasks()",
+      "ast_subtree_json": {
+        "_type": "Return",
+        "value": {
+          "_type": "Call",
+          "func": {
+            "_type": "Attribute"
+          },
+          "args": [],
+          "keywords": []
+        }
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -22.0
+    },
+    {
+      "line": 8,
+      "line_absolute": 302,
+      "node_id": 14,
+      "node_id_local": 4,
+      "type": "Call",
+      "code": "six.moves.filter(lambda task: task.status in [PENDING, RUNNING], self.tasks)",
+      "distance_to_buggy": 1,
+      "context": "   5:           You have to pass in the state for optimization reasons.\n   6:           \"\"\"\n   7:       if len(self.tasks) < state.num_pending_tasks():\n   8:->         return six.moves.filter(lambda task: task.status in [PENDING, RUNNING], self.tasks)\n   9:       else:\n  10:           return state.get_pending_tasks()",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Attribute",
+          "value": {
+            "_type": "Attribute"
+          },
+          "attr": "filter",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [
+          {
+            "_type": "Lambda",
+            "args": {
+              "_type": "arguments"
+            },
+            "body": {
+              "_type": "Compare"
+            }
+          },
+          {
+            "_type": "Attribute",
+            "value": {
+              "_type": "Name"
+            },
+            "attr": "tasks",
+            "ctx": {
+              "_type": "Load"
+            }
+          }
+        ],
+        "keywords": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -15.5
+    },
+    {
+      "line": 8,
+      "line_absolute": 302,
+      "node_id": 9,
+      "node_id_local": 3,
+      "type": "Return",
+      "code": "return six.moves.filter(lambda task: task.status in [PENDING, RUNNING], self.tasks)",
+      "distance_to_buggy": 1,
+      "context": "   5:           You have to pass in the state for optimization reasons.\n   6:           \"\"\"\n   7:       if len(self.tasks) < state.num_pending_tasks():\n   8:->         return six.moves.filter(lambda task: task.status in [PENDING, RUNNING], self.tasks)\n   9:       else:\n  10:           return state.get_pending_tasks()",
+      "ast_subtree_json": {
+        "_type": "Return",
+        "value": {
+          "_type": "Call",
+          "func": {
+            "_type": "Attribute"
+          },
+          "args": [
+            {
+              "_type": "Lambda"
+            },
+            {
+              "_type": "Attribute"
+            }
+          ],
+          "keywords": []
+        }
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -13.5
+    },
+    {
+      "line": 7,
+      "line_absolute": 301,
+      "node_id": 4,
+      "node_id_local": 0,
+      "type": "If",
+      "code": "if len(self.tasks) < state.num_pending_tasks():\n    return six.moves.filter(lambda task: task.status in [PENDING, RUNNING], self.tasks)\nelse:\n    return state.get_pending_tasks()",
+      "distance_to_buggy": 2,
+      "context": "   4:   \n   5:           You have to pass in the state for optimization reasons.\n   6:           \"\"\"\n   7:->     if len(self.tasks) < state.num_pending_tasks():\n   8:           return six.moves.filter(lambda task: task.status in [PENDING, RUNNING], self.tasks)\n   9:       else:\n  10:           return state.get_pending_tasks()",
+      "ast_subtree_json": {
+        "_type": "If",
+        "test": {
+          "_type": "Compare",
+          "left": {
+            "_type": "Call"
+          },
+          "ops": [
+            {
+              "_type": "Lt"
+            }
+          ],
+          "comparators": [
+            {
+              "_type": "Call"
+            }
+          ]
+        },
+        "body": [
+          {
+            "_type": "Return",
+            "value": {
+              "_type": "Call"
+            }
+          }
+        ],
+        "orelse": [
+          {
+            "_type": "Return",
+            "value": {
+              "_type": "Call"
+            }
+          }
+        ]
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -6.0
+    },
+    {
+      "line": 7,
+      "line_absolute": 301,
+      "node_id": 11,
+      "node_id_local": 1,
+      "type": "Call",
+      "code": "len(self.tasks)",
+      "distance_to_buggy": 2,
+      "context": "   4:   \n   5:           You have to pass in the state for optimization reasons.\n   6:           \"\"\"\n   7:->     if len(self.tasks) < state.num_pending_tasks():\n   8:           return six.moves.filter(lambda task: task.status in [PENDING, RUNNING], self.tasks)\n   9:       else:\n  10:           return state.get_pending_tasks()",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Name",
+          "id": "len",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [
+          {
+            "_type": "Attribute",
+            "value": {
+              "_type": "Name"
+            },
+            "attr": "tasks",
+            "ctx": {
+              "_type": "Load"
+            }
+          }
+        ],
+        "keywords": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -5.5
+    },
+    {
+      "line": 7,
+      "line_absolute": 301,
+      "node_id": 13,
+      "node_id_local": 2,
+      "type": "Call",
+      "code": "state.num_pending_tasks()",
+      "distance_to_buggy": 2,
+      "context": "   4:   \n   5:           You have to pass in the state for optimization reasons.\n   6:           \"\"\"\n   7:->     if len(self.tasks) < state.num_pending_tasks():\n   8:           return six.moves.filter(lambda task: task.status in [PENDING, RUNNING], self.tasks)\n   9:       else:\n  10:           return state.get_pending_tasks()",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Attribute",
+          "value": {
+            "_type": "Name"
+          },
+          "attr": "num_pending_tasks",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [],
+        "keywords": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -4.0
+    }
+  ]
+}

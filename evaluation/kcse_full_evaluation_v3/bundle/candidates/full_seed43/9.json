@@ -1,0 +1,1082 @@
+{
+  "bug_id": "9",
+  "seed": 43,
+  "arm": "full",
+  "candidates": [
+    {
+      "index": 0,
+      "patch_text": "def table_exists(self, table, database='default', partition=None):\n    if partition is None:\n        stdout = run_hive_cmd('use %s; show tables like \"%s\";' % (database, table))\n        return stdout and table in stdout\n    else:\n        stdout = run_hive_cmd('use %s; show partitions %s partition\\n                                (%s)' % (database, table, self.partition_spec(partition)))\n        if stdout:\n            return True\n        else:\n            return False",
+      "patch_sha256": "511e41008d2f18ff1f74f84b6c2c342d5adba50cfa401df84f2c22e6da779d7b",
+      "rank_score": 225,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7704673177175924,
+      "top_p": 0.8630841471469904
+    },
+    {
+      "index": 1,
+      "patch_text": "def table_exists(self, table, database='default', partition=None):\n    if partition is None:\n        stdout = run_hive_cmd('use %s; show tables like \"%s\";' % (database, table))\n        return stdout and table in stdout\n    else:\n        stdout = run_hive_cmd('use %s; show partitions %s partition (%s)' % (database, table, self.partition_spec(partition)))\n        if stdout:\n            return True\n        else:\n            return False",
+      "patch_sha256": "d6e7f20a645e9fe01574b153b27a2213dbea830b44d2f0ec3cd035ac339091f6",
+      "rank_score": 215,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7956728856928922,
+      "top_p": 0.8945911071161152
+    },
+    {
+      "index": 2,
+      "patch_text": "def table_exists(self, table, database='default', partition=None):\n    if partition is None:\n        stdout = run_hive_cmd('use %s; show tables like \"%s\";' % (database, table))\n        return stdout and table in stdout\n    else:\n        stdout = run_hive_cmd('use %s; show partitions %s partition(%s);' % (database, table, self.partition_spec(partition)))\n        if stdout:\n            return True\n        else:\n            return False",
+      "patch_sha256": "31dd5dbf9fa5fda735993a68f926b1029bb834e5f4546e96d9e7a96c07b633ba",
+      "rank_score": 215,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8030069698746244,
+      "top_p": 0.9037587123432804
+    },
+    {
+      "index": 3,
+      "patch_text": "def table_exists(self, table, database='default', partition=None):\n    if partition is None:\n        stdout = run_hive_cmd('use %s; show tables like \"%s\";' % (database, table))\n        return stdout and table in stdout\n    else:\n        stdout = run_hive_cmd('use %s; show partitions %s partition (%s);' % (database, table, self.partition_spec(partition)))\n        if stdout:\n            return True\n        else:\n            return False",
+      "patch_sha256": "29f9f1d85dd0ecb453f6a62b9f5dfc287d784324590348627f76bc6b25e66140",
+      "rank_score": 214,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.9326332018390676,
+      "top_p": 0.8237317411294214
+    }
+  ],
+  "candidate_count": 4,
+  "retrieved_examples": [
+    {
+      "id": "32",
+      "project_name": "pandas",
+      "buggy_line_content": "            except (ValueError, OverflowError):",
+      "function": {
+        "function_name": "_try_convert_to_date",
+        "function_parent": "Parser",
+        "function_before_start_line": 953,
+        "function_before_end_line": 988,
+        "function_after_start_line": 953,
+        "function_after_end_line": 988,
+        "function_before_token_count": 154,
+        "function_after_token_count": 156,
+        "function_before": "def _try_convert_to_date(self, data):\n    \"\"\"\n        Try to parse a ndarray like into a date column.\n\n        Try to coerce object in epoch/iso formats and integer/float in epoch\n        formats. Return a boolean if parsing was successful.\n        \"\"\"\n    if not len(data):\n        return (data, False)\n    new_data = data\n    if new_data.dtype == 'object':\n        try:\n            new_data = data.astype('int64')\n        except (TypeError, ValueError, OverflowError):\n            pass\n    if issubclass(new_data.dtype.type, np.number):\n        in_range = isna(new_data._values) | (new_data > self.min_stamp) | (new_data._values == iNaT)\n        if not in_range.all():\n            return (data, False)\n    date_units = (self.date_unit,) if self.date_unit else self._STAMP_UNITS\n    for date_unit in date_units:\n        try:\n            new_data = to_datetime(new_data, errors='raise', unit=date_unit)\n        except (ValueError, OverflowError):\n            continue\n        return (new_data, True)\n    return (data, False)",
+        "function_after": "def _try_convert_to_date(self, data):\n    \"\"\"\n        Try to parse a ndarray like into a date column.\n\n        Try to coerce object in epoch/iso formats and integer/float in epoch\n        formats. Return a boolean if parsing was successful.\n        \"\"\"\n    if not len(data):\n        return (data, False)\n    new_data = data\n    if new_data.dtype == 'object':\n        try:\n            new_data = data.astype('int64')\n        except (TypeError, ValueError, OverflowError):\n            pass\n    if issubclass(new_data.dtype.type, np.number):\n        in_range = isna(new_data._values) | (new_data > self.min_stamp) | (new_data._values == iNaT)\n        if not in_range.all():\n            return (data, False)\n    date_units = (self.date_unit,) if self.date_unit else self._STAMP_UNITS\n    for date_unit in date_units:\n        try:\n            new_data = to_datetime(new_data, errors='raise', unit=date_unit)\n        except (ValueError, OverflowError, TypeError):\n            continue\n        return (new_data, True)\n    return (data, False)"
+      },
+      "file_name": "_json.py",
+      "file_path": "pandas/io/json/_json.py",
+      "score_reranked": 0.4249541935202282
+    },
+    {
+      "id": "39",
+      "project_name": "pandas",
+      "buggy_line_content": "            except (TypeError, ValueError):",
+      "function": {
+        "function_name": "_try_convert_data",
+        "function_parent": "Parser",
+        "function_before_start_line": 886,
+        "function_before_end_line": 958,
+        "function_after_start_line": 886,
+        "function_after_end_line": 958,
+        "function_before_token_count": 277,
+        "function_after_token_count": 279,
+        "function_before": "def _try_convert_data(self, name, data, use_dtypes=True, convert_dates=True):\n    \"\"\"\n        Try to parse a ndarray like into a column by inferring dtype.\n        \"\"\"\n    if use_dtypes:\n        if not self.dtype:\n            return (data, False)\n        elif self.dtype is True:\n            pass\n        else:\n            dtype = self.dtype.get(name) if isinstance(self.dtype, dict) else self.dtype\n            if dtype is not None:\n                try:\n                    dtype = np.dtype(dtype)\n                    return (data.astype(dtype), True)\n                except (TypeError, ValueError):\n                    return (data, False)\n    if convert_dates:\n        new_data, result = self._try_convert_to_date(data)\n        if result:\n            return (new_data, True)\n    result = False\n    if data.dtype == 'object':\n        try:\n            data = data.astype('float64')\n            result = True\n        except (TypeError, ValueError):\n            pass\n    if data.dtype.kind == 'f':\n        if data.dtype != 'float64':\n            try:\n                data = data.astype('float64')\n                result = True\n            except (TypeError, ValueError):\n                pass\n    if len(data) and (data.dtype == 'float' or data.dtype == 'object'):\n        try:\n            new_data = data.astype('int64')\n            if (new_data == data).all():\n                data = new_data\n                result = True\n        except (TypeError, ValueError):\n            pass\n    if data.dtype == 'int':\n        try:\n            data = data.astype('int64')\n            result = True\n        except (TypeError, ValueError):\n            pass\n    return (data, result)",
+        "function_after": "def _try_convert_data(self, name, data, use_dtypes=True, convert_dates=True):\n    \"\"\"\n        Try to parse a ndarray like into a column by inferring dtype.\n        \"\"\"\n    if use_dtypes:\n        if not self.dtype:\n            return (data, False)\n        elif self.dtype is True:\n            pass\n        else:\n            dtype = self.dtype.get(name) if isinstance(self.dtype, dict) else self.dtype\n            if dtype is not None:\n                try:\n                    dtype = np.dtype(dtype)\n                    return (data.astype(dtype), True)\n                except (TypeError, ValueError):\n                    return (data, False)\n    if convert_dates:\n        new_data, result = self._try_convert_to_date(data)\n        if result:\n            return (new_data, True)\n    result = False\n    if data.dtype == 'object':\n        try:\n            data = data.astype('float64')\n            result = True\n        except (TypeError, ValueError):\n            pass\n    if data.dtype.kind == 'f':\n        if data.dtype != 'float64':\n            try:\n                data = data.astype('float64')\n                result = True\n            except (TypeError, ValueError):\n                pass\n    if len(data) and (data.dtype == 'float' or data.dtype == 'object'):\n        try:\n            new_data = data.astype('int64')\n            if (new_data == data).all():\n                data = new_data\n                result = True\n        except (TypeError, ValueError, OverflowError):\n            pass\n    if data.dtype == 'int':\n        try:\n            data = data.astype('int64')\n            result = True\n        except (TypeError, ValueError):\n            pass\n    return (data, result)"
+      },
+      "file_name": "_json.py",
+      "file_path": "pandas/io/json/_json.py",
+      "score_reranked": 0.39159041376366144
+    },
+    {
+      "id": "19",
+      "project_name": "youtube-dl",
+      "buggy_line_content": "        [a-zA-Z_][.a-zA-Z_0-9]*|",
+      "function": {
+        "function_name": "js_to_json",
+        "function_parent": "utils.py",
+        "function_before_start_line": 2235,
+        "function_before_end_line": 2273,
+        "function_after_start_line": 2235,
+        "function_after_end_line": 2273,
+        "function_before_token_count": 77,
+        "function_after_token_count": 77,
+        "function_before": "def js_to_json(code):\n    COMMENT_RE = '/\\\\*(?:(?!\\\\*/).)*?\\\\*/|//[^\\\\n]*'\n    SKIP_RE = '\\\\s*(?:{comment})?\\\\s*'.format(comment=COMMENT_RE)\n    INTEGER_TABLE = (('(?s)^(0[xX][0-9a-fA-F]+){skip}:?$'.format(skip=SKIP_RE), 16), ('(?s)^(0+[0-7]+){skip}:?$'.format(skip=SKIP_RE), 8))\n\n    def fix_kv(m):\n        v = m.group(0)\n        if v in ('true', 'false', 'null'):\n            return v\n        elif v.startswith('/*') or v.startswith('//') or v == ',':\n            return ''\n        if v[0] in (\"'\", '\"'):\n            v = re.sub('(?s)\\\\\\\\.|\"', lambda m: {'\"': '\\\\\"', \"\\\\'\": \"'\", '\\\\\\n': '', '\\\\x': '\\\\u00'}.get(m.group(0), m.group(0)), v[1:-1])\n        for regex, base in INTEGER_TABLE:\n            im = re.match(regex, v)\n            if im:\n                i = int(im.group(1), base)\n                return '\"%d\":' % i if v.endswith(':') else '%d' % i\n        return '\"%s\"' % v\n    return re.sub('(?sx)\\n        \"(?:[^\"\\\\\\\\]*(?:\\\\\\\\\\\\\\\\|\\\\\\\\[\\'\"nurtbfx/\\\\n]))*[^\"\\\\\\\\]*\"|\\n        \\'(?:[^\\'\\\\\\\\]*(?:\\\\\\\\\\\\\\\\|\\\\\\\\[\\'\"nurtbfx/\\\\n]))*[^\\'\\\\\\\\]*\\'|\\n        {comment}|,(?={skip}[\\\\]}}])|\\n        [a-zA-Z_][.a-zA-Z_0-9]*|\\n        \\\\b(?:0[xX][0-9a-fA-F]+|0+[0-7]+)(?:{skip}:)?|\\n        [0-9]+(?={skip}:)\\n        '.format(comment=COMMENT_RE, skip=SKIP_RE), fix_kv, code)",
+        "function_after": "def js_to_json(code):\n    COMMENT_RE = '/\\\\*(?:(?!\\\\*/).)*?\\\\*/|//[^\\\\n]*'\n    SKIP_RE = '\\\\s*(?:{comment})?\\\\s*'.format(comment=COMMENT_RE)\n    INTEGER_TABLE = (('(?s)^(0[xX][0-9a-fA-F]+){skip}:?$'.format(skip=SKIP_RE), 16), ('(?s)^(0+[0-7]+){skip}:?$'.format(skip=SKIP_RE), 8))\n\n    def fix_kv(m):\n        v = m.group(0)\n        if v in ('true', 'false', 'null'):\n            return v\n        elif v.startswith('/*') or v.startswith('//') or v == ',':\n            return ''\n        if v[0] in (\"'\", '\"'):\n            v = re.sub('(?s)\\\\\\\\.|\"', lambda m: {'\"': '\\\\\"', \"\\\\'\": \"'\", '\\\\\\n': '', '\\\\x': '\\\\u00'}.get(m.group(0), m.group(0)), v[1:-1])\n        for regex, base in INTEGER_TABLE:\n            im = re.match(regex, v)\n            if im:\n                i = int(im.group(1), base)\n                return '\"%d\":' % i if v.endswith(':') else '%d' % i\n        return '\"%s\"' % v\n    return re.sub('(?sx)\\n        \"(?:[^\"\\\\\\\\]*(?:\\\\\\\\\\\\\\\\|\\\\\\\\[\\'\"nurtbfx/\\\\n]))*[^\"\\\\\\\\]*\"|\\n        \\'(?:[^\\'\\\\\\\\]*(?:\\\\\\\\\\\\\\\\|\\\\\\\\[\\'\"nurtbfx/\\\\n]))*[^\\'\\\\\\\\]*\\'|\\n        {comment}|,(?={skip}[\\\\]}}])|\\n        (?:(?<![0-9])[eE]|[a-df-zA-DF-Z_])[.a-zA-Z_0-9]*|\\n        \\\\b(?:0[xX][0-9a-fA-F]+|0+[0-7]+)(?:{skip}:)?|\\n        [0-9]+(?={skip}:)\\n        '.format(comment=COMMENT_RE, skip=SKIP_RE), fix_kv, code)"
+      },
+      "file_name": "utils.py",
+      "file_path": "youtube_dl/utils.py",
+      "score_reranked": 0.38825788646529635
+    },
+    {
+      "id": "1",
+      "project_name": "PySnooper",
+      "buggy_line_content": "            with open(output_path, 'a') as output_file:",
+      "function": {
+        "function_name": "get_write_function",
+        "function_parent": "pysnooper.py",
+        "function_before_start_line": 19,
+        "function_before_end_line": 33,
+        "function_after_start_line": 19,
+        "function_after_end_line": 33,
+        "function_before_token_count": 43,
+        "function_after_token_count": 43,
+        "function_before": "def get_write_function(output):\n    if output is None:\n\n        def write(s):\n            stderr = sys.stderr\n            stderr.write(s)\n    elif isinstance(output, (pycompat.PathLike, str)):\n\n        def write(s):\n            with open(output_path, 'a') as output_file:\n                output_file.write(s)\n    else:\n        assert isinstance(output, utils.WritableStream)\n\n        def write(s):\n            output.write(s)\n    return write",
+        "function_after": "def get_write_function(output):\n    if output is None:\n\n        def write(s):\n            stderr = sys.stderr\n            stderr.write(s)\n    elif isinstance(output, (pycompat.PathLike, str)):\n\n        def write(s):\n            with open(output, 'a') as output_file:\n                output_file.write(s)\n    else:\n        assert isinstance(output, utils.WritableStream)\n\n        def write(s):\n            output.write(s)\n    return write"
+      },
+      "file_name": "pysnooper.py",
+      "file_path": "pysnooper/pysnooper.py",
+      "score_reranked": 0.3673411485529632
+    },
+    {
+      "id": "21",
+      "project_name": "youtube-dl",
+      "buggy_line_content": "        (?:0[xX][0-9a-fA-F]+|0+[0-7]+)(?:\\s*:)?|",
+      "function": {
+        "function_name": "js_to_json",
+        "function_parent": "utils.py",
+        "function_before_start_line": 1939,
+        "function_before_end_line": 1975,
+        "function_after_start_line": 1939,
+        "function_after_end_line": 1975,
+        "function_before_token_count": 19,
+        "function_after_token_count": 19,
+        "function_before": "def js_to_json(code):\n\n    def fix_kv(m):\n        v = m.group(0)\n        if v in ('true', 'false', 'null'):\n            return v\n        elif v.startswith('/*') or v == ',':\n            return ''\n        if v[0] in (\"'\", '\"'):\n            v = re.sub('(?s)\\\\\\\\.|\"', lambda m: {'\"': '\\\\\"', \"\\\\'\": \"'\", '\\\\\\n': '', '\\\\x': '\\\\u00'}.get(m.group(0), m.group(0)), v[1:-1])\n        INTEGER_TABLE = (('^0[xX][0-9a-fA-F]+', 16), ('^0+[0-7]+', 8))\n        for regex, base in INTEGER_TABLE:\n            im = re.match(regex, v)\n            if im:\n                i = int(im.group(0), base)\n                return '\"%d\":' % i if v.endswith(':') else '%d' % i\n        return '\"%s\"' % v\n    return re.sub('(?sx)\\n        \"(?:[^\"\\\\\\\\]*(?:\\\\\\\\\\\\\\\\|\\\\\\\\[\\'\"nurtbfx/\\\\n]))*[^\"\\\\\\\\]*\"|\\n        \\'(?:[^\\'\\\\\\\\]*(?:\\\\\\\\\\\\\\\\|\\\\\\\\[\\'\"nurtbfx/\\\\n]))*[^\\'\\\\\\\\]*\\'|\\n        /\\\\*.*?\\\\*/|,(?=\\\\s*[\\\\]}])|\\n        [a-zA-Z_][.a-zA-Z_0-9]*|\\n        (?:0[xX][0-9a-fA-F]+|0+[0-7]+)(?:\\\\s*:)?|\\n        [0-9]+(?=\\\\s*:)\\n        ', fix_kv, code)",
+        "function_after": "def js_to_json(code):\n\n    def fix_kv(m):\n        v = m.group(0)\n        if v in ('true', 'false', 'null'):\n            return v\n        elif v.startswith('/*') or v == ',':\n            return ''\n        if v[0] in (\"'\", '\"'):\n            v = re.sub('(?s)\\\\\\\\.|\"', lambda m: {'\"': '\\\\\"', \"\\\\'\": \"'\", '\\\\\\n': '', '\\\\x': '\\\\u00'}.get(m.group(0), m.group(0)), v[1:-1])\n        INTEGER_TABLE = (('^0[xX][0-9a-fA-F]+', 16), ('^0+[0-7]+', 8))\n        for regex, base in INTEGER_TABLE:\n            im = re.match(regex, v)\n            if im:\n                i = int(im.group(0), base)\n                return '\"%d\":' % i if v.endswith(':') else '%d' % i\n        return '\"%s\"' % v\n    return re.sub('(?sx)\\n        \"(?:[^\"\\\\\\\\]*(?:\\\\\\\\\\\\\\\\|\\\\\\\\[\\'\"nurtbfx/\\\\n]))*[^\"\\\\\\\\]*\"|\\n        \\'(?:[^\\'\\\\\\\\]*(?:\\\\\\\\\\\\\\\\|\\\\\\\\[\\'\"nurtbfx/\\\\n]))*[^\\'\\\\\\\\]*\\'|\\n        /\\\\*.*?\\\\*/|,(?=\\\\s*[\\\\]}])|\\n        [a-zA-Z_][.a-zA-Z_0-9]*|\\n        \\\\b(?:0[xX][0-9a-fA-F]+|0+[0-7]+)(?:\\\\s*:)?|\\n        [0-9]+(?=\\\\s*:)\\n        ', fix_kv, code)"
+      },
+      "file_name": "utils.py",
+      "file_path": "youtube_dl/utils.py",
+      "score_reranked": 0.36485723536958575
+    }
+  ],
+  "diffusion_plan": [
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 59
+        },
+        {
+          "op": "Replace",
+          "node": 22
+        },
+        {
+          "op": "Replace",
+          "node": 29
+        },
+        {
+          "op": "Replace",
+          "node": 11
+        },
+        {
+          "op": "InsertBefore",
+          "node": 12
+        },
+        {
+          "op": "Replace",
+          "node": 19
+        },
+        {
+          "op": "Replace",
+          "node": 14
+        },
+        {
+          "op": "GuardAdd",
+          "node": 13
+        },
+        {
+          "op": "InsertBefore",
+          "node": 22
+        },
+        {
+          "op": "GuardAdd",
+          "node": 22
+        },
+        {
+          "op": "GuardAdd",
+          "node": 59
+        }
+      ],
+      "score": 17.863636362103307
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 12
+        },
+        {
+          "op": "Replace",
+          "node": 11
+        },
+        {
+          "op": "InsertBefore",
+          "node": 59
+        },
+        {
+          "op": "Replace",
+          "node": 29
+        },
+        {
+          "op": "Replace",
+          "node": 19
+        },
+        {
+          "op": "Replace",
+          "node": 59
+        },
+        {
+          "op": "Replace",
+          "node": 13
+        },
+        {
+          "op": "GuardAdd",
+          "node": 19
+        },
+        {
+          "op": "Replace",
+          "node": 22
+        },
+        {
+          "op": "InsertBefore",
+          "node": 11
+        },
+        {
+          "op": "Delete",
+          "node": 12
+        }
+      ],
+      "score": 17.4999999985
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "GuardAdd",
+          "node": 12
+        },
+        {
+          "op": "Replace",
+          "node": 12
+        },
+        {
+          "op": "GuardAdd",
+          "node": 22
+        },
+        {
+          "op": "Delete",
+          "node": 11
+        },
+        {
+          "op": "GuardAdd",
+          "node": 3
+        },
+        {
+          "op": "GuardAdd",
+          "node": 59
+        },
+        {
+          "op": "Replace",
+          "node": 14
+        },
+        {
+          "op": "Replace",
+          "node": 29
+        },
+        {
+          "op": "Replace",
+          "node": 19
+        },
+        {
+          "op": "GuardAdd",
+          "node": 11
+        },
+        {
+          "op": "GuardAdd",
+          "node": 19
+        },
+        {
+          "op": "Replace",
+          "node": 11
+        }
+      ],
+      "score": 17.39999999850909
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 11
+        },
+        {
+          "op": "GuardAdd",
+          "node": 3
+        },
+        {
+          "op": "Replace",
+          "node": 59
+        },
+        {
+          "op": "GuardAdd",
+          "node": 11
+        },
+        {
+          "op": "Replace",
+          "node": 22
+        },
+        {
+          "op": "Replace",
+          "node": 29
+        },
+        {
+          "op": "Replace",
+          "node": 19
+        },
+        {
+          "op": "InsertBefore",
+          "node": 29
+        },
+        {
+          "op": "Delete",
+          "node": 19
+        },
+        {
+          "op": "Replace",
+          "node": 14
+        },
+        {
+          "op": "GuardAdd",
+          "node": 12
+        }
+      ],
+      "score": 17.15454545307686
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "GuardAdd",
+          "node": 13
+        },
+        {
+          "op": "Replace",
+          "node": 11
+        },
+        {
+          "op": "GuardAdd",
+          "node": 12
+        },
+        {
+          "op": "GuardAdd",
+          "node": 19
+        },
+        {
+          "op": "Replace",
+          "node": 13
+        },
+        {
+          "op": "Replace",
+          "node": 59
+        },
+        {
+          "op": "Replace",
+          "node": 29
+        },
+        {
+          "op": "Delete",
+          "node": 59
+        },
+        {
+          "op": "Delete",
+          "node": 19
+        },
+        {
+          "op": "Replace",
+          "node": 19
+        }
+      ],
+      "score": 16.454545453140497
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 13
+        },
+        {
+          "op": "Replace",
+          "node": 22
+        },
+        {
+          "op": "Delete",
+          "node": 59
+        },
+        {
+          "op": "Replace",
+          "node": 29
+        },
+        {
+          "op": "Replace",
+          "node": 19
+        },
+        {
+          "op": "Replace",
+          "node": 11
+        },
+        {
+          "op": "Replace",
+          "node": 59
+        },
+        {
+          "op": "GuardAdd",
+          "node": 59
+        }
+      ],
+      "score": 16.309090907880993
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "GuardAdd",
+          "node": 29
+        },
+        {
+          "op": "GuardAdd",
+          "node": 22
+        },
+        {
+          "op": "Replace",
+          "node": 13
+        },
+        {
+          "op": "GuardAdd",
+          "node": 59
+        },
+        {
+          "op": "Replace",
+          "node": 59
+        },
+        {
+          "op": "Replace",
+          "node": 11
+        },
+        {
+          "op": "Delete",
+          "node": 19
+        },
+        {
+          "op": "Replace",
+          "node": 22
+        },
+        {
+          "op": "Replace",
+          "node": 29
+        }
+      ],
+      "score": 16.145454544077687
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 22
+        },
+        {
+          "op": "GuardAdd",
+          "node": 29
+        },
+        {
+          "op": "Replace",
+          "node": 29
+        },
+        {
+          "op": "GuardAdd",
+          "node": 22
+        },
+        {
+          "op": "Delete",
+          "node": 22
+        },
+        {
+          "op": "Replace",
+          "node": 19
+        },
+        {
+          "op": "Replace",
+          "node": 11
+        }
+      ],
+      "score": 15.81818181701653
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 11
+        },
+        {
+          "op": "Replace",
+          "node": 3
+        },
+        {
+          "op": "GuardAdd",
+          "node": 11
+        },
+        {
+          "op": "Delete",
+          "node": 11
+        },
+        {
+          "op": "Replace",
+          "node": 12
+        },
+        {
+          "op": "GuardAdd",
+          "node": 29
+        },
+        {
+          "op": "GuardAdd",
+          "node": 59
+        },
+        {
+          "op": "GuardAdd",
+          "node": 19
+        },
+        {
+          "op": "Replace",
+          "node": 22
+        },
+        {
+          "op": "Replace",
+          "node": 19
+        }
+      ],
+      "score": 15.818181816834713
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 59
+        },
+        {
+          "op": "Replace",
+          "node": 29
+        },
+        {
+          "op": "Replace",
+          "node": 22
+        },
+        {
+          "op": "Replace",
+          "node": 12
+        },
+        {
+          "op": "InsertBefore",
+          "node": 19
+        },
+        {
+          "op": "GuardAdd",
+          "node": 29
+        },
+        {
+          "op": "GuardAdd",
+          "node": 14
+        },
+        {
+          "op": "Replace",
+          "node": 11
+        }
+      ],
+      "score": 15.545454544314051
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 22
+        },
+        {
+          "op": "Replace",
+          "node": 19
+        },
+        {
+          "op": "Replace",
+          "node": 13
+        },
+        {
+          "op": "Replace",
+          "node": 59
+        },
+        {
+          "op": "Replace",
+          "node": 29
+        },
+        {
+          "op": "GuardAdd",
+          "node": 13
+        },
+        {
+          "op": "GuardAdd",
+          "node": 19
+        }
+      ],
+      "score": 15.490909089773554
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 59
+        },
+        {
+          "op": "Replace",
+          "node": 22
+        },
+        {
+          "op": "Replace",
+          "node": 19
+        },
+        {
+          "op": "Replace",
+          "node": 3
+        },
+        {
+          "op": "GuardAdd",
+          "node": 59
+        },
+        {
+          "op": "Replace",
+          "node": 14
+        },
+        {
+          "op": "GuardAdd",
+          "node": 29
+        },
+        {
+          "op": "Delete",
+          "node": 19
+        }
+      ],
+      "score": 15.454545453413225
+    }
+  ],
+  "static_analysis_nodes": [
+    {
+      "line": 3,
+      "line_absolute": 139,
+      "node_id": 19,
+      "node_id_local": 2,
+      "type": "Call",
+      "code": "run_hive_cmd('use {0}; show tables like \"{1}\";'.format(database, table))",
+      "distance_to_buggy": 0,
+      "context": "   1:   def table_exists(self, table, database='default', partition=None):\n   2:       if partition is None:\n   3:->         stdout = run_hive_cmd('use {0}; show tables like \"{1}\";'.format(database, table))\n   4:           return stdout and table in stdout\n   5:       else:\n   6:           stdout = run_hive_cmd('use %s; show partitions %s partition\\n                                (%s)' % (database, table, self.partition_spec(partition)))",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Name",
+          "id": "run_hive_cmd",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [
+          {
+            "_type": "Call",
+            "func": {
+              "_type": "Attribute"
+            },
+            "args": [
+              {
+                "_type": "Name"
+              },
+              {
+                "_type": "Name"
+              }
+            ],
+            "keywords": []
+          }
+        ],
+        "keywords": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|system|>...",
+      "reranker_score": -24.0
+    },
+    {
+      "line": 3,
+      "line_absolute": 139,
+      "node_id": 29,
+      "node_id_local": 3,
+      "type": "Call",
+      "code": "'use {0}; show tables like \"{1}\";'.format(database, table)",
+      "distance_to_buggy": 0,
+      "context": "   1:   def table_exists(self, table, database='default', partition=None):\n   2:       if partition is None:\n   3:->         stdout = run_hive_cmd('use {0}; show tables like \"{1}\";'.format(database, table))\n   4:           return stdout and table in stdout\n   5:       else:\n   6:           stdout = run_hive_cmd('use %s; show partitions %s partition\\n                                (%s)' % (database, table, self.partition_spec(partition)))",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Attribute",
+          "value": {
+            "_type": "Constant"
+          },
+          "attr": "format",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [
+          {
+            "_type": "Name",
+            "id": "database",
+            "ctx": {
+              "_type": "Load"
+            }
+          },
+          {
+            "_type": "Name",
+            "id": "table",
+            "ctx": {
+              "_type": "Load"
+            }
+          }
+        ],
+        "keywords": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -24.0
+    },
+    {
+      "line": 6,
+      "line_absolute": 142,
+      "node_id": 22,
+      "node_id_local": 6,
+      "type": "Call",
+      "code": "run_hive_cmd('use %s; show partitions %s partition\\n                                (%s)' % (database, table, self.partition_spec(partition)))",
+      "distance_to_buggy": 0,
+      "context": "   3:           stdout = run_hive_cmd('use {0}; show tables like \"{1}\";'.format(database, table))\n   4:           return stdout and table in stdout\n   5:       else:\n   6:->         stdout = run_hive_cmd('use %s; show partitions %s partition\\n                                (%s)' % (database, table, self.partition_spec(partition)))\n   7:           if stdout:\n   8:               return True\n   9:           else:",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Name",
+          "id": "run_hive_cmd",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [
+          {
+            "_type": "BinOp",
+            "left": {
+              "_type": "Constant"
+            },
+            "op": {
+              "_type": "Mod"
+            },
+            "right": {
+              "_type": "Tuple"
+            }
+          }
+        ],
+        "keywords": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|system|>...",
+      "reranker_score": -24.0
+    },
+    {
+      "line": 6,
+      "line_absolute": 142,
+      "node_id": 59,
+      "node_id_local": 7,
+      "type": "Call",
+      "code": "self.partition_spec(partition)",
+      "distance_to_buggy": 0,
+      "context": "   3:           stdout = run_hive_cmd('use {0}; show tables like \"{1}\";'.format(database, table))\n   4:           return stdout and table in stdout\n   5:       else:\n   6:->         stdout = run_hive_cmd('use %s; show partitions %s partition\\n                                (%s)' % (database, table, self.partition_spec(partition)))\n   7:           if stdout:\n   8:               return True\n   9:           else:",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Attribute",
+          "value": {
+            "_type": "Name"
+          },
+          "attr": "partition_spec",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [
+          {
+            "_type": "Name",
+            "id": "partition",
+            "ctx": {
+              "_type": "Load"
+            }
+          }
+        ],
+        "keywords": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -24.0
+    },
+    {
+      "line": 3,
+      "line_absolute": 139,
+      "node_id": 11,
+      "node_id_local": 1,
+      "type": "Assign",
+      "code": "stdout = run_hive_cmd('use {0}; show tables like \"{1}\";'.format(database, table))",
+      "distance_to_buggy": 0,
+      "context": "   1:   def table_exists(self, table, database='default', partition=None):\n   2:       if partition is None:\n   3:->         stdout = run_hive_cmd('use {0}; show tables like \"{1}\";'.format(database, table))\n   4:           return stdout and table in stdout\n   5:       else:\n   6:           stdout = run_hive_cmd('use %s; show partitions %s partition\\n                                (%s)' % (database, table, self.partition_spec(partition)))",
+      "ast_subtree_json": {
+        "_type": "Assign",
+        "targets": [
+          {
+            "_type": "Name",
+            "id": "stdout",
+            "ctx": {
+              "_type": "Store"
+            }
+          }
+        ],
+        "value": {
+          "_type": "Call",
+          "func": {
+            "_type": "Name"
+          },
+          "args": [
+            {
+              "_type": "Call"
+            }
+          ],
+          "keywords": []
+        },
+        "type_comment": null
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|system|>...",
+      "reranker_score": -23.0
+    },
+    {
+      "line": 6,
+      "line_absolute": 142,
+      "node_id": 13,
+      "node_id_local": 5,
+      "type": "Assign",
+      "code": "stdout = run_hive_cmd('use %s; show partitions %s partition\\n                                (%s)' % (database, table, self.partition_spec(partition)))",
+      "distance_to_buggy": 0,
+      "context": "   3:           stdout = run_hive_cmd('use {0}; show tables like \"{1}\";'.format(database, table))\n   4:           return stdout and table in stdout\n   5:       else:\n   6:->         stdout = run_hive_cmd('use %s; show partitions %s partition\\n                                (%s)' % (database, table, self.partition_spec(partition)))\n   7:           if stdout:\n   8:               return True\n   9:           else:",
+      "ast_subtree_json": {
+        "_type": "Assign",
+        "targets": [
+          {
+            "_type": "Name",
+            "id": "stdout",
+            "ctx": {
+              "_type": "Store"
+            }
+          }
+        ],
+        "value": {
+          "_type": "Call",
+          "func": {
+            "_type": "Name"
+          },
+          "args": [
+            {
+              "_type": "BinOp"
+            }
+          ],
+          "keywords": []
+        },
+        "type_comment": null
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -23.0
+    },
+    {
+      "line": 7,
+      "line_absolute": 143,
+      "node_id": 14,
+      "node_id_local": 8,
+      "type": "If",
+      "code": "if stdout:\n    return True\nelse:\n    return False",
+      "distance_to_buggy": 0,
+      "context": "   4:           return stdout and table in stdout\n   5:       else:\n   6:           stdout = run_hive_cmd('use %s; show partitions %s partition\\n                                (%s)' % (database, table, self.partition_spec(partition)))\n   7:->         if stdout:\n   8:               return True\n   9:           else:\n  10:               return False",
+      "ast_subtree_json": {
+        "_type": "If",
+        "test": {
+          "_type": "Name",
+          "id": "stdout",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "body": [
+          {
+            "_type": "Return",
+            "value": {
+              "_type": "Constant"
+            }
+          }
+        ],
+        "orelse": [
+          {
+            "_type": "Return",
+            "value": {
+              "_type": "Constant"
+            }
+          }
+        ]
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -23.0
+    },
+    {
+      "line": 4,
+      "line_absolute": 140,
+      "node_id": 12,
+      "node_id_local": 4,
+      "type": "Return",
+      "code": "return stdout and table in stdout",
+      "distance_to_buggy": 0,
+      "context": "   1:   def table_exists(self, table, database='default', partition=None):\n   2:       if partition is None:\n   3:           stdout = run_hive_cmd('use {0}; show tables like \"{1}\";'.format(database, table))\n   4:->         return stdout and table in stdout\n   5:       else:\n   6:           stdout = run_hive_cmd('use %s; show partitions %s partition\\n                                (%s)' % (database, table, self.partition_spec(partition)))\n   7:           if stdout:",
+      "ast_subtree_json": {
+        "_type": "Return",
+        "value": {
+          "_type": "BoolOp",
+          "op": {
+            "_type": "And"
+          },
+          "values": [
+            {
+              "_type": "Name"
+            },
+            {
+              "_type": "Compare"
+            }
+          ]
+        }
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -22.0
+    },
+    {
+      "line": 2,
+      "line_absolute": 138,
+      "node_id": 3,
+      "node_id_local": 0,
+      "type": "If",
+      "code": "if partition is None:\n    stdout = run_hive_cmd('use {0}; show tables like \"{1}\";'.format(database, table))\n    return stdout and table in stdout\nelse:\n    stdout = run_hive_cmd('use %s; show partitions %s partition\\n                                (%s)' % (database, table, self.partition_spec(partition)))\n    if stdout:\n        return True\n    else:\n        return False",
+      "distance_to_buggy": 1,
+      "context": "   1:   def table_exists(self, table, database='default', partition=None):\n   2:->     if partition is None:\n   3:           stdout = run_hive_cmd('use {0}; show tables like \"{1}\";'.format(database, table))\n   4:           return stdout and table in stdout\n   5:       else:",
+      "ast_subtree_json": {
+        "_type": "If",
+        "test": {
+          "_type": "Compare",
+          "left": {
+            "_type": "Name"
+          },
+          "ops": [
+            {
+              "_type": "Is"
+            }
+          ],
+          "comparators": [
+            {
+              "_type": "Constant"
+            }
+          ]
+        },
+        "body": [
+          {
+            "_type": "Assign",
+            "targets": [
+              {
+                "_type": "Name"
+              }
+            ],
+            "value": {
+              "_type": "Call"
+            },
+            "type_comment": null
+          },
+          {
+            "_type": "Return",
+            "value": {
+              "_type": "BoolOp"
+            }
+          }
+        ],
+        "orelse": [
+          {
+            "_type": "Assign",
+            "targets": [
+              {
+                "_type": "Name"
+              }
+            ],
+            "value": {
+              "_type": "Call"
+            },
+            "type_comment": null
+          },
+          {
+            "_type": "If",
+            "test": {
+              "_type": "Name"
+            },
+            "body": [
+              {
+                "_type": "Return"
+              }
+            ],
+            "orelse": [
+              {
+                "_type": "Return"
+              }
+            ]
+          }
+        ]
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -12.0
+    },
+    {
+      "line": 8,
+      "line_absolute": 144,
+      "node_id": 24,
+      "node_id_local": 9,
+      "type": "Return",
+      "code": "return True",
+      "distance_to_buggy": 1,
+      "context": "   5:       else:\n   6:           stdout = run_hive_cmd('use %s; show partitions %s partition\\n                                (%s)' % (database, table, self.partition_spec(partition)))\n   7:           if stdout:\n   8:->             return True\n   9:           else:\n  10:               return False",
+      "ast_subtree_json": {
+        "_type": "Return",
+        "value": {
+          "_type": "Constant",
+          "value": true,
+          "kind": null
+        }
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -12.0
+    }
+  ]
+}

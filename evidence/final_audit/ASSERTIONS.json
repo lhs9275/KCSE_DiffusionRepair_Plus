@@ -1,0 +1,49 @@
+{
+ "all_passed": true,
+ "superseded_record_count": 27,
+ "accounting_superseded_count": 27,
+ "checks": [
+  {
+   "check": "prefix@1 base success",
+   "recomputed": 20,
+   "accounting": 20,
+   "match": true
+  },
+  {
+   "check": "prefix@1 base unknown",
+   "recomputed": 1,
+   "accounting": 1,
+   "match": true
+  },
+  {
+   "check": "prefix@1 full success",
+   "recomputed": 9,
+   "accounting": 9,
+   "match": true
+  },
+  {
+   "check": "prefix@1 full unknown",
+   "recomputed": 3,
+   "accounting": 3,
+   "match": true
+  },
+  {
+   "check": "최종 후보 수 base",
+   "recomputed": 1054,
+   "paper_value": 1054,
+   "match": true
+  },
+  {
+   "check": "최종 후보 수 full",
+   "recomputed": 618,
+   "paper_value": 618,
+   "match": true
+  },
+  {
+   "check": "선택된 레코드 수",
+   "recomputed": 258,
+   "accounting": 258,
+   "match": true
+  }
+ ]
+}

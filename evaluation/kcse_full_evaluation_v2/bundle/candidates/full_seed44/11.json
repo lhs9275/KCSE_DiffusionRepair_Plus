@@ -1,0 +1,1042 @@
+{
+  "bug_id": "11",
+  "seed": 44,
+  "arm": "full",
+  "candidates": [
+    {
+      "index": 0,
+      "patch_text": "def get_param_values(cls, params, args, kwargs):\n    \"\"\"\n        Get the values of the parameters from the args and kwargs.\n\n        :param params: list of (param_name, Parameter).\n        :param args: positional arguments\n        :param kwargs: keyword arguments.\n        :returns: list of `(name, value)` tuples, one for each parameter.\n        \"\"\"\n    result = {}\n    params_dict = dict(params)\n    task_name = cls.task_family\n    exc_desc = '%s[args=%s, kwargs=%s]' % (task_name, args, kwargs)\n    positional_params = [(n, p) for n, p in params if p.significant]\n    for i, arg in enumerate(args):\n        if i >= len(positional_params):\n            raise parameter.UnknownParameterException('%s: takes at most %d parameters (%d given)' % (exc_desc, len(positional_params), len(args)))\n        param_name, param_obj = positional_params[i]\n        result[param_name] = arg\n    for param_name, arg in kwargs.items():\n        if param_name in result:\n            raise parameter.DuplicateParameterException('%s: parameter %s was already set as a positional parameter' % (exc_desc, param_name))\n        if param_name not in params_dict:\n            raise parameter.UnknownParameterException('%s: unknown parameter %s' % (exc_desc, param_name))\n        result[param_name] = arg\n    for param_name, param_obj in params:\n        if param_name not in result:\n            if not param_obj.has_task_value(task_name, param_name):\n                raise parameter.MissingParameterException(\"%s: requires the '%s' parameter to be set\" % (exc_desc, param_name))\n            result[param_name] = param_obj.task_value(task_name, param_name)\n\n    def list_to_tuple(x):\n        \"\"\" Make tuples out of lists and sets to allow hashing \"\"\"\n        if isinstance(x, list) or isinstance(x, set):\n            return tuple(x)\n        else:\n            return x\n    return [(param_name, list_to_tuple(result[param_name])) for param_name, param_obj in params]",
+      "patch_sha256": "b1a8ffc2e1d29dee75268684568e23ee608602a7a0329272101ccea68b60873b",
+      "rank_score": 214,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.9230891398700982,
+      "top_p": 0.8133577607283677
+    }
+  ],
+  "candidate_count": 1,
+  "retrieved_examples": [
+    {
+      "id": "26",
+      "project_name": "scrapy",
+      "buggy_line_content": "            for url in sitemap_urls_from_robots(response.body):",
+      "function": {
+        "function_name": "_parse_sitemap",
+        "function_parent": "SitemapSpider",
+        "function_before_start_line": 33,
+        "function_before_end_line": 54,
+        "function_after_start_line": 33,
+        "function_after_end_line": 54,
+        "function_before_token_count": 169,
+        "function_after_token_count": 169,
+        "function_before": "def _parse_sitemap(self, response):\n    if response.url.endswith('/robots.txt'):\n        for url in sitemap_urls_from_robots(response.body):\n            yield Request(url, callback=self._parse_sitemap)\n    else:\n        body = self._get_sitemap_body(response)\n        if body is None:\n            logger.warning('Ignoring invalid sitemap: %(response)s', {'response': response}, extra={'spider': self})\n            return\n        s = Sitemap(body)\n        if s.type == 'sitemapindex':\n            for loc in iterloc(s, self.sitemap_alternate_links):\n                if any((x.search(loc) for x in self._follow)):\n                    yield Request(loc, callback=self._parse_sitemap)\n        elif s.type == 'urlset':\n            for loc in iterloc(s):\n                for r, c in self._cbs:\n                    if r.search(loc):\n                        yield Request(loc, callback=c)\n                        break",
+        "function_after": "def _parse_sitemap(self, response):\n    if response.url.endswith('/robots.txt'):\n        for url in sitemap_urls_from_robots(response.text):\n            yield Request(url, callback=self._parse_sitemap)\n    else:\n        body = self._get_sitemap_body(response)\n        if body is None:\n            logger.warning('Ignoring invalid sitemap: %(response)s', {'response': response}, extra={'spider': self})\n            return\n        s = Sitemap(body)\n        if s.type == 'sitemapindex':\n            for loc in iterloc(s, self.sitemap_alternate_links):\n                if any((x.search(loc) for x in self._follow)):\n                    yield Request(loc, callback=self._parse_sitemap)\n        elif s.type == 'urlset':\n            for loc in iterloc(s):\n                for r, c in self._cbs:\n                    if r.search(loc):\n                        yield Request(loc, callback=c)\n                        break"
+      },
+      "file_name": "sitemap.py",
+      "file_path": "scrapy/spiders/sitemap.py",
+      "score_reranked": 0.4774895558989982
+    },
+    {
+      "id": "17",
+      "project_name": "youtube-dl",
+      "buggy_line_content": "                    op = lambda attr, value: not str_op",
+      "function": {
+        "function_name": "_build_format_filter",
+        "function_parent": "YoutubeDL",
+        "function_before_start_line": 1032,
+        "function_before_end_line": 1093,
+        "function_after_start_line": 1032,
+        "function_after_end_line": 1093,
+        "function_before_token_count": 310,
+        "function_after_token_count": 315,
+        "function_before": "def _build_format_filter(self, filter_spec):\n    \"\"\" Returns a function to filter the formats according to the filter_spec \"\"\"\n    OPERATORS = {'<': operator.lt, '<=': operator.le, '>': operator.gt, '>=': operator.ge, '=': operator.eq, '!=': operator.ne}\n    operator_rex = re.compile('(?x)\\\\s*\\n            (?P<key>width|height|tbr|abr|vbr|asr|filesize|filesize_approx|fps)\\n            \\\\s*(?P<op>%s)(?P<none_inclusive>\\\\s*\\\\?)?\\\\s*\\n            (?P<value>[0-9.]+(?:[kKmMgGtTpPeEzZyY]i?[Bb]?)?)\\n            $\\n            ' % '|'.join(map(re.escape, OPERATORS.keys())))\n    m = operator_rex.search(filter_spec)\n    if m:\n        try:\n            comparison_value = int(m.group('value'))\n        except ValueError:\n            comparison_value = parse_filesize(m.group('value'))\n            if comparison_value is None:\n                comparison_value = parse_filesize(m.group('value') + 'B')\n            if comparison_value is None:\n                raise ValueError('Invalid value %r in format specification %r' % (m.group('value'), filter_spec))\n        op = OPERATORS[m.group('op')]\n    if not m:\n        STR_OPERATORS = {'=': operator.eq, '^=': lambda attr, value: attr.startswith(value), '$=': lambda attr, value: attr.endswith(value), '*=': lambda attr, value: value in attr}\n        str_operator_rex = re.compile('(?x)\\n                \\\\s*(?P<key>ext|acodec|vcodec|container|protocol|format_id)\\n                \\\\s*(?P<negation>!\\\\s*)?(?P<op>%s)(?P<none_inclusive>\\\\s*\\\\?)?\\n                \\\\s*(?P<value>[a-zA-Z0-9._-]+)\\n                \\\\s*$\\n                ' % '|'.join(map(re.escape, STR_OPERATORS.keys())))\n        m = str_operator_rex.search(filter_spec)\n        if m:\n            comparison_value = m.group('value')\n            str_op = STR_OPERATORS[m.group('op')]\n            if m.group('negation'):\n                op = lambda attr, value: not str_op\n            else:\n                op = str_op\n    if not m:\n        raise ValueError('Invalid filter specification %r' % filter_spec)\n\n    def _filter(f):\n        actual_value = f.get(m.group('key'))\n        if actual_value is None:\n            return m.group('none_inclusive')\n        return op(actual_value, comparison_value)\n    return _filter",
+        "function_after": "def _build_format_filter(self, filter_spec):\n    \"\"\" Returns a function to filter the formats according to the filter_spec \"\"\"\n    OPERATORS = {'<': operator.lt, '<=': operator.le, '>': operator.gt, '>=': operator.ge, '=': operator.eq, '!=': operator.ne}\n    operator_rex = re.compile('(?x)\\\\s*\\n            (?P<key>width|height|tbr|abr|vbr|asr|filesize|filesize_approx|fps)\\n            \\\\s*(?P<op>%s)(?P<none_inclusive>\\\\s*\\\\?)?\\\\s*\\n            (?P<value>[0-9.]+(?:[kKmMgGtTpPeEzZyY]i?[Bb]?)?)\\n            $\\n            ' % '|'.join(map(re.escape, OPERATORS.keys())))\n    m = operator_rex.search(filter_spec)\n    if m:\n        try:\n            comparison_value = int(m.group('value'))\n        except ValueError:\n            comparison_value = parse_filesize(m.group('value'))\n            if comparison_value is None:\n                comparison_value = parse_filesize(m.group('value') + 'B')\n            if comparison_value is None:\n                raise ValueError('Invalid value %r in format specification %r' % (m.group('value'), filter_spec))\n        op = OPERATORS[m.group('op')]\n    if not m:\n        STR_OPERATORS = {'=': operator.eq, '^=': lambda attr, value: attr.startswith(value), '$=': lambda attr, value: attr.endswith(value), '*=': lambda attr, value: value in attr}\n        str_operator_rex = re.compile('(?x)\\n                \\\\s*(?P<key>ext|acodec|vcodec|container|protocol|format_id)\\n                \\\\s*(?P<negation>!\\\\s*)?(?P<op>%s)(?P<none_inclusive>\\\\s*\\\\?)?\\n                \\\\s*(?P<value>[a-zA-Z0-9._-]+)\\n                \\\\s*$\\n                ' % '|'.join(map(re.escape, STR_OPERATORS.keys())))\n        m = str_operator_rex.search(filter_spec)\n        if m:\n            comparison_value = m.group('value')\n            str_op = STR_OPERATORS[m.group('op')]\n            if m.group('negation'):\n                op = lambda attr, value: not str_op(attr, value)\n            else:\n                op = str_op\n    if not m:\n        raise ValueError('Invalid filter specification %r' % filter_spec)\n\n    def _filter(f):\n        actual_value = f.get(m.group('key'))\n        if actual_value is None:\n            return m.group('none_inclusive')\n        return op(actual_value, comparison_value)\n    return _filter"
+      },
+      "file_name": "YoutubeDL.py",
+      "file_path": "youtube_dl/YoutubeDL.py",
+      "score_reranked": 0.41972688980460177
+    },
+    {
+      "id": "19",
+      "project_name": "youtube-dl",
+      "buggy_line_content": "        [a-zA-Z_][.a-zA-Z_0-9]*|",
+      "function": {
+        "function_name": "js_to_json",
+        "function_parent": "utils.py",
+        "function_before_start_line": 2235,
+        "function_before_end_line": 2273,
+        "function_after_start_line": 2235,
+        "function_after_end_line": 2273,
+        "function_before_token_count": 77,
+        "function_after_token_count": 77,
+        "function_before": "def js_to_json(code):\n    COMMENT_RE = '/\\\\*(?:(?!\\\\*/).)*?\\\\*/|//[^\\\\n]*'\n    SKIP_RE = '\\\\s*(?:{comment})?\\\\s*'.format(comment=COMMENT_RE)\n    INTEGER_TABLE = (('(?s)^(0[xX][0-9a-fA-F]+){skip}:?$'.format(skip=SKIP_RE), 16), ('(?s)^(0+[0-7]+){skip}:?$'.format(skip=SKIP_RE), 8))\n\n    def fix_kv(m):\n        v = m.group(0)\n        if v in ('true', 'false', 'null'):\n            return v\n        elif v.startswith('/*') or v.startswith('//') or v == ',':\n            return ''\n        if v[0] in (\"'\", '\"'):\n            v = re.sub('(?s)\\\\\\\\.|\"', lambda m: {'\"': '\\\\\"', \"\\\\'\": \"'\", '\\\\\\n': '', '\\\\x': '\\\\u00'}.get(m.group(0), m.group(0)), v[1:-1])\n        for regex, base in INTEGER_TABLE:\n            im = re.match(regex, v)\n            if im:\n                i = int(im.group(1), base)\n                return '\"%d\":' % i if v.endswith(':') else '%d' % i\n        return '\"%s\"' % v\n    return re.sub('(?sx)\\n        \"(?:[^\"\\\\\\\\]*(?:\\\\\\\\\\\\\\\\|\\\\\\\\[\\'\"nurtbfx/\\\\n]))*[^\"\\\\\\\\]*\"|\\n        \\'(?:[^\\'\\\\\\\\]*(?:\\\\\\\\\\\\\\\\|\\\\\\\\[\\'\"nurtbfx/\\\\n]))*[^\\'\\\\\\\\]*\\'|\\n        {comment}|,(?={skip}[\\\\]}}])|\\n        [a-zA-Z_][.a-zA-Z_0-9]*|\\n        \\\\b(?:0[xX][0-9a-fA-F]+|0+[0-7]+)(?:{skip}:)?|\\n        [0-9]+(?={skip}:)\\n        '.format(comment=COMMENT_RE, skip=SKIP_RE), fix_kv, code)",
+        "function_after": "def js_to_json(code):\n    COMMENT_RE = '/\\\\*(?:(?!\\\\*/).)*?\\\\*/|//[^\\\\n]*'\n    SKIP_RE = '\\\\s*(?:{comment})?\\\\s*'.format(comment=COMMENT_RE)\n    INTEGER_TABLE = (('(?s)^(0[xX][0-9a-fA-F]+){skip}:?$'.format(skip=SKIP_RE), 16), ('(?s)^(0+[0-7]+){skip}:?$'.format(skip=SKIP_RE), 8))\n\n    def fix_kv(m):\n        v = m.group(0)\n        if v in ('true', 'false', 'null'):\n            return v\n        elif v.startswith('/*') or v.startswith('//') or v == ',':\n            return ''\n        if v[0] in (\"'\", '\"'):\n            v = re.sub('(?s)\\\\\\\\.|\"', lambda m: {'\"': '\\\\\"', \"\\\\'\": \"'\", '\\\\\\n': '', '\\\\x': '\\\\u00'}.get(m.group(0), m.group(0)), v[1:-1])\n        for regex, base in INTEGER_TABLE:\n            im = re.match(regex, v)\n            if im:\n                i = int(im.group(1), base)\n                return '\"%d\":' % i if v.endswith(':') else '%d' % i\n        return '\"%s\"' % v\n    return re.sub('(?sx)\\n        \"(?:[^\"\\\\\\\\]*(?:\\\\\\\\\\\\\\\\|\\\\\\\\[\\'\"nurtbfx/\\\\n]))*[^\"\\\\\\\\]*\"|\\n        \\'(?:[^\\'\\\\\\\\]*(?:\\\\\\\\\\\\\\\\|\\\\\\\\[\\'\"nurtbfx/\\\\n]))*[^\\'\\\\\\\\]*\\'|\\n        {comment}|,(?={skip}[\\\\]}}])|\\n        (?:(?<![0-9])[eE]|[a-df-zA-DF-Z_])[.a-zA-Z_0-9]*|\\n        \\\\b(?:0[xX][0-9a-fA-F]+|0+[0-7]+)(?:{skip}:)?|\\n        [0-9]+(?={skip}:)\\n        '.format(comment=COMMENT_RE, skip=SKIP_RE), fix_kv, code)"
+      },
+      "file_name": "utils.py",
+      "file_path": "youtube_dl/utils.py",
+      "score_reranked": 0.4087017750799278
+    },
+    {
+      "id": "21",
+      "project_name": "youtube-dl",
+      "buggy_line_content": "        (?:0[xX][0-9a-fA-F]+|0+[0-7]+)(?:\\s*:)?|",
+      "function": {
+        "function_name": "js_to_json",
+        "function_parent": "utils.py",
+        "function_before_start_line": 1939,
+        "function_before_end_line": 1975,
+        "function_after_start_line": 1939,
+        "function_after_end_line": 1975,
+        "function_before_token_count": 19,
+        "function_after_token_count": 19,
+        "function_before": "def js_to_json(code):\n\n    def fix_kv(m):\n        v = m.group(0)\n        if v in ('true', 'false', 'null'):\n            return v\n        elif v.startswith('/*') or v == ',':\n            return ''\n        if v[0] in (\"'\", '\"'):\n            v = re.sub('(?s)\\\\\\\\.|\"', lambda m: {'\"': '\\\\\"', \"\\\\'\": \"'\", '\\\\\\n': '', '\\\\x': '\\\\u00'}.get(m.group(0), m.group(0)), v[1:-1])\n        INTEGER_TABLE = (('^0[xX][0-9a-fA-F]+', 16), ('^0+[0-7]+', 8))\n        for regex, base in INTEGER_TABLE:\n            im = re.match(regex, v)\n            if im:\n                i = int(im.group(0), base)\n                return '\"%d\":' % i if v.endswith(':') else '%d' % i\n        return '\"%s\"' % v\n    return re.sub('(?sx)\\n        \"(?:[^\"\\\\\\\\]*(?:\\\\\\\\\\\\\\\\|\\\\\\\\[\\'\"nurtbfx/\\\\n]))*[^\"\\\\\\\\]*\"|\\n        \\'(?:[^\\'\\\\\\\\]*(?:\\\\\\\\\\\\\\\\|\\\\\\\\[\\'\"nurtbfx/\\\\n]))*[^\\'\\\\\\\\]*\\'|\\n        /\\\\*.*?\\\\*/|,(?=\\\\s*[\\\\]}])|\\n        [a-zA-Z_][.a-zA-Z_0-9]*|\\n        (?:0[xX][0-9a-fA-F]+|0+[0-7]+)(?:\\\\s*:)?|\\n        [0-9]+(?=\\\\s*:)\\n        ', fix_kv, code)",
+        "function_after": "def js_to_json(code):\n\n    def fix_kv(m):\n        v = m.group(0)\n        if v in ('true', 'false', 'null'):\n            return v\n        elif v.startswith('/*') or v == ',':\n            return ''\n        if v[0] in (\"'\", '\"'):\n            v = re.sub('(?s)\\\\\\\\.|\"', lambda m: {'\"': '\\\\\"', \"\\\\'\": \"'\", '\\\\\\n': '', '\\\\x': '\\\\u00'}.get(m.group(0), m.group(0)), v[1:-1])\n        INTEGER_TABLE = (('^0[xX][0-9a-fA-F]+', 16), ('^0+[0-7]+', 8))\n        for regex, base in INTEGER_TABLE:\n            im = re.match(regex, v)\n            if im:\n                i = int(im.group(0), base)\n                return '\"%d\":' % i if v.endswith(':') else '%d' % i\n        return '\"%s\"' % v\n    return re.sub('(?sx)\\n        \"(?:[^\"\\\\\\\\]*(?:\\\\\\\\\\\\\\\\|\\\\\\\\[\\'\"nurtbfx/\\\\n]))*[^\"\\\\\\\\]*\"|\\n        \\'(?:[^\\'\\\\\\\\]*(?:\\\\\\\\\\\\\\\\|\\\\\\\\[\\'\"nurtbfx/\\\\n]))*[^\\'\\\\\\\\]*\\'|\\n        /\\\\*.*?\\\\*/|,(?=\\\\s*[\\\\]}])|\\n        [a-zA-Z_][.a-zA-Z_0-9]*|\\n        \\\\b(?:0[xX][0-9a-fA-F]+|0+[0-7]+)(?:\\\\s*:)?|\\n        [0-9]+(?=\\\\s*:)\\n        ', fix_kv, code)"
+      },
+      "file_name": "utils.py",
+      "file_path": "youtube_dl/utils.py",
+      "score_reranked": 0.40324569498327506
+    },
+    {
+      "id": "32",
+      "project_name": "pandas",
+      "buggy_line_content": "            except (ValueError, OverflowError):",
+      "function": {
+        "function_name": "_try_convert_to_date",
+        "function_parent": "Parser",
+        "function_before_start_line": 953,
+        "function_before_end_line": 988,
+        "function_after_start_line": 953,
+        "function_after_end_line": 988,
+        "function_before_token_count": 154,
+        "function_after_token_count": 156,
+        "function_before": "def _try_convert_to_date(self, data):\n    \"\"\"\n        Try to parse a ndarray like into a date column.\n\n        Try to coerce object in epoch/iso formats and integer/float in epoch\n        formats. Return a boolean if parsing was successful.\n        \"\"\"\n    if not len(data):\n        return (data, False)\n    new_data = data\n    if new_data.dtype == 'object':\n        try:\n            new_data = data.astype('int64')\n        except (TypeError, ValueError, OverflowError):\n            pass\n    if issubclass(new_data.dtype.type, np.number):\n        in_range = isna(new_data._values) | (new_data > self.min_stamp) | (new_data._values == iNaT)\n        if not in_range.all():\n            return (data, False)\n    date_units = (self.date_unit,) if self.date_unit else self._STAMP_UNITS\n    for date_unit in date_units:\n        try:\n            new_data = to_datetime(new_data, errors='raise', unit=date_unit)\n        except (ValueError, OverflowError):\n            continue\n        return (new_data, True)\n    return (data, False)",
+        "function_after": "def _try_convert_to_date(self, data):\n    \"\"\"\n        Try to parse a ndarray like into a date column.\n\n        Try to coerce object in epoch/iso formats and integer/float in epoch\n        formats. Return a boolean if parsing was successful.\n        \"\"\"\n    if not len(data):\n        return (data, False)\n    new_data = data\n    if new_data.dtype == 'object':\n        try:\n            new_data = data.astype('int64')\n        except (TypeError, ValueError, OverflowError):\n            pass\n    if issubclass(new_data.dtype.type, np.number):\n        in_range = isna(new_data._values) | (new_data > self.min_stamp) | (new_data._values == iNaT)\n        if not in_range.all():\n            return (data, False)\n    date_units = (self.date_unit,) if self.date_unit else self._STAMP_UNITS\n    for date_unit in date_units:\n        try:\n            new_data = to_datetime(new_data, errors='raise', unit=date_unit)\n        except (ValueError, OverflowError, TypeError):\n            continue\n        return (new_data, True)\n    return (data, False)"
+      },
+      "file_name": "_json.py",
+      "file_path": "pandas/io/json/_json.py",
+      "score_reranked": 0.39340889535957596
+    }
+  ],
+  "diffusion_plan": [
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "GuardAdd",
+          "node": 33
+        },
+        {
+          "op": "Replace",
+          "node": 10
+        },
+        {
+          "op": "Replace",
+          "node": 34
+        },
+        {
+          "op": "GuardAdd",
+          "node": 36
+        },
+        {
+          "op": "Replace",
+          "node": 36
+        },
+        {
+          "op": "Replace",
+          "node": 33
+        },
+        {
+          "op": "Replace",
+          "node": 37
+        },
+        {
+          "op": "Replace",
+          "node": 137
+        }
+      ],
+      "score": 16.472727271502478
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 273
+        },
+        {
+          "op": "Replace",
+          "node": 34
+        },
+        {
+          "op": "Replace",
+          "node": 118
+        },
+        {
+          "op": "Replace",
+          "node": 33
+        },
+        {
+          "op": "Replace",
+          "node": 137
+        },
+        {
+          "op": "Replace",
+          "node": 10
+        },
+        {
+          "op": "GuardAdd",
+          "node": 33
+        },
+        {
+          "op": "GuardAdd",
+          "node": 137
+        }
+      ],
+      "score": 16.381818180601655
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 272
+        },
+        {
+          "op": "Replace",
+          "node": 118
+        },
+        {
+          "op": "GuardAdd",
+          "node": 137
+        },
+        {
+          "op": "Replace",
+          "node": 273
+        },
+        {
+          "op": "Replace",
+          "node": 37
+        },
+        {
+          "op": "Replace",
+          "node": 10
+        },
+        {
+          "op": "Replace",
+          "node": 137
+        },
+        {
+          "op": "Replace",
+          "node": 33
+        },
+        {
+          "op": "Delete",
+          "node": 137
+        },
+        {
+          "op": "InsertAfter",
+          "node": 33
+        }
+      ],
+      "score": 16.272727271338844
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 37
+        },
+        {
+          "op": "Replace",
+          "node": 36
+        },
+        {
+          "op": "Delete",
+          "node": 137
+        },
+        {
+          "op": "Replace",
+          "node": 34
+        },
+        {
+          "op": "Replace",
+          "node": 137
+        },
+        {
+          "op": "GuardAdd",
+          "node": 137
+        },
+        {
+          "op": "InsertAfter",
+          "node": 10
+        },
+        {
+          "op": "Replace",
+          "node": 33
+        },
+        {
+          "op": "Replace",
+          "node": 118
+        }
+      ],
+      "score": 15.990909089546282
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 34
+        },
+        {
+          "op": "Replace",
+          "node": 10
+        },
+        {
+          "op": "Replace",
+          "node": 118
+        },
+        {
+          "op": "GuardAdd",
+          "node": 137
+        },
+        {
+          "op": "GuardAdd",
+          "node": 10
+        },
+        {
+          "op": "Replace",
+          "node": 37
+        },
+        {
+          "op": "InsertAfter",
+          "node": 137
+        },
+        {
+          "op": "Replace",
+          "node": 272
+        }
+      ],
+      "score": 15.909090907917356
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 33
+        },
+        {
+          "op": "Replace",
+          "node": 137
+        },
+        {
+          "op": "Replace",
+          "node": 37
+        },
+        {
+          "op": "Replace",
+          "node": 34
+        },
+        {
+          "op": "GuardAdd",
+          "node": 33
+        },
+        {
+          "op": "Replace",
+          "node": 273
+        },
+        {
+          "op": "Replace",
+          "node": 38
+        },
+        {
+          "op": "Delete",
+          "node": 33
+        },
+        {
+          "op": "Replace",
+          "node": 36
+        },
+        {
+          "op": "InsertBefore",
+          "node": 137
+        },
+        {
+          "op": "Replace",
+          "node": 272
+        }
+      ],
+      "score": 15.890909089555372
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 36
+        },
+        {
+          "op": "Replace",
+          "node": 34
+        },
+        {
+          "op": "GuardAdd",
+          "node": 10
+        },
+        {
+          "op": "GuardAdd",
+          "node": 37
+        },
+        {
+          "op": "Replace",
+          "node": 137
+        },
+        {
+          "op": "Replace",
+          "node": 118
+        },
+        {
+          "op": "Replace",
+          "node": 37
+        },
+        {
+          "op": "Replace",
+          "node": 33
+        }
+      ],
+      "score": 15.727272726115704
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "InsertAfter",
+          "node": 137
+        },
+        {
+          "op": "GuardAdd",
+          "node": 10
+        },
+        {
+          "op": "Replace",
+          "node": 34
+        },
+        {
+          "op": "Replace",
+          "node": 273
+        },
+        {
+          "op": "Replace",
+          "node": 137
+        },
+        {
+          "op": "Replace",
+          "node": 37
+        },
+        {
+          "op": "Replace",
+          "node": 118
+        },
+        {
+          "op": "Replace",
+          "node": 33
+        }
+      ],
+      "score": 15.618181817034712
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Delete",
+          "node": 36
+        },
+        {
+          "op": "Replace",
+          "node": 137
+        },
+        {
+          "op": "Replace",
+          "node": 34
+        },
+        {
+          "op": "Replace",
+          "node": 118
+        },
+        {
+          "op": "GuardAdd",
+          "node": 36
+        },
+        {
+          "op": "GuardAdd",
+          "node": 10
+        },
+        {
+          "op": "Replace",
+          "node": 10
+        },
+        {
+          "op": "GuardAdd",
+          "node": 34
+        },
+        {
+          "op": "Replace",
+          "node": 33
+        }
+      ],
+      "score": 15.381818180510745
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "GuardAdd",
+          "node": 10
+        },
+        {
+          "op": "Replace",
+          "node": 118
+        },
+        {
+          "op": "Replace",
+          "node": 34
+        },
+        {
+          "op": "Replace",
+          "node": 10
+        },
+        {
+          "op": "Replace",
+          "node": 36
+        },
+        {
+          "op": "Replace",
+          "node": 137
+        },
+        {
+          "op": "Replace",
+          "node": 272
+        },
+        {
+          "op": "Replace",
+          "node": 37
+        }
+      ],
+      "score": 15.363636362512398
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 137
+        },
+        {
+          "op": "Replace",
+          "node": 34
+        },
+        {
+          "op": "GuardAdd",
+          "node": 36
+        },
+        {
+          "op": "Replace",
+          "node": 10
+        },
+        {
+          "op": "Replace",
+          "node": 272
+        },
+        {
+          "op": "Replace",
+          "node": 118
+        },
+        {
+          "op": "GuardAdd",
+          "node": 33
+        },
+        {
+          "op": "Replace",
+          "node": 36
+        },
+        {
+          "op": "GuardAdd",
+          "node": 10
+        }
+      ],
+      "score": 14.781818180565288
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Delete",
+          "node": 34
+        },
+        {
+          "op": "Replace",
+          "node": 118
+        },
+        {
+          "op": "Replace",
+          "node": 34
+        },
+        {
+          "op": "Replace",
+          "node": 137
+        },
+        {
+          "op": "GuardAdd",
+          "node": 137
+        },
+        {
+          "op": "Replace",
+          "node": 37
+        },
+        {
+          "op": "GuardAdd",
+          "node": 33
+        },
+        {
+          "op": "GuardAdd",
+          "node": 273
+        },
+        {
+          "op": "Replace",
+          "node": 33
+        }
+      ],
+      "score": 14.781818180565288
+    }
+  ],
+  "static_analysis_nodes": [
+    {
+      "line": 23,
+      "line_absolute": 336,
+      "node_id": 137,
+      "node_id_local": 18,
+      "type": "Call",
+      "code": "parameter.DuplicateParameterException('%s: parameter %s was already set as a positional parameter' % (exc_desc, param_name))",
+      "distance_to_buggy": 0,
+      "context": "  20:           result[param_name] = arg\n  21:       for param_name, arg in six.iteritems(kwargs):\n  22:           if param_name in result:\n  23:->             raise parameter.DuplicateParameterException('%s: parameter %s was already set as a positional parameter' % (exc_desc, param_name))\n  24:           if param_name not in params_dict:\n  25:               raise parameter.UnknownParameterException('%s: unknown parameter %s' % (exc_desc, param_name))\n  26:           result[param_name] = arg",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Attribute",
+          "value": {
+            "_type": "Name"
+          },
+          "attr": "DuplicateParameterException",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [
+          {
+            "_type": "BinOp",
+            "left": {
+              "_type": "Constant"
+            },
+            "op": {
+              "_type": "Mod"
+            },
+            "right": {
+              "_type": "Tuple"
+            }
+          }
+        ],
+        "keywords": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -25.2
+    },
+    {
+      "line": 21,
+      "line_absolute": 334,
+      "node_id": 10,
+      "node_id_local": 15,
+      "type": "For",
+      "code": "for param_name, arg in six.iteritems(kwargs):\n    if param_name in result:\n        raise parameter.DuplicateParameterException('%s: parameter %s was already set as a positional parameter' % (exc_desc, param_name))\n    if param_name not in params_dict:\n        raise parameter.UnknownParameterException('%s: unknown parameter %s' % (exc_desc, param_name))\n    result[param_name] = arg",
+      "distance_to_buggy": 0,
+      "context": "  18:               raise parameter.UnknownParameterException('%s: takes at most %d parameters (%d given)' % (exc_desc, len(positional_params), len(args)))\n  19:           param_name, param_obj = positional_params[i]\n  20:           result[param_name] = arg\n  21:->     for param_name, arg in six.iteritems(kwargs):\n  22:           if param_name in result:\n  23:               raise parameter.DuplicateParameterException('%s: parameter %s was already set as a positional parameter' % (exc_desc, param_name))\n  24:           if param_name not in params_dict:",
+      "ast_subtree_json": {
+        "_type": "For",
+        "target": {
+          "_type": "Tuple",
+          "elts": [
+            {
+              "_type": "Name"
+            },
+            {
+              "_type": "Name"
+            }
+          ],
+          "ctx": {
+            "_type": "Store"
+          }
+        },
+        "iter": {
+          "_type": "Call",
+          "func": {
+            "_type": "Attribute"
+          },
+          "args": [
+            {
+              "_type": "Name"
+            }
+          ],
+          "keywords": []
+        },
+        "body": [
+          {
+            "_type": "If",
+            "test": {
+              "_type": "Compare"
+            },
+            "body": [
+              {
+                "_type": "Raise"
+              }
+            ],
+            "orelse": []
+          },
+          {
+            "_type": "If",
+            "test": {
+              "_type": "Compare"
+            },
+            "body": [
+              {
+                "_type": "Raise"
+              }
+            ],
+            "orelse": []
+          },
+          {
+            "_type": "Assign",
+            "targets": [
+              {
+                "_type": "Subscript"
+              }
+            ],
+            "value": {
+              "_type": "Name"
+            },
+            "type_comment": null
+          }
+        ],
+        "orelse": [],
+        "type_comment": null
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -24.7
+    },
+    {
+      "line": 19,
+      "line_absolute": 332,
+      "node_id": 33,
+      "node_id_local": 13,
+      "type": "Assign",
+      "code": "param_name, param_obj = positional_params[i]",
+      "distance_to_buggy": 0,
+      "context": "  16:       for i, arg in enumerate(args):\n  17:           if i >= len(positional_params):\n  18:               raise parameter.UnknownParameterException('%s: takes at most %d parameters (%d given)' % (exc_desc, len(positional_params), len(args)))\n  19:->         param_name, param_obj = positional_params[i]\n  20:           result[param_name] = arg\n  21:       for param_name, arg in six.iteritems(kwargs):\n  22:           if param_name in result:",
+      "ast_subtree_json": {
+        "_type": "Assign",
+        "targets": [
+          {
+            "_type": "Tuple",
+            "elts": [
+              {
+                "_type": "Name"
+              },
+              {
+                "_type": "Name"
+              }
+            ],
+            "ctx": {
+              "_type": "Store"
+            }
+          }
+        ],
+        "value": {
+          "_type": "Subscript",
+          "value": {
+            "_type": "Name"
+          },
+          "slice": {
+            "_type": "Name"
+          },
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "type_comment": null
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -24.5
+    },
+    {
+      "line": 20,
+      "line_absolute": 333,
+      "node_id": 34,
+      "node_id_local": 14,
+      "type": "Assign",
+      "code": "result[param_name] = arg",
+      "distance_to_buggy": 0,
+      "context": "  17:           if i >= len(positional_params):\n  18:               raise parameter.UnknownParameterException('%s: takes at most %d parameters (%d given)' % (exc_desc, len(positional_params), len(args)))\n  19:           param_name, param_obj = positional_params[i]\n  20:->         result[param_name] = arg\n  21:       for param_name, arg in six.iteritems(kwargs):\n  22:           if param_name in result:\n  23:               raise parameter.DuplicateParameterException('%s: parameter %s was already set as a positional parameter' % (exc_desc, param_name))",
+      "ast_subtree_json": {
+        "_type": "Assign",
+        "targets": [
+          {
+            "_type": "Subscript",
+            "value": {
+              "_type": "Name"
+            },
+            "slice": {
+              "_type": "Name"
+            },
+            "ctx": {
+              "_type": "Store"
+            }
+          }
+        ],
+        "value": {
+          "_type": "Name",
+          "id": "arg",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "type_comment": null
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -24.5
+    },
+    {
+      "line": 22,
+      "line_absolute": 335,
+      "node_id": 37,
+      "node_id_local": 17,
+      "type": "If",
+      "code": "if param_name in result:\n    raise parameter.DuplicateParameterException('%s: parameter %s was already set as a positional parameter' % (exc_desc, param_name))",
+      "distance_to_buggy": 0,
+      "context": "  19:           param_name, param_obj = positional_params[i]\n  20:           result[param_name] = arg\n  21:       for param_name, arg in six.iteritems(kwargs):\n  22:->         if param_name in result:\n  23:               raise parameter.DuplicateParameterException('%s: parameter %s was already set as a positional parameter' % (exc_desc, param_name))\n  24:           if param_name not in params_dict:\n  25:               raise parameter.UnknownParameterException('%s: unknown parameter %s' % (exc_desc, param_name))",
+      "ast_subtree_json": {
+        "_type": "If",
+        "test": {
+          "_type": "Compare",
+          "left": {
+            "_type": "Name"
+          },
+          "ops": [
+            {
+              "_type": "In"
+            }
+          ],
+          "comparators": [
+            {
+              "_type": "Name"
+            }
+          ]
+        },
+        "body": [
+          {
+            "_type": "Raise",
+            "exc": {
+              "_type": "Call"
+            },
+            "cause": null
+          }
+        ],
+        "orelse": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -24.2
+    },
+    {
+      "line": 21,
+      "line_absolute": 334,
+      "node_id": 36,
+      "node_id_local": 16,
+      "type": "Call",
+      "code": "six.iteritems(kwargs)",
+      "distance_to_buggy": 0,
+      "context": "  18:               raise parameter.UnknownParameterException('%s: takes at most %d parameters (%d given)' % (exc_desc, len(positional_params), len(args)))\n  19:           param_name, param_obj = positional_params[i]\n  20:           result[param_name] = arg\n  21:->     for param_name, arg in six.iteritems(kwargs):\n  22:           if param_name in result:\n  23:               raise parameter.DuplicateParameterException('%s: parameter %s was already set as a positional parameter' % (exc_desc, param_name))\n  24:           if param_name not in params_dict:",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Attribute",
+          "value": {
+            "_type": "Name"
+          },
+          "attr": "iteritems",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [
+          {
+            "_type": "Name",
+            "id": "kwargs",
+            "ctx": {
+              "_type": "Load"
+            }
+          }
+        ],
+        "keywords": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -24.0
+    },
+    {
+      "line": 18,
+      "line_absolute": 331,
+      "node_id": 118,
+      "node_id_local": 10,
+      "type": "Call",
+      "code": "parameter.UnknownParameterException('%s: takes at most %d parameters (%d given)' % (exc_desc, len(positional_params), len(args)))",
+      "distance_to_buggy": 1,
+      "context": "  15:       positional_params = [(n, p) for n, p in params if p.significant]\n  16:       for i, arg in enumerate(args):\n  17:           if i >= len(positional_params):\n  18:->             raise parameter.UnknownParameterException('%s: takes at most %d parameters (%d given)' % (exc_desc, len(positional_params), len(args)))\n  19:           param_name, param_obj = positional_params[i]\n  20:           result[param_name] = arg\n  21:       for param_name, arg in six.iteritems(kwargs):",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Attribute",
+          "value": {
+            "_type": "Name"
+          },
+          "attr": "UnknownParameterException",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [
+          {
+            "_type": "BinOp",
+            "left": {
+              "_type": "Constant"
+            },
+            "op": {
+              "_type": "Mod"
+            },
+            "right": {
+              "_type": "Tuple"
+            }
+          }
+        ],
+        "keywords": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -16.7
+    },
+    {
+      "line": 18,
+      "line_absolute": 331,
+      "node_id": 272,
+      "node_id_local": 11,
+      "type": "Call",
+      "code": "len(positional_params)",
+      "distance_to_buggy": 1,
+      "context": "  15:       positional_params = [(n, p) for n, p in params if p.significant]\n  16:       for i, arg in enumerate(args):\n  17:           if i >= len(positional_params):\n  18:->             raise parameter.UnknownParameterException('%s: takes at most %d parameters (%d given)' % (exc_desc, len(positional_params), len(args)))\n  19:           param_name, param_obj = positional_params[i]\n  20:           result[param_name] = arg\n  21:       for param_name, arg in six.iteritems(kwargs):",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Name",
+          "id": "len",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [
+          {
+            "_type": "Name",
+            "id": "positional_params",
+            "ctx": {
+              "_type": "Load"
+            }
+          }
+        ],
+        "keywords": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -15.5
+    },
+    {
+      "line": 18,
+      "line_absolute": 331,
+      "node_id": 273,
+      "node_id_local": 12,
+      "type": "Call",
+      "code": "len(args)",
+      "distance_to_buggy": 1,
+      "context": "  15:       positional_params = [(n, p) for n, p in params if p.significant]\n  16:       for i, arg in enumerate(args):\n  17:           if i >= len(positional_params):\n  18:->             raise parameter.UnknownParameterException('%s: takes at most %d parameters (%d given)' % (exc_desc, len(positional_params), len(args)))\n  19:           param_name, param_obj = positional_params[i]\n  20:           result[param_name] = arg\n  21:       for param_name, arg in six.iteritems(kwargs):",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Name",
+          "id": "len",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [
+          {
+            "_type": "Name",
+            "id": "args",
+            "ctx": {
+              "_type": "Load"
+            }
+          }
+        ],
+        "keywords": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -15.5
+    },
+    {
+      "line": 24,
+      "line_absolute": 337,
+      "node_id": 38,
+      "node_id_local": 19,
+      "type": "If",
+      "code": "if param_name not in params_dict:\n    raise parameter.UnknownParameterException('%s: unknown parameter %s' % (exc_desc, param_name))",
+      "distance_to_buggy": 1,
+      "context": "  21:       for param_name, arg in six.iteritems(kwargs):\n  22:           if param_name in result:\n  23:               raise parameter.DuplicateParameterException('%s: parameter %s was already set as a positional parameter' % (exc_desc, param_name))\n  24:->         if param_name not in params_dict:\n  25:               raise parameter.UnknownParameterException('%s: unknown parameter %s' % (exc_desc, param_name))\n  26:           result[param_name] = arg\n  27:       for param_name, param_obj in params:",
+      "ast_subtree_json": {
+        "_type": "If",
+        "test": {
+          "_type": "Compare",
+          "left": {
+            "_type": "Name"
+          },
+          "ops": [
+            {
+              "_type": "NotIn"
+            }
+          ],
+          "comparators": [
+            {
+              "_type": "Name"
+            }
+          ]
+        },
+        "body": [
+          {
+            "_type": "Raise",
+            "exc": {
+              "_type": "Call"
+            },
+            "cause": null
+          }
+        ],
+        "orelse": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -14.2
+    }
+  ]
+}

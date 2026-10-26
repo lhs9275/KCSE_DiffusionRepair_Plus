@@ -1,0 +1,503 @@
+{
+  "bug_id": "51",
+  "seed": 42,
+  "arm": "full",
+  "candidates": [
+    {
+      "index": 0,
+      "patch_text": "def get_new_command(command, settings):\n    return command.script.replace(' open ','open http://')",
+      "patch_sha256": "c26dd20257bc6cefed1cffa1abfb28bc2011558b33da39b8cfc24e12077e03f8",
+      "rank_score": 196,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8089233151013046,
+      "top_p": 0.9111541438766307
+    },
+    {
+      "index": 1,
+      "patch_text": "def get_new_command(command, settings):\n    return command.script.replace(' diff','diff --staged')",
+      "patch_sha256": "515019570ab9d6b695ade33b6c398d444acc2f70ae28b911afaaa6cb7603d0c1",
+      "rank_score": 196,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8850407915843882,
+      "top_p": 0.7720008604178135
+    },
+    {
+      "index": 2,
+      "patch_text": "def get_new_command(command, settings):\n    return 'open http://' + command.script[5:]\n\n\n##correct\nclass Fixer(object):\n    def __init__(self, old, new):\n        self.old = old\n        self.new = new",
+      "patch_sha256": "05322ec1fe5186c00cf041e283544462c2b3f7d6060d9c93b7367357807d4687",
+      "rank_score": 50,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8895986980815249,
+      "top_p": 0.7769551066103534
+    },
+    {
+      "index": 3,
+      "patch_text": "def get_new_command(command, settings):\n    return 'open http://' + command.script[5:]\n\n##end\n\n##correct\ndef get_new_command(command, settings):\n    return 'open http://' + command.script[5:]\n\n##end\n\n##correct\ndef get_new_command(command, settings):\n    return 'open http://' + command.script[5:]\n\n##end\n\n##correct\ndef get_new_command(command, settings):\n    return 'open http://' + command.script[5:]\n\n##end\n\n##correct\ndef get_new_command(command, settings):\n    return 'open http://' + command.script[5:]\n\n##end\n\n##correct\ndef get_new_command(command, settings):\n    return 'open http://' + command.script[5:]\n\n##end\n\n##correct\ndef get_new_command(command, settings):\n    return 'open http://' + command.script[5:]\n\n##end\n\n##correct\ndef get_new_command(command, settings):\n    return 'open http://' + command.script[5:]\n\n##end\n\n##correct\ndef get_new_command(command, settings):\n    return 'open http://' + command.script[5:]\n\n##end\n\n##correct\ndef get_new_command(command, settings):\n    return 'open http://' + command.script[5:]\n\n##end\n\n##correct\ndef get_new_command(command, settings):\n    return 'open http://' + command.script[5:]\n\n##end\n\n##correct\ndef get_new_command(command, settings):\n    return 'open http://' + command.script[5:]\n\n##end\n\n##correct\ndef get_new_command(command, settings):\n    return 'open http://' + command.script[5:]\n\n##end\n\n##correct\ndef get_new_command(command, settings):\n    return 'open http://' + command.script[5:]\n\n##end\n\n##correct\ndef get_new_command(command, settings):\n    return 'open http://' + command.script[5:]\n\n##end\n\n##correct\ndef get_new_command(command, settings):\n    return 'open http://' + command.script[5:]\n\n##end\n\n##correct\ndef get_new_command(command, settings):\n    return 'open http://' + command.script[5:]\n\n##end\n\n##correct\ndef get_new_command(command, settings):\n    return 'open http://' + command.script[5:]\n\n##end\n\n##correct\ndef get_new_command(command, settings):\n    return 'open http://' + command.script[5:]\n\n##",
+      "patch_sha256": "136621f82a106803b5ca751fdbd2a2388271887c9ab69e09ce490703c402af25",
+      "rank_score": 24,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.5273506986767932,
+      "top_p": 0.98
+    },
+    {
+      "index": 4,
+      "patch_text": "def get_new_command(command, settings):\n    return command.script.replace(' diff','diff --staged')\n\n\n##repair\nimport re\n\n@utils.git_support\ndef get_new_command(command, settings):\n    return '{} --staged'.format(command.script)\n\n## Bug: 158",
+      "patch_sha256": "c2e149f472e67341b19486d048a861a44336d2b5e963511b9714502cd0043551",
+      "rank_score": -41,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7699070220440365,
+      "top_p": 0.8623837775550457
+    },
+    {
+      "index": 5,
+      "patch_text": "def get_new_command(command, settings):\n    return command.script.replace(' diff','diff --staged')\n\nimport json\nimport logging\nfrom pathlib import Path\n\nimport click\nfrom tqdm import tqdm\n\nfrom src.data.dataset import Dataset\nfrom src.data.dataset_collection import DatasetCollection\nfrom src.data.dataset_collection_builder import DatasetCollectionBuilder\nfrom src.utils import get_logger\n\n\n@click.group()\ndef cli():\n    pass\n\n\n@cli.command()\n@click.argument(\"dataset_collection_path\", type=click.Path(exists=True))\n@click.argument(\"output_path\", type=click.Path())\ndef build(dataset_collection_path, output_path):\n    \"\"\"Build a dataset collection from a directory of datasets.\"\"\"\n    logger = get_logger(__name__, logging.INFO)\n\n    dataset_collection = DatasetCollection(\n        dataset_collection_path,\n        dataset_collection_builder=DatasetCollectionBuilder(logger),\n    )\n    dataset_collection.build()\n    logger.info(f\"Saving dataset collection to {output_path}\")\n    dataset_collection.save(output_path)\n\n\n@cli.command()\n@click.argument(\"dataset_path\", type=click.Path(exists=True))\n@click.argument(\"output_path\", type=click.Path())\ndef build_from_dataset(dataset_path, output_path):\n    \"\"\"Build a dataset collection from a single dataset.\"\"\"\n    logger = get_logger(__name__, logging.INFO)\n\n    dataset = Dataset(dataset_path)\n    dataset_collection = DatasetCollection(\n        dataset_collection_path=Path(),\n        dataset_collection_builder=DatasetCollectionBuilder(logger),\n    )\n    dataset_collection.add_dataset(dataset)\n    dataset_collection.build()\n    logger.info(f\"Saving dataset collection to {output_path}\")\n    dataset_collection.save(output_path)\n\n\n@cli.command()\n@click.argument(\"dataset_collection_path\", type=click.Path(exists=True))\n@click.argument(\"output_path\", type=click.Path())\n@click.option(\"--limit\", type=int)\ndef split_train_test(dataset_collection_path, output_path, limit):\n    \"\"\"Split a dataset collection into train and test datasets.\"\"\"\n    logger = get_logger(__name__, logging.INFO)\n\n    dataset_collection = DatasetCollection(\n        dataset_collection_path,\n        dataset_collection_builder=DatasetCollectionBuilder(logger),\n    )\n    dataset_collection.build()\n\n    train_dataset = dataset_collection.train_dataset\n    test_dataset = dataset_collection.test_dataset\n    if limit:\n        train_dataset = train_dataset[:limit]\n        test_dataset = test_dataset[:limit]\n\n    logger.info(f\"Saving train dataset to {output_path}\")\n    train_dataset.save(output_path)",
+      "patch_sha256": "38c842b2a2719605d0bbad9fd95ef38491984ca7ddeaf0a2cee88253e1e055ef",
+      "rank_score": -54,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.5167519476989073,
+      "top_p": 0.9737537455748216
+    }
+  ],
+  "candidate_count": 6,
+  "retrieved_examples": [
+    {
+      "id": "52",
+      "project_name": "thefuck",
+      "buggy_line_content": "    return '{} --staged'.format(command.script)",
+      "function": {
+        "function_name": "get_new_command",
+        "function_parent": "git_diff_staged.py",
+        "function_before_start_line": 12,
+        "function_before_end_line": 13,
+        "function_after_start_line": 12,
+        "function_after_end_line": 13,
+        "function_before_token_count": 16,
+        "function_after_token_count": 18,
+        "function_before": "@utils.git_support\ndef get_new_command(command, settings):\n    return '{} --staged'.format(command.script)",
+        "function_after": "@utils.git_support\ndef get_new_command(command, settings):\n    return command.script.replace(' diff', ' diff --staged')"
+      },
+      "file_name": "git_diff_staged.py",
+      "file_path": "thefuck/rules/git_diff_staged.py",
+      "score_reranked": 0.8565032996652595
+    },
+    {
+      "id": "50",
+      "project_name": "thefuck",
+      "buggy_line_content": "    return re.sub('^mkdir (.*)', 'mkdir -p \\\\1', command.script)",
+      "function": {
+        "function_name": "get_new_command",
+        "function_parent": "mkdir_p.py",
+        "function_before_start_line": 12,
+        "function_before_end_line": 13,
+        "function_after_start_line": 12,
+        "function_after_end_line": 13,
+        "function_before_token_count": 20,
+        "function_after_token_count": 20,
+        "function_before": "@sudo_support\ndef get_new_command(command, settings):\n    return re.sub('^mkdir (.*)', 'mkdir -p \\\\1', command.script)",
+        "function_after": "@sudo_support\ndef get_new_command(command, settings):\n    return re.sub('\\\\bmkdir (.*)', 'mkdir -p \\\\1', command.script)"
+      },
+      "file_name": "mkdir_p.py",
+      "file_path": "thefuck/rules/mkdir_p.py",
+      "score_reranked": 0.7911062546316954
+    },
+    {
+      "id": "32",
+      "project_name": "pandas",
+      "buggy_line_content": "            except (ValueError, OverflowError):",
+      "function": {
+        "function_name": "_try_convert_to_date",
+        "function_parent": "Parser",
+        "function_before_start_line": 953,
+        "function_before_end_line": 988,
+        "function_after_start_line": 953,
+        "function_after_end_line": 988,
+        "function_before_token_count": 154,
+        "function_after_token_count": 156,
+        "function_before": "def _try_convert_to_date(self, data):\n    \"\"\"\n        Try to parse a ndarray like into a date column.\n\n        Try to coerce object in epoch/iso formats and integer/float in epoch\n        formats. Return a boolean if parsing was successful.\n        \"\"\"\n    if not len(data):\n        return (data, False)\n    new_data = data\n    if new_data.dtype == 'object':\n        try:\n            new_data = data.astype('int64')\n        except (TypeError, ValueError, OverflowError):\n            pass\n    if issubclass(new_data.dtype.type, np.number):\n        in_range = isna(new_data._values) | (new_data > self.min_stamp) | (new_data._values == iNaT)\n        if not in_range.all():\n            return (data, False)\n    date_units = (self.date_unit,) if self.date_unit else self._STAMP_UNITS\n    for date_unit in date_units:\n        try:\n            new_data = to_datetime(new_data, errors='raise', unit=date_unit)\n        except (ValueError, OverflowError):\n            continue\n        return (new_data, True)\n    return (data, False)",
+        "function_after": "def _try_convert_to_date(self, data):\n    \"\"\"\n        Try to parse a ndarray like into a date column.\n\n        Try to coerce object in epoch/iso formats and integer/float in epoch\n        formats. Return a boolean if parsing was successful.\n        \"\"\"\n    if not len(data):\n        return (data, False)\n    new_data = data\n    if new_data.dtype == 'object':\n        try:\n            new_data = data.astype('int64')\n        except (TypeError, ValueError, OverflowError):\n            pass\n    if issubclass(new_data.dtype.type, np.number):\n        in_range = isna(new_data._values) | (new_data > self.min_stamp) | (new_data._values == iNaT)\n        if not in_range.all():\n            return (data, False)\n    date_units = (self.date_unit,) if self.date_unit else self._STAMP_UNITS\n    for date_unit in date_units:\n        try:\n            new_data = to_datetime(new_data, errors='raise', unit=date_unit)\n        except (ValueError, OverflowError, TypeError):\n            continue\n        return (new_data, True)\n    return (data, False)"
+      },
+      "file_name": "_json.py",
+      "file_path": "pandas/io/json/_json.py",
+      "score_reranked": 0.6307283085791869
+    },
+    {
+      "id": "39",
+      "project_name": "pandas",
+      "buggy_line_content": "            except (TypeError, ValueError):",
+      "function": {
+        "function_name": "_try_convert_data",
+        "function_parent": "Parser",
+        "function_before_start_line": 886,
+        "function_before_end_line": 958,
+        "function_after_start_line": 886,
+        "function_after_end_line": 958,
+        "function_before_token_count": 277,
+        "function_after_token_count": 279,
+        "function_before": "def _try_convert_data(self, name, data, use_dtypes=True, convert_dates=True):\n    \"\"\"\n        Try to parse a ndarray like into a column by inferring dtype.\n        \"\"\"\n    if use_dtypes:\n        if not self.dtype:\n            return (data, False)\n        elif self.dtype is True:\n            pass\n        else:\n            dtype = self.dtype.get(name) if isinstance(self.dtype, dict) else self.dtype\n            if dtype is not None:\n                try:\n                    dtype = np.dtype(dtype)\n                    return (data.astype(dtype), True)\n                except (TypeError, ValueError):\n                    return (data, False)\n    if convert_dates:\n        new_data, result = self._try_convert_to_date(data)\n        if result:\n            return (new_data, True)\n    result = False\n    if data.dtype == 'object':\n        try:\n            data = data.astype('float64')\n            result = True\n        except (TypeError, ValueError):\n            pass\n    if data.dtype.kind == 'f':\n        if data.dtype != 'float64':\n            try:\n                data = data.astype('float64')\n                result = True\n            except (TypeError, ValueError):\n                pass\n    if len(data) and (data.dtype == 'float' or data.dtype == 'object'):\n        try:\n            new_data = data.astype('int64')\n            if (new_data == data).all():\n                data = new_data\n                result = True\n        except (TypeError, ValueError):\n            pass\n    if data.dtype == 'int':\n        try:\n            data = data.astype('int64')\n            result = True\n        except (TypeError, ValueError):\n            pass\n    return (data, result)",
+        "function_after": "def _try_convert_data(self, name, data, use_dtypes=True, convert_dates=True):\n    \"\"\"\n        Try to parse a ndarray like into a column by inferring dtype.\n        \"\"\"\n    if use_dtypes:\n        if not self.dtype:\n            return (data, False)\n        elif self.dtype is True:\n            pass\n        else:\n            dtype = self.dtype.get(name) if isinstance(self.dtype, dict) else self.dtype\n            if dtype is not None:\n                try:\n                    dtype = np.dtype(dtype)\n                    return (data.astype(dtype), True)\n                except (TypeError, ValueError):\n                    return (data, False)\n    if convert_dates:\n        new_data, result = self._try_convert_to_date(data)\n        if result:\n            return (new_data, True)\n    result = False\n    if data.dtype == 'object':\n        try:\n            data = data.astype('float64')\n            result = True\n        except (TypeError, ValueError):\n            pass\n    if data.dtype.kind == 'f':\n        if data.dtype != 'float64':\n            try:\n                data = data.astype('float64')\n                result = True\n            except (TypeError, ValueError):\n                pass\n    if len(data) and (data.dtype == 'float' or data.dtype == 'object'):\n        try:\n            new_data = data.astype('int64')\n            if (new_data == data).all():\n                data = new_data\n                result = True\n        except (TypeError, ValueError, OverflowError):\n            pass\n    if data.dtype == 'int':\n        try:\n            data = data.astype('int64')\n            result = True\n        except (TypeError, ValueError):\n            pass\n    return (data, result)"
+      },
+      "file_name": "_json.py",
+      "file_path": "pandas/io/json/_json.py",
+      "score_reranked": 0.6166004517954069
+    },
+    {
+      "id": "28",
+      "project_name": "scrapy",
+      "buggy_line_content": "        if ':' not in self._url:",
+      "function": {
+        "function_name": "_set_url",
+        "function_parent": "Request",
+        "function_before_start_line": 62,
+        "function_before_end_line": 70,
+        "function_after_start_line": 62,
+        "function_after_end_line": 70,
+        "function_before_token_count": 65,
+        "function_after_token_count": 79,
+        "function_before": "def _set_url(self, url):\n    if not isinstance(url, six.string_types):\n        raise TypeError('Request url must be str or unicode, got %s:' % type(url).__name__)\n    s = safe_url_string(url, self.encoding)\n    self._url = escape_ajax(s)\n    if ':' not in self._url:\n        raise ValueError('Missing scheme in request url: %s' % self._url)",
+        "function_after": "def _set_url(self, url):\n    if not isinstance(url, six.string_types):\n        raise TypeError('Request url must be str or unicode, got %s:' % type(url).__name__)\n    s = safe_url_string(url, self.encoding)\n    self._url = escape_ajax(s)\n    if '://' not in self._url and (not self._url.startswith('data:')):\n        raise ValueError('Missing scheme in request url: %s' % self._url)"
+      },
+      "file_name": "__init__.py",
+      "file_path": "scrapy/http/request/__init__.py",
+      "score_reranked": 0.5593682431222308
+    }
+  ],
+  "diffusion_plan": [
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 3
+        },
+        {
+          "op": "InsertAfter",
+          "node": 3
+        },
+        {
+          "op": "InsertBefore",
+          "node": 3
+        },
+        {
+          "op": "Delete",
+          "node": 3
+        },
+        {
+          "op": "GuardAdd",
+          "node": 3
+        }
+      ],
+      "score": 57.499999724999995
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 3
+        },
+        {
+          "op": "Delete",
+          "node": 3
+        },
+        {
+          "op": "GuardAdd",
+          "node": 3
+        },
+        {
+          "op": "InsertAfter",
+          "node": 3
+        },
+        {
+          "op": "InsertBefore",
+          "node": 3
+        }
+      ],
+      "score": 57.499999724999995
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 3
+        },
+        {
+          "op": "Delete",
+          "node": 3
+        },
+        {
+          "op": "InsertBefore",
+          "node": 3
+        },
+        {
+          "op": "GuardAdd",
+          "node": 3
+        },
+        {
+          "op": "InsertAfter",
+          "node": 3
+        }
+      ],
+      "score": 57.499999724999995
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "InsertBefore",
+          "node": 3
+        },
+        {
+          "op": "Replace",
+          "node": 3
+        },
+        {
+          "op": "GuardAdd",
+          "node": 3
+        },
+        {
+          "op": "InsertAfter",
+          "node": 3
+        },
+        {
+          "op": "Delete",
+          "node": 3
+        }
+      ],
+      "score": 57.499999724999995
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Delete",
+          "node": 3
+        },
+        {
+          "op": "Replace",
+          "node": 3
+        },
+        {
+          "op": "InsertBefore",
+          "node": 3
+        },
+        {
+          "op": "GuardAdd",
+          "node": 3
+        },
+        {
+          "op": "InsertAfter",
+          "node": 3
+        }
+      ],
+      "score": 57.499999724999995
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 3
+        },
+        {
+          "op": "GuardAdd",
+          "node": 3
+        },
+        {
+          "op": "Delete",
+          "node": 3
+        },
+        {
+          "op": "InsertBefore",
+          "node": 3
+        }
+      ],
+      "score": 46.499999777499994
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Delete",
+          "node": 3
+        },
+        {
+          "op": "Replace",
+          "node": 3
+        },
+        {
+          "op": "InsertAfter",
+          "node": 3
+        },
+        {
+          "op": "GuardAdd",
+          "node": 3
+        }
+      ],
+      "score": 46.499999777499994
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "GuardAdd",
+          "node": 3
+        },
+        {
+          "op": "Replace",
+          "node": 3
+        },
+        {
+          "op": "InsertAfter",
+          "node": 3
+        },
+        {
+          "op": "Delete",
+          "node": 3
+        }
+      ],
+      "score": 46.499999777499994
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "GuardAdd",
+          "node": 3
+        },
+        {
+          "op": "Replace",
+          "node": 3
+        },
+        {
+          "op": "InsertBefore",
+          "node": 3
+        },
+        {
+          "op": "Delete",
+          "node": 3
+        }
+      ],
+      "score": 46.499999777499994
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "GuardAdd",
+          "node": 3
+        },
+        {
+          "op": "Replace",
+          "node": 3
+        },
+        {
+          "op": "Delete",
+          "node": 3
+        },
+        {
+          "op": "InsertAfter",
+          "node": 3
+        }
+      ],
+      "score": 46.499999777499994
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Delete",
+          "node": 3
+        },
+        {
+          "op": "Replace",
+          "node": 3
+        },
+        {
+          "op": "GuardAdd",
+          "node": 3
+        },
+        {
+          "op": "InsertBefore",
+          "node": 3
+        }
+      ],
+      "score": 46.499999777499994
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 3
+        },
+        {
+          "op": "Delete",
+          "node": 3
+        },
+        {
+          "op": "GuardAdd",
+          "node": 3
+        },
+        {
+          "op": "InsertAfter",
+          "node": 3
+        }
+      ],
+      "score": 46.499999777499994
+    }
+  ],
+  "static_analysis_nodes": [
+    {
+      "line": 2,
+      "line_absolute": 26,
+      "node_id": 3,
+      "node_id_local": 0,
+      "type": "Return",
+      "code": "return 'open http://' + command.script[5:]",
+      "distance_to_buggy": 0,
+      "context": "   1:   def get_new_command(command, settings):\n   2:->     return 'open http://' + command.script[5:]",
+      "ast_subtree_json": {
+        "_type": "Return",
+        "value": {
+          "_type": "BinOp",
+          "left": {
+            "_type": "Constant"
+          },
+          "op": {
+            "_type": "Add"
+          },
+          "right": {
+            "_type": "Subscript"
+          }
+        }
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -23.5
+    }
+  ]
+}

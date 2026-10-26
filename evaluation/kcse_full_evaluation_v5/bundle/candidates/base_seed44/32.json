@@ -1,0 +1,141 @@
+{
+  "bug_id": "32",
+  "seed": 44,
+  "arm": "base",
+  "candidates": [
+    {
+      "index": 0,
+      "patch_text": "def _try_convert_to_date(self, data):\n    \"\"\"\n        Try to parse a ndarray like into a date column.\n\n        Try to coerce object in epoch/iso formats and integer/float in epoch\n        formats. Return a boolean if parsing was successful.\n        \"\"\"\n    if not len(data):\n        return (data, False)\n    new_data = data\n    if new_data.dtype == 'object':\n        try:\n            new_data = data.astype('int64')\n        except (TypeError, ValueError, OverflowError):\n            pass\n    if issubclass(new_data.dtype.type, np.number):\n        in_range = isna(new_data._values) | (new_data > self.min_stamp) | (new_data._values == iNaT)\n        if not in_range.all():\n            return (data, False)\n    date_units = (self.date_unit,) if self.date_unit else self._STAMP_UNITS\n    for date_unit in date_units:\n        try:\n            new_data = to_datetime(new_data, errors='raise', unit=date_unit)\n        except (OverflowError):  # <--- BUGGY LINE\n            continue\n        return (new_data, True)\n    return (data, False)",
+      "patch_sha256": "b18f83a754f4e001b336f19b6b128e789677e0e3a4d1cd6d1d9e0e1e1a9e1c75",
+      "rank_score": 244,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.9230891398700982,
+      "top_p": 0.8133577607283677
+    },
+    {
+      "index": 1,
+      "patch_text": "def _try_convert_to_date(self, data):\n    \"\"\"\n        Try to parse a ndarray like into a date column.\n\n        Try to coerce object in epoch/iso formats and integer/float in epoch\n        formats. Return a boolean if parsing was successful.\n        \"\"\"\n    if not len(data):\n        return (data, False)\n    new_data = data\n    if new_data.dtype == 'object':\n        try:\n            new_data = data.astype('int64')\n        except TypeError:\n            pass\n    if issubclass(new_data.dtype.type, np.number):\n        in_range = isna(new_data._values) | (new_data > self.min_stamp) | (new_data._values == iNaT)\n        if not in_range.all():\n            return (data, False)\n    date_units = (self.date_unit,) if self.date_unit else self._STAMP_UNITS\n    for date_unit in date_units:\n        try:\n            new_data = to_datetime(new_data, errors='raise', unit=date_unit)\n        except (OverflowError, ValueError):\n            continue\n        return (new_data, True)\n    return (data, False)",
+      "patch_sha256": "9b7ae99755a7678af28d547291bb753f9e6c977991dfac399bd0bfca1f0d131f",
+      "rank_score": 243,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7941462962722876,
+      "top_p": 0.8926828703403595
+    },
+    {
+      "index": 2,
+      "patch_text": "def _try_convert_to_date(self, data):\n    \"\"\"\n        Try to parse a ndarray like into a date column.\n\n        Try to coerce object in epoch/iso formats and integer/float in epoch\n        formats. Return a boolean if parsing was successful.\n        \"\"\"\n    if not len(data):\n        return (data, False)\n    new_data = data\n    if new_data.dtype == 'object':\n        try:\n            new_data = data.astype('int64')\n        except TypeError:\n            pass\n    if issubclass(new_data.dtype.type, np.number):\n        in_range = isna(new_data._values) | (new_data > self.min_stamp) | (new_data._values == iNaT)\n        if not in_range.all():\n            return (data, False)\n    date_units = (self.date_unit,) if self.date_unit else self._STAMP_UNITS\n    for date_unit in date_units:\n        try:\n            new_data = to_datetime(new_data, errors='raise', unit=date_unit)\n        except ValueError:\n            continue\n        return (new_data, True)\n    return (data, False)",
+      "patch_sha256": "3b5b883f2e9c0d00eba354253a628772a9dcda6cd0228e94bb87ee1559eec589",
+      "rank_score": 243,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7941462962722876,
+      "top_p": 0.8926828703403595
+    },
+    {
+      "index": 3,
+      "patch_text": "def _try_convert_to_date(self, data):\n    \"\"\"\n    Try to parse a ndarray like into a date column.\n\n    Try to coerce object in epoch/iso formats and integer/float in epoch\n    formats. Return a boolean if parsing was successful.\n    \"\"\"\n    if not len(data):\n        return (data, False)\n    new_data = data\n    if new_data.dtype == 'object':\n        try:\n            new_data = data.astype('int64')\n        except (TypeError, ValueError):\n            pass\n    if issubclass(new_data.dtype.type, np.number):\n        in_range = isna(new_data._values) | (new_data > self.min_stamp) | (new_data._values == iNaT)\n        if not in_range.all():\n            return (data, False)\n    date_units = (self.date_unit,) if self.date_unit else self._STAMP_UNITS\n    for date_unit in date_units:\n        try:\n            new_data = to_datetime(new_data, errors='raise', unit=date_unit)\n        except (ValueError):\n            continue\n        return (new_data, True)\n    return (data, False)",
+      "patch_sha256": "90de8b50bcdad1f1603c70e161d80bce70db92ee29c71bb56d86526ca4e5c5f5",
+      "rank_score": 234,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7941462962722876,
+      "top_p": 0.8926828703403595
+    },
+    {
+      "index": 4,
+      "patch_text": "def _try_convert_to_date(self, data):\n    \"\"\"\n    Try to parse a ndarray like into a date column.\n\n    Try to coerce object in epoch/iso formats and integer/float in epoch\n    formats. Return a boolean if parsing was successful.\n    \"\"\"\n    if not len(data):\n        return (data, False)\n    new_data = data\n    if new_data.dtype == 'object':\n        try:\n            new_data = data.astype('int64')\n        except (TypeError, ValueError):\n            pass\n    if issubclass(new_data.dtype.type, np.number):\n        in_range = isna(new_data._values) | (new_data > self.min_stamp) | (new_data._values == iNaT)\n        if not in_range.all():\n            return (data, False)\n    date_units = (self.date_unit,) if self.date_unit else self._STAMP_UNITS\n    for date_unit in date_units:\n        try:\n            new_data = to_datetime(new_data, errors='raise', unit=date_unit)\n        except ValueError:\n            continue\n        return (new_data, True)\n    return (data, False)",
+      "patch_sha256": "447e9b64359ebf7def845dac490715355ebf8f8edd79c1226ec52501abe58e4e",
+      "rank_score": 234,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7793066012285085,
+      "top_p": 0.8741332515356355
+    },
+    {
+      "index": 5,
+      "patch_text": "def _try_convert_to_date(self, data):\n    \"\"\"\n        Try to parse a ndarray like into a date column.\n\n        Try to coerce object in epoch/iso formats and integer/float in epoch\n        formats. Return a boolean if parsing was successful.\n        \"\"\"\n    if not len(data):\n        return (data, False)\n    new_data = data\n    if new_data.dtype == 'object':\n        try:\n            new_data = data.astype('int64')\n        except TypeError:\n            pass\n    if issubclass(new_data.dtype.type, np.number):\n        in_range = isna(new_data._values) | (new_data > self.min_stamp) | (new_data._values == iNaT)\n        if not in_range.all():\n            return (data, False)\n    date_units = (self.date_unit,) if self.date_unit else self._STAMP_UNITS\n    for date_unit in date_units:\n        try:\n            new_data = to_datetime(new_data, errors='raise', unit=date_unit)\n        except (ValueError, OverflowError):\n            continue\n        return (new_data, True)\n    return (data, False)",
+      "patch_sha256": "6820527276dfca9f04551523b677ad34959b0b8b3243493397dad5110a6bbbb2",
+      "rank_score": 214,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7941462962722876,
+      "top_p": 0.8926828703403595
+    },
+    {
+      "index": 6,
+      "patch_text": "def _try_convert_to_date(self, data):\n    \"\"\"\n        Try to parse a ndarray like into a date column.\n\n        Try to coerce object in epoch/iso formats and integer/float in epoch\n        formats. Return a boolean if parsing was successful.\n        \"\"\"\n    if not len(data):\n        return (data, False)\n    new_data = data\n    if new_data.dtype == 'object':\n        try:\n            new_data = data.astype('int64')\n        except TypeError:\n            pass\n        except (ValueError, OverflowError):  # <--- FIXED BUG\n            pass\n    if issubclass(new_data.dtype.type, np.number):\n        in_range = isna(new_data._values) | (new_data > self.min_stamp) | (new_data._values == iNaT)\n        if not in_range.all():\n            return (data, False)\n    date_units = (self.date_unit,) if self.date_unit else self._STAMP_UNITS\n    for date_unit in date_units:\n        try:\n            new_data = to_datetime(new_data, errors='raise', unit=date_unit)\n        except (ValueError, OverflowError):  # <--- FIXED BUG\n            continue\n        return (new_data, True)\n    return (data, False)",
+      "patch_sha256": "9aae70eaa5a532ec354baec533c0e67e6ed7b8a4e3c65e50cc3b3260912d1d6d",
+      "rank_score": 214,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.5350607232455378,
+      "top_p": 0.98
+    },
+    {
+      "index": 7,
+      "patch_text": "def _try_convert_to_date(self, data):\n    \"\"\"\n        Try to parse a ndarray like into a date column.\n\n        Try to coerce object in epoch/iso formats and integer/float in epoch\n        formats. Return a boolean if parsing was successful.\n        \"\"\"\n    if not len(data):\n        return (data, False)\n    new_data = data\n    if new_data.dtype == 'object':\n        try:\n            new_data = data.astype('int64')\n        except (TypeError, ValueError):\n            pass\n    if issubclass(new_data.dtype.type, np.number):\n        in_range = isna(new_data._values) | (new_data > self.min_stamp) | (new_data._values == iNaT)\n        if not in_range.all():\n            return (data, False)\n    date_units = (self.date_unit,) if self.date_unit else self._STAMP_UNITS\n    for date_unit in date_units:\n        try:\n            new_data = to_datetime(new_data, errors='raise', unit=date_unit)\n        except (ValueError, OverflowError):\n            continue\n        return (new_data, True)\n    return (data, False)",
+      "patch_sha256": "da2c28ed8963e1721cbd88830c6c53160baed25b25c4db2f467516adb1e0bebd",
+      "rank_score": 214,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7793066012285085,
+      "top_p": 0.8741332515356355
+    },
+    {
+      "index": 8,
+      "patch_text": "def _try_convert_to_date(self, data):\n    \"\"\"\n        Try to parse a ndarray like into a date column.\n\n        Try to coerce object in epoch/iso formats and integer/float in epoch\n        formats. Return a boolean if parsing was successful.\n        \"\"\"\n    if not len(data):\n        return (data, False)\n    new_data = data\n    if new_data.dtype == 'object':\n        try:\n            new_data = data.astype('int64')\n        except TypeError:\n            pass\n    if issubclass(new_data.dtype.type, np.number):\n        in_range = isna(new_data._values) | (new_data > self.min_stamp) | (new_data._values == iNaT)\n        if not in_range.all():\n            return (data, False)\n    date_units = (self.date_unit,) if self.date_unit else self._STAMP_UNITS\n    for date_unit in date_units:\n        try:\n            new_data = to_datetime(new_data, errors='raise', unit=date_unit)\n        except (TypeError, ValueError):\n            continue\n        return (new_data, True)\n    return (data, False)\n\n# -*- coding: utf-8 -*-\n\nimport re\n\nfrom pytest import raises\n\nfrom blackd import exceptions as ex\n\n\ndef test_blackd_exception():\n    exc = ex.BlackdException(\"Test\")\n    assert str(exc) == \"Test\"\n\n\ndef test_blackd_exception_with_args():\n    exc = ex.BlackdException(\"Test\", \"one\", 2, three=\"four\")\n    assert str(exc) == \"Test one 2 three=four\"\n\n\ndef test_blackd_exception_with_format():\n    exc = ex.BlackdException(\"Test {0} {1}\", \"one\", 2)\n    assert str(exc) == \"Test one 2\"\n\n    exc = ex.BlackdException(\"Test {0} {1}\", \"one\", 2, 3)\n    assert str(exc) == \"Test one 2 3\"\n\n    exc = ex.BlackdException(\"Test {0} {1}\", \"one\", 2, three=\"four\")\n    assert str(exc) == \"Test one 2 three=four\"\n\n\ndef test_blackd_exception_with_kwargs():\n    exc = ex.BlackdException(\"Test {one} {two}\", one=\"1\", two=\"2\")\n    assert str(exc) == \"Test 1 2\"\n\n    exc = ex.BlackdException(\"Test {one} {two}\", one=\"1\", two=\"2\", three=\"3\")\n    assert str(exc) == \"Test 1 2 three=3\"\n\n    exc = ex.BlackdException(\"Test {one} {two}\", one=\"1\", two=\"2\", three=\"3\")\n    assert str(exc)",
+      "patch_sha256": "0c4825a3de509176194437e596c787b7e9ac822d46f28c6f61e6603d3a2a4e93",
+      "rank_score": 5,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7941462962722876,
+      "top_p": 0.8926828703403595
+    },
+    {
+      "index": 9,
+      "patch_text": "def _try_convert_to_date(self, data):\n    \"\"\"\n        Try to parse a ndarray like into a date column.\n\n        Try to coerce object in epoch/iso formats and integer/float in epoch\n        formats. Return a boolean if parsing was successful.\n        \"\"\"\n    if not len(data):\n        return (data, False)\n    new_data = data\n    if new_data.dtype == 'object':\n        try:\n            new_data = data.astype('int64')\n        except TypeError:\n            pass\n    if issubclass(new_data.dtype.type, np.number):\n        in_range = isna(new_data._values) | (new_data > self.min_stamp) | (new_data._values == iNaT)\n        if not in_range.all():\n            return (data, False)\n    date_units = (self.date_unit,) if self.date_unit else self._STAMP_UNITS\n    for date_unit in date_units:\n        try:\n            new_data = to_datetime(new_data, errors='raise', unit=date_unit)\n        except ValueError:\n            continue\n        return (new_data, True)\n    return (data, False)\nimport os\nimport re\nfrom pathlib import Path\nfrom typing import Dict, List, Set\n\nfrom jinja2 import Template\nfrom lark import Lark, Transformer\nfrom rich.console import Console\nfrom rich.markdown import Markdown\n\nfrom. import utils\n\nconsole = Console()\n\n__all__ = [\"get_buggy_tasks\"]\n\nBUGGY_TASKS_LARK_GRAMMAR = \"\"\"\n?start: tasks\ntasks: task+\ntask: header NEWLINE task_content\nheader: header_line+\nheader_line: (text_line NEWLINE)*\ntask_content: (text_line NEWLINE)*\ntext_line: (text_line_content | markdown_line_content)\ntext_line_content: (text_line_marker text)+\nmarkdown_line_content: (markdown_line_marker text)+\ntext_line_marker: text \"Task\" text \":\" text\nmarkdown_line_marker: text \"Task\" text \":\" text\n\"\"\"\n\n_lark_parser = Lark(BUGGY_TASKS_LARK_GRAMMAR, parser=\"lalr\", transformer=Transformer())\n\n\ndef get_buggy_tasks(\n    tasks_dir: Path,\n    ignore_dirs: Set[str] = set(),\n    filter_fn=None,\n) -> Dict[str, Dict]:\n    \"\"\"Get buggy tasks from a directory of markdown files\n\n    :param tasks_dir: The path to the tasks directory\n    :param ignore_dirs: A set of directories to ignore\n    :param filter_fn: A callable taking a task dict and returning true if the task should be included\n\n    Returns:\n        A dictionary mapping bug IDs to buggy tasks\n    \"\"\"",
+      "patch_sha256": "909b60c83b1fa84172fdc0c85e597d0d46baf9c8357ecdba2ace3a7d9dfc7156",
+      "rank_score": -27,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.9230891398700982,
+      "top_p": 0.8133577607283677
+    }
+  ],
+  "candidate_count": 10,
+  "retrieved_examples": [],
+  "diffusion_plan": [],
+  "static_analysis_nodes": []
+}

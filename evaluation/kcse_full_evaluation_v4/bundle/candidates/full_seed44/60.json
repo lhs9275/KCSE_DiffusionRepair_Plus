@@ -1,0 +1,1138 @@
+{
+  "bug_id": "60",
+  "seed": 44,
+  "arm": "full",
+  "candidates": [
+    {
+      "index": 0,
+      "patch_text": "def create_cloned_field(field: ModelField) -> ModelField:\n    original_type = field.type_\n    if is_dataclass(original_type) and hasattr(original_type, '__pydantic_model__'):\n        original_type = original_type.__pydantic_model__\n    use_type = original_type\n    if lenient_issubclass(original_type, BaseModel):\n        original_type = cast(Type[BaseModel], original_type)\n        use_type = create_model(original_type.__name__, __config__=original_type.__config__)\n        for f in original_type.__fields__.values():\n            use_type.__fields__[f.name] = f\n    if PYDANTIC_1:\n        new_field = ModelField(name=field.name, type_=use_type, class_validators={}, default=None, required=False, model_config=BaseConfig, field_info=FieldInfo(None))\n    else:\n        new_field = ModelField(name=field.name, type_=use_type, class_validators={}, default=None, required=False, model_config=BaseConfig, schema=FieldInfo(None))\n    new_field.has_alias = field.has_alias\n    new_field.alias = field.alias\n    new_field.class_validators = field.class_validators\n    new_field.default = field.default\n    new_field.required = field.required\n    new_field.model_config = field.model_config\n    if PYDANTIC_1:\n        new_field.field_info = field.field_info\n    else:\n        new_field.schema = field.schema\n    new_field.allow_none = field.allow_none\n    new_field.validate_always = field.validate_always\n    if field.sub_fields:\n        new_field.sub_fields = [create_cloned_field(sub_field) for sub_field in field.sub_fields]\n    if field.key_field:\n        new_field.key_field = create_cloned_field(field.key_field)\n    new_field.validators = field.validators\n    if PYDANTIC_1:\n        new_field.pre_validators = field.pre_validators\n        new_field.post_validators = field.post_validators\n    else:\n        new_field.whole_pre_validators = field.whole_pre_validators\n        new_field.whole_post_validators = field.whole_post_validators\n    new_field.parse_json = field.parse_json\n    new_field.shape = field.shape\n    try:\n        new_field.populate_validators()\n    except AttributeError:\n        new_field._populate_validators()\n    return new_field",
+      "patch_sha256": "5e96af5b84dd01edb1fee75550495f8efecc7c2d3b6bd08f3312dc248b0e5aad",
+      "rank_score": 236,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.5350607232455378,
+      "top_p": 0.98
+    },
+    {
+      "index": 1,
+      "patch_text": "def create_cloned_field(field: ModelField) -> ModelField:\n    original_type = field.type_\n    if is_dataclass(original_type) and hasattr(original_type, '__pydantic_model__'):\n        original_type = original_type.__pydantic_model__\n    use_type = original_type\n    if lenient_issubclass(original_type, BaseModel):\n        original_type = cast(Type[BaseModel], original_type)\n        use_type = create_model(original_type.__name__, __config__=original_type.__config__)\n# edit1\n        for f in original_type.__fields__.values():\n            use_type.__fields__[f.name] = f\n# edit2\n        use_type.__validators__ = original_type.__validators__\n    if PYDANTIC_1:\n# edit3\n        new_field = ModelField(name=field.name, type_=use_type, class_validators={}, default=None, required=False, model_config=BaseConfig, field_info=FieldInfo(None))\n    else:\n# edit4\n        new_field = ModelField(name=field.name, type_=use_type, class_validators={}, default=None, required=False, model_config=BaseConfig, schema=FieldInfo(None))\n    new_field.has_alias = field.has_alias\n    new_field.alias = field.alias\n    new_field.class_validators = field.class_validators\n    new_field.default = field.default\n    new_field.required = field.required\n    new_field.model_config = field.model_config\n    if PYDANTIC_1:\n# edit5\n        new_field.field_info = field.field_info\n    else:\n# edit6\n        new_field.schema = field.schema\n    new_field.allow_none = field.allow_none\n    new_field.validate_always = field.validate_always\n    if field.sub_fields:\n        new_field.sub_fields = [create_cloned_field(sub_field) for sub_field in field.sub_fields]\n    if field.key_field:\n        new_field.key_field = create_cloned_field(field.key_field)\n    new_field.validators = field.validators\n    if PYDANTIC_1:\n# edit7\n        new_field.pre_validators = field.pre_validators\n        new_field.post_validators = field.post_validators\n    else:\n# edit8\n        new_field.whole_pre_validators = field.whole_pre_validators\n        new_field.whole_post_validators = field.whole_post_validators\n    new_field.parse_json = field.parse_json\n    new_field.shape = field.shape\n    try:\n        new_field.populate_validators()\n    except AttributeError:\n        new_field",
+      "patch_sha256": "ad9ef644f75019e0301d59431797ccc74b8619436d77fa7bb98bc74bd1757f79",
+      "rank_score": 214,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.9560266782037877,
+      "top_p": 0.8491594328302041
+    },
+    {
+      "index": 2,
+      "patch_text": "def create_cloned_field(field: ModelField) -> ModelField:\n    original_type = field.type_\n    if is_dataclass(original_type) and hasattr(original_type, '__pydantic_model__'):\n        original_type = original_type.__pydantic_model__\n    use_type = original_type\n    if lenient_issubclass(original_type, BaseModel):\n        original_type = cast(Type[BaseModel], original_type)\n        use_type = create_model(original_type.__name__, __config__=original_type.__config__)\n        for f in original_type.__fields__.values():\n            use_type.__fields__[f.name] = f  # <--- BUGGY LINE\n        use_type.__validators__ = original_type.__validators__\n    if PYDANTIC_1:\n        new_field = ModelField(name=field.name, type_=use_type, class_validators={}, default=None, required=False, model_config=BaseConfig, field_info=FieldInfo(None))\n    else:\n        new_field = ModelField(name=field.name, type_=use_type, class_validators={}, default=None, required=False, model_config=BaseConfig, schema=FieldInfo(None))\n    new_field.has_alias = field.has_alias\n    new_field.alias = field.alias\n    new_field.class_validators = field.class_validators\n    new_field.default = field.default\n    new_field.required = field.required\n    new_field.model_config = field.model_config\n    if PYDANTIC_1:\n        new_field.field_info = field.field_info\n    else:\n        new_field.schema = field.schema\n    new_field.allow_none = field.allow_none\n    new_field.validate_always = field.validate_always\n    if field.sub_fields:\n        new_field.sub_fields = [create_cloned_field(sub_field) for sub_field in field.sub_fields]\n    if field.key_field:\n        new_field.key_field = create_cloned_field(field.key_field)\n    new_field.validators = field.validators\n    if PYDANTIC_1:\n        new_field.pre_validators = field.pre_validators\n        new_field.post_validators = field.post_validators\n    else:\n        new_field.whole_pre_validators = field.whole_pre_validators\n        new_field.whole_post_validators = field.whole_post_validators\n    new_field.parse_json = field.parse_json\n    new_field.shape = field.shape\n    try:\n        new_field.populate_validators()\n    except AttributeError:\n        new_field._populate_validators()\n    return new_field/generated/fixer_results/test_django_",
+      "patch_sha256": "680e742aabd590bb1be1a2223ddc66696888d40f1192a6dddea356185ad4f86c",
+      "rank_score": 214,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.9560266782037877,
+      "top_p": 0.8491594328302041
+    },
+    {
+      "index": 3,
+      "patch_text": "def create_cloned_field(field: ModelField) -> ModelField:\n    original_type = field.type_\n    if is_dataclass(original_type) and hasattr(original_type, '__pydantic_model__'):\n        original_type = original_type.__pydantic_model__\n    use_type = original_type\n    if lenient_issubclass(original_type, BaseModel):\n        original_type = cast(Type[BaseModel], original_type)\n        use_type = create_model(original_type.__name__, __config__=original_type.__config__)\n        for f in original_type.__fields__.values():\n            use_type.__fields__[f.name] = f  # <-- edit1\n        use_type.__validators__ = original_type.__validators__  # <-- edit2\n    if PYDANTIC_1:\n        new_field = ModelField(name=field.name, type_=use_type, class_validators={}, default=None, required=False, model_config=BaseConfig, field_info=FieldInfo(None))  # <-- edit3\n    else:\n        new_field = ModelField(name=field.name, type_=use_type, class_validators={}, default=None, required=False, model_config=BaseConfig, schema=FieldInfo(None))  # <-- edit4\n    new_field.has_alias = field.has_alias\n    new_field.alias = field.alias\n    new_field.class_validators = field.class_validators\n    new_field.default = field.default\n    new_field.required = field.required\n    new_field.model_config = field.model_config\n    if PYDANTIC_1:\n        new_field.field_info = field.field_info  # <-- edit5\n    else:\n        new_field.schema = field.schema  # <-- edit6\n    new_field.allow_none = field.allow_none\n    new_field.validate_always = field.validate_always\n    if field.sub_fields:\n        new_field.sub_fields = [create_cloned_field(sub_field) for sub_field in field.sub_fields]\n    if field.key_field:\n        new_field.key_field = create_cloned_field(field.key_field)\n    new_field.validators = field.validators\n    if PYDANTIC_1:\n        new_field.pre_validators = field.pre_validators\n        new_field.post_validators = field.post_validators\n    else:\n        new_field.whole_pre_validators = field.whole_pre_validators\n        new_field.whole_post_validators = field.whole_post_validators\n    new_field.parse_json = field.parse_json\n    new_field.shape = field.shape\n    try:\n        new_field.populate_validators()\n    except AttributeError:\n        new_field._populate",
+      "patch_sha256": "8a6652d1fc2758194fe39724cbf15c9779c5094c4832738582f641f9c25f29eb",
+      "rank_score": 204,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.5280500268755478,
+      "top_p": 0.98
+    },
+    {
+      "index": 4,
+      "patch_text": "def create_cloned_field(field: ModelField) -> ModelField:\n    original_type = field.type_\n    if is_dataclass(original_type) and hasattr(original_type, '__pydantic_model__'):\n        original_type = original_type.__pydantic_model__\n    use_type = original_type\n    if lenient_issubclass(original_type, BaseModel):\n        original_type = cast(Type[BaseModel], original_type)\n        use_type = create_model(original_type.__name__, __config__=original_type.__config__)\n        for f in original_type.__fields__.values():\n            use_type.__fields__[f.name] = f  # <--- BUGGY LINE\n        use_type.__validators__ = original_type.__validators__\n    if PYDANTIC_1:\n        new_field = ModelField(name=field.name, type_=use_type, class_validators={}, default=None, required=False, model_config=BaseConfig, field_info=FieldInfo(None))\n    else:\n        new_field = ModelField(name=field.name, type_=use_type, class_validators={}, default=None, required=False, model_config=BaseConfig, schema=FieldInfo(None))\n    new_field.has_alias = field.has_alias\n    new_field.alias = field.alias\n    new_field.class_validators = field.class_validators\n    new_field.default = field.default\n    new_field.required = field.required\n    new_field.model_config = field.model_config\n    if PYDANTIC_1:\n        new_field.field_info = field.field_info\n    else:\n        new_field.schema = field.schema\n    new_field.allow_none = field.allow_none\n    new_field.validate_always = field.validate_always\n    if field.sub_fields:\n        new_field.sub_fields = [create_cloned_field(sub_field) for sub_field in field.sub_fields]\n    if field.key_field:\n        new_field.key_field = create_cloned_field(field.key_field)\n    new_field.validators = field.validators\n    if PYDANTIC_1:\n        new_field.pre_validators = field.pre_validators\n        new_field.post_validators = field.post_validators\n    else:\n        new_field.whole_pre_validators = field.whole_pre_validators\n        new_field.whole_post_validators = field.whole_post_validators\n    new_field.parse_json = field.parse_json\n    new_field.shape = field.shape\n    try:\n        new_field.populate_validators()\n    except AttributeError:\n        new_field._populate_validators()\n    return new_field\n\nimport json\nimport sys\n\nimport ast",
+      "patch_sha256": "6eda060bc1c120f3a0da68cf1f45c94eae78bafe3d69c4e0be52925c709baad5",
+      "rank_score": 24,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.9230891398700982,
+      "top_p": 0.8133577607283677
+    },
+    {
+      "index": 5,
+      "patch_text": "def create_cloned_field(field: ModelField) -> ModelField:\n    original_type = field.type_\n    if is_dataclass(original_type) and hasattr(original_type, '__pydantic_model__'):\n        original_type = original_type.__pydantic_model__\n    use_type = original_type\n    if lenient_issubclass(original_type, BaseModel):\n        original_type = cast(Type[BaseModel], original_type)\n        use_type = create_model(original_type.__name__, __config__=original_type.__config__)\n        for f in original_type.__fields__.values():\n            use_type.__fields__[f.name] = f\n    use_type.__validators__ = original_type.__validators__\n    if PYDANTIC_1:\n        new_field = ModelField(name=field.name, type_=use_type, class_validators={}, default=None, required=False, model_config=BaseConfig, field_info=FieldInfo(None))\n    else:\n        new_field = ModelField(name=field.name, type_=use_type, class_validators={}, default=None, required=False, model_config=BaseConfig, schema=FieldInfo(None))\n    new_field.has_alias = field.has_alias\n    new_field.alias = field.alias\n    new_field.class_validators = field.class_validators\n    new_field.default = field.default\n    new_field.required = field.required\n    new_field.model_config = field.model_config\n    if PYDANTIC_1:\n        new_field.field_info = field.field_info\n    else:\n        new_field.schema = field.schema\n    new_field.allow_none = field.allow_none\n    new_field.validate_always = field.validate_always\n    if field.sub_fields:\n        new_field.sub_fields = [create_cloned_field(sub_field) for sub_field in field.sub_fields]\n    if field.key_field:\n        new_field.key_field = create_cloned_field(field.key_field)\n    new_field.validators = field.validators\n    if PYDANTIC_1:\n        new_field.pre_validators = field.pre_validators\n        new_field.post_validators = field.post_validators\n    else:\n        new_field.whole_pre_validators = field.whole_pre_validators\n        new_field.whole_post_validators = field.whole_post_validators\n    new_field.parse_json = field.parse_json\n    new_field.shape = field.shape\n    try:\n        new_field.populate_validators()\n    except AttributeError:\n        new_field._populate_validators()\n    return new_field\n\n# Python\nimport ast\nfrom typing import Any, List, Tuple\n\nimport torch",
+      "patch_sha256": "13dba051ea171f0f877c28828c173f41e4b1aab2d545ce5dba6c00fcf5be9327",
+      "rank_score": 24,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8997717407145516,
+      "top_p": 0.7880127616462518
+    },
+    {
+      "index": 6,
+      "patch_text": "def create_cloned_field(field: ModelField) -> ModelField:\n    original_type = field.type_\n    if is_dataclass(original_type) and hasattr(original_type, '__pydantic_model__'):\n        original_type = original_type.__pydantic_model__\n    use_type = original_type\n    if lenient_issubclass(original_type, BaseModel):\n        original_type = cast(Type[BaseModel], original_type)\n        use_type = create_model(original_type.__name__, __config__=original_type.__config__)\n        for f in original_type.__fields__.values():\n            use_type.__fields__[f.name] = f  # <--- BUGGY LINE\n        use_type.__validators__ = original_type.__validators__\n    if PYDANTIC_1:\n        new_field = ModelField(name=field.name, type_=use_type, class_validators={}, default=None, required=False, model_config=BaseConfig, field_info=FieldInfo(None))\n    else:\n        new_field = ModelField(name=field.name, type_=use_type, class_validators={}, default=None, required=False, model_config=BaseConfig, schema=FieldInfo(None))\n    new_field.has_alias = field.has_alias\n    new_field.alias = field.alias\n    new_field.class_validators = field.class_validators\n    new_field.default = field.default\n    new_field.required = field.required\n    new_field.model_config = field.model_config\n    if PYDANTIC_1:\n        new_field.field_info = field.field_info\n    else:\n        new_field.schema = field.schema\n    new_field.allow_none = field.allow_none\n    new_field.validate_always = field.validate_always\n    if field.sub_fields:\n        new_field.sub_fields = [create_cloned_field(sub_field) for sub_field in field.sub_fields]\n    if field.key_field:\n        new_field.key_field = create_cloned_field(field.key_field)\n    new_field.validators = field.validators\n    if PYDANTIC_1:\n        new_field.pre_validators = field.pre_validators\n        new_field.post_validators = field.post_validators\n    else:\n        new_field.whole_pre_validators = field.whole_pre_validators\n        new_field.whole_post_validators = field.whole_post_validators\n    new_field.parse_json = field.parse_json\n    new_field.shape = field.shape\n    try:\n        new_field.populate_validators()\n    except AttributeError:\n        new_field._populate_validators()\n    return new_field\nimport sys\nimport subprocess\nimport json\nimport os",
+      "patch_sha256": "b191aa3ca4220de1ddbeced416a02168c96a6b2c9c1bc40d55d1d4ad067b8601",
+      "rank_score": 24,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8838480940652881,
+      "top_p": 0.7707044500709654
+    }
+  ],
+  "candidate_count": 7,
+  "retrieved_examples": [
+    {
+      "id": "39",
+      "project_name": "pandas",
+      "buggy_line_content": "            except (TypeError, ValueError):",
+      "function": {
+        "function_name": "_try_convert_data",
+        "function_parent": "Parser",
+        "function_before_start_line": 886,
+        "function_before_end_line": 958,
+        "function_after_start_line": 886,
+        "function_after_end_line": 958,
+        "function_before_token_count": 277,
+        "function_after_token_count": 279,
+        "function_before": "def _try_convert_data(self, name, data, use_dtypes=True, convert_dates=True):\n    \"\"\"\n        Try to parse a ndarray like into a column by inferring dtype.\n        \"\"\"\n    if use_dtypes:\n        if not self.dtype:\n            return (data, False)\n        elif self.dtype is True:\n            pass\n        else:\n            dtype = self.dtype.get(name) if isinstance(self.dtype, dict) else self.dtype\n            if dtype is not None:\n                try:\n                    dtype = np.dtype(dtype)\n                    return (data.astype(dtype), True)\n                except (TypeError, ValueError):\n                    return (data, False)\n    if convert_dates:\n        new_data, result = self._try_convert_to_date(data)\n        if result:\n            return (new_data, True)\n    result = False\n    if data.dtype == 'object':\n        try:\n            data = data.astype('float64')\n            result = True\n        except (TypeError, ValueError):\n            pass\n    if data.dtype.kind == 'f':\n        if data.dtype != 'float64':\n            try:\n                data = data.astype('float64')\n                result = True\n            except (TypeError, ValueError):\n                pass\n    if len(data) and (data.dtype == 'float' or data.dtype == 'object'):\n        try:\n            new_data = data.astype('int64')\n            if (new_data == data).all():\n                data = new_data\n                result = True\n        except (TypeError, ValueError):\n            pass\n    if data.dtype == 'int':\n        try:\n            data = data.astype('int64')\n            result = True\n        except (TypeError, ValueError):\n            pass\n    return (data, result)",
+        "function_after": "def _try_convert_data(self, name, data, use_dtypes=True, convert_dates=True):\n    \"\"\"\n        Try to parse a ndarray like into a column by inferring dtype.\n        \"\"\"\n    if use_dtypes:\n        if not self.dtype:\n            return (data, False)\n        elif self.dtype is True:\n            pass\n        else:\n            dtype = self.dtype.get(name) if isinstance(self.dtype, dict) else self.dtype\n            if dtype is not None:\n                try:\n                    dtype = np.dtype(dtype)\n                    return (data.astype(dtype), True)\n                except (TypeError, ValueError):\n                    return (data, False)\n    if convert_dates:\n        new_data, result = self._try_convert_to_date(data)\n        if result:\n            return (new_data, True)\n    result = False\n    if data.dtype == 'object':\n        try:\n            data = data.astype('float64')\n            result = True\n        except (TypeError, ValueError):\n            pass\n    if data.dtype.kind == 'f':\n        if data.dtype != 'float64':\n            try:\n                data = data.astype('float64')\n                result = True\n            except (TypeError, ValueError):\n                pass\n    if len(data) and (data.dtype == 'float' or data.dtype == 'object'):\n        try:\n            new_data = data.astype('int64')\n            if (new_data == data).all():\n                data = new_data\n                result = True\n        except (TypeError, ValueError, OverflowError):\n            pass\n    if data.dtype == 'int':\n        try:\n            data = data.astype('int64')\n            result = True\n        except (TypeError, ValueError):\n            pass\n    return (data, result)"
+      },
+      "file_name": "_json.py",
+      "file_path": "pandas/io/json/_json.py",
+      "score_reranked": 0.6802201723970579
+    },
+    {
+      "id": "32",
+      "project_name": "pandas",
+      "buggy_line_content": "            except (ValueError, OverflowError):",
+      "function": {
+        "function_name": "_try_convert_to_date",
+        "function_parent": "Parser",
+        "function_before_start_line": 953,
+        "function_before_end_line": 988,
+        "function_after_start_line": 953,
+        "function_after_end_line": 988,
+        "function_before_token_count": 154,
+        "function_after_token_count": 156,
+        "function_before": "def _try_convert_to_date(self, data):\n    \"\"\"\n        Try to parse a ndarray like into a date column.\n\n        Try to coerce object in epoch/iso formats and integer/float in epoch\n        formats. Return a boolean if parsing was successful.\n        \"\"\"\n    if not len(data):\n        return (data, False)\n    new_data = data\n    if new_data.dtype == 'object':\n        try:\n            new_data = data.astype('int64')\n        except (TypeError, ValueError, OverflowError):\n            pass\n    if issubclass(new_data.dtype.type, np.number):\n        in_range = isna(new_data._values) | (new_data > self.min_stamp) | (new_data._values == iNaT)\n        if not in_range.all():\n            return (data, False)\n    date_units = (self.date_unit,) if self.date_unit else self._STAMP_UNITS\n    for date_unit in date_units:\n        try:\n            new_data = to_datetime(new_data, errors='raise', unit=date_unit)\n        except (ValueError, OverflowError):\n            continue\n        return (new_data, True)\n    return (data, False)",
+        "function_after": "def _try_convert_to_date(self, data):\n    \"\"\"\n        Try to parse a ndarray like into a date column.\n\n        Try to coerce object in epoch/iso formats and integer/float in epoch\n        formats. Return a boolean if parsing was successful.\n        \"\"\"\n    if not len(data):\n        return (data, False)\n    new_data = data\n    if new_data.dtype == 'object':\n        try:\n            new_data = data.astype('int64')\n        except (TypeError, ValueError, OverflowError):\n            pass\n    if issubclass(new_data.dtype.type, np.number):\n        in_range = isna(new_data._values) | (new_data > self.min_stamp) | (new_data._values == iNaT)\n        if not in_range.all():\n            return (data, False)\n    date_units = (self.date_unit,) if self.date_unit else self._STAMP_UNITS\n    for date_unit in date_units:\n        try:\n            new_data = to_datetime(new_data, errors='raise', unit=date_unit)\n        except (ValueError, OverflowError, TypeError):\n            continue\n        return (new_data, True)\n    return (data, False)"
+      },
+      "file_name": "_json.py",
+      "file_path": "pandas/io/json/_json.py",
+      "score_reranked": 0.605356191715588
+    },
+    {
+      "id": "21",
+      "project_name": "youtube-dl",
+      "buggy_line_content": "        (?:0[xX][0-9a-fA-F]+|0+[0-7]+)(?:\\s*:)?|",
+      "function": {
+        "function_name": "js_to_json",
+        "function_parent": "utils.py",
+        "function_before_start_line": 1939,
+        "function_before_end_line": 1975,
+        "function_after_start_line": 1939,
+        "function_after_end_line": 1975,
+        "function_before_token_count": 19,
+        "function_after_token_count": 19,
+        "function_before": "def js_to_json(code):\n\n    def fix_kv(m):\n        v = m.group(0)\n        if v in ('true', 'false', 'null'):\n            return v\n        elif v.startswith('/*') or v == ',':\n            return ''\n        if v[0] in (\"'\", '\"'):\n            v = re.sub('(?s)\\\\\\\\.|\"', lambda m: {'\"': '\\\\\"', \"\\\\'\": \"'\", '\\\\\\n': '', '\\\\x': '\\\\u00'}.get(m.group(0), m.group(0)), v[1:-1])\n        INTEGER_TABLE = (('^0[xX][0-9a-fA-F]+', 16), ('^0+[0-7]+', 8))\n        for regex, base in INTEGER_TABLE:\n            im = re.match(regex, v)\n            if im:\n                i = int(im.group(0), base)\n                return '\"%d\":' % i if v.endswith(':') else '%d' % i\n        return '\"%s\"' % v\n    return re.sub('(?sx)\\n        \"(?:[^\"\\\\\\\\]*(?:\\\\\\\\\\\\\\\\|\\\\\\\\[\\'\"nurtbfx/\\\\n]))*[^\"\\\\\\\\]*\"|\\n        \\'(?:[^\\'\\\\\\\\]*(?:\\\\\\\\\\\\\\\\|\\\\\\\\[\\'\"nurtbfx/\\\\n]))*[^\\'\\\\\\\\]*\\'|\\n        /\\\\*.*?\\\\*/|,(?=\\\\s*[\\\\]}])|\\n        [a-zA-Z_][.a-zA-Z_0-9]*|\\n        (?:0[xX][0-9a-fA-F]+|0+[0-7]+)(?:\\\\s*:)?|\\n        [0-9]+(?=\\\\s*:)\\n        ', fix_kv, code)",
+        "function_after": "def js_to_json(code):\n\n    def fix_kv(m):\n        v = m.group(0)\n        if v in ('true', 'false', 'null'):\n            return v\n        elif v.startswith('/*') or v == ',':\n            return ''\n        if v[0] in (\"'\", '\"'):\n            v = re.sub('(?s)\\\\\\\\.|\"', lambda m: {'\"': '\\\\\"', \"\\\\'\": \"'\", '\\\\\\n': '', '\\\\x': '\\\\u00'}.get(m.group(0), m.group(0)), v[1:-1])\n        INTEGER_TABLE = (('^0[xX][0-9a-fA-F]+', 16), ('^0+[0-7]+', 8))\n        for regex, base in INTEGER_TABLE:\n            im = re.match(regex, v)\n            if im:\n                i = int(im.group(0), base)\n                return '\"%d\":' % i if v.endswith(':') else '%d' % i\n        return '\"%s\"' % v\n    return re.sub('(?sx)\\n        \"(?:[^\"\\\\\\\\]*(?:\\\\\\\\\\\\\\\\|\\\\\\\\[\\'\"nurtbfx/\\\\n]))*[^\"\\\\\\\\]*\"|\\n        \\'(?:[^\\'\\\\\\\\]*(?:\\\\\\\\\\\\\\\\|\\\\\\\\[\\'\"nurtbfx/\\\\n]))*[^\\'\\\\\\\\]*\\'|\\n        /\\\\*.*?\\\\*/|,(?=\\\\s*[\\\\]}])|\\n        [a-zA-Z_][.a-zA-Z_0-9]*|\\n        \\\\b(?:0[xX][0-9a-fA-F]+|0+[0-7]+)(?:\\\\s*:)?|\\n        [0-9]+(?=\\\\s*:)\\n        ', fix_kv, code)"
+      },
+      "file_name": "utils.py",
+      "file_path": "youtube_dl/utils.py",
+      "score_reranked": 0.5847091228569299
+    },
+    {
+      "id": "28",
+      "project_name": "scrapy",
+      "buggy_line_content": "        if ':' not in self._url:",
+      "function": {
+        "function_name": "_set_url",
+        "function_parent": "Request",
+        "function_before_start_line": 62,
+        "function_before_end_line": 70,
+        "function_after_start_line": 62,
+        "function_after_end_line": 70,
+        "function_before_token_count": 65,
+        "function_after_token_count": 79,
+        "function_before": "def _set_url(self, url):\n    if not isinstance(url, six.string_types):\n        raise TypeError('Request url must be str or unicode, got %s:' % type(url).__name__)\n    s = safe_url_string(url, self.encoding)\n    self._url = escape_ajax(s)\n    if ':' not in self._url:\n        raise ValueError('Missing scheme in request url: %s' % self._url)",
+        "function_after": "def _set_url(self, url):\n    if not isinstance(url, six.string_types):\n        raise TypeError('Request url must be str or unicode, got %s:' % type(url).__name__)\n    s = safe_url_string(url, self.encoding)\n    self._url = escape_ajax(s)\n    if '://' not in self._url and (not self._url.startswith('data:')):\n        raise ValueError('Missing scheme in request url: %s' % self._url)"
+      },
+      "file_name": "__init__.py",
+      "file_path": "scrapy/http/request/__init__.py",
+      "score_reranked": 0.5151461015124076
+    },
+    {
+      "id": "19",
+      "project_name": "youtube-dl",
+      "buggy_line_content": "        [a-zA-Z_][.a-zA-Z_0-9]*|",
+      "function": {
+        "function_name": "js_to_json",
+        "function_parent": "utils.py",
+        "function_before_start_line": 2235,
+        "function_before_end_line": 2273,
+        "function_after_start_line": 2235,
+        "function_after_end_line": 2273,
+        "function_before_token_count": 77,
+        "function_after_token_count": 77,
+        "function_before": "def js_to_json(code):\n    COMMENT_RE = '/\\\\*(?:(?!\\\\*/).)*?\\\\*/|//[^\\\\n]*'\n    SKIP_RE = '\\\\s*(?:{comment})?\\\\s*'.format(comment=COMMENT_RE)\n    INTEGER_TABLE = (('(?s)^(0[xX][0-9a-fA-F]+){skip}:?$'.format(skip=SKIP_RE), 16), ('(?s)^(0+[0-7]+){skip}:?$'.format(skip=SKIP_RE), 8))\n\n    def fix_kv(m):\n        v = m.group(0)\n        if v in ('true', 'false', 'null'):\n            return v\n        elif v.startswith('/*') or v.startswith('//') or v == ',':\n            return ''\n        if v[0] in (\"'\", '\"'):\n            v = re.sub('(?s)\\\\\\\\.|\"', lambda m: {'\"': '\\\\\"', \"\\\\'\": \"'\", '\\\\\\n': '', '\\\\x': '\\\\u00'}.get(m.group(0), m.group(0)), v[1:-1])\n        for regex, base in INTEGER_TABLE:\n            im = re.match(regex, v)\n            if im:\n                i = int(im.group(1), base)\n                return '\"%d\":' % i if v.endswith(':') else '%d' % i\n        return '\"%s\"' % v\n    return re.sub('(?sx)\\n        \"(?:[^\"\\\\\\\\]*(?:\\\\\\\\\\\\\\\\|\\\\\\\\[\\'\"nurtbfx/\\\\n]))*[^\"\\\\\\\\]*\"|\\n        \\'(?:[^\\'\\\\\\\\]*(?:\\\\\\\\\\\\\\\\|\\\\\\\\[\\'\"nurtbfx/\\\\n]))*[^\\'\\\\\\\\]*\\'|\\n        {comment}|,(?={skip}[\\\\]}}])|\\n        [a-zA-Z_][.a-zA-Z_0-9]*|\\n        \\\\b(?:0[xX][0-9a-fA-F]+|0+[0-7]+)(?:{skip}:)?|\\n        [0-9]+(?={skip}:)\\n        '.format(comment=COMMENT_RE, skip=SKIP_RE), fix_kv, code)",
+        "function_after": "def js_to_json(code):\n    COMMENT_RE = '/\\\\*(?:(?!\\\\*/).)*?\\\\*/|//[^\\\\n]*'\n    SKIP_RE = '\\\\s*(?:{comment})?\\\\s*'.format(comment=COMMENT_RE)\n    INTEGER_TABLE = (('(?s)^(0[xX][0-9a-fA-F]+){skip}:?$'.format(skip=SKIP_RE), 16), ('(?s)^(0+[0-7]+){skip}:?$'.format(skip=SKIP_RE), 8))\n\n    def fix_kv(m):\n        v = m.group(0)\n        if v in ('true', 'false', 'null'):\n            return v\n        elif v.startswith('/*') or v.startswith('//') or v == ',':\n            return ''\n        if v[0] in (\"'\", '\"'):\n            v = re.sub('(?s)\\\\\\\\.|\"', lambda m: {'\"': '\\\\\"', \"\\\\'\": \"'\", '\\\\\\n': '', '\\\\x': '\\\\u00'}.get(m.group(0), m.group(0)), v[1:-1])\n        for regex, base in INTEGER_TABLE:\n            im = re.match(regex, v)\n            if im:\n                i = int(im.group(1), base)\n                return '\"%d\":' % i if v.endswith(':') else '%d' % i\n        return '\"%s\"' % v\n    return re.sub('(?sx)\\n        \"(?:[^\"\\\\\\\\]*(?:\\\\\\\\\\\\\\\\|\\\\\\\\[\\'\"nurtbfx/\\\\n]))*[^\"\\\\\\\\]*\"|\\n        \\'(?:[^\\'\\\\\\\\]*(?:\\\\\\\\\\\\\\\\|\\\\\\\\[\\'\"nurtbfx/\\\\n]))*[^\\'\\\\\\\\]*\\'|\\n        {comment}|,(?={skip}[\\\\]}}])|\\n        (?:(?<![0-9])[eE]|[a-df-zA-DF-Z_])[.a-zA-Z_0-9]*|\\n        \\\\b(?:0[xX][0-9a-fA-F]+|0+[0-7]+)(?:{skip}:)?|\\n        [0-9]+(?={skip}:)\\n        '.format(comment=COMMENT_RE, skip=SKIP_RE), fix_kv, code)"
+      },
+      "file_name": "utils.py",
+      "file_path": "youtube_dl/utils.py",
+      "score_reranked": 0.4961894964873465
+    }
+  ],
+  "diffusion_plan": [
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 36
+        },
+        {
+          "op": "Replace",
+          "node": 37
+        },
+        {
+          "op": "GuardAdd",
+          "node": 99
+        },
+        {
+          "op": "Replace",
+          "node": 104
+        },
+        {
+          "op": "Replace",
+          "node": 312
+        },
+        {
+          "op": "Replace",
+          "node": 99
+        },
+        {
+          "op": "Replace",
+          "node": 39
+        },
+        {
+          "op": "InsertAfter",
+          "node": 104
+        }
+      ],
+      "score": 16.636363635123967
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 99
+        },
+        {
+          "op": "Replace",
+          "node": 312
+        },
+        {
+          "op": "Replace",
+          "node": 39
+        },
+        {
+          "op": "Replace",
+          "node": 104
+        },
+        {
+          "op": "InsertBefore",
+          "node": 312
+        },
+        {
+          "op": "Replace",
+          "node": 37
+        },
+        {
+          "op": "Replace",
+          "node": 7
+        },
+        {
+          "op": "GuardAdd",
+          "node": 312
+        }
+      ],
+      "score": 16.49999999877273
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "GuardAdd",
+          "node": 36
+        },
+        {
+          "op": "InsertAfter",
+          "node": 37
+        },
+        {
+          "op": "Replace",
+          "node": 104
+        },
+        {
+          "op": "Replace",
+          "node": 37
+        },
+        {
+          "op": "Replace",
+          "node": 312
+        },
+        {
+          "op": "Replace",
+          "node": 36
+        },
+        {
+          "op": "Replace",
+          "node": 99
+        },
+        {
+          "op": "GuardAdd",
+          "node": 37
+        },
+        {
+          "op": "GuardAdd",
+          "node": 99
+        }
+      ],
+      "score": 16.26363636224876
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 98
+        },
+        {
+          "op": "Replace",
+          "node": 7
+        },
+        {
+          "op": "GuardAdd",
+          "node": 104
+        },
+        {
+          "op": "Replace",
+          "node": 99
+        },
+        {
+          "op": "Replace",
+          "node": 37
+        },
+        {
+          "op": "GuardAdd",
+          "node": 99
+        },
+        {
+          "op": "Replace",
+          "node": 312
+        },
+        {
+          "op": "Replace",
+          "node": 36
+        }
+      ],
+      "score": 16.145454544259508
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "InsertAfter",
+          "node": 37
+        },
+        {
+          "op": "Replace",
+          "node": 320
+        },
+        {
+          "op": "Replace",
+          "node": 39
+        },
+        {
+          "op": "Replace",
+          "node": 99
+        },
+        {
+          "op": "Replace",
+          "node": 37
+        },
+        {
+          "op": "Replace",
+          "node": 106
+        },
+        {
+          "op": "Replace",
+          "node": 7
+        },
+        {
+          "op": "Replace",
+          "node": 104
+        },
+        {
+          "op": "GuardAdd",
+          "node": 37
+        },
+        {
+          "op": "GuardAdd",
+          "node": 104
+        }
+      ],
+      "score": 16.11818181680744
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 99
+        },
+        {
+          "op": "GuardAdd",
+          "node": 7
+        },
+        {
+          "op": "Replace",
+          "node": 7
+        },
+        {
+          "op": "Replace",
+          "node": 104
+        },
+        {
+          "op": "Replace",
+          "node": 39
+        },
+        {
+          "op": "GuardAdd",
+          "node": 99
+        },
+        {
+          "op": "Replace",
+          "node": 106
+        },
+        {
+          "op": "Replace",
+          "node": 37
+        }
+      ],
+      "score": 15.945454544277688
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 99
+        },
+        {
+          "op": "Delete",
+          "node": 104
+        },
+        {
+          "op": "Replace",
+          "node": 39
+        },
+        {
+          "op": "Replace",
+          "node": 312
+        },
+        {
+          "op": "Replace",
+          "node": 37
+        },
+        {
+          "op": "GuardAdd",
+          "node": 312
+        },
+        {
+          "op": "InsertAfter",
+          "node": 36
+        },
+        {
+          "op": "Replace",
+          "node": 104
+        }
+      ],
+      "score": 15.627272726124794
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 37
+        },
+        {
+          "op": "Replace",
+          "node": 104
+        },
+        {
+          "op": "GuardAdd",
+          "node": 104
+        },
+        {
+          "op": "Replace",
+          "node": 312
+        },
+        {
+          "op": "Replace",
+          "node": 99
+        },
+        {
+          "op": "Replace",
+          "node": 7
+        },
+        {
+          "op": "InsertAfter",
+          "node": 312
+        }
+      ],
+      "score": 15.536363635223967
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 37
+        },
+        {
+          "op": "Replace",
+          "node": 104
+        },
+        {
+          "op": "Replace",
+          "node": 106
+        },
+        {
+          "op": "Replace",
+          "node": 99
+        },
+        {
+          "op": "Replace",
+          "node": 39
+        },
+        {
+          "op": "GuardAdd",
+          "node": 37
+        },
+        {
+          "op": "Replace",
+          "node": 320
+        },
+        {
+          "op": "Delete",
+          "node": 37
+        },
+        {
+          "op": "Replace",
+          "node": 98
+        },
+        {
+          "op": "Replace",
+          "node": 312
+        }
+      ],
+      "score": 15.309090907790086
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 106
+        },
+        {
+          "op": "InsertAfter",
+          "node": 104
+        },
+        {
+          "op": "Replace",
+          "node": 39
+        },
+        {
+          "op": "Replace",
+          "node": 98
+        },
+        {
+          "op": "Replace",
+          "node": 7
+        },
+        {
+          "op": "Replace",
+          "node": 99
+        },
+        {
+          "op": "Replace",
+          "node": 104
+        },
+        {
+          "op": "Replace",
+          "node": 312
+        },
+        {
+          "op": "GuardAdd",
+          "node": 37
+        },
+        {
+          "op": "Replace",
+          "node": 36
+        }
+      ],
+      "score": 15.127272725988433
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 312
+        },
+        {
+          "op": "Replace",
+          "node": 37
+        },
+        {
+          "op": "Replace",
+          "node": 104
+        },
+        {
+          "op": "Replace",
+          "node": 99
+        },
+        {
+          "op": "Replace",
+          "node": 36
+        },
+        {
+          "op": "Replace",
+          "node": 39
+        },
+        {
+          "op": "GuardAdd",
+          "node": 99
+        }
+      ],
+      "score": 15.109090907990083
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 99
+        },
+        {
+          "op": "Replace",
+          "node": 98
+        },
+        {
+          "op": "GuardAdd",
+          "node": 7
+        },
+        {
+          "op": "GuardAdd",
+          "node": 99
+        },
+        {
+          "op": "Replace",
+          "node": 39
+        },
+        {
+          "op": "Replace",
+          "node": 104
+        },
+        {
+          "op": "Replace",
+          "node": 37
+        }
+      ],
+      "score": 14.999999998909091
+    }
+  ],
+  "static_analysis_nodes": [
+    {
+      "line": 10,
+      "line_absolute": 98,
+      "node_id": 99,
+      "node_id_local": 14,
+      "type": "Assign",
+      "code": "use_type.__fields__[f.name] = f",
+      "distance_to_buggy": 0,
+      "context": "   7:           original_type = cast(Type[BaseModel], original_type)\n   8:           use_type = create_model(original_type.__name__, __config__=original_type.__config__)\n   9:           for f in original_type.__fields__.values():\n  10:->             use_type.__fields__[f.name] = f\n  11:           use_type.__validators__ = original_type.__validators__\n  12:       if PYDANTIC_1:\n  13:           new_field = ModelField(name=field.name, type_=use_type, class_validators={}, default=None, required=False, model_config=BaseConfig, field_info=FieldInfo(None))",
+      "ast_subtree_json": {
+        "_type": "Assign",
+        "targets": [
+          {
+            "_type": "Subscript",
+            "value": {
+              "_type": "Attribute"
+            },
+            "slice": {
+              "_type": "Attribute"
+            },
+            "ctx": {
+              "_type": "Store"
+            }
+          }
+        ],
+        "value": {
+          "_type": "Name",
+          "id": "f",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "type_comment": null
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -24.5
+    },
+    {
+      "line": 11,
+      "line_absolute": 99,
+      "node_id": 37,
+      "node_id_local": 15,
+      "type": "Assign",
+      "code": "use_type.__validators__ = original_type.__validators__",
+      "distance_to_buggy": 0,
+      "context": "   8:           use_type = create_model(original_type.__name__, __config__=original_type.__config__)\n   9:           for f in original_type.__fields__.values():\n  10:               use_type.__fields__[f.name] = f\n  11:->         use_type.__validators__ = original_type.__validators__\n  12:       if PYDANTIC_1:\n  13:           new_field = ModelField(name=field.name, type_=use_type, class_validators={}, default=None, required=False, model_config=BaseConfig, field_info=FieldInfo(None))\n  14:       else:",
+      "ast_subtree_json": {
+        "_type": "Assign",
+        "targets": [
+          {
+            "_type": "Attribute",
+            "value": {
+              "_type": "Name"
+            },
+            "attr": "__validators__",
+            "ctx": {
+              "_type": "Store"
+            }
+          }
+        ],
+        "value": {
+          "_type": "Attribute",
+          "value": {
+            "_type": "Name"
+          },
+          "attr": "__validators__",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "type_comment": null
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -23.0
+    },
+    {
+      "line": 13,
+      "line_absolute": 101,
+      "node_id": 104,
+      "node_id_local": 18,
+      "type": "Call",
+      "code": "ModelField(name=field.name, type_=use_type, class_validators={}, default=None, required=False, model_config=BaseConfig, field_info=FieldInfo(None))",
+      "distance_to_buggy": 0,
+      "context": "  10:               use_type.__fields__[f.name] = f\n  11:           use_type.__validators__ = original_type.__validators__\n  12:       if PYDANTIC_1:\n  13:->         new_field = ModelField(name=field.name, type_=use_type, class_validators={}, default=None, required=False, model_config=BaseConfig, field_info=FieldInfo(None))\n  14:       else:\n  15:           new_field = ModelField(name=field.name, type_=use_type, class_validators={}, default=None, required=False, model_config=BaseConfig, schema=FieldInfo(None))\n  16:       new_field.has_alias = field.has_alias",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Name",
+          "id": "ModelField",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [],
+        "keywords": [
+          {
+            "_type": "keyword",
+            "arg": "name",
+            "value": {
+              "_type": "Attribute"
+            }
+          },
+          {
+            "_type": "keyword",
+            "arg": "type_",
+            "value": {
+              "_type": "Name"
+            }
+          },
+          {
+            "_type": "keyword",
+            "arg": "class_validators",
+            "value": {
+              "_type": "Dict"
+            }
+          },
+          {
+            "_type": "keyword",
+            "arg": "default",
+            "value": {
+              "_type": "Constant"
+            }
+          },
+          {
+            "_type": "keyword",
+            "arg": "required",
+            "value": {
+              "_type": "Constant"
+            }
+          },
+          {
+            "_type": "keyword",
+            "arg": "model_config",
+            "value": {
+              "_type": "Name"
+            }
+          },
+          {
+            "_type": "keyword",
+            "arg": "field_info",
+            "value": {
+              "_type": "Call"
+            }
+          }
+        ]
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -23.0
+    },
+    {
+      "line": 13,
+      "line_absolute": 101,
+      "node_id": 312,
+      "node_id_local": 19,
+      "type": "Call",
+      "code": "FieldInfo(None)",
+      "distance_to_buggy": 0,
+      "context": "  10:               use_type.__fields__[f.name] = f\n  11:           use_type.__validators__ = original_type.__validators__\n  12:       if PYDANTIC_1:\n  13:->         new_field = ModelField(name=field.name, type_=use_type, class_validators={}, default=None, required=False, model_config=BaseConfig, field_info=FieldInfo(None))\n  14:       else:\n  15:           new_field = ModelField(name=field.name, type_=use_type, class_validators={}, default=None, required=False, model_config=BaseConfig, schema=FieldInfo(None))\n  16:       new_field.has_alias = field.has_alias",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Name",
+          "id": "FieldInfo",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [
+          {
+            "_type": "Constant",
+            "value": null,
+            "kind": null
+          }
+        ],
+        "keywords": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -23.0
+    },
+    {
+      "line": 12,
+      "line_absolute": 100,
+      "node_id": 7,
+      "node_id_local": 16,
+      "type": "If",
+      "code": "if PYDANTIC_1:\n    new_field = ModelField(name=field.name, type_=use_type, class_validators={}, default=None, required=False, model_config=BaseConfig, field_info=FieldInfo(None))\nelse:\n    new_field = ModelField(name=field.name, type_=use_type, class_validators={}, default=None, required=False, model_config=BaseConfig, schema=FieldInfo(None))",
+      "distance_to_buggy": 0,
+      "context": "   9:           for f in original_type.__fields__.values():\n  10:               use_type.__fields__[f.name] = f\n  11:           use_type.__validators__ = original_type.__validators__\n  12:->     if PYDANTIC_1:\n  13:           new_field = ModelField(name=field.name, type_=use_type, class_validators={}, default=None, required=False, model_config=BaseConfig, field_info=FieldInfo(None))\n  14:       else:\n  15:           new_field = ModelField(name=field.name, type_=use_type, class_validators={}, default=None, required=False, model_config=BaseConfig, schema=FieldInfo(None))",
+      "ast_subtree_json": {
+        "_type": "If",
+        "test": {
+          "_type": "Name",
+          "id": "PYDANTIC_1",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "body": [
+          {
+            "_type": "Assign",
+            "targets": [
+              {
+                "_type": "Name"
+              }
+            ],
+            "value": {
+              "_type": "Call"
+            },
+            "type_comment": null
+          }
+        ],
+        "orelse": [
+          {
+            "_type": "Assign",
+            "targets": [
+              {
+                "_type": "Name"
+              }
+            ],
+            "value": {
+              "_type": "Call"
+            },
+            "type_comment": null
+          }
+        ]
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -22.0
+    },
+    {
+      "line": 13,
+      "line_absolute": 101,
+      "node_id": 39,
+      "node_id_local": 17,
+      "type": "Assign",
+      "code": "new_field = ModelField(name=field.name, type_=use_type, class_validators={}, default=None, required=False, model_config=BaseConfig, field_info=FieldInfo(None))",
+      "distance_to_buggy": 0,
+      "context": "  10:               use_type.__fields__[f.name] = f\n  11:           use_type.__validators__ = original_type.__validators__\n  12:       if PYDANTIC_1:\n  13:->         new_field = ModelField(name=field.name, type_=use_type, class_validators={}, default=None, required=False, model_config=BaseConfig, field_info=FieldInfo(None))\n  14:       else:\n  15:           new_field = ModelField(name=field.name, type_=use_type, class_validators={}, default=None, required=False, model_config=BaseConfig, schema=FieldInfo(None))\n  16:       new_field.has_alias = field.has_alias",
+      "ast_subtree_json": {
+        "_type": "Assign",
+        "targets": [
+          {
+            "_type": "Name",
+            "id": "new_field",
+            "ctx": {
+              "_type": "Store"
+            }
+          }
+        ],
+        "value": {
+          "_type": "Call",
+          "func": {
+            "_type": "Name"
+          },
+          "args": [],
+          "keywords": [
+            {
+              "_type": "keyword"
+            },
+            {
+              "_type": "keyword"
+            },
+            {
+              "_type": "keyword"
+            },
+            {
+              "_type": "keyword"
+            },
+            {
+              "_type": "keyword"
+            },
+            {
+              "_type": "keyword"
+            },
+            {
+              "_type": "keyword"
+            }
+          ]
+        },
+        "type_comment": null
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -22.0
+    },
+    {
+      "line": 9,
+      "line_absolute": 97,
+      "node_id": 98,
+      "node_id_local": 13,
+      "type": "Call",
+      "code": "original_type.__fields__.values()",
+      "distance_to_buggy": 1,
+      "context": "   6:       if lenient_issubclass(original_type, BaseModel):\n   7:           original_type = cast(Type[BaseModel], original_type)\n   8:           use_type = create_model(original_type.__name__, __config__=original_type.__config__)\n   9:->         for f in original_type.__fields__.values():\n  10:               use_type.__fields__[f.name] = f\n  11:           use_type.__validators__ = original_type.__validators__\n  12:       if PYDANTIC_1:",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Attribute",
+          "value": {
+            "_type": "Attribute"
+          },
+          "attr": "values",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [],
+        "keywords": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -14.0
+    },
+    {
+      "line": 9,
+      "line_absolute": 97,
+      "node_id": 36,
+      "node_id_local": 12,
+      "type": "For",
+      "code": "for f in original_type.__fields__.values():\n    use_type.__fields__[f.name] = f",
+      "distance_to_buggy": 1,
+      "context": "   6:       if lenient_issubclass(original_type, BaseModel):\n   7:           original_type = cast(Type[BaseModel], original_type)\n   8:           use_type = create_model(original_type.__name__, __config__=original_type.__config__)\n   9:->         for f in original_type.__fields__.values():\n  10:               use_type.__fields__[f.name] = f\n  11:           use_type.__validators__ = original_type.__validators__\n  12:       if PYDANTIC_1:",
+      "ast_subtree_json": {
+        "_type": "For",
+        "target": {
+          "_type": "Name",
+          "id": "f",
+          "ctx": {
+            "_type": "Store"
+          }
+        },
+        "iter": {
+          "_type": "Call",
+          "func": {
+            "_type": "Attribute"
+          },
+          "args": [],
+          "keywords": []
+        },
+        "body": [
+          {
+            "_type": "Assign",
+            "targets": [
+              {
+                "_type": "Subscript"
+              }
+            ],
+            "value": {
+              "_type": "Name"
+            },
+            "type_comment": null
+          }
+        ],
+        "orelse": [],
+        "type_comment": null
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -13.5
+    },
+    {
+      "line": 15,
+      "line_absolute": 103,
+      "node_id": 106,
+      "node_id_local": 21,
+      "type": "Call",
+      "code": "ModelField(name=field.name, type_=use_type, class_validators={}, default=None, required=False, model_config=BaseConfig, schema=FieldInfo(None))",
+      "distance_to_buggy": 1,
+      "context": "  12:       if PYDANTIC_1:\n  13:           new_field = ModelField(name=field.name, type_=use_type, class_validators={}, default=None, required=False, model_config=BaseConfig, field_info=FieldInfo(None))\n  14:       else:\n  15:->         new_field = ModelField(name=field.name, type_=use_type, class_validators={}, default=None, required=False, model_config=BaseConfig, schema=FieldInfo(None))\n  16:       new_field.has_alias = field.has_alias\n  17:       new_field.alias = field.alias\n  18:       new_field.class_validators = field.class_validators",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Name",
+          "id": "ModelField",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [],
+        "keywords": [
+          {
+            "_type": "keyword",
+            "arg": "name",
+            "value": {
+              "_type": "Attribute"
+            }
+          },
+          {
+            "_type": "keyword",
+            "arg": "type_",
+            "value": {
+              "_type": "Name"
+            }
+          },
+          {
+            "_type": "keyword",
+            "arg": "class_validators",
+            "value": {
+              "_type": "Dict"
+            }
+          },
+          {
+            "_type": "keyword",
+            "arg": "default",
+            "value": {
+              "_type": "Constant"
+            }
+          },
+          {
+            "_type": "keyword",
+            "arg": "required",
+            "value": {
+              "_type": "Constant"
+            }
+          },
+          {
+            "_type": "keyword",
+            "arg": "model_config",
+            "value": {
+              "_type": "Name"
+            }
+          },
+          {
+            "_type": "keyword",
+            "arg": "schema",
+            "value": {
+              "_type": "Call"
+            }
+          }
+        ]
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -13.0
+    },
+    {
+      "line": 15,
+      "line_absolute": 103,
+      "node_id": 320,
+      "node_id_local": 22,
+      "type": "Call",
+      "code": "FieldInfo(None)",
+      "distance_to_buggy": 1,
+      "context": "  12:       if PYDANTIC_1:\n  13:           new_field = ModelField(name=field.name, type_=use_type, class_validators={}, default=None, required=False, model_config=BaseConfig, field_info=FieldInfo(None))\n  14:       else:\n  15:->         new_field = ModelField(name=field.name, type_=use_type, class_validators={}, default=None, required=False, model_config=BaseConfig, schema=FieldInfo(None))\n  16:       new_field.has_alias = field.has_alias\n  17:       new_field.alias = field.alias\n  18:       new_field.class_validators = field.class_validators",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Name",
+          "id": "FieldInfo",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [
+          {
+            "_type": "Constant",
+            "value": null,
+            "kind": null
+          }
+        ],
+        "keywords": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|system|>...",
+      "reranker_score": -13.0
+    }
+  ]
+}

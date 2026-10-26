@@ -1,0 +1,1109 @@
+{
+  "bug_id": "23",
+  "seed": 44,
+  "arm": "full",
+  "candidates": [
+    {
+      "index": 0,
+      "patch_text": "def check_required_arguments(argument_spec, module_parameters):\n    \"\"\"Check all paramaters in argument_spec and return a list of parameters\n    that are required but not present in module_parameters\n\n    Raises TypeError if the check fails\n\n    :arg argument_spec: Argument spec dicitionary containing all parameters\n        and their specification\n    :arg module_paramaters: Dictionary of module parameters\n\n    :returns: Empty list or raises TypeError if the check fails.\n    \"\"\"\n    missing = []\n    if argument_spec is None:\n        return missing\n    for k, v in argument_spec.items():\n        required = v.get('required', False)\n        if required and k not in module_parameters:\n            missing.append(k)\n    if missing:\n        raise TypeError('missing required arguments: %s' % ', '.join(missing))\n    return missing",
+      "patch_sha256": "9ae07004635b01a5387317150f64805a95383b01475d7272c1ab010c89802338",
+      "rank_score": 255,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.5280500268755478,
+      "top_p": 0.98
+    },
+    {
+      "index": 1,
+      "patch_text": "def check_required_arguments(argument_spec, module_parameters):\n    \"\"\"Check all paramaters in argument_spec and return a list of parameters\n    that are required but not present in module_parameters\n\n    Raises TypeError if the check fails\n\n    :arg argument_spec: Argument spec dicitionary containing all parameters\n        and their specification\n    :arg module_paramaters: Dictionary of module parameters\n\n    :returns: Empty list or raises TypeError if the check fails.\n    \"\"\"\n    missing = []\n    if argument_spec is None:\n        return missing\n    for k, v in argument_spec.items():\n        required = v.get('required', False)\n        if required and k not in module_parameters:\n            missing.append(k)\n    if missing:\n        msg = \"missing required arguments: %s\" % \", \".join(missing)\n        raise TypeError(to_native(msg))\n    return missing",
+      "patch_sha256": "24fb46d4ced101a0596050eebe8731ed5014c4e1163b37be4b00f757e16285a0",
+      "rank_score": 244,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.9230891398700982,
+      "top_p": 0.8133577607283677
+    },
+    {
+      "index": 2,
+      "patch_text": "def check_required_arguments(argument_spec, module_parameters):\n    \"\"\"Check all paramaters in argument_spec and return a list of parameters\n    that are required but not present in module_parameters\n\n    Raises TypeError if the check fails\n\n    :arg argument_spec: Argument spec dicitionary containing all parameters\n        and their specification\n    :arg module_paramaters: Dictionary of module parameters\n\n    :returns: Empty list or raises TypeError if the check fails.\n    \"\"\"\n    missing = []\n    if argument_spec is None:\n        return missing\n    for k, v in argument_spec.items():\n        required = v.get('required', False)\n        if required and k not in module_parameters:\n            missing.append(k)\n    if missing:\n        msg ='missing required arguments: %s' % ', '.join(missing)\n        raise TypeError(to_native(msg))\n    return missing",
+      "patch_sha256": "201acbbae3bea4e4d3e7ec9cf4aff94e7bcc2a1685b55c777b9df7bf2c958883",
+      "rank_score": 237,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7941462962722876,
+      "top_p": 0.8926828703403595
+    },
+    {
+      "index": 3,
+      "patch_text": "def check_required_arguments(argument_spec, module_parameters):\n    \"\"\"Check all paramaters in argument_spec and return a list of parameters\n    that are required but not present in module_parameters\n\n    Raises TypeError if the check fails\n\n    :arg argument_spec: Argument spec dicitionary containing all parameters\n        and their specification\n    :arg module_paramaters: Dictionary of module parameters\n\n    :returns: Empty list or raises TypeError if the check fails.\n    \"\"\"\n    missing = []\n    if argument_spec is None:\n        return missing\n    for k, v in argument_spec.items():\n        required = v.get('required', False)\n        if required and k not in module_parameters:\n            missing.append(k)\n    if missing:\n        msg ='missing required arguments: %s' % ', '.join(missing)\n        raise TypeError(to_native(msg))\n    return missing\n\n\n# Fixed Function\ndef check_required_arguments(argument_spec, module_parameters):\n    \"\"\"Check all paramaters in argument_spec and return a list of parameters\n    that are required but not present in module_parameters\n\n    Raises TypeError if the check fails\n\n    :arg argument_spec: Argument spec dicitionary containing all parameters\n        and their specification\n    :arg module_paramaters: Dictionary of module parameters\n\n    :returns: Empty list or raises TypeError if the check fails.\n    \"\"\"\n    missing = []\n    if argument_spec is None:\n        return missing\n    for k, v in argument_spec.items():\n        required = v.get('required', False)\n        if required and k not in module_parameters:\n            missing.append(k)\n    if missing:\n        msg ='missing required arguments: %s' % ', '.join(missing)\n        raise TypeError(to_native(msg))\n    return missing",
+      "patch_sha256": "c2f0a2c34f898c4e056efb41bb58d432819111226b8a84f708484d49cfe7dda6",
+      "rank_score": 202,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.9560266782037877,
+      "top_p": 0.8491594328302041
+    },
+    {
+      "index": 4,
+      "patch_text": "def check_required_arguments(argument_spec, module_parameters):\n    missing = []\n    if argument_spec is None:\n        return missing\n    for k, v in argument_spec.items():\n        required = v.get('required', False)\n        if required and k not in module_parameters:\n            missing.append(k)\n    return missing",
+      "patch_sha256": "ec209ffb60bc2ba44f98538d7cf1d02b94d3f16c263da6c34c88689344e3f2c7",
+      "rank_score": 182,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7793066012285085,
+      "top_p": 0.8741332515356355
+    },
+    {
+      "index": 5,
+      "patch_text": "def check_required_arguments(argument_spec, module_parameters):\n    missing = []\n    if argument_spec is None:\n        return missing\n    for k, v in argument_spec.items():\n        required = v.get('required', False)\n        if required and k not in module_parameters:\n            missing.append(k)\n    if missing:\n        msg ='missing required arguments: %s' % ', '.join(missing)\n        raise TypeError(to_native(msg))\n    return missing",
+      "patch_sha256": "baa7039857604929cb36611667c8ecd9c1999853baef3b2e7637680563561870",
+      "rank_score": 139,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8838480940652881,
+      "top_p": 0.7707044500709654
+    },
+    {
+      "index": 6,
+      "patch_text": "def check_required_arguments(argument_spec, module_parameters):\n    \"\"\"Check all paramaters in argument_spec and return a list of parameters\n    that are required but not present in module_parameters\n\n    Raises TypeError if the check fails\n\n    :arg argument_spec: Argument spec dicitionary containing all parameters\n        and their specification\n    :arg module_paramaters: Dictionary of module parameters\n\n    :returns: Empty list or raises TypeError if the check fails.\n    \"\"\"\n    missing = []\n    if argument_spec is None:\n        return missing\n    for k, v in argument_spec.items():\n        required = v.get('required', False)\n        if required and k not in module_parameters:\n            missing.append(k)\n    if missing:\n        msg ='missing required arguments: %s' % ', '.join(missing)\n        raise TypeError(to_native(msg))\n    return missing\n# coding=utf-8\nfrom __future__ import print_function\nimport sys\nimport os\nimport json\nimport re\nimport argparse\nimport logging\nfrom collections import defaultdict\n\nfrom ast import parse, dump\n\nimport networkx as nx\n\nfrom.utils import get_code_snippet\nfrom.utils import get_bug_id_from_filename\nfrom.utils import get_project_from_filename\nfrom.utils import get_bug_id_and_project_from_filename\nfrom.utils import get_buggy_line_number_from_filename\nfrom.utils import get_buggy_line_content_from_filename\nfrom.utils import get_buggy_line_number_from_filename_in_dir\nfrom.utils import get_buggy_line_content_from_filename_in_dir\nfrom.utils import get_buggy_line_number_and_content_from_filename_in_dir\nfrom.utils import get_buggy_line_number_and_content_from_filename\nfrom.utils import get_buggy_line_number_and_content_from_filename_in_dir\nfrom.utils import get_buggy_line_number_from_filename_in_dir\nfrom.utils import get_buggy_line_number_and_content_from_filename\nfrom.utils import get_buggy_line_number_and_content_from_filename_in_dir\nfrom.utils import get_buggy_line_number_and_content_from_filename\nfrom.utils import get_buggy_line_number_and_content_from_filename_in_dir\nfrom.utils import get_buggy_line_number_and_content_from_filename\nfrom.utils import get_buggy_line_number_and_content_from_filename_in_dir\nfrom.utils import get_buggy_line_number_and_content_from_filename\nfrom.utils import get_buggy_line_number_and_",
+      "patch_sha256": "e600cac834fb640490bc0741edffbdf0aa196de34ae18496ee0117041341f804",
+      "rank_score": -4,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": false,
+        "error": "SyntaxError: from __future__ imports must occur at the beginning of the file (<candidate-diagnostic>, line 25)"
+      },
+      "temperature": 0.5004104457359534,
+      "top_p": 0.9423277802614489
+    },
+    {
+      "index": 7,
+      "patch_text": "def check_required_arguments(argument_spec, module_parameters):\n    \"\"\"Check all paramaters in argument_spec and return a list of parameters\n    that are required but not present in module_parameters\n\n    Raises TypeError if the check fails\n\n    :arg argument_spec: Argument spec dicitionary containing all parameters\n        and their specification\n    :arg module_paramaters: Dictionary of module parameters\n\n    :returns: Empty list or raises TypeError if the check fails.\n    \"\"\"\n    missing = []\n    if argument_spec is None:\n        return missing\n    for k, v in argument_spec.items():\n        required = v.get('required', False)\n        if required and k not in module_parameters:\n            missing.append(k)\n    if missing:\n        msg = \"missing required arguments: %s\" % \", \".join(missing)\n        raise TypeError(to_native(msg))\n    return missing\nimport sys\nimport os\nfrom datetime import datetime\nimport csv\nimport json\nimport pandas as pd\nfrom utils import *\n\n# # Set up logging\n# import logging\n# logging.basicConfig(filename='logs/log-{}.txt'.format(datetime.now().strftime(\"%m-%d-%Y-%H-%M\")), filemode='w', level=logging.INFO)\n\n# Set up environment variables\nBUGGY_LINE_NUM = int(sys.argv[1])\n\n# Set up path variables\nROOT_PATH = os.path.dirname(os.path.realpath(__file__))\nPROJECTS_PATH = os.path.join(ROOT_PATH, 'projects')\nPROJECT_PATHS = os.listdir(PROJECTS_PATH)\n\n# Define global variables\n# The dictionary key will be the project name\n# The value is a dictionary of key=bug_id, value=list of context numbers\nbuggy_line_contexts = {}\nproject_contexts = {}\nproject_repair_plans = {}\nproject_similars = {}\nproject_similars_raw = {}\nproject_guardrails = {}\n\n# The dictionary key will be the project name\n# The value is a dictionary of key=bug_id, value=list of context numbers\nproject_repair_plan_counts = {}\nproject_repair_plan_counts_all = {}\nproject_repair_plan_counts_guard = {}\nproject_repair_plan_counts_guard_all = {}\n\nproject_repair_plan_counts_all_top10 = {}\nproject_repair_plan_counts_guard_all_top10 = {}\n\n# The dictionary key will be the project name\n# The value is a dictionary of key=bug_id, value=list of context numbers\nproject_similar_count = {}\nproject_similar_count_top10 = {}\nproject_similar_count_all = {}\nproject_similar_count_all_top10 = {}\n\nproject_guardrail_count = {}\nproject_guard",
+      "patch_sha256": "b107bb9fbea13bda96a748de1a86f57171f9b5545183ab86f56c259cf7e35773",
+      "rank_score": -22,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8997717407145516,
+      "top_p": 0.7880127616462518
+    },
+    {
+      "index": 8,
+      "patch_text": "def check_required_arguments(argument_spec, module_parameters):\n    \"\"\"Check all paramaters in argument_spec and return a list of parameters\n    that are required but not present in module_parameters\n\n    Raises TypeError if the check fails\n\n    :arg argument_spec: Argument spec dicitionary containing all parameters\n        and their specification\n    :arg module_paramaters: Dictionary of module parameters\n\n    :returns: Empty list or raises TypeError if the check fails.\n    \"\"\"\n    missing = []\n    if argument_spec is None:\n        return missing\n    for k, v in argument_spec.items():\n        required = v.get('required', False)\n        if required and k not in module_parameters:\n            missing.append(k)\n    if missing:\n        msg = ', '.join(missing)\n        raise TypeError(to_native(msg))\n    return missing\n# Generated from python/ir/parser/Python3Parser.g4 by ANTLR 4.9.1\nfrom antlr4 import *\nif __name__ is not None and \".\" in __name__:\n    from.Python3Parser import Python3Parser\nelse:\n    from Python3Parser import Python3Parser\n\n# This class defines a complete generic visitor for a parse tree produced by Python3Parser.\n\nclass Python3Visitor(ParseTreeVisitor):\n\n    # Visit a parse tree produced by Python3Parser#single_input.\n    def visitSingle_input(self, ctx:Python3Parser.Single_inputContext):\n        return self.visitChildren(ctx)\n\n\n    # Visit a parse tree produced by Python3Parser#file_input.\n    def visitFile_input(self, ctx:Python3Parser.File_inputContext):\n        return self.visitChildren(ctx)\n\n\n    # Visit a parse tree produced by Python3Parser#eval_input.\n    def visitEval_input(self, ctx:Python3Parser.Eval_inputContext):\n        return self.visitChildren(ctx)\n\n\n    # Visit a parse tree produced by Python3Parser#decorator.\n    def visitDecorator(self, ctx:Python3Parser.DecoratorContext):\n        return self.visitChildren(ctx)\n\n\n    # Visit a parse tree produced by Python3Parser#decorated.\n    def visitDecorated(self, ctx:Python3Parser.DecoratedContext):\n        return self.visitChildren(ctx)\n\n\n    # Visit a parse tree produced by Python3Parser#async_funcdef.\n    def visitAsync_funcdef(self, ctx:Python3Parser.Async_funcdefContext):\n        return self.visitChildren(ctx)\n\n\n    # Visit a parse tree produced by Python3Parser#funcdef.\n    def visitFuncdef(self, ctx:Python3Parser.FuncdefContext):\n        return self.visitChildren(ctx)\n\n\n    # Visit a parse tree produced by Python3Parser#async_with_clause.\n    def visitAsync_with_clause(self, ctx:Python3Parser.Async_with_clauseContext):\n        return self.visitChildren(ctx)\n\n\n    # Visit a parse tree produced by Python",
+      "patch_sha256": "6345843ee066bd2f0b6ab407b3db929e4edec7c1cc151e8006d44e9a1d84be83",
+      "rank_score": -33,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8997717407145516,
+      "top_p": 0.7880127616462518
+    }
+  ],
+  "candidate_count": 9,
+  "retrieved_examples": [
+    {
+      "id": "39",
+      "project_name": "pandas",
+      "buggy_line_content": "            except (TypeError, ValueError):",
+      "function": {
+        "function_name": "_try_convert_data",
+        "function_parent": "Parser",
+        "function_before_start_line": 886,
+        "function_before_end_line": 958,
+        "function_after_start_line": 886,
+        "function_after_end_line": 958,
+        "function_before_token_count": 277,
+        "function_after_token_count": 279,
+        "function_before": "def _try_convert_data(self, name, data, use_dtypes=True, convert_dates=True):\n    \"\"\"\n        Try to parse a ndarray like into a column by inferring dtype.\n        \"\"\"\n    if use_dtypes:\n        if not self.dtype:\n            return (data, False)\n        elif self.dtype is True:\n            pass\n        else:\n            dtype = self.dtype.get(name) if isinstance(self.dtype, dict) else self.dtype\n            if dtype is not None:\n                try:\n                    dtype = np.dtype(dtype)\n                    return (data.astype(dtype), True)\n                except (TypeError, ValueError):\n                    return (data, False)\n    if convert_dates:\n        new_data, result = self._try_convert_to_date(data)\n        if result:\n            return (new_data, True)\n    result = False\n    if data.dtype == 'object':\n        try:\n            data = data.astype('float64')\n            result = True\n        except (TypeError, ValueError):\n            pass\n    if data.dtype.kind == 'f':\n        if data.dtype != 'float64':\n            try:\n                data = data.astype('float64')\n                result = True\n            except (TypeError, ValueError):\n                pass\n    if len(data) and (data.dtype == 'float' or data.dtype == 'object'):\n        try:\n            new_data = data.astype('int64')\n            if (new_data == data).all():\n                data = new_data\n                result = True\n        except (TypeError, ValueError):\n            pass\n    if data.dtype == 'int':\n        try:\n            data = data.astype('int64')\n            result = True\n        except (TypeError, ValueError):\n            pass\n    return (data, result)",
+        "function_after": "def _try_convert_data(self, name, data, use_dtypes=True, convert_dates=True):\n    \"\"\"\n        Try to parse a ndarray like into a column by inferring dtype.\n        \"\"\"\n    if use_dtypes:\n        if not self.dtype:\n            return (data, False)\n        elif self.dtype is True:\n            pass\n        else:\n            dtype = self.dtype.get(name) if isinstance(self.dtype, dict) else self.dtype\n            if dtype is not None:\n                try:\n                    dtype = np.dtype(dtype)\n                    return (data.astype(dtype), True)\n                except (TypeError, ValueError):\n                    return (data, False)\n    if convert_dates:\n        new_data, result = self._try_convert_to_date(data)\n        if result:\n            return (new_data, True)\n    result = False\n    if data.dtype == 'object':\n        try:\n            data = data.astype('float64')\n            result = True\n        except (TypeError, ValueError):\n            pass\n    if data.dtype.kind == 'f':\n        if data.dtype != 'float64':\n            try:\n                data = data.astype('float64')\n                result = True\n            except (TypeError, ValueError):\n                pass\n    if len(data) and (data.dtype == 'float' or data.dtype == 'object'):\n        try:\n            new_data = data.astype('int64')\n            if (new_data == data).all():\n                data = new_data\n                result = True\n        except (TypeError, ValueError, OverflowError):\n            pass\n    if data.dtype == 'int':\n        try:\n            data = data.astype('int64')\n            result = True\n        except (TypeError, ValueError):\n            pass\n    return (data, result)"
+      },
+      "file_name": "_json.py",
+      "file_path": "pandas/io/json/_json.py",
+      "score_reranked": 0.5302622988480507
+    },
+    {
+      "id": "32",
+      "project_name": "pandas",
+      "buggy_line_content": "            except (ValueError, OverflowError):",
+      "function": {
+        "function_name": "_try_convert_to_date",
+        "function_parent": "Parser",
+        "function_before_start_line": 953,
+        "function_before_end_line": 988,
+        "function_after_start_line": 953,
+        "function_after_end_line": 988,
+        "function_before_token_count": 154,
+        "function_after_token_count": 156,
+        "function_before": "def _try_convert_to_date(self, data):\n    \"\"\"\n        Try to parse a ndarray like into a date column.\n\n        Try to coerce object in epoch/iso formats and integer/float in epoch\n        formats. Return a boolean if parsing was successful.\n        \"\"\"\n    if not len(data):\n        return (data, False)\n    new_data = data\n    if new_data.dtype == 'object':\n        try:\n            new_data = data.astype('int64')\n        except (TypeError, ValueError, OverflowError):\n            pass\n    if issubclass(new_data.dtype.type, np.number):\n        in_range = isna(new_data._values) | (new_data > self.min_stamp) | (new_data._values == iNaT)\n        if not in_range.all():\n            return (data, False)\n    date_units = (self.date_unit,) if self.date_unit else self._STAMP_UNITS\n    for date_unit in date_units:\n        try:\n            new_data = to_datetime(new_data, errors='raise', unit=date_unit)\n        except (ValueError, OverflowError):\n            continue\n        return (new_data, True)\n    return (data, False)",
+        "function_after": "def _try_convert_to_date(self, data):\n    \"\"\"\n        Try to parse a ndarray like into a date column.\n\n        Try to coerce object in epoch/iso formats and integer/float in epoch\n        formats. Return a boolean if parsing was successful.\n        \"\"\"\n    if not len(data):\n        return (data, False)\n    new_data = data\n    if new_data.dtype == 'object':\n        try:\n            new_data = data.astype('int64')\n        except (TypeError, ValueError, OverflowError):\n            pass\n    if issubclass(new_data.dtype.type, np.number):\n        in_range = isna(new_data._values) | (new_data > self.min_stamp) | (new_data._values == iNaT)\n        if not in_range.all():\n            return (data, False)\n    date_units = (self.date_unit,) if self.date_unit else self._STAMP_UNITS\n    for date_unit in date_units:\n        try:\n            new_data = to_datetime(new_data, errors='raise', unit=date_unit)\n        except (ValueError, OverflowError, TypeError):\n            continue\n        return (new_data, True)\n    return (data, False)"
+      },
+      "file_name": "_json.py",
+      "file_path": "pandas/io/json/_json.py",
+      "score_reranked": 0.5193639236042781
+    },
+    {
+      "id": "21",
+      "project_name": "youtube-dl",
+      "buggy_line_content": "        (?:0[xX][0-9a-fA-F]+|0+[0-7]+)(?:\\s*:)?|",
+      "function": {
+        "function_name": "js_to_json",
+        "function_parent": "utils.py",
+        "function_before_start_line": 1939,
+        "function_before_end_line": 1975,
+        "function_after_start_line": 1939,
+        "function_after_end_line": 1975,
+        "function_before_token_count": 19,
+        "function_after_token_count": 19,
+        "function_before": "def js_to_json(code):\n\n    def fix_kv(m):\n        v = m.group(0)\n        if v in ('true', 'false', 'null'):\n            return v\n        elif v.startswith('/*') or v == ',':\n            return ''\n        if v[0] in (\"'\", '\"'):\n            v = re.sub('(?s)\\\\\\\\.|\"', lambda m: {'\"': '\\\\\"', \"\\\\'\": \"'\", '\\\\\\n': '', '\\\\x': '\\\\u00'}.get(m.group(0), m.group(0)), v[1:-1])\n        INTEGER_TABLE = (('^0[xX][0-9a-fA-F]+', 16), ('^0+[0-7]+', 8))\n        for regex, base in INTEGER_TABLE:\n            im = re.match(regex, v)\n            if im:\n                i = int(im.group(0), base)\n                return '\"%d\":' % i if v.endswith(':') else '%d' % i\n        return '\"%s\"' % v\n    return re.sub('(?sx)\\n        \"(?:[^\"\\\\\\\\]*(?:\\\\\\\\\\\\\\\\|\\\\\\\\[\\'\"nurtbfx/\\\\n]))*[^\"\\\\\\\\]*\"|\\n        \\'(?:[^\\'\\\\\\\\]*(?:\\\\\\\\\\\\\\\\|\\\\\\\\[\\'\"nurtbfx/\\\\n]))*[^\\'\\\\\\\\]*\\'|\\n        /\\\\*.*?\\\\*/|,(?=\\\\s*[\\\\]}])|\\n        [a-zA-Z_][.a-zA-Z_0-9]*|\\n        (?:0[xX][0-9a-fA-F]+|0+[0-7]+)(?:\\\\s*:)?|\\n        [0-9]+(?=\\\\s*:)\\n        ', fix_kv, code)",
+        "function_after": "def js_to_json(code):\n\n    def fix_kv(m):\n        v = m.group(0)\n        if v in ('true', 'false', 'null'):\n            return v\n        elif v.startswith('/*') or v == ',':\n            return ''\n        if v[0] in (\"'\", '\"'):\n            v = re.sub('(?s)\\\\\\\\.|\"', lambda m: {'\"': '\\\\\"', \"\\\\'\": \"'\", '\\\\\\n': '', '\\\\x': '\\\\u00'}.get(m.group(0), m.group(0)), v[1:-1])\n        INTEGER_TABLE = (('^0[xX][0-9a-fA-F]+', 16), ('^0+[0-7]+', 8))\n        for regex, base in INTEGER_TABLE:\n            im = re.match(regex, v)\n            if im:\n                i = int(im.group(0), base)\n                return '\"%d\":' % i if v.endswith(':') else '%d' % i\n        return '\"%s\"' % v\n    return re.sub('(?sx)\\n        \"(?:[^\"\\\\\\\\]*(?:\\\\\\\\\\\\\\\\|\\\\\\\\[\\'\"nurtbfx/\\\\n]))*[^\"\\\\\\\\]*\"|\\n        \\'(?:[^\\'\\\\\\\\]*(?:\\\\\\\\\\\\\\\\|\\\\\\\\[\\'\"nurtbfx/\\\\n]))*[^\\'\\\\\\\\]*\\'|\\n        /\\\\*.*?\\\\*/|,(?=\\\\s*[\\\\]}])|\\n        [a-zA-Z_][.a-zA-Z_0-9]*|\\n        \\\\b(?:0[xX][0-9a-fA-F]+|0+[0-7]+)(?:\\\\s*:)?|\\n        [0-9]+(?=\\\\s*:)\\n        ', fix_kv, code)"
+      },
+      "file_name": "utils.py",
+      "file_path": "youtube_dl/utils.py",
+      "score_reranked": 0.513949201474487
+    },
+    {
+      "id": "28",
+      "project_name": "scrapy",
+      "buggy_line_content": "        if ':' not in self._url:",
+      "function": {
+        "function_name": "_set_url",
+        "function_parent": "Request",
+        "function_before_start_line": 62,
+        "function_before_end_line": 70,
+        "function_after_start_line": 62,
+        "function_after_end_line": 70,
+        "function_before_token_count": 65,
+        "function_after_token_count": 79,
+        "function_before": "def _set_url(self, url):\n    if not isinstance(url, six.string_types):\n        raise TypeError('Request url must be str or unicode, got %s:' % type(url).__name__)\n    s = safe_url_string(url, self.encoding)\n    self._url = escape_ajax(s)\n    if ':' not in self._url:\n        raise ValueError('Missing scheme in request url: %s' % self._url)",
+        "function_after": "def _set_url(self, url):\n    if not isinstance(url, six.string_types):\n        raise TypeError('Request url must be str or unicode, got %s:' % type(url).__name__)\n    s = safe_url_string(url, self.encoding)\n    self._url = escape_ajax(s)\n    if '://' not in self._url and (not self._url.startswith('data:')):\n        raise ValueError('Missing scheme in request url: %s' % self._url)"
+      },
+      "file_name": "__init__.py",
+      "file_path": "scrapy/http/request/__init__.py",
+      "score_reranked": 0.48339695104519526
+    },
+    {
+      "id": "19",
+      "project_name": "youtube-dl",
+      "buggy_line_content": "        [a-zA-Z_][.a-zA-Z_0-9]*|",
+      "function": {
+        "function_name": "js_to_json",
+        "function_parent": "utils.py",
+        "function_before_start_line": 2235,
+        "function_before_end_line": 2273,
+        "function_after_start_line": 2235,
+        "function_after_end_line": 2273,
+        "function_before_token_count": 77,
+        "function_after_token_count": 77,
+        "function_before": "def js_to_json(code):\n    COMMENT_RE = '/\\\\*(?:(?!\\\\*/).)*?\\\\*/|//[^\\\\n]*'\n    SKIP_RE = '\\\\s*(?:{comment})?\\\\s*'.format(comment=COMMENT_RE)\n    INTEGER_TABLE = (('(?s)^(0[xX][0-9a-fA-F]+){skip}:?$'.format(skip=SKIP_RE), 16), ('(?s)^(0+[0-7]+){skip}:?$'.format(skip=SKIP_RE), 8))\n\n    def fix_kv(m):\n        v = m.group(0)\n        if v in ('true', 'false', 'null'):\n            return v\n        elif v.startswith('/*') or v.startswith('//') or v == ',':\n            return ''\n        if v[0] in (\"'\", '\"'):\n            v = re.sub('(?s)\\\\\\\\.|\"', lambda m: {'\"': '\\\\\"', \"\\\\'\": \"'\", '\\\\\\n': '', '\\\\x': '\\\\u00'}.get(m.group(0), m.group(0)), v[1:-1])\n        for regex, base in INTEGER_TABLE:\n            im = re.match(regex, v)\n            if im:\n                i = int(im.group(1), base)\n                return '\"%d\":' % i if v.endswith(':') else '%d' % i\n        return '\"%s\"' % v\n    return re.sub('(?sx)\\n        \"(?:[^\"\\\\\\\\]*(?:\\\\\\\\\\\\\\\\|\\\\\\\\[\\'\"nurtbfx/\\\\n]))*[^\"\\\\\\\\]*\"|\\n        \\'(?:[^\\'\\\\\\\\]*(?:\\\\\\\\\\\\\\\\|\\\\\\\\[\\'\"nurtbfx/\\\\n]))*[^\\'\\\\\\\\]*\\'|\\n        {comment}|,(?={skip}[\\\\]}}])|\\n        [a-zA-Z_][.a-zA-Z_0-9]*|\\n        \\\\b(?:0[xX][0-9a-fA-F]+|0+[0-7]+)(?:{skip}:)?|\\n        [0-9]+(?={skip}:)\\n        '.format(comment=COMMENT_RE, skip=SKIP_RE), fix_kv, code)",
+        "function_after": "def js_to_json(code):\n    COMMENT_RE = '/\\\\*(?:(?!\\\\*/).)*?\\\\*/|//[^\\\\n]*'\n    SKIP_RE = '\\\\s*(?:{comment})?\\\\s*'.format(comment=COMMENT_RE)\n    INTEGER_TABLE = (('(?s)^(0[xX][0-9a-fA-F]+){skip}:?$'.format(skip=SKIP_RE), 16), ('(?s)^(0+[0-7]+){skip}:?$'.format(skip=SKIP_RE), 8))\n\n    def fix_kv(m):\n        v = m.group(0)\n        if v in ('true', 'false', 'null'):\n            return v\n        elif v.startswith('/*') or v.startswith('//') or v == ',':\n            return ''\n        if v[0] in (\"'\", '\"'):\n            v = re.sub('(?s)\\\\\\\\.|\"', lambda m: {'\"': '\\\\\"', \"\\\\'\": \"'\", '\\\\\\n': '', '\\\\x': '\\\\u00'}.get(m.group(0), m.group(0)), v[1:-1])\n        for regex, base in INTEGER_TABLE:\n            im = re.match(regex, v)\n            if im:\n                i = int(im.group(1), base)\n                return '\"%d\":' % i if v.endswith(':') else '%d' % i\n        return '\"%s\"' % v\n    return re.sub('(?sx)\\n        \"(?:[^\"\\\\\\\\]*(?:\\\\\\\\\\\\\\\\|\\\\\\\\[\\'\"nurtbfx/\\\\n]))*[^\"\\\\\\\\]*\"|\\n        \\'(?:[^\\'\\\\\\\\]*(?:\\\\\\\\\\\\\\\\|\\\\\\\\[\\'\"nurtbfx/\\\\n]))*[^\\'\\\\\\\\]*\\'|\\n        {comment}|,(?={skip}[\\\\]}}])|\\n        (?:(?<![0-9])[eE]|[a-df-zA-DF-Z_])[.a-zA-Z_0-9]*|\\n        \\\\b(?:0[xX][0-9a-fA-F]+|0+[0-7]+)(?:{skip}:)?|\\n        [0-9]+(?={skip}:)\\n        '.format(comment=COMMENT_RE, skip=SKIP_RE), fix_kv, code)"
+      },
+      "file_name": "utils.py",
+      "file_path": "youtube_dl/utils.py",
+      "score_reranked": 0.4743016424369418
+    }
+  ],
+  "diffusion_plan": [
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Delete",
+          "node": 41
+        },
+        {
+          "op": "Replace",
+          "node": 60
+        },
+        {
+          "op": "Replace",
+          "node": 41
+        },
+        {
+          "op": "Replace",
+          "node": 21
+        },
+        {
+          "op": "GuardAdd",
+          "node": 60
+        },
+        {
+          "op": "GuardAdd",
+          "node": 41
+        },
+        {
+          "op": "GuardAdd",
+          "node": 8
+        },
+        {
+          "op": "Replace",
+          "node": 8
+        },
+        {
+          "op": "GuardAdd",
+          "node": 21
+        },
+        {
+          "op": "Replace",
+          "node": 62
+        },
+        {
+          "op": "GuardAdd",
+          "node": 56
+        }
+      ],
+      "score": 19.72727272557025
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 8
+        },
+        {
+          "op": "Replace",
+          "node": 19
+        },
+        {
+          "op": "Replace",
+          "node": 56
+        },
+        {
+          "op": "Replace",
+          "node": 62
+        },
+        {
+          "op": "InsertBefore",
+          "node": 8
+        },
+        {
+          "op": "GuardAdd",
+          "node": 7
+        },
+        {
+          "op": "InsertAfter",
+          "node": 62
+        },
+        {
+          "op": "Replace",
+          "node": 21
+        },
+        {
+          "op": "Replace",
+          "node": 41
+        },
+        {
+          "op": "Replace",
+          "node": 60
+        },
+        {
+          "op": "GuardAdd",
+          "node": 56
+        }
+      ],
+      "score": 17.31818181669835
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 21
+        },
+        {
+          "op": "GuardAdd",
+          "node": 7
+        },
+        {
+          "op": "Delete",
+          "node": 41
+        },
+        {
+          "op": "Replace",
+          "node": 56
+        },
+        {
+          "op": "GuardAdd",
+          "node": 60
+        },
+        {
+          "op": "GuardAdd",
+          "node": 62
+        },
+        {
+          "op": "Replace",
+          "node": 7
+        },
+        {
+          "op": "Replace",
+          "node": 41
+        },
+        {
+          "op": "InsertAfter",
+          "node": 62
+        },
+        {
+          "op": "Replace",
+          "node": 62
+        }
+      ],
+      "score": 16.972727271275208
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 19
+        },
+        {
+          "op": "Replace",
+          "node": 62
+        },
+        {
+          "op": "Replace",
+          "node": 60
+        },
+        {
+          "op": "GuardAdd",
+          "node": 8
+        },
+        {
+          "op": "Replace",
+          "node": 56
+        },
+        {
+          "op": "Replace",
+          "node": 41
+        },
+        {
+          "op": "Replace",
+          "node": 8
+        },
+        {
+          "op": "GuardAdd",
+          "node": 7
+        },
+        {
+          "op": "Replace",
+          "node": 18
+        },
+        {
+          "op": "Delete",
+          "node": 62
+        },
+        {
+          "op": "Replace",
+          "node": 21
+        }
+      ],
+      "score": 16.654545453122317
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Delete",
+          "node": 21
+        },
+        {
+          "op": "Delete",
+          "node": 60
+        },
+        {
+          "op": "Replace",
+          "node": 21
+        },
+        {
+          "op": "Replace",
+          "node": 60
+        },
+        {
+          "op": "Replace",
+          "node": 62
+        },
+        {
+          "op": "GuardAdd",
+          "node": 60
+        },
+        {
+          "op": "Replace",
+          "node": 41
+        },
+        {
+          "op": "InsertBefore",
+          "node": 21
+        },
+        {
+          "op": "GuardAdd",
+          "node": 18
+        },
+        {
+          "op": "Replace",
+          "node": 56
+        },
+        {
+          "op": "GuardAdd",
+          "node": 62
+        }
+      ],
+      "score": 16.49090908950083
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "InsertAfter",
+          "node": 62
+        },
+        {
+          "op": "GuardAdd",
+          "node": 7
+        },
+        {
+          "op": "Replace",
+          "node": 21
+        },
+        {
+          "op": "Replace",
+          "node": 62
+        },
+        {
+          "op": "Replace",
+          "node": 60
+        },
+        {
+          "op": "Replace",
+          "node": 41
+        },
+        {
+          "op": "Replace",
+          "node": 56
+        },
+        {
+          "op": "Replace",
+          "node": 8
+        }
+      ],
+      "score": 16.209090907890086
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 41
+        },
+        {
+          "op": "Delete",
+          "node": 60
+        },
+        {
+          "op": "Replace",
+          "node": 21
+        },
+        {
+          "op": "Replace",
+          "node": 62
+        },
+        {
+          "op": "GuardAdd",
+          "node": 62
+        },
+        {
+          "op": "InsertAfter",
+          "node": 8
+        },
+        {
+          "op": "Replace",
+          "node": 8
+        },
+        {
+          "op": "Delete",
+          "node": 41
+        },
+        {
+          "op": "Replace",
+          "node": 56
+        }
+      ],
+      "score": 16.01818181681653
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Delete",
+          "node": 62
+        },
+        {
+          "op": "Delete",
+          "node": 41
+        },
+        {
+          "op": "Replace",
+          "node": 41
+        },
+        {
+          "op": "Replace",
+          "node": 62
+        },
+        {
+          "op": "GuardAdd",
+          "node": 21
+        },
+        {
+          "op": "Replace",
+          "node": 8
+        },
+        {
+          "op": "GuardAdd",
+          "node": 41
+        }
+      ],
+      "score": 15.981818180638017
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "GuardAdd",
+          "node": 7
+        },
+        {
+          "op": "Replace",
+          "node": 56
+        },
+        {
+          "op": "Replace",
+          "node": 21
+        },
+        {
+          "op": "Replace",
+          "node": 7
+        },
+        {
+          "op": "Replace",
+          "node": 41
+        },
+        {
+          "op": "Replace",
+          "node": 60
+        },
+        {
+          "op": "Replace",
+          "node": 62
+        },
+        {
+          "op": "GuardAdd",
+          "node": 62
+        }
+      ],
+      "score": 15.74545454429587
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "GuardAdd",
+          "node": 8
+        },
+        {
+          "op": "InsertAfter",
+          "node": 21
+        },
+        {
+          "op": "InsertBefore",
+          "node": 8
+        },
+        {
+          "op": "Replace",
+          "node": 19
+        },
+        {
+          "op": "Replace",
+          "node": 62
+        },
+        {
+          "op": "Replace",
+          "node": 56
+        },
+        {
+          "op": "Replace",
+          "node": 41
+        },
+        {
+          "op": "GuardAdd",
+          "node": 41
+        }
+      ],
+      "score": 15.74545454429587
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 62
+        },
+        {
+          "op": "InsertAfter",
+          "node": 60
+        },
+        {
+          "op": "Replace",
+          "node": 21
+        },
+        {
+          "op": "GuardAdd",
+          "node": 41
+        },
+        {
+          "op": "Replace",
+          "node": 7
+        },
+        {
+          "op": "Replace",
+          "node": 60
+        },
+        {
+          "op": "Delete",
+          "node": 56
+        },
+        {
+          "op": "GuardAdd",
+          "node": 8
+        },
+        {
+          "op": "Replace",
+          "node": 41
+        }
+      ],
+      "score": 15.663636362303308
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 41
+        },
+        {
+          "op": "GuardAdd",
+          "node": 62
+        },
+        {
+          "op": "Replace",
+          "node": 21
+        },
+        {
+          "op": "Replace",
+          "node": 56
+        },
+        {
+          "op": "InsertBefore",
+          "node": 62
+        },
+        {
+          "op": "Replace",
+          "node": 62
+        },
+        {
+          "op": "Replace",
+          "node": 19
+        },
+        {
+          "op": "Replace",
+          "node": 7
+        },
+        {
+          "op": "GuardAdd",
+          "node": 41
+        }
+      ],
+      "score": 15.609090907762813
+    }
+  ],
+  "static_analysis_nodes": [
+    {
+      "line": 22,
+      "line_absolute": 190,
+      "node_id": 41,
+      "node_id_local": 12,
+      "type": "Call",
+      "code": "TypeError(to_native(msg))",
+      "distance_to_buggy": 0,
+      "context": "  19:               missing.append(k)\n  20:       if missing:\n  21:           msg = 'missing required arguments: %s' % ', '.join(missing)\n  22:->         raise TypeError(to_native(msg))\n  23:       return missing",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Name",
+          "id": "TypeError",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [
+          {
+            "_type": "Call",
+            "func": {
+              "_type": "Name"
+            },
+            "args": [
+              {
+                "_type": "Name"
+              }
+            ],
+            "keywords": []
+          }
+        ],
+        "keywords": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -24.0
+    },
+    {
+      "line": 22,
+      "line_absolute": 190,
+      "node_id": 62,
+      "node_id_local": 13,
+      "type": "Call",
+      "code": "to_native(msg)",
+      "distance_to_buggy": 0,
+      "context": "  19:               missing.append(k)\n  20:       if missing:\n  21:           msg = 'missing required arguments: %s' % ', '.join(missing)\n  22:->         raise TypeError(to_native(msg))\n  23:       return missing",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Name",
+          "id": "to_native",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [
+          {
+            "_type": "Name",
+            "id": "msg",
+            "ctx": {
+              "_type": "Load"
+            }
+          }
+        ],
+        "keywords": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -24.0
+    },
+    {
+      "line": 23,
+      "line_absolute": 191,
+      "node_id": 8,
+      "node_id_local": 14,
+      "type": "Return",
+      "code": "return missing",
+      "distance_to_buggy": 0,
+      "context": "  20:       if missing:\n  21:           msg = 'missing required arguments: %s' % ', '.join(missing)\n  22:           raise TypeError(to_native(msg))\n  23:->     return missing",
+      "ast_subtree_json": {
+        "_type": "Return",
+        "value": {
+          "_type": "Name",
+          "id": "missing",
+          "ctx": {
+            "_type": "Load"
+          }
+        }
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -22.0
+    },
+    {
+      "line": 21,
+      "line_absolute": 189,
+      "node_id": 60,
+      "node_id_local": 11,
+      "type": "Call",
+      "code": "', '.join(missing)",
+      "distance_to_buggy": 1,
+      "context": "  18:           if required and k not in module_parameters:\n  19:               missing.append(k)\n  20:       if missing:\n  21:->         msg = 'missing required arguments: %s' % ', '.join(missing)\n  22:           raise TypeError(to_native(msg))\n  23:       return missing",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Attribute",
+          "value": {
+            "_type": "Constant"
+          },
+          "attr": "join",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [
+          {
+            "_type": "Name",
+            "id": "missing",
+            "ctx": {
+              "_type": "Load"
+            }
+          }
+        ],
+        "keywords": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -14.0
+    },
+    {
+      "line": 21,
+      "line_absolute": 189,
+      "node_id": 21,
+      "node_id_local": 10,
+      "type": "Assign",
+      "code": "msg = 'missing required arguments: %s' % ', '.join(missing)",
+      "distance_to_buggy": 1,
+      "context": "  18:           if required and k not in module_parameters:\n  19:               missing.append(k)\n  20:       if missing:\n  21:->         msg = 'missing required arguments: %s' % ', '.join(missing)\n  22:           raise TypeError(to_native(msg))\n  23:       return missing",
+      "ast_subtree_json": {
+        "_type": "Assign",
+        "targets": [
+          {
+            "_type": "Name",
+            "id": "msg",
+            "ctx": {
+              "_type": "Store"
+            }
+          }
+        ],
+        "value": {
+          "_type": "BinOp",
+          "left": {
+            "_type": "Constant"
+          },
+          "op": {
+            "_type": "Mod"
+          },
+          "right": {
+            "_type": "Call"
+          }
+        },
+        "type_comment": null
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -13.0
+    },
+    {
+      "line": 20,
+      "line_absolute": 188,
+      "node_id": 7,
+      "node_id_local": 9,
+      "type": "If",
+      "code": "if missing:\n    msg = 'missing required arguments: %s' % ', '.join(missing)\n    raise TypeError(to_native(msg))",
+      "distance_to_buggy": 2,
+      "context": "  17:           required = v.get('required', False)\n  18:           if required and k not in module_parameters:\n  19:               missing.append(k)\n  20:->     if missing:\n  21:           msg = 'missing required arguments: %s' % ', '.join(missing)\n  22:           raise TypeError(to_native(msg))\n  23:       return missing",
+      "ast_subtree_json": {
+        "_type": "If",
+        "test": {
+          "_type": "Name",
+          "id": "missing",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "body": [
+          {
+            "_type": "Assign",
+            "targets": [
+              {
+                "_type": "Name"
+              }
+            ],
+            "value": {
+              "_type": "BinOp"
+            },
+            "type_comment": null
+          },
+          {
+            "_type": "Raise",
+            "exc": {
+              "_type": "Call"
+            },
+            "cause": null
+          }
+        ],
+        "orelse": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -3.0
+    },
+    {
+      "line": 19,
+      "line_absolute": 187,
+      "node_id": 56,
+      "node_id_local": 8,
+      "type": "Call",
+      "code": "missing.append(k)",
+      "distance_to_buggy": 3,
+      "context": "  16:       for k, v in argument_spec.items():\n  17:           required = v.get('required', False)\n  18:           if required and k not in module_parameters:\n  19:->             missing.append(k)\n  20:       if missing:\n  21:           msg = 'missing required arguments: %s' % ', '.join(missing)\n  22:           raise TypeError(to_native(msg))",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Attribute",
+          "value": {
+            "_type": "Name"
+          },
+          "attr": "append",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [
+          {
+            "_type": "Name",
+            "id": "k",
+            "ctx": {
+              "_type": "Load"
+            }
+          }
+        ],
+        "keywords": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": 5.1
+    },
+    {
+      "line": 18,
+      "line_absolute": 186,
+      "node_id": 19,
+      "node_id_local": 7,
+      "type": "If",
+      "code": "if required and k not in module_parameters:\n    missing.append(k)",
+      "distance_to_buggy": 4,
+      "context": "  15:           return missing\n  16:       for k, v in argument_spec.items():\n  17:           required = v.get('required', False)\n  18:->         if required and k not in module_parameters:\n  19:               missing.append(k)\n  20:       if missing:\n  21:           msg = 'missing required arguments: %s' % ', '.join(missing)",
+      "ast_subtree_json": {
+        "_type": "If",
+        "test": {
+          "_type": "BoolOp",
+          "op": {
+            "_type": "And"
+          },
+          "values": [
+            {
+              "_type": "Name"
+            },
+            {
+              "_type": "Compare"
+            }
+          ]
+        },
+        "body": [
+          {
+            "_type": "Expr",
+            "value": {
+              "_type": "Call"
+            }
+          }
+        ],
+        "orelse": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": 16.1
+    },
+    {
+      "line": 17,
+      "line_absolute": 185,
+      "node_id": 35,
+      "node_id_local": 6,
+      "type": "Call",
+      "code": "v.get('required', False)",
+      "distance_to_buggy": 5,
+      "context": "  14:       if argument_spec is None:\n  15:           return missing\n  16:       for k, v in argument_spec.items():\n  17:->         required = v.get('required', False)\n  18:           if required and k not in module_parameters:\n  19:               missing.append(k)\n  20:       if missing:",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Attribute",
+          "value": {
+            "_type": "Name"
+          },
+          "attr": "get",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [
+          {
+            "_type": "Constant",
+            "value": "required",
+            "kind": null
+          },
+          {
+            "_type": "Constant",
+            "value": false,
+            "kind": null
+          }
+        ],
+        "keywords": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": 24.8
+    },
+    {
+      "line": 17,
+      "line_absolute": 185,
+      "node_id": 18,
+      "node_id_local": 5,
+      "type": "Assign",
+      "code": "required = v.get('required', False)",
+      "distance_to_buggy": 5,
+      "context": "  14:       if argument_spec is None:\n  15:           return missing\n  16:       for k, v in argument_spec.items():\n  17:->         required = v.get('required', False)\n  18:           if required and k not in module_parameters:\n  19:               missing.append(k)\n  20:       if missing:",
+      "ast_subtree_json": {
+        "_type": "Assign",
+        "targets": [
+          {
+            "_type": "Name",
+            "id": "required",
+            "ctx": {
+              "_type": "Store"
+            }
+          }
+        ],
+        "value": {
+          "_type": "Call",
+          "func": {
+            "_type": "Attribute"
+          },
+          "args": [
+            {
+              "_type": "Constant"
+            },
+            {
+              "_type": "Constant"
+            }
+          ],
+          "keywords": []
+        },
+        "type_comment": null
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": 25.8
+    }
+  ]
+}

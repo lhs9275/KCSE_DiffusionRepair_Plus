@@ -1,0 +1,115 @@
+{
+  "bug_id": "43",
+  "seed": 43,
+  "arm": "base",
+  "candidates": [
+    {
+      "index": 0,
+      "patch_text": "def get_indexer_non_unique(self, target):\n    target = ensure_index(target)\n    pself, ptarget = self._maybe_promote(target)\n    if pself is not self or ptarget is not target:\n        return pself.get_indexer_non_unique(ptarget)\n    if is_categorical(target):\n        tgt_values = np.asarray(target)\n    elif self.is_datetime64_any_dtype:  # <--- BUG FIXED HERE\n        tgt_values = target.asi8\n    else:\n        tgt_values = target._ndarray_values\n    indexer, missing = self._engine.get_indexer_non_unique(tgt_values)\n    return (ensure_platform_int(indexer), missing)",
+      "patch_sha256": "c150bf8adc239022ee3a148469b84a938a116cfd6ceefa1cc3440463dbd3ee76",
+      "rank_score": 230,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.9326332018390676,
+      "top_p": 0.8237317411294214
+    },
+    {
+      "index": 1,
+      "patch_text": "def get_indexer_non_unique(self, target):\n    target = ensure_index(target)\n    pself, ptarget = self._maybe_promote(target)\n    if pself is not self or ptarget is not target:\n        return pself.get_indexer_non_unique(ptarget)\n    if is_categorical(target):\n        tgt_values = np.asarray(target)\n    elif target.dtype == 'M8[ns]':\n        tgt_values = target.asi8\n    else:\n        tgt_values = target._ndarray_values\n    indexer, missing = self._engine.get_indexer_non_unique(tgt_values)\n    return (ensure_platform_int(indexer), missing)",
+      "patch_sha256": "5bdb06fab742aa07820e8f7c002685a95443f510c997a6d0daeae41e0eeacbd5",
+      "rank_score": 229,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.934442110146087,
+      "top_p": 0.8256979458109642
+    },
+    {
+      "index": 2,
+      "patch_text": "def get_indexer_non_unique(self, target):\n    target = ensure_index(target)\n    pself, ptarget = self._maybe_promote(target)\n    if pself is not self or ptarget is not target:\n        return pself.get_indexer_non_unique(ptarget)\n    if is_categorical(target):\n        tgt_values = np.asarray(target)\n    elif isinstance(target, DatetimeIndex):\n        tgt_values = target.asi8\n    else:\n        tgt_values = target._ndarray_values\n    indexer, missing = self._engine.get_indexer_non_unique(tgt_values)\n    return (ensure_platform_int(indexer), missing)",
+      "patch_sha256": "e742b18caedbfae182a3f168ce1c8f81f5abca40761f041b315b24fbc44b7bfa",
+      "rank_score": 229,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.9326332018390676,
+      "top_p": 0.8237317411294214
+    },
+    {
+      "index": 3,
+      "patch_text": "def get_indexer_non_unique(self, target):\n    target = ensure_index(target)\n    pself, ptarget = self._maybe_promote(target)\n    if pself is not self or ptarget is not target:\n        return pself.get_indexer_non_unique(ptarget)\n    if is_categorical(target):\n        tgt_values = np.asarray(target)\n    elif self.is_all_dates:\n        tgt_values = target.asi8\n    else:\n        tgt_values = target._ndarray_values\n    indexer, missing = self._engine.get_indexer_non_unique(tgt_values)\n    return (ensure_platform_int(indexer), missing)",
+      "patch_sha256": "56c2dd0ed47dc01b7659e936adefb3a33bf0518face5d99d0a456d428679b3f9",
+      "rank_score": 211,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7704673177175924,
+      "top_p": 0.8630841471469904
+    },
+    {
+      "index": 4,
+      "patch_text": "def get_indexer_non_unique(self, target):\n    target = ensure_index(target)\n    pself, ptarget = self._maybe_promote(target)\n    if pself is not self or ptarget is not target:\n        return pself.get_indexer_non_unique(ptarget)\n    if is_categorical(target):\n        tgt_values = np.asarray(target)\n    else:\n        tgt_values = target._ndarray_values\n    indexer, missing = self._engine.get_indexer_non_unique(tgt_values)\n    return (ensure_platform_int(indexer), missing)",
+      "patch_sha256": "ef1d702db41e28502bc0457bfc37da4a74e9bd4396e0aac68d23496927ce418b",
+      "rank_score": 207,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.0,
+      "top_p": 1.0
+    },
+    {
+      "index": 5,
+      "patch_text": "def get_indexer_non_unique(self, target):\n    target = ensure_index(target)\n    pself, ptarget = self._maybe_promote(target)\n    if pself is not self or ptarget is not target:\n        return pself.get_indexer_non_unique(ptarget)\n    if is_categorical(target):\n        tgt_values = np.asarray(target)\n    elif self.is_all_dates:  # <--- FIXED LINE\n        tgt_values = target.astype('i8')\n    else:\n        tgt_values = target._ndarray_values\n    indexer, missing = self._engine.get_indexer_non_unique(tgt_values)\n    return (ensure_platform_int(indexer), missing)",
+      "patch_sha256": "e23b4cd834e7dd78daa513263eb83d387c59d36534c35e3ae550d1c121aae9c8",
+      "rank_score": 201,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.9326332018390676,
+      "top_p": 0.8237317411294214
+    },
+    {
+      "index": 6,
+      "patch_text": "def get_indexer_non_unique(self, target):\n    target = ensure_index(target)\n    pself, ptarget = self._maybe_promote(target)\n    if pself is not self or ptarget is not target:\n        return pself.get_indexer_non_unique(ptarget)\n    if is_categorical(target):\n        tgt_values = np.asarray(target)\n    else:\n        tgt_values = target._ndarray_values\n    indexer, missing = self._engine.get_indexer_non_unique(tgt_values)\n    return (ensure_platform_int(indexer), missing)\n\n##end\n\n##correct\ndef get_indexer_non_unique(self, target):\n    target = ensure_index(target)\n    pself, ptarget = self._maybe_promote(target)\n    if pself is not self or ptarget is not target:\n        return pself.get_indexer_non_unique(ptarget)\n    if is_categorical(target):\n        tgt_values = np.asarray(target)\n    else:\n        tgt_values = target._ndarray_values\n    indexer, missing = self._engine.get_indexer_non_unique(tgt_values)\n    return (ensure_platform_int(indexer), missing)\n\n##end\n\n##correct\ndef get_indexer_non_unique(self, target):\n    target = ensure_index(target)\n    pself, ptarget = self._maybe_promote(target)\n    if pself is not self or ptarget is not target:\n        return pself.get_indexer_non_unique(ptarget)\n    if is_categorical(target):\n        tgt_values = np.asarray(target)\n    else:\n        tgt_values = target._ndarray_values\n    indexer, missing = self._engine.get_indexer_non_unique(tgt_values)\n    return (ensure_platform_int(indexer), missing)\n\n##end\n\n##correct\ndef get_indexer_non_unique(self, target):\n    target = ensure_index(target)\n    pself, ptarget = self._maybe_promote(target)\n    if pself is not self or ptarget is not target:\n        return pself.get_indexer_non_unique(ptarget)\n    if is_categorical(target):\n        tgt_values = np.asarray(target)\n    else:\n        tgt_values = target._ndarray_values\n    indexer, missing = self._engine.get_indexer_non_unique(tgt_values)\n    return (ensure_platform_int(indexer), missing)\n\n##end\n\n##correct\ndef get_indexer_non_unique(self, target):\n    target = ensure_index(target)\n    pself, ptarget = self._maybe_promote(target)\n    if pself is not self or ptarget is not target:\n        return pself.get_indexer_non_unique(ptarget)",
+      "patch_sha256": "5c521dff6c8bca0bdbfde0dcc4c9df2160490cdc9b4ba60f5a9c9207bccf9f3e",
+      "rank_score": 155,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7704673177175924,
+      "top_p": 0.8630841471469904
+    },
+    {
+      "index": 7,
+      "patch_text": "def get_indexer_non_unique(self, target):\n    target = ensure_index(target)\n    pself, ptarget = self._maybe_promote(target)\n    if pself is not self or ptarget is not target:\n        return pself.get_indexer_non_unique(ptarget)\n    if is_categorical(target):\n        tgt_values = np.asarray(target)\n    elif self.is_all_dates:\n        tgt_values = target.astype(\"int64\")\n    else:\n        tgt_values = target._ndarray_values\n    indexer, missing = self._engine.get_indexer_non_unique(tgt_values)\n    return (ensure_platform_int(indexer), missing)\n\n##end\n\n\n##correct\n\ndef get_indexer_non_unique(self, target):\n    target = ensure_index(target)\n    pself, ptarget = self._maybe_promote(target)\n    if pself is not self or ptarget is not target:\n        return pself.get_indexer_non_unique(ptarget)\n    if is_categorical(target):\n        tgt_values = np.asarray(target)\n    elif self.is_all_dates:\n        tgt_values = target.astype(\"int64\")\n    else:\n        tgt_values = target._ndarray_values\n    indexer, missing = self._engine.get_indexer_non_unique(tgt_values)\n    return (ensure_platform_int(indexer), missing)\n\n##end\nimport astor\nimport os\nimport sys\n\nfrom collections import namedtuple\nfrom pathlib import Path\nfrom typing import List, Tuple\n\nfrom. import utils\n\n\nclass SourceCode(namedtuple('SourceCode', ['filename', 'lines', 'text'])):\n    def __new__(cls, filename, lines, text):\n        return super().__new__(cls, filename, lines, text)\n\n    @property\n    def num_lines(self):\n        return len(self.lines)\n\n    @property\n    def num_tokens(self):\n        return sum([len(l.split()) for l in self.lines])\n\n    def tokenize(self):\n        tokens = []\n        for line in self.lines:\n            tokens.extend(line.split())\n        return tokens\n\n    @property\n    def ast(self):\n        return astor.to_ast(self.text)\n\n    def show(self, output_filename=None):\n        if output_filename is None:\n            output_filename = self.filename\n        print('=' * 79)\n        print('FILE: {}'.format(output_filename))\n        print('-' * 79)\n        print(self.text)\n        print('=' * 79)\n\n    def save(self, output_filename=None):\n        if output_filename is None:\n            output_filename = self.filename\n        with open(output_filename, 'w') as f:\n            f.write(self.text)",
+      "patch_sha256": "efbf6393c684b6a3be9153fe23b5e5fb6b3fe416843064d748271e3130a2d1f1",
+      "rank_score": -170,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.934442110146087,
+      "top_p": 0.8256979458109642
+    }
+  ],
+  "candidate_count": 8,
+  "retrieved_examples": [],
+  "diffusion_plan": [],
+  "static_analysis_nodes": []
+}

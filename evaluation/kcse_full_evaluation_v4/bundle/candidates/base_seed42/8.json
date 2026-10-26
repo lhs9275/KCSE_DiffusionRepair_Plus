@@ -1,0 +1,141 @@
+{
+  "bug_id": "8",
+  "seed": 42,
+  "arm": "base",
+  "candidates": [
+    {
+      "index": 0,
+      "patch_text": "def __init__(self, worker_id, last_active=None):\n    self.id = worker_id\n    self.reference = None\n    self.last_active = last_active or 0.0\n    self.started = time.time()\n    self.tasks = set()\n    self.info = {}",
+      "patch_sha256": "bae4df00a84b246d29e00c9e56654c5b27be4a28d53f695e697318afe661e084",
+      "rank_score": 204,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8250994923331102,
+      "top_p": 0.9313743654163876
+    },
+    {
+      "index": 1,
+      "patch_text": "def __init__(self, worker_id, last_active=None):\n    self.id = worker_id\n    self.reference = None\n    self.last_active = last_active or time.time()\n    self.started = time.time()\n    self.tasks = set()\n    self.info = {}",
+      "patch_sha256": "4ccbf3724c7f1eb4ea51b55b8c892ac484205073b38caf275c9adb73014e96a1",
+      "rank_score": 203,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8850407915843882,
+      "top_p": 0.7720008604178135
+    },
+    {
+      "index": 2,
+      "patch_text": "def __init__(self, worker_id, last_active=None):\n    self.id = worker_id\n    self.reference = None\n    self.last_active = last_active\n    if last_active:\n        self.started = time.time()\n    else:\n        self.started = 0\n    self.tasks = set()\n    self.info = {}",
+      "patch_sha256": "8baa9fedce80863b9bb1baa51f38ef07c5ed8f7dd1ec320f4e90c7e43872fb0a",
+      "rank_score": 188,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7822854872415247,
+      "top_p": 0.8778568590519058
+    },
+    {
+      "index": 3,
+      "patch_text": "def __init__(self, worker_id, last_active=None):\n    if last_active:\n        self.last_active = last_active\n    else:\n        self.last_active = time.time()\n    self.id = worker_id\n    self.reference = None\n    self.started = time.time()\n    self.tasks = set()\n    self.info = {}",
+      "patch_sha256": "7b2df26fc84baf1428b0182c8ada75f44c4d506b9c8e11a089f8f385faa90b4f",
+      "rank_score": 180,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8250994923331102,
+      "top_p": 0.9313743654163876
+    },
+    {
+      "index": 4,
+      "patch_text": "def __init__(self, worker_id, last_active=None):\n    self.id = worker_id\n    self.reference = None\n    if last_active is not None:\n        self.last_active = last_active\n    else:\n        self.last_active = time.time()\n    self.started = time.time()\n    self.tasks = set()\n    self.info = {}",
+      "patch_sha256": "ba84aa837abc96c18cd3d30b68f7b25310f597a4f817e8439e5f3f1cd64153d8",
+      "rank_score": 179,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.5106412196441554,
+      "top_p": 0.9620023454695296
+    },
+    {
+      "index": 5,
+      "patch_text": "def __init__(self, name, worker_environment):  # <--- BUGGY LINE\n    self._worker_id = Worker.get_or_create_worker_id(name)\n    self._name = name\n    self._events_queue = Queue.Queue()\n    self._events_processor = WorkerEventsProcessor(self._events_queue, worker_environment)\n    self._events_processor.daemon = True\n    self._events_processor.start()",
+      "patch_sha256": "dab5b1fba763c21ccda4831674234b37576c36e330ef364c4000e35ce5b45f0b",
+      "rank_score": 165,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8250994923331102,
+      "top_p": 0.9313743654163876
+    },
+    {
+      "index": 6,
+      "patch_text": "def __init__(self, worker_id, last_active=None):\n  self.id = worker_id\n  self.reference = None\n  self.last_active = last_active\n  if self.last_active is None:\n    self.last_active = time.time()\n  self.started = time.time()\n  self.tasks = set()\n  self.info = {}",
+      "patch_sha256": "e6e4ea1dfd30f24516bb4f4caa078f5512bfb23e72fdea304ca96b87ed030be0",
+      "rank_score": 156,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.9374042813624712,
+      "top_p": 0.828917697133121
+    },
+    {
+      "index": 7,
+      "patch_text": "def __init__(self, worker_id, last_active=None):\n    self.id = worker_id\n    self.reference = None\n    self.last_active = last_active\n    self.started = time.time()\n    self.last_active = last_active\n    self.tasks = set()\n    self.info = {}",
+      "patch_sha256": "f8251a3aa9222890360dfa61a09a499fd218324bccf4a3fb0320c609c19df5e8",
+      "rank_score": 101,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.5273506986767932,
+      "top_p": 0.98
+    },
+    {
+      "index": 8,
+      "patch_text": "def __init__(self, worker_id, last_active=None):\n    self.id = worker_id\n    self.reference = None\n    self.last_active = last_active\n    if last_active is not None:\n        self.last_active = time.time()\n    self.started = time.time()\n    self.tasks = set()\n    self.info = {}",
+      "patch_sha256": "d881739ff8785f272494c30093b39912046104f6c55c245ed129a19c0aeef45e",
+      "rank_score": 86,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8250994923331102,
+      "top_p": 0.9313743654163876
+    },
+    {
+      "index": 9,
+      "patch_text": "def __init__(self, worker_id, last_active=None):\n    self.id = worker_id\n    self.reference = None\n    self.last_active = last_active\n    self.started = time.time()\n    self.tasks = set()\n    self.info = {}\n\n##correct\nclass LocalScheduler(object):\n\n    def __init__(self, worker_id):\n        self.id = worker_id\n        self.reference = None\n        self.started = time.time()\n        self.tasks = set()\n        self.info = {}\n        self.task_history = collections.defaultdict(set)\n        self.scheduled_tasks = collections.defaultdict(set)\n        self.failed_tasks = collections.defaultdict(set)\n\n##correct\nclass Scheduler(object):\n\n    def __init__(self, worker_id, reference, last_active=None):\n        self.id = worker_id\n        self.reference = reference\n        self.last_active = last_active\n        self.started = time.time()\n        self.tasks = set()\n        self.info = {}\n        self.task_history = collections.defaultdict(set)\n        self.scheduled_tasks = collections.defaultdict(set)\n        self.failed_tasks = collections.defaultdict(set)\n\n\n##correct\nclass TaskScheduler(object):\n\n    def __init__(self, worker_id, reference, last_active=None):\n        self.id = worker_id\n        self.reference = reference\n        self.last_active = last_active\n        self.started = time.time()\n        self.tasks = set()\n        self.info = {}\n        self.task_history = collections.defaultdict(set)\n        self.scheduled_tasks = collections.defaultdict(set)\n        self.failed_tasks = collections.defaultdict(set)\n\n##correct\nclass RemoteScheduler(object):\n\n    def __init__(self, worker_id, reference, last_active=None):\n        self.id = worker_id\n        self.reference = reference\n        self.last_active = last_active\n        self.started = time.time()\n        self.tasks = set()\n        self.info = {}\n        self.task_history = collections.defaultdict(set)\n        self.scheduled_tasks = collections.defaultdict(set)\n        self.failed_tasks = collections.defaultdict(set)\n\n##correct\ndef get_worker_id():\n    return str(uuid.uuid4())\n\n##correct\nclass Worker(object):\n\n    def __init__(self, worker_id, worker_name=None):\n        self.id = worker_id\n        self.name = worker_name\n        self.started = time.time()\n        self.last_active = None\n        self.info = {}\n        self.task_history = collections.defaultdict(set)\n        self.scheduled_tasks = collections.defaultdict(set)\n        self.failed_tasks = collections.default",
+      "patch_sha256": "1623e6d8203df7866885fc1bdc15c206b4335015d95d9000f4df3a66e25b9485",
+      "rank_score": 17,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8895986980815249,
+      "top_p": 0.7769551066103534
+    }
+  ],
+  "candidate_count": 10,
+  "retrieved_examples": [],
+  "diffusion_plan": [],
+  "static_analysis_nodes": []
+}

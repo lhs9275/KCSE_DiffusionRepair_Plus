@@ -1,0 +1,76 @@
+{
+  "bug_id": "49",
+  "seed": 42,
+  "arm": "base",
+  "candidates": [
+    {
+      "index": 0,
+      "patch_text": "def get_new_command(command):\n    return replace_argument(command.script, 'push', 'push -f')",
+      "patch_sha256": "28ff51e211ef67547b9f618f35bf51fe99345460108b77d3d4f6a9a5e5edbb31",
+      "rank_score": 158,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8089233151013046,
+      "top_p": 0.9111541438766307
+    },
+    {
+      "index": 1,
+      "patch_text": "def get_new_command(command):\n    return replace_argument(command.script,'rebase','rebase -i')  # <--- BUGGY LINE",
+      "patch_sha256": "5094d5ffa0fde94fa06e212ff6f5cf7208bdbac097d699728749be5fdb173dd7",
+      "rank_score": 154,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.9374042813624712,
+      "top_p": 0.828917697133121
+    },
+    {
+      "index": 2,
+      "patch_text": "def get_new_command(command):\n    return replace_argument(command.script, 'push', 'push --force')",
+      "patch_sha256": "7de032244bf1c77fe82d0327b62311fd65423f7de4f247b70a65598d803a9b13",
+      "rank_score": 145,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.0,
+      "top_p": 1.0
+    },
+    {
+      "index": 3,
+      "patch_text": "def get_new_command(command):\n    return command.script + \" --allow-running-insecure-content\"  # <--- BUGGY LINE",
+      "patch_sha256": "4d31f882d472ad219156e65d95d12f3c34af044c5229971fa266ee57195da69e",
+      "rank_score": 145,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8250994923331102,
+      "top_p": 0.9313743654163876
+    },
+    {
+      "index": 4,
+      "patch_text": "def get_new_command(command):\n    return replace_argument(command.script, 'push', 'push --force')\n\n##end\n\n##correct\ndef get_new_command(command):\n    return replace_argument(command.script, 'push', 'push --force')\n\n##end\n\n##correct\ndef get_new_command(command):\n    return replace_argument(command.script, 'push', 'push --force')\n\n##end\n\n##correct\ndef get_new_command(command):\n    return replace_argument(command.script, 'push', 'push --force')\n\n##end\n\n##correct\ndef get_new_command(command):\n    return replace_argument(command.script, 'push', 'push --force')\n\n##end\n\n##correct\ndef get_new_command(command):\n    return replace_argument(command.script, 'push', 'push --force')\n\n##end\n\n##correct\ndef get_new_command(command):\n    return replace_argument(command.script, 'push', 'push --force')\n\n##end\n\n##correct\ndef get_new_command(command):\n    return replace_argument(command.script, 'push', 'push --force')\n\n##end\n\n##correct\ndef get_new_command(command):\n    return replace_argument(command.script, 'push', 'push --force')\n\n##end\n\n##correct\ndef get_new_command(command):\n    return replace_argument(command.script, 'push', 'push --force')\n\n##end\n\n##correct\ndef get_new_command(command):\n    return replace_argument(command.script, 'push', 'push --force')\n\n##end\n\n##correct\ndef get_new_command(command):\n    return replace_argument(command.script, 'push', 'push --force')\n\n##end\n\n##correct\ndef get_new_command(command):\n    return replace_argument(command.script, 'push', 'push --force')\n\n##end\n\n##correct\ndef get_new_command(command):\n    return replace_argument(command.script, 'push', 'push --force')\n\n##end\n\n##correct\ndef get_new_command(command):\n    return replace_argument(command.script, 'push', 'push --force')\n\n##end\n\n##correct\ndef get_new_command(command):\n    return replace_argument(command.script, 'push', 'push --force')\n\n##end\n\n##correct\ndef get_new_command(command):\n    return replace_argument(command.script, 'push', 'push --force')\n\n##end\n\n##correct\ndef get_new_command(command):\n    return replace_argument(command.script, 'push', 'push --force')",
+      "patch_sha256": "06357083ee5eb0e9b7a1bce6c358f9220731aa988ef789155600646c1737f712",
+      "rank_score": 95,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.5273506986767932,
+      "top_p": 0.98
+    }
+  ],
+  "candidate_count": 5,
+  "retrieved_examples": [],
+  "diffusion_plan": [],
+  "static_analysis_nodes": []
+}

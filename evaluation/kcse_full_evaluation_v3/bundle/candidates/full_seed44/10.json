@@ -1,0 +1,1189 @@
+{
+  "bug_id": "10",
+  "seed": 44,
+  "arm": "full",
+  "candidates": [
+    {
+      "index": 0,
+      "patch_text": "def get_work(self, worker, host=None, assistant=False, **kwargs):\n    self.update(worker, {'host': host})\n    if assistant:\n        self.add_worker(worker, [('assistant', assistant)])\n    best_task = None\n    locally_pending_tasks = 0\n    running_tasks = []\n    used_resources = self._used_resources()\n    greedy_resources = collections.defaultdict(int)\n    n_unique_pending = 0\n    greedy_workers = dict(((worker.id, worker.info.get('workers', 1)) for worker in self._state.get_active_workers()))\n    tasks = list(self._state.get_pending_tasks())\n    tasks.sort(key=self._rank(), reverse=True)\n    for task in tasks:\n        in_workers = worker in task.workers\n        if task.status == 'RUNNING' and in_workers:\n            other_worker = self._state.get_worker(task.worker_running)\n            more_info = {'task_id': task.id, 'worker': str(other_worker)}\n            if other_worker is not None:\n                more_info.update(other_worker.info)\n                running_tasks.append(more_info)\n        if task.status == PENDING and in_workers:\n            locally_pending_tasks += 1\n            if len(task.workers) == 1 and (not assistant):\n                n_unique_pending += 1\n        if task.status == RUNNING and task.worker_running in greedy_workers:\n            greedy_workers[task.worker_running] -= 1\n            for resource, amount in six.iteritems(task.resources or {}):\n                greedy_resources[resource] += amount\n        if not best_task and self._schedulable(task) and self._has_resources(task.resources, greedy_resources):\n            if in_workers and self._has_resources(task.resources, used_resources):\n                best_task = task\n            else:\n                workers = task.workers\n                for task_worker in workers:\n                    if greedy_workers.get(task_worker, 0) > 0:\n                        greedy_workers[task_worker] -= 1\n                        for resource, amount in six.iteritems(task.resources or {}):\n                            greedy_resources[resource] += amount\n                        break\n    reply = {'n_pending_tasks': locally_pending_tasks, 'running_tasks': running_tasks, 'task_id': None, 'n_unique_pending': n_unique_pending}\n    if best_task:\n        self._state.set_status(best_task, RUNNING, self._config)\n        best_task.worker_running = worker\n        best_task.time_running = time.time()\n        self._update_task_history(best_task.id, RUNNING, host=host)\n        reply['task_id']",
+      "patch_sha256": "67d816d4c914921823e8ceea52dc582e8c17304d55a94a3a821bd5c9536d5313",
+      "rank_score": 240,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7754656341403433,
+      "top_p": 0.8693320426754291
+    },
+    {
+      "index": 1,
+      "patch_text": "def get_work(self, worker, host=None, assistant=False, **kwargs):\n    self.update(worker, {'host': host})\n    if assistant:\n        self.add_worker(worker, [('assistant', assistant)])\n    best_task = None\n    locally_pending_tasks = 0\n    running_tasks = []\n    used_resources = self._used_resources()\n    greedy_resources = collections.defaultdict(int)\n    n_unique_pending = 0\n    greedy_workers = dict(((worker.id, worker.info.get('workers', 1)) for worker in self._state.get_active_workers()))\n    tasks = list(self._state.get_pending_tasks())\n    tasks.sort(key=self._rank(), reverse=True)\n    for task in tasks:\n        if task.status == 'RUNNING' and worker in task.workers:\n            other_worker = self._state.get_worker(task.worker_running)\n            more_info = {'task_id': task.id, 'worker': str(other_worker)}\n            if other_worker is not None:\n                more_info.update(other_worker.info)\n                running_tasks.append(more_info)\n        if task.status == PENDING and worker in task.workers:\n            locally_pending_tasks += 1\n            if len(task.workers) == 1 and (not assistant):\n                n_unique_pending += 1\n        if task.status == RUNNING and task.worker_running in greedy_workers:\n            greedy_workers[task.worker_running] -= 1\n            for resource, amount in six.iteritems(task.resources or {}):\n                greedy_resources[resource] += amount\n        if not best_task and self._schedulable(task) and self._has_resources(task.resources, used_resources):\n            if self._has_resources(task.resources, used_resources):\n                best_task = task\n            else:\n                for task_worker in task.workers:\n                    if greedy_workers.get(task_worker, 0) > 0:\n                        greedy_workers[task_worker] -= 1\n                        for resource, amount in six.iteritems(task.resources or {}):\n                            greedy_resources[resource] += amount\n                        break\n    reply = {'n_pending_tasks': locally_pending_tasks, 'running_tasks': running_tasks, 'task_id': None, 'n_unique_pending': n_unique_pending}\n    if best_task:\n        self._state.set_status(best_task, RUNNING, self._config)\n        best_task.worker_running = worker\n        best_task.time_running = time.time()\n        self._update_task_history(best_task.id, RUNNING, host=host)\n        reply['task_id'] = best_task.id\n        reply['task_family'] = best",
+      "patch_sha256": "75f7075529f78cadbb602a9f0dc95567f13389cbe4523f894caf57b89d23e0f6",
+      "rank_score": 238,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7793066012285085,
+      "top_p": 0.8741332515356355
+    },
+    {
+      "index": 2,
+      "patch_text": "def get_work(self, worker, host=None, assistant=False, **kwargs):\n    self.update(worker, {'host': host})\n    if assistant:\n        self.add_worker(worker, [('assistant', assistant)])\n    best_task = None\n    locally_pending_tasks = 0\n    running_tasks = []\n    used_resources = self._used_resources()\n    greedy_resources = collections.defaultdict(int)\n    n_unique_pending = 0\n    greedy_workers = dict(((worker.id, worker.info.get('workers', 1)) for worker in self._state.get_active_workers()))\n    tasks = list(self._state.get_pending_tasks())\n    tasks.sort(key=self._rank(), reverse=True)\n    for task in tasks:\n        if task.status == 'RUNNING' and (worker in task.workers or assistant):\n            other_worker = self._state.get_worker(task.worker_running)\n            more_info = {'task_id': task.id, 'worker': str(other_worker)}\n            if other_worker is not None:\n                more_info.update(other_worker.info)\n                running_tasks.append(more_info)\n        if task.status == PENDING and (worker in task.workers or assistant):\n            locally_pending_tasks += 1\n            if len(task.workers) == 1 and (not assistant):\n                n_unique_pending += 1\n        if task.status == RUNNING and task.worker_running in greedy_workers:\n            greedy_workers[task.worker_running] -= 1\n            for resource, amount in six.iteritems(task.resources or {}):\n                greedy_resources[resource] += amount\n        if not best_task and self._schedulable(task) and self._has_resources(task.resources, greedy_resources):\n            best_task = task\n            if (worker in task.workers or assistant) and self._has_resources(task.resources, used_resources):\n                best_task = task\n            else:\n                workers = itertools.chain(task.workers, [worker]) if assistant else task.workers\n                for task_worker in workers:\n                    if greedy_workers.get(task_worker, 0) > 0:\n                        greedy_workers[task_worker] -= 1\n                        for resource, amount in six.iteritems(task.resources or {}):\n                            greedy_resources[resource] += amount\n                        break\n    reply = {'n_pending_tasks': locally_pending_tasks, 'running_tasks': running_tasks, 'task_id': None, 'n_unique_pending': n_unique_pending}\n    if best_task:\n        self._state.set_status(best_task, RUNNING, self._config)\n        best_task.worker_running = worker\n        best_task.time_running = time.time()\n        self._",
+      "patch_sha256": "ef5636a3f662985ab4ae9bb1af9f0e0f5eaf2e26b13d143214dfb6edb2e03c9d",
+      "rank_score": 238,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8997717407145516,
+      "top_p": 0.7880127616462518
+    },
+    {
+      "index": 3,
+      "patch_text": "def get_work(self, worker, host=None, assistant=False, **kwargs):\n    self.update(worker, {'host': host})\n    if assistant:\n        self.add_worker(worker, [('assistant', assistant)])\n    best_task = None\n    locally_pending_tasks = 0\n    running_tasks = []\n    used_resources = self._used_resources()\n    greedy_resources = collections.defaultdict(int)\n    n_unique_pending = 0\n    greedy_workers = dict(((worker.id, worker.info.get('workers', 1)) for worker in self._state.get_active_workers()))\n    tasks = list(self._state.get_pending_tasks())\n    tasks.sort(key=self._rank(), reverse=True)\n    for task in tasks:\n        if task.status == 'RUNNING' and worker in task.workers:\n            other_worker = self._state.get_worker(task.worker_running)\n            more_info = {'task_id': task.id, 'worker': str(other_worker)}\n            if other_worker is not None:\n                more_info.update(other_worker.info)\n                running_tasks.append(more_info)\n        if task.status == PENDING and worker in task.workers:\n            locally_pending_tasks += 1\n            if len(task.workers) == 1 and (not assistant):\n                n_unique_pending += 1\n        if task.status == RUNNING and task.worker_running in greedy_workers:\n            greedy_workers[task.worker_running] -= 1\n            for resource, amount in six.iteritems(task.resources or {}):\n                greedy_resources[resource] += amount\n        if not best_task and self._schedulable(task) and self._has_resources(task.resources, greedy_resources):\n            if worker in task.workers:\n                best_task = task\n            else:\n                workers = itertools.chain(task.workers, [worker]) if assistant else task.workers\n                for task_worker in workers:\n                    if greedy_workers.get(task_worker, 0) > 0:\n                        greedy_workers[task_worker] -= 1\n                        for resource, amount in six.iteritems(task.resources or {}):\n                            greedy_resources[resource] += amount\n                        break\n    reply = {'n_pending_tasks': locally_pending_tasks, 'running_tasks': running_tasks, 'task_id': None, 'n_unique_pending': n_unique_pending}\n    if best_task:\n        self._state.set_status(best_task, RUNNING, self._config)\n        best_task.worker_running = worker\n        best_task.time_running = time.time()\n        self._update_task_history(best_task.id, RUNNING, host=host)\n        reply['task_id'] = best_task",
+      "patch_sha256": "977167633e3ff254b4b08792a7f0f7e9073d1702a73f4710d18e289f311b6adf",
+      "rank_score": 233,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.5350607232455378,
+      "top_p": 0.98
+    },
+    {
+      "index": 4,
+      "patch_text": "def get_work(self, worker, host=None, assistant=False, **kwargs):\n    self.update(worker, {'host': host})\n    if assistant:\n        self.add_worker(worker, [('assistant', assistant)])\n    best_task = None\n    locally_pending_tasks = 0\n    running_tasks = []\n    used_resources = self._used_resources()\n    greedy_resources = collections.defaultdict(int)\n    n_unique_pending = 0\n    greedy_workers = dict(((worker.id, worker.info.get('workers', 1)) for worker in self._state.get_active_workers()))\n    tasks = list(self._state.get_pending_tasks())\n    tasks.sort(key=self._rank(), reverse=True)\n    for task in tasks:\n        if task.status == 'RUNNING' and worker in task.workers:\n            other_worker = self._state.get_worker(task.worker_running)\n            more_info = {'task_id': task.id, 'worker': str(other_worker)}\n            if other_worker is not None:\n                more_info.update(other_worker.info)\n                running_tasks.append(more_info)\n        if task.status == PENDING and worker in task.workers:\n            locally_pending_tasks += 1\n            if len(task.workers) == 1 and (not assistant):\n                n_unique_pending += 1\n        if task.status == RUNNING and task.worker_running in greedy_workers:\n            greedy_workers[task.worker_running] -= 1\n            for resource, amount in six.iteritems(task.resources or {}):\n                greedy_resources[resource] += amount\n        if not best_task and self._schedulable(task) and self._has_resources(task.resources, greedy_resources):\n            best_task = task\n            workers = itertools.chain(task.workers, [worker]) if assistant else task.workers\n            for task_worker in workers:\n                if greedy_workers.get(task_worker, 0) > 0:\n                    greedy_workers[task_worker] -= 1\n                    for resource, amount in six.iteritems(task.resources or {}):\n                        greedy_resources[resource] += amount\n                    break\n    reply = {'n_pending_tasks': locally_pending_tasks, 'running_tasks': running_tasks, 'task_id': None, 'n_unique_pending': n_unique_pending}\n    if best_task:\n        self._state.set_status(best_task, RUNNING, self._config)\n        best_task.worker_running = worker\n        best_task.time_running = time.time()\n        self._update_task_history(best_task.id, RUNNING, host=host)\n        reply['task_id'] = best_task.id\n        reply['task_family'] = best",
+      "patch_sha256": "18f743bf8efdfde8250119d1a59302fe4c683c9f4a4448cc83b1b46d024ee998",
+      "rank_score": 218,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7754656341403433,
+      "top_p": 0.8693320426754291
+    },
+    {
+      "index": 5,
+      "patch_text": "def get_work(self, worker, host=None, assistant=False, **kwargs):\n    self.update(worker, {'host': host})\n    if assistant:\n        self.add_worker(worker, [('assistant', assistant)])\n    best_task = None\n    locally_pending_tasks = 0\n    running_tasks = []\n    used_resources = self._used_resources()\n    greedy_resources = collections.defaultdict(int)\n    n_unique_pending = 0\n    greedy_workers = dict(((worker.id, worker.info.get('workers', 1)) for worker in self._state.get_active_workers()))\n    tasks = list(self._state.get_pending_tasks())\n    tasks.sort(key=self._rank(), reverse=True)\n    for task in tasks:\n        if task.status == 'RUNNING' and worker in task.workers:\n            other_worker = self._state.get_worker(task.worker_running)\n            more_info = {'task_id': task.id, 'worker': str(other_worker)}\n            if other_worker is not None:\n                more_info.update(other_worker.info)\n                running_tasks.append(more_info)\n        if task.status == PENDING and worker in task.workers:\n            locally_pending_tasks += 1\n            if len(task.workers) == 1 and (not assistant):\n                n_unique_pending += 1\n        if task.status == RUNNING and task.worker_running in greedy_workers:\n            greedy_workers[task.worker_running] -= 1\n            for resource, amount in six.iteritems(task.resources or {}):\n                greedy_resources[resource] += amount\n        if not best_task and self._schedulable(task) and self._has_resources(task.resources, greedy_resources):\n            best_task = task\n            break\n    reply = {'n_pending_tasks': locally_pending_tasks, 'running_tasks': running_tasks, 'task_id': None, 'n_unique_pending': n_unique_pending}\n    if best_task:\n        self._state.set_status(best_task, RUNNING, self._config)\n        best_task.worker_running = worker\n        best_task.time_running = time.time()\n        self._update_task_history(best_task.id, RUNNING, host=host)\n        reply['task_id'] = best_task.id\n        reply['task_family'] = best_task.family\n        reply['task_module'] = getattr(best_task,'module', None)\n        reply['task_params'] = best_task.params\n    return reply",
+      "patch_sha256": "b24ba167e4edc2b6645fd1438401aad158d93b29740aac87edc89fc1424e1977",
+      "rank_score": 217,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8838480940652881,
+      "top_p": 0.7707044500709654
+    },
+    {
+      "index": 6,
+      "patch_text": "def get_work(self, worker, host=None, assistant=False, **kwargs):\n    self.update(worker, {'host': host})\n    if assistant:\n        self.add_worker(worker, [('assistant', assistant)])\n    best_task = None\n    locally_pending_tasks = 0\n    running_tasks = []\n    used_resources = self._used_resources()\n    greedy_resources = collections.defaultdict(int)\n    n_unique_pending = 0\n    greedy_workers = dict(((worker.id, worker.info.get('workers', 1)) for worker in self._state.get_active_workers()))\n    tasks = list(self._state.get_pending_tasks())\n    tasks.sort(key=self._rank(), reverse=True)\n    for task in tasks:\n        in_workers = assistant or worker in task.workers  # <--- BUGGY LINE\n        if task.status == 'RUNNING' and in_workers:\n            other_worker = self._state.get_worker(task.worker_running)\n            more_info = {'task_id': task.id, 'worker': str(other_worker)}\n            if other_worker is not None:\n                more_info.update(other_worker.info)\n                running_tasks.append(more_info)\n        if task.status == PENDING and in_workers:\n            locally_pending_tasks += 1\n            if len(task.workers) == 1 and (not assistant):\n                n_unique_pending += 1\n        if task.status == RUNNING and task.worker_running in greedy_workers:\n            greedy_workers[task.worker_running] -= 1\n            for resource, amount in six.iteritems(task.resources or {}):\n                greedy_resources[resource] += amount\n        if not best_task and self._schedulable(task) and self._has_resources(task.resources, used_resources):\n            if in_workers and self._has_resources(task.resources, used_resources):\n                best_task = task\n            else:\n                workers = itertools.chain(task.workers, [worker]) if assistant else task.workers\n                for task_worker in workers:\n                    if greedy_workers.get(task_worker, 0) > 0:\n                        greedy_workers[task_worker] -= 1\n                        for resource, amount in six.iteritems(task.resources or {}):\n                            greedy_resources[resource] += amount\n                        break\n    reply = {'n_pending_tasks': locally_pending_tasks, 'running_tasks': running_tasks, 'task_id': None, 'n_unique_pending': n_unique_pending}\n    if best_task:\n        self._state.set_status(best_task, RUNNING, self._config)\n        best_task.worker_running = worker\n        best_task.time_running = time.time()\n        self._update_task",
+      "patch_sha256": "2603fa025235ba9ac685bc9ed394eafc59ca244ecb4ca0f700b4ab85ac63db79",
+      "rank_score": 210,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7941462962722876,
+      "top_p": 0.8926828703403595
+    },
+    {
+      "index": 7,
+      "patch_text": "def get_work(self, worker, host=None, assistant=False, **kwargs):\n    self.update(worker, {'host': host})\n    if assistant:\n        self.add_worker(worker, [('assistant', assistant)])\n    best_task = None\n    locally_pending_tasks = 0\n    running_tasks = []\n    used_resources = self._used_resources()\n    greedy_resources = collections.defaultdict(int)\n    n_unique_pending = 0\n    greedy_workers = dict(((worker.id, worker.info.get('workers', 1)) for worker in self._state.get_active_workers()))\n    tasks = list(self._state.get_pending_tasks())\n    tasks.sort(key=self._rank(), reverse=True)\n    for task in tasks:\n        in_workers = assistant or worker in task.workers  # <--- BUGGY LINE\n        if task.status == 'RUNNING' and in_workers:\n            other_worker = self._state.get_worker(task.worker_running)\n            more_info = {'task_id': task.id, 'worker': str(other_worker)}\n            if other_worker is not None:\n                more_info.update(other_worker.info)\n                running_tasks.append(more_info)\n        if task.status == PENDING and in_workers:\n            locally_pending_tasks += 1\n            if len(task.workers) == 1 and (not assistant):\n                n_unique_pending += 1\n        if task.status == RUNNING and task.worker_running in greedy_workers:\n            greedy_workers[task.worker_running] -= 1\n            for resource, amount in six.iteritems(task.resources or {}):\n                greedy_resources[resource] += amount\n        if not best_task and self._schedulable(task) and self._has_resources(task.resources, used_resources):\n            if in_workers and self._has_resources(task.resources, used_resources):\n                best_task = task\n            else:\n                workers = itertools.chain(task.workers, [worker]) if assistant else task.workers\n                for task_worker in workers:\n                    if greedy_workers.get(task_worker, 0) > 0:\n                        greedy_workers[task_worker] -= 1\n                        for resource, amount in six.iteritems(task.resources or {}):\n                            greedy_resources[resource] += amount\n                        break\n    reply = {'n_pending_tasks': locally_pending_tasks, 'running_tasks': running_tasks, 'task_id': None, 'n_unique_pending': n_unique_pending}\n    if best_task:\n        self._state.set_status(best_task, RUNNING, self._config)\n        best_task.worker_running = worker\n        best_task.time_running = time.time()\n        self._update_",
+      "patch_sha256": "ec9e49b4ec428e1197626dac51d4b089e9032a848410a494f04cd6c091d1c31b",
+      "rank_score": 210,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7793066012285085,
+      "top_p": 0.8741332515356355
+    },
+    {
+      "index": 8,
+      "patch_text": "def get_work(self, worker, host=None, assistant=False, **kwargs):\n    self.update(worker, {'host': host})\n    if assistant:\n        self.add_worker(worker, [('assistant', assistant)])\n    best_task = None\n    locally_pending_tasks = 0\n    running_tasks = []\n    used_resources = self._used_resources()\n    greedy_resources = collections.defaultdict(int)\n    n_unique_pending = 0\n    greedy_workers = dict(((worker.id, worker.info.get('workers', 1)) for worker in self._state.get_active_workers()))\n    tasks = list(self._state.get_pending_tasks())\n    tasks.sort(key=self._rank(), reverse=True)\n    for task in tasks:\n        in_workers = assistant or worker in task.workers\n        if task.status == 'RUNNING' and in_workers:\n            other_worker = self._state.get_worker(task.worker_running)\n            more_info = {'task_id': task.id, 'worker': str(other_worker)}\n            if other_worker is not None:\n                more_info.update(other_worker.info)\n                running_tasks.append(more_info)\n        if task.status == PENDING and in_workers:\n            locally_pending_tasks += 1\n            if len(task.workers) == 1 and (not assistant):\n                n_unique_pending += 1\n        if task.status == RUNNING and task.worker_running in greedy_workers:\n            greedy_workers[task.worker_running] -= 1\n            for resource, amount in six.iteritems(task.resources or {}):\n                greedy_resources[resource] += amount\n        if not best_task and self._schedulable(task) and self._has_resources(task.resources, greedy_resources):\n            if in_workers and self._has_resources(task.resources, used_resources):\n                best_task = task\n            else:\n                for task_worker in task.workers:\n                    if greedy_workers.get(task_worker, 0) > 0:\n                        greedy_workers[task_worker] -= 1\n                        for resource, amount in six.iteritems(task.resources or {}):\n                            greedy_resources[resource] += amount\n                        break\n    reply = {'n_pending_tasks': locally_pending_tasks, 'running_tasks': running_tasks, 'task_id': None, 'n_unique_pending': n_unique_pending}\n    if best_task:\n        self._state.set_status(best_task, RUNNING, self._config)\n        best_task.worker_running = worker\n        best_task.time_running = time.time()\n        self._update_task_history(best_task.id, RUNNING, host=host)\n        reply['task_id'] = best",
+      "patch_sha256": "1e0378d8992f6581427706e5ad0276a9123c453b60237dcdb931c0eb28532486",
+      "rank_score": 209,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7941462962722876,
+      "top_p": 0.8926828703403595
+    },
+    {
+      "index": 9,
+      "patch_text": "def get_work(self, worker, host=None, assistant=False, **kwargs):\n    self.update(worker, {'host': host})\n    if assistant:\n        self.add_worker(worker, [('assistant', assistant)])\n    best_task = None\n    locally_pending_tasks = 0\n    running_tasks = []\n    used_resources = self._used_resources()\n    greedy_resources = collections.defaultdict(int)\n    n_unique_pending = 0\n    greedy_workers = dict(((worker.id, worker.info.get('workers', 1)) for worker in self._state.get_active_workers()))\n    tasks = list(self._state.get_pending_tasks())\n    tasks.sort(key=self._rank(), reverse=True)\n    for task in tasks:\n        if task.status == 'RUNNING' and task.worker_running in greedy_workers:\n            greedy_workers[task.worker_running] -= 1\n            for resource, amount in six.iteritems(task.resources or {}):\n                greedy_resources[resource] += amount\n        if task.status == PENDING and task.workers:\n            locally_pending_tasks += 1\n            if len(task.workers) == 1 and (not assistant):\n                n_unique_pending += 1\n        if task.status == RUNNING:\n            other_worker = self._state.get_worker(task.worker_running)\n            more_info = {'task_id': task.id, 'worker': str(other_worker)}\n            if other_worker is not None:\n                more_info.update(other_worker.info)\n                running_tasks.append(more_info)\n        if not best_task and self._schedulable(task) and self._has_resources(task.resources, greedy_resources):\n            best_task = task\n            workers = itertools.chain(task.workers, [worker]) if assistant else task.workers\n            for task_worker in workers:\n                if greedy_workers.get(task_worker, 0) > 0:\n                    greedy_workers[task_worker] -= 1\n                    for resource, amount in six.iteritems(task.resources or {}):\n                        greedy_resources[resource] += amount\n                    break\n    reply = {'n_pending_tasks': locally_pending_tasks, 'running_tasks': running_tasks, 'task_id': None, 'n_unique_pending': n_unique_pending}\n    if best_task:\n        self._state.set_status(best_task, RUNNING, self._config)\n        best_task.worker_running = worker\n        best_task.time_running = time.time()\n        self._update_task_history(best_task.id, RUNNING, host=host)\n        reply['task_id'] = best_task.id\n        reply['task_family'] = best_task.family",
+      "patch_sha256": "d85a833a770b97c683845fe285e17e5f649c4b94563ed8d70869c83d117cd6c7",
+      "rank_score": 208,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7941462962722876,
+      "top_p": 0.8926828703403595
+    }
+  ],
+  "candidate_count": 10,
+  "retrieved_examples": [
+    {
+      "id": "11",
+      "project_name": "luigi",
+      "buggy_line_content": "        positional_params = [(n, p) for n, p in params if p.significant]",
+      "function": {
+        "function_name": "get_param_values",
+        "function_parent": "Task",
+        "function_before_start_line": 314,
+        "function_before_end_line": 363,
+        "function_after_start_line": 314,
+        "function_after_end_line": 363,
+        "function_before_token_count": 237,
+        "function_after_token_count": 238,
+        "function_before": "@classmethod\ndef get_param_values(cls, params, args, kwargs):\n    \"\"\"\n        Get the values of the parameters from the args and kwargs.\n\n        :param params: list of (param_name, Parameter).\n        :param args: positional arguments\n        :param kwargs: keyword arguments.\n        :returns: list of `(name, value)` tuples, one for each parameter.\n        \"\"\"\n    result = {}\n    params_dict = dict(params)\n    task_name = cls.task_family\n    exc_desc = '%s[args=%s, kwargs=%s]' % (task_name, args, kwargs)\n    positional_params = [(n, p) for n, p in params if p.significant]\n    for i, arg in enumerate(args):\n        if i >= len(positional_params):\n            raise parameter.UnknownParameterException('%s: takes at most %d parameters (%d given)' % (exc_desc, len(positional_params), len(args)))\n        param_name, param_obj = positional_params[i]\n        result[param_name] = arg\n    for param_name, arg in six.iteritems(kwargs):\n        if param_name in result:\n            raise parameter.DuplicateParameterException('%s: parameter %s was already set as a positional parameter' % (exc_desc, param_name))\n        if param_name not in params_dict:\n            raise parameter.UnknownParameterException('%s: unknown parameter %s' % (exc_desc, param_name))\n        result[param_name] = arg\n    for param_name, param_obj in params:\n        if param_name not in result:\n            if not param_obj.has_task_value(task_name, param_name):\n                raise parameter.MissingParameterException(\"%s: requires the '%s' parameter to be set\" % (exc_desc, param_name))\n            result[param_name] = param_obj.task_value(task_name, param_name)\n\n    def list_to_tuple(x):\n        \"\"\" Make tuples out of lists and sets to allow hashing \"\"\"\n        if isinstance(x, list) or isinstance(x, set):\n            return tuple(x)\n        else:\n            return x\n    return [(param_name, list_to_tuple(result[param_name])) for param_name, param_obj in params]",
+        "function_after": "@classmethod\ndef get_param_values(cls, params, args, kwargs):\n    \"\"\"\n        Get the values of the parameters from the args and kwargs.\n\n        :param params: list of (param_name, Parameter).\n        :param args: positional arguments\n        :param kwargs: keyword arguments.\n        :returns: list of `(name, value)` tuples, one for each parameter.\n        \"\"\"\n    result = {}\n    params_dict = dict(params)\n    task_name = cls.task_family\n    exc_desc = '%s[args=%s, kwargs=%s]' % (task_name, args, kwargs)\n    positional_params = [(n, p) for n, p in params if not p.is_global]\n    for i, arg in enumerate(args):\n        if i >= len(positional_params):\n            raise parameter.UnknownParameterException('%s: takes at most %d parameters (%d given)' % (exc_desc, len(positional_params), len(args)))\n        param_name, param_obj = positional_params[i]\n        result[param_name] = arg\n    for param_name, arg in six.iteritems(kwargs):\n        if param_name in result:\n            raise parameter.DuplicateParameterException('%s: parameter %s was already set as a positional parameter' % (exc_desc, param_name))\n        if param_name not in params_dict:\n            raise parameter.UnknownParameterException('%s: unknown parameter %s' % (exc_desc, param_name))\n        result[param_name] = arg\n    for param_name, param_obj in params:\n        if param_name not in result:\n            if not param_obj.has_task_value(task_name, param_name):\n                raise parameter.MissingParameterException(\"%s: requires the '%s' parameter to be set\" % (exc_desc, param_name))\n            result[param_name] = param_obj.task_value(task_name, param_name)\n\n    def list_to_tuple(x):\n        \"\"\" Make tuples out of lists and sets to allow hashing \"\"\"\n        if isinstance(x, list) or isinstance(x, set):\n            return tuple(x)\n        else:\n            return x\n    return [(param_name, list_to_tuple(result[param_name])) for param_name, param_obj in params]"
+      },
+      "file_name": "task.py",
+      "file_path": "luigi/task.py",
+      "score_reranked": 0.5414980329669332
+    },
+    {
+      "id": "7",
+      "project_name": "luigi",
+      "buggy_line_content": "        if new_status == FAILED and task.can_disable():",
+      "function": {
+        "function_name": "set_status",
+        "function_parent": "SimpleTaskState",
+        "function_before_start_line": 393,
+        "function_before_end_line": 427,
+        "function_after_start_line": 393,
+        "function_after_end_line": 427,
+        "function_before_token_count": 186,
+        "function_after_token_count": 192,
+        "function_before": "def set_status(self, task, new_status, config=None):\n    if new_status == FAILED:\n        assert config is not None\n    if new_status == DISABLED and task.status == RUNNING:\n        return\n    if task.status == DISABLED:\n        if new_status == DONE:\n            self.re_enable(task)\n        elif task.scheduler_disable_time is not None:\n            return\n    if new_status == FAILED and task.can_disable():\n        task.add_failure()\n        if task.has_excessive_failures():\n            task.scheduler_disable_time = time.time()\n            new_status = DISABLED\n            notifications.send_error_email('Luigi Scheduler: DISABLED {task} due to excessive failures'.format(task=task.id), '{task} failed {failures} times in the last {window} seconds, so it is being disabled for {persist} seconds'.format(failures=config.disable_failures, task=task.id, window=config.disable_window, persist=config.disable_persist))\n    elif new_status == DISABLED:\n        task.scheduler_disable_time = None\n    self._status_tasks[task.status].pop(task.id)\n    self._status_tasks[new_status][task.id] = task\n    task.status = new_status",
+        "function_after": "def set_status(self, task, new_status, config=None):\n    if new_status == FAILED:\n        assert config is not None\n    if new_status == DISABLED and task.status == RUNNING:\n        return\n    if task.status == DISABLED:\n        if new_status == DONE:\n            self.re_enable(task)\n        elif task.scheduler_disable_time is not None:\n            return\n    if new_status == FAILED and task.can_disable() and (task.status != DISABLED):\n        task.add_failure()\n        if task.has_excessive_failures():\n            task.scheduler_disable_time = time.time()\n            new_status = DISABLED\n            notifications.send_error_email('Luigi Scheduler: DISABLED {task} due to excessive failures'.format(task=task.id), '{task} failed {failures} times in the last {window} seconds, so it is being disabled for {persist} seconds'.format(failures=config.disable_failures, task=task.id, window=config.disable_window, persist=config.disable_persist))\n    elif new_status == DISABLED:\n        task.scheduler_disable_time = None\n    self._status_tasks[task.status].pop(task.id)\n    self._status_tasks[new_status][task.id] = task\n    task.status = new_status"
+      },
+      "file_name": "scheduler.py",
+      "file_path": "luigi/scheduler.py",
+      "score_reranked": 0.5308966279852617
+    },
+    {
+      "id": "6",
+      "project_name": "luigi",
+      "buggy_line_content": "            elif task.scheduler_disable_time is not None:",
+      "function": {
+        "function_name": "set_status",
+        "function_parent": "SimpleTaskState",
+        "function_before_start_line": 393,
+        "function_before_end_line": 427,
+        "function_after_start_line": 393,
+        "function_after_end_line": 427,
+        "function_before_token_count": 192,
+        "function_after_token_count": 196,
+        "function_before": "def set_status(self, task, new_status, config=None):\n    if new_status == FAILED:\n        assert config is not None\n    if new_status == DISABLED and task.status == RUNNING:\n        return\n    if task.status == DISABLED:\n        if new_status == DONE:\n            self.re_enable(task)\n        elif task.scheduler_disable_time is not None:\n            return\n    if new_status == FAILED and task.can_disable() and (task.status != DISABLED):\n        task.add_failure()\n        if task.has_excessive_failures():\n            task.scheduler_disable_time = time.time()\n            new_status = DISABLED\n            notifications.send_error_email('Luigi Scheduler: DISABLED {task} due to excessive failures'.format(task=task.id), '{task} failed {failures} times in the last {window} seconds, so it is being disabled for {persist} seconds'.format(failures=config.disable_failures, task=task.id, window=config.disable_window, persist=config.disable_persist))\n    elif new_status == DISABLED:\n        task.scheduler_disable_time = None\n    self._status_tasks[task.status].pop(task.id)\n    self._status_tasks[new_status][task.id] = task\n    task.status = new_status",
+        "function_after": "def set_status(self, task, new_status, config=None):\n    if new_status == FAILED:\n        assert config is not None\n    if new_status == DISABLED and task.status == RUNNING:\n        return\n    if task.status == DISABLED:\n        if new_status == DONE:\n            self.re_enable(task)\n        elif task.scheduler_disable_time is not None and new_status != DISABLED:\n            return\n    if new_status == FAILED and task.can_disable() and (task.status != DISABLED):\n        task.add_failure()\n        if task.has_excessive_failures():\n            task.scheduler_disable_time = time.time()\n            new_status = DISABLED\n            notifications.send_error_email('Luigi Scheduler: DISABLED {task} due to excessive failures'.format(task=task.id), '{task} failed {failures} times in the last {window} seconds, so it is being disabled for {persist} seconds'.format(failures=config.disable_failures, task=task.id, window=config.disable_window, persist=config.disable_persist))\n    elif new_status == DISABLED:\n        task.scheduler_disable_time = None\n    self._status_tasks[task.status].pop(task.id)\n    self._status_tasks[new_status][task.id] = task\n    task.status = new_status"
+      },
+      "file_name": "scheduler.py",
+      "file_path": "luigi/scheduler.py",
+      "score_reranked": 0.5125354989108776
+    },
+    {
+      "id": "28",
+      "project_name": "scrapy",
+      "buggy_line_content": "        if ':' not in self._url:",
+      "function": {
+        "function_name": "_set_url",
+        "function_parent": "Request",
+        "function_before_start_line": 62,
+        "function_before_end_line": 70,
+        "function_after_start_line": 62,
+        "function_after_end_line": 70,
+        "function_before_token_count": 65,
+        "function_after_token_count": 79,
+        "function_before": "def _set_url(self, url):\n    if not isinstance(url, six.string_types):\n        raise TypeError('Request url must be str or unicode, got %s:' % type(url).__name__)\n    s = safe_url_string(url, self.encoding)\n    self._url = escape_ajax(s)\n    if ':' not in self._url:\n        raise ValueError('Missing scheme in request url: %s' % self._url)",
+        "function_after": "def _set_url(self, url):\n    if not isinstance(url, six.string_types):\n        raise TypeError('Request url must be str or unicode, got %s:' % type(url).__name__)\n    s = safe_url_string(url, self.encoding)\n    self._url = escape_ajax(s)\n    if '://' not in self._url and (not self._url.startswith('data:')):\n        raise ValueError('Missing scheme in request url: %s' % self._url)"
+      },
+      "file_name": "__init__.py",
+      "file_path": "scrapy/http/request/__init__.py",
+      "score_reranked": 0.4275024891950906
+    },
+    {
+      "id": "32",
+      "project_name": "pandas",
+      "buggy_line_content": "            except (ValueError, OverflowError):",
+      "function": {
+        "function_name": "_try_convert_to_date",
+        "function_parent": "Parser",
+        "function_before_start_line": 953,
+        "function_before_end_line": 988,
+        "function_after_start_line": 953,
+        "function_after_end_line": 988,
+        "function_before_token_count": 154,
+        "function_after_token_count": 156,
+        "function_before": "def _try_convert_to_date(self, data):\n    \"\"\"\n        Try to parse a ndarray like into a date column.\n\n        Try to coerce object in epoch/iso formats and integer/float in epoch\n        formats. Return a boolean if parsing was successful.\n        \"\"\"\n    if not len(data):\n        return (data, False)\n    new_data = data\n    if new_data.dtype == 'object':\n        try:\n            new_data = data.astype('int64')\n        except (TypeError, ValueError, OverflowError):\n            pass\n    if issubclass(new_data.dtype.type, np.number):\n        in_range = isna(new_data._values) | (new_data > self.min_stamp) | (new_data._values == iNaT)\n        if not in_range.all():\n            return (data, False)\n    date_units = (self.date_unit,) if self.date_unit else self._STAMP_UNITS\n    for date_unit in date_units:\n        try:\n            new_data = to_datetime(new_data, errors='raise', unit=date_unit)\n        except (ValueError, OverflowError):\n            continue\n        return (new_data, True)\n    return (data, False)",
+        "function_after": "def _try_convert_to_date(self, data):\n    \"\"\"\n        Try to parse a ndarray like into a date column.\n\n        Try to coerce object in epoch/iso formats and integer/float in epoch\n        formats. Return a boolean if parsing was successful.\n        \"\"\"\n    if not len(data):\n        return (data, False)\n    new_data = data\n    if new_data.dtype == 'object':\n        try:\n            new_data = data.astype('int64')\n        except (TypeError, ValueError, OverflowError):\n            pass\n    if issubclass(new_data.dtype.type, np.number):\n        in_range = isna(new_data._values) | (new_data > self.min_stamp) | (new_data._values == iNaT)\n        if not in_range.all():\n            return (data, False)\n    date_units = (self.date_unit,) if self.date_unit else self._STAMP_UNITS\n    for date_unit in date_units:\n        try:\n            new_data = to_datetime(new_data, errors='raise', unit=date_unit)\n        except (ValueError, OverflowError, TypeError):\n            continue\n        return (new_data, True)\n    return (data, False)"
+      },
+      "file_name": "_json.py",
+      "file_path": "pandas/io/json/_json.py",
+      "score_reranked": 0.36616275807686566
+    }
+  ],
+  "diffusion_plan": [
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Delete",
+          "node": 188
+        },
+        {
+          "op": "Replace",
+          "node": 417
+        },
+        {
+          "op": "Replace",
+          "node": 187
+        },
+        {
+          "op": "GuardAdd",
+          "node": 305
+        },
+        {
+          "op": "GuardAdd",
+          "node": 188
+        },
+        {
+          "op": "Replace",
+          "node": 51
+        },
+        {
+          "op": "GuardAdd",
+          "node": 103
+        },
+        {
+          "op": "Replace",
+          "node": 103
+        },
+        {
+          "op": "GuardAdd",
+          "node": 187
+        },
+        {
+          "op": "Replace",
+          "node": 188
+        }
+      ],
+      "score": 16.52727272586116
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 103
+        },
+        {
+          "op": "InsertAfter",
+          "node": 187
+        },
+        {
+          "op": "InsertBefore",
+          "node": 103
+        },
+        {
+          "op": "Replace",
+          "node": 417
+        },
+        {
+          "op": "Replace",
+          "node": 184
+        },
+        {
+          "op": "Replace",
+          "node": 305
+        },
+        {
+          "op": "GuardAdd",
+          "node": 103
+        },
+        {
+          "op": "GuardAdd",
+          "node": 189
+        }
+      ],
+      "score": 16.17272727152975
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 188
+        },
+        {
+          "op": "Delete",
+          "node": 417
+        },
+        {
+          "op": "Replace",
+          "node": 187
+        },
+        {
+          "op": "Replace",
+          "node": 417
+        },
+        {
+          "op": "GuardAdd",
+          "node": 417
+        },
+        {
+          "op": "Replace",
+          "node": 103
+        },
+        {
+          "op": "Replace",
+          "node": 51
+        },
+        {
+          "op": "Replace",
+          "node": 305
+        }
+      ],
+      "score": 16.12727272607934
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 51
+        },
+        {
+          "op": "GuardAdd",
+          "node": 103
+        },
+        {
+          "op": "Replace",
+          "node": 481
+        },
+        {
+          "op": "Replace",
+          "node": 103
+        },
+        {
+          "op": "Delete",
+          "node": 103
+        },
+        {
+          "op": "Replace",
+          "node": 417
+        },
+        {
+          "op": "Replace",
+          "node": 188
+        },
+        {
+          "op": "Replace",
+          "node": 305
+        }
+      ],
+      "score": 16.036363635178514
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "GuardAdd",
+          "node": 189
+        },
+        {
+          "op": "Replace",
+          "node": 188
+        },
+        {
+          "op": "Replace",
+          "node": 103
+        },
+        {
+          "op": "Replace",
+          "node": 417
+        },
+        {
+          "op": "Replace",
+          "node": 51
+        },
+        {
+          "op": "Replace",
+          "node": 305
+        },
+        {
+          "op": "Replace",
+          "node": 189
+        },
+        {
+          "op": "Replace",
+          "node": 184
+        }
+      ],
+      "score": 15.618181817034712
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 185
+        },
+        {
+          "op": "Replace",
+          "node": 417
+        },
+        {
+          "op": "Replace",
+          "node": 305
+        },
+        {
+          "op": "GuardAdd",
+          "node": 103
+        },
+        {
+          "op": "Delete",
+          "node": 305
+        },
+        {
+          "op": "Replace",
+          "node": 188
+        },
+        {
+          "op": "Replace",
+          "node": 103
+        },
+        {
+          "op": "GuardAdd",
+          "node": 51
+        },
+        {
+          "op": "Delete",
+          "node": 417
+        },
+        {
+          "op": "Replace",
+          "node": 187
+        }
+      ],
+      "score": 15.490909089591739
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "GuardAdd",
+          "node": 103
+        },
+        {
+          "op": "Replace",
+          "node": 189
+        },
+        {
+          "op": "Replace",
+          "node": 417
+        },
+        {
+          "op": "GuardAdd",
+          "node": 189
+        },
+        {
+          "op": "InsertBefore",
+          "node": 189
+        },
+        {
+          "op": "Replace",
+          "node": 481
+        },
+        {
+          "op": "Replace",
+          "node": 188
+        },
+        {
+          "op": "Replace",
+          "node": 187
+        },
+        {
+          "op": "Replace",
+          "node": 305
+        }
+      ],
+      "score": 15.43636363505124
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 103
+        },
+        {
+          "op": "GuardAdd",
+          "node": 188
+        },
+        {
+          "op": "Replace",
+          "node": 417
+        },
+        {
+          "op": "Replace",
+          "node": 188
+        },
+        {
+          "op": "InsertBefore",
+          "node": 187
+        },
+        {
+          "op": "Replace",
+          "node": 187
+        },
+        {
+          "op": "Replace",
+          "node": 305
+        },
+        {
+          "op": "InsertAfter",
+          "node": 305
+        }
+      ],
+      "score": 15.37272727160248
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 417
+        },
+        {
+          "op": "Replace",
+          "node": 51
+        },
+        {
+          "op": "Replace",
+          "node": 188
+        },
+        {
+          "op": "Replace",
+          "node": 103
+        },
+        {
+          "op": "GuardAdd",
+          "node": 305
+        },
+        {
+          "op": "Replace",
+          "node": 187
+        },
+        {
+          "op": "InsertBefore",
+          "node": 188
+        },
+        {
+          "op": "Replace",
+          "node": 305
+        }
+      ],
+      "score": 15.33636363524215
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 417
+        },
+        {
+          "op": "Replace",
+          "node": 187
+        },
+        {
+          "op": "GuardAdd",
+          "node": 188
+        },
+        {
+          "op": "Replace",
+          "node": 51
+        },
+        {
+          "op": "Replace",
+          "node": 481
+        },
+        {
+          "op": "Delete",
+          "node": 189
+        },
+        {
+          "op": "GuardAdd",
+          "node": 103
+        },
+        {
+          "op": "Replace",
+          "node": 188
+        },
+        {
+          "op": "Replace",
+          "node": 103
+        }
+      ],
+      "score": 14.999999998727276
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 305
+        },
+        {
+          "op": "Replace",
+          "node": 417
+        },
+        {
+          "op": "Replace",
+          "node": 189
+        },
+        {
+          "op": "Replace",
+          "node": 188
+        },
+        {
+          "op": "GuardAdd",
+          "node": 103
+        },
+        {
+          "op": "InsertAfter",
+          "node": 103
+        },
+        {
+          "op": "Replace",
+          "node": 481
+        },
+        {
+          "op": "GuardAdd",
+          "node": 189
+        },
+        {
+          "op": "Delete",
+          "node": 184
+        }
+      ],
+      "score": 14.963636362366941
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 481
+        },
+        {
+          "op": "Replace",
+          "node": 305
+        },
+        {
+          "op": "Replace",
+          "node": 417
+        },
+        {
+          "op": "GuardAdd",
+          "node": 417
+        },
+        {
+          "op": "Replace",
+          "node": 189
+        },
+        {
+          "op": "Replace",
+          "node": 103
+        },
+        {
+          "op": "Replace",
+          "node": 51
+        },
+        {
+          "op": "InsertAfter",
+          "node": 184
+        }
+      ],
+      "score": 14.799999998927275
+    }
+  ],
+  "static_analysis_nodes": [
+    {
+      "line": 31,
+      "line_absolute": 654,
+      "node_id": 103,
+      "node_id_local": 39,
+      "type": "If",
+      "code": "if in_workers and self._has_resources(task.resources, used_resources):\n    best_task = task\nelse:\n    workers = itertools.chain(task.workers, [worker]) if assistant else task.workers\n    for task_worker in workers:\n        if greedy_workers.get(task_worker, 0) > 0:\n            greedy_workers[task_worker] -= 1\n            for resource, amount in six.iteritems(task.resources or {}):\n                greedy_resources[resource] += amount\n            break",
+      "distance_to_buggy": 0,
+      "context": "  28:               for resource, amount in six.iteritems(task.resources or {}):\n  29:                   greedy_resources[resource] += amount\n  30:           if not best_task and self._schedulable(task) and self._has_resources(task.resources, greedy_resources):\n  31:->             if in_workers and self._has_resources(task.resources, used_resources):\n  32:                   best_task = task\n  33:               else:\n  34:                   workers = itertools.chain(task.workers, [worker]) if assistant else task.workers",
+      "ast_subtree_json": {
+        "_type": "If",
+        "test": {
+          "_type": "BoolOp",
+          "op": {
+            "_type": "And"
+          },
+          "values": [
+            {
+              "_type": "Name"
+            },
+            {
+              "_type": "Call"
+            }
+          ]
+        },
+        "body": [
+          {
+            "_type": "Assign",
+            "targets": [
+              {
+                "_type": "Name"
+              }
+            ],
+            "value": {
+              "_type": "Name"
+            },
+            "type_comment": null
+          }
+        ],
+        "orelse": [
+          {
+            "_type": "Assign",
+            "targets": [
+              {
+                "_type": "Name"
+              }
+            ],
+            "value": {
+              "_type": "IfExp"
+            },
+            "type_comment": null
+          },
+          {
+            "_type": "For",
+            "target": {
+              "_type": "Name"
+            },
+            "iter": {
+              "_type": "Name"
+            },
+            "body": [
+              {
+                "_type": "If"
+              }
+            ],
+            "orelse": [],
+            "type_comment": null
+          }
+        ]
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|system|>...",
+      "reranker_score": -25.7
+    },
+    {
+      "line": 34,
+      "line_absolute": 657,
+      "node_id": 417,
+      "node_id_local": 43,
+      "type": "Call",
+      "code": "itertools.chain(task.workers, [worker])",
+      "distance_to_buggy": 0,
+      "context": "  31:               if in_workers and self._has_resources(task.resources, used_resources):\n  32:                   best_task = task\n  33:               else:\n  34:->                 workers = itertools.chain(task.workers, [worker]) if assistant else task.workers\n  35:                   for task_worker in workers:\n  36:                       if greedy_workers.get(task_worker, 0) > 0:\n  37:                           greedy_workers[task_worker] -= 1",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Attribute",
+          "value": {
+            "_type": "Name"
+          },
+          "attr": "chain",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [
+          {
+            "_type": "Attribute",
+            "value": {
+              "_type": "Name"
+            },
+            "attr": "workers",
+            "ctx": {
+              "_type": "Load"
+            }
+          },
+          {
+            "_type": "List",
+            "elts": [
+              {
+                "_type": "Name"
+              }
+            ],
+            "ctx": {
+              "_type": "Load"
+            }
+          }
+        ],
+        "keywords": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|system|>...",
+      "reranker_score": -25.5
+    },
+    {
+      "line": 35,
+      "line_absolute": 658,
+      "node_id": 189,
+      "node_id_local": 44,
+      "type": "For",
+      "code": "for task_worker in workers:\n    if greedy_workers.get(task_worker, 0) > 0:\n        greedy_workers[task_worker] -= 1\n        for resource, amount in six.iteritems(task.resources or {}):\n            greedy_resources[resource] += amount\n        break",
+      "distance_to_buggy": 0,
+      "context": "  32:                   best_task = task\n  33:               else:\n  34:                   workers = itertools.chain(task.workers, [worker]) if assistant else task.workers\n  35:->                 for task_worker in workers:\n  36:                       if greedy_workers.get(task_worker, 0) > 0:\n  37:                           greedy_workers[task_worker] -= 1\n  38:                           for resource, amount in six.iteritems(task.resources or {}):",
+      "ast_subtree_json": {
+        "_type": "For",
+        "target": {
+          "_type": "Name",
+          "id": "task_worker",
+          "ctx": {
+            "_type": "Store"
+          }
+        },
+        "iter": {
+          "_type": "Name",
+          "id": "workers",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "body": [
+          {
+            "_type": "If",
+            "test": {
+              "_type": "Compare"
+            },
+            "body": [
+              {
+                "_type": "AugAssign"
+              },
+              {
+                "_type": "For"
+              },
+              {
+                "_type": "Break"
+              }
+            ],
+            "orelse": []
+          }
+        ],
+        "orelse": [],
+        "type_comment": null
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|system|>...",
+      "reranker_score": -24.7
+    },
+    {
+      "line": 34,
+      "line_absolute": 657,
+      "node_id": 188,
+      "node_id_local": 42,
+      "type": "Assign",
+      "code": "workers = itertools.chain(task.workers, [worker]) if assistant else task.workers",
+      "distance_to_buggy": 0,
+      "context": "  31:               if in_workers and self._has_resources(task.resources, used_resources):\n  32:                   best_task = task\n  33:               else:\n  34:->                 workers = itertools.chain(task.workers, [worker]) if assistant else task.workers\n  35:                   for task_worker in workers:\n  36:                       if greedy_workers.get(task_worker, 0) > 0:\n  37:                           greedy_workers[task_worker] -= 1",
+      "ast_subtree_json": {
+        "_type": "Assign",
+        "targets": [
+          {
+            "_type": "Name",
+            "id": "workers",
+            "ctx": {
+              "_type": "Store"
+            }
+          }
+        ],
+        "value": {
+          "_type": "IfExp",
+          "test": {
+            "_type": "Name"
+          },
+          "body": {
+            "_type": "Call"
+          },
+          "orelse": {
+            "_type": "Attribute"
+          }
+        },
+        "type_comment": null
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|system|>...",
+      "reranker_score": -24.5
+    },
+    {
+      "line": 31,
+      "line_absolute": 654,
+      "node_id": 305,
+      "node_id_local": 40,
+      "type": "Call",
+      "code": "self._has_resources(task.resources, used_resources)",
+      "distance_to_buggy": 0,
+      "context": "  28:               for resource, amount in six.iteritems(task.resources or {}):\n  29:                   greedy_resources[resource] += amount\n  30:           if not best_task and self._schedulable(task) and self._has_resources(task.resources, greedy_resources):\n  31:->             if in_workers and self._has_resources(task.resources, used_resources):\n  32:                   best_task = task\n  33:               else:\n  34:                   workers = itertools.chain(task.workers, [worker]) if assistant else task.workers",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Attribute",
+          "value": {
+            "_type": "Name"
+          },
+          "attr": "_has_resources",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [
+          {
+            "_type": "Attribute",
+            "value": {
+              "_type": "Name"
+            },
+            "attr": "resources",
+            "ctx": {
+              "_type": "Load"
+            }
+          },
+          {
+            "_type": "Name",
+            "id": "used_resources",
+            "ctx": {
+              "_type": "Load"
+            }
+          }
+        ],
+        "keywords": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|system|>...",
+      "reranker_score": -24.0
+    },
+    {
+      "line": 32,
+      "line_absolute": 655,
+      "node_id": 187,
+      "node_id_local": 41,
+      "type": "Assign",
+      "code": "best_task = task",
+      "distance_to_buggy": 0,
+      "context": "  29:                   greedy_resources[resource] += amount\n  30:           if not best_task and self._schedulable(task) and self._has_resources(task.resources, greedy_resources):\n  31:               if in_workers and self._has_resources(task.resources, used_resources):\n  32:->                 best_task = task\n  33:               else:\n  34:                   workers = itertools.chain(task.workers, [worker]) if assistant else task.workers\n  35:                   for task_worker in workers:",
+      "ast_subtree_json": {
+        "_type": "Assign",
+        "targets": [
+          {
+            "_type": "Name",
+            "id": "best_task",
+            "ctx": {
+              "_type": "Store"
+            }
+          }
+        ],
+        "value": {
+          "_type": "Name",
+          "id": "task",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "type_comment": null
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|system|>...",
+      "reranker_score": -23.0
+    },
+    {
+      "line": 30,
+      "line_absolute": 653,
+      "node_id": 51,
+      "node_id_local": 36,
+      "type": "If",
+      "code": "if not best_task and self._schedulable(task) and self._has_resources(task.resources, greedy_resources):\n    if in_workers and self._has_resources(task.resources, used_resources):\n        best_task = task\n    else:\n        workers = itertools.chain(task.workers, [worker]) if assistant else task.workers\n        for task_worker in workers:\n            if greedy_workers.get(task_worker, 0) > 0:\n                greedy_workers[task_worker] -= 1\n                for resource, amount in six.iteritems(task.resources or {}):\n                    greedy_resources[resource] += amount\n                break",
+      "distance_to_buggy": 1,
+      "context": "  27:               greedy_workers[task.worker_running] -= 1\n  28:               for resource, amount in six.iteritems(task.resources or {}):\n  29:                   greedy_resources[resource] += amount\n  30:->         if not best_task and self._schedulable(task) and self._has_resources(task.resources, greedy_resources):\n  31:               if in_workers and self._has_resources(task.resources, used_resources):\n  32:                   best_task = task\n  33:               else:",
+      "ast_subtree_json": {
+        "_type": "If",
+        "test": {
+          "_type": "BoolOp",
+          "op": {
+            "_type": "And"
+          },
+          "values": [
+            {
+              "_type": "UnaryOp"
+            },
+            {
+              "_type": "Call"
+            },
+            {
+              "_type": "Call"
+            }
+          ]
+        },
+        "body": [
+          {
+            "_type": "If",
+            "test": {
+              "_type": "BoolOp"
+            },
+            "body": [
+              {
+                "_type": "Assign"
+              }
+            ],
+            "orelse": [
+              {
+                "_type": "Assign"
+              },
+              {
+                "_type": "For"
+              }
+            ]
+          }
+        ],
+        "orelse": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|system|>...",
+      "reranker_score": -15.7
+    },
+    {
+      "line": 36,
+      "line_absolute": 659,
+      "node_id": 481,
+      "node_id_local": 46,
+      "type": "Call",
+      "code": "greedy_workers.get(task_worker, 0)",
+      "distance_to_buggy": 1,
+      "context": "  33:               else:\n  34:                   workers = itertools.chain(task.workers, [worker]) if assistant else task.workers\n  35:                   for task_worker in workers:\n  36:->                     if greedy_workers.get(task_worker, 0) > 0:\n  37:                           greedy_workers[task_worker] -= 1\n  38:                           for resource, amount in six.iteritems(task.resources or {}):\n  39:                               greedy_resources[resource] += amount",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Attribute",
+          "value": {
+            "_type": "Name"
+          },
+          "attr": "get",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [
+          {
+            "_type": "Name",
+            "id": "task_worker",
+            "ctx": {
+              "_type": "Load"
+            }
+          },
+          {
+            "_type": "Constant",
+            "value": 0,
+            "kind": null
+          }
+        ],
+        "keywords": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|system|>...",
+      "reranker_score": -15.2
+    },
+    {
+      "line": 30,
+      "line_absolute": 653,
+      "node_id": 184,
+      "node_id_local": 37,
+      "type": "Call",
+      "code": "self._schedulable(task)",
+      "distance_to_buggy": 1,
+      "context": "  27:               greedy_workers[task.worker_running] -= 1\n  28:               for resource, amount in six.iteritems(task.resources or {}):\n  29:                   greedy_resources[resource] += amount\n  30:->         if not best_task and self._schedulable(task) and self._has_resources(task.resources, greedy_resources):\n  31:               if in_workers and self._has_resources(task.resources, used_resources):\n  32:                   best_task = task\n  33:               else:",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Attribute",
+          "value": {
+            "_type": "Name"
+          },
+          "attr": "_schedulable",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [
+          {
+            "_type": "Name",
+            "id": "task",
+            "ctx": {
+              "_type": "Load"
+            }
+          }
+        ],
+        "keywords": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -14.0
+    },
+    {
+      "line": 30,
+      "line_absolute": 653,
+      "node_id": 185,
+      "node_id_local": 38,
+      "type": "Call",
+      "code": "self._has_resources(task.resources, greedy_resources)",
+      "distance_to_buggy": 1,
+      "context": "  27:               greedy_workers[task.worker_running] -= 1\n  28:               for resource, amount in six.iteritems(task.resources or {}):\n  29:                   greedy_resources[resource] += amount\n  30:->         if not best_task and self._schedulable(task) and self._has_resources(task.resources, greedy_resources):\n  31:               if in_workers and self._has_resources(task.resources, used_resources):\n  32:                   best_task = task\n  33:               else:",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Attribute",
+          "value": {
+            "_type": "Name"
+          },
+          "attr": "_has_resources",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [
+          {
+            "_type": "Attribute",
+            "value": {
+              "_type": "Name"
+            },
+            "attr": "resources",
+            "ctx": {
+              "_type": "Load"
+            }
+          },
+          {
+            "_type": "Name",
+            "id": "greedy_resources",
+            "ctx": {
+              "_type": "Load"
+            }
+          }
+        ],
+        "keywords": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -14.0
+    }
+  ]
+}

@@ -1,0 +1,102 @@
+{
+  "bug_id": "2",
+  "seed": 43,
+  "arm": "base",
+  "candidates": [
+    {
+      "index": 0,
+      "patch_text": "def register_named_middleware(self, middleware, route_names, attach_to='request'):\n    if attach_to =='request':\n        for _rn in route_names:\n            if _rn not in self.named_request_middleware:\n                self.named_request_middleware[_rn] = deque()\n            if middleware not in self.named_request_middleware[_rn]:\n                self.named_request_middleware[_rn].appendleft(middleware)\n    if attach_to =='response':\n        for _rn in route_names:\n            if _rn not in self.named_response_middleware:\n                self.named_response_middleware[_rn] = deque()\n            if middleware not in self.named_response_middleware[_rn]:\n                self.named_response_middleware[_rn].appendleft(middleware)",
+      "patch_sha256": "b0dc34a227b6b903160bb5b939de9d80ed03ebf2898516f56460aa35ba7d3ac2",
+      "rank_score": 219,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.934442110146087,
+      "top_p": 0.8256979458109642
+    },
+    {
+      "index": 1,
+      "patch_text": "def register_named_middleware(self, middleware, route_names, attach_to='request'):\n    if attach_to =='request':\n        for _rn in route_names:\n            if _rn not in self.named_request_middleware:\n                self.named_request_middleware[_rn] = deque()\n            if middleware not in self.named_request_middleware[_rn]:\n                self.named_request_middleware[_rn].append(middleware)\n    if attach_to =='response':\n        for _rn in route_names:\n            if _rn not in self.named_response_middleware:\n                self.named_response_middleware[_rn] = deque()\n            if middleware not in self.named_response_middleware[_rn]:\n                self.named_response_middleware[_rn].append(middleware)",
+      "patch_sha256": "eadd138af41371af95eb21924b601ffd7f552b2def5123bd28554c3fd550683d",
+      "rank_score": 204,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7704673177175924,
+      "top_p": 0.8630841471469904
+    },
+    {
+      "index": 2,
+      "patch_text": "def register_named_middleware(self, middleware, route_names, attach_to='request'):\n    if attach_to =='request':\n        for _rn in route_names:\n            if _rn not in self.named_request_middleware:\n                self.named_request_middleware[_rn] = deque()\n            if middleware not in self.named_request_middleware[_rn]:\n                self.named_request_middleware[_rn].append(middleware)\n    elif attach_to =='response':\n        for _rn in route_names:\n            if _rn not in self.named_response_middleware:\n                self.named_response_middleware[_rn] = deque()\n            if middleware not in self.named_response_middleware[_rn]:\n                self.named_response_middleware[_rn].append(middleware)",
+      "patch_sha256": "09c0d37a58b6ae6549caba44ae16c02a98e16f0d1a5f451373e08c8d04879025",
+      "rank_score": 204,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.5321867729008602,
+      "top_p": 0.98
+    },
+    {
+      "index": 3,
+      "patch_text": "def register_named_middleware(self, middleware, route_names, attach_to='request'):\n    if attach_to =='request':\n        for _rn in route_names:\n            if _rn not in self.named_request_middleware:\n                self.named_request_middleware[_rn] = deque()\n            self.named_request_middleware[_rn].append(middleware)\n    if attach_to =='response':\n        for _rn in route_names:\n            if _rn not in self.named_response_middleware:\n                self.named_response_middleware[_rn] = deque()\n            self.named_response_middleware[_rn].append(middleware)",
+      "patch_sha256": "103445e449b58ade2a30ca02570f8299de12785d9f693194c649903cc0152291",
+      "rank_score": 185,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.9326332018390676,
+      "top_p": 0.8237317411294214
+    },
+    {
+      "index": 4,
+      "patch_text": "def register_named_middleware(self, middleware, route_names, attach_to='request'):\n    if attach_to =='request':\n        for _rn in route_names:\n            if _rn not in self.named_request_middleware:\n                self.named_request_middleware[_rn] = deque()\n            else:\n                self.named_request_middleware[_rn].append(middleware)\n    if attach_to =='response':\n        for _rn in route_names:\n            if _rn not in self.named_response_middleware:\n                self.named_response_middleware[_rn] = deque()\n            else:\n                self.named_response_middleware[_rn].append(middleware)",
+      "patch_sha256": "f6dfc88863e8531739468a22a8f29def06560779765632eedfa52d025a631282",
+      "rank_score": 184,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.9198728361131365,
+      "top_p": 0.8098617783838441
+    },
+    {
+      "index": 5,
+      "patch_text": "def register_named_middleware(self, middleware, route_names, attach_to='request'):\n    if attach_to =='request':\n        for _rn in route_names:\n            if _rn not in self.named_request_middleware:\n                self.named_request_middleware[_rn] = deque()\n            if middleware not in self.named_request_middleware[_rn]:\n                self.named_request_middleware[_rn].append(middleware)\n    if attach_to =='response':\n        for _rn in route_names:\n            if _rn not in self.named_response_middleware:\n                self.named_response_middleware[_rn] = deque()\n            if middleware not in self.named_response_middleware[_rn]:\n                self.named_response_middleware[_rn].append(middleware)\n\n##end\n##correct\n\n##info\n\n##end\n\n##tests\nfrom sanic import Sanic\nfrom sanic.response import json\n\napp = Sanic()\n\n\n@app.route('/a')\nasync def a(request):\n    return json({'a': 1})\n\n\n@app.route('/b')\nasync def b(request):\n    return json({'b': 2})\n\n\n@app.route('/c')\nasync def c(request):\n    return json({'c': 3})\n\n\n@app.route('/d')\nasync def d(request):\n    return json({'d': 4})\n\n\n@app.route('/e')\nasync def e(request):\n    return json({'e': 5})\n\n\n@app.route('/f')\nasync def f(request):\n    return json({'f': 6})\n\n\n@app.route('/g')\nasync def g(request):\n    return json({'g': 7})\n\n\n@app.route('/h')\nasync def h(request):\n    return json({'h': 8})\n\n\n@app.route('/i')\nasync def i(request):\n    return json({'i': 9})\n\n\n@app.route('/j')\nasync def j(request):\n    return json({'j': 10})\n\n\n@app.route('/k')\nasync def k(request):\n    return json({'k': 11})\n\n\n@app.route('/l')\nasync def l(request):\n    return json({'l': 12})\n\n\n@app.route('/m')\nasync def m(request):\n    return json({'m': 13})\n\n\n@app.route('/n')\nasync def n(request):\n    return json({'n': 14})\n\n\n@app.route('/o')\nasync def o(request):\n    return json({'o': 15})\n\n\n@app.route('/p')\nasync def p(request):\n    return json({'p': 16})\n\n\n@app.route('/q')\nasync def q(request):\n    return json",
+      "patch_sha256": "2e448a8e0420dcec281bc0977e39c7f75db134b995b7383b925da44e095867aa",
+      "rank_score": -67,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.49999693569381287,
+      "top_p": 0.9415325686419478
+    },
+    {
+      "index": 6,
+      "patch_text": "def register_named_middleware(self, middleware, route_names, attach_to='request'):\n    if attach_to =='request':\n        for _rn in route_names:\n            if _rn not in self.named_request_middleware:\n                self.named_request_middleware[_rn] = deque()\n            if middleware not in self.named_request_middleware[_rn]:\n                self.named_request_middleware[_rn].append(middleware)\n    if attach_to =='response':\n        for _rn in route_names:\n            if _rn not in self.named_response_middleware:\n                self.named_response_middleware[_rn] = deque()\n            if middleware not in self.named_response_middleware[_rn]:\n                self.named_response_middleware[_rn].append(middleware)\n\n##end\n##tests\nimport pytest\nfrom sanic import Sanic\nfrom sanic.response import HTTPResponse\nfrom sanic.request import Request\nfrom sanic.exceptions import NotFound\n\napp = Sanic()\napp.add_exception_handler(NotFound, lambda *args: HTTPResponse())\n\n@app.route('/hello', methods=['GET'])\nasync def hello(request):\n    return HTTPResponse(\"Hello, world!\")\n\n@app.middleware('request')\nasync def add_url_parameter(request):\n    request.ctx.url_parameter = \"foo\"\n\n@app.middleware('response')\nasync def modify_response(request, response):\n    response.headers['X-Modified'] = True\n\ndef test_sanic_named_middleware():\n    request = Request(\n        method=\"GET\",\n        path=\"/hello\",\n        url=\"http://testserver/hello\",\n        headers={\n            'Host': 'testserver'\n        },\n        version=1.1\n    )\n    app.router.add_route(hello, '/hello')\n    app.register_named_middleware(add_url_parameter, ['hello'],'request')\n    app.register_named_middleware(modify_response, ['hello'],'response')\n\n    response = app.test_client.get('/hello')\n\n    assert response.status == 200\n    assert response.headers['X-Modified']\n    assert response.ctx.url_parameter == \"foo\"\n\n##end\n##endimport pytest\nfrom sanic import Sanic\nfrom sanic.response import HTTPResponse\nfrom sanic.request import Request\nfrom sanic.exceptions import NotFound\n\napp = Sanic()\napp.add_exception_handler(NotFound, lambda *args: HTTPResponse())\n\n@app.route('/hello', methods=['GET'])\nasync def hello(request):\n    return HTTPResponse(\"Hello, world!\")\n\n@app.middleware('request')\nasync def add_url_parameter(request):\n    request.ctx.url_parameter = \"foo\"\n\n@app.middleware('response')\nasync def modify_response(request, response):\n    response",
+      "patch_sha256": "132fe4d0a4e35ee163d95094cfc98b1fba550d0f0e45bee0688fccbbf01662fc",
+      "rank_score": -71,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.5321867729008602,
+      "top_p": 0.98
+    }
+  ],
+  "candidate_count": 7,
+  "retrieved_examples": [],
+  "diffusion_plan": [],
+  "static_analysis_nodes": []
+}

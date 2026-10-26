@@ -1,0 +1,141 @@
+{
+  "bug_id": "22",
+  "seed": 42,
+  "arm": "base",
+  "candidates": [
+    {
+      "index": 0,
+      "patch_text": "def url_basename(url):\n    m = re.match(r'(?:https?:|)//[^/]+/(?:[^/?#]+/)?([^/?#]+)/?(?:[?#]|$)', url)\n    if not m:\n        return u''\n    return m.group(1)",
+      "patch_sha256": "2aa5e7633e9f41b4213d27f92bd676a3cafb9c8a83920964a4a06f490da2a357",
+      "rank_score": 219,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.0,
+      "top_p": 1.0
+    },
+    {
+      "index": 1,
+      "patch_text": "def url_basename(url):\n    m = re.match('(?:https?:|)//[^/]+/(?:[^/?#]+/)?([^/?#]+)/?(?:[?#]|$)', url)\n    if not m:\n        return ''\n    return m.group(1)",
+      "patch_sha256": "a3e9210f1db7aa820e683069fa6b6bd6cdce3ba07c3aa07f6cbddc88e40c26ab",
+      "rank_score": 219,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8089233151013046,
+      "top_p": 0.9111541438766307
+    },
+    {
+      "index": 2,
+      "patch_text": "def url_basename(url):\n    m = re.match(r'(?:https?:|)//[^/]+/(?:[^/?#]+/)?([^/?#]+)/?(?:[?#]|$)', url)\n    if not m:\n        return ''\n    return m.group(1)",
+      "patch_sha256": "2342f40a0803a7ef3851258a16f509158dc17e7bd1f15cc6d70f31e422066bde",
+      "rank_score": 204,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7822854872415247,
+      "top_p": 0.8778568590519058
+    },
+    {
+      "index": 3,
+      "patch_text": "def url_basename(url):\n    if '://' not in url:\n        url = 'http://' + url\n    m = re.match(r'^https?://[^/]+/([^/?#]+/)?[^/?#]+/?(?:[?#]|$)', url)\n    if not m:\n        return u''\n    return m.group(1)",
+      "patch_sha256": "7742b92e6e07adf6a78ec7893894b395d7352dbd0f2eab79725393f59cea4353",
+      "rank_score": 198,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7822854872415247,
+      "top_p": 0.8778568590519058
+    },
+    {
+      "index": 4,
+      "patch_text": "def url_basename(url):\n    if not url:\n        return ''\n    return url.split('/')[-1]",
+      "patch_sha256": "614bb0ff463b5abcc0b9fe0e73001b0adfbdf2af20b688cc453215c3628dd47f",
+      "rank_score": 172,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8850407915843882,
+      "top_p": 0.7720008604178135
+    },
+    {
+      "index": 5,
+      "patch_text": "def url_basename(url):\n    if url == None:\n        return u''\n    return url.split('/')[-1]",
+      "patch_sha256": "32b40e29293241718d6036336c4ec827925ede888762bb79266da77d46cf6761",
+      "rank_score": 170,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8850407915843882,
+      "top_p": 0.7720008604178135
+    },
+    {
+      "index": 6,
+      "patch_text": "def url_basename(url):\n    if '://' not in url:\n        url = 'http://' + url\n    return url.split('://')[1].split('/')[0]",
+      "patch_sha256": "9bb781980aeece133dfdeb7dc92957a8c10c405df9c3a4a9a11cab83ea3fc400",
+      "rank_score": 165,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.5106412196441554,
+      "top_p": 0.9620023454695296
+    },
+    {
+      "index": 7,
+      "patch_text": "def url_basename(url):\n    \"\"\"Return the basename of an URL.\"\"\"\n    return url.split(\"/\")[-1]",
+      "patch_sha256": "6cad17e21e6519ce108b734f4bdf3ddb45a7994d0787e706174f501026697b3a",
+      "rank_score": 153,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7822854872415247,
+      "top_p": 0.8778568590519058
+    },
+    {
+      "index": 8,
+      "patch_text": "def url_basename(url):\n    if '://' in url:\n        idx = url.find('://')\n        url = url[idx + 3:]\n\n    url_parts = url.split('/')\n    return url_parts[-1]",
+      "patch_sha256": "91871c76e2ae452759b084b701e8d423aeb0f78bd4f044a95bfdf90ee059a21e",
+      "rank_score": 151,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8850407915843882,
+      "top_p": 0.7720008604178135
+    },
+    {
+      "index": 9,
+      "patch_text": "def url_basename(url):\n    m = re.match(r'(?:https?:|)//[^/]+/(?:[^/?#]+/)?([^/?#]+)/?(?:[?#]|$)', url)\n    if not m:\n        return u''\n    return m.group(1)\n##end\n\n##start_incorrect\ndef url_basename(url):\n    # <--- BUGGY LINE\n    m = re.match(r'(?:https?:|)//[^/]+/(?:[^/?#]+/)?([^/?#]+)/?(?:[?#]|$)', url)\n    # <--- BUGGY LINE\n    if not m:\n        return u''\n    return m.group(1)\n##end\n\n##start_incorrect\ndef url_basename(url):\n    # <--- BUGGY LINE\n    m = re.match(r'(?:https?:|)//[^/]+/(?:[^/?#]+/)?([^/?#]+)/?(?:[?#]|$)', url)\n    # <--- BUGGY LINE\n    if not m:\n        return u''\n    return m.group(1)\n    # <--- BUGGY LINE\n##end\n\n##start_incorrect\ndef url_basename(url):\n    # <--- BUGGY LINE\n    m = re.match(r'(?:https?:|)//[^/]+/(?:[^/?#]+/)?([^/?#]+)/?(?:[?#]|$)', url)\n    # <--- BUGGY LINE\n    if not m:\n        return u''\n    return m.group(1)\n    # <--- BUGGY LINE\n##end\n\n##start_incorrect\ndef url_basename(url):\n    # <--- BUGGY LINE\n    m = re.match(r'(?:https?:|)//[^/]+/(?:[^/?#]+/)?([^/?#]+)/?(?:[?#]|$)', url)\n    # <--- BUGGY LINE\n    if not m:\n        return u''\n    return m.group(1)\n    # <--- BUGGY LINE\n##end\n\n##start_incorrect\ndef url_basename(url):\n    # <--- BUGGY LINE\n    m = re.match(r'(?:https?:|)//[^/]+/(?:[^/?#]+/)?([^/?#]+)/?(?:[?#]|$)', url)\n    # <--- BUGGY LINE\n    if not m:\n        return u''\n    return m.group(1)\n    # <--- BUGGY LINE\n##end\n\n##start_incorrect\ndef url_basename(url):\n    # <--- BUGGY LINE\n    m = re.match(r'(?:https?:|)//[^/]+/(?:[^/?#]+/)?([^/?#]+)/?(?:[?#]|$)', url)\n    # <--- BUGGY LINE\n    if not m:\n        return u''\n    return m.group(1)\n    # <--- BUGGY LINE\n##end",
+      "patch_sha256": "53029fbbc02be7af28be4355674382d4e005950a2edc5b2c3b4dec5e6130b953",
+      "rank_score": 136,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8089233151013046,
+      "top_p": 0.9111541438766307
+    }
+  ],
+  "candidate_count": 10,
+  "retrieved_examples": [],
+  "diffusion_plan": [],
+  "static_analysis_nodes": []
+}

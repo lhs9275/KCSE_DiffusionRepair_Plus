@@ -1,0 +1,3368 @@
+{
+ "purpose": "수정본 표 3-6이 사용한 최종 평가 레코드와 생성 로그의 고정 목록",
+ "n_records": 258,
+ "n_generation_runs": 258,
+ "aggregator": {
+  "path": "/cephfs/home/s2022810061/tmp/2026_09_21/kcse_full_evaluation_v5/analysis/aggregate_full_results.py",
+  "sha256": "298bac036335b65fdbbe8287545953f84692a62063fc37a6cae68e1ce94d3a5d"
+ },
+ "accounting_sha256": "5dcd20d96c623d1382896f16c859f43f03cc0a51eb04f535883acc8bdec62efe",
+ "records": [
+  {
+   "bug_id": "2",
+   "arm": "base",
+   "seed": 42,
+   "evaluation_version": 1,
+   "evaluation_record": "kcse_full_evaluation_v1/results/slot_3_task_3_base_seed42_bug_2_job_2826/evaluation.json",
+   "record_sha256": "987b89ab781429a26e07deb6a18f4ad1eb6e301d01c339a395d0c4c0ebe05923",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "3",
+   "arm": "base",
+   "seed": 42,
+   "evaluation_version": 1,
+   "evaluation_record": "kcse_full_evaluation_v1/results/slot_9_task_9_base_seed42_bug_3_job_2833/evaluation.json",
+   "record_sha256": "11f75024e5ceaff0531a3649848132dffa2d031a1394f5b657b4e6b55c6bc474",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "4",
+   "arm": "base",
+   "seed": 42,
+   "evaluation_version": 1,
+   "evaluation_record": "kcse_full_evaluation_v1/results/slot_15_task_15_base_seed42_bug_4_job_2840/evaluation.json",
+   "record_sha256": "c6a6bdd153c976f51cad2b01e88d62f7e0cc06df1895d369adb2bc5e04502011",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "5",
+   "arm": "base",
+   "seed": 42,
+   "evaluation_version": 1,
+   "evaluation_record": "kcse_full_evaluation_v1/results/slot_21_task_21_base_seed42_bug_5_job_2824/evaluation.json",
+   "record_sha256": "0811c7943f7869244f14c8e87b024407c3565ffd9c665a0962d7b2fd6c4b33b9",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "6",
+   "arm": "base",
+   "seed": 42,
+   "evaluation_version": 1,
+   "evaluation_record": "kcse_full_evaluation_v1/results/slot_27_task_27_base_seed42_bug_6_job_2854/evaluation.json",
+   "record_sha256": "52ccf9048913b21dbe1e5dea0fa7224df4fe4b754c3ac96992da6a15502edb6b",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "7",
+   "arm": "base",
+   "seed": 42,
+   "evaluation_version": 1,
+   "evaluation_record": "kcse_full_evaluation_v1/results/slot_33_task_33_base_seed42_bug_7_job_2864/evaluation.json",
+   "record_sha256": "566965457fb517107116029cb3f4d952d3999f84b24b14dbf0046d7f780417f6",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "8",
+   "arm": "base",
+   "seed": 42,
+   "evaluation_version": 1,
+   "evaluation_record": "kcse_full_evaluation_v1/results/slot_39_task_39_base_seed42_bug_8_job_2870/evaluation.json",
+   "record_sha256": "b5031ccd2403573abf351fb94f49e8910125dc688ec19adfae9601cc5c959118",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "9",
+   "arm": "base",
+   "seed": 42,
+   "evaluation_version": 1,
+   "evaluation_record": "kcse_full_evaluation_v1/results/slot_45_task_45_base_seed42_bug_9_job_2878/evaluation.json",
+   "record_sha256": "c782b1af905379e79c15c3f9c8989887c259f11fccba6ab69cbb6b554d103ad8",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "10",
+   "arm": "base",
+   "seed": 42,
+   "evaluation_version": 1,
+   "evaluation_record": "kcse_full_evaluation_v1/results/slot_51_task_51_base_seed42_bug_10_job_2890/evaluation.json",
+   "record_sha256": "5aecbc7f67a34952e9bd6500f5ea3944d847052724fed814c17f993bfdde36af",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "11",
+   "arm": "base",
+   "seed": 42,
+   "evaluation_version": 1,
+   "evaluation_record": "kcse_full_evaluation_v1/results/slot_57_task_57_base_seed42_bug_11_job_2903/evaluation.json",
+   "record_sha256": "67e3d9f5b0f7daa4fbbda77b8096bb36a8e71241210b36b282ccd25dd30b4de2",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "16",
+   "arm": "base",
+   "seed": 42,
+   "evaluation_version": 1,
+   "evaluation_record": "kcse_full_evaluation_v1/results/slot_63_task_63_base_seed42_bug_16_job_2911/evaluation.json",
+   "record_sha256": "ff517501139a718691c0c8f50270dc8c9e7d481c011ebf023e4a5386aefa7d75",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "18",
+   "arm": "base",
+   "seed": 42,
+   "evaluation_version": 1,
+   "evaluation_record": "kcse_full_evaluation_v1/results/slot_69_task_69_base_seed42_bug_18_job_2918/evaluation.json",
+   "record_sha256": "f26a3d8d12f4b7e598f29955fa07d92a7429225db53d3fccbcdf12591491bed2",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "20",
+   "arm": "base",
+   "seed": 42,
+   "evaluation_version": 1,
+   "evaluation_record": "kcse_full_evaluation_v1/results/slot_75_task_75_base_seed42_bug_20_job_2925/evaluation.json",
+   "record_sha256": "036ba19837ce3764bfcb54d7089a945e96efc47d1bfb63c1099b1080edb2089f",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "21",
+   "arm": "base",
+   "seed": 42,
+   "evaluation_version": 1,
+   "evaluation_record": "kcse_full_evaluation_v1/results/slot_81_task_81_base_seed42_bug_21_job_2909/evaluation.json",
+   "record_sha256": "a8539b32456ee097f838bf1f0cf3b8afeee0fed03dd8e327ec494ebfabe7adfc",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "22",
+   "arm": "base",
+   "seed": 42,
+   "evaluation_version": 1,
+   "evaluation_record": "kcse_full_evaluation_v1/results/slot_87_task_87_base_seed42_bug_22_job_2938/evaluation.json",
+   "record_sha256": "73f95287e989f86162beaf47eefc039118605290c288c44b44e9ad3e03ef30a2",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "23",
+   "arm": "base",
+   "seed": 42,
+   "evaluation_version": 1,
+   "evaluation_record": "kcse_full_evaluation_v1/results/slot_93_task_93_base_seed42_bug_23_job_2944/evaluation.json",
+   "record_sha256": "e9d859b7074d7c5d39a78a984b80593a44b45d4b4f5b712efd34fc02a99b9019",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "24",
+   "arm": "base",
+   "seed": 42,
+   "evaluation_version": 2,
+   "evaluation_record": "kcse_full_evaluation_v2/results/batch_0_base_seed42_bugs_24-26-27-28_job_2950/evaluation.json",
+   "record_sha256": "7a943cb562ad967eef001c41a2334570ca51ea4e0b3a43723495c08f150776cd",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "26",
+   "arm": "base",
+   "seed": 42,
+   "evaluation_version": 2,
+   "evaluation_record": "kcse_full_evaluation_v2/results/batch_0_base_seed42_bugs_24-26-27-28_job_2950/evaluation.json",
+   "record_sha256": "7a943cb562ad967eef001c41a2334570ca51ea4e0b3a43723495c08f150776cd",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "27",
+   "arm": "base",
+   "seed": 42,
+   "evaluation_version": 2,
+   "evaluation_record": "kcse_full_evaluation_v2/results/batch_0_base_seed42_bugs_24-26-27-28_job_2950/evaluation.json",
+   "record_sha256": "7a943cb562ad967eef001c41a2334570ca51ea4e0b3a43723495c08f150776cd",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "28",
+   "arm": "base",
+   "seed": 42,
+   "evaluation_version": 2,
+   "evaluation_record": "kcse_full_evaluation_v2/results/batch_0_base_seed42_bugs_24-26-27-28_job_2950/evaluation.json",
+   "record_sha256": "7a943cb562ad967eef001c41a2334570ca51ea4e0b3a43723495c08f150776cd",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "29",
+   "arm": "base",
+   "seed": 42,
+   "evaluation_version": 3,
+   "evaluation_record": "kcse_full_evaluation_v3/results/batch_0_base_seed42_bugs_29_job_2979/evaluation.json",
+   "record_sha256": "b1b514506f0da8515813ac50e09bf5b9a61ca9c998df295103661e7e680f4c0d",
+   "superseded_count": 1
+  },
+  {
+   "bug_id": "30",
+   "arm": "base",
+   "seed": 42,
+   "evaluation_version": 3,
+   "evaluation_record": "kcse_full_evaluation_v3/results/batch_1_base_seed42_bugs_30_job_2982/evaluation.json",
+   "record_sha256": "c41ad4e0e21324d95e35f129baba4081f4f47c2b6227f6accbce848d71e3fc4f",
+   "superseded_count": 1
+  },
+  {
+   "bug_id": "31",
+   "arm": "base",
+   "seed": 42,
+   "evaluation_version": 3,
+   "evaluation_record": "kcse_full_evaluation_v3/results/batch_2_base_seed42_bugs_31_job_2983/evaluation.json",
+   "record_sha256": "8dabef3323c688df0d209e4fa7c65a708767c85f529c02dcfd66022e1b81746d",
+   "superseded_count": 1
+  },
+  {
+   "bug_id": "32",
+   "arm": "base",
+   "seed": 42,
+   "evaluation_version": 3,
+   "evaluation_record": "kcse_full_evaluation_v3/results/batch_3_base_seed42_bugs_32_job_2984/evaluation.json",
+   "record_sha256": "f487a431bacce284938926b1eeb72cba08705883bbd0d2f5b989cdcb72ff3441",
+   "superseded_count": 1
+  },
+  {
+   "bug_id": "33",
+   "arm": "base",
+   "seed": 42,
+   "evaluation_version": 3,
+   "evaluation_record": "kcse_full_evaluation_v3/results/batch_4_base_seed42_bugs_33_job_2985/evaluation.json",
+   "record_sha256": "2246c35d0da3767a91af7ea6418890fb5af9fff88e65646ba95b7bafa75534c9",
+   "superseded_count": 1
+  },
+  {
+   "bug_id": "35",
+   "arm": "base",
+   "seed": 42,
+   "evaluation_version": 2,
+   "evaluation_record": "kcse_full_evaluation_v2/results/batch_2_base_seed42_bugs_33-35-36-37_job_2955/evaluation.json",
+   "record_sha256": "3b2b4e6fa29c836b4705ec8e349b12a1ec10c331edeb9b5b5a1c6e489975d8a6",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "36",
+   "arm": "base",
+   "seed": 42,
+   "evaluation_version": 2,
+   "evaluation_record": "kcse_full_evaluation_v2/results/batch_2_base_seed42_bugs_33-35-36-37_job_2955/evaluation.json",
+   "record_sha256": "3b2b4e6fa29c836b4705ec8e349b12a1ec10c331edeb9b5b5a1c6e489975d8a6",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "37",
+   "arm": "base",
+   "seed": 42,
+   "evaluation_version": 5,
+   "evaluation_record": "kcse_full_evaluation_v5/results/batch_0_base_seed42_bugs_37_job_3161/evaluation.json",
+   "record_sha256": "62694f535616d7ea3f2840e7ebab37bb46990e16e722c86a19a14e95f3f7b3ea",
+   "superseded_count": 2
+  },
+  {
+   "bug_id": "38",
+   "arm": "base",
+   "seed": 42,
+   "evaluation_version": 5,
+   "evaluation_record": "kcse_full_evaluation_v5/results/batch_1_base_seed42_bugs_38_job_3162/evaluation.json",
+   "record_sha256": "cbb87b4ce2437165131033fbebd7372e75aee33d553c060d410877604f891bd5",
+   "superseded_count": 2
+  },
+  {
+   "bug_id": "41",
+   "arm": "base",
+   "seed": 42,
+   "evaluation_version": 5,
+   "evaluation_record": "kcse_full_evaluation_v5/results/batch_2_base_seed42_bugs_41_job_3163/evaluation.json",
+   "record_sha256": "a7d6923bd755e8a41108d148c4306ab1233204e9f5e2585f292c35201fea202f",
+   "superseded_count": 2
+  },
+  {
+   "bug_id": "42",
+   "arm": "base",
+   "seed": 42,
+   "evaluation_version": 5,
+   "evaluation_record": "kcse_full_evaluation_v5/results/batch_3_base_seed42_bugs_42_job_3164/evaluation.json",
+   "record_sha256": "b3ea79e69b563e28661bd39682e5715ba89d7de37d67503efd33793e133217aa",
+   "superseded_count": 2
+  },
+  {
+   "bug_id": "43",
+   "arm": "base",
+   "seed": 42,
+   "evaluation_version": 5,
+   "evaluation_record": "kcse_full_evaluation_v5/results/batch_4_base_seed42_bugs_43_job_3165/evaluation.json",
+   "record_sha256": "5fd031bdadb32f87208afafd3d517186fde03acfbf5c9471a473e9bb5c72fcea",
+   "superseded_count": 2
+  },
+  {
+   "bug_id": "44",
+   "arm": "base",
+   "seed": 42,
+   "evaluation_version": 5,
+   "evaluation_record": "kcse_full_evaluation_v5/results/batch_5_base_seed42_bugs_44_job_3166/evaluation.json",
+   "record_sha256": "e18a63abd27371dc686c1ca8ab66362b1b7062b16cb5b4badcad8467ec78b740",
+   "superseded_count": 2
+  },
+  {
+   "bug_id": "45",
+   "arm": "base",
+   "seed": 42,
+   "evaluation_version": 5,
+   "evaluation_record": "kcse_full_evaluation_v5/results/batch_6_base_seed42_bugs_45_job_3167/evaluation.json",
+   "record_sha256": "e60aeb3e111cfab89a2ed1168db2878bff772abf37ad5df81df08d659761fbcd",
+   "superseded_count": 2
+  },
+  {
+   "bug_id": "47",
+   "arm": "base",
+   "seed": 42,
+   "evaluation_version": 2,
+   "evaluation_record": "kcse_full_evaluation_v2/results/batch_4_base_seed42_bugs_44-45-47-48_job_2957/evaluation.json",
+   "record_sha256": "f63a35cb7b01aecbe5c35d8e53bd16ed2875a13a0f8932a27a1cca4c45b074f4",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "48",
+   "arm": "base",
+   "seed": 42,
+   "evaluation_version": 2,
+   "evaluation_record": "kcse_full_evaluation_v2/results/batch_4_base_seed42_bugs_44-45-47-48_job_2957/evaluation.json",
+   "record_sha256": "f63a35cb7b01aecbe5c35d8e53bd16ed2875a13a0f8932a27a1cca4c45b074f4",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "49",
+   "arm": "base",
+   "seed": 42,
+   "evaluation_version": 2,
+   "evaluation_record": "kcse_full_evaluation_v2/results/batch_5_base_seed42_bugs_49-50-51-52_job_2970/evaluation.json",
+   "record_sha256": "90aa99d841bf7c2dcb3615fb0e98b849f02baf0fb4e443170c4e56425e1759f9",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "50",
+   "arm": "base",
+   "seed": 42,
+   "evaluation_version": 2,
+   "evaluation_record": "kcse_full_evaluation_v2/results/batch_5_base_seed42_bugs_49-50-51-52_job_2970/evaluation.json",
+   "record_sha256": "90aa99d841bf7c2dcb3615fb0e98b849f02baf0fb4e443170c4e56425e1759f9",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "51",
+   "arm": "base",
+   "seed": 42,
+   "evaluation_version": 2,
+   "evaluation_record": "kcse_full_evaluation_v2/results/batch_5_base_seed42_bugs_49-50-51-52_job_2970/evaluation.json",
+   "record_sha256": "90aa99d841bf7c2dcb3615fb0e98b849f02baf0fb4e443170c4e56425e1759f9",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "52",
+   "arm": "base",
+   "seed": 42,
+   "evaluation_version": 2,
+   "evaluation_record": "kcse_full_evaluation_v2/results/batch_5_base_seed42_bugs_49-50-51-52_job_2970/evaluation.json",
+   "record_sha256": "90aa99d841bf7c2dcb3615fb0e98b849f02baf0fb4e443170c4e56425e1759f9",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "53",
+   "arm": "base",
+   "seed": 42,
+   "evaluation_version": 3,
+   "evaluation_record": "kcse_full_evaluation_v3/results/batch_12_base_seed42_bugs_53-60-68_job_2998/evaluation.json",
+   "record_sha256": "541b73561e67538712de297e275f23dc44d94243bcbd86e9d8fbc2091d89baa3",
+   "superseded_count": 1
+  },
+  {
+   "bug_id": "60",
+   "arm": "base",
+   "seed": 42,
+   "evaluation_version": 3,
+   "evaluation_record": "kcse_full_evaluation_v3/results/batch_12_base_seed42_bugs_53-60-68_job_2998/evaluation.json",
+   "record_sha256": "541b73561e67538712de297e275f23dc44d94243bcbd86e9d8fbc2091d89baa3",
+   "superseded_count": 1
+  },
+  {
+   "bug_id": "68",
+   "arm": "base",
+   "seed": 42,
+   "evaluation_version": 3,
+   "evaluation_record": "kcse_full_evaluation_v3/results/batch_12_base_seed42_bugs_53-60-68_job_2998/evaluation.json",
+   "record_sha256": "541b73561e67538712de297e275f23dc44d94243bcbd86e9d8fbc2091d89baa3",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "2",
+   "arm": "base",
+   "seed": 43,
+   "evaluation_version": 1,
+   "evaluation_record": "kcse_full_evaluation_v1/results/slot_4_task_4_base_seed43_bug_2_job_2827/evaluation.json",
+   "record_sha256": "64fc0a983b776816b8a21a573a21c696a9600137413fd18d0227d523bffc60a1",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "3",
+   "arm": "base",
+   "seed": 43,
+   "evaluation_version": 1,
+   "evaluation_record": "kcse_full_evaluation_v1/results/slot_10_task_10_base_seed43_bug_3_job_2834/evaluation.json",
+   "record_sha256": "bbdcef704ddff7e30af71984b9d3cfc420dd11636161d5448375762178a6f4df",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "4",
+   "arm": "base",
+   "seed": 43,
+   "evaluation_version": 1,
+   "evaluation_record": "kcse_full_evaluation_v1/results/slot_16_task_16_base_seed43_bug_4_job_2841/evaluation.json",
+   "record_sha256": "b4862a07ea522c481fd1ca1b739228ebd79cfa8eb7b90e78fc42d3b6b33dcdfe",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "5",
+   "arm": "base",
+   "seed": 43,
+   "evaluation_version": 1,
+   "evaluation_record": "kcse_full_evaluation_v1/results/slot_22_task_22_base_seed43_bug_5_job_2849/evaluation.json",
+   "record_sha256": "cf440b0e3a621d0034eeef893f887bb7720866a3e604318447c76b8df5c82c65",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "6",
+   "arm": "base",
+   "seed": 43,
+   "evaluation_version": 1,
+   "evaluation_record": "kcse_full_evaluation_v1/results/slot_28_task_28_base_seed43_bug_6_job_2855/evaluation.json",
+   "record_sha256": "0c2781eb10558fe9db4223f6d16c3457814f7ef5394af62bf15a184bdbbffa04",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "7",
+   "arm": "base",
+   "seed": 43,
+   "evaluation_version": 1,
+   "evaluation_record": "kcse_full_evaluation_v1/results/slot_34_task_34_base_seed43_bug_7_job_2865/evaluation.json",
+   "record_sha256": "298d742674887f19dabea4bb3bbfde61413aaa8c355bc95c4fa18bd6c67808df",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "8",
+   "arm": "base",
+   "seed": 43,
+   "evaluation_version": 1,
+   "evaluation_record": "kcse_full_evaluation_v1/results/slot_40_task_40_base_seed43_bug_8_job_2871/evaluation.json",
+   "record_sha256": "c90f7844f64dc29d0c218978a6edf2dccf3ebc705d8b2bfe12e2aa2bc726512d",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "9",
+   "arm": "base",
+   "seed": 43,
+   "evaluation_version": 1,
+   "evaluation_record": "kcse_full_evaluation_v1/results/slot_46_task_46_base_seed43_bug_9_job_2881/evaluation.json",
+   "record_sha256": "bc990d129bfa954e961c37b6a8ba0649cca82b5df3f0be0c4be1441541750c4a",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "10",
+   "arm": "base",
+   "seed": 43,
+   "evaluation_version": 1,
+   "evaluation_record": "kcse_full_evaluation_v1/results/slot_52_task_52_base_seed43_bug_10_job_2891/evaluation.json",
+   "record_sha256": "cce4bef7c5567b09fdced92f9990038d0cf07a990995b9463d8b3001d7c4b304",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "11",
+   "arm": "base",
+   "seed": 43,
+   "evaluation_version": 1,
+   "evaluation_record": "kcse_full_evaluation_v1/results/slot_58_task_58_base_seed43_bug_11_job_2905/evaluation.json",
+   "record_sha256": "eee26ac8f2617f16b790b40e5d26e2bc74f7d2e38799a86f717275728a35a280",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "16",
+   "arm": "base",
+   "seed": 43,
+   "evaluation_version": 1,
+   "evaluation_record": "kcse_full_evaluation_v1/results/slot_64_task_64_base_seed43_bug_16_job_2912/evaluation.json",
+   "record_sha256": "92c51f9e053240c44ab1836b9e890ae905e6ecb1b2796a6b1013ae3502501e33",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "18",
+   "arm": "base",
+   "seed": 43,
+   "evaluation_version": 1,
+   "evaluation_record": "kcse_full_evaluation_v1/results/slot_70_task_70_base_seed43_bug_18_job_2919/evaluation.json",
+   "record_sha256": "6996ac6682146a043e3cf05ddd63d20e94892e8ea0e5b924b9cad64348b64080",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "20",
+   "arm": "base",
+   "seed": 43,
+   "evaluation_version": 1,
+   "evaluation_record": "kcse_full_evaluation_v1/results/slot_76_task_76_base_seed43_bug_20_job_2926/evaluation.json",
+   "record_sha256": "31eaf2cbfba3408f757273ae0f25fa67c3143a2b9e12a9927b344bdb93949f25",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "21",
+   "arm": "base",
+   "seed": 43,
+   "evaluation_version": 1,
+   "evaluation_record": "kcse_full_evaluation_v1/results/slot_82_task_82_base_seed43_bug_21_job_2932/evaluation.json",
+   "record_sha256": "ac588158e76ea056713cd6331b958f13b6145b7a189c7236f2b614089204d368",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "22",
+   "arm": "base",
+   "seed": 43,
+   "evaluation_version": 1,
+   "evaluation_record": "kcse_full_evaluation_v1/results/slot_88_task_88_base_seed43_bug_22_job_2939/evaluation.json",
+   "record_sha256": "417d9e6faf869dbf47ebf1bd9c7675e4e5805e124f1126e742b57529dedc46ac",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "23",
+   "arm": "base",
+   "seed": 43,
+   "evaluation_version": 2,
+   "evaluation_record": "kcse_full_evaluation_v2/results/batch_7_base_seed43_bugs_23-24-26-27_job_2972/evaluation.json",
+   "record_sha256": "560324ad3a18e6d2be31e8d6273fea42a825bdab8b5ee482b7af1e5ada5f33d2",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "24",
+   "arm": "base",
+   "seed": 43,
+   "evaluation_version": 2,
+   "evaluation_record": "kcse_full_evaluation_v2/results/batch_7_base_seed43_bugs_23-24-26-27_job_2972/evaluation.json",
+   "record_sha256": "560324ad3a18e6d2be31e8d6273fea42a825bdab8b5ee482b7af1e5ada5f33d2",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "26",
+   "arm": "base",
+   "seed": 43,
+   "evaluation_version": 2,
+   "evaluation_record": "kcse_full_evaluation_v2/results/batch_7_base_seed43_bugs_23-24-26-27_job_2972/evaluation.json",
+   "record_sha256": "560324ad3a18e6d2be31e8d6273fea42a825bdab8b5ee482b7af1e5ada5f33d2",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "27",
+   "arm": "base",
+   "seed": 43,
+   "evaluation_version": 2,
+   "evaluation_record": "kcse_full_evaluation_v2/results/batch_7_base_seed43_bugs_23-24-26-27_job_2972/evaluation.json",
+   "record_sha256": "560324ad3a18e6d2be31e8d6273fea42a825bdab8b5ee482b7af1e5ada5f33d2",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "28",
+   "arm": "base",
+   "seed": 43,
+   "evaluation_version": 4,
+   "evaluation_record": "kcse_full_evaluation_v4/results/batch_0_base_seed43_bugs_28-47-48-49_job_3039/evaluation.json",
+   "record_sha256": "d8fdbfe9f817a296d710ef76be2af43319e58bc2efabab9cb4158ee9ef80d593",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "29",
+   "arm": "base",
+   "seed": 43,
+   "evaluation_version": 3,
+   "evaluation_record": "kcse_full_evaluation_v3/results/batch_13_base_seed43_bugs_29_job_2999/evaluation.json",
+   "record_sha256": "60f5e93d3d7e4de48bf5bb5bb78b593d81163b30c788a000a8cb418935b8edb0",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "30",
+   "arm": "base",
+   "seed": 43,
+   "evaluation_version": 3,
+   "evaluation_record": "kcse_full_evaluation_v3/results/batch_14_base_seed43_bugs_30_job_3000/evaluation.json",
+   "record_sha256": "728e14b77ba707bd8a29ad4da48d8a574895402ec66c17a640f7f9ba1a8ca980",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "31",
+   "arm": "base",
+   "seed": 43,
+   "evaluation_version": 3,
+   "evaluation_record": "kcse_full_evaluation_v3/results/batch_15_base_seed43_bugs_31_job_3001/evaluation.json",
+   "record_sha256": "67d7c64ae7cd4e6be4825065a4d0e551163b508fb1ddf7a10d7179aac73575c7",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "32",
+   "arm": "base",
+   "seed": 43,
+   "evaluation_version": 3,
+   "evaluation_record": "kcse_full_evaluation_v3/results/batch_16_base_seed43_bugs_32_job_3006/evaluation.json",
+   "record_sha256": "aac8ff95dff2a275c893a08508c935f92c4c205532c508e327a60b8a8078a13f",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "33",
+   "arm": "base",
+   "seed": 43,
+   "evaluation_version": 3,
+   "evaluation_record": "kcse_full_evaluation_v3/results/batch_17_base_seed43_bugs_33_job_3007/evaluation.json",
+   "record_sha256": "3577e7f742481b711eb8f488b8de3d2ab924c3d5bee9697b8f78e3897fe0607b",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "35",
+   "arm": "base",
+   "seed": 43,
+   "evaluation_version": 3,
+   "evaluation_record": "kcse_full_evaluation_v3/results/batch_18_base_seed43_bugs_35_job_3008/evaluation.json",
+   "record_sha256": "9ba451152c075ce1bd036f41c309d641fc286eae011e3151a0c75900ea9bd699",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "36",
+   "arm": "base",
+   "seed": 43,
+   "evaluation_version": 3,
+   "evaluation_record": "kcse_full_evaluation_v3/results/batch_19_base_seed43_bugs_36_job_3013/evaluation.json",
+   "record_sha256": "0ae479d78d25af8d0be4a48e5b8555af4940be98eb63f1d975158d16adc22b36",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "37",
+   "arm": "base",
+   "seed": 43,
+   "evaluation_version": 5,
+   "evaluation_record": "kcse_full_evaluation_v5/results/batch_7_base_seed43_bugs_37_job_3168/evaluation.json",
+   "record_sha256": "f9c09f2c5cdc57b9cd96619387e95d098eea1bcf8b147b136731e7ebd3ba7c44",
+   "superseded_count": 1
+  },
+  {
+   "bug_id": "38",
+   "arm": "base",
+   "seed": 43,
+   "evaluation_version": 5,
+   "evaluation_record": "kcse_full_evaluation_v5/results/batch_8_base_seed43_bugs_38_job_3169/evaluation.json",
+   "record_sha256": "363dbeedd715c6bd3bd921725d32b93a357f23cd21018708a6666f25d51b72ba",
+   "superseded_count": 1
+  },
+  {
+   "bug_id": "41",
+   "arm": "base",
+   "seed": 43,
+   "evaluation_version": 5,
+   "evaluation_record": "kcse_full_evaluation_v5/results/batch_9_base_seed43_bugs_41_job_3170/evaluation.json",
+   "record_sha256": "988f734625ecb8bc7a2ce56579d0594cdbe3cbd04b72500776cdbce619c4a2d2",
+   "superseded_count": 1
+  },
+  {
+   "bug_id": "42",
+   "arm": "base",
+   "seed": 43,
+   "evaluation_version": 5,
+   "evaluation_record": "kcse_full_evaluation_v5/results/batch_10_base_seed43_bugs_42_job_3171/evaluation.json",
+   "record_sha256": "f2c2f7e61d25066f6307f9af0187a304ddb7b895b9b1d64958fbd15e2b002897",
+   "superseded_count": 1
+  },
+  {
+   "bug_id": "43",
+   "arm": "base",
+   "seed": 43,
+   "evaluation_version": 5,
+   "evaluation_record": "kcse_full_evaluation_v5/results/batch_11_base_seed43_bugs_43_job_3172/evaluation.json",
+   "record_sha256": "fd561aa5c9a6dddd188675359a5f7783ae8c6eba98818556af601280f18c4faf",
+   "superseded_count": 1
+  },
+  {
+   "bug_id": "44",
+   "arm": "base",
+   "seed": 43,
+   "evaluation_version": 5,
+   "evaluation_record": "kcse_full_evaluation_v5/results/batch_12_base_seed43_bugs_44_job_3173/evaluation.json",
+   "record_sha256": "3ad797dcd3c2cbfb4729ae08cd5479dc97b43efe4ffb884113b9b98c20521ef8",
+   "superseded_count": 1
+  },
+  {
+   "bug_id": "45",
+   "arm": "base",
+   "seed": 43,
+   "evaluation_version": 5,
+   "evaluation_record": "kcse_full_evaluation_v5/results/batch_13_base_seed43_bugs_45_job_3174/evaluation.json",
+   "record_sha256": "b7f84365563b556dc4a8ba38ddf5b3fd2795d22b7dc1a4858591883a3bc4cfa3",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "47",
+   "arm": "base",
+   "seed": 43,
+   "evaluation_version": 4,
+   "evaluation_record": "kcse_full_evaluation_v4/results/batch_0_base_seed43_bugs_28-47-48-49_job_3039/evaluation.json",
+   "record_sha256": "d8fdbfe9f817a296d710ef76be2af43319e58bc2efabab9cb4158ee9ef80d593",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "48",
+   "arm": "base",
+   "seed": 43,
+   "evaluation_version": 4,
+   "evaluation_record": "kcse_full_evaluation_v4/results/batch_0_base_seed43_bugs_28-47-48-49_job_3039/evaluation.json",
+   "record_sha256": "d8fdbfe9f817a296d710ef76be2af43319e58bc2efabab9cb4158ee9ef80d593",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "49",
+   "arm": "base",
+   "seed": 43,
+   "evaluation_version": 4,
+   "evaluation_record": "kcse_full_evaluation_v4/results/batch_0_base_seed43_bugs_28-47-48-49_job_3039/evaluation.json",
+   "record_sha256": "d8fdbfe9f817a296d710ef76be2af43319e58bc2efabab9cb4158ee9ef80d593",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "50",
+   "arm": "base",
+   "seed": 43,
+   "evaluation_version": 4,
+   "evaluation_record": "kcse_full_evaluation_v4/results/batch_1_base_seed43_bugs_50-51-52-53_job_3041/evaluation.json",
+   "record_sha256": "6df541267f9a6f275a201460be11f9ef576a942d59b09ecf373dd32b2a9cb9a6",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "51",
+   "arm": "base",
+   "seed": 43,
+   "evaluation_version": 4,
+   "evaluation_record": "kcse_full_evaluation_v4/results/batch_1_base_seed43_bugs_50-51-52-53_job_3041/evaluation.json",
+   "record_sha256": "6df541267f9a6f275a201460be11f9ef576a942d59b09ecf373dd32b2a9cb9a6",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "52",
+   "arm": "base",
+   "seed": 43,
+   "evaluation_version": 4,
+   "evaluation_record": "kcse_full_evaluation_v4/results/batch_1_base_seed43_bugs_50-51-52-53_job_3041/evaluation.json",
+   "record_sha256": "6df541267f9a6f275a201460be11f9ef576a942d59b09ecf373dd32b2a9cb9a6",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "53",
+   "arm": "base",
+   "seed": 43,
+   "evaluation_version": 4,
+   "evaluation_record": "kcse_full_evaluation_v4/results/batch_1_base_seed43_bugs_50-51-52-53_job_3041/evaluation.json",
+   "record_sha256": "6df541267f9a6f275a201460be11f9ef576a942d59b09ecf373dd32b2a9cb9a6",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "60",
+   "arm": "base",
+   "seed": 43,
+   "evaluation_version": 4,
+   "evaluation_record": "kcse_full_evaluation_v4/results/batch_2_base_seed43_bugs_60-68_job_3043/evaluation.json",
+   "record_sha256": "cb8c56bbccc73ae97cbf50382fd346f48284303ad179d72d5c8184867c62d5c4",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "68",
+   "arm": "base",
+   "seed": 43,
+   "evaluation_version": 4,
+   "evaluation_record": "kcse_full_evaluation_v4/results/batch_2_base_seed43_bugs_60-68_job_3043/evaluation.json",
+   "record_sha256": "cb8c56bbccc73ae97cbf50382fd346f48284303ad179d72d5c8184867c62d5c4",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "2",
+   "arm": "base",
+   "seed": 44,
+   "evaluation_version": 1,
+   "evaluation_record": "kcse_full_evaluation_v1/results/slot_5_task_5_base_seed44_bug_2_job_2828/evaluation.json",
+   "record_sha256": "1da64f0af4071457cc1e4ff5422b4a818b19ed8624f0b1d05bf386a60d640ad0",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "3",
+   "arm": "base",
+   "seed": 44,
+   "evaluation_version": 1,
+   "evaluation_record": "kcse_full_evaluation_v1/results/slot_11_task_11_base_seed44_bug_3_job_2835/evaluation.json",
+   "record_sha256": "e9cdd3bd12e5267070668f06b32e23f28939d4b41885b8ba3809898f025716da",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "4",
+   "arm": "base",
+   "seed": 44,
+   "evaluation_version": 1,
+   "evaluation_record": "kcse_full_evaluation_v1/results/slot_17_task_17_base_seed44_bug_4_job_2842/evaluation.json",
+   "record_sha256": "2210e857f6ba133e284e63766bcf3c5be3c5d8a6f2cb409b361605a98b8c9c85",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "5",
+   "arm": "base",
+   "seed": 44,
+   "evaluation_version": 1,
+   "evaluation_record": "kcse_full_evaluation_v1/results/slot_23_task_23_base_seed44_bug_5_job_2850/evaluation.json",
+   "record_sha256": "bb1c0a699f82aafd26016a3ec84d78d83f7e9073c132f4158e0c1a36314901be",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "6",
+   "arm": "base",
+   "seed": 44,
+   "evaluation_version": 1,
+   "evaluation_record": "kcse_full_evaluation_v1/results/slot_29_task_29_base_seed44_bug_6_job_2857/evaluation.json",
+   "record_sha256": "389cc6b65228a0e7e50cf39b910e0e30e443ab371da94e738dbefab3343bf68b",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "7",
+   "arm": "base",
+   "seed": 44,
+   "evaluation_version": 1,
+   "evaluation_record": "kcse_full_evaluation_v1/results/slot_35_task_35_base_seed44_bug_7_job_2866/evaluation.json",
+   "record_sha256": "e79f3e7cacd1c310c6015780bac0d26f40c9a021f71d4d775bd0b9f9dec6e148",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "8",
+   "arm": "base",
+   "seed": 44,
+   "evaluation_version": 1,
+   "evaluation_record": "kcse_full_evaluation_v1/results/slot_41_task_41_base_seed44_bug_8_job_2848/evaluation.json",
+   "record_sha256": "293a96873ce52ed8200b700f3a4a380aa33bad74392f53a7be2bf547eba4e0b9",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "9",
+   "arm": "base",
+   "seed": 44,
+   "evaluation_version": 1,
+   "evaluation_record": "kcse_full_evaluation_v1/results/slot_47_task_47_base_seed44_bug_9_job_2882/evaluation.json",
+   "record_sha256": "d164fb387fd43154d146dde501b3334444753490d1c233ca1448ed786ad5487b",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "10",
+   "arm": "base",
+   "seed": 44,
+   "evaluation_version": 1,
+   "evaluation_record": "kcse_full_evaluation_v1/results/slot_53_task_53_base_seed44_bug_10_job_2895/evaluation.json",
+   "record_sha256": "d208efd3b568e9b36c13d95c306e551b842dd572b92dec20ad65b2ed5fbc7b96",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "11",
+   "arm": "base",
+   "seed": 44,
+   "evaluation_version": 1,
+   "evaluation_record": "kcse_full_evaluation_v1/results/slot_59_task_59_base_seed44_bug_11_job_2906/evaluation.json",
+   "record_sha256": "4d7412a89b718140623bf2a6439fd76d1ec4ef2260d2d09462128344932e92ae",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "16",
+   "arm": "base",
+   "seed": 44,
+   "evaluation_version": 1,
+   "evaluation_record": "kcse_full_evaluation_v1/results/slot_65_task_65_base_seed44_bug_16_job_2913/evaluation.json",
+   "record_sha256": "286ba164d5b74e81e5b764643d9864ef0d6fc2218b7eb1f221fc4a419459fbf6",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "18",
+   "arm": "base",
+   "seed": 44,
+   "evaluation_version": 1,
+   "evaluation_record": "kcse_full_evaluation_v1/results/slot_71_task_71_base_seed44_bug_18_job_2920/evaluation.json",
+   "record_sha256": "adbf02c39d223db329fa97946537783433aabba44e948df3c8e48451f77fea76",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "20",
+   "arm": "base",
+   "seed": 44,
+   "evaluation_version": 1,
+   "evaluation_record": "kcse_full_evaluation_v1/results/slot_77_task_77_base_seed44_bug_20_job_2927/evaluation.json",
+   "record_sha256": "f3ee72caae25f72c0e4e24a1ba9d333ddddfa6bce017ae3f5edabf1dc81f8273",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "21",
+   "arm": "base",
+   "seed": 44,
+   "evaluation_version": 1,
+   "evaluation_record": "kcse_full_evaluation_v1/results/slot_83_task_83_base_seed44_bug_21_job_2933/evaluation.json",
+   "record_sha256": "5d11e0ba1ecaeb238f80354c5bfecfef7a1d697d45822b51a43588268af23ff6",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "22",
+   "arm": "base",
+   "seed": 44,
+   "evaluation_version": 1,
+   "evaluation_record": "kcse_full_evaluation_v1/results/slot_89_task_89_base_seed44_bug_22_job_2940/evaluation.json",
+   "record_sha256": "e21e80af084ef4b1646c1d7baad46078ca25c19547cff817bf8cd6c2d951fab6",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "23",
+   "arm": "base",
+   "seed": 44,
+   "evaluation_version": 4,
+   "evaluation_record": "kcse_full_evaluation_v4/results/batch_10_base_seed44_bugs_23-24-26-27_job_3054/evaluation.json",
+   "record_sha256": "a464683ebff12abbd781dac1245b616d18543aa9b1d9af6e79493a5f42b73f46",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "24",
+   "arm": "base",
+   "seed": 44,
+   "evaluation_version": 4,
+   "evaluation_record": "kcse_full_evaluation_v4/results/batch_10_base_seed44_bugs_23-24-26-27_job_3054/evaluation.json",
+   "record_sha256": "a464683ebff12abbd781dac1245b616d18543aa9b1d9af6e79493a5f42b73f46",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "26",
+   "arm": "base",
+   "seed": 44,
+   "evaluation_version": 4,
+   "evaluation_record": "kcse_full_evaluation_v4/results/batch_10_base_seed44_bugs_23-24-26-27_job_3054/evaluation.json",
+   "record_sha256": "a464683ebff12abbd781dac1245b616d18543aa9b1d9af6e79493a5f42b73f46",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "27",
+   "arm": "base",
+   "seed": 44,
+   "evaluation_version": 4,
+   "evaluation_record": "kcse_full_evaluation_v4/results/batch_10_base_seed44_bugs_23-24-26-27_job_3054/evaluation.json",
+   "record_sha256": "a464683ebff12abbd781dac1245b616d18543aa9b1d9af6e79493a5f42b73f46",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "28",
+   "arm": "base",
+   "seed": 44,
+   "evaluation_version": 4,
+   "evaluation_record": "kcse_full_evaluation_v4/results/batch_11_base_seed44_bugs_28-47-48-49_job_3055/evaluation.json",
+   "record_sha256": "6de3ed28f33bd48609c6e3ef463e81959a6903e59d1d33cf7689ced367282311",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "29",
+   "arm": "base",
+   "seed": 44,
+   "evaluation_version": 4,
+   "evaluation_record": "kcse_full_evaluation_v4/results/batch_3_base_seed44_bugs_29_job_3044/evaluation.json",
+   "record_sha256": "7ed38ac4571d38b8f3bd9654458fc1a9bd367a96c2b64efe7835bf4a88b0fc9c",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "30",
+   "arm": "base",
+   "seed": 44,
+   "evaluation_version": 4,
+   "evaluation_record": "kcse_full_evaluation_v4/results/batch_4_base_seed44_bugs_30_job_3045/evaluation.json",
+   "record_sha256": "a4b5dc43ba2dd806fd69df53f08d34fb7121b747bb184d859b9cf067a5414100",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "31",
+   "arm": "base",
+   "seed": 44,
+   "evaluation_version": 4,
+   "evaluation_record": "kcse_full_evaluation_v4/results/batch_5_base_seed44_bugs_31_job_3046/evaluation.json",
+   "record_sha256": "ff55eae182e48e063f40fd5a883b08778fd9d2439e527ef6fc8bdafefc7d679c",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "32",
+   "arm": "base",
+   "seed": 44,
+   "evaluation_version": 4,
+   "evaluation_record": "kcse_full_evaluation_v4/results/batch_6_base_seed44_bugs_32_job_3047/evaluation.json",
+   "record_sha256": "131a3fdec3c5ff53990c4abd21f5ca1cbbe2fbe86f95ffe06817e8132ce2d6c2",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "33",
+   "arm": "base",
+   "seed": 44,
+   "evaluation_version": 4,
+   "evaluation_record": "kcse_full_evaluation_v4/results/batch_7_base_seed44_bugs_33_job_3048/evaluation.json",
+   "record_sha256": "255e8e62f3c3d4dddebb6a3cd575421dbc4a5a941a8bdfdf749f61cc47e9ddd5",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "35",
+   "arm": "base",
+   "seed": 44,
+   "evaluation_version": 4,
+   "evaluation_record": "kcse_full_evaluation_v4/results/batch_8_base_seed44_bugs_35_job_3052/evaluation.json",
+   "record_sha256": "751f6db6689f32c39ef7a326c354eff6b332a454a037e416ded03f6c8cd256dd",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "36",
+   "arm": "base",
+   "seed": 44,
+   "evaluation_version": 4,
+   "evaluation_record": "kcse_full_evaluation_v4/results/batch_9_base_seed44_bugs_36_job_3053/evaluation.json",
+   "record_sha256": "ae1417b4cd57bf42cf52e8de50b2f351a60ddc6d0dfb0096ac1c3a69027688c4",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "37",
+   "arm": "base",
+   "seed": 44,
+   "evaluation_version": 5,
+   "evaluation_record": "kcse_full_evaluation_v5/results/batch_14_base_seed44_bugs_37_job_3175/evaluation.json",
+   "record_sha256": "be7ec92f96f269ec5635fc3dea6ce20e50398c94583e5eed2ffd04659bc34ce7",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "38",
+   "arm": "base",
+   "seed": 44,
+   "evaluation_version": 5,
+   "evaluation_record": "kcse_full_evaluation_v5/results/batch_15_base_seed44_bugs_38_job_3176/evaluation.json",
+   "record_sha256": "05648d514c98d1c0cda162c7e8801352578e181a64686fdf868bd4d893774f7e",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "41",
+   "arm": "base",
+   "seed": 44,
+   "evaluation_version": 5,
+   "evaluation_record": "kcse_full_evaluation_v5/results/batch_16_base_seed44_bugs_41_job_3177/evaluation.json",
+   "record_sha256": "c22d3ab265c9bfd8481d1ba217537fd7a330d56125e1b3c929784579bc1f5217",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "42",
+   "arm": "base",
+   "seed": 44,
+   "evaluation_version": 5,
+   "evaluation_record": "kcse_full_evaluation_v5/results/batch_17_base_seed44_bugs_42_job_3178/evaluation.json",
+   "record_sha256": "8bbf2ddd6f9bbbe77546976efb181fec3b0c8e1634b74d2e5877d4478a3c4a13",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "43",
+   "arm": "base",
+   "seed": 44,
+   "evaluation_version": 5,
+   "evaluation_record": "kcse_full_evaluation_v5/results/batch_18_base_seed44_bugs_43_job_3179/evaluation.json",
+   "record_sha256": "9065b263a1b3e31d23b350d14c09cde149adac17148b9b07b3bc3c4efd6966ac",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "44",
+   "arm": "base",
+   "seed": 44,
+   "evaluation_version": 5,
+   "evaluation_record": "kcse_full_evaluation_v5/results/batch_19_base_seed44_bugs_44_job_3160/evaluation.json",
+   "record_sha256": "488e4527f41bdc0907b542a16331b91fa410d3cfb24c0e7dc2342d40c85174fe",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "45",
+   "arm": "base",
+   "seed": 44,
+   "evaluation_version": 5,
+   "evaluation_record": "kcse_full_evaluation_v5/results/batch_20_base_seed44_bugs_45_job_3181/evaluation.json",
+   "record_sha256": "f3e417a5e03c90a1483f2fa5fd1c392eebc8a264b4f9bb9f1ef51adbb2d1e82c",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "47",
+   "arm": "base",
+   "seed": 44,
+   "evaluation_version": 4,
+   "evaluation_record": "kcse_full_evaluation_v4/results/batch_11_base_seed44_bugs_28-47-48-49_job_3055/evaluation.json",
+   "record_sha256": "6de3ed28f33bd48609c6e3ef463e81959a6903e59d1d33cf7689ced367282311",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "48",
+   "arm": "base",
+   "seed": 44,
+   "evaluation_version": 4,
+   "evaluation_record": "kcse_full_evaluation_v4/results/batch_11_base_seed44_bugs_28-47-48-49_job_3055/evaluation.json",
+   "record_sha256": "6de3ed28f33bd48609c6e3ef463e81959a6903e59d1d33cf7689ced367282311",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "49",
+   "arm": "base",
+   "seed": 44,
+   "evaluation_version": 4,
+   "evaluation_record": "kcse_full_evaluation_v4/results/batch_11_base_seed44_bugs_28-47-48-49_job_3055/evaluation.json",
+   "record_sha256": "6de3ed28f33bd48609c6e3ef463e81959a6903e59d1d33cf7689ced367282311",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "50",
+   "arm": "base",
+   "seed": 44,
+   "evaluation_version": 4,
+   "evaluation_record": "kcse_full_evaluation_v4/results/batch_12_base_seed44_bugs_50-51-52-53_job_3056/evaluation.json",
+   "record_sha256": "af3f176b9cd78d221a14c65ddbe291eaee9b6d996b34e54835acb17eb5c92d7e",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "51",
+   "arm": "base",
+   "seed": 44,
+   "evaluation_version": 4,
+   "evaluation_record": "kcse_full_evaluation_v4/results/batch_12_base_seed44_bugs_50-51-52-53_job_3056/evaluation.json",
+   "record_sha256": "af3f176b9cd78d221a14c65ddbe291eaee9b6d996b34e54835acb17eb5c92d7e",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "52",
+   "arm": "base",
+   "seed": 44,
+   "evaluation_version": 4,
+   "evaluation_record": "kcse_full_evaluation_v4/results/batch_12_base_seed44_bugs_50-51-52-53_job_3056/evaluation.json",
+   "record_sha256": "af3f176b9cd78d221a14c65ddbe291eaee9b6d996b34e54835acb17eb5c92d7e",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "53",
+   "arm": "base",
+   "seed": 44,
+   "evaluation_version": 4,
+   "evaluation_record": "kcse_full_evaluation_v4/results/batch_12_base_seed44_bugs_50-51-52-53_job_3056/evaluation.json",
+   "record_sha256": "af3f176b9cd78d221a14c65ddbe291eaee9b6d996b34e54835acb17eb5c92d7e",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "60",
+   "arm": "base",
+   "seed": 44,
+   "evaluation_version": 4,
+   "evaluation_record": "kcse_full_evaluation_v4/results/batch_13_base_seed44_bugs_60-68_job_3057/evaluation.json",
+   "record_sha256": "84d2d1621ddd67e61ff415819a0cbd2caa3bb6aaf3d496b1415765e84dd0f564",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "68",
+   "arm": "base",
+   "seed": 44,
+   "evaluation_version": 4,
+   "evaluation_record": "kcse_full_evaluation_v4/results/batch_13_base_seed44_bugs_60-68_job_3057/evaluation.json",
+   "record_sha256": "84d2d1621ddd67e61ff415819a0cbd2caa3bb6aaf3d496b1415765e84dd0f564",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "2",
+   "arm": "full",
+   "seed": 42,
+   "evaluation_version": 1,
+   "evaluation_record": "kcse_full_evaluation_v1/results/slot_0_task_0_full_seed42_bug_2_job_2815/evaluation.json",
+   "record_sha256": "43d1d70a8f6379d772c314d1a11d41009eb1ca923549bfc4ee8b5fd72d223d66",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "3",
+   "arm": "full",
+   "seed": 42,
+   "evaluation_version": 1,
+   "evaluation_record": "kcse_full_evaluation_v1/results/slot_6_task_6_full_seed42_bug_3_job_2830/evaluation.json",
+   "record_sha256": "3dac56792371add53948180fc9b1428cf67da10d53d72d939140393edf72597d",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "4",
+   "arm": "full",
+   "seed": 42,
+   "evaluation_version": 1,
+   "evaluation_record": "kcse_full_evaluation_v1/results/slot_12_task_12_full_seed42_bug_4_job_2836/evaluation.json",
+   "record_sha256": "f594a7e666ffc643504080390c10c474c281d2a56f684a0e08f7d914b0bd62c3",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "5",
+   "arm": "full",
+   "seed": 42,
+   "evaluation_version": 1,
+   "evaluation_record": "kcse_full_evaluation_v1/results/slot_18_task_18_full_seed42_bug_5_job_2843/evaluation.json",
+   "record_sha256": "64463b5ba532bf8666ae55cc8947febbe1e811ba2008481521ccc533beef1ad3",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "6",
+   "arm": "full",
+   "seed": 42,
+   "evaluation_version": 1,
+   "evaluation_record": "kcse_full_evaluation_v1/results/slot_24_task_24_full_seed42_bug_6_job_2851/evaluation.json",
+   "record_sha256": "502c3645cbd908d2a6201ec74e0ecc86c8527677ce628205f3191e8f0d5a81f9",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "7",
+   "arm": "full",
+   "seed": 42,
+   "evaluation_version": 1,
+   "evaluation_record": "kcse_full_evaluation_v1/results/slot_30_task_30_full_seed42_bug_7_job_2858/evaluation.json",
+   "record_sha256": "c74f876d270185f968189f8521dff1b2fe2fb7251e60f08456faaf04b11638de",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "8",
+   "arm": "full",
+   "seed": 42,
+   "evaluation_version": 1,
+   "evaluation_record": "kcse_full_evaluation_v1/results/slot_36_task_36_full_seed42_bug_8_job_2867/evaluation.json",
+   "record_sha256": "4d6781c8397973d043eb021b71b10f530859a15c191e310b9bda0f6dcb6461a7",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "9",
+   "arm": "full",
+   "seed": 42,
+   "evaluation_version": 1,
+   "evaluation_record": "kcse_full_evaluation_v1/results/slot_42_task_42_full_seed42_bug_9_job_2875/evaluation.json",
+   "record_sha256": "9f3b9721aed184a9b9bf411a9cb8a4438246b00d506352eae7c8cbc8ce68b002",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "10",
+   "arm": "full",
+   "seed": 42,
+   "evaluation_version": 1,
+   "evaluation_record": "kcse_full_evaluation_v1/results/slot_48_task_48_full_seed42_bug_10_job_2883/evaluation.json",
+   "record_sha256": "c446fb54efe559ad42e0d45cfdc9d2e993825371e2eb398a32117b7d358f9d5c",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "11",
+   "arm": "full",
+   "seed": 42,
+   "evaluation_version": 1,
+   "evaluation_record": "kcse_full_evaluation_v1/results/slot_54_task_54_full_seed42_bug_11_job_2896/evaluation.json",
+   "record_sha256": "5b8a8f15de61829cb1d0bc591e7d6a4cc9a6cfed5da2ff5e970a3fe9e0899071",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "16",
+   "arm": "full",
+   "seed": 42,
+   "evaluation_version": 1,
+   "evaluation_record": "kcse_full_evaluation_v1/results/slot_60_task_60_full_seed42_bug_16_job_2907/evaluation.json",
+   "record_sha256": "ad0b7bcb3a7df5c08498cb4f1055e2adacb065af8c26465f7af5189c651b0123",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "18",
+   "arm": "full",
+   "seed": 42,
+   "evaluation_version": 1,
+   "evaluation_record": "kcse_full_evaluation_v1/results/slot_66_task_66_full_seed42_bug_18_job_2914/evaluation.json",
+   "record_sha256": "b0bb3f50737b41b790b5349e8cfa950f899e10b9f2467ef78755af1ed66071b0",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "20",
+   "arm": "full",
+   "seed": 42,
+   "evaluation_version": 1,
+   "evaluation_record": "kcse_full_evaluation_v1/results/slot_72_task_72_full_seed42_bug_20_job_2921/evaluation.json",
+   "record_sha256": "9ec32dc53778a13fb20d124fa7f146ff90c4e319d861dfe9d2567a80896a312f",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "21",
+   "arm": "full",
+   "seed": 42,
+   "evaluation_version": 1,
+   "evaluation_record": "kcse_full_evaluation_v1/results/slot_78_task_78_full_seed42_bug_21_job_2928/evaluation.json",
+   "record_sha256": "5fd2ec87960d2d5e9ad7a8e12ac1ca46a134edb355d2e48450aca66309e07653",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "22",
+   "arm": "full",
+   "seed": 42,
+   "evaluation_version": 1,
+   "evaluation_record": "kcse_full_evaluation_v1/results/slot_84_task_84_full_seed42_bug_22_job_2934/evaluation.json",
+   "record_sha256": "ffb39a668547b9641caad9341bb8513dcce8c8b3d2597992dc3578d578abe3d8",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "23",
+   "arm": "full",
+   "seed": 42,
+   "evaluation_version": 1,
+   "evaluation_record": "kcse_full_evaluation_v1/results/slot_90_task_90_full_seed42_bug_23_job_2941/evaluation.json",
+   "record_sha256": "af5d573feb969e3628eb74930b3da201b75b3f8933da1a4474816f9436a8626b",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "24",
+   "arm": "full",
+   "seed": 42,
+   "evaluation_version": 4,
+   "evaluation_record": "kcse_full_evaluation_v4/results/batch_21_full_seed42_bugs_24-26-27-28_job_3066/evaluation.json",
+   "record_sha256": "d0aa2d0a2c2db717b530b026a6d76d6e75ac3e3f6d4b3130da8880a6a87e9269",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "26",
+   "arm": "full",
+   "seed": 42,
+   "evaluation_version": 4,
+   "evaluation_record": "kcse_full_evaluation_v4/results/batch_21_full_seed42_bugs_24-26-27-28_job_3066/evaluation.json",
+   "record_sha256": "d0aa2d0a2c2db717b530b026a6d76d6e75ac3e3f6d4b3130da8880a6a87e9269",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "27",
+   "arm": "full",
+   "seed": 42,
+   "evaluation_version": 4,
+   "evaluation_record": "kcse_full_evaluation_v4/results/batch_21_full_seed42_bugs_24-26-27-28_job_3066/evaluation.json",
+   "record_sha256": "d0aa2d0a2c2db717b530b026a6d76d6e75ac3e3f6d4b3130da8880a6a87e9269",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "28",
+   "arm": "full",
+   "seed": 42,
+   "evaluation_version": 4,
+   "evaluation_record": "kcse_full_evaluation_v4/results/batch_21_full_seed42_bugs_24-26-27-28_job_3066/evaluation.json",
+   "record_sha256": "d0aa2d0a2c2db717b530b026a6d76d6e75ac3e3f6d4b3130da8880a6a87e9269",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "29",
+   "arm": "full",
+   "seed": 42,
+   "evaluation_version": 4,
+   "evaluation_record": "kcse_full_evaluation_v4/results/batch_14_full_seed42_bugs_29_job_3058/evaluation.json",
+   "record_sha256": "24f75fdbe338777706e63a64aeb6366e84ddd331c77ea8da8d345686b6b0cfca",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "30",
+   "arm": "full",
+   "seed": 42,
+   "evaluation_version": 4,
+   "evaluation_record": "kcse_full_evaluation_v4/results/batch_15_full_seed42_bugs_30_job_3059/evaluation.json",
+   "record_sha256": "709fa8c63d041e3020314d3c6efc7d8d5972b633add8270f570088f06b00d9f6",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "31",
+   "arm": "full",
+   "seed": 42,
+   "evaluation_version": 4,
+   "evaluation_record": "kcse_full_evaluation_v4/results/batch_16_full_seed42_bugs_31_job_3060/evaluation.json",
+   "record_sha256": "f947b184ad908fb834a24398129b42cd0162fc3d98d2a6a5d22ee18c2d2e5822",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "32",
+   "arm": "full",
+   "seed": 42,
+   "evaluation_version": 4,
+   "evaluation_record": "kcse_full_evaluation_v4/results/batch_17_full_seed42_bugs_32_job_3061/evaluation.json",
+   "record_sha256": "082b2c06fe716656578c959fd3b0fa4d3cae4b9b42ba32f925fee1f22fd75bf0",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "33",
+   "arm": "full",
+   "seed": 42,
+   "evaluation_version": 4,
+   "evaluation_record": "kcse_full_evaluation_v4/results/batch_18_full_seed42_bugs_33_job_3062/evaluation.json",
+   "record_sha256": "391f78b2f2638ebe1bbf2524a8e92c370d09d1df394f8bdfdf7d92994bbdedc6",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "35",
+   "arm": "full",
+   "seed": 42,
+   "evaluation_version": 4,
+   "evaluation_record": "kcse_full_evaluation_v4/results/batch_19_full_seed42_bugs_35_job_3038/evaluation.json",
+   "record_sha256": "8ac411892e773ecccd869fe681243093ca57bb525a154e3f98fbcdcc86912de0",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "36",
+   "arm": "full",
+   "seed": 42,
+   "evaluation_version": 4,
+   "evaluation_record": "kcse_full_evaluation_v4/results/batch_20_full_seed42_bugs_36_job_3065/evaluation.json",
+   "record_sha256": "53a907f3983c080f28f8cbbe177b63e166ff80e4f82184f75428079731f5a216",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "37",
+   "arm": "full",
+   "seed": 42,
+   "evaluation_version": 5,
+   "evaluation_record": "kcse_full_evaluation_v5/results/batch_21_full_seed42_bugs_37_job_3182/evaluation.json",
+   "record_sha256": "06cf42538e6ea1e23ec6c0b3fdbb1cf429d5943ec747e215bbfa5767a16cfe29",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "38",
+   "arm": "full",
+   "seed": 42,
+   "evaluation_version": 5,
+   "evaluation_record": "kcse_full_evaluation_v5/results/batch_22_full_seed42_bugs_38_job_3183/evaluation.json",
+   "record_sha256": "6b83da0f49121da94018360f1b9ddd169f2c4eba053cc8718a49ef6d580e20a9",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "41",
+   "arm": "full",
+   "seed": 42,
+   "evaluation_version": 5,
+   "evaluation_record": "kcse_full_evaluation_v5/results/batch_23_full_seed42_bugs_41_job_3184/evaluation.json",
+   "record_sha256": "186ccfac97069a79f6fd8f76d1f0b2a5183f91ce56053fdd9c8189982a3d5e43",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "42",
+   "arm": "full",
+   "seed": 42,
+   "evaluation_version": 5,
+   "evaluation_record": "kcse_full_evaluation_v5/results/batch_24_full_seed42_bugs_42_job_3185/evaluation.json",
+   "record_sha256": "561c6159be1eb01e0795e4276cbb8e797ae87f498bf86774834981e4991670f7",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "43",
+   "arm": "full",
+   "seed": 42,
+   "evaluation_version": 5,
+   "evaluation_record": "kcse_full_evaluation_v5/results/batch_25_full_seed42_bugs_43_job_3187/evaluation.json",
+   "record_sha256": "a0af46c1869ee368405eaa291f4ddec9b84673dfb536c48811a5f32110477e4a",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "44",
+   "arm": "full",
+   "seed": 42,
+   "evaluation_version": 5,
+   "evaluation_record": "kcse_full_evaluation_v5/results/batch_26_full_seed42_bugs_44_job_3188/evaluation.json",
+   "record_sha256": "980f797886817d6715dc589f2218cf89eecab95966bc651918df508c6bd9dae6",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "45",
+   "arm": "full",
+   "seed": 42,
+   "evaluation_version": 5,
+   "evaluation_record": "kcse_full_evaluation_v5/results/batch_27_full_seed42_bugs_45_job_3189/evaluation.json",
+   "record_sha256": "d16f2634875864cf2fff664a4dacc30715bc6f744ba7a400fb0c1d1bad00eba2",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "47",
+   "arm": "full",
+   "seed": 42,
+   "evaluation_version": 4,
+   "evaluation_record": "kcse_full_evaluation_v4/results/batch_22_full_seed42_bugs_47-48-49-50_job_3067/evaluation.json",
+   "record_sha256": "4cb57f9fbd573f45322e06019507f23fe89aea7a1804b762424ad1eb29784f13",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "48",
+   "arm": "full",
+   "seed": 42,
+   "evaluation_version": 4,
+   "evaluation_record": "kcse_full_evaluation_v4/results/batch_22_full_seed42_bugs_47-48-49-50_job_3067/evaluation.json",
+   "record_sha256": "4cb57f9fbd573f45322e06019507f23fe89aea7a1804b762424ad1eb29784f13",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "49",
+   "arm": "full",
+   "seed": 42,
+   "evaluation_version": 4,
+   "evaluation_record": "kcse_full_evaluation_v4/results/batch_22_full_seed42_bugs_47-48-49-50_job_3067/evaluation.json",
+   "record_sha256": "4cb57f9fbd573f45322e06019507f23fe89aea7a1804b762424ad1eb29784f13",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "50",
+   "arm": "full",
+   "seed": 42,
+   "evaluation_version": 4,
+   "evaluation_record": "kcse_full_evaluation_v4/results/batch_22_full_seed42_bugs_47-48-49-50_job_3067/evaluation.json",
+   "record_sha256": "4cb57f9fbd573f45322e06019507f23fe89aea7a1804b762424ad1eb29784f13",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "51",
+   "arm": "full",
+   "seed": 42,
+   "evaluation_version": 4,
+   "evaluation_record": "kcse_full_evaluation_v4/results/batch_23_full_seed42_bugs_51-52-53-60_job_3068/evaluation.json",
+   "record_sha256": "daf9612eb99c70ac839f039c0b6d60e8f655073be1355bc28fa0012f06e1500e",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "52",
+   "arm": "full",
+   "seed": 42,
+   "evaluation_version": 4,
+   "evaluation_record": "kcse_full_evaluation_v4/results/batch_23_full_seed42_bugs_51-52-53-60_job_3068/evaluation.json",
+   "record_sha256": "daf9612eb99c70ac839f039c0b6d60e8f655073be1355bc28fa0012f06e1500e",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "53",
+   "arm": "full",
+   "seed": 42,
+   "evaluation_version": 4,
+   "evaluation_record": "kcse_full_evaluation_v4/results/batch_23_full_seed42_bugs_51-52-53-60_job_3068/evaluation.json",
+   "record_sha256": "daf9612eb99c70ac839f039c0b6d60e8f655073be1355bc28fa0012f06e1500e",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "60",
+   "arm": "full",
+   "seed": 42,
+   "evaluation_version": 4,
+   "evaluation_record": "kcse_full_evaluation_v4/results/batch_23_full_seed42_bugs_51-52-53-60_job_3068/evaluation.json",
+   "record_sha256": "daf9612eb99c70ac839f039c0b6d60e8f655073be1355bc28fa0012f06e1500e",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "68",
+   "arm": "full",
+   "seed": 42,
+   "evaluation_version": 4,
+   "evaluation_record": "kcse_full_evaluation_v4/results/batch_24_full_seed42_bugs_68_job_3069/evaluation.json",
+   "record_sha256": "26768f38c4a8827bc90e81032fbb64b4d0f991bda6dd29d726b5b7675d54d034",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "2",
+   "arm": "full",
+   "seed": 43,
+   "evaluation_version": 1,
+   "evaluation_record": "kcse_full_evaluation_v1/results/slot_1_task_1_full_seed43_bug_2_job_2814/evaluation.json",
+   "record_sha256": "f92be58f4d9e09a958c093d5dc0032fb217984e2c3e263b1ceb6da454109f145",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "3",
+   "arm": "full",
+   "seed": 43,
+   "evaluation_version": 1,
+   "evaluation_record": "kcse_full_evaluation_v1/results/slot_7_task_7_full_seed43_bug_3_job_2831/evaluation.json",
+   "record_sha256": "aa258d3f716a9842df35b922061bd671bb1ab3450386de5db65cf7237ca4f1a7",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "4",
+   "arm": "full",
+   "seed": 43,
+   "evaluation_version": 1,
+   "evaluation_record": "kcse_full_evaluation_v1/results/slot_13_task_13_full_seed43_bug_4_job_2838/evaluation.json",
+   "record_sha256": "09b7c04f27c2e62914c96bb2adb472e970f78190b99536179348df5bbdafd527",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "5",
+   "arm": "full",
+   "seed": 43,
+   "evaluation_version": 1,
+   "evaluation_record": "kcse_full_evaluation_v1/results/slot_19_task_19_full_seed43_bug_5_job_2844/evaluation.json",
+   "record_sha256": "83891f98640a6d2b51f4f5157678d5dd2b5d3dba586d6d960513fb91fd0a9b6d",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "6",
+   "arm": "full",
+   "seed": 43,
+   "evaluation_version": 1,
+   "evaluation_record": "kcse_full_evaluation_v1/results/slot_25_task_25_full_seed43_bug_6_job_2852/evaluation.json",
+   "record_sha256": "9242d0277185ab9932874269ada78a9e52deb24470479c9f42422f3aec208430",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "7",
+   "arm": "full",
+   "seed": 43,
+   "evaluation_version": 1,
+   "evaluation_record": "kcse_full_evaluation_v1/results/slot_31_task_31_full_seed43_bug_7_job_2859/evaluation.json",
+   "record_sha256": "0859906b2baf30d87122c6f8dd82d5ddf1856a473f60053ce8a19c2b037b1e54",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "8",
+   "arm": "full",
+   "seed": 43,
+   "evaluation_version": 1,
+   "evaluation_record": "kcse_full_evaluation_v1/results/slot_37_task_37_full_seed43_bug_8_job_2868/evaluation.json",
+   "record_sha256": "05870e801e5a50ea08fc54daf51ff0a8f5edf099ff74147f074fa2c36e4e442a",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "9",
+   "arm": "full",
+   "seed": 43,
+   "evaluation_version": 1,
+   "evaluation_record": "kcse_full_evaluation_v1/results/slot_43_task_43_full_seed43_bug_9_job_2876/evaluation.json",
+   "record_sha256": "74ecd738f83f16407c62d31bb8e246a06d600abda7655050a1decf081086338f",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "10",
+   "arm": "full",
+   "seed": 43,
+   "evaluation_version": 1,
+   "evaluation_record": "kcse_full_evaluation_v1/results/slot_49_task_49_full_seed43_bug_10_job_2887/evaluation.json",
+   "record_sha256": "aa2dd4b75360faa8782dfac64e770ccc892e6b0ff3afb30adfc538961fa864a5",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "11",
+   "arm": "full",
+   "seed": 43,
+   "evaluation_version": 1,
+   "evaluation_record": "kcse_full_evaluation_v1/results/slot_55_task_55_full_seed43_bug_11_job_2897/evaluation.json",
+   "record_sha256": "c4a4adffc714781d01baad3a286e8d81148a20d92028bcd5785373c7d166b4ff",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "16",
+   "arm": "full",
+   "seed": 43,
+   "evaluation_version": 1,
+   "evaluation_record": "kcse_full_evaluation_v1/results/slot_61_task_61_full_seed43_bug_16_job_2874/evaluation.json",
+   "record_sha256": "8d338059bf0d4f1c251adba8bfb9c88ac37305f12b6f7a641cdc7eb77562ddc5",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "18",
+   "arm": "full",
+   "seed": 43,
+   "evaluation_version": 1,
+   "evaluation_record": "kcse_full_evaluation_v1/results/slot_67_task_67_full_seed43_bug_18_job_2916/evaluation.json",
+   "record_sha256": "4eeb451c1372df43968ed10df99004e4ea94463af7580d612dcc2d635cb1a4d7",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "20",
+   "arm": "full",
+   "seed": 43,
+   "evaluation_version": 1,
+   "evaluation_record": "kcse_full_evaluation_v1/results/slot_73_task_73_full_seed43_bug_20_job_2922/evaluation.json",
+   "record_sha256": "92902ae96b046e02783fd5fb5e0dfb75533129b9812de66a7cf0919652f25254",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "21",
+   "arm": "full",
+   "seed": 43,
+   "evaluation_version": 1,
+   "evaluation_record": "kcse_full_evaluation_v1/results/slot_79_task_79_full_seed43_bug_21_job_2929/evaluation.json",
+   "record_sha256": "0d20accfbe5d8998f6ed47f9f257dc8610c9ad29e27b4aa11d44ee15d3baea2e",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "22",
+   "arm": "full",
+   "seed": 43,
+   "evaluation_version": 1,
+   "evaluation_record": "kcse_full_evaluation_v1/results/slot_85_task_85_full_seed43_bug_22_job_2935/evaluation.json",
+   "record_sha256": "c76f35d38ffaa954ad61c6298175c088df7e6c4678ca032983128a6c0f56fa5f",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "23",
+   "arm": "full",
+   "seed": 43,
+   "evaluation_version": 1,
+   "evaluation_record": "kcse_full_evaluation_v1/results/slot_91_task_91_full_seed43_bug_23_job_2942/evaluation.json",
+   "record_sha256": "e0bb85666195b1dde919dd67102f6020a6c0c3a9ad79f1fcad76d2578b98a4c5",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "24",
+   "arm": "full",
+   "seed": 43,
+   "evaluation_version": 4,
+   "evaluation_record": "kcse_full_evaluation_v4/results/batch_32_full_seed43_bugs_24-26-27-28_job_3090/evaluation.json",
+   "record_sha256": "aaed92dee710a4038283a23edb57434c2fba997a56b3dd7f545271415ebf4938",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "26",
+   "arm": "full",
+   "seed": 43,
+   "evaluation_version": 4,
+   "evaluation_record": "kcse_full_evaluation_v4/results/batch_32_full_seed43_bugs_24-26-27-28_job_3090/evaluation.json",
+   "record_sha256": "aaed92dee710a4038283a23edb57434c2fba997a56b3dd7f545271415ebf4938",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "27",
+   "arm": "full",
+   "seed": 43,
+   "evaluation_version": 4,
+   "evaluation_record": "kcse_full_evaluation_v4/results/batch_32_full_seed43_bugs_24-26-27-28_job_3090/evaluation.json",
+   "record_sha256": "aaed92dee710a4038283a23edb57434c2fba997a56b3dd7f545271415ebf4938",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "28",
+   "arm": "full",
+   "seed": 43,
+   "evaluation_version": 4,
+   "evaluation_record": "kcse_full_evaluation_v4/results/batch_32_full_seed43_bugs_24-26-27-28_job_3090/evaluation.json",
+   "record_sha256": "aaed92dee710a4038283a23edb57434c2fba997a56b3dd7f545271415ebf4938",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "29",
+   "arm": "full",
+   "seed": 43,
+   "evaluation_version": 4,
+   "evaluation_record": "kcse_full_evaluation_v4/results/batch_25_full_seed43_bugs_29_job_3070/evaluation.json",
+   "record_sha256": "807f6a8a32c58614c49c9eaf78cf5f351c604f30e971b37a5cc46b6bd8533679",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "30",
+   "arm": "full",
+   "seed": 43,
+   "evaluation_version": 4,
+   "evaluation_record": "kcse_full_evaluation_v4/results/batch_26_full_seed43_bugs_30_job_3071/evaluation.json",
+   "record_sha256": "fa2014d7ea1b565c145c2313f3289ac92afaac7c9765b5d6d11b867b4ab87573",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "31",
+   "arm": "full",
+   "seed": 43,
+   "evaluation_version": 4,
+   "evaluation_record": "kcse_full_evaluation_v4/results/batch_27_full_seed43_bugs_31_job_3072/evaluation.json",
+   "record_sha256": "90636619378b0505a39b5e223c8654bf0c2a9fdf15e3fd0e4c9bc9c9cdbfad93",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "32",
+   "arm": "full",
+   "seed": 43,
+   "evaluation_version": 4,
+   "evaluation_record": "kcse_full_evaluation_v4/results/batch_28_full_seed43_bugs_32_job_3073/evaluation.json",
+   "record_sha256": "c9505f90de4aefefdd4e2233fe480f97ffdbd971e24ec23ef0cb408f2573c54c",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "33",
+   "arm": "full",
+   "seed": 43,
+   "evaluation_version": 4,
+   "evaluation_record": "kcse_full_evaluation_v4/results/batch_29_full_seed43_bugs_33_job_3079/evaluation.json",
+   "record_sha256": "97397acbcee22356f80421b4f4059f1638b8916e925c33b45a510ce0e50193be",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "35",
+   "arm": "full",
+   "seed": 43,
+   "evaluation_version": 4,
+   "evaluation_record": "kcse_full_evaluation_v4/results/batch_30_full_seed43_bugs_35_job_3086/evaluation.json",
+   "record_sha256": "9029399cdab21773b3bca6055e4678d41ca3805834fb94dcdd6ff4c469167518",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "36",
+   "arm": "full",
+   "seed": 43,
+   "evaluation_version": 4,
+   "evaluation_record": "kcse_full_evaluation_v4/results/batch_31_full_seed43_bugs_36_job_3087/evaluation.json",
+   "record_sha256": "da3d13df5153b9571d438b2e254d3b5d7307024f3f29fe598b9a04dcf287bd6d",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "37",
+   "arm": "full",
+   "seed": 43,
+   "evaluation_version": 5,
+   "evaluation_record": "kcse_full_evaluation_v5/results/batch_28_full_seed43_bugs_37_job_3190/evaluation.json",
+   "record_sha256": "b9d71fe18a63f0a2490bbecf9e327cca51f96f17356c0e077a38ab66684f8fda",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "38",
+   "arm": "full",
+   "seed": 43,
+   "evaluation_version": 5,
+   "evaluation_record": "kcse_full_evaluation_v5/results/batch_29_full_seed43_bugs_38_job_3191/evaluation.json",
+   "record_sha256": "cd3ef591b197811c5b5604a4640a89b05c9547c3f73c4ad225d367e3b2c91197",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "41",
+   "arm": "full",
+   "seed": 43,
+   "evaluation_version": 5,
+   "evaluation_record": "kcse_full_evaluation_v5/results/batch_30_full_seed43_bugs_41_job_3192/evaluation.json",
+   "record_sha256": "44cfb4d56dc4e4ddaa8f5785830ccfcb6ed85066682a763fde9e4ca69f37b905",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "42",
+   "arm": "full",
+   "seed": 43,
+   "evaluation_version": 5,
+   "evaluation_record": "kcse_full_evaluation_v5/results/batch_31_full_seed43_bugs_42_job_3193/evaluation.json",
+   "record_sha256": "149e9b277b859745c8ee8d31f546299697054be93501e4374b3dac0b38a6bc39",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "43",
+   "arm": "full",
+   "seed": 43,
+   "evaluation_version": 5,
+   "evaluation_record": "kcse_full_evaluation_v5/results/batch_32_full_seed43_bugs_43_job_3194/evaluation.json",
+   "record_sha256": "3877809e2b2d25a612e846d8b07215b48f04adc04833563f614e2148a3f05d4a",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "44",
+   "arm": "full",
+   "seed": 43,
+   "evaluation_version": 5,
+   "evaluation_record": "kcse_full_evaluation_v5/results/batch_33_full_seed43_bugs_44_job_3195/evaluation.json",
+   "record_sha256": "1c31401d93e9e8520d6ecdd9138a510052a4fb94974eb65d780949424ec4860c",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "45",
+   "arm": "full",
+   "seed": 43,
+   "evaluation_version": 5,
+   "evaluation_record": "kcse_full_evaluation_v5/results/batch_34_full_seed43_bugs_45_job_3196/evaluation.json",
+   "record_sha256": "79a647ddba26f0477b9f44e315fb30772053a6f7564cfc2ab5526f74a97bb633",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "47",
+   "arm": "full",
+   "seed": 43,
+   "evaluation_version": 4,
+   "evaluation_record": "kcse_full_evaluation_v4/results/batch_33_full_seed43_bugs_47-48-49-50_job_3092/evaluation.json",
+   "record_sha256": "34fff456d6c890e823eca8f34e7a3006d58bbb0b2ada2c4455a76df39190bf5e",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "48",
+   "arm": "full",
+   "seed": 43,
+   "evaluation_version": 4,
+   "evaluation_record": "kcse_full_evaluation_v4/results/batch_33_full_seed43_bugs_47-48-49-50_job_3092/evaluation.json",
+   "record_sha256": "34fff456d6c890e823eca8f34e7a3006d58bbb0b2ada2c4455a76df39190bf5e",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "49",
+   "arm": "full",
+   "seed": 43,
+   "evaluation_version": 4,
+   "evaluation_record": "kcse_full_evaluation_v4/results/batch_33_full_seed43_bugs_47-48-49-50_job_3092/evaluation.json",
+   "record_sha256": "34fff456d6c890e823eca8f34e7a3006d58bbb0b2ada2c4455a76df39190bf5e",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "50",
+   "arm": "full",
+   "seed": 43,
+   "evaluation_version": 4,
+   "evaluation_record": "kcse_full_evaluation_v4/results/batch_33_full_seed43_bugs_47-48-49-50_job_3092/evaluation.json",
+   "record_sha256": "34fff456d6c890e823eca8f34e7a3006d58bbb0b2ada2c4455a76df39190bf5e",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "51",
+   "arm": "full",
+   "seed": 43,
+   "evaluation_version": 4,
+   "evaluation_record": "kcse_full_evaluation_v4/results/batch_34_full_seed43_bugs_51-52-53-60_job_3093/evaluation.json",
+   "record_sha256": "881b19443009ef319e21c60be176ee431dd84268c7fd54a2823ee3ad77052067",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "52",
+   "arm": "full",
+   "seed": 43,
+   "evaluation_version": 4,
+   "evaluation_record": "kcse_full_evaluation_v4/results/batch_34_full_seed43_bugs_51-52-53-60_job_3093/evaluation.json",
+   "record_sha256": "881b19443009ef319e21c60be176ee431dd84268c7fd54a2823ee3ad77052067",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "53",
+   "arm": "full",
+   "seed": 43,
+   "evaluation_version": 4,
+   "evaluation_record": "kcse_full_evaluation_v4/results/batch_34_full_seed43_bugs_51-52-53-60_job_3093/evaluation.json",
+   "record_sha256": "881b19443009ef319e21c60be176ee431dd84268c7fd54a2823ee3ad77052067",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "60",
+   "arm": "full",
+   "seed": 43,
+   "evaluation_version": 4,
+   "evaluation_record": "kcse_full_evaluation_v4/results/batch_34_full_seed43_bugs_51-52-53-60_job_3093/evaluation.json",
+   "record_sha256": "881b19443009ef319e21c60be176ee431dd84268c7fd54a2823ee3ad77052067",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "68",
+   "arm": "full",
+   "seed": 43,
+   "evaluation_version": 4,
+   "evaluation_record": "kcse_full_evaluation_v4/results/batch_35_full_seed43_bugs_68_job_3094/evaluation.json",
+   "record_sha256": "eefb3e7e9a99dd685cdcca0e8f6329d7a9047f336e9399bcbda0e0a3855225e9",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "2",
+   "arm": "full",
+   "seed": 44,
+   "evaluation_version": 1,
+   "evaluation_record": "kcse_full_evaluation_v1/results/slot_2_task_2_full_seed44_bug_2_job_2825/evaluation.json",
+   "record_sha256": "b95862f850e5968d4f4dad3b3df8433dbd10cb19a5a38472337a8ebcfdab6213",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "3",
+   "arm": "full",
+   "seed": 44,
+   "evaluation_version": 1,
+   "evaluation_record": "kcse_full_evaluation_v1/results/slot_8_task_8_full_seed44_bug_3_job_2832/evaluation.json",
+   "record_sha256": "c0d53a52f9b190ace8b386a723838732970a4f58720e8a0b840626779eb0a71c",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "4",
+   "arm": "full",
+   "seed": 44,
+   "evaluation_version": 1,
+   "evaluation_record": "kcse_full_evaluation_v1/results/slot_14_task_14_full_seed44_bug_4_job_2839/evaluation.json",
+   "record_sha256": "679d225c2d46547f8b293523c7ab04cf797cc4107c9f9f36a32786333a4683b1",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "5",
+   "arm": "full",
+   "seed": 44,
+   "evaluation_version": 1,
+   "evaluation_record": "kcse_full_evaluation_v1/results/slot_20_task_20_full_seed44_bug_5_job_2845/evaluation.json",
+   "record_sha256": "89ca3ff8e15293a6b4982cecd978288fd481049ac4e8b091d48a18ec035ca021",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "6",
+   "arm": "full",
+   "seed": 44,
+   "evaluation_version": 1,
+   "evaluation_record": "kcse_full_evaluation_v1/results/slot_26_task_26_full_seed44_bug_6_job_2853/evaluation.json",
+   "record_sha256": "f3d18e76c94a525ae9b3233b61e30b9f92a40e1f17cb6bbc20525ad37622118a",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "7",
+   "arm": "full",
+   "seed": 44,
+   "evaluation_version": 1,
+   "evaluation_record": "kcse_full_evaluation_v1/results/slot_32_task_32_full_seed44_bug_7_job_2861/evaluation.json",
+   "record_sha256": "7bb00b93751d39973a7a2d0dc69bf428a6d85e81c9c335dfe3272df7a2105b4b",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "8",
+   "arm": "full",
+   "seed": 44,
+   "evaluation_version": 1,
+   "evaluation_record": "kcse_full_evaluation_v1/results/slot_38_task_38_full_seed44_bug_8_job_2869/evaluation.json",
+   "record_sha256": "bbd8c26c3a86af4f8a3b03dd6f405fe774b934cb9ef622c39a3e40d39f36ce3f",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "9",
+   "arm": "full",
+   "seed": 44,
+   "evaluation_version": 1,
+   "evaluation_record": "kcse_full_evaluation_v1/results/slot_44_task_44_full_seed44_bug_9_job_2877/evaluation.json",
+   "record_sha256": "6beb4ca2ad638e25fd4a087606230d5c750e64b25c1fdf4f24a0790a042584fb",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "10",
+   "arm": "full",
+   "seed": 44,
+   "evaluation_version": 1,
+   "evaluation_record": "kcse_full_evaluation_v1/results/slot_50_task_50_full_seed44_bug_10_job_2889/evaluation.json",
+   "record_sha256": "ca1a964eb0e9881fca26aa05c689cc4cb4cc9570477ed4c4cbbb1803f95fe641",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "11",
+   "arm": "full",
+   "seed": 44,
+   "evaluation_version": 1,
+   "evaluation_record": "kcse_full_evaluation_v1/results/slot_56_task_56_full_seed44_bug_11_job_2902/evaluation.json",
+   "record_sha256": "f31ef74c7a69fbd2df09eb3319e82775c3bddbe36f92abd0fbfcf762329806b3",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "16",
+   "arm": "full",
+   "seed": 44,
+   "evaluation_version": 1,
+   "evaluation_record": "kcse_full_evaluation_v1/results/slot_62_task_62_full_seed44_bug_16_job_2910/evaluation.json",
+   "record_sha256": "1d50f85640d9b6b59644ea880ab09526560bd4d0108a2c87c4faacf179fac83e",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "18",
+   "arm": "full",
+   "seed": 44,
+   "evaluation_version": 1,
+   "evaluation_record": "kcse_full_evaluation_v1/results/slot_68_task_68_full_seed44_bug_18_job_2917/evaluation.json",
+   "record_sha256": "1a8104d6ded9b4668f3f3ae88bd27a4810d639d73b1fa1056aa09ca6ad770d27",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "20",
+   "arm": "full",
+   "seed": 44,
+   "evaluation_version": 1,
+   "evaluation_record": "kcse_full_evaluation_v1/results/slot_74_task_74_full_seed44_bug_20_job_2924/evaluation.json",
+   "record_sha256": "6d51808169043907b94291cb1c38f4d4bcad9ce90c404ce2f0d64c107b75e8f0",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "21",
+   "arm": "full",
+   "seed": 44,
+   "evaluation_version": 1,
+   "evaluation_record": "kcse_full_evaluation_v1/results/slot_80_task_80_full_seed44_bug_21_job_2930/evaluation.json",
+   "record_sha256": "1e51ce1c6ce2537e87c6684c8aff0cca4db7b21e3194b10cebf388e6f4df68e9",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "22",
+   "arm": "full",
+   "seed": 44,
+   "evaluation_version": 1,
+   "evaluation_record": "kcse_full_evaluation_v1/results/slot_86_task_86_full_seed44_bug_22_job_2937/evaluation.json",
+   "record_sha256": "5781c5de2a74d10babdc3b107b97294403f4d2c9769259a287b9295285f9e2ad",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "23",
+   "arm": "full",
+   "seed": 44,
+   "evaluation_version": 1,
+   "evaluation_record": "kcse_full_evaluation_v1/results/slot_92_task_92_full_seed44_bug_23_job_2943/evaluation.json",
+   "record_sha256": "652f2831f97856a1988e97ccab4868ba67b998bc505f1fe1a825ed8fdced105e",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "24",
+   "arm": "full",
+   "seed": 44,
+   "evaluation_version": 4,
+   "evaluation_record": "kcse_full_evaluation_v4/results/batch_43_full_seed44_bugs_24-26-27-28_job_3106/evaluation.json",
+   "record_sha256": "2e56e78bc9035f76f8fb456bd1290f512490320343cc4383b31f9890d57ea4a8",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "26",
+   "arm": "full",
+   "seed": 44,
+   "evaluation_version": 4,
+   "evaluation_record": "kcse_full_evaluation_v4/results/batch_43_full_seed44_bugs_24-26-27-28_job_3106/evaluation.json",
+   "record_sha256": "2e56e78bc9035f76f8fb456bd1290f512490320343cc4383b31f9890d57ea4a8",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "27",
+   "arm": "full",
+   "seed": 44,
+   "evaluation_version": 4,
+   "evaluation_record": "kcse_full_evaluation_v4/results/batch_43_full_seed44_bugs_24-26-27-28_job_3106/evaluation.json",
+   "record_sha256": "2e56e78bc9035f76f8fb456bd1290f512490320343cc4383b31f9890d57ea4a8",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "28",
+   "arm": "full",
+   "seed": 44,
+   "evaluation_version": 4,
+   "evaluation_record": "kcse_full_evaluation_v4/results/batch_43_full_seed44_bugs_24-26-27-28_job_3106/evaluation.json",
+   "record_sha256": "2e56e78bc9035f76f8fb456bd1290f512490320343cc4383b31f9890d57ea4a8",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "29",
+   "arm": "full",
+   "seed": 44,
+   "evaluation_version": 4,
+   "evaluation_record": "kcse_full_evaluation_v4/results/batch_36_full_seed44_bugs_29_job_3096/evaluation.json",
+   "record_sha256": "c71efbbfb0906bab589473f0e627a6e2e0fb02080a21b81ac36c44146cd4042e",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "30",
+   "arm": "full",
+   "seed": 44,
+   "evaluation_version": 4,
+   "evaluation_record": "kcse_full_evaluation_v4/results/batch_37_full_seed44_bugs_30_job_3097/evaluation.json",
+   "record_sha256": "b367eea2ccf55e59317a9e10d1b5a1817778f0ef9ccf60d48d173c796225b09a",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "31",
+   "arm": "full",
+   "seed": 44,
+   "evaluation_version": 4,
+   "evaluation_record": "kcse_full_evaluation_v4/results/batch_38_full_seed44_bugs_31_job_3098/evaluation.json",
+   "record_sha256": "81e3bd2b6aa10e771e013562ba472caa5572867d88e67d4091ade503600990a6",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "32",
+   "arm": "full",
+   "seed": 44,
+   "evaluation_version": 4,
+   "evaluation_record": "kcse_full_evaluation_v4/results/batch_39_full_seed44_bugs_32_job_3064/evaluation.json",
+   "record_sha256": "f53aa0d1ae6dcb50d284ff841e38f10013d7f193f695172ccf84aeed2a2ed3c9",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "33",
+   "arm": "full",
+   "seed": 44,
+   "evaluation_version": 4,
+   "evaluation_record": "kcse_full_evaluation_v4/results/batch_40_full_seed44_bugs_33_job_3103/evaluation.json",
+   "record_sha256": "60a69d4360f04d7944dc4d94db67ce3ee6ad2d58d9c5c210546df3106cbb0554",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "35",
+   "arm": "full",
+   "seed": 44,
+   "evaluation_version": 4,
+   "evaluation_record": "kcse_full_evaluation_v4/results/batch_41_full_seed44_bugs_35_job_3104/evaluation.json",
+   "record_sha256": "5b5678eba961bddd2e66edd74f89d009b9f31d8402c8da7af1854c58e7d85eee",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "36",
+   "arm": "full",
+   "seed": 44,
+   "evaluation_version": 4,
+   "evaluation_record": "kcse_full_evaluation_v4/results/batch_42_full_seed44_bugs_36_job_3105/evaluation.json",
+   "record_sha256": "e876d86a1f0aeb5209ff4b5d92b51c99f00a16ec776d5bb91162fc207412c8e4",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "37",
+   "arm": "full",
+   "seed": 44,
+   "evaluation_version": 5,
+   "evaluation_record": "kcse_full_evaluation_v5/results/batch_35_full_seed44_bugs_37_job_3200/evaluation.json",
+   "record_sha256": "e3587122a44bab2c63b0b91514439be820bcea623c2e41e22da2b7cc77d8c5b3",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "38",
+   "arm": "full",
+   "seed": 44,
+   "evaluation_version": 5,
+   "evaluation_record": "kcse_full_evaluation_v5/results/batch_36_full_seed44_bugs_38_job_3202/evaluation.json",
+   "record_sha256": "754d9d0dda39717556aedad08d53b95c0adf231b36d3fedaa6c344e742844dd4",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "41",
+   "arm": "full",
+   "seed": 44,
+   "evaluation_version": 5,
+   "evaluation_record": "kcse_full_evaluation_v5/results/batch_37_full_seed44_bugs_41_job_3203/evaluation.json",
+   "record_sha256": "05260e2870a26c06b4ee8dec2066cc447b46e2437b5e599074176362b17b41b7",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "42",
+   "arm": "full",
+   "seed": 44,
+   "evaluation_version": 5,
+   "evaluation_record": "kcse_full_evaluation_v5/results/batch_38_full_seed44_bugs_42_job_3204/evaluation.json",
+   "record_sha256": "88ae10943f98a5a9130b0af8cfc1bf46496fc7a20180648d49dd7a324e2a68f2",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "43",
+   "arm": "full",
+   "seed": 44,
+   "evaluation_version": 5,
+   "evaluation_record": "kcse_full_evaluation_v5/results/batch_39_full_seed44_bugs_43_job_3180/evaluation.json",
+   "record_sha256": "aa223aa1a09caf4ef61826dbc02198e4d762aeadd8727cda0c8339de9ce071cb",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "44",
+   "arm": "full",
+   "seed": 44,
+   "evaluation_version": 5,
+   "evaluation_record": "kcse_full_evaluation_v5/results/batch_40_full_seed44_bugs_44_job_3212/evaluation.json",
+   "record_sha256": "be96c9cc18b409933bc20c3095e89453283e45a3bc9d6645eb358dfa6d4dec56",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "45",
+   "arm": "full",
+   "seed": 44,
+   "evaluation_version": 5,
+   "evaluation_record": "kcse_full_evaluation_v5/results/batch_41_full_seed44_bugs_45_job_3211/evaluation.json",
+   "record_sha256": "916b6e747f594fc1eb23177787dbbfd60019f997e4465226c43ac3c88bb8ec7a",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "47",
+   "arm": "full",
+   "seed": 44,
+   "evaluation_version": 4,
+   "evaluation_record": "kcse_full_evaluation_v4/results/batch_44_full_seed44_bugs_47-48-49-50_job_3107/evaluation.json",
+   "record_sha256": "6f7d53f2dc162c5179e462322eaa9265ff231aae470d00c124b71bc8de442c13",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "48",
+   "arm": "full",
+   "seed": 44,
+   "evaluation_version": 4,
+   "evaluation_record": "kcse_full_evaluation_v4/results/batch_44_full_seed44_bugs_47-48-49-50_job_3107/evaluation.json",
+   "record_sha256": "6f7d53f2dc162c5179e462322eaa9265ff231aae470d00c124b71bc8de442c13",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "49",
+   "arm": "full",
+   "seed": 44,
+   "evaluation_version": 4,
+   "evaluation_record": "kcse_full_evaluation_v4/results/batch_44_full_seed44_bugs_47-48-49-50_job_3107/evaluation.json",
+   "record_sha256": "6f7d53f2dc162c5179e462322eaa9265ff231aae470d00c124b71bc8de442c13",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "50",
+   "arm": "full",
+   "seed": 44,
+   "evaluation_version": 4,
+   "evaluation_record": "kcse_full_evaluation_v4/results/batch_44_full_seed44_bugs_47-48-49-50_job_3107/evaluation.json",
+   "record_sha256": "6f7d53f2dc162c5179e462322eaa9265ff231aae470d00c124b71bc8de442c13",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "51",
+   "arm": "full",
+   "seed": 44,
+   "evaluation_version": 4,
+   "evaluation_record": "kcse_full_evaluation_v4/results/batch_45_full_seed44_bugs_51-52-53-60_job_3108/evaluation.json",
+   "record_sha256": "57dab7990b6a341643fab5e3f3086ffb1039947f99bea245c8840bdb91615aa8",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "52",
+   "arm": "full",
+   "seed": 44,
+   "evaluation_version": 4,
+   "evaluation_record": "kcse_full_evaluation_v4/results/batch_45_full_seed44_bugs_51-52-53-60_job_3108/evaluation.json",
+   "record_sha256": "57dab7990b6a341643fab5e3f3086ffb1039947f99bea245c8840bdb91615aa8",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "53",
+   "arm": "full",
+   "seed": 44,
+   "evaluation_version": 4,
+   "evaluation_record": "kcse_full_evaluation_v4/results/batch_45_full_seed44_bugs_51-52-53-60_job_3108/evaluation.json",
+   "record_sha256": "57dab7990b6a341643fab5e3f3086ffb1039947f99bea245c8840bdb91615aa8",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "60",
+   "arm": "full",
+   "seed": 44,
+   "evaluation_version": 4,
+   "evaluation_record": "kcse_full_evaluation_v4/results/batch_45_full_seed44_bugs_51-52-53-60_job_3108/evaluation.json",
+   "record_sha256": "57dab7990b6a341643fab5e3f3086ffb1039947f99bea245c8840bdb91615aa8",
+   "superseded_count": 0
+  },
+  {
+   "bug_id": "68",
+   "arm": "full",
+   "seed": 44,
+   "evaluation_version": 4,
+   "evaluation_record": "kcse_full_evaluation_v4/results/batch_46_full_seed44_bugs_68_job_3102/evaluation.json",
+   "record_sha256": "79158cb5cc8d62028a50bfae08488dbcba08b05020c935768312d401b05f9f84",
+   "superseded_count": 0
+  }
+ ],
+ "generation_logs": [
+  {
+   "run_dir": "task_0_bug_2_full_seed_42_job_2470",
+   "model_inputs_sha256": "8881be5754d997663491b6005aa946f7ad679596f791573cd26be42adda4abb2"
+  },
+  {
+   "run_dir": "task_100_bug_24_base_seed_43_job_2589",
+   "model_inputs_sha256": "1095e9a4e319aa7c6c9a968dcf44a294b3ada71b80f000c9d2985d38d8ca7675"
+  },
+  {
+   "run_dir": "task_101_bug_24_base_seed_44_job_2590",
+   "model_inputs_sha256": "c4e4b297a6209a699e897fdfb6a3f112c95e9312dc93fd8666b8287083e03852"
+  },
+  {
+   "run_dir": "task_102_bug_26_full_seed_42_job_2591",
+   "model_inputs_sha256": "ca8d3b675f126480e3ea844d2cd92cf5fa99d702ce1fee3c40fb5f363d0fe83a"
+  },
+  {
+   "run_dir": "task_103_bug_26_full_seed_43_job_2592",
+   "model_inputs_sha256": "c61143a53936dd898f52edc4739eaf00b1c01c3dcc3e43fb89a1954154501fa2"
+  },
+  {
+   "run_dir": "task_104_bug_26_full_seed_44_job_2593",
+   "model_inputs_sha256": "144a956ce3645bfef3c80d36709bc9b5e21439a3c94a712e1b556cc619b7aa5e"
+  },
+  {
+   "run_dir": "task_105_bug_26_base_seed_42_job_2594",
+   "model_inputs_sha256": "ae571c9e76c8eb22cd5f5c20dc73c5572d508d3b96580f162a69a9464f63e519"
+  },
+  {
+   "run_dir": "task_106_bug_26_base_seed_43_job_2595",
+   "model_inputs_sha256": "ae571c9e76c8eb22cd5f5c20dc73c5572d508d3b96580f162a69a9464f63e519"
+  },
+  {
+   "run_dir": "task_107_bug_26_base_seed_44_job_2597",
+   "model_inputs_sha256": "ae571c9e76c8eb22cd5f5c20dc73c5572d508d3b96580f162a69a9464f63e519"
+  },
+  {
+   "run_dir": "task_108_bug_27_full_seed_42_job_2598",
+   "model_inputs_sha256": "ddfc8ac846f344e98305191ce14c040ce5bd48eee43f5bdc23c14f78f99d93a7"
+  },
+  {
+   "run_dir": "task_109_bug_27_full_seed_43_job_2599",
+   "model_inputs_sha256": "bda2504f06221a5604434897f9000dedbff99a5f4594b8734ddc82e9e8857fad"
+  },
+  {
+   "run_dir": "task_10_bug_3_base_seed_43_job_2482",
+   "model_inputs_sha256": "907ddf03873406bc166383b57efbbcd6c8c360779f4bce455c1838ff8d501ac0"
+  },
+  {
+   "run_dir": "task_110_bug_27_full_seed_44_job_2600",
+   "model_inputs_sha256": "e4ec807cd787000243f282a28b30074b3bc788d8e608099fe8259534d81d21eb"
+  },
+  {
+   "run_dir": "task_111_bug_27_base_seed_42_job_2601",
+   "model_inputs_sha256": "1c17bd4ca871e7e76a170b20d067014eb02974d149e51feb69ed0991e58cb8bd"
+  },
+  {
+   "run_dir": "task_112_bug_27_base_seed_43_job_2602",
+   "model_inputs_sha256": "1c17bd4ca871e7e76a170b20d067014eb02974d149e51feb69ed0991e58cb8bd"
+  },
+  {
+   "run_dir": "task_113_bug_27_base_seed_44_job_2604",
+   "model_inputs_sha256": "1c17bd4ca871e7e76a170b20d067014eb02974d149e51feb69ed0991e58cb8bd"
+  },
+  {
+   "run_dir": "task_114_bug_28_full_seed_42_job_2606",
+   "model_inputs_sha256": "2b64d04c2582680a01b9c63a7201573a702bc1f9da829b948a9aae31e178aa1c"
+  },
+  {
+   "run_dir": "task_115_bug_28_full_seed_43_job_2607",
+   "model_inputs_sha256": "1101c6f9249cf1793ea8dc861ebe55943dacb2983b2eb43503552f16e9e2f692"
+  },
+  {
+   "run_dir": "task_116_bug_28_full_seed_44_job_2608",
+   "model_inputs_sha256": "ef8b753808ac701685039b4614b308825f16ebcc40128a7cf2e0bf6db4fcc979"
+  },
+  {
+   "run_dir": "task_117_bug_28_base_seed_42_job_2610",
+   "model_inputs_sha256": "656bda16ed6ee1b95d571db670cd1e5b884c42b8451a9d869a41b70b14635e5e"
+  },
+  {
+   "run_dir": "task_118_bug_28_base_seed_43_job_2563",
+   "model_inputs_sha256": "0c1262e0b514bd2736452eeb1b9ba335d7daf25db014a211ddd44f4efe4933bf"
+  },
+  {
+   "run_dir": "task_119_bug_28_base_seed_44_job_2613",
+   "model_inputs_sha256": "e7094f254d902b174a32897707555d0f2f0f099ed62e7a594e822d527647200d"
+  },
+  {
+   "run_dir": "task_11_bug_3_base_seed_44_job_2483",
+   "model_inputs_sha256": "568422babb2438347e1bc6728dd70d9e96af25eecd3c6c18e5ccb405ed743b5d"
+  },
+  {
+   "run_dir": "task_120_bug_29_full_seed_42_job_2614",
+   "model_inputs_sha256": "0043d3b89d089046f9911cee34af32668d3a47c9c449b6a6c711c6365a9e29b0"
+  },
+  {
+   "run_dir": "task_121_bug_29_full_seed_43_job_2615",
+   "model_inputs_sha256": "128e97df3919fb255af0b359988fe990daae12130061fba6e087a8dd6ed255d9"
+  },
+  {
+   "run_dir": "task_122_bug_29_full_seed_44_job_2616",
+   "model_inputs_sha256": "6efa3f63cded1f3fef264f281185f556aded4f6e028d04a25aae5d6fe05ee39f"
+  },
+  {
+   "run_dir": "task_123_bug_29_base_seed_42_job_2621",
+   "model_inputs_sha256": "2c36bcbf15111cd0daea38d52af19706d894f3a3ba31f9380f311253ed8da5e3"
+  },
+  {
+   "run_dir": "task_124_bug_29_base_seed_43_job_2622",
+   "model_inputs_sha256": "91e4c3cf273bd67d073848c47f3636c7b92f2f4aa175210fa56990db5cbc71fd"
+  },
+  {
+   "run_dir": "task_125_bug_29_base_seed_44_job_2623",
+   "model_inputs_sha256": "df08fbb9d6d9d0663b0afe85306d3f3b89f926b09d9cf1f8c21f942064e3f0d0"
+  },
+  {
+   "run_dir": "task_126_bug_30_full_seed_42_job_2624",
+   "model_inputs_sha256": "ccfaa6a56c047bba35aa02d81b55be3649a35e9528718810fe442022115d82ea"
+  },
+  {
+   "run_dir": "task_127_bug_30_full_seed_43_job_2625",
+   "model_inputs_sha256": "cc730be35cf6ee6e9939fb91b3b9c7456fa4d5daba90dcd35da13c978b0b02e6"
+  },
+  {
+   "run_dir": "task_128_bug_30_full_seed_44_job_2626",
+   "model_inputs_sha256": "29c74a8ffa73c3bbbde233b979a4c32f483e036bc1d1448e6549fb4c8827e774"
+  },
+  {
+   "run_dir": "task_129_bug_30_base_seed_42_job_2627",
+   "model_inputs_sha256": "28ca6620f4b71a1bb9a9a5ffea0cb740de3dbab9e29b8a3f9529a35352c236f3"
+  },
+  {
+   "run_dir": "task_12_bug_4_full_seed_42_job_2485",
+   "model_inputs_sha256": "eba7c44ea46e451212e61bac13799a7d01c8748823db46f9562056831147726c"
+  },
+  {
+   "run_dir": "task_130_bug_30_base_seed_43_job_2628",
+   "model_inputs_sha256": "5af465bf70e63e5647e0896c74de7aa038faf0e130b847e3d3ebb81dc5ed97cd"
+  },
+  {
+   "run_dir": "task_131_bug_30_base_seed_44_job_2633",
+   "model_inputs_sha256": "27f45cd94b199230f585a8cf603c5b12ba22b3a49d989bed2014dec8e4ce9b5e"
+  },
+  {
+   "run_dir": "task_132_bug_31_full_seed_42_job_2634",
+   "model_inputs_sha256": "de2f6f6dfd27967e47293d462a87f8685d53969e3f83de65d239875b7bb15cac"
+  },
+  {
+   "run_dir": "task_133_bug_31_full_seed_43_job_2635",
+   "model_inputs_sha256": "9731307f16b0207668f7ed50c70d488ea3ab5c73a9db4f7aed29cc65651bccc5"
+  },
+  {
+   "run_dir": "task_134_bug_31_full_seed_44_job_2638",
+   "model_inputs_sha256": "a245ed0c476c91aa27f9c52c8af82a8ea408b12b6ab9246df5c1eec9eee5c822"
+  },
+  {
+   "run_dir": "task_135_bug_31_base_seed_42_job_2640",
+   "model_inputs_sha256": "38533c814804d410848a3b4f16b8f8e8e1d2fae431ff9c2029836cf3cb96a84b"
+  },
+  {
+   "run_dir": "task_136_bug_31_base_seed_43_job_2643",
+   "model_inputs_sha256": "f0f84fbae4d36bde59f4abb2618694e7846d850dee7c036abc8ae1be2c4ffe81"
+  },
+  {
+   "run_dir": "task_137_bug_31_base_seed_44_job_2644",
+   "model_inputs_sha256": "f0f84fbae4d36bde59f4abb2618694e7846d850dee7c036abc8ae1be2c4ffe81"
+  },
+  {
+   "run_dir": "task_138_bug_32_full_seed_42_job_2645",
+   "model_inputs_sha256": "89ae31c5757df83fd603e4db7b957ed32b6aa62a8690272ec791181dea61acba"
+  },
+  {
+   "run_dir": "task_139_bug_32_full_seed_43_job_2646",
+   "model_inputs_sha256": "b311c74fd2e342d8582e331c3f591ea0e37802676002fd1e9a6b87c64916160b"
+  },
+  {
+   "run_dir": "task_13_bug_4_full_seed_43_job_2486",
+   "model_inputs_sha256": "7bc6c557aa16151c0e96ec809e403874aeb94d8f302b76e92d5c54554cc63f8a"
+  },
+  {
+   "run_dir": "task_140_bug_32_full_seed_44_job_2648",
+   "model_inputs_sha256": "bbeb901ca5338bf5ddc9ac124d336a061c6beca492ef037d5e632810016ae5cd"
+  },
+  {
+   "run_dir": "task_141_bug_32_base_seed_42_job_2649",
+   "model_inputs_sha256": "6dce59efd91988ccfb95d2dba65c13748cb1ba491860b480789b1631bcad4a88"
+  },
+  {
+   "run_dir": "task_142_bug_32_base_seed_43_job_2650",
+   "model_inputs_sha256": "7d62529700c2183326eda16daacffc5ea744657677fcb4e06593dd22adf29e46"
+  },
+  {
+   "run_dir": "task_143_bug_32_base_seed_44_job_2652",
+   "model_inputs_sha256": "1a6db2066ae313f28d86506a30277744a8cfe884691d3dd13d0a9d6052a7cfba"
+  },
+  {
+   "run_dir": "task_144_bug_33_full_seed_42_job_2653",
+   "model_inputs_sha256": "91d29351d65117cabe3fc4067791e75d9bd33eff70b8bdc9c9f6364a799abfb5"
+  },
+  {
+   "run_dir": "task_145_bug_33_full_seed_43_job_2654",
+   "model_inputs_sha256": "7e9e3157bcc8c60831149da068a6e717c6b5c4e18526241c3fc89b4d8500a9d9"
+  },
+  {
+   "run_dir": "task_146_bug_33_full_seed_44_job_2656",
+   "model_inputs_sha256": "f3f983e3fa4f2589184b46a4548f9bcb35c9e1819cdc2696ddc3e8da18363f28"
+  },
+  {
+   "run_dir": "task_147_bug_33_base_seed_42_job_2657",
+   "model_inputs_sha256": "d1fba2ebf00d27a4686273e8996ce67a55444a523c9d8bb138173859a562cba2"
+  },
+  {
+   "run_dir": "task_148_bug_33_base_seed_43_job_2659",
+   "model_inputs_sha256": "d1fba2ebf00d27a4686273e8996ce67a55444a523c9d8bb138173859a562cba2"
+  },
+  {
+   "run_dir": "task_149_bug_33_base_seed_44_job_2660",
+   "model_inputs_sha256": "d1fba2ebf00d27a4686273e8996ce67a55444a523c9d8bb138173859a562cba2"
+  },
+  {
+   "run_dir": "task_14_bug_4_full_seed_44_job_2488",
+   "model_inputs_sha256": "97fcf567cab8141cd17f0a4d9f0c163e2c41369ad8b2ae23e5a435608e81ff6e"
+  },
+  {
+   "run_dir": "task_150_bug_35_full_seed_42_job_2661",
+   "model_inputs_sha256": "64ce670ad5b8975909fe1949631ef659d0e0b516987ca90edccef1cf1fea0895"
+  },
+  {
+   "run_dir": "task_151_bug_35_full_seed_43_job_2662",
+   "model_inputs_sha256": "eb4854b8f9a5fcc8fc1ba5d26d1469a1927ad12b39b3247e720ef2d46e952faf"
+  },
+  {
+   "run_dir": "task_152_bug_35_full_seed_44_job_2663",
+   "model_inputs_sha256": "573bc89215f1e35ce3c0e06ba0537547f21854028e61a17ada674e6f57fa477b"
+  },
+  {
+   "run_dir": "task_153_bug_35_base_seed_42_job_2664",
+   "model_inputs_sha256": "1d4565221a2eab440a72bb21532b2c55b473feec78ffe724367835ba95e5c54e"
+  },
+  {
+   "run_dir": "task_154_bug_35_base_seed_43_job_2665",
+   "model_inputs_sha256": "1d4565221a2eab440a72bb21532b2c55b473feec78ffe724367835ba95e5c54e"
+  },
+  {
+   "run_dir": "task_155_bug_35_base_seed_44_job_2666",
+   "model_inputs_sha256": "1d4565221a2eab440a72bb21532b2c55b473feec78ffe724367835ba95e5c54e"
+  },
+  {
+   "run_dir": "task_156_bug_36_full_seed_42_job_2667",
+   "model_inputs_sha256": "49a45320e6a64a7cf06374c8fb17bfe817c921e8bf61c8a5d38d2ac5ba0fa256"
+  },
+  {
+   "run_dir": "task_157_bug_36_full_seed_43_job_2668",
+   "model_inputs_sha256": "ff0c6490ffaa6b81b976730fe5d426e057e956da39f99811b435d895837ac978"
+  },
+  {
+   "run_dir": "task_158_bug_36_full_seed_44_job_2612",
+   "model_inputs_sha256": "a70049db21b862c48022fd9587fac84e06e906f476f26b81591ee04ff813a848"
+  },
+  {
+   "run_dir": "task_159_bug_36_base_seed_42_job_2672",
+   "model_inputs_sha256": "99bd76e0b0b7f51c9f04913a32bb7a809f38c412ca191fffaf5abe1acae52e55"
+  },
+  {
+   "run_dir": "task_15_bug_4_base_seed_42_job_2489",
+   "model_inputs_sha256": "47e2d47f61f97b1694df84808c0d01a15765e0b7058cea204696813adf83bb83"
+  },
+  {
+   "run_dir": "task_160_bug_36_base_seed_43_job_2674",
+   "model_inputs_sha256": "6c5567a918b01c05334e8b66e2604b7b076c2fbee674ba0adbb33d3042490983"
+  },
+  {
+   "run_dir": "task_161_bug_36_base_seed_44_job_2675",
+   "model_inputs_sha256": "99bd76e0b0b7f51c9f04913a32bb7a809f38c412ca191fffaf5abe1acae52e55"
+  },
+  {
+   "run_dir": "task_162_bug_37_full_seed_42_job_2676",
+   "model_inputs_sha256": "6be3db3bc6863dd4b365f3b3675a90bc84e0b5f4e5acfc24a65f1f3d4891aa63"
+  },
+  {
+   "run_dir": "task_163_bug_37_full_seed_43_job_2677",
+   "model_inputs_sha256": "40851b754baa4f727f4812ba619c4b392b88e4dd8eefbe5bbb4a5cccfbd8b957"
+  },
+  {
+   "run_dir": "task_164_bug_37_full_seed_44_job_2678",
+   "model_inputs_sha256": "7735fbc33a4cf0bfa80d3582df090e28e43f9fad6af5f873255cf06a3df21d89"
+  },
+  {
+   "run_dir": "task_165_bug_37_base_seed_42_job_2679",
+   "model_inputs_sha256": "fcc03c5fa9e11652e50de5c741ab80cf4ac7c4ab7403c1e6ca35f698c4449ff4"
+  },
+  {
+   "run_dir": "task_166_bug_37_base_seed_43_job_2680",
+   "model_inputs_sha256": "d85d87e14ffff9d22c70b7300304d8cb78d28d99fae68ea4fa8f8e31d8ac1a35"
+  },
+  {
+   "run_dir": "task_167_bug_37_base_seed_44_job_2681",
+   "model_inputs_sha256": "ad8b0ef4f9671ff18ab1744d9da4da6de264bc4cc784beaa4915c699fcc9dba5"
+  },
+  {
+   "run_dir": "task_168_bug_38_full_seed_42_job_2682",
+   "model_inputs_sha256": "69177b6ba20cdab095aa3b4c321fcf130e9144f50199232933e6381afb84f343"
+  },
+  {
+   "run_dir": "task_169_bug_38_full_seed_43_job_2683",
+   "model_inputs_sha256": "1d29a6f7a9f682b32e5172ba0305fb46d678f8cd4e6453234f5680fc9f473797"
+  },
+  {
+   "run_dir": "task_16_bug_4_base_seed_43_job_2492",
+   "model_inputs_sha256": "eab449da2d06b26afaf6470b760338480f4662df25f8bf51dda8b06c0d809912"
+  },
+  {
+   "run_dir": "task_170_bug_38_full_seed_44_job_2684",
+   "model_inputs_sha256": "66dab50f763ac98bc67e8fe15533400d76510669ffb08302476e717db76cf711"
+  },
+  {
+   "run_dir": "task_171_bug_38_base_seed_42_job_2685",
+   "model_inputs_sha256": "4d2587e8b2187eb1d24916d8bf9d453d1752e160d10910b29a8a380a0904ab04"
+  },
+  {
+   "run_dir": "task_172_bug_38_base_seed_43_job_2686",
+   "model_inputs_sha256": "245575fa108b289932ef5b6c2e07bb6db0a4fc35a44f58d4a9f298dfc36eae99"
+  },
+  {
+   "run_dir": "task_173_bug_38_base_seed_44_job_2687",
+   "model_inputs_sha256": "5ef8748d6bd75628b8948c30e402e26f07004bac541382aa6826d335025e9fb8"
+  },
+  {
+   "run_dir": "task_174_bug_41_full_seed_42_job_2688",
+   "model_inputs_sha256": "0f20c6cac132ffaead6df1e4f868ab056cc71761533df46daed6964d324f7e50"
+  },
+  {
+   "run_dir": "task_175_bug_41_full_seed_43_job_2689",
+   "model_inputs_sha256": "d4d6b3835bbab57907edf6e12eec3fd062eacf36bf30f9f41c27fc7460db5209"
+  },
+  {
+   "run_dir": "task_176_bug_41_full_seed_44_job_2690",
+   "model_inputs_sha256": "fe1b558e2b26c0891952916903ca104778e78f9b9e7e716ada5d64bfa9917401"
+  },
+  {
+   "run_dir": "task_177_bug_41_base_seed_42_job_2691",
+   "model_inputs_sha256": "c61aa42f8908320725c079812b32153e266106588075191e32e2c2b4c9c5bb90"
+  },
+  {
+   "run_dir": "task_178_bug_41_base_seed_43_job_2692",
+   "model_inputs_sha256": "c61aa42f8908320725c079812b32153e266106588075191e32e2c2b4c9c5bb90"
+  },
+  {
+   "run_dir": "task_179_bug_41_base_seed_44_job_2693",
+   "model_inputs_sha256": "c61aa42f8908320725c079812b32153e266106588075191e32e2c2b4c9c5bb90"
+  },
+  {
+   "run_dir": "task_17_bug_4_base_seed_44_job_2493",
+   "model_inputs_sha256": "47e2d47f61f97b1694df84808c0d01a15765e0b7058cea204696813adf83bb83"
+  },
+  {
+   "run_dir": "task_180_bug_42_full_seed_42_job_2694",
+   "model_inputs_sha256": "c423c08bdcf49fffef2c1a7afffb43668a018a4ca173a4bee8b1bf5ee6bc8a67"
+  },
+  {
+   "run_dir": "task_181_bug_42_full_seed_43_job_2695",
+   "model_inputs_sha256": "dd43c733a6a104e7e93bdaee95bb66b6cb4c65b8379dce7e82db9d7f5e14c2ce"
+  },
+  {
+   "run_dir": "task_182_bug_42_full_seed_44_job_2696",
+   "model_inputs_sha256": "7581457384b07416482214000608b43222a2d2b967570aa24527d67939f5e306"
+  },
+  {
+   "run_dir": "task_183_bug_42_base_seed_42_job_2697",
+   "model_inputs_sha256": "f62d9293a01a14f143b5c755bd934572910a8186862694e9f239a36ea4c58cb5"
+  },
+  {
+   "run_dir": "task_184_bug_42_base_seed_43_job_2698",
+   "model_inputs_sha256": "f62d9293a01a14f143b5c755bd934572910a8186862694e9f239a36ea4c58cb5"
+  },
+  {
+   "run_dir": "task_185_bug_42_base_seed_44_job_2699",
+   "model_inputs_sha256": "f62d9293a01a14f143b5c755bd934572910a8186862694e9f239a36ea4c58cb5"
+  },
+  {
+   "run_dir": "task_186_bug_43_full_seed_42_job_2700",
+   "model_inputs_sha256": "7e4102b72625f8218ab918d005964bfbe1e69300200321eda798b80874aaf8a7"
+  },
+  {
+   "run_dir": "task_187_bug_43_full_seed_43_job_2701",
+   "model_inputs_sha256": "40b8ce9e505714861322df05bde6f8e993b0f342e9da24177e2b21597123cebf"
+  },
+  {
+   "run_dir": "task_188_bug_43_full_seed_44_job_2702",
+   "model_inputs_sha256": "ddea77e241eda9326e40c4c29dd9f7617a123c0f6f98987ad253d97f47561452"
+  },
+  {
+   "run_dir": "task_189_bug_43_base_seed_42_job_2703",
+   "model_inputs_sha256": "aa547b8ee035e76dd59e60ac490a274f2e0da640b20588489109c3755dadba5b"
+  },
+  {
+   "run_dir": "task_18_bug_5_full_seed_42_job_2494",
+   "model_inputs_sha256": "3e9a9d2132057e94783d8558d8942c096ad6d2a11fe52ff8b6f0e77906150ade"
+  },
+  {
+   "run_dir": "task_190_bug_43_base_seed_43_job_2704",
+   "model_inputs_sha256": "8a2ddc7e5522d2ff8d5b98feee5067a6cb4e7f2160f6c4ef6f96f5b4205b1175"
+  },
+  {
+   "run_dir": "task_191_bug_43_base_seed_44_job_2705",
+   "model_inputs_sha256": "aa547b8ee035e76dd59e60ac490a274f2e0da640b20588489109c3755dadba5b"
+  },
+  {
+   "run_dir": "task_192_bug_44_full_seed_42_job_2706",
+   "model_inputs_sha256": "b2444b6eb7794568bdd46ebdee0b41cf0e1e46a96e6e0ed24512b78a323a101d"
+  },
+  {
+   "run_dir": "task_193_bug_44_full_seed_43_job_2707",
+   "model_inputs_sha256": "023cceef2f64ef7cec0b6831c1e58fdeae908e87fc07e6f59ec4de1cb453b3d6"
+  },
+  {
+   "run_dir": "task_194_bug_44_full_seed_44_job_2708",
+   "model_inputs_sha256": "c21f91ce629b8527963ffe0bba1bb987a2f8510987edacd618300606b4af1192"
+  },
+  {
+   "run_dir": "task_195_bug_44_base_seed_42_job_2709",
+   "model_inputs_sha256": "b2bd26a5db5aba5b0df668896286f585ac4b455c67c16e6f23b3da8f31681f59"
+  },
+  {
+   "run_dir": "task_196_bug_44_base_seed_43_job_2671",
+   "model_inputs_sha256": "b2bd26a5db5aba5b0df668896286f585ac4b455c67c16e6f23b3da8f31681f59"
+  },
+  {
+   "run_dir": "task_197_bug_44_base_seed_44_job_2711",
+   "model_inputs_sha256": "b2bd26a5db5aba5b0df668896286f585ac4b455c67c16e6f23b3da8f31681f59"
+  },
+  {
+   "run_dir": "task_198_bug_45_full_seed_42_job_2712",
+   "model_inputs_sha256": "656963d42d4e112cc4b71ceea7bef9ba78a74bb8d14d16bd7c8c356c81406687"
+  },
+  {
+   "run_dir": "task_199_bug_45_full_seed_43_job_2713",
+   "model_inputs_sha256": "20a8a1bfeda950ffe4a88a920ce0bea0b4eff9632f45f2c66465e43e53fcd472"
+  },
+  {
+   "run_dir": "task_19_bug_5_full_seed_43_job_2495",
+   "model_inputs_sha256": "94e9214df5c6518a78e26fcb742a03659bab21a02a38cb68793780f7ab6b2170"
+  },
+  {
+   "run_dir": "task_1_bug_2_full_seed_43_job_2471",
+   "model_inputs_sha256": "39a2c44936a71f1c2c92061e6f55fdab15999a244a295e87ea294ba03c9b49ec"
+  },
+  {
+   "run_dir": "task_200_bug_45_full_seed_44_job_2714",
+   "model_inputs_sha256": "0dacc341a8bc232731b5617a64554b7b986ed8742a286ab9237eaa120d71c283"
+  },
+  {
+   "run_dir": "task_201_bug_45_base_seed_42_job_2715",
+   "model_inputs_sha256": "75c05921f11f6c6d00255907ba85f033bc1f01224536b142bfa41591fc243f8f"
+  },
+  {
+   "run_dir": "task_202_bug_45_base_seed_43_job_2716",
+   "model_inputs_sha256": "8cbeaa7504f864b4926144f48468cc698710e446f7b4429a7348ea5df3302967"
+  },
+  {
+   "run_dir": "task_203_bug_45_base_seed_44_job_2717",
+   "model_inputs_sha256": "9c5095a2b16ee34619577f1e756de9628a1dd06dbf65c1f36a6ab01c17d1ab49"
+  },
+  {
+   "run_dir": "task_204_bug_47_full_seed_42_job_2718",
+   "model_inputs_sha256": "bbc570e35be87dc27b00688f0b82d9b85d4c4b5c2d176e15b09791bd8593bb40"
+  },
+  {
+   "run_dir": "task_205_bug_47_full_seed_43_job_2719",
+   "model_inputs_sha256": "f1fa236db42275ebfc37c79658a521e8e57507496e3c52f882e1a0458fcce47d"
+  },
+  {
+   "run_dir": "task_206_bug_47_full_seed_44_job_2720",
+   "model_inputs_sha256": "ac6b65da0180cbc5a8ba100ecf4b31d8c98bdc92af0929f898ac3faf983fee71"
+  },
+  {
+   "run_dir": "task_207_bug_47_base_seed_42_job_2721",
+   "model_inputs_sha256": "2694a5eee1f94ebce7ec7ef2775effa0b4f435711209c6969c08d561c716c9e4"
+  },
+  {
+   "run_dir": "task_208_bug_47_base_seed_43_job_2722",
+   "model_inputs_sha256": "08812975adf96f4a248d2968030f1c5bc2b9f8a45637cd2b585c1ba751a9eb1a"
+  },
+  {
+   "run_dir": "task_209_bug_47_base_seed_44_job_2723",
+   "model_inputs_sha256": "51e65f6216c2a8aabae073fd9c8150754399f384f511ccf36b52525bd5426085"
+  },
+  {
+   "run_dir": "task_20_bug_5_full_seed_44_job_2496",
+   "model_inputs_sha256": "dc45f7bf08e23c2943940cf3e4f6ad413d20f4dca0a6a76a0cd9c5b4b2ded09c"
+  },
+  {
+   "run_dir": "task_210_bug_48_full_seed_42_job_2724",
+   "model_inputs_sha256": "4a33081ba4ff00d75ba5554ed60b0857898d330a51264957fb47533a9d693839"
+  },
+  {
+   "run_dir": "task_211_bug_48_full_seed_43_job_2725",
+   "model_inputs_sha256": "8b5ff474005a99b31e1b358bbdca7f00474e4bdaafd8723c84494ccdcdddc449"
+  },
+  {
+   "run_dir": "task_212_bug_48_full_seed_44_job_2726",
+   "model_inputs_sha256": "d50152ec12d8bda05481b6e8902d6699bb74bcbff522ae96021a980d612f5800"
+  },
+  {
+   "run_dir": "task_213_bug_48_base_seed_42_job_2727",
+   "model_inputs_sha256": "596578725b09232083bef5a18a345e9dcab0effe24c1d36cc5482c4996014096"
+  },
+  {
+   "run_dir": "task_214_bug_48_base_seed_43_job_2736",
+   "model_inputs_sha256": "256a06f841c1611426352d109b3cfe1476b8e39c3c37f1d44d69f07886a79d60"
+  },
+  {
+   "run_dir": "task_215_bug_48_base_seed_44_job_2737",
+   "model_inputs_sha256": "217fc8b7ecc5992184b1df60c84a3544acd128b25f335bdf9ea7a21de87f6ef7"
+  },
+  {
+   "run_dir": "task_216_bug_49_full_seed_42_job_2738",
+   "model_inputs_sha256": "b4957612411fcf10dd10eb54494d1e1e25032e33df0826ae8be3bd1a85f2c6fd"
+  },
+  {
+   "run_dir": "task_217_bug_49_full_seed_43_job_2739",
+   "model_inputs_sha256": "09474ff0b26b84a8ec5b316850b99b7530d1b19c31bcee60e79f3534456d337e"
+  },
+  {
+   "run_dir": "task_218_bug_49_full_seed_44_job_2740",
+   "model_inputs_sha256": "d8cd59166fd00e67c721265cc139b22c63f485c37acf26be15cb4232d5bc8934"
+  },
+  {
+   "run_dir": "task_219_bug_49_base_seed_42_job_2741",
+   "model_inputs_sha256": "1c8fdcd1237a87c0b8fa7f279fbe6b407337e9457a79bf81223cdbf072e56fa4"
+  },
+  {
+   "run_dir": "task_21_bug_5_base_seed_42_job_2497",
+   "model_inputs_sha256": "2d3643e50df4987511555cdd99889a41f87ac2dc448ca9309fab7e7d41292fad"
+  },
+  {
+   "run_dir": "task_220_bug_49_base_seed_43_job_2742",
+   "model_inputs_sha256": "1c8fdcd1237a87c0b8fa7f279fbe6b407337e9457a79bf81223cdbf072e56fa4"
+  },
+  {
+   "run_dir": "task_221_bug_49_base_seed_44_job_2743",
+   "model_inputs_sha256": "1c8fdcd1237a87c0b8fa7f279fbe6b407337e9457a79bf81223cdbf072e56fa4"
+  },
+  {
+   "run_dir": "task_222_bug_50_full_seed_42_job_2744",
+   "model_inputs_sha256": "85b00a8b94308fc150826f4eea0809a3e46ec9f2ca4b29ee3a83e3c237ce0b61"
+  },
+  {
+   "run_dir": "task_223_bug_50_full_seed_43_job_2745",
+   "model_inputs_sha256": "7c648f8f0ddb48ee5b26a7d60008787ef0a45eaba61794c60f9c358985a05a8b"
+  },
+  {
+   "run_dir": "task_224_bug_50_full_seed_44_job_2746",
+   "model_inputs_sha256": "4099673a72b2ef9549145c0fe3d03a590487f8ea1cadb77d76130760dfa9c5fc"
+  },
+  {
+   "run_dir": "task_225_bug_50_base_seed_42_job_2747",
+   "model_inputs_sha256": "a556097a358aabb8d707e847ff444586e4fb3d78f79cd33d1f468f80d0f85cfc"
+  },
+  {
+   "run_dir": "task_226_bug_50_base_seed_43_job_2748",
+   "model_inputs_sha256": "a556097a358aabb8d707e847ff444586e4fb3d78f79cd33d1f468f80d0f85cfc"
+  },
+  {
+   "run_dir": "task_227_bug_50_base_seed_44_job_2749",
+   "model_inputs_sha256": "86f3083ffb8014351a56f7555cd7c440eb6bbdd9bd34087d7e422dc9dc00b219"
+  },
+  {
+   "run_dir": "task_228_bug_51_full_seed_42_job_2750",
+   "model_inputs_sha256": "13a0067ace434ee18e52d3da9876ffca0bf9c9e2d088cfccb889d9981419606d"
+  },
+  {
+   "run_dir": "task_229_bug_51_full_seed_43_job_2751",
+   "model_inputs_sha256": "bd1a0264eef09356a77a9d898987e9f48b9c4a486c4a121a8bb3ae7e7a5ccc6d"
+  },
+  {
+   "run_dir": "task_22_bug_5_base_seed_43_job_2499",
+   "model_inputs_sha256": "e7ff883794c8c0c4605382c26cc01b51b1f8406f59ea00d7dd2d63b7c7bda235"
+  },
+  {
+   "run_dir": "task_230_bug_51_full_seed_44_job_2752",
+   "model_inputs_sha256": "3a2b9fcdebb62e63a8ad1c0a4c6e708a49dcb42cb3684a63c90209d4f7dee428"
+  },
+  {
+   "run_dir": "task_231_bug_51_base_seed_42_job_2753",
+   "model_inputs_sha256": "5ac0574601fe6195f6f487cfd272727337a1a65fe076c10a044ec3b4dafe6da3"
+  },
+  {
+   "run_dir": "task_232_bug_51_base_seed_43_job_2754",
+   "model_inputs_sha256": "09fab21e1bfb58c608b7cfdeae16d2d3fd178b6d251544509d9190fa24096972"
+  },
+  {
+   "run_dir": "task_233_bug_51_base_seed_44_job_2755",
+   "model_inputs_sha256": "09fab21e1bfb58c608b7cfdeae16d2d3fd178b6d251544509d9190fa24096972"
+  },
+  {
+   "run_dir": "task_234_bug_52_full_seed_42_job_2710",
+   "model_inputs_sha256": "37b7e6c034183f3be755c737407337380ce4d6e879ecb82742e825994eb90c4a"
+  },
+  {
+   "run_dir": "task_235_bug_52_full_seed_43_job_2803",
+   "model_inputs_sha256": "e93027aacba6c8ea0b02c0ccd8337e393996a89b2c5da4aa6d7bfb267eb5a143"
+  },
+  {
+   "run_dir": "task_236_bug_52_full_seed_44_job_2804",
+   "model_inputs_sha256": "b6ab3909f22819f0e9237dfb1b1c0c3a95e98f7a71e9ab1c8cdf2da17ca1a3d2"
+  },
+  {
+   "run_dir": "task_237_bug_52_base_seed_42_job_2806",
+   "model_inputs_sha256": "a07167dfed35e1c01232a2cb993a6bd52cb8fc761f77b6577970006bce969d46"
+  },
+  {
+   "run_dir": "task_238_bug_52_base_seed_43_job_2807",
+   "model_inputs_sha256": "7d5afb5ffdd5709a62449e01a7e4497e1c776bdae0ac4abfe5c9c49baa75c305"
+  },
+  {
+   "run_dir": "task_239_bug_52_base_seed_44_job_2809",
+   "model_inputs_sha256": "400d91f0436ea182a8d0cbb8783a923c0e6afd700e8688222e172c24f51dd75f"
+  },
+  {
+   "run_dir": "task_23_bug_5_base_seed_44_job_2500",
+   "model_inputs_sha256": "2d3643e50df4987511555cdd99889a41f87ac2dc448ca9309fab7e7d41292fad"
+  },
+  {
+   "run_dir": "task_240_bug_53_full_seed_42_job_2810",
+   "model_inputs_sha256": "3cc746c311f0b4a30b7148ce19496a21d1d39055098079d5d25afa83769b1b6a"
+  },
+  {
+   "run_dir": "task_241_bug_53_full_seed_43_job_2811",
+   "model_inputs_sha256": "c7b8c15ef06e659a376b3cedaec15c6d451a6cfa872b94880d215d8a42d1eb3c"
+  },
+  {
+   "run_dir": "task_242_bug_53_full_seed_44_job_2812",
+   "model_inputs_sha256": "a3d1d1602a163275cc5ba6dead32ea6e09d026ce77284582fdb7fea29f56784a"
+  },
+  {
+   "run_dir": "task_243_bug_53_base_seed_42_job_2813",
+   "model_inputs_sha256": "4cda6eb520af33511127aa065dca06214195f181064e30dca1e6bd152d7e3b54"
+  },
+  {
+   "run_dir": "task_244_bug_53_base_seed_43_job_2816",
+   "model_inputs_sha256": "20eba59e2dc4f4bc5732c7a9120a1e38d03f8f9c0d8812520ff43b35ecbca7f0"
+  },
+  {
+   "run_dir": "task_245_bug_53_base_seed_44_job_2829",
+   "model_inputs_sha256": "20eba59e2dc4f4bc5732c7a9120a1e38d03f8f9c0d8812520ff43b35ecbca7f0"
+  },
+  {
+   "run_dir": "task_246_bug_60_full_seed_42_job_2837",
+   "model_inputs_sha256": "32cda074a072ccb9c3f1e437c163be3d346255e80853bb379d2c93711bac23f1"
+  },
+  {
+   "run_dir": "task_247_bug_60_full_seed_43_job_2847",
+   "model_inputs_sha256": "28bce28532573be7fc24e3f5a405377a693efa4f444fd6b1a474a10061eae5b1"
+  },
+  {
+   "run_dir": "task_248_bug_60_full_seed_44_job_2863",
+   "model_inputs_sha256": "b7640016a6c48dc20eed7abaa2ce1bf3cf77e815d943a277d7c1da5afd579601"
+  },
+  {
+   "run_dir": "task_249_bug_60_base_seed_42_job_2873",
+   "model_inputs_sha256": "f977a35938d742045006802ab1606ef047e0e1d520e344cc74e30e573714421d"
+  },
+  {
+   "run_dir": "task_24_bug_6_full_seed_42_job_2501",
+   "model_inputs_sha256": "116c17f72b157fe0008b93b359f778552b7bfadda58eddd7be8789f10157bd84"
+  },
+  {
+   "run_dir": "task_250_bug_60_base_seed_43_job_2885",
+   "model_inputs_sha256": "f977a35938d742045006802ab1606ef047e0e1d520e344cc74e30e573714421d"
+  },
+  {
+   "run_dir": "task_251_bug_60_base_seed_44_job_2904",
+   "model_inputs_sha256": "f977a35938d742045006802ab1606ef047e0e1d520e344cc74e30e573714421d"
+  },
+  {
+   "run_dir": "task_252_bug_68_full_seed_42_job_2936",
+   "model_inputs_sha256": "84e2477f28be118c41f5163e2c243b80a2f2e1f38c7d5811afbec5787ccbe6d8"
+  },
+  {
+   "run_dir": "task_253_bug_68_full_seed_43_job_2951",
+   "model_inputs_sha256": "dc1261d78036ab209a171771698b5d0f3ab789590da129fb6b0f3f3c05ee0484"
+  },
+  {
+   "run_dir": "task_254_bug_68_full_seed_44_job_2962",
+   "model_inputs_sha256": "75500f43e6731dd2b3740a082940b8f9ba6a250adb42c11ff42f6479885ad00f"
+  },
+  {
+   "run_dir": "task_255_bug_68_base_seed_42_job_2969",
+   "model_inputs_sha256": "ccc3134f0a8b8fc58b2e394daaa264b6c1d60553d12243a37b5e621523074b16"
+  },
+  {
+   "run_dir": "task_256_bug_68_base_seed_43_job_2975",
+   "model_inputs_sha256": "ccc3134f0a8b8fc58b2e394daaa264b6c1d60553d12243a37b5e621523074b16"
+  },
+  {
+   "run_dir": "task_257_bug_68_base_seed_44_job_2802",
+   "model_inputs_sha256": "ccc3134f0a8b8fc58b2e394daaa264b6c1d60553d12243a37b5e621523074b16"
+  },
+  {
+   "run_dir": "task_25_bug_6_full_seed_43_job_2502",
+   "model_inputs_sha256": "c410ed00d97b9871203c9c5700064668f83c3b806056da1b9515a36aa7d22a86"
+  },
+  {
+   "run_dir": "task_26_bug_6_full_seed_44_job_2503",
+   "model_inputs_sha256": "3ec516afdac66ba1d5b7c52d888598fc837c297a003235921bc23f4d3cfd6c85"
+  },
+  {
+   "run_dir": "task_27_bug_6_base_seed_42_job_2504",
+   "model_inputs_sha256": "3292ba294bba4bd5bc86f6516c0d6f0e1f36afc332165b9b630b73e2cc4d061b"
+  },
+  {
+   "run_dir": "task_28_bug_6_base_seed_43_job_2505",
+   "model_inputs_sha256": "d914943c06e4544b2d1a4a317e7d02bb1064c598090aede91ea3cf972a9dc0c9"
+  },
+  {
+   "run_dir": "task_29_bug_6_base_seed_44_job_2506",
+   "model_inputs_sha256": "590c753aa7d0e014b96ba802b7f8ceaa2491e7e30fb1f0572652f0a96f09e17b"
+  },
+  {
+   "run_dir": "task_2_bug_2_full_seed_44_job_2472",
+   "model_inputs_sha256": "2cfcfb2304cd2b9f3af64649d132e6e733ae22aef8b3a7d07222aeed29d16a39"
+  },
+  {
+   "run_dir": "task_30_bug_7_full_seed_42_job_2507",
+   "model_inputs_sha256": "3ead58250a0be2d6f4e043543c6e39adc4eef7e53fcfadfcaef222a73e880c6e"
+  },
+  {
+   "run_dir": "task_31_bug_7_full_seed_43_job_2508",
+   "model_inputs_sha256": "629cb5ab25cae366ade0f0ac872d96c0ff14e616cf5ddaa3f0852e6c7fd69b94"
+  },
+  {
+   "run_dir": "task_32_bug_7_full_seed_44_job_2509",
+   "model_inputs_sha256": "78924b8f62fb420f18437ee4f1a3b7d0688763d5561ae5188ad64901ab4ef035"
+  },
+  {
+   "run_dir": "task_33_bug_7_base_seed_42_job_2510",
+   "model_inputs_sha256": "d3b3a5b75c5c77ce8cca85407cd3e22e27c807f96235b528bb96d59b9a6d5003"
+  },
+  {
+   "run_dir": "task_34_bug_7_base_seed_43_job_2512",
+   "model_inputs_sha256": "c73e59c4ef3a8bbfb1dfc36006d645cd91391ef9cf085ba3d075a6d5a13760fe"
+  },
+  {
+   "run_dir": "task_35_bug_7_base_seed_44_job_2513",
+   "model_inputs_sha256": "ebbf5c07b2c7f8481bf79bda471ef370fcf867eeb619f039936e175e64272d0a"
+  },
+  {
+   "run_dir": "task_36_bug_8_full_seed_42_job_2514",
+   "model_inputs_sha256": "dc6d057b94b598056226d47a75efaab81cc273c8a2488e0f5dc1197fcbca442c"
+  },
+  {
+   "run_dir": "task_37_bug_8_full_seed_43_job_2515",
+   "model_inputs_sha256": "a9acd818d3657cc077ebf29d8d9fcba8fe126e95c00bc306924cdb90754f4aae"
+  },
+  {
+   "run_dir": "task_38_bug_8_full_seed_44_job_2516",
+   "model_inputs_sha256": "e2ed2a1fc8331b31ec393d9de4327c62a1cb15fc283e6362f3b096e894d8499c"
+  },
+  {
+   "run_dir": "task_39_bug_8_base_seed_42_job_2469",
+   "model_inputs_sha256": "1616dab5ee6de04675202f22e0b9c361cd525a47d39449f7feb90b68a54ffe05"
+  },
+  {
+   "run_dir": "task_3_bug_2_base_seed_42_job_2473",
+   "model_inputs_sha256": "c043a40ae1c5486eea1ab1f9057248aea56013f1d38db63103ee80201bc61dc9"
+  },
+  {
+   "run_dir": "task_40_bug_8_base_seed_43_job_2518",
+   "model_inputs_sha256": "1616dab5ee6de04675202f22e0b9c361cd525a47d39449f7feb90b68a54ffe05"
+  },
+  {
+   "run_dir": "task_41_bug_8_base_seed_44_job_2519",
+   "model_inputs_sha256": "1616dab5ee6de04675202f22e0b9c361cd525a47d39449f7feb90b68a54ffe05"
+  },
+  {
+   "run_dir": "task_42_bug_9_full_seed_42_job_2520",
+   "model_inputs_sha256": "2b5b39172b44d2892333f8633213f275dab9ed25e8d860105da4abe941952e33"
+  },
+  {
+   "run_dir": "task_43_bug_9_full_seed_43_job_2521",
+   "model_inputs_sha256": "ec58ad9b90b89a857641abf2b7daadabf17b5e7901ce17f9f1032524793a61dd"
+  },
+  {
+   "run_dir": "task_44_bug_9_full_seed_44_job_2522",
+   "model_inputs_sha256": "4d346e2ecd846302d476c9977accc98f4cd7fbbd534843d0c1bcffa5755eaf81"
+  },
+  {
+   "run_dir": "task_45_bug_9_base_seed_42_job_2523",
+   "model_inputs_sha256": "53a39e5489f898d25f9dbccb9289fed5bf3956b4493c164093667d9855c38c45"
+  },
+  {
+   "run_dir": "task_46_bug_9_base_seed_43_job_2524",
+   "model_inputs_sha256": "4d05da241b142e7c0db14bb5bc2b7331383ba29f79309ec060a7726849df977d"
+  },
+  {
+   "run_dir": "task_47_bug_9_base_seed_44_job_2525",
+   "model_inputs_sha256": "1e986f8beeae71b764b673b187c15fd5def014390c85596b3cf7f23d680ef060"
+  },
+  {
+   "run_dir": "task_48_bug_10_full_seed_42_job_2526",
+   "model_inputs_sha256": "2bc81c76e4913e0c902983c979af3857eb3d5ddd9d0880ee6e678082d8ef93e5"
+  },
+  {
+   "run_dir": "task_49_bug_10_full_seed_43_job_2527",
+   "model_inputs_sha256": "a5b6a34c2a20141fc168f834177fdca02e432ab6fb54342008d3ed5a2cbcec1c"
+  },
+  {
+   "run_dir": "task_4_bug_2_base_seed_43_job_2475",
+   "model_inputs_sha256": "c043a40ae1c5486eea1ab1f9057248aea56013f1d38db63103ee80201bc61dc9"
+  },
+  {
+   "run_dir": "task_50_bug_10_full_seed_44_job_2528",
+   "model_inputs_sha256": "e2a79bf3b4c1a368b7ed51206bcf380e652abd4282e355e41da5f4267baf3808"
+  },
+  {
+   "run_dir": "task_51_bug_10_base_seed_42_job_2529",
+   "model_inputs_sha256": "369b17bd1bd43ef7cf97c2d312bdddb3c1d055a4c407d1c25d4f6e2c3c5487e0"
+  },
+  {
+   "run_dir": "task_52_bug_10_base_seed_43_job_2531",
+   "model_inputs_sha256": "4cb4c1aee27ca452f1f5c66876310684b84da0f2a140522b6477c820f1c284dc"
+  },
+  {
+   "run_dir": "task_53_bug_10_base_seed_44_job_2532",
+   "model_inputs_sha256": "05ade9697f44fca346ac618abff58f51cd2257ba702d507022d7af933a0ef334"
+  },
+  {
+   "run_dir": "task_54_bug_11_full_seed_42_job_2533",
+   "model_inputs_sha256": "c6fc6ecc3e67283e6e149c035eee14b10d9bf3223e17bc493455a1118817e047"
+  },
+  {
+   "run_dir": "task_55_bug_11_full_seed_43_job_2534",
+   "model_inputs_sha256": "d6cf9cab02ec230783acfe0e159ed6a2325cf489ee7884299bffdb2d62357e95"
+  },
+  {
+   "run_dir": "task_56_bug_11_full_seed_44_job_2536",
+   "model_inputs_sha256": "933aaa86a27d11c4b07049becee5328779e2a27dbd433bf24a237cd00eaf21e7"
+  },
+  {
+   "run_dir": "task_57_bug_11_base_seed_42_job_2537",
+   "model_inputs_sha256": "f0487240145f767fbd760f0683134b149b3bb92ccda19292209c2ad0f90282ef"
+  },
+  {
+   "run_dir": "task_58_bug_11_base_seed_43_job_2538",
+   "model_inputs_sha256": "f0487240145f767fbd760f0683134b149b3bb92ccda19292209c2ad0f90282ef"
+  },
+  {
+   "run_dir": "task_59_bug_11_base_seed_44_job_2539",
+   "model_inputs_sha256": "f0487240145f767fbd760f0683134b149b3bb92ccda19292209c2ad0f90282ef"
+  },
+  {
+   "run_dir": "task_5_bug_2_base_seed_44_job_2476",
+   "model_inputs_sha256": "c043a40ae1c5486eea1ab1f9057248aea56013f1d38db63103ee80201bc61dc9"
+  },
+  {
+   "run_dir": "task_60_bug_16_full_seed_42_job_2541",
+   "model_inputs_sha256": "0f6d6c6ee3a5eaf4cd523efc6e3c9117b0f5938921804a21bbde19500128df85"
+  },
+  {
+   "run_dir": "task_61_bug_16_full_seed_43_job_2543",
+   "model_inputs_sha256": "6e518d639bea39b7b5c4d94101dbd52862559b58939519e3e5a20157dd23061a"
+  },
+  {
+   "run_dir": "task_62_bug_16_full_seed_44_job_2544",
+   "model_inputs_sha256": "a7d22da4add762e10d4433ecc0232239e5bb152d95b48fddf46b79864920186c"
+  },
+  {
+   "run_dir": "task_63_bug_16_base_seed_42_job_2545",
+   "model_inputs_sha256": "0be5845b1a131cfe253c4537daf29afb5f37e80ca143f01eccb8dcb845cd66f4"
+  },
+  {
+   "run_dir": "task_64_bug_16_base_seed_43_job_2546",
+   "model_inputs_sha256": "717df0d05feaaa3f7c2f9c77052161cc1c6b8faa899f5da937e0e9d31c4168cc"
+  },
+  {
+   "run_dir": "task_65_bug_16_base_seed_44_job_2547",
+   "model_inputs_sha256": "0be5845b1a131cfe253c4537daf29afb5f37e80ca143f01eccb8dcb845cd66f4"
+  },
+  {
+   "run_dir": "task_66_bug_18_full_seed_42_job_2549",
+   "model_inputs_sha256": "3bcc0b1a3d35b077bf45cdb2f66f8700d289e68f7c47721d0a6951fdd7359350"
+  },
+  {
+   "run_dir": "task_67_bug_18_full_seed_43_job_2550",
+   "model_inputs_sha256": "8d159dca789d9aff8b3909191e53f6853da5d782d3572161602cff0d304db300"
+  },
+  {
+   "run_dir": "task_68_bug_18_full_seed_44_job_2551",
+   "model_inputs_sha256": "6431fef2206ef783bf8be73bba802a7ebcbfbe44b4ed07237b3eb2f39c350ec5"
+  },
+  {
+   "run_dir": "task_69_bug_18_base_seed_42_job_2552",
+   "model_inputs_sha256": "3fe34b49a28531f979b671ceba128f63bafbb83ec1d50afd302603cb1a296cd5"
+  },
+  {
+   "run_dir": "task_6_bug_3_full_seed_42_job_2477",
+   "model_inputs_sha256": "6cc5e6a7011bb08c7b3b405d6ad45a558a822b8b5819472a767b83373198f1aa"
+  },
+  {
+   "run_dir": "task_70_bug_18_base_seed_43_job_2553",
+   "model_inputs_sha256": "3fe34b49a28531f979b671ceba128f63bafbb83ec1d50afd302603cb1a296cd5"
+  },
+  {
+   "run_dir": "task_71_bug_18_base_seed_44_job_2554",
+   "model_inputs_sha256": "fca6497982031e8b016e26abf1129eb0d84d9bd93f8b3084c244b05e56764ef3"
+  },
+  {
+   "run_dir": "task_72_bug_20_full_seed_42_job_2555",
+   "model_inputs_sha256": "62a4bd7b5e1781b2e37c5c378379da75a9e2abe940c78cde92219130a1d1d981"
+  },
+  {
+   "run_dir": "task_73_bug_20_full_seed_43_job_2556",
+   "model_inputs_sha256": "09e2ed91bba63766e13285bfe78087b36d0a35c5693179d4ed7e1c64035ca168"
+  },
+  {
+   "run_dir": "task_74_bug_20_full_seed_44_job_2557",
+   "model_inputs_sha256": "ba1abdbc7e4c31a9ead35b5bcf1a50efd55451cd461ce58f9bbcf9bf6f95c3cd"
+  },
+  {
+   "run_dir": "task_75_bug_20_base_seed_42_job_2558",
+   "model_inputs_sha256": "ec3cd2f95f10cbc27a3bc1ac7715e0c1417ff08cc17639ad5fbc164e2290efd8"
+  },
+  {
+   "run_dir": "task_76_bug_20_base_seed_43_job_2560",
+   "model_inputs_sha256": "ec3cd2f95f10cbc27a3bc1ac7715e0c1417ff08cc17639ad5fbc164e2290efd8"
+  },
+  {
+   "run_dir": "task_77_bug_20_base_seed_44_job_2561",
+   "model_inputs_sha256": "ec3cd2f95f10cbc27a3bc1ac7715e0c1417ff08cc17639ad5fbc164e2290efd8"
+  },
+  {
+   "run_dir": "task_78_bug_21_full_seed_42_job_2562",
+   "model_inputs_sha256": "903a8ef0d16310d5edef4d4022b55aaf33e52e2d7e5b37f66e44af2174462132"
+  },
+  {
+   "run_dir": "task_79_bug_21_full_seed_43_job_2517",
+   "model_inputs_sha256": "dc577f6ae465519813ddd60c37eae862d2fa00b3d72e524ec9fa2591bb30ac5d"
+  },
+  {
+   "run_dir": "task_7_bug_3_full_seed_43_job_2478",
+   "model_inputs_sha256": "1e0c2a3248a3b22f233f7c860f1632bb2c8db651c42757addade6f701f16fab6"
+  },
+  {
+   "run_dir": "task_80_bug_21_full_seed_44_job_2564",
+   "model_inputs_sha256": "f45dbb9f98d70b63c9a08fdc6a3bac18d40db0f58aa21f7fc9d6961af9e2d4bc"
+  },
+  {
+   "run_dir": "task_81_bug_21_base_seed_42_job_2565",
+   "model_inputs_sha256": "08b6d4757103820902b8f3462a03b320c14a8fd2b0a86b6b0ee495b52c647982"
+  },
+  {
+   "run_dir": "task_82_bug_21_base_seed_43_job_2566",
+   "model_inputs_sha256": "94543be2a0d438a161368f02ff605c3c3a31f7c9ebd083f94bf19084e5807ca3"
+  },
+  {
+   "run_dir": "task_83_bug_21_base_seed_44_job_2567",
+   "model_inputs_sha256": "279b0d4cdf1f79b10adb71c08d69299cdb9a9ab7f91d55dbcac4cd993b2a8512"
+  },
+  {
+   "run_dir": "task_84_bug_22_full_seed_42_job_2569",
+   "model_inputs_sha256": "93b9f854c30ccd918627786560c288815a2544497441370d2cabec460162a211"
+  },
+  {
+   "run_dir": "task_85_bug_22_full_seed_43_job_2570",
+   "model_inputs_sha256": "36ca50d19362de04c2d7dd4a556533ccac2be4a337c2b425dbcce23fc6629bb8"
+  },
+  {
+   "run_dir": "task_86_bug_22_full_seed_44_job_2571",
+   "model_inputs_sha256": "b06b7a4c47de8898472c4d4105c96c8c3f8723052ed7123756e61de66505e13b"
+  },
+  {
+   "run_dir": "task_87_bug_22_base_seed_42_job_2572",
+   "model_inputs_sha256": "613e446ecee62ffbdc807510b89e1d21a3bd816fdfbc83c6324d48570ef12106"
+  },
+  {
+   "run_dir": "task_88_bug_22_base_seed_43_job_2575",
+   "model_inputs_sha256": "da62651cb26c587fd32f501478ed60f32772957960a0a969fc5750130ee852c8"
+  },
+  {
+   "run_dir": "task_89_bug_22_base_seed_44_job_2577",
+   "model_inputs_sha256": "da62651cb26c587fd32f501478ed60f32772957960a0a969fc5750130ee852c8"
+  },
+  {
+   "run_dir": "task_8_bug_3_full_seed_44_job_2480",
+   "model_inputs_sha256": "0a9a7775b079c8c98e193c3e0d6d1403153f95ae8c8dee4186590b536921ab82"
+  },
+  {
+   "run_dir": "task_90_bug_23_full_seed_42_job_2578",
+   "model_inputs_sha256": "32053a814c4ba23e6a2885ce6230ec82031c75b74c80c1fdce2cd09956af189c"
+  },
+  {
+   "run_dir": "task_91_bug_23_full_seed_43_job_2579",
+   "model_inputs_sha256": "5d7f8001b466ca8a1c5cc3315197eb75a46b6bbb15e30f2cbf344e60b146dfd2"
+  },
+  {
+   "run_dir": "task_92_bug_23_full_seed_44_job_2580",
+   "model_inputs_sha256": "93b5491ea0bd85644737c35fcc7661159d906297896f7b9399afc55ede0d23e5"
+  },
+  {
+   "run_dir": "task_93_bug_23_base_seed_42_job_2581",
+   "model_inputs_sha256": "eabdfaddda063900f8093d398dc0f9b8743b64813ee8b9b231df03fdb7dd9081"
+  },
+  {
+   "run_dir": "task_94_bug_23_base_seed_43_job_2582",
+   "model_inputs_sha256": "655c2ff47d8ce92d7c954eb5943bafaba1d1cc30d8e02bd4407956569d43c31f"
+  },
+  {
+   "run_dir": "task_95_bug_23_base_seed_44_job_2583",
+   "model_inputs_sha256": "728c85d95308a01ebbe278019bb753868279ff5c150e421348ea86c59bb0e381"
+  },
+  {
+   "run_dir": "task_96_bug_24_full_seed_42_job_2584",
+   "model_inputs_sha256": "7d6fdbc625e5895f3c9df2cd7b080ac7b747a75b0331209d0149048ab6f84f1c"
+  },
+  {
+   "run_dir": "task_97_bug_24_full_seed_43_job_2585",
+   "model_inputs_sha256": "e1bc89f103f147d494ffe7f647117db7757f7ba474e29e0f5ed94d4e0a8c7415"
+  },
+  {
+   "run_dir": "task_98_bug_24_full_seed_44_job_2586",
+   "model_inputs_sha256": "521786a0963774a730dc767eab2049e152e759cf5fe69207692e88796319738c"
+  },
+  {
+   "run_dir": "task_99_bug_24_base_seed_42_job_2588",
+   "model_inputs_sha256": "c8f1dd316aada7790c1415d52b70baf264dd6d8ad11826bcd0fde93847749a53"
+  },
+  {
+   "run_dir": "task_9_bug_3_base_seed_42_job_2481",
+   "model_inputs_sha256": "135994123e2845cfc2099c015422b49fde73c65de7f167125806a0ba7a4bc0a1"
+  }
+ ]
+}

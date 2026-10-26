@@ -1,0 +1,978 @@
+{
+  "bug_id": "68",
+  "seed": 42,
+  "arm": "full",
+  "candidates": [],
+  "candidate_count": 0,
+  "retrieved_examples": [
+    {
+      "id": "19",
+      "project_name": "youtube-dl",
+      "buggy_line_content": "        [a-zA-Z_][.a-zA-Z_0-9]*|",
+      "function": {
+        "function_name": "js_to_json",
+        "function_parent": "utils.py",
+        "function_before_start_line": 2235,
+        "function_before_end_line": 2273,
+        "function_after_start_line": 2235,
+        "function_after_end_line": 2273,
+        "function_before_token_count": 77,
+        "function_after_token_count": 77,
+        "function_before": "def js_to_json(code):\n    COMMENT_RE = '/\\\\*(?:(?!\\\\*/).)*?\\\\*/|//[^\\\\n]*'\n    SKIP_RE = '\\\\s*(?:{comment})?\\\\s*'.format(comment=COMMENT_RE)\n    INTEGER_TABLE = (('(?s)^(0[xX][0-9a-fA-F]+){skip}:?$'.format(skip=SKIP_RE), 16), ('(?s)^(0+[0-7]+){skip}:?$'.format(skip=SKIP_RE), 8))\n\n    def fix_kv(m):\n        v = m.group(0)\n        if v in ('true', 'false', 'null'):\n            return v\n        elif v.startswith('/*') or v.startswith('//') or v == ',':\n            return ''\n        if v[0] in (\"'\", '\"'):\n            v = re.sub('(?s)\\\\\\\\.|\"', lambda m: {'\"': '\\\\\"', \"\\\\'\": \"'\", '\\\\\\n': '', '\\\\x': '\\\\u00'}.get(m.group(0), m.group(0)), v[1:-1])\n        for regex, base in INTEGER_TABLE:\n            im = re.match(regex, v)\n            if im:\n                i = int(im.group(1), base)\n                return '\"%d\":' % i if v.endswith(':') else '%d' % i\n        return '\"%s\"' % v\n    return re.sub('(?sx)\\n        \"(?:[^\"\\\\\\\\]*(?:\\\\\\\\\\\\\\\\|\\\\\\\\[\\'\"nurtbfx/\\\\n]))*[^\"\\\\\\\\]*\"|\\n        \\'(?:[^\\'\\\\\\\\]*(?:\\\\\\\\\\\\\\\\|\\\\\\\\[\\'\"nurtbfx/\\\\n]))*[^\\'\\\\\\\\]*\\'|\\n        {comment}|,(?={skip}[\\\\]}}])|\\n        [a-zA-Z_][.a-zA-Z_0-9]*|\\n        \\\\b(?:0[xX][0-9a-fA-F]+|0+[0-7]+)(?:{skip}:)?|\\n        [0-9]+(?={skip}:)\\n        '.format(comment=COMMENT_RE, skip=SKIP_RE), fix_kv, code)",
+        "function_after": "def js_to_json(code):\n    COMMENT_RE = '/\\\\*(?:(?!\\\\*/).)*?\\\\*/|//[^\\\\n]*'\n    SKIP_RE = '\\\\s*(?:{comment})?\\\\s*'.format(comment=COMMENT_RE)\n    INTEGER_TABLE = (('(?s)^(0[xX][0-9a-fA-F]+){skip}:?$'.format(skip=SKIP_RE), 16), ('(?s)^(0+[0-7]+){skip}:?$'.format(skip=SKIP_RE), 8))\n\n    def fix_kv(m):\n        v = m.group(0)\n        if v in ('true', 'false', 'null'):\n            return v\n        elif v.startswith('/*') or v.startswith('//') or v == ',':\n            return ''\n        if v[0] in (\"'\", '\"'):\n            v = re.sub('(?s)\\\\\\\\.|\"', lambda m: {'\"': '\\\\\"', \"\\\\'\": \"'\", '\\\\\\n': '', '\\\\x': '\\\\u00'}.get(m.group(0), m.group(0)), v[1:-1])\n        for regex, base in INTEGER_TABLE:\n            im = re.match(regex, v)\n            if im:\n                i = int(im.group(1), base)\n                return '\"%d\":' % i if v.endswith(':') else '%d' % i\n        return '\"%s\"' % v\n    return re.sub('(?sx)\\n        \"(?:[^\"\\\\\\\\]*(?:\\\\\\\\\\\\\\\\|\\\\\\\\[\\'\"nurtbfx/\\\\n]))*[^\"\\\\\\\\]*\"|\\n        \\'(?:[^\\'\\\\\\\\]*(?:\\\\\\\\\\\\\\\\|\\\\\\\\[\\'\"nurtbfx/\\\\n]))*[^\\'\\\\\\\\]*\\'|\\n        {comment}|,(?={skip}[\\\\]}}])|\\n        (?:(?<![0-9])[eE]|[a-df-zA-DF-Z_])[.a-zA-Z_0-9]*|\\n        \\\\b(?:0[xX][0-9a-fA-F]+|0+[0-7]+)(?:{skip}:)?|\\n        [0-9]+(?={skip}:)\\n        '.format(comment=COMMENT_RE, skip=SKIP_RE), fix_kv, code)"
+      },
+      "file_name": "utils.py",
+      "file_path": "youtube_dl/utils.py",
+      "score_reranked": 0.5262393316968575
+    },
+    {
+      "id": "39",
+      "project_name": "pandas",
+      "buggy_line_content": "            except (TypeError, ValueError):",
+      "function": {
+        "function_name": "_try_convert_data",
+        "function_parent": "Parser",
+        "function_before_start_line": 886,
+        "function_before_end_line": 958,
+        "function_after_start_line": 886,
+        "function_after_end_line": 958,
+        "function_before_token_count": 277,
+        "function_after_token_count": 279,
+        "function_before": "def _try_convert_data(self, name, data, use_dtypes=True, convert_dates=True):\n    \"\"\"\n        Try to parse a ndarray like into a column by inferring dtype.\n        \"\"\"\n    if use_dtypes:\n        if not self.dtype:\n            return (data, False)\n        elif self.dtype is True:\n            pass\n        else:\n            dtype = self.dtype.get(name) if isinstance(self.dtype, dict) else self.dtype\n            if dtype is not None:\n                try:\n                    dtype = np.dtype(dtype)\n                    return (data.astype(dtype), True)\n                except (TypeError, ValueError):\n                    return (data, False)\n    if convert_dates:\n        new_data, result = self._try_convert_to_date(data)\n        if result:\n            return (new_data, True)\n    result = False\n    if data.dtype == 'object':\n        try:\n            data = data.astype('float64')\n            result = True\n        except (TypeError, ValueError):\n            pass\n    if data.dtype.kind == 'f':\n        if data.dtype != 'float64':\n            try:\n                data = data.astype('float64')\n                result = True\n            except (TypeError, ValueError):\n                pass\n    if len(data) and (data.dtype == 'float' or data.dtype == 'object'):\n        try:\n            new_data = data.astype('int64')\n            if (new_data == data).all():\n                data = new_data\n                result = True\n        except (TypeError, ValueError):\n            pass\n    if data.dtype == 'int':\n        try:\n            data = data.astype('int64')\n            result = True\n        except (TypeError, ValueError):\n            pass\n    return (data, result)",
+        "function_after": "def _try_convert_data(self, name, data, use_dtypes=True, convert_dates=True):\n    \"\"\"\n        Try to parse a ndarray like into a column by inferring dtype.\n        \"\"\"\n    if use_dtypes:\n        if not self.dtype:\n            return (data, False)\n        elif self.dtype is True:\n            pass\n        else:\n            dtype = self.dtype.get(name) if isinstance(self.dtype, dict) else self.dtype\n            if dtype is not None:\n                try:\n                    dtype = np.dtype(dtype)\n                    return (data.astype(dtype), True)\n                except (TypeError, ValueError):\n                    return (data, False)\n    if convert_dates:\n        new_data, result = self._try_convert_to_date(data)\n        if result:\n            return (new_data, True)\n    result = False\n    if data.dtype == 'object':\n        try:\n            data = data.astype('float64')\n            result = True\n        except (TypeError, ValueError):\n            pass\n    if data.dtype.kind == 'f':\n        if data.dtype != 'float64':\n            try:\n                data = data.astype('float64')\n                result = True\n            except (TypeError, ValueError):\n                pass\n    if len(data) and (data.dtype == 'float' or data.dtype == 'object'):\n        try:\n            new_data = data.astype('int64')\n            if (new_data == data).all():\n                data = new_data\n                result = True\n        except (TypeError, ValueError, OverflowError):\n            pass\n    if data.dtype == 'int':\n        try:\n            data = data.astype('int64')\n            result = True\n        except (TypeError, ValueError):\n            pass\n    return (data, result)"
+      },
+      "file_name": "_json.py",
+      "file_path": "pandas/io/json/_json.py",
+      "score_reranked": 0.5248791639220645
+    },
+    {
+      "id": "65",
+      "project_name": "matplotlib",
+      "buggy_line_content": "        self._label = str(label)",
+      "function": {
+        "function_name": "set_label",
+        "function_parent": "ColorbarBase",
+        "function_before_start_line": 725,
+        "function_before_end_line": 729,
+        "function_after_start_line": 725,
+        "function_after_end_line": 729,
+        "function_before_token_count": 29,
+        "function_after_token_count": 26,
+        "function_before": "def set_label(self, label, **kw):\n    \"\"\"Label the long axis of the colorbar.\"\"\"\n    self._label = str(label)\n    self._labelkw = kw\n    self._set_label()",
+        "function_after": "def set_label(self, label, **kw):\n    \"\"\"Label the long axis of the colorbar.\"\"\"\n    self._label = label\n    self._labelkw = kw\n    self._set_label()"
+      },
+      "file_name": "colorbar.py",
+      "file_path": "lib/matplotlib/colorbar.py",
+      "score_reranked": 0.5070358649602746
+    },
+    {
+      "id": "32",
+      "project_name": "pandas",
+      "buggy_line_content": "            except (ValueError, OverflowError):",
+      "function": {
+        "function_name": "_try_convert_to_date",
+        "function_parent": "Parser",
+        "function_before_start_line": 953,
+        "function_before_end_line": 988,
+        "function_after_start_line": 953,
+        "function_after_end_line": 988,
+        "function_before_token_count": 154,
+        "function_after_token_count": 156,
+        "function_before": "def _try_convert_to_date(self, data):\n    \"\"\"\n        Try to parse a ndarray like into a date column.\n\n        Try to coerce object in epoch/iso formats and integer/float in epoch\n        formats. Return a boolean if parsing was successful.\n        \"\"\"\n    if not len(data):\n        return (data, False)\n    new_data = data\n    if new_data.dtype == 'object':\n        try:\n            new_data = data.astype('int64')\n        except (TypeError, ValueError, OverflowError):\n            pass\n    if issubclass(new_data.dtype.type, np.number):\n        in_range = isna(new_data._values) | (new_data > self.min_stamp) | (new_data._values == iNaT)\n        if not in_range.all():\n            return (data, False)\n    date_units = (self.date_unit,) if self.date_unit else self._STAMP_UNITS\n    for date_unit in date_units:\n        try:\n            new_data = to_datetime(new_data, errors='raise', unit=date_unit)\n        except (ValueError, OverflowError):\n            continue\n        return (new_data, True)\n    return (data, False)",
+        "function_after": "def _try_convert_to_date(self, data):\n    \"\"\"\n        Try to parse a ndarray like into a date column.\n\n        Try to coerce object in epoch/iso formats and integer/float in epoch\n        formats. Return a boolean if parsing was successful.\n        \"\"\"\n    if not len(data):\n        return (data, False)\n    new_data = data\n    if new_data.dtype == 'object':\n        try:\n            new_data = data.astype('int64')\n        except (TypeError, ValueError, OverflowError):\n            pass\n    if issubclass(new_data.dtype.type, np.number):\n        in_range = isna(new_data._values) | (new_data > self.min_stamp) | (new_data._values == iNaT)\n        if not in_range.all():\n            return (data, False)\n    date_units = (self.date_unit,) if self.date_unit else self._STAMP_UNITS\n    for date_unit in date_units:\n        try:\n            new_data = to_datetime(new_data, errors='raise', unit=date_unit)\n        except (ValueError, OverflowError, TypeError):\n            continue\n        return (new_data, True)\n    return (data, False)"
+      },
+      "file_name": "_json.py",
+      "file_path": "pandas/io/json/_json.py",
+      "score_reranked": 0.4993571008524308
+    },
+    {
+      "id": "17",
+      "project_name": "youtube-dl",
+      "buggy_line_content": "                    op = lambda attr, value: not str_op",
+      "function": {
+        "function_name": "_build_format_filter",
+        "function_parent": "YoutubeDL",
+        "function_before_start_line": 1032,
+        "function_before_end_line": 1093,
+        "function_after_start_line": 1032,
+        "function_after_end_line": 1093,
+        "function_before_token_count": 310,
+        "function_after_token_count": 315,
+        "function_before": "def _build_format_filter(self, filter_spec):\n    \"\"\" Returns a function to filter the formats according to the filter_spec \"\"\"\n    OPERATORS = {'<': operator.lt, '<=': operator.le, '>': operator.gt, '>=': operator.ge, '=': operator.eq, '!=': operator.ne}\n    operator_rex = re.compile('(?x)\\\\s*\\n            (?P<key>width|height|tbr|abr|vbr|asr|filesize|filesize_approx|fps)\\n            \\\\s*(?P<op>%s)(?P<none_inclusive>\\\\s*\\\\?)?\\\\s*\\n            (?P<value>[0-9.]+(?:[kKmMgGtTpPeEzZyY]i?[Bb]?)?)\\n            $\\n            ' % '|'.join(map(re.escape, OPERATORS.keys())))\n    m = operator_rex.search(filter_spec)\n    if m:\n        try:\n            comparison_value = int(m.group('value'))\n        except ValueError:\n            comparison_value = parse_filesize(m.group('value'))\n            if comparison_value is None:\n                comparison_value = parse_filesize(m.group('value') + 'B')\n            if comparison_value is None:\n                raise ValueError('Invalid value %r in format specification %r' % (m.group('value'), filter_spec))\n        op = OPERATORS[m.group('op')]\n    if not m:\n        STR_OPERATORS = {'=': operator.eq, '^=': lambda attr, value: attr.startswith(value), '$=': lambda attr, value: attr.endswith(value), '*=': lambda attr, value: value in attr}\n        str_operator_rex = re.compile('(?x)\\n                \\\\s*(?P<key>ext|acodec|vcodec|container|protocol|format_id)\\n                \\\\s*(?P<negation>!\\\\s*)?(?P<op>%s)(?P<none_inclusive>\\\\s*\\\\?)?\\n                \\\\s*(?P<value>[a-zA-Z0-9._-]+)\\n                \\\\s*$\\n                ' % '|'.join(map(re.escape, STR_OPERATORS.keys())))\n        m = str_operator_rex.search(filter_spec)\n        if m:\n            comparison_value = m.group('value')\n            str_op = STR_OPERATORS[m.group('op')]\n            if m.group('negation'):\n                op = lambda attr, value: not str_op\n            else:\n                op = str_op\n    if not m:\n        raise ValueError('Invalid filter specification %r' % filter_spec)\n\n    def _filter(f):\n        actual_value = f.get(m.group('key'))\n        if actual_value is None:\n            return m.group('none_inclusive')\n        return op(actual_value, comparison_value)\n    return _filter",
+        "function_after": "def _build_format_filter(self, filter_spec):\n    \"\"\" Returns a function to filter the formats according to the filter_spec \"\"\"\n    OPERATORS = {'<': operator.lt, '<=': operator.le, '>': operator.gt, '>=': operator.ge, '=': operator.eq, '!=': operator.ne}\n    operator_rex = re.compile('(?x)\\\\s*\\n            (?P<key>width|height|tbr|abr|vbr|asr|filesize|filesize_approx|fps)\\n            \\\\s*(?P<op>%s)(?P<none_inclusive>\\\\s*\\\\?)?\\\\s*\\n            (?P<value>[0-9.]+(?:[kKmMgGtTpPeEzZyY]i?[Bb]?)?)\\n            $\\n            ' % '|'.join(map(re.escape, OPERATORS.keys())))\n    m = operator_rex.search(filter_spec)\n    if m:\n        try:\n            comparison_value = int(m.group('value'))\n        except ValueError:\n            comparison_value = parse_filesize(m.group('value'))\n            if comparison_value is None:\n                comparison_value = parse_filesize(m.group('value') + 'B')\n            if comparison_value is None:\n                raise ValueError('Invalid value %r in format specification %r' % (m.group('value'), filter_spec))\n        op = OPERATORS[m.group('op')]\n    if not m:\n        STR_OPERATORS = {'=': operator.eq, '^=': lambda attr, value: attr.startswith(value), '$=': lambda attr, value: attr.endswith(value), '*=': lambda attr, value: value in attr}\n        str_operator_rex = re.compile('(?x)\\n                \\\\s*(?P<key>ext|acodec|vcodec|container|protocol|format_id)\\n                \\\\s*(?P<negation>!\\\\s*)?(?P<op>%s)(?P<none_inclusive>\\\\s*\\\\?)?\\n                \\\\s*(?P<value>[a-zA-Z0-9._-]+)\\n                \\\\s*$\\n                ' % '|'.join(map(re.escape, STR_OPERATORS.keys())))\n        m = str_operator_rex.search(filter_spec)\n        if m:\n            comparison_value = m.group('value')\n            str_op = STR_OPERATORS[m.group('op')]\n            if m.group('negation'):\n                op = lambda attr, value: not str_op(attr, value)\n            else:\n                op = str_op\n    if not m:\n        raise ValueError('Invalid filter specification %r' % filter_spec)\n\n    def _filter(f):\n        actual_value = f.get(m.group('key'))\n        if actual_value is None:\n            return m.group('none_inclusive')\n        return op(actual_value, comparison_value)\n    return _filter"
+      },
+      "file_name": "YoutubeDL.py",
+      "file_path": "youtube_dl/YoutubeDL.py",
+      "score_reranked": 0.4717622145989432
+    }
+  ],
+  "diffusion_plan": [
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "GuardAdd",
+          "node": 63
+        },
+        {
+          "op": "GuardAdd",
+          "node": 62
+        },
+        {
+          "op": "Replace",
+          "node": 63
+        },
+        {
+          "op": "Replace",
+          "node": 465
+        },
+        {
+          "op": "Replace",
+          "node": 236
+        },
+        {
+          "op": "GuardAdd",
+          "node": 236
+        },
+        {
+          "op": "Replace",
+          "node": 62
+        },
+        {
+          "op": "GuardAdd",
+          "node": 128
+        },
+        {
+          "op": "InsertBefore",
+          "node": 236
+        }
+      ],
+      "score": 18.14545454389587
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "InsertAfter",
+          "node": 128
+        },
+        {
+          "op": "GuardAdd",
+          "node": 63
+        },
+        {
+          "op": "GuardAdd",
+          "node": 128
+        },
+        {
+          "op": "Replace",
+          "node": 62
+        },
+        {
+          "op": "Replace",
+          "node": 465
+        },
+        {
+          "op": "Replace",
+          "node": 63
+        },
+        {
+          "op": "GuardAdd",
+          "node": 236
+        },
+        {
+          "op": "Replace",
+          "node": 236
+        }
+      ],
+      "score": 17.636363635033057
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 63
+        },
+        {
+          "op": "InsertBefore",
+          "node": 236
+        },
+        {
+          "op": "Replace",
+          "node": 236
+        },
+        {
+          "op": "Replace",
+          "node": 465
+        },
+        {
+          "op": "Replace",
+          "node": 127
+        },
+        {
+          "op": "GuardAdd",
+          "node": 236
+        },
+        {
+          "op": "InsertBefore",
+          "node": 128
+        },
+        {
+          "op": "Replace",
+          "node": 62
+        }
+      ],
+      "score": 17.218181816889256
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 62
+        },
+        {
+          "op": "Replace",
+          "node": 61
+        },
+        {
+          "op": "Replace",
+          "node": 63
+        },
+        {
+          "op": "GuardAdd",
+          "node": 62
+        },
+        {
+          "op": "GuardAdd",
+          "node": 236
+        },
+        {
+          "op": "Replace",
+          "node": 465
+        },
+        {
+          "op": "Replace",
+          "node": 461
+        },
+        {
+          "op": "GuardAdd",
+          "node": 63
+        }
+      ],
+      "score": 16.454545453322314
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 63
+        },
+        {
+          "op": "Delete",
+          "node": 236
+        },
+        {
+          "op": "GuardAdd",
+          "node": 62
+        },
+        {
+          "op": "Replace",
+          "node": 236
+        },
+        {
+          "op": "Replace",
+          "node": 465
+        },
+        {
+          "op": "Replace",
+          "node": 61
+        },
+        {
+          "op": "Replace",
+          "node": 461
+        },
+        {
+          "op": "Replace",
+          "node": 62
+        }
+      ],
+      "score": 16.309090907880993
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 62
+        },
+        {
+          "op": "Replace",
+          "node": 236
+        },
+        {
+          "op": "Replace",
+          "node": 350
+        },
+        {
+          "op": "GuardAdd",
+          "node": 63
+        },
+        {
+          "op": "Replace",
+          "node": 63
+        },
+        {
+          "op": "Replace",
+          "node": 128
+        },
+        {
+          "op": "Replace",
+          "node": 465
+        },
+        {
+          "op": "GuardAdd",
+          "node": 128
+        }
+      ],
+      "score": 16.199999998800003
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 465
+        },
+        {
+          "op": "Replace",
+          "node": 62
+        },
+        {
+          "op": "Delete",
+          "node": 128
+        },
+        {
+          "op": "Replace",
+          "node": 128
+        },
+        {
+          "op": "Replace",
+          "node": 236
+        },
+        {
+          "op": "Replace",
+          "node": 350
+        },
+        {
+          "op": "GuardAdd",
+          "node": 236
+        },
+        {
+          "op": "Replace",
+          "node": 63
+        }
+      ],
+      "score": 16.09090908971901
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "GuardAdd",
+          "node": 465
+        },
+        {
+          "op": "GuardAdd",
+          "node": 62
+        },
+        {
+          "op": "Replace",
+          "node": 465
+        },
+        {
+          "op": "Replace",
+          "node": 62
+        },
+        {
+          "op": "Replace",
+          "node": 63
+        },
+        {
+          "op": "GuardAdd",
+          "node": 128
+        },
+        {
+          "op": "Replace",
+          "node": 61
+        },
+        {
+          "op": "InsertAfter",
+          "node": 236
+        }
+      ],
+      "score": 15.872727271557027
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 62
+        },
+        {
+          "op": "Replace",
+          "node": 350
+        },
+        {
+          "op": "GuardAdd",
+          "node": 465
+        },
+        {
+          "op": "Replace",
+          "node": 63
+        },
+        {
+          "op": "GuardAdd",
+          "node": 236
+        },
+        {
+          "op": "Replace",
+          "node": 461
+        },
+        {
+          "op": "Replace",
+          "node": 465
+        },
+        {
+          "op": "Replace",
+          "node": 128
+        }
+      ],
+      "score": 15.454545453413225
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 127
+        },
+        {
+          "op": "Replace",
+          "node": 63
+        },
+        {
+          "op": "Replace",
+          "node": 236
+        },
+        {
+          "op": "Replace",
+          "node": 62
+        },
+        {
+          "op": "Replace",
+          "node": 128
+        },
+        {
+          "op": "Replace",
+          "node": 465
+        },
+        {
+          "op": "Replace",
+          "node": 461
+        },
+        {
+          "op": "GuardAdd",
+          "node": 465
+        },
+        {
+          "op": "Replace",
+          "node": 350
+        },
+        {
+          "op": "InsertAfter",
+          "node": 127
+        }
+      ],
+      "score": 15.345454544150414
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "GuardAdd",
+          "node": 62
+        },
+        {
+          "op": "GuardAdd",
+          "node": 63
+        },
+        {
+          "op": "Replace",
+          "node": 350
+        },
+        {
+          "op": "Replace",
+          "node": 62
+        },
+        {
+          "op": "Replace",
+          "node": 63
+        },
+        {
+          "op": "Replace",
+          "node": 236
+        },
+        {
+          "op": "Replace",
+          "node": 465
+        }
+      ],
+      "score": 15.218181817071075
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "InsertBefore",
+          "node": 128
+        },
+        {
+          "op": "Replace",
+          "node": 62
+        },
+        {
+          "op": "Replace",
+          "node": 461
+        },
+        {
+          "op": "Replace",
+          "node": 125
+        },
+        {
+          "op": "Delete",
+          "node": 63
+        },
+        {
+          "op": "Replace",
+          "node": 63
+        },
+        {
+          "op": "Replace",
+          "node": 236
+        },
+        {
+          "op": "GuardAdd",
+          "node": 465
+        }
+      ],
+      "score": 14.945454544368596
+    }
+  ],
+  "static_analysis_nodes": [
+    {
+      "line": 93,
+      "line_absolute": 196,
+      "node_id": 236,
+      "node_id_local": 69,
+      "type": "Call",
+      "code": "'{0}{1} [{2}, {3}]'.format(n_fmt, unit, elapsed_str, rate_fmt)",
+      "distance_to_buggy": 27,
+      "context": "  90:               full_bar = bar + ' ' * max(N_BARS - bar_length, 0)\n  91:           return l_bar + full_bar + r_bar\n  92:       else:\n  93:->         return (prefix if prefix else '') + '{0}{1} [{2}, {3}]'.format(n_fmt, unit, elapsed_str, rate_fmt)",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Attribute",
+          "value": {
+            "_type": "Constant"
+          },
+          "attr": "format",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [
+          {
+            "_type": "Name",
+            "id": "n_fmt",
+            "ctx": {
+              "_type": "Load"
+            }
+          },
+          {
+            "_type": "Name",
+            "id": "unit",
+            "ctx": {
+              "_type": "Load"
+            }
+          },
+          {
+            "_type": "Name",
+            "id": "elapsed_str",
+            "ctx": {
+              "_type": "Load"
+            }
+          },
+          {
+            "_type": "Name",
+            "id": "rate_fmt",
+            "ctx": {
+              "_type": "Load"
+            }
+          }
+        ],
+        "keywords": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": 244.5
+    },
+    {
+      "line": 93,
+      "line_absolute": 196,
+      "node_id": 63,
+      "node_id_local": 68,
+      "type": "Return",
+      "code": "return (prefix if prefix else '') + '{0}{1} [{2}, {3}]'.format(n_fmt, unit, elapsed_str, rate_fmt)",
+      "distance_to_buggy": 27,
+      "context": "  90:               full_bar = bar + ' ' * max(N_BARS - bar_length, 0)\n  91:           return l_bar + full_bar + r_bar\n  92:       else:\n  93:->         return (prefix if prefix else '') + '{0}{1} [{2}, {3}]'.format(n_fmt, unit, elapsed_str, rate_fmt)",
+      "ast_subtree_json": {
+        "_type": "Return",
+        "value": {
+          "_type": "BinOp",
+          "left": {
+            "_type": "IfExp"
+          },
+          "op": {
+            "_type": "Add"
+          },
+          "right": {
+            "_type": "Call"
+          }
+        }
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": 246.5
+    },
+    {
+      "line": 91,
+      "line_absolute": 194,
+      "node_id": 62,
+      "node_id_local": 67,
+      "type": "Return",
+      "code": "return l_bar + full_bar + r_bar",
+      "distance_to_buggy": 29,
+      "context": "  88:               full_bar = bar + frac_bar + ' ' * max(N_BARS - bar_length - 1, 0)\n  89:           else:\n  90:               full_bar = bar + ' ' * max(N_BARS - bar_length, 0)\n  91:->         return l_bar + full_bar + r_bar\n  92:       else:\n  93:           return (prefix if prefix else '') + '{0}{1} [{2}, {3}]'.format(n_fmt, unit, elapsed_str, rate_fmt)",
+      "ast_subtree_json": {
+        "_type": "Return",
+        "value": {
+          "_type": "BinOp",
+          "left": {
+            "_type": "BinOp"
+          },
+          "op": {
+            "_type": "Add"
+          },
+          "right": {
+            "_type": "Name"
+          }
+        }
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": 268.0
+    },
+    {
+      "line": 90,
+      "line_absolute": 193,
+      "node_id": 465,
+      "node_id_local": 66,
+      "type": "Call",
+      "code": "max(N_BARS - bar_length, 0)",
+      "distance_to_buggy": 30,
+      "context": "  87:           if bar_length < N_BARS:\n  88:               full_bar = bar + frac_bar + ' ' * max(N_BARS - bar_length - 1, 0)\n  89:           else:\n  90:->             full_bar = bar + ' ' * max(N_BARS - bar_length, 0)\n  91:           return l_bar + full_bar + r_bar\n  92:       else:\n  93:           return (prefix if prefix else '') + '{0}{1} [{2}, {3}]'.format(n_fmt, unit, elapsed_str, rate_fmt)",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Name",
+          "id": "max",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [
+          {
+            "_type": "BinOp",
+            "left": {
+              "_type": "Name"
+            },
+            "op": {
+              "_type": "Sub"
+            },
+            "right": {
+              "_type": "Name"
+            }
+          },
+          {
+            "_type": "Constant",
+            "value": 0,
+            "kind": null
+          }
+        ],
+        "keywords": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": 276.0
+    },
+    {
+      "line": 90,
+      "line_absolute": 193,
+      "node_id": 128,
+      "node_id_local": 65,
+      "type": "Assign",
+      "code": "full_bar = bar + ' ' * max(N_BARS - bar_length, 0)",
+      "distance_to_buggy": 30,
+      "context": "  87:           if bar_length < N_BARS:\n  88:               full_bar = bar + frac_bar + ' ' * max(N_BARS - bar_length - 1, 0)\n  89:           else:\n  90:->             full_bar = bar + ' ' * max(N_BARS - bar_length, 0)\n  91:           return l_bar + full_bar + r_bar\n  92:       else:\n  93:           return (prefix if prefix else '') + '{0}{1} [{2}, {3}]'.format(n_fmt, unit, elapsed_str, rate_fmt)",
+      "ast_subtree_json": {
+        "_type": "Assign",
+        "targets": [
+          {
+            "_type": "Name",
+            "id": "full_bar",
+            "ctx": {
+              "_type": "Store"
+            }
+          }
+        ],
+        "value": {
+          "_type": "BinOp",
+          "left": {
+            "_type": "Name"
+          },
+          "op": {
+            "_type": "Add"
+          },
+          "right": {
+            "_type": "BinOp"
+          }
+        },
+        "type_comment": null
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": 277.0
+    },
+    {
+      "line": 88,
+      "line_absolute": 191,
+      "node_id": 461,
+      "node_id_local": 64,
+      "type": "Call",
+      "code": "max(N_BARS - bar_length - 1, 0)",
+      "distance_to_buggy": 32,
+      "context": "  85:               bar = _unich(9608) * bar_length\n  86:               frac_bar = _unich(9616 - frac_bar_length) if frac_bar_length else ' '\n  87:           if bar_length < N_BARS:\n  88:->             full_bar = bar + frac_bar + ' ' * max(N_BARS - bar_length - 1, 0)\n  89:           else:\n  90:               full_bar = bar + ' ' * max(N_BARS - bar_length, 0)\n  91:           return l_bar + full_bar + r_bar",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Name",
+          "id": "max",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [
+          {
+            "_type": "BinOp",
+            "left": {
+              "_type": "BinOp"
+            },
+            "op": {
+              "_type": "Sub"
+            },
+            "right": {
+              "_type": "Constant"
+            }
+          },
+          {
+            "_type": "Constant",
+            "value": 0,
+            "kind": null
+          }
+        ],
+        "keywords": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": 296.0
+    },
+    {
+      "line": 88,
+      "line_absolute": 191,
+      "node_id": 127,
+      "node_id_local": 63,
+      "type": "Assign",
+      "code": "full_bar = bar + frac_bar + ' ' * max(N_BARS - bar_length - 1, 0)",
+      "distance_to_buggy": 32,
+      "context": "  85:               bar = _unich(9608) * bar_length\n  86:               frac_bar = _unich(9616 - frac_bar_length) if frac_bar_length else ' '\n  87:           if bar_length < N_BARS:\n  88:->             full_bar = bar + frac_bar + ' ' * max(N_BARS - bar_length - 1, 0)\n  89:           else:\n  90:               full_bar = bar + ' ' * max(N_BARS - bar_length, 0)\n  91:           return l_bar + full_bar + r_bar",
+      "ast_subtree_json": {
+        "_type": "Assign",
+        "targets": [
+          {
+            "_type": "Name",
+            "id": "full_bar",
+            "ctx": {
+              "_type": "Store"
+            }
+          }
+        ],
+        "value": {
+          "_type": "BinOp",
+          "left": {
+            "_type": "BinOp"
+          },
+          "op": {
+            "_type": "Add"
+          },
+          "right": {
+            "_type": "BinOp"
+          }
+        },
+        "type_comment": null
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": 297.0
+    },
+    {
+      "line": 87,
+      "line_absolute": 190,
+      "node_id": 61,
+      "node_id_local": 62,
+      "type": "If",
+      "code": "if bar_length < N_BARS:\n    full_bar = bar + frac_bar + ' ' * max(N_BARS - bar_length - 1, 0)\nelse:\n    full_bar = bar + ' ' * max(N_BARS - bar_length, 0)",
+      "distance_to_buggy": 33,
+      "context": "  84:               bar_length, frac_bar_length = divmod(int(frac * N_BARS * 8), 8)\n  85:               bar = _unich(9608) * bar_length\n  86:               frac_bar = _unich(9616 - frac_bar_length) if frac_bar_length else ' '\n  87:->         if bar_length < N_BARS:\n  88:               full_bar = bar + frac_bar + ' ' * max(N_BARS - bar_length - 1, 0)\n  89:           else:\n  90:               full_bar = bar + ' ' * max(N_BARS - bar_length, 0)",
+      "ast_subtree_json": {
+        "_type": "If",
+        "test": {
+          "_type": "Compare",
+          "left": {
+            "_type": "Name"
+          },
+          "ops": [
+            {
+              "_type": "Lt"
+            }
+          ],
+          "comparators": [
+            {
+              "_type": "Name"
+            }
+          ]
+        },
+        "body": [
+          {
+            "_type": "Assign",
+            "targets": [
+              {
+                "_type": "Name"
+              }
+            ],
+            "value": {
+              "_type": "BinOp"
+            },
+            "type_comment": null
+          }
+        ],
+        "orelse": [
+          {
+            "_type": "Assign",
+            "targets": [
+              {
+                "_type": "Name"
+              }
+            ],
+            "value": {
+              "_type": "BinOp"
+            },
+            "type_comment": null
+          }
+        ]
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": 307.0
+    },
+    {
+      "line": 86,
+      "line_absolute": 189,
+      "node_id": 350,
+      "node_id_local": 61,
+      "type": "Call",
+      "code": "_unich(9616 - frac_bar_length)",
+      "distance_to_buggy": 34,
+      "context": "  83:           else:\n  84:               bar_length, frac_bar_length = divmod(int(frac * N_BARS * 8), 8)\n  85:               bar = _unich(9608) * bar_length\n  86:->             frac_bar = _unich(9616 - frac_bar_length) if frac_bar_length else ' '\n  87:           if bar_length < N_BARS:\n  88:               full_bar = bar + frac_bar + ' ' * max(N_BARS - bar_length - 1, 0)\n  89:           else:",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Name",
+          "id": "_unich",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [
+          {
+            "_type": "BinOp",
+            "left": {
+              "_type": "Constant"
+            },
+            "op": {
+              "_type": "Sub"
+            },
+            "right": {
+              "_type": "Name"
+            }
+          }
+        ],
+        "keywords": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|system|>...",
+      "reranker_score": 316.0
+    },
+    {
+      "line": 86,
+      "line_absolute": 189,
+      "node_id": 125,
+      "node_id_local": 60,
+      "type": "Assign",
+      "code": "frac_bar = _unich(9616 - frac_bar_length) if frac_bar_length else ' '",
+      "distance_to_buggy": 34,
+      "context": "  83:           else:\n  84:               bar_length, frac_bar_length = divmod(int(frac * N_BARS * 8), 8)\n  85:               bar = _unich(9608) * bar_length\n  86:->             frac_bar = _unich(9616 - frac_bar_length) if frac_bar_length else ' '\n  87:           if bar_length < N_BARS:\n  88:               full_bar = bar + frac_bar + ' ' * max(N_BARS - bar_length - 1, 0)\n  89:           else:",
+      "ast_subtree_json": {
+        "_type": "Assign",
+        "targets": [
+          {
+            "_type": "Name",
+            "id": "frac_bar",
+            "ctx": {
+              "_type": "Store"
+            }
+          }
+        ],
+        "value": {
+          "_type": "IfExp",
+          "test": {
+            "_type": "Name"
+          },
+          "body": {
+            "_type": "Call"
+          },
+          "orelse": {
+            "_type": "Constant"
+          }
+        },
+        "type_comment": null
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": 317.0
+    }
+  ]
+}

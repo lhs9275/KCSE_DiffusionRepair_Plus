@@ -1,0 +1,1024 @@
+{
+  "bug_id": "47",
+  "seed": 43,
+  "arm": "full",
+  "candidates": [
+    {
+      "index": 0,
+      "patch_text": "def get_all_executables():\n    from thefuck.shells import shell\n\n    def _safe(fn, fallback):\n        try:\n            return fn()\n        except OSError:\n            return fallback\n    tf_alias = get_alias()\n    tf_entry_points = ['thefuck', 'fuck']\n    bins = [exe.name.decode('utf8') if six.PY2 else exe.name for path in os.environ.get('PATH', '').split(':') for exe in _safe(lambda: list(Path(path).iterdir()), []) if not _safe(exe.is_dir, True) and exe.name not in tf_entry_points]\n    aliases = [alias.decode('utf8') if six.PY2 else alias for alias in shell.get_aliases() if alias!= tf_alias]\n    return bins + aliases",
+      "patch_sha256": "bc9f8e3f95fe8b7ed414dc00c4c8433a0bd61be9fcac4480fe3d3299860d7cf0",
+      "rank_score": 9,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.0,
+      "top_p": 1.0
+    },
+    {
+      "index": 1,
+      "patch_text": "def get_all_executables():\n    from thefuck.shells import shell\n\n    def _safe(fn, fallback):\n        try:\n            return fn()\n        except OSError:\n            return fallback\n    tf_alias = get_alias()\n    tf_entry_points = ['thefuck', 'fuck']\n    bins = [exe.name.decode('utf8') if six.PY2 else exe.name for path in os.environ.get('PATH', '').split(':') for exe in list(Path(path).iterdir()) if not exe.is_dir() and exe.name not in tf_entry_points]  # <--- BUGGY LINE\n    aliases = [alias.decode('utf8') if six.PY2 else alias for alias in shell.get_aliases() if alias!= tf_alias]\n    return bins + aliases",
+      "patch_sha256": "21f2aab9a917f66bd91e473dcd7fb09a34a3d0e679d343b51d98a3449915775c",
+      "rank_score": 6,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7704673177175924,
+      "top_p": 0.8630841471469904
+    },
+    {
+      "index": 2,
+      "patch_text": "def get_all_executables():\n    from thefuck.shells import shell\n\n    tf_alias = get_alias()\n    tf_entry_points = ['thefuck', 'fuck']\n    bins = [exe.name.decode('utf8') if six.PY2 else exe.name for path in os.environ.get('PATH', '').split(':') for exe in _safe(lambda: list(Path(path).iterdir()), []) if not _safe(exe.is_dir, True) and exe.name not in tf_entry_points]  # <--- BUGGY LINE\n    aliases = [alias.decode('utf8') if six.PY2 else alias for alias in shell.get_aliases() if alias!= tf_alias]\n    return bins + aliases",
+      "patch_sha256": "bad8f6d29f657c13b8e3293323a2a3041b80ae267c4608450017fd5cebb6c489",
+      "rank_score": -44,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8030069698746244,
+      "top_p": 0.9037587123432804
+    },
+    {
+      "index": 3,
+      "patch_text": "def get_all_executables():\n    from thefuck.shells import shell\n\n    def _safe(fn, fallback):\n        try:\n            return fn()\n        except OSError:\n            return fallback\n    tf_alias = get_alias()\n    tf_entry_points = ['thefuck', 'fuck']\n    bins = [exe.name.decode('utf8') if six.PY2 else exe.name for path in os.environ.get('PATH', '').split(':') for exe in _safe(lambda: list(Path(path).iterdir()), []) if not _safe(exe.is_dir, True) and exe.name not in tf_entry_points]\n    aliases = [alias.decode('utf8') if six.PY2 else alias for alias in shell.get_aliases() if alias!= tf_alias]\n    return bins + aliases\n\nimport sys\nfrom.base import BaseFix\n\nsys.stderr.write(\"I am a python fix\\n\")\n\n\nclass FixPython(BaseFix):\n    language = \"python\"\n    languages = [\"python\"]\nimport re\nimport sys\nfrom typing import List\n\nfrom..core import FileEdit\nfrom..exceptions import FixError\nfrom..fixes import Fix\n\nsys.stderr.write(\"I am a jsx fix\\n\")\n\n\nclass FixJsx(Fix):\n    def apply(self, file_edit: FileEdit, project: str) -> bool:\n        def fix_tag_missing_slash(m):\n            return m.group(1) + \"/\"\n\n        def fix_tag_with_content(m):\n            return m.group(1) + m.group(3)\n\n        def fix_tag_with_attributes(m):\n            return m.group(1) + m.group(3)\n\n        def fix_tag_with_self_closing(m):\n            return m.group(1) + m.group(3)\n\n        def fix_tag_with_children(m):\n            return m.group(1) + m.group(3)\n\n        def fix_tag_with_children_and_slash(m):\n            return m.group(1) + m.group(3) + \"/\"\n\n        def fix_tag_with_children_and_attributes(m):\n            return m.group(1) + m.group(3)\n\n        def fix_tag_with_children_and_self_closing(m):\n            return m.group(1) + m.group(3)\n\n        def fix_tag_with_children_and_attributes_and_slash(m):\n            return m.group(1) + m.group(3)\n\n        def fix_tag_with_children_and_attributes_and_self_closing(m):\n            return m.group(1) + m.group(3)\n\n        def fix_tag_with_children_and_slash_and_attributes(m):\n            return m",
+      "patch_sha256": "d4f635ae5d01d2907fa888439905c3164eaf099e79835c60a0f375ff81b36c09",
+      "rank_score": -64,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7956728856928922,
+      "top_p": 0.8945911071161152
+    },
+    {
+      "index": 4,
+      "patch_text": "def get_all_executables():\n    from thefuck.shells import shell\n\n    def _safe(fn, fallback):\n        try:\n            return fn()\n        except OSError:\n            return fallback\n    tf_alias = get_alias()\n    tf_entry_points = ['thefuck', 'fuck']\n    bins = [exe.name.decode('utf8') if six.PY2 else exe.name for path in os.environ.get('PATH', '').split(':') for exe in list(Path(path).iterdir()) if not exe.is_dir() and exe.name not in tf_entry_points]\n    aliases = [alias.decode('utf8') if six.PY2 else alias for alias in shell.get_aliases() if alias!= tf_alias]\n    return bins + aliases\nimport ast\nimport os\nfrom pathlib import Path\nfrom subprocess import check_output\n\nimport jinja2\nimport yaml\n\nfrom buggier.bug_fixer import Fixer\nfrom buggier.constants import TEST_FIX_DIR\n\n\nclass TestFixer(Fixer):\n    def __init__(self, project_dir, test_case_dir):\n        super().__init__(project_dir, test_case_dir)\n        self.test_case_dir = test_case_dir\n\n        self.testcase_dir = self.test_case_dir\n        self.proj_dir = self.project_dir\n        self.buggy_line = self.buggy_lines[-1]\n        self.buggy_filename = self.buggy_files[-1]\n\n        self.test_case_name = Path(self.test_case_dir).stem\n        self.test_case_filepath = Path(self.test_case_dir) / f\"{self.test_case_name}.yml\"\n\n        self.buggy_file_content = self.buggy_file_contents[-1]\n        self.buggy_line_content = self.buggy_line_contents[-1]\n\n        self.buggy_file_ast = ast.parse(self.buggy_file_content)\n        self.buggy_line_ast = ast.parse(self.buggy_line_content)\n\n        self.buggy_line_number = self.buggy_line_numbers[-1]\n        self.buggy_filename = self.buggy_filenames[-1]\n        self.buggy_func_name = self.buggy_func_names[-1]\n\n        self.buggy_line_node = self.buggy_line_ast.body[self.buggy_line_number]\n        self.buggy_file_node = self.buggy_file_ast.body[self.buggy_line_number]\n        self.buggy_file_node = self.buggy_file_ast.body[self.buggy_line_number]\n\n        self.buggy",
+      "patch_sha256": "5dbdfd57088d501c84621e645456dbe4bd40da749392cd33cd0a814b0ee3b1b7",
+      "rank_score": -65,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7970041106218376,
+      "top_p": 0.896255138277297
+    }
+  ],
+  "candidate_count": 5,
+  "retrieved_examples": [
+    {
+      "id": "18",
+      "project_name": "youtube-dl",
+      "buggy_line_content": "    if re.match(r'^(?:https?:)?//', path):",
+      "function": {
+        "function_name": "urljoin",
+        "function_parent": "utils.py",
+        "function_before_start_line": 1866,
+        "function_before_end_line": 1878,
+        "function_after_start_line": 1866,
+        "function_after_end_line": 1878,
+        "function_before_token_count": 97,
+        "function_after_token_count": 97,
+        "function_before": "def urljoin(base, path):\n    if isinstance(path, bytes):\n        path = path.decode('utf-8')\n    if not isinstance(path, compat_str) or not path:\n        return None\n    if re.match('^(?:https?:)?//', path):\n        return path\n    if isinstance(base, bytes):\n        base = base.decode('utf-8')\n    if not isinstance(base, compat_str) or not re.match('^(?:https?:)?//', base):\n        return None\n    return compat_urlparse.urljoin(base, path)",
+        "function_after": "def urljoin(base, path):\n    if isinstance(path, bytes):\n        path = path.decode('utf-8')\n    if not isinstance(path, compat_str) or not path:\n        return None\n    if re.match('^(?:[a-zA-Z][a-zA-Z0-9+-.]*:)?//', path):\n        return path\n    if isinstance(base, bytes):\n        base = base.decode('utf-8')\n    if not isinstance(base, compat_str) or not re.match('^(?:https?:)?//', base):\n        return None\n    return compat_urlparse.urljoin(base, path)"
+      },
+      "file_name": "utils.py",
+      "file_path": "youtube_dl/utils.py",
+      "score_reranked": 0.5168522125436104
+    },
+    {
+      "id": "28",
+      "project_name": "scrapy",
+      "buggy_line_content": "        if ':' not in self._url:",
+      "function": {
+        "function_name": "_set_url",
+        "function_parent": "Request",
+        "function_before_start_line": 62,
+        "function_before_end_line": 70,
+        "function_after_start_line": 62,
+        "function_after_end_line": 70,
+        "function_before_token_count": 65,
+        "function_after_token_count": 79,
+        "function_before": "def _set_url(self, url):\n    if not isinstance(url, six.string_types):\n        raise TypeError('Request url must be str or unicode, got %s:' % type(url).__name__)\n    s = safe_url_string(url, self.encoding)\n    self._url = escape_ajax(s)\n    if ':' not in self._url:\n        raise ValueError('Missing scheme in request url: %s' % self._url)",
+        "function_after": "def _set_url(self, url):\n    if not isinstance(url, six.string_types):\n        raise TypeError('Request url must be str or unicode, got %s:' % type(url).__name__)\n    s = safe_url_string(url, self.encoding)\n    self._url = escape_ajax(s)\n    if '://' not in self._url and (not self._url.startswith('data:')):\n        raise ValueError('Missing scheme in request url: %s' % self._url)"
+      },
+      "file_name": "__init__.py",
+      "file_path": "scrapy/http/request/__init__.py",
+      "score_reranked": 0.49367570101401764
+    },
+    {
+      "id": "39",
+      "project_name": "pandas",
+      "buggy_line_content": "            except (TypeError, ValueError):",
+      "function": {
+        "function_name": "_try_convert_data",
+        "function_parent": "Parser",
+        "function_before_start_line": 886,
+        "function_before_end_line": 958,
+        "function_after_start_line": 886,
+        "function_after_end_line": 958,
+        "function_before_token_count": 277,
+        "function_after_token_count": 279,
+        "function_before": "def _try_convert_data(self, name, data, use_dtypes=True, convert_dates=True):\n    \"\"\"\n        Try to parse a ndarray like into a column by inferring dtype.\n        \"\"\"\n    if use_dtypes:\n        if not self.dtype:\n            return (data, False)\n        elif self.dtype is True:\n            pass\n        else:\n            dtype = self.dtype.get(name) if isinstance(self.dtype, dict) else self.dtype\n            if dtype is not None:\n                try:\n                    dtype = np.dtype(dtype)\n                    return (data.astype(dtype), True)\n                except (TypeError, ValueError):\n                    return (data, False)\n    if convert_dates:\n        new_data, result = self._try_convert_to_date(data)\n        if result:\n            return (new_data, True)\n    result = False\n    if data.dtype == 'object':\n        try:\n            data = data.astype('float64')\n            result = True\n        except (TypeError, ValueError):\n            pass\n    if data.dtype.kind == 'f':\n        if data.dtype != 'float64':\n            try:\n                data = data.astype('float64')\n                result = True\n            except (TypeError, ValueError):\n                pass\n    if len(data) and (data.dtype == 'float' or data.dtype == 'object'):\n        try:\n            new_data = data.astype('int64')\n            if (new_data == data).all():\n                data = new_data\n                result = True\n        except (TypeError, ValueError):\n            pass\n    if data.dtype == 'int':\n        try:\n            data = data.astype('int64')\n            result = True\n        except (TypeError, ValueError):\n            pass\n    return (data, result)",
+        "function_after": "def _try_convert_data(self, name, data, use_dtypes=True, convert_dates=True):\n    \"\"\"\n        Try to parse a ndarray like into a column by inferring dtype.\n        \"\"\"\n    if use_dtypes:\n        if not self.dtype:\n            return (data, False)\n        elif self.dtype is True:\n            pass\n        else:\n            dtype = self.dtype.get(name) if isinstance(self.dtype, dict) else self.dtype\n            if dtype is not None:\n                try:\n                    dtype = np.dtype(dtype)\n                    return (data.astype(dtype), True)\n                except (TypeError, ValueError):\n                    return (data, False)\n    if convert_dates:\n        new_data, result = self._try_convert_to_date(data)\n        if result:\n            return (new_data, True)\n    result = False\n    if data.dtype == 'object':\n        try:\n            data = data.astype('float64')\n            result = True\n        except (TypeError, ValueError):\n            pass\n    if data.dtype.kind == 'f':\n        if data.dtype != 'float64':\n            try:\n                data = data.astype('float64')\n                result = True\n            except (TypeError, ValueError):\n                pass\n    if len(data) and (data.dtype == 'float' or data.dtype == 'object'):\n        try:\n            new_data = data.astype('int64')\n            if (new_data == data).all():\n                data = new_data\n                result = True\n        except (TypeError, ValueError, OverflowError):\n            pass\n    if data.dtype == 'int':\n        try:\n            data = data.astype('int64')\n            result = True\n        except (TypeError, ValueError):\n            pass\n    return (data, result)"
+      },
+      "file_name": "_json.py",
+      "file_path": "pandas/io/json/_json.py",
+      "score_reranked": 0.47873581146376065
+    },
+    {
+      "id": "5",
+      "project_name": "luigi",
+      "buggy_line_content": "            self.fs.mkdir(d)",
+      "function": {
+        "function_name": "move",
+        "function_parent": "LocalFileSystem",
+        "function_before_start_line": 86,
+        "function_before_end_line": 92,
+        "function_after_start_line": 86,
+        "function_after_end_line": 92,
+        "function_before_token_count": 71,
+        "function_after_token_count": 69,
+        "function_before": "def move(self, old_path, new_path, raise_if_exists=False):\n    if raise_if_exists and os.path.exists(new_path):\n        raise RuntimeError('Destination exists: %s' % new_path)\n    d = os.path.dirname(new_path)\n    if d and (not os.path.exists(d)):\n        self.fs.mkdir(d)\n    os.rename(old_path, new_path)",
+        "function_after": "def move(self, old_path, new_path, raise_if_exists=False):\n    if raise_if_exists and os.path.exists(new_path):\n        raise RuntimeError('Destination exists: %s' % new_path)\n    d = os.path.dirname(new_path)\n    if d and (not os.path.exists(d)):\n        self.mkdir(d)\n    os.rename(old_path, new_path)"
+      },
+      "file_name": "file.py",
+      "file_path": "luigi/file.py",
+      "score_reranked": 0.4412258652101539
+    },
+    {
+      "id": "19",
+      "project_name": "youtube-dl",
+      "buggy_line_content": "        [a-zA-Z_][.a-zA-Z_0-9]*|",
+      "function": {
+        "function_name": "js_to_json",
+        "function_parent": "utils.py",
+        "function_before_start_line": 2235,
+        "function_before_end_line": 2273,
+        "function_after_start_line": 2235,
+        "function_after_end_line": 2273,
+        "function_before_token_count": 77,
+        "function_after_token_count": 77,
+        "function_before": "def js_to_json(code):\n    COMMENT_RE = '/\\\\*(?:(?!\\\\*/).)*?\\\\*/|//[^\\\\n]*'\n    SKIP_RE = '\\\\s*(?:{comment})?\\\\s*'.format(comment=COMMENT_RE)\n    INTEGER_TABLE = (('(?s)^(0[xX][0-9a-fA-F]+){skip}:?$'.format(skip=SKIP_RE), 16), ('(?s)^(0+[0-7]+){skip}:?$'.format(skip=SKIP_RE), 8))\n\n    def fix_kv(m):\n        v = m.group(0)\n        if v in ('true', 'false', 'null'):\n            return v\n        elif v.startswith('/*') or v.startswith('//') or v == ',':\n            return ''\n        if v[0] in (\"'\", '\"'):\n            v = re.sub('(?s)\\\\\\\\.|\"', lambda m: {'\"': '\\\\\"', \"\\\\'\": \"'\", '\\\\\\n': '', '\\\\x': '\\\\u00'}.get(m.group(0), m.group(0)), v[1:-1])\n        for regex, base in INTEGER_TABLE:\n            im = re.match(regex, v)\n            if im:\n                i = int(im.group(1), base)\n                return '\"%d\":' % i if v.endswith(':') else '%d' % i\n        return '\"%s\"' % v\n    return re.sub('(?sx)\\n        \"(?:[^\"\\\\\\\\]*(?:\\\\\\\\\\\\\\\\|\\\\\\\\[\\'\"nurtbfx/\\\\n]))*[^\"\\\\\\\\]*\"|\\n        \\'(?:[^\\'\\\\\\\\]*(?:\\\\\\\\\\\\\\\\|\\\\\\\\[\\'\"nurtbfx/\\\\n]))*[^\\'\\\\\\\\]*\\'|\\n        {comment}|,(?={skip}[\\\\]}}])|\\n        [a-zA-Z_][.a-zA-Z_0-9]*|\\n        \\\\b(?:0[xX][0-9a-fA-F]+|0+[0-7]+)(?:{skip}:)?|\\n        [0-9]+(?={skip}:)\\n        '.format(comment=COMMENT_RE, skip=SKIP_RE), fix_kv, code)",
+        "function_after": "def js_to_json(code):\n    COMMENT_RE = '/\\\\*(?:(?!\\\\*/).)*?\\\\*/|//[^\\\\n]*'\n    SKIP_RE = '\\\\s*(?:{comment})?\\\\s*'.format(comment=COMMENT_RE)\n    INTEGER_TABLE = (('(?s)^(0[xX][0-9a-fA-F]+){skip}:?$'.format(skip=SKIP_RE), 16), ('(?s)^(0+[0-7]+){skip}:?$'.format(skip=SKIP_RE), 8))\n\n    def fix_kv(m):\n        v = m.group(0)\n        if v in ('true', 'false', 'null'):\n            return v\n        elif v.startswith('/*') or v.startswith('//') or v == ',':\n            return ''\n        if v[0] in (\"'\", '\"'):\n            v = re.sub('(?s)\\\\\\\\.|\"', lambda m: {'\"': '\\\\\"', \"\\\\'\": \"'\", '\\\\\\n': '', '\\\\x': '\\\\u00'}.get(m.group(0), m.group(0)), v[1:-1])\n        for regex, base in INTEGER_TABLE:\n            im = re.match(regex, v)\n            if im:\n                i = int(im.group(1), base)\n                return '\"%d\":' % i if v.endswith(':') else '%d' % i\n        return '\"%s\"' % v\n    return re.sub('(?sx)\\n        \"(?:[^\"\\\\\\\\]*(?:\\\\\\\\\\\\\\\\|\\\\\\\\[\\'\"nurtbfx/\\\\n]))*[^\"\\\\\\\\]*\"|\\n        \\'(?:[^\\'\\\\\\\\]*(?:\\\\\\\\\\\\\\\\|\\\\\\\\[\\'\"nurtbfx/\\\\n]))*[^\\'\\\\\\\\]*\\'|\\n        {comment}|,(?={skip}[\\\\]}}])|\\n        (?:(?<![0-9])[eE]|[a-df-zA-DF-Z_])[.a-zA-Z_0-9]*|\\n        \\\\b(?:0[xX][0-9a-fA-F]+|0+[0-7]+)(?:{skip}:)?|\\n        [0-9]+(?={skip}:)\\n        '.format(comment=COMMENT_RE, skip=SKIP_RE), fix_kv, code)"
+      },
+      "file_name": "utils.py",
+      "file_path": "youtube_dl/utils.py",
+      "score_reranked": 0.4269038739518692
+    }
+  ],
+  "diffusion_plan": [
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 60
+        },
+        {
+          "op": "GuardAdd",
+          "node": 103
+        },
+        {
+          "op": "GuardAdd",
+          "node": 52
+        },
+        {
+          "op": "Replace",
+          "node": 49
+        },
+        {
+          "op": "Replace",
+          "node": 103
+        },
+        {
+          "op": "Replace",
+          "node": 52
+        },
+        {
+          "op": "Replace",
+          "node": 54
+        },
+        {
+          "op": "GuardAdd",
+          "node": 99
+        },
+        {
+          "op": "InsertAfter",
+          "node": 49
+        },
+        {
+          "op": "Replace",
+          "node": 123
+        },
+        {
+          "op": "GuardAdd",
+          "node": 123
+        },
+        {
+          "op": "Replace",
+          "node": 143
+        },
+        {
+          "op": "Replace",
+          "node": 57
+        }
+      ],
+      "score": 18.845454543832233
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 143
+        },
+        {
+          "op": "Replace",
+          "node": 99
+        },
+        {
+          "op": "Replace",
+          "node": 103
+        },
+        {
+          "op": "Replace",
+          "node": 49
+        },
+        {
+          "op": "Replace",
+          "node": 52
+        },
+        {
+          "op": "Replace",
+          "node": 54
+        },
+        {
+          "op": "GuardAdd",
+          "node": 52
+        },
+        {
+          "op": "Replace",
+          "node": 106
+        },
+        {
+          "op": "InsertBefore",
+          "node": 99
+        },
+        {
+          "op": "GuardAdd",
+          "node": 99
+        },
+        {
+          "op": "GuardAdd",
+          "node": 143
+        }
+      ],
+      "score": 18.218181816616532
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 52
+        },
+        {
+          "op": "Replace",
+          "node": 103
+        },
+        {
+          "op": "Replace",
+          "node": 54
+        },
+        {
+          "op": "Replace",
+          "node": 143
+        },
+        {
+          "op": "GuardAdd",
+          "node": 54
+        },
+        {
+          "op": "Replace",
+          "node": 99
+        },
+        {
+          "op": "InsertBefore",
+          "node": 49
+        },
+        {
+          "op": "Delete",
+          "node": 52
+        }
+      ],
+      "score": 16.736363635114877
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 123
+        },
+        {
+          "op": "Replace",
+          "node": 54
+        },
+        {
+          "op": "InsertBefore",
+          "node": 103
+        },
+        {
+          "op": "GuardAdd",
+          "node": 99
+        },
+        {
+          "op": "InsertBefore",
+          "node": 54
+        },
+        {
+          "op": "Replace",
+          "node": 52
+        },
+        {
+          "op": "GuardAdd",
+          "node": 49
+        },
+        {
+          "op": "GuardAdd",
+          "node": 103
+        },
+        {
+          "op": "Replace",
+          "node": 106
+        },
+        {
+          "op": "Replace",
+          "node": 49
+        }
+      ],
+      "score": 16.67272727130248
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 52
+        },
+        {
+          "op": "Replace",
+          "node": 143
+        },
+        {
+          "op": "Replace",
+          "node": 103
+        },
+        {
+          "op": "InsertBefore",
+          "node": 54
+        },
+        {
+          "op": "Replace",
+          "node": 99
+        },
+        {
+          "op": "GuardAdd",
+          "node": 103
+        },
+        {
+          "op": "Replace",
+          "node": 49
+        },
+        {
+          "op": "Replace",
+          "node": 54
+        }
+      ],
+      "score": 16.618181816943803
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "GuardAdd",
+          "node": 52
+        },
+        {
+          "op": "Replace",
+          "node": 54
+        },
+        {
+          "op": "Delete",
+          "node": 52
+        },
+        {
+          "op": "GuardAdd",
+          "node": 49
+        },
+        {
+          "op": "GuardAdd",
+          "node": 99
+        },
+        {
+          "op": "GuardAdd",
+          "node": 123
+        },
+        {
+          "op": "Replace",
+          "node": 123
+        },
+        {
+          "op": "Replace",
+          "node": 52
+        }
+      ],
+      "score": 16.472727271502478
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Delete",
+          "node": 54
+        },
+        {
+          "op": "InsertAfter",
+          "node": 52
+        },
+        {
+          "op": "Replace",
+          "node": 57
+        },
+        {
+          "op": "Replace",
+          "node": 54
+        },
+        {
+          "op": "Replace",
+          "node": 52
+        },
+        {
+          "op": "GuardAdd",
+          "node": 99
+        },
+        {
+          "op": "Replace",
+          "node": 49
+        },
+        {
+          "op": "Replace",
+          "node": 103
+        }
+      ],
+      "score": 16.136363635169424
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 123
+        },
+        {
+          "op": "Replace",
+          "node": 49
+        },
+        {
+          "op": "Replace",
+          "node": 60
+        },
+        {
+          "op": "GuardAdd",
+          "node": 54
+        },
+        {
+          "op": "InsertBefore",
+          "node": 99
+        },
+        {
+          "op": "Replace",
+          "node": 52
+        },
+        {
+          "op": "GuardAdd",
+          "node": 60
+        },
+        {
+          "op": "Replace",
+          "node": 106
+        },
+        {
+          "op": "Replace",
+          "node": 54
+        },
+        {
+          "op": "Replace",
+          "node": 103
+        },
+        {
+          "op": "Delete",
+          "node": 52
+        }
+      ],
+      "score": 16.090909089537192
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 52
+        },
+        {
+          "op": "GuardAdd",
+          "node": 54
+        },
+        {
+          "op": "Replace",
+          "node": 57
+        },
+        {
+          "op": "Replace",
+          "node": 103
+        },
+        {
+          "op": "Replace",
+          "node": 54
+        },
+        {
+          "op": "Replace",
+          "node": 49
+        },
+        {
+          "op": "Replace",
+          "node": 106
+        },
+        {
+          "op": "Replace",
+          "node": 99
+        }
+      ],
+      "score": 15.81818181701653
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "GuardAdd",
+          "node": 52
+        },
+        {
+          "op": "Replace",
+          "node": 49
+        },
+        {
+          "op": "GuardAdd",
+          "node": 99
+        },
+        {
+          "op": "Replace",
+          "node": 52
+        },
+        {
+          "op": "Replace",
+          "node": 143
+        },
+        {
+          "op": "Delete",
+          "node": 143
+        },
+        {
+          "op": "Delete",
+          "node": 99
+        },
+        {
+          "op": "Replace",
+          "node": 54
+        }
+      ],
+      "score": 15.763636362476033
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 99
+        },
+        {
+          "op": "Replace",
+          "node": 103
+        },
+        {
+          "op": "Replace",
+          "node": 52
+        },
+        {
+          "op": "GuardAdd",
+          "node": 143
+        },
+        {
+          "op": "Replace",
+          "node": 54
+        },
+        {
+          "op": "Replace",
+          "node": 49
+        },
+        {
+          "op": "GuardAdd",
+          "node": 54
+        }
+      ],
+      "score": 15.50909090795372
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 103
+        },
+        {
+          "op": "Replace",
+          "node": 54
+        },
+        {
+          "op": "Replace",
+          "node": 52
+        },
+        {
+          "op": "Replace",
+          "node": 143
+        },
+        {
+          "op": "Replace",
+          "node": 99
+        },
+        {
+          "op": "Replace",
+          "node": 106
+        },
+        {
+          "op": "InsertBefore",
+          "node": 106
+        },
+        {
+          "op": "GuardAdd",
+          "node": 52
+        },
+        {
+          "op": "GuardAdd",
+          "node": 54
+        }
+      ],
+      "score": 15.172727271438845
+    }
+  ],
+  "static_analysis_nodes": [
+    {
+      "line": 12,
+      "line_absolute": 119,
+      "node_id": 54,
+      "node_id_local": 12,
+      "type": "Call",
+      "code": "_safe(lambda: list(Path(path).iterdir()), [])",
+      "distance_to_buggy": 0,
+      "context": "   9:               return fallback\n  10:       tf_alias = get_alias()\n  11:       tf_entry_points = ['thefuck', 'fuck']\n  12:->     bins = [exe.name.decode('utf8') if six.PY2 else exe.name for path in os.environ.get('PATH', '').split(':') for exe in _safe(lambda: list(Path(path).iterdir()), []) if not _safe(exe.is_dir, True) and exe.name not in tf_entry_points]\n  13:       aliases = [alias.decode('utf8') if six.PY2 else alias for alias in shell.get_aliases() if alias != tf_alias]\n  14:       return bins + aliases",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Name",
+          "id": "_safe",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [
+          {
+            "_type": "Lambda",
+            "args": {
+              "_type": "arguments"
+            },
+            "body": {
+              "_type": "Call"
+            }
+          },
+          {
+            "_type": "List",
+            "elts": [],
+            "ctx": {
+              "_type": "Load"
+            }
+          }
+        ],
+        "keywords": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -25.5
+    },
+    {
+      "line": 12,
+      "line_absolute": 119,
+      "node_id": 52,
+      "node_id_local": 10,
+      "type": "Call",
+      "code": "os.environ.get('PATH', '').split(':')",
+      "distance_to_buggy": 0,
+      "context": "   9:               return fallback\n  10:       tf_alias = get_alias()\n  11:       tf_entry_points = ['thefuck', 'fuck']\n  12:->     bins = [exe.name.decode('utf8') if six.PY2 else exe.name for path in os.environ.get('PATH', '').split(':') for exe in _safe(lambda: list(Path(path).iterdir()), []) if not _safe(exe.is_dir, True) and exe.name not in tf_entry_points]\n  13:       aliases = [alias.decode('utf8') if six.PY2 else alias for alias in shell.get_aliases() if alias != tf_alias]\n  14:       return bins + aliases",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Attribute",
+          "value": {
+            "_type": "Call"
+          },
+          "attr": "split",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [
+          {
+            "_type": "Constant",
+            "value": ":",
+            "kind": null
+          }
+        ],
+        "keywords": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -25.2
+    },
+    {
+      "line": 12,
+      "line_absolute": 119,
+      "node_id": 99,
+      "node_id_local": 11,
+      "type": "Call",
+      "code": "os.environ.get('PATH', '')",
+      "distance_to_buggy": 0,
+      "context": "   9:               return fallback\n  10:       tf_alias = get_alias()\n  11:       tf_entry_points = ['thefuck', 'fuck']\n  12:->     bins = [exe.name.decode('utf8') if six.PY2 else exe.name for path in os.environ.get('PATH', '').split(':') for exe in _safe(lambda: list(Path(path).iterdir()), []) if not _safe(exe.is_dir, True) and exe.name not in tf_entry_points]\n  13:       aliases = [alias.decode('utf8') if six.PY2 else alias for alias in shell.get_aliases() if alias != tf_alias]\n  14:       return bins + aliases",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Attribute",
+          "value": {
+            "_type": "Attribute"
+          },
+          "attr": "get",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [
+          {
+            "_type": "Constant",
+            "value": "PATH",
+            "kind": null
+          },
+          {
+            "_type": "Constant",
+            "value": "",
+            "kind": null
+          }
+        ],
+        "keywords": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -25.2
+    },
+    {
+      "line": 12,
+      "line_absolute": 119,
+      "node_id": 49,
+      "node_id_local": 9,
+      "type": "Call",
+      "code": "exe.name.decode('utf8')",
+      "distance_to_buggy": 0,
+      "context": "   9:               return fallback\n  10:       tf_alias = get_alias()\n  11:       tf_entry_points = ['thefuck', 'fuck']\n  12:->     bins = [exe.name.decode('utf8') if six.PY2 else exe.name for path in os.environ.get('PATH', '').split(':') for exe in _safe(lambda: list(Path(path).iterdir()), []) if not _safe(exe.is_dir, True) and exe.name not in tf_entry_points]\n  13:       aliases = [alias.decode('utf8') if six.PY2 else alias for alias in shell.get_aliases() if alias != tf_alias]\n  14:       return bins + aliases",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Attribute",
+          "value": {
+            "_type": "Attribute"
+          },
+          "attr": "decode",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [
+          {
+            "_type": "Constant",
+            "value": "utf8",
+            "kind": null
+          }
+        ],
+        "keywords": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -24.0
+    },
+    {
+      "line": 12,
+      "line_absolute": 119,
+      "node_id": 103,
+      "node_id_local": 13,
+      "type": "Call",
+      "code": "list(Path(path).iterdir())",
+      "distance_to_buggy": 0,
+      "context": "   9:               return fallback\n  10:       tf_alias = get_alias()\n  11:       tf_entry_points = ['thefuck', 'fuck']\n  12:->     bins = [exe.name.decode('utf8') if six.PY2 else exe.name for path in os.environ.get('PATH', '').split(':') for exe in _safe(lambda: list(Path(path).iterdir()), []) if not _safe(exe.is_dir, True) and exe.name not in tf_entry_points]\n  13:       aliases = [alias.decode('utf8') if six.PY2 else alias for alias in shell.get_aliases() if alias != tf_alias]\n  14:       return bins + aliases",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Name",
+          "id": "list",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [
+          {
+            "_type": "Call",
+            "func": {
+              "_type": "Attribute"
+            },
+            "args": [],
+            "keywords": []
+          }
+        ],
+        "keywords": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -24.0
+    },
+    {
+      "line": 12,
+      "line_absolute": 119,
+      "node_id": 123,
+      "node_id_local": 14,
+      "type": "Call",
+      "code": "Path(path).iterdir()",
+      "distance_to_buggy": 0,
+      "context": "   9:               return fallback\n  10:       tf_alias = get_alias()\n  11:       tf_entry_points = ['thefuck', 'fuck']\n  12:->     bins = [exe.name.decode('utf8') if six.PY2 else exe.name for path in os.environ.get('PATH', '').split(':') for exe in _safe(lambda: list(Path(path).iterdir()), []) if not _safe(exe.is_dir, True) and exe.name not in tf_entry_points]\n  13:       aliases = [alias.decode('utf8') if six.PY2 else alias for alias in shell.get_aliases() if alias != tf_alias]\n  14:       return bins + aliases",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Attribute",
+          "value": {
+            "_type": "Call"
+          },
+          "attr": "iterdir",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [],
+        "keywords": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -24.0
+    },
+    {
+      "line": 12,
+      "line_absolute": 119,
+      "node_id": 143,
+      "node_id_local": 15,
+      "type": "Call",
+      "code": "Path(path)",
+      "distance_to_buggy": 0,
+      "context": "   9:               return fallback\n  10:       tf_alias = get_alias()\n  11:       tf_entry_points = ['thefuck', 'fuck']\n  12:->     bins = [exe.name.decode('utf8') if six.PY2 else exe.name for path in os.environ.get('PATH', '').split(':') for exe in _safe(lambda: list(Path(path).iterdir()), []) if not _safe(exe.is_dir, True) and exe.name not in tf_entry_points]\n  13:       aliases = [alias.decode('utf8') if six.PY2 else alias for alias in shell.get_aliases() if alias != tf_alias]\n  14:       return bins + aliases",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Name",
+          "id": "Path",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [
+          {
+            "_type": "Name",
+            "id": "path",
+            "ctx": {
+              "_type": "Load"
+            }
+          }
+        ],
+        "keywords": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -24.0
+    },
+    {
+      "line": 12,
+      "line_absolute": 119,
+      "node_id": 106,
+      "node_id_local": 16,
+      "type": "Call",
+      "code": "_safe(exe.is_dir, True)",
+      "distance_to_buggy": 0,
+      "context": "   9:               return fallback\n  10:       tf_alias = get_alias()\n  11:       tf_entry_points = ['thefuck', 'fuck']\n  12:->     bins = [exe.name.decode('utf8') if six.PY2 else exe.name for path in os.environ.get('PATH', '').split(':') for exe in _safe(lambda: list(Path(path).iterdir()), []) if not _safe(exe.is_dir, True) and exe.name not in tf_entry_points]\n  13:       aliases = [alias.decode('utf8') if six.PY2 else alias for alias in shell.get_aliases() if alias != tf_alias]\n  14:       return bins + aliases",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Name",
+          "id": "_safe",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [
+          {
+            "_type": "Attribute",
+            "value": {
+              "_type": "Name"
+            },
+            "attr": "is_dir",
+            "ctx": {
+              "_type": "Load"
+            }
+          },
+          {
+            "_type": "Constant",
+            "value": true,
+            "kind": null
+          }
+        ],
+        "keywords": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -24.0
+    },
+    {
+      "line": 13,
+      "line_absolute": 120,
+      "node_id": 57,
+      "node_id_local": 18,
+      "type": "Call",
+      "code": "alias.decode('utf8')",
+      "distance_to_buggy": 0,
+      "context": "  10:       tf_alias = get_alias()\n  11:       tf_entry_points = ['thefuck', 'fuck']\n  12:       bins = [exe.name.decode('utf8') if six.PY2 else exe.name for path in os.environ.get('PATH', '').split(':') for exe in _safe(lambda: list(Path(path).iterdir()), []) if not _safe(exe.is_dir, True) and exe.name not in tf_entry_points]\n  13:->     aliases = [alias.decode('utf8') if six.PY2 else alias for alias in shell.get_aliases() if alias != tf_alias]\n  14:       return bins + aliases",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Attribute",
+          "value": {
+            "_type": "Name"
+          },
+          "attr": "decode",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [
+          {
+            "_type": "Constant",
+            "value": "utf8",
+            "kind": null
+          }
+        ],
+        "keywords": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|system|>...",
+      "reranker_score": -24.0
+    },
+    {
+      "line": 13,
+      "line_absolute": 120,
+      "node_id": 60,
+      "node_id_local": 19,
+      "type": "Call",
+      "code": "shell.get_aliases()",
+      "distance_to_buggy": 0,
+      "context": "  10:       tf_alias = get_alias()\n  11:       tf_entry_points = ['thefuck', 'fuck']\n  12:       bins = [exe.name.decode('utf8') if six.PY2 else exe.name for path in os.environ.get('PATH', '').split(':') for exe in _safe(lambda: list(Path(path).iterdir()), []) if not _safe(exe.is_dir, True) and exe.name not in tf_entry_points]\n  13:->     aliases = [alias.decode('utf8') if six.PY2 else alias for alias in shell.get_aliases() if alias != tf_alias]\n  14:       return bins + aliases",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Attribute",
+          "value": {
+            "_type": "Name"
+          },
+          "attr": "get_aliases",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [],
+        "keywords": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -24.0
+    }
+  ]
+}

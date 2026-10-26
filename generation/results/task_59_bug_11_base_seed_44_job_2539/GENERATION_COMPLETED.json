@@ -1,0 +1,9 @@
+{
+  "status": "GENERATED_NOT_EVALUATED",
+  "arm": "base",
+  "bug_id": "11",
+  "seed": 44,
+  "candidate_count": 10,
+  "result_sha256": "c93ff358cae92fb40b802dd0b8661bd8f804f6cc18d596b9e70290b7a23c5e91",
+  "job_id": "2539"
+}

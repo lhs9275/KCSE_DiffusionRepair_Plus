@@ -1,0 +1,141 @@
+{
+  "bug_id": "8",
+  "seed": 44,
+  "arm": "base",
+  "candidates": [
+    {
+      "index": 0,
+      "patch_text": "def __init__(self, worker_id, last_active=None):\n    self.id = worker_id\n    self.reference = None\n    self.last_active = last_active or 0\n    self.started = time.time()\n    self.tasks = set()\n    self.info = {}",
+      "patch_sha256": "00e05899ea112891fadf108132f9f1cd92c596c92b386366e7de609fe7e1554a",
+      "rank_score": 204,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8838480940652881,
+      "top_p": 0.7707044500709654
+    },
+    {
+      "index": 1,
+      "patch_text": "def __init__(self, worker_id, last_active=None):\n    self.id = worker_id\n    self.reference = None\n    self.last_active = last_active or time.time()\n    self.started = time.time()\n    self.tasks = set()\n    self.info = {}",
+      "patch_sha256": "4ccbf3724c7f1eb4ea51b55b8c892ac484205073b38caf275c9adb73014e96a1",
+      "rank_score": 203,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7941462962722876,
+      "top_p": 0.8926828703403595
+    },
+    {
+      "index": 2,
+      "patch_text": "def __init__(self, worker_id, last_active=None):\n    self.id = worker_id\n    self.reference = None\n    if last_active is not None:\n        self.last_active = last_active\n    self.started = time.time()\n    self.tasks = set()\n    self.info = {}",
+      "patch_sha256": "2dbea4010e5d37334f38e01aa79b243ec28fd7bd305f71cddba32e78300ce81f",
+      "rank_score": 201,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.5350607232455378,
+      "top_p": 0.98
+    },
+    {
+      "index": 3,
+      "patch_text": "def __init__(self, worker_id, last_active=None):\n    self.id = worker_id\n    self.reference = None\n    self.last_active = last_active\n    if last_active is None:\n        self.started = time.time()\n    else:\n        self.started = last_active\n    self.tasks = set()\n    self.info = {}",
+      "patch_sha256": "448c72b163e889af69aceb5470ed2782663e0796f12150d468d261485fcf03ce",
+      "rank_score": 186,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.9230891398700982,
+      "top_p": 0.8133577607283677
+    },
+    {
+      "index": 4,
+      "patch_text": "def __init__(self, worker_id, last_active=None):\n    self.id = worker_id\n    self.reference = None\n    self.last_active = last_active\n    if self.last_active is not None:\n        self.started = self.last_active\n    else:\n        self.started = time.time()\n    self.tasks = set()\n    self.info = {}",
+      "patch_sha256": "b5906b195bc256ad7a11beaf8f2f746fe52651f99f856caf10c16f5e8ba59b04",
+      "rank_score": 185,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7793066012285085,
+      "top_p": 0.8741332515356355
+    },
+    {
+      "index": 5,
+      "patch_text": "def __init__(self, worker_id, last_active=None):\n    self.id = worker_id\n    self.reference = None\n    if last_active is None:\n        self.last_active = last_active\n    else:\n        self.last_active = time.time()\n    self.started = time.time()\n    self.tasks = set()\n    self.info = {}",
+      "patch_sha256": "53080ff3189caa76bd7fbc883d9aaa36789320280fe2ae3ae7983c0271d70a04",
+      "rank_score": 180,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.5350607232455378,
+      "top_p": 0.98
+    },
+    {
+      "index": 6,
+      "patch_text": "def __init__(self, worker_id, last_active=None):\n    self.id = worker_id\n    self.reference = None\n    if last_active is not None:\n        self.last_active = last_active\n    else:\n        self.last_active = time.time()\n    self.started = time.time()\n    self.tasks = set()\n    self.info = {}",
+      "patch_sha256": "ba84aa837abc96c18cd3d30b68f7b25310f597a4f817e8439e5f3f1cd64153d8",
+      "rank_score": 179,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.5350607232455378,
+      "top_p": 0.98
+    },
+    {
+      "index": 7,
+      "patch_text": "def __init__(self, worker_id, last_active=None):  # <--- BUGGY LINE\n    self.id = worker_id\n    self.reference = None\n    self.last_active = last_active\n    if last_active is not None:\n        self.started = time.time()\n    else:\n        self.started = last_active\n    self.tasks = set()\n    self.info = {}",
+      "patch_sha256": "365ff23b52acc8350f2df60487a5172c4f4bc449370804224f2ec8bd1f61cda8",
+      "rank_score": 171,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.9230891398700982,
+      "top_p": 0.8133577607283677
+    },
+    {
+      "index": 8,
+      "patch_text": "def __init__(self, worker_id, last_active=None):\n    self.id = worker_id\n    self.reference = None\n    self.last_active = last_active\n    if self.last_active is None:\n        self.last_active = time.time()\n    self.started = time.time()\n    self.tasks = set()\n    self.info = {}",
+      "patch_sha256": "f52d50be6f333549884d287047fe8bec9a88f764bb6619f50c935a51c1fb4992",
+      "rank_score": 86,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7941462962722876,
+      "top_p": 0.8926828703403595
+    },
+    {
+      "index": 9,
+      "patch_text": "def __init__(self, worker_id, last_active=None):\n    self.id = worker_id\n    self.reference = None\n    self.last_active = last_active\n    self.started = time.time()\n    self.tasks = set()\n    self.info = {}\n\n##end\nimport unittest\nfrom pathlib import Path\n\nfrom mann_whitney_u_test import MannWhitneyUTest\n\n\nclass MannWhitneyUTest(unittest.TestCase):\n    \"\"\"\n    Test class for Mann Whitney U test\n    \"\"\"\n\n    def setUp(self):\n        \"\"\"\n        Load input data\n        \"\"\"\n\n        self.data_path = Path(__file__).parent.absolute() / 'input'\n\n        self.data_set1 = self.data_path / 'data_set1.csv'\n        self.data_set2 = self.data_path / 'data_set2.csv'\n\n    def test_mann_whitney_u_test(self):\n        \"\"\"\n        Run mann whitney u test\n        \"\"\"\n\n        # Get data from files\n        data_set1 = []\n        data_set2 = []\n\n        with open(self.data_set1) as file:\n            data_set1 = file.readlines()\n\n        with open(self.data_set2) as file:\n            data_set2 = file.readlines()\n\n        mann_whitney_u_test = MannWhitneyUTest(data_set1, data_set2)\n\n        # Calculate p value\n        result = mann_whitney_u_test.calculate_p_value()\n\n        self.assertEqual(result, 0.03458394844465013)\n\n\nif __name__ == '__main__':\n    unittest.main()\n#!/usr/bin/env python\n# coding: utf-8\n\n# In[1]:\n\n\nimport pandas as pd\nimport numpy as np\nimport re\nimport nltk\nfrom sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer\nfrom nltk.stem import WordNetLemmatizer\nfrom nltk.tokenize import RegexpTokenizer\nfrom nltk.corpus import stopwords\nfrom nltk.stem.porter import PorterStemmer\nimport matplotlib.pyplot as plt\nget_ipython().run_line_magic('matplotlib', 'inline')\nfrom wordcloud import WordCloud, STOPWORDS\nimport pickle\n\n\n# In[2]:\n\n\ndf = pd.read_csv('final_data_set.csv')\ndf = df[['body','category']]\n\n\n# In[3]:\n\n\ndf.head()\n\n\n# In[4]:\n\n\ndf['category'].value_counts().plot(kind='bar')\n\n\n# In[5]:\n\n\ndf.isnull().sum()\n\n\n# In[6]:\n\n\ndf.shape\n\n\n# In[7]:",
+      "patch_sha256": "09d5d1b9b46adbe520dc638ff981ad670a1629eb1666cf4562b486cb65a587ed",
+      "rank_score": -181,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.9230891398700982,
+      "top_p": 0.8133577607283677
+    }
+  ],
+  "candidate_count": 10,
+  "retrieved_examples": [],
+  "diffusion_plan": [],
+  "static_analysis_nodes": []
+}

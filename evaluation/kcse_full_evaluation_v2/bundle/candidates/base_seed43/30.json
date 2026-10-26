@@ -1,0 +1,141 @@
+{
+  "bug_id": "30",
+  "seed": 43,
+  "arm": "base",
+  "candidates": [
+    {
+      "index": 0,
+      "patch_text": "def putmask(self, mask, new, inplace: bool=False, axis: int=0, transpose: bool=False) -> List['Block']:\n    \"\"\"\n        See Block.putmask.__doc__\n        \"\"\"\n    inplace = validate_bool_kwarg(inplace, 'inplace')\n    mask = _extract_bool_array(mask)\n    new_values = self.values if inplace else self.values.copy()\n    if len(new) == len(mask):\n        new = new[mask]\n    mask = _safe_reshape(mask, new_values.shape)\n    new_values[mask] = new\n    return [self.make_block(values=new_values)]",
+      "patch_sha256": "4d25915c9db9911c99782ef17e7bb229171820a393490eece7d87d932e2e8ee4",
+      "rank_score": 243,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.5051876220100471,
+      "top_p": 0.9515146577116289
+    },
+    {
+      "index": 1,
+      "patch_text": "def putmask(self, mask, new, inplace: bool=False, axis: int=0, transpose: bool=False) -> List['Block']:\n    \"\"\"\n    See Block.putmask.__doc__\n    \"\"\"\n    inplace = validate_bool_kwarg(inplace, 'inplace')\n    mask = _extract_bool_array(mask)\n    new_values = self.values if inplace else self.values.copy()\n    if isinstance(new, np.ndarray):\n        new = new[mask]\n    mask = _safe_reshape(mask, new_values.shape)\n    new_values[mask] = new\n    return [self.make_block(values=new_values)]",
+      "patch_sha256": "345cc0e914480c006bca5184abfdfe3c816ec94c8d5448af4b446e0395858c36",
+      "rank_score": 233,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7976020643090617,
+      "top_p": 0.8970025803863271
+    },
+    {
+      "index": 2,
+      "patch_text": "def putmask(self, mask, new, inplace: bool=False, axis: int=0, transpose: bool=False) -> List['Block']:\n    \"\"\"\n    See Block.putmask.__doc__\n    \"\"\"\n    inplace = validate_bool_kwarg(inplace, 'inplace')\n    mask = _extract_bool_array(mask)\n    new_values = self.values if inplace else self.values.copy()\n    if not isinstance(new, np.ndarray) or len(new)!= len(mask):\n        new = new[mask]\n    mask = _safe_reshape(mask, new_values.shape)\n    new_values[mask] = new\n    return [self.make_block(values=new_values)]",
+      "patch_sha256": "a3e35388be2fa00efaef366e24e22ff63e263fa261cdd58f8f107123c89cfe53",
+      "rank_score": 233,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7970041106218376,
+      "top_p": 0.896255138277297
+    },
+    {
+      "index": 3,
+      "patch_text": "def putmask(self, mask, new, inplace: bool=False, axis: int=0, transpose: bool=False) -> List['Block']:\n    \"\"\"\n        See Block.putmask.__doc__\n        \"\"\"\n    inplace = validate_bool_kwarg(inplace, 'inplace')\n    mask = _extract_bool_array(mask)\n    new_values = self.values if inplace else self.values.copy()\n    new = new[mask]\n    mask = _safe_reshape(mask, new_values.shape)\n    new_values[mask] = new\n    return [self.make_block(values=new_values)]",
+      "patch_sha256": "cb07eb52b377cff89e5274c7413b1dbba8cad71f6216a77ce0ed75b0c8697a71",
+      "rank_score": 232,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7704673177175924,
+      "top_p": 0.8630841471469904
+    },
+    {
+      "index": 4,
+      "patch_text": "def putmask(self, mask, new, inplace: bool=False, axis: int=0, transpose: bool=False) -> List['Block']:\n    \"\"\"\n        See Block.putmask.__doc__\n        \"\"\"\n    inplace = validate_bool_kwarg(inplace, 'inplace')\n    mask = _extract_bool_array(mask)\n    new_values = self.values if inplace else self.values.copy()\n    new = _extract_bool_array(new)\n    new_values[mask] = new\n    return [self.make_block(values=new_values)]",
+      "patch_sha256": "83b4a52eb26c596df2bee34c1d47d6e5dfded57a01f799ba6eacbd93901dc7d6",
+      "rank_score": 221,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7970041106218376,
+      "top_p": 0.896255138277297
+    },
+    {
+      "index": 5,
+      "patch_text": "def putmask(self, mask, new, inplace: bool=False, axis: int=0, transpose: bool=False) -> List['Block']:\n    \"\"\"\n        See Block.putmask.__doc__\n        \"\"\"\n    inplace = validate_bool_kwarg(inplace, 'inplace')\n    mask = _extract_bool_array(mask)\n    new_values = self.values if inplace else self.values.copy()\n    new_values[mask] = new\n    return [self.make_block(values=new_values)]",
+      "patch_sha256": "6e56e76b0133eb00182f1519ab38471f704e62f66bdcc02eb5f5888e1e21261d",
+      "rank_score": 210,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7704673177175924,
+      "top_p": 0.8630841471469904
+    },
+    {
+      "index": 6,
+      "patch_text": "def putmask(self, mask, new, inplace=False, axis=0, transpose=False):\n    \"\"\"\n        See Block.putmask.__doc__\n        \"\"\"\n    inplace = validate_bool_kwarg(inplace, 'inplace')\n    mask = _extract_bool_array(mask)\n    new_values = self.values if inplace else self.values.copy()\n    if len(new) == len(mask):\n        new = new[mask]\n    mask = _safe_reshape(mask, new_values.shape)\n    new_values[mask] = new\n    return [self.make_block(values=new_values)]\n##correct\ndef putmask(self, mask, new, inplace=False, axis=0, transpose=False):\n    \"\"\"\n        See Block.putmask.__doc__\n        \"\"\"\n    inplace = validate_bool_kwarg(inplace, 'inplace')\n    mask = _extract_bool_array(mask)\n    new_values = self.values if inplace else self.values.copy()\n    if len(new) == len(mask):\n        new = new[mask]\n    mask = _safe_reshape(mask, new_values.shape)\n    new_values[mask] = new\n    return [self.make_block(values=new_values)]\n##correct\ndef putmask(self, mask, new, inplace=False, axis=0, transpose=False):\n    \"\"\"\n        See Block.putmask.__doc__\n        \"\"\"\n    inplace = validate_bool_kwarg(inplace, 'inplace')\n    mask = _extract_bool_array(mask)\n    new_values = self.values if inplace else self.values.copy()\n    if len(new) == len(mask):\n        new = new[mask]\n    mask = _safe_reshape(mask, new_values.shape)\n    new_values[mask] = new\n    return [self.make_block(values=new_values)]",
+      "patch_sha256": "c46c5463a172277ae5f08c4f6b866df3c13bcadd07411a4368f41b4f27000042",
+      "rank_score": 144,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.9198728361131365,
+      "top_p": 0.8098617783838441
+    },
+    {
+      "index": 7,
+      "patch_text": "def putmask(self, mask, new, inplace: bool=False, axis: int=0, transpose: bool=False) -> List['Block']:\n    \"\"\"\n        See Block.putmask.__doc__\n        \"\"\"\n    inplace = validate_bool_kwarg(inplace, 'inplace')\n    mask = _extract_bool_array(mask)\n    new_values = self.values if inplace else self.values.copy()\n    if isinstance(new, np.ndarray) and len(new) == len(mask):\n        new = new[mask]\n    mask = _safe_reshape(mask, new_values.shape)\n    new_values[mask] = new\n    return [self.make_block(values=new_values)]\n\n##end\n\n##correct\ndef putmask(self, mask, new, inplace: bool=False, axis: int=0, transpose: bool=False) -> List['Block']:\n    \"\"\"\n        See Block.putmask.__doc__\n        \"\"\"\n    inplace = validate_bool_kwarg(inplace, 'inplace')\n    mask = _extract_bool_array(mask)\n    new_values = self.values if inplace else self.values.copy()\n    if isinstance(new, np.ndarray) and len(new) == len(mask):\n        new = new[mask]\n    mask = _safe_reshape(mask, new_values.shape)\n    new_values[mask] = new\n    return [self.make_block(values=new_values)]\n\n##end\n\n##correct\ndef putmask(self, mask, new, inplace: bool=False, axis: int=0, transpose: bool=False) -> List['Block']:\n    \"\"\"\n        See Block.putmask.__doc__\n        \"\"\"\n    inplace = validate_bool_kwarg(inplace, 'inplace')\n    mask = _extract_bool_array(mask)\n    new_values = self.values if inplace else self.values.copy()\n    if isinstance(new, np.ndarray) and len(new) == len(mask):\n        new = new[mask]\n    mask = _safe_reshape(mask, new_values.shape)\n    new_values[mask] = new\n    return [self.make_block(values=new_values)]\n\n##end\n\n##correct\ndef putmask(self, mask, new, inplace: bool=False, axis: int=0, transpose: bool=False) -> List['Block']:\n    \"\"\"\n        See Block.putmask.__doc__\n        \"\"\"\n    inplace = validate_bool_kwarg(inplace, 'inplace')\n    mask = _extract_bool_array(mask)\n    new_values = self.values if inplace else self.values.copy()\n    if isinstance(new, np.ndarray) and len(new) == len(mask):\n        new = new[mask]\n    mask = _safe_reshape(mask, new_values.shape)\n    new_values[mask] = new",
+      "patch_sha256": "8f3ba37c137a5c49cc5a60507cc58e49df42a3729354e0fc246824b2c2153839",
+      "rank_score": 28,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.0,
+      "top_p": 1.0
+    },
+    {
+      "index": 8,
+      "patch_text": "def putmask(self, mask, new, inplace: bool=False, axis: int=0, transpose: bool=False) -> List['Block']:\n    \"\"\"\n        See Block.putmask.__doc__\n        \"\"\"\n    inplace = validate_bool_kwarg(inplace, 'inplace')\n    mask = _extract_bool_array(mask)\n    new_values = self.values if inplace else self.values.copy()\n    new_values[mask] = new\n    return [self.make_block(values=new_values)]\n\nimport ast\nfrom collections import defaultdict\nfrom pathlib import Path\nfrom typing import Dict, List\n\nfrom.base import BaseFileAnalyzer\nfrom..utils import get_file_path, parse_function_signature, get_ast_root\nfrom..utils.ast_utils import AstUtils\n\n\nclass FileAnalyzer(BaseFileAnalyzer):\n    def __init__(self, filepath: str):\n        super().__init__()\n        self._filepath = filepath\n\n    @property\n    def filepath(self) -> Path:\n        return Path(self._filepath)\n\n    def analyze(self) -> Dict[str, List[str]]:\n        function_list = []\n        class_list = []\n        for function_name, function_body in AstUtils.get_functions(self._filepath):\n            function_list.append((function_name, function_body))\n\n        for class_name, class_body in AstUtils.get_classes(self._filepath):\n            class_list.append((class_name, class_body))\n\n        return {'functions': function_list, 'classes': class_list}\nfrom.utils.logger import Logger\n\n\nclass PyCodeFixerLogger:\n    logger = Logger('PyCodeFixerLogger')\nimport re\nfrom pathlib import Path\n\nfrom..utils.ast_utils import AstUtils\n\n\ndef _extract_class_method_name(ast_node):\n    \"\"\"Extracts method name from an AST node of a class method\"\"\"\n    func_body = ast_node.body[0].value\n    return func_body.name\n\n\ndef _extract_function_name(ast_node):\n    \"\"\"Extracts function name from an AST node of a function\"\"\"\n    return ast_node.name\n\n\ndef _extract_class_name(ast_node):\n    \"\"\"Extracts class name from an AST node of a class\"\"\"\n    return ast_node.name\n\n\ndef _extract_function_signature(func_ast_node):\n    \"\"\"Extracts function signature from an AST node of a function\"\"\"\n    func_signature = AstUtils.get_function_signature(func_ast_node)\n    # Remove the leading space in the function signature\n    if func_signature.startswith(' '):\n        func_signature = func_signature[1:]\n    return func_signature\n\n\ndef _extract_class_signature(class_ast_node):\n    \"\"\"Extracts class signature from an AST node of a class\"\"\"\n    return class_ast_node.name",
+      "patch_sha256": "97229cafea1e816957da0f4f833af188874ead63a25e7be8b0fb5ad22566afb5",
+      "rank_score": -50,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7704673177175924,
+      "top_p": 0.8630841471469904
+    },
+    {
+      "index": 9,
+      "patch_text": "def putmask(self, mask, new, inplace: bool=False, axis: int=0, transpose: bool=False) -> List['Block']:\n    \"\"\"\n        See Block.putmask.__doc__\n        \"\"\"\n    inplace = validate_bool_kwarg(inplace, 'inplace')\n    mask = _extract_bool_array(mask)\n    new_values = self.values if inplace else self.values.copy()\n    if isinstance(new, np.ndarray) and len(new) == len(mask):\n        new = new[mask]\n    mask = _safe_reshape(mask, new_values.shape)\n    new_values[mask] = new\n    return [self.make_block(values=new_values)]\n\n##end\n##patch\ndef putmask(self, mask, new, inplace: bool=False, axis: int=0, transpose: bool=False) -> List['Block']:\n    \"\"\"\n        See Block.putmask.__doc__\n        \"\"\"\n    inplace = validate_bool_kwarg(inplace, 'inplace')\n    mask = _extract_bool_array(mask)\n    new_values = self.values if inplace else self.values.copy()\n    if isinstance(new, np.ndarray) and len(new) == len(mask):\n        new = new[mask]\n    mask = _safe_reshape(mask, new_values.shape)\n    new_values[mask] = new\n    return [self.make_block(values=new_values)]\n\n##end\n##file_header\nimport numpy as np\nfrom pandas._typing import (\n    Any,\n    AxisInt,\n    BlockValues,\n    DataFrame,\n    Dict,\n    Index,\n    Label,\n    List,\n    NDFrameT,\n    Optional,\n    Series,\n    Union,\n)\n\nfrom pandas.core.dtypes.common import (\n    is_list_like,\n    is_object_dtype,\n    is_string_dtype,\n    is_valid_dtype,\n    promote_dtypes,\n)\nfrom pandas.core.dtypes.dtypes import (\n    ExtensionDtype,\n    ExtensionDtypeFactory,\n    register_extension_dtype,\n)\nfrom pandas.core.dtypes.generic import ABCExtensionArray, ABCSeries\nfrom pandas.core.dtypes.inference import (\n    is_list_like_not_dict_or_index,\n    is_valid_list_like_for_apply,\n)\nfrom pandas.errors import InvalidIndexError\nfrom pandas.util._decorators import validate_bool_kwarg\n\nfrom pandas.core.base import DataError, PandasError, no_default\n\nfrom pandas.core.arrays import ExtensionArray\nfrom pandas.core.arrays.sparse.array import SparseArray\nfrom pandas.core.arrays.sparse.dtype import SparseDtype\n\nfrom pandas.core.indexes.base import Index as PandasIndex\n\nfrom pandas.core.arrays.array_ import NDArrayBackedExtensionArray",
+      "patch_sha256": "383fa5b5e6582588c5b9dca248acdfa8fc3409c3d770c74892c2cb1c9b641a60",
+      "rank_score": -173,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.9198728361131365,
+      "top_p": 0.8098617783838441
+    }
+  ],
+  "candidate_count": 10,
+  "retrieved_examples": [],
+  "diffusion_plan": [],
+  "static_analysis_nodes": []
+}

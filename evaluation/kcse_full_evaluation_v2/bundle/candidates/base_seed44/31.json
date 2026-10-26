@@ -1,0 +1,128 @@
+{
+  "bug_id": "31",
+  "seed": 44,
+  "arm": "base",
+  "candidates": [
+    {
+      "index": 0,
+      "patch_text": "def _get_series_list(self, others):\n    \"\"\"\n        Auxiliary function for :meth:`str.cat`. Turn potentially mixed input\n        into a list of Series (elements without an index must match the length\n        of the calling Series/Index).\n\n        Parameters\n        ----------\n        others : Series, DataFrame, np.ndarray, list-like or list-like of\n            Objects that are either Series, Index or np.ndarray (1-dim).\n\n        Returns\n        -------\n        list of Series\n            Others transformed into list of Series.\n        \"\"\"\n    from pandas import Series, DataFrame\n    idx = self._orig if isinstance(self._orig, ABCIndexClass) else self._orig.index\n    if isinstance(others, ABCSeries):\n        return [others]\n    elif isinstance(others, ABCIndexClass):\n        return [Series(others._values, index=idx)]\n    elif isinstance(others, ABCDataFrame):\n        return [others[x] for x in others]\n    elif isinstance(others, np.ndarray) and others.ndim == 2:\n        others = DataFrame(others, index=idx)\n        return [others[x] for x in others]\n    elif is_list_like(others, allow_sets=False):\n        others = list(others)\n        if all((isinstance(x, (ABCSeries, ABCIndexClass)) or (isinstance(x, np.ndarray) and x.ndim == 1) for x in others)):\n            los = []\n            while others:\n                los = los + self._get_series_list(others.pop(0))\n            return los\n        elif all((not is_list_like(x) for x in others)):\n            return [Series(others, index=idx)]\n    raise TypeError('others must be Series, Index, DataFrame, np.ndarrary or list-like (either containing only strings or containing only objects of type Series/Index/np.ndarray[1-dim])')",
+      "patch_sha256": "88232f6e2232f766110e5532289ae6097a39f69eec436b3bc82bc3cf71b3290e",
+      "rank_score": 54,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7941462962722876,
+      "top_p": 0.8926828703403595
+    },
+    {
+      "index": 1,
+      "patch_text": "def _get_series_list(self, others):\n    \"\"\"\n        Auxiliary function for :meth:`str.cat`. Turn potentially mixed input\n        into a list of Series (elements without an index must match the length\n        of the calling Series/Index).\n\n        Parameters\n        ----------\n        others : Series, DataFrame, np.ndarray, list-like or list-like of\n            Objects that are either Series, Index or np.ndarray (1-dim).\n\n        Returns\n        -------\n        list of Series\n            Others transformed into list of Series.\n        \"\"\"\n    from pandas import Series, DataFrame\n    idx = self._orig if isinstance(self._orig, ABCIndexClass) else self._orig.index\n    if isinstance(others, ABCSeries):\n        return [others]\n    elif isinstance(others, np.ndarray) and others.ndim == 2:\n        others = DataFrame(others, index=idx)\n        return [others[x] for x in others]\n    elif is_list_like(others, allow_sets=False):\n        others = list(others)\n        if all((isinstance(x, (ABCSeries, ABCIndexClass)) or (isinstance(x, np.ndarray) and x.ndim == 1) for x in others)):\n            los = []\n            while others:\n                los = los + self._get_series_list(others.pop(0))\n            return los\n        elif all((not is_list_like(x) for x in others)):\n            return [Series(others, index=idx)]\n    raise TypeError('others must be Series, Index, DataFrame, np.ndarrary or list-like (either containing only strings or containing only objects of type Series/Index/np.ndarray[1-dim])')",
+      "patch_sha256": "96786ecc2652fa996a7fe7474758105cfc590bb5e525fa7fb58b30dedd800d17",
+      "rank_score": 35,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.9230891398700982,
+      "top_p": 0.8133577607283677
+    },
+    {
+      "index": 2,
+      "patch_text": "def _get_series_list(self, others):\n    \"\"\"\n        Auxiliary function for :meth:`str.cat`. Turn potentially mixed input\n        into a list of Series (elements without an index must match the length\n        of the calling Series/Index).\n\n        Parameters\n        ----------\n        others : Series, DataFrame, np.ndarray, list-like or list-like of\n            Objects that are either Series, Index or np.ndarray (1-dim).\n\n        Returns\n        -------\n        list of Series\n            Others transformed into list of Series.\n        \"\"\"\n    from pandas import Series, DataFrame\n    idx = self._orig if isinstance(self._orig, ABCIndexClass) else self._orig.index\n    if isinstance(others, ABCSeries):\n        return [others]\n    elif isinstance(others, np.ndarray) and others.ndim == 1:\n        return [Series(others, index=idx)]\n    elif isinstance(others, ABCDataFrame):\n        return [others[x] for x in others]\n    elif is_list_like(others, allow_sets=False):\n        others = list(others)\n        if all((isinstance(x, (ABCSeries, ABCIndexClass)) or (isinstance(x, np.ndarray) and x.ndim == 1) for x in others)):\n            los = []\n            while others:\n                los = los + self._get_series_list(others.pop(0))\n            return los\n        elif all((not is_list_like(x) for x in others)):\n            return [Series(others, index=idx)]\n    raise TypeError('others must be Series, Index, DataFrame, np.ndarrary or list-like (either containing only strings or containing only objects of type Series/Index/np.ndarray[1-dim])')",
+      "patch_sha256": "f8918619da54de0bf164e659aede7f3d4932524c84a812e8cd79ac6da7809854",
+      "rank_score": 24,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8838480940652881,
+      "top_p": 0.7707044500709654
+    },
+    {
+      "index": 3,
+      "patch_text": "def _get_series_list(self, others):\n    \"\"\"\n        Auxiliary function for :meth:`str.cat`. Turn potentially mixed input\n        into a list of Series (elements without an index must match the length\n        of the calling Series/Index).\n\n        Parameters\n        ----------\n        others : Series, DataFrame, np.ndarray, list-like or list-like of\n            Objects that are either Series, Index or np.ndarray (1-dim).\n\n        Returns\n        -------\n        list of Series\n            Others transformed into list of Series.\n        \"\"\"\n    from pandas import Series, DataFrame\n    idx = self._orig if isinstance(self._orig, ABCIndexClass) else self._orig.index\n    if isinstance(others, ABCSeries):\n        return [others]\n    elif isinstance(others, (Series, Index)):\n        return [Series(others._values, index=others)]\n    elif isinstance(others, ABCDataFrame):\n        return [others[x] for x in others]\n    elif isinstance(others, np.ndarray) and others.ndim == 2:\n        others = DataFrame(others, index=idx)\n        return [others[x] for x in others]\n    elif is_list_like(others, allow_sets=False):\n        others = list(others)\n        if all((isinstance(x, (ABCSeries, ABCIndexClass)) or (isinstance(x, np.ndarray) and x.ndim == 1) for x in others)):\n            los = []\n            while others:\n                los = los + self._get_series_list(others.pop(0))\n            return los\n        elif all((not is_list_like(x) for x in others)):\n            return [Series(others, index=idx)]\n    raise TypeError('others must be Series, Index, DataFrame, np.ndarrary or list-like (either containing only strings or containing only objects of type Series/Index/np.ndarray[1-dim])')",
+      "patch_sha256": "2b2a18966ef49adaf2a60398d60b94adbadd8e88d9f660940c484cf96bb301ad",
+      "rank_score": 13,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8008776453441713,
+      "top_p": 0.9010970566802141
+    },
+    {
+      "index": 4,
+      "patch_text": "def _get_series_list(self, others):\n    \"\"\"\n        Auxiliary function for :meth:`str.cat`. Turn potentially mixed input\n        into a list of Series (elements without an index must match the length\n        of the calling Series/Index).\n\n        Parameters\n        ----------\n        others : Series, DataFrame, np.ndarray, list-like or list-like of\n            Objects that are either Series, Index or np.ndarray (1-dim).\n\n        Returns\n        -------\n        list of Series\n            Others transformed into list of Series.\n        \"\"\"\n    from pandas import Series, DataFrame\n    idx = self._orig if isinstance(self._orig, ABCIndexClass) else self._orig.index\n    if isinstance(others, ABCSeries):\n        return [others]\n    elif isinstance(others, np.ndarray) and others.ndim == 1:\n        return [Series(others, index=idx)]\n    elif isinstance(others, ABCIndexClass):\n        return [Series(others._values, index=others)]\n    elif isinstance(others, ABCDataFrame):\n        return [others[x] for x in others]\n    elif is_list_like(others, allow_sets=False):\n        others = list(others)\n        if all((isinstance(x, (ABCSeries, ABCIndexClass)) or (isinstance(x, np.ndarray) and x.ndim == 1) for x in others)):\n            los = []\n            while others:\n                los = los + self._get_series_list(others.pop(0))\n            return los\n        elif all((not is_list_like(x) for x in others)):\n            return [Series(others, index=idx)]\n    raise TypeError('others must be Series, Index, DataFrame, np.ndarrary or list-like (either containing only strings or containing only objects of type Series/Index/np.ndarray[1-dim])')",
+      "patch_sha256": "27336cf54403b6abdd300a60b503be83cb638789337b7abd2be28d5f71d62fc2",
+      "rank_score": 11,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8997717407145516,
+      "top_p": 0.7880127616462518
+    },
+    {
+      "index": 5,
+      "patch_text": "def _get_series_list(self, others):\n    \"\"\"\n        Auxiliary function for :meth:`str.cat`. Turn potentially mixed input\n        into a list of Series (elements without an index must match the length\n        of the calling Series/Index).\n\n        Parameters\n        ----------\n        others : Series, DataFrame, np.ndarray, list-like or list-like of\n            Objects that are either Series, Index or np.ndarray (1-dim).\n\n        Returns\n        -------\n        list of Series\n            Others transformed into list of Series.\n        \"\"\"\n    from pandas import Series, DataFrame\n    idx = self._orig if isinstance(self._orig, ABCIndexClass) else self._orig.index\n    if isinstance(others, ABCSeries):\n        return [others]\n    elif isinstance(others, np.ndarray) and others.ndim == 1:\n        return [Series(others, index=idx)]\n    elif isinstance(others, ABCDataFrame):\n        return [others[x] for x in others]\n    elif isinstance(others, np.ndarray) and others.ndim == 2:\n        others = DataFrame(others, index=idx)\n        return [others[x] for x in others]\n    elif is_list_like(others, allow_sets=False):\n        others = list(others)\n        if all((isinstance(x, (ABCSeries, ABCIndexClass)) or (isinstance(x, np.ndarray) and x.ndim == 1) for x in others)):\n            los = []\n            while others:\n                los = los + self._get_series_list(others.pop(0))\n            return los\n        elif all((not is_list_like(x) for x in others)):\n            return [Series(others, index=idx)]\n    raise TypeError('others must be Series, Index, DataFrame, np.ndarrary or list-like (either containing only strings or containing only objects of type Series/Index/np.ndarray[1-dim])')\n\nimport pytest\nfrom pygments.lexers import PythonLexer\nfrom pygments.util import get_long_filename\n\nfrom code_search_tool.languages import python as pl\n\n\n@pytest.fixture(scope='module', params=[\n    'code_search_tool/languages/python/__init__.py',\n    'code_search_tool/languages/python/test_functions.py'\n])\ndef filename(request):\n    return request.param\n\n\n@pytest.mark.parametrize('input,expected', [\n    (['import sys','sys.path'], ['sys']),\n    (['from sys import path','sys.path'], ['sys']),\n    (['from foo.bar import baz', 'foo.bar'], ['foo', 'foo.bar']),\n    (['from foo.bar import baz', 'baz'], []),\n    (['from foo import bar', 'bar'], ['foo'])\n])\ndef test_extract_import_from_imports(input, expected):\n    actual = pl._extract_import_from_imports",
+      "patch_sha256": "d86582089f6fc70a28b702bbcb99ab7d2b2eeac838ed7af012ef9d371d4612bd",
+      "rank_score": 6,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.9230891398700982,
+      "top_p": 0.8133577607283677
+    },
+    {
+      "index": 6,
+      "patch_text": "def _get_series_list(self, others):\n    \"\"\"\n        Auxiliary function for :meth:`str.cat`. Turn potentially mixed input\n        into a list of Series (elements without an index must match the length\n        of the calling Series/Index).\n\n        Parameters\n        ----------\n        others : Series, DataFrame, np.ndarray, list-like or list-like of\n            Objects that are either Series, Index or np.ndarray (1-dim).\n\n        Returns\n        -------\n        list of Series\n            Others transformed into list of Series.\n        \"\"\"\n    from pandas import Series, DataFrame\n    idx = self._orig if isinstance(self._orig, ABCIndexClass) else self._orig.index\n    if isinstance(others, ABCSeries):\n        return [others]\n    elif isinstance(others, ABCIndexClass):\n        return [Series(others._values, index=others)]\n    elif isinstance(others, ABCDataFrame):\n        return [others[x] for x in others]\n    elif isinstance(others, np.ndarray) and others.ndim == 2:\n        others = DataFrame(others, index=idx)\n        return [others[x] for x in others]\n    elif is_list_like(others, allow_sets=False):\n        others = list(others)\n        if all((isinstance(x, (ABCSeries, ABCIndexClass)) or (isinstance(x, np.ndarray) and x.ndim == 1) for x in others)):\n            los = []\n            while others:\n                los = los + self._get_series_list(others.pop(0))\n            return los\n        elif all((not is_list_like(x) for x in others)):\n            return [Series(others, index=idx)]\n    raise TypeError('others must be Series, Index, DataFrame, np.ndarrary or list-like (either containing only strings or containing only objects of type Series/Index/np.ndarray[1-dim])')\nimport pytest\nfrom hypothesis import given\n\nfrom..errors import DataError\nfrom.utils import assert_equal\nfrom. import strategies as st\n\n\n@given(st.series(), st.series())\ndef test_add_sub(s1, s2):\n    result = s1.add(s2, fill_value=0)\n    expected = s1.fillna(0) + s2.fillna(0)\n    assert_equal(result, expected)\n\n\n@given(st.series(), st.series())\ndef test_add_sub_fill(s1, s2):\n    result = s1.add(s2, fill_value=-1)\n    expected = s1.fillna(-1) + s2.fillna(-1)\n    assert_equal(result, expected)\n\n\n@given(st.series(), st.series())\ndef test_add_sub_fill_opposite(s1, s2):\n    result = s1.subtract(s2, fill_value=-1)",
+      "patch_sha256": "c485b31df516217223188ce18c7dcdaa55ef24b54c7989d801978b64581ca597",
+      "rank_score": -123,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.79221930055189,
+      "top_p": 0.8902741256898625
+    },
+    {
+      "index": 7,
+      "patch_text": "def _get_series_list(self, others):\n    \"\"\"\n        Auxiliary function for :meth:`str.cat`. Turn potentially mixed input\n        into a list of Series (elements without an index must match the length\n        of the calling Series/Index).\n\n        Parameters\n        ----------\n        others : Series, DataFrame, np.ndarray, list-like or list-like of\n            Objects that are either Series, Index or np.ndarray (1-dim).\n\n        Returns\n        -------\n        list of Series\n            Others transformed into list of Series.\n        \"\"\"\n    from pandas import Series, DataFrame\n    idx = self._orig if isinstance(self._orig, ABCIndexClass) else self._orig.index\n    if isinstance(others, ABCSeries):\n        return [others]\n    elif isinstance(others, ABCIndexClass):\n        return [Series(others._values, index=others)]\n    elif isinstance(others, ABCDataFrame):\n        return [others[x] for x in others]\n    elif isinstance(others, np.ndarray) and others.ndim == 2:\n        others = DataFrame(others, index=idx)\n        return [others[x] for x in others]\n    elif is_list_like(others, allow_sets=False):\n        others = list(others)\n        if all((isinstance(x, (ABCSeries, ABCIndexClass)) or (isinstance(x, np.ndarray) and x.ndim == 1) for x in others)):\n            los = []\n            while others:\n                los = los + self._get_series_list(others.pop(0))\n            return los\n        elif all((not is_list_like(x) for x in others)):\n            return [Series(others, index=idx)]\n    raise TypeError('others must be Series, Index, DataFrame, np.ndarrary or list-like (either containing only strings or containing only objects of type Series/Index/np.ndarray[1-dim])')\n\n##end\n##file\n\ndef _get_series_list(self, others):\n    \"\"\"\n        Auxiliary function for :meth:`str.cat`. Turn potentially mixed input\n        into a list of Series (elements without an index must match the length\n        of the calling Series/Index).\n\n        Parameters\n        ----------\n        others : Series, DataFrame, np.ndarray, list-like or list-like of\n            Objects that are either Series, Index or np.ndarray (1-dim).\n\n        Returns\n        -------\n        list of Series\n            Others transformed into list of Series.\n        \"\"\"\n    from pandas import Series, DataFrame\n    idx = self._orig if isinstance(self._orig, ABCIndexClass) else self._orig.index\n    if isinstance(others, ABCSeries):\n        return [others]\n    elif isinstance(others, ABCIndexClass):\n        return [Series(others._values, index=others)]\n    elif isinstance(others, ABCDataFrame):\n        return [others[x] for x in others]\n    elif isinstance(others, np.ndarray) and others.ndim == 2:\n        others",
+      "patch_sha256": "933d6553d0359c3bb66735acf60954ad6fba259742ffd5e2cbbf3406c4aa1243",
+      "rank_score": -126,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7941462962722876,
+      "top_p": 0.8926828703403595
+    },
+    {
+      "index": 8,
+      "patch_text": "def _get_series_list(self, others):\n    \"\"\"\n        Auxiliary function for :meth:`str.cat`. Turn potentially mixed input\n        into a list of Series (elements without an index must match the length\n        of the calling Series/Index).\n\n        Parameters\n        ----------\n        others : Series, DataFrame, np.ndarray, list-like or list-like of\n            Objects that are either Series, Index or np.ndarray (1-dim).\n\n        Returns\n        -------\n        list of Series\n            Others transformed into list of Series.\n        \"\"\"\n    from pandas import Series, DataFrame\n    idx = self._orig if isinstance(self._orig, ABCIndexClass) else self._orig.index\n    if isinstance(others, ABCSeries):\n        return [others]\n    elif isinstance(others, ABCIndexClass):\n        return [Series(others._values, index=others)]\n    elif isinstance(others, ABCDataFrame):\n        return [others[x] for x in others]\n    elif isinstance(others, np.ndarray) and others.ndim == 2:\n        others = DataFrame(others, index=idx)\n        return [others[x] for x in others]\n    elif is_list_like(others, allow_sets=False):\n        others = list(others)\n        if all((isinstance(x, (ABCSeries, ABCIndexClass)) or (isinstance(x, np.ndarray) and x.ndim == 1) for x in others)):\n            los = []\n            while others:\n                los = los + self._get_series_list(others.pop(0))\n            return los\n        elif all((not is_list_like(x) for x in others)):\n            return [Series(others, index=idx)]\n    raise TypeError('others must be Series, Index, DataFrame, np.ndarrary or list-like (either containing only strings or containing only objects of type Series/Index/np.ndarray[1-dim])')\n# Copyright (c) Microsoft Corporation.\n# Licensed under the MIT license.\n\nimport sys\nfrom pathlib import Path\nfrom subprocess import run\nfrom tempfile import TemporaryDirectory\n\nimport pytest\n\nfrom utils import get_python_binary\n\npytestmark = pytest.mark.integration\n\n\n@pytest.fixture\ndef python():\n    return get_python_binary()\n\n\ndef test_help(tmp_path, python):\n    p = tmp_path / \"foo.py\"\n    p.write_text(\"print('hello world')\")\n    r = run([python, \"-m\", \"autopep8\", \"--help\"], capture_output=True)\n    assert r.returncode == 0\n    assert b\"usage: autopep8 [-h] [--version]\" in r.stdout\n    assert b\"positional arguments:\" in r.stdout\n    assert b\"optional arguments:\" in r.stdout\n    assert b\"-h, --help\" in r.stdout\n    assert b\"--version\" in r.stdout\n    assert b\"--aggressive\" in r.stdout\n    assert b",
+      "patch_sha256": "50d04968cd5707d95d5acfc732ded5862b4bc03a40ab6329ab574b81d3635da9",
+      "rank_score": -204,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8838480940652881,
+      "top_p": 0.7707044500709654
+    }
+  ],
+  "candidate_count": 9,
+  "retrieved_examples": [],
+  "diffusion_plan": [],
+  "static_analysis_nodes": []
+}

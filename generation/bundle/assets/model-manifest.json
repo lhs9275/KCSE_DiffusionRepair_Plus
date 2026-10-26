@@ -1,0 +1,14 @@
+{
+  "README.md": "080310ee50788aac46dcdfdfa0e74605171e220d3e497398dbfced8c8cfb3ae1",
+  "vocab.json": "542ee3f8b27b3a825754728b4dc59eff31065fecce843a93f09b98f13dbd7de9",
+  "tokenizer.json": "6190a6649d90a7fe35bfed8bff990c3e7aafc3cfa5beea185045f03f0890402b",
+  "model.safetensors.index.json": "5fba3632f1628dc210d7c142162371e3464003eb9c5146f987785a6248efcc6f",
+  "config.json": "af07df1e6ea8f9a1b74b8ada728e694c9e63db00fd71b1feccd0ae69d5292b9d",
+  "generation_config.json": "99cbcf1ae947a2d7aa8eae072c257589c6363eee957e0a0d0787b97b319f0411",
+  "tokenizer_config.json": "8149d8e6b21275ad2cc346885ad92c0e9b5aa3e28a78bb5d39b7febc7e52545d",
+  "special_tokens_map.json": "1dd716f4648a359f7fca1221fc6a14edb1dd369239a4d7e0e5674c5f11f061d6",
+  "merges.txt": "ac9dfb2c5bd3b10bd46aa7fdaa8c54e8e1bcfe1618d9288320ebc82c518442fc",
+  "model-00001-of-00003.safetensors": "a8af6f18f9527fece36992ca3cda7ea257f37839539d26f5bf42997edfe3e3f5",
+  "model-00002-of-00003.safetensors": "5432ea6c03caf138258efd8acd0434c64a2c22524ed0863671546627d6db6cb0",
+  "model-00003-of-00003.safetensors": "da5c636da861b5f0a8e01dbee183e6a814d612c454055449e3a9146d05e0ee3d"
+}

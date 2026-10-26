@@ -1,0 +1,141 @@
+{
+  "bug_id": "9",
+  "seed": 42,
+  "arm": "base",
+  "candidates": [
+    {
+      "index": 0,
+      "patch_text": "def table_exists(self, table, database='default', partition=None):\n    if partition is None:\n        stdout = run_hive_cmd('use {0}; show tables like \"{1}\";'.format(database, table))\n        return stdout is not None and table in stdout  # <--- FIXED\n    else:\n        stdout = run_hive_cmd('use %s; show partitions %s partition\\n                                (%s)' % (database, table, self.partition_spec(partition)))\n        if stdout:\n            return True\n        else:\n            return False",
+      "patch_sha256": "6664bc7804d3f03fb07bf6c558128fbbeb3cacf9ac41f5bf2dc4ea835e60cee5",
+      "rank_score": 244,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8850407915843882,
+      "top_p": 0.7720008604178135
+    },
+    {
+      "index": 1,
+      "patch_text": "def table_exists(self, table, database='default', partition=None):\n    if partition is None:\n        stdout = run_hive_cmd('use {0}; show tables like \"{1}\";'.format(database, table))\n        return stdout!= \"\" and table in stdout\n    else:\n        stdout = run_hive_cmd('use %s; show partitions %s partition\\n                                (%s)' % (database, table, self.partition_spec(partition)))\n        if stdout:\n            return True\n        else:\n            return False",
+      "patch_sha256": "58678d472c8d750a328faf7d72ccecd6c265ae30a99b9e0c3bc1d53d18dd27c3",
+      "rank_score": 244,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7699070220440365,
+      "top_p": 0.8623837775550457
+    },
+    {
+      "index": 2,
+      "patch_text": "def table_exists(self, table, database='default', partition=None):\n    if partition is None:\n        stdout = run_hive_cmd('use {0}; show tables like \"{1}\";'.format(database, table))\n        return table in stdout  # <--- BUGGY LINE\n    else:\n        stdout = run_hive_cmd('use %s; show partitions %s partition\\n                                (%s)' % (database, table, self.partition_spec(partition)))\n        if stdout:\n            return True\n        else:\n            return False",
+      "patch_sha256": "b78d39c0cfb87da32320c184c7022b8769b7f8027e877a8a3099f5a64700f238",
+      "rank_score": 244,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7699070220440365,
+      "top_p": 0.8623837775550457
+    },
+    {
+      "index": 3,
+      "patch_text": "def table_exists(self, table, database='default', partition=None):\n    if partition is None:\n        stdout = run_hive_cmd('use {0}; show tables like \"{1}\";'.format(database, table))\n        return stdout!= \"\"\n    else:\n        stdout = run_hive_cmd('use %s; show partitions %s partition\\n                                (%s)' % (database, table, self.partition_spec(partition)))\n        if stdout:\n            return True\n        else:\n            return False",
+      "patch_sha256": "1b0cdab441030801c8f9c23bf6912109f2594c888f8de578a513bc799654d4a4",
+      "rank_score": 243,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8250994923331102,
+      "top_p": 0.9313743654163876
+    },
+    {
+      "index": 4,
+      "patch_text": "def table_exists(self, table, database='default', partition=None):\n    if partition is None:\n        stdout = run_hive_cmd('use {0}; show tables like \"{1}\";'.format(database, table))\n        return stdout!= ''\n    else:\n        stdout = run_hive_cmd('use %s; show partitions %s partition\\n                                (%s)' % (database, table, self.partition_spec(partition)))\n        if stdout:\n            return True\n        else:\n            return False",
+      "patch_sha256": "65a577a9137d8ef59137cc4f06c1712c16781a11422b449d46790b0b4904e57d",
+      "rank_score": 243,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7699070220440365,
+      "top_p": 0.8623837775550457
+    },
+    {
+      "index": 5,
+      "patch_text": "def table_exists(self, table, database='default', partition=None):\n    if partition is None:\n        stdout = run_hive_cmd('use {0}; show tables like \"{1}\";'.format(database, table))\n        if stdout:\n            return table in stdout  # <--- BUGGY LINE\n    else:\n        stdout = run_hive_cmd('use %s; show partitions %s partition\\n                                (%s)' % (database, table, self.partition_spec(partition)))\n        if stdout:\n            return True\n        else:\n            return False",
+      "patch_sha256": "6ac54c11b61fb0308d3c258233bc1a8dbaea595a0b9c6340ceaa489afad6ea1e",
+      "rank_score": 242,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8089233151013046,
+      "top_p": 0.9111541438766307
+    },
+    {
+      "index": 6,
+      "patch_text": "def table_exists(self, table, database='default', partition=None):\n    if partition is None:\n        stdout = run_hive_cmd('use {0}; show tables like \"{1}\";'.format(database, table))\n        if stdout:\n            return table in stdout  # <--- FIXED LINE\n        else:\n            return False\n    else:\n        stdout = run_hive_cmd('use %s; show partitions %s partition\\n                                (%s)' % (database, table, self.partition_spec(partition)))\n        if stdout:\n            return True\n        else:\n            return False",
+      "patch_sha256": "de91eea70f6bb46b7656389a79fe37add946264b73dfa63b008077b269d36524",
+      "rank_score": 228,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8250994923331102,
+      "top_p": 0.9313743654163876
+    },
+    {
+      "index": 7,
+      "patch_text": "def table_exists(self, table, database='default', partition=None):\n    if partition is None:\n        stdout = run_hive_cmd('use {0}; show tables like \"{1}\";'.format(database, table))\n        if stdout and table in stdout:\n            return True\n        else:\n            return False\n    else:\n        stdout = run_hive_cmd('use %s; show partitions %s partition\\n                                (%s)' % (database, table, self.partition_spec(partition)))\n        if stdout:\n            return True\n        else:\n            return False",
+      "patch_sha256": "11d71a4ce8778234c2e0c11653623cf3cbb5e5fd2ec78dd2e412cdb2ebaac123",
+      "rank_score": 227,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8089233151013046,
+      "top_p": 0.9111541438766307
+    },
+    {
+      "index": 8,
+      "patch_text": "def table_exists(self, table, database='default', partition=None):\n    if partition is None:\n        stdout = run_hive_cmd('use {0}; show tables like \"{1}\";'.format(database, table))\n        return stdout and table in stdout  # <--- BUGGY LINE\n    else:\n        stdout = run_hive_cmd('use %s; show partitions %s partition\\n                                (%s)' % (database, table, self.partition_spec(partition)))\n        if stdout:\n            return True\n        else:\n            return False\n\n\n##end\n\n\n##correct\n\ndef table_exists(self, table, database='default', partition=None):\n    if partition is None:\n        stdout = run_hive_cmd('use {0}; show tables like \"{1}\";'.format(database, table))\n        return stdout and table in stdout  # <--- BUGGY LINE\n    else:\n        stdout = run_hive_cmd('use %s; show partitions %s partition\\n                                (%s)' % (database, table, self.partition_spec(partition)))\n        if stdout:\n            return True\n        else:\n            return False\n\n\n##end\n\n##correct\n\ndef table_exists(self, table, database='default', partition=None):\n    if partition is None:\n        stdout = run_hive_cmd('use {0}; show tables like \"{1}\";'.format(database, table))\n        return stdout and table in stdout  # <--- BUGGY LINE\n    else:\n        stdout = run_hive_cmd('use %s; show partitions %s partition\\n                                (%s)' % (database, table, self.partition_spec(partition)))\n        if stdout:\n            return True\n        else:\n            return False\n\n\n##end\n\n\n##correct\n\ndef table_exists(self, table, database='default', partition=None):\n    if partition is None:\n        stdout = run_hive_cmd('use {0}; show tables like \"{1}\";'.format(database, table))\n        return stdout and table in stdout  # <--- BUGGY LINE\n    else:\n        stdout = run_hive_cmd('use %s; show partitions %s partition\\n                                (%s)' % (database, table, self.partition_spec(partition)))\n        if stdout:\n            return True\n        else:\n            return False\n\n\n##end\n\n\n##correct\n\ndef table_exists(self, table, database='default', partition=None):\n    if partition is None:\n        stdout = run_hive_cmd('use {0}; show tables like \"{1}\";'.format(database, table))\n        return stdout and table in stdout  # <--- BUGGY LINE\n    else:\n        stdout = run_hive_cmd('use %s; show partitions %s partition\\n                                (%s)' % (database, table, self.partition_spec(partition)))\n        if stdout:\n            return True\n        else:\n            return False\n\n\n##end\n\n\n##correct",
+      "patch_sha256": "dd1b9fb664208d3036dcbe7e0f1e561d680c6b5a96ca92c587a128d4015564e6",
+      "rank_score": 134,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7699070220440365,
+      "top_p": 0.8623837775550457
+    },
+    {
+      "index": 9,
+      "patch_text": "def table_exists(self, table, database='default', partition=None):\n    if partition is None:\n        stdout = run_hive_cmd('use {0}; show tables like \"{1}\";'.format(database, table))\n        return stdout and table in stdout\n    else:\n        stdout = run_hive_cmd('use %s; show partitions %s partition\\n                                (%s)' % (database, table, self.partition_spec(partition)))\n        if stdout:\n            return True\n        else:\n            return False\n\n##correct\ndef table_exists(self, table, database='default', partition=None):\n    if partition is None:\n        stdout = run_hive_cmd('use {0}; show tables like \"{1}\";'.format(database, table))\n        return stdout and table in stdout\n    else:\n        stdout = run_hive_cmd('use %s; show partitions %s partition\\n                                (%s)' % (database, table, self.partition_spec(partition)))\n        if stdout:\n            return True\n        else:\n            return False\n\n##correct\ndef table_exists(self, table, database='default', partition=None):\n    if partition is None:\n        stdout = run_hive_cmd('use {0}; show tables like \"{1}\";'.format(database, table))\n        return stdout and table in stdout\n    else:\n        stdout = run_hive_cmd('use %s; show partitions %s partition\\n                                (%s)' % (database, table, self.partition_spec(partition)))\n        if stdout:\n            return True\n        else:\n            return False\n\n##correct\ndef table_exists(self, table, database='default', partition=None):\n    if partition is None:\n        stdout = run_hive_cmd('use {0}; show tables like \"{1}\";'.format(database, table))\n        return stdout and table in stdout\n    else:\n        stdout = run_hive_cmd('use %s; show partitions %s partition\\n                                (%s)' % (database, table, self.partition_spec(partition)))\n        if stdout:\n            return True\n        else:\n            return False\n\n##correct\ndef table_exists(self, table, database='default', partition=None):\n    if partition is None:\n        stdout = run_hive_cmd('use {0}; show tables like \"{1}\";'.format(database, table))\n        return stdout and table in stdout\n    else:\n        stdout = run_hive_cmd('use %s; show partitions %s partition\\n                                (%s)' % (database, table, self.partition_spec(partition)))\n        if stdout:\n            return True\n        else:\n            return False\n\n##correct\ndef table_exists(self, table, database='default', partition=None):\n    if partition is None:\n        stdout = run_hive_cmd('use {0}; show tables like \"{1}\";'.format(database, table))\n        return stdout and table in stdout\n    else:\n        stdout = run_hive",
+      "patch_sha256": "ab79492cf98e104ecde75c5204f525db4cb7f9ee3abcab97f9832a8f83c33600",
+      "rank_score": 23,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.5167519476989073,
+      "top_p": 0.9737537455748216
+    }
+  ],
+  "candidate_count": 10,
+  "retrieved_examples": [],
+  "diffusion_plan": [],
+  "static_analysis_nodes": []
+}

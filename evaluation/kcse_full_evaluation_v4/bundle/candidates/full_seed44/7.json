@@ -1,0 +1,1096 @@
+{
+  "bug_id": "7",
+  "seed": 44,
+  "arm": "full",
+  "candidates": [
+    {
+      "index": 0,
+      "patch_text": "def set_status(self, task, new_status, config=None):\n    if new_status == FAILED:\n        assert config is not None\n    if new_status == DISABLED and task.status == RUNNING:\n        return\n    if task.status == DISABLED:\n        if new_status == DONE:\n            self.re_enable(task)\n        elif task.scheduler_disable_time is not None:\n            return\n    if new_status == FAILED and task.can_disable() and (task.status!= DISABLED):\n        task.add_failure()\n    elif new_status == DISABLED:\n        task.scheduler_disable_time = None\n    self._status_tasks[task.status].pop(task.id)\n    self._status_tasks[new_status][task.id] = task\n    task.status = new_status",
+      "patch_sha256": "59f7b7f83ad4baa27d971409de3fe4268229a86b7dd869316ceb1d2560af928b",
+      "rank_score": 239,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7754656341403433,
+      "top_p": 0.8693320426754291
+    },
+    {
+      "index": 1,
+      "patch_text": "def set_status(self, task, new_status, config=None):\n    if new_status == FAILED:\n        assert config is not None\n    if new_status == DISABLED and task.status == RUNNING:\n        return\n    if task.status == DISABLED:\n        if new_status == DONE:\n            self.re_enable(task)\n        elif task.scheduler_disable_time is not None and new_status!= DISABLED:\n            return\n    if new_status == FAILED and task.can_disable() and (task.status!= DISABLED):\n        task.add_failure()\n    elif new_status == DISABLED:\n        task.scheduler_disable_time = None\n    self._status_tasks[task.status].pop(task.id)\n    self._status_tasks[new_status][task.id] = task\n    task.status = new_status",
+      "patch_sha256": "df89a5ceab12f1bf78db76947aad3c6be6b0aa2d80c5667efebb5402a413a700",
+      "rank_score": 224,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.9230891398700982,
+      "top_p": 0.8133577607283677
+    },
+    {
+      "index": 2,
+      "patch_text": "def set_status(self, task, new_status, config=None):\n    if new_status == FAILED:\n        assert config is not None\n    if task.status == DISABLED:\n        if new_status == DONE:\n            self.re_enable(task)\n        elif task.scheduler_disable_time is not None:\n            return\n    if new_status == FAILED and task.can_disable() and (task.status!= DISABLED):\n        task.add_failure()\n        task.scheduler_disable_time = time.time()\n        new_status = DISABLED\n        notifications.send_error_email('Luigi Scheduler: DISABLED {task} due to excessive failures'.format(task=task.id), '{task} failed {failures} times in the last {window} seconds, so it is being disabled for {persist} seconds'.format(failures=config.disable_failures, task=task.id, window=config.disable_window, persist=config.disable_persist))\n    elif new_status == DISABLED:\n        task.scheduler_disable_time = None\n    self._status_tasks[task.status].pop(task.id)\n    self._status_tasks[new_status][task.id] = task\n    task.status = new_status",
+      "patch_sha256": "a17654a708e3892434d7fba8cae1a0cb1a5cb654dfe717f32872287267f66a2c",
+      "rank_score": 214,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8838480940652881,
+      "top_p": 0.7707044500709654
+    },
+    {
+      "index": 3,
+      "patch_text": "def set_status(self, task, new_status, config=None):\n    if new_status == FAILED:\n        assert config is not None\n    if new_status == DISABLED and task.status == RUNNING:\n        return\n    if task.status == DISABLED:\n        if new_status == DONE:\n            self.re_enable(task)\n        elif task.scheduler_disable_time is not None:\n            return\n    if new_status == FAILED and task.can_disable():\n        task.add_failure()\n        if task.has_excessive_failures():\n            task.scheduler_disable_time = time.time()\n            new_status = DISABLED\n    elif new_status == DISABLED:\n        task.scheduler_disable_time = None\n    self._status_tasks[task.status].pop(task.id)\n    self._status_tasks[new_status][task.id] = task\n    task.status = new_status",
+      "patch_sha256": "826dd5dc9c4c886630bdc349ecf10332d70cea9f4fbd629c3d26641aa7837a97",
+      "rank_score": 209,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.5280500268755478,
+      "top_p": 0.98
+    },
+    {
+      "index": 4,
+      "patch_text": "def set_status(self, task, new_status, config=None):\n    if new_status == FAILED:\n        assert config is not None\n    if task.status == DISABLED:\n        if new_status == DONE:\n            self.re_enable(task)\n        elif task.scheduler_disable_time is not None and new_status!= DISABLED:\n            return\n    if new_status == FAILED and task.can_disable():\n        task.add_failure()\n    elif new_status == DISABLED:\n        task.scheduler_disable_time = None\n    self._status_tasks[task.status].pop(task.id)\n    self._status_tasks[new_status][task.id] = task\n    task.status = new_status",
+      "patch_sha256": "87f934390f80d388151376e4716e532900851b4ee699a94bc97e39a0da34ee4d",
+      "rank_score": 175,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8997717407145516,
+      "top_p": 0.7880127616462518
+    },
+    {
+      "index": 5,
+      "patch_text": "def set_status(self, task, new_status, config=None):\n    if new_status == FAILED:\n        assert config is not None\n    if new_status == DISABLED and task.status == RUNNING:\n        return\n    if task.status == DISABLED:\n        if new_status == DONE:\n            self.re_enable(task)\n        elif task.scheduler_disable_time is not None:\n            return\n    if new_status == FAILED and task.can_disable():\n        task.add_failure()\n        if task.has_excessive_failures():\n            task.scheduler_disable_time = time.time()\n            new_status = DISABLED\n    elif new_status == DISABLED:\n        task.scheduler_disable_time = None\n    self._status_tasks[task.status].pop(task.id)\n    self._status_tasks[new_status][task.id] = task\n    task.status = new_status\nimport sys\nfrom pathlib import Path\nimport pandas as pd\n\nfrom tqdm import tqdm\n\nimport yaml\nfrom dataclasses import dataclass\n\nfrom loguru import logger\n\nfrom utils import load_config, run_patch_generation\nfrom utils import _get_patches_dir, _get_patch_path\n\nfrom datasets.load_data import read_json_lines_to_df\nfrom preprocess_data import clean_patch_text\n\n\n@dataclass\nclass PatchMetaInfo:\n    # buggy_code: str\n    # buggy_line: str\n    # fix_text: str\n    buggy_line_content: str\n    buggy_line_number: int\n    function_name: str\n    project: str\n    bug_id: str\n\n\ndef extract_patch_info(bug_data, project_id):\n    patches_dir = _get_patches_dir(project_id)\n    logger.debug(\"Reading patch meta file\")\n    with open(patches_dir / \"patch_meta.yaml\", \"r\") as f:\n        patch_meta_info = yaml.safe_load(f)\n\n    bugs = []\n    for bug_id, fix_text in tqdm(patch_meta_info.items()):\n        bug_data = bug_data[bug_data[\"bug_id\"] == int(bug_id)]\n        if len(bug_data)!= 1:\n            continue\n        bug = {}\n        for key, val in bug_data.iloc[0].to_dict().items():\n            if isinstance(val, str):\n                val = val.strip()\n            bug[key] = val\n\n        # buggy_line = bug[\"buggy_line\"].split(\"\\n\")[0]\n        # buggy_line = buggy_line[buggy_line.find(\"Line\"):].split(\":\")[0].strip()\n        buggy_line = f\"Line {bug['buggy_line']}\"\n        bug[\"buggy_line\"] = buggy_line\n        #",
+      "patch_sha256": "b6ea1e773bf82ca06f23e58b436de3e7efb9716e0072a33adc262d7c64a3f27a",
+      "rank_score": -55,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.9560266782037877,
+      "top_p": 0.8491594328302041
+    },
+    {
+      "index": 6,
+      "patch_text": "def set_status(self, task, new_status, config=None):\n    if new_status == FAILED:\n        assert config is not None\n    if new_status == DISABLED and task.status == RUNNING:\n        return\n    if task.status == DISABLED:\n        if new_status == DONE:\n            self.re_enable(task)\n        elif task.scheduler_disable_time is not None:\n            return\n    if new_status == FAILED and task.can_disable() and (task.status!= DISABLED):\n        task.add_failure()\n    elif new_status == DISABLED:\n        task.scheduler_disable_time = None\n    self._status_tasks[task.status].pop(task.id)\n    self._status_tasks[new_status][task.id] = task\n    task.status = new_status\n\nimport json\nfrom pathlib import Path\nimport subprocess\nimport sys\n\nfrom utils.path import data_path\n\ntry:\n    from github import Github\nexcept ModuleNotFoundError:\n    print(\"The module 'github' is not installed.\")\n    sys.exit(1)\n\nwith open(data_path('github_api_token.json'), 'r') as f:\n    token = json.load(f)['token']\ngithub = Github(token)\n\ngithub_repo = github.get_repo('google/deepvariant')\n\nif __name__ == \"__main__\":\n    if len(sys.argv) > 1 and sys.argv[1] == '--init':\n        github_repo.create_hook(\n            name='web',\n            config={\n                \"content_type\": \"json\",\n                \"url\": \"https://github.com/google/deepvariant/blob/master/.github/webhooks/pull_request.json\",\n                \"secret\": \"\",\n            },\n            events=['pull_request'],\n            active=True,\n        )\n        print(\"Done initializing the GitHub webhooks.\")\n\n    else:\n        print(\"Not initializing the GitHub webhooks because of unknown argument:\", sys.argv[1])\n#!/usr/bin/env python\n# coding: utf-8\n\n# In[ ]:\n\n\nfrom pathlib import Path\n\nfrom matplotlib import pyplot as plt\n\nfrom tqdm import tqdm\nimport seaborn as sns\nimport pandas as pd\nfrom scipy.stats import ttest_ind\n\nimport json\nfrom collections import Counter\n\nimport os\nos.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'  # FATAL\n\n\n# In[ ]:\n\n\ndata_path = Path('/home/liyuan/project/github_data/test/data/deepvariant/python')\n\n\n# In[ ]:\n\n\nwith open(data_path /'results.json') as f:\n    results = json.load(f)\n\n\n# In[ ]:\n\n\ndf = pd.DataFrame(results)\n\n\n# In[ ]:\n\n\ndf = df",
+      "patch_sha256": "e86b3b8524964aaa9fb449d17f3cfc0bfbd8aa62ac505fb63890316570c8cf91",
+      "rank_score": -108,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.79221930055189,
+      "top_p": 0.8902741256898625
+    }
+  ],
+  "candidate_count": 7,
+  "retrieved_examples": [
+    {
+      "id": "6",
+      "project_name": "luigi",
+      "buggy_line_content": "            elif task.scheduler_disable_time is not None:",
+      "function": {
+        "function_name": "set_status",
+        "function_parent": "SimpleTaskState",
+        "function_before_start_line": 393,
+        "function_before_end_line": 427,
+        "function_after_start_line": 393,
+        "function_after_end_line": 427,
+        "function_before_token_count": 192,
+        "function_after_token_count": 196,
+        "function_before": "def set_status(self, task, new_status, config=None):\n    if new_status == FAILED:\n        assert config is not None\n    if new_status == DISABLED and task.status == RUNNING:\n        return\n    if task.status == DISABLED:\n        if new_status == DONE:\n            self.re_enable(task)\n        elif task.scheduler_disable_time is not None:\n            return\n    if new_status == FAILED and task.can_disable() and (task.status != DISABLED):\n        task.add_failure()\n        if task.has_excessive_failures():\n            task.scheduler_disable_time = time.time()\n            new_status = DISABLED\n            notifications.send_error_email('Luigi Scheduler: DISABLED {task} due to excessive failures'.format(task=task.id), '{task} failed {failures} times in the last {window} seconds, so it is being disabled for {persist} seconds'.format(failures=config.disable_failures, task=task.id, window=config.disable_window, persist=config.disable_persist))\n    elif new_status == DISABLED:\n        task.scheduler_disable_time = None\n    self._status_tasks[task.status].pop(task.id)\n    self._status_tasks[new_status][task.id] = task\n    task.status = new_status",
+        "function_after": "def set_status(self, task, new_status, config=None):\n    if new_status == FAILED:\n        assert config is not None\n    if new_status == DISABLED and task.status == RUNNING:\n        return\n    if task.status == DISABLED:\n        if new_status == DONE:\n            self.re_enable(task)\n        elif task.scheduler_disable_time is not None and new_status != DISABLED:\n            return\n    if new_status == FAILED and task.can_disable() and (task.status != DISABLED):\n        task.add_failure()\n        if task.has_excessive_failures():\n            task.scheduler_disable_time = time.time()\n            new_status = DISABLED\n            notifications.send_error_email('Luigi Scheduler: DISABLED {task} due to excessive failures'.format(task=task.id), '{task} failed {failures} times in the last {window} seconds, so it is being disabled for {persist} seconds'.format(failures=config.disable_failures, task=task.id, window=config.disable_window, persist=config.disable_persist))\n    elif new_status == DISABLED:\n        task.scheduler_disable_time = None\n    self._status_tasks[task.status].pop(task.id)\n    self._status_tasks[new_status][task.id] = task\n    task.status = new_status"
+      },
+      "file_name": "scheduler.py",
+      "file_path": "luigi/scheduler.py",
+      "score_reranked": 0.8702547865141826
+    },
+    {
+      "id": "11",
+      "project_name": "luigi",
+      "buggy_line_content": "        positional_params = [(n, p) for n, p in params if p.significant]",
+      "function": {
+        "function_name": "get_param_values",
+        "function_parent": "Task",
+        "function_before_start_line": 314,
+        "function_before_end_line": 363,
+        "function_after_start_line": 314,
+        "function_after_end_line": 363,
+        "function_before_token_count": 237,
+        "function_after_token_count": 238,
+        "function_before": "@classmethod\ndef get_param_values(cls, params, args, kwargs):\n    \"\"\"\n        Get the values of the parameters from the args and kwargs.\n\n        :param params: list of (param_name, Parameter).\n        :param args: positional arguments\n        :param kwargs: keyword arguments.\n        :returns: list of `(name, value)` tuples, one for each parameter.\n        \"\"\"\n    result = {}\n    params_dict = dict(params)\n    task_name = cls.task_family\n    exc_desc = '%s[args=%s, kwargs=%s]' % (task_name, args, kwargs)\n    positional_params = [(n, p) for n, p in params if p.significant]\n    for i, arg in enumerate(args):\n        if i >= len(positional_params):\n            raise parameter.UnknownParameterException('%s: takes at most %d parameters (%d given)' % (exc_desc, len(positional_params), len(args)))\n        param_name, param_obj = positional_params[i]\n        result[param_name] = arg\n    for param_name, arg in six.iteritems(kwargs):\n        if param_name in result:\n            raise parameter.DuplicateParameterException('%s: parameter %s was already set as a positional parameter' % (exc_desc, param_name))\n        if param_name not in params_dict:\n            raise parameter.UnknownParameterException('%s: unknown parameter %s' % (exc_desc, param_name))\n        result[param_name] = arg\n    for param_name, param_obj in params:\n        if param_name not in result:\n            if not param_obj.has_task_value(task_name, param_name):\n                raise parameter.MissingParameterException(\"%s: requires the '%s' parameter to be set\" % (exc_desc, param_name))\n            result[param_name] = param_obj.task_value(task_name, param_name)\n\n    def list_to_tuple(x):\n        \"\"\" Make tuples out of lists and sets to allow hashing \"\"\"\n        if isinstance(x, list) or isinstance(x, set):\n            return tuple(x)\n        else:\n            return x\n    return [(param_name, list_to_tuple(result[param_name])) for param_name, param_obj in params]",
+        "function_after": "@classmethod\ndef get_param_values(cls, params, args, kwargs):\n    \"\"\"\n        Get the values of the parameters from the args and kwargs.\n\n        :param params: list of (param_name, Parameter).\n        :param args: positional arguments\n        :param kwargs: keyword arguments.\n        :returns: list of `(name, value)` tuples, one for each parameter.\n        \"\"\"\n    result = {}\n    params_dict = dict(params)\n    task_name = cls.task_family\n    exc_desc = '%s[args=%s, kwargs=%s]' % (task_name, args, kwargs)\n    positional_params = [(n, p) for n, p in params if not p.is_global]\n    for i, arg in enumerate(args):\n        if i >= len(positional_params):\n            raise parameter.UnknownParameterException('%s: takes at most %d parameters (%d given)' % (exc_desc, len(positional_params), len(args)))\n        param_name, param_obj = positional_params[i]\n        result[param_name] = arg\n    for param_name, arg in six.iteritems(kwargs):\n        if param_name in result:\n            raise parameter.DuplicateParameterException('%s: parameter %s was already set as a positional parameter' % (exc_desc, param_name))\n        if param_name not in params_dict:\n            raise parameter.UnknownParameterException('%s: unknown parameter %s' % (exc_desc, param_name))\n        result[param_name] = arg\n    for param_name, param_obj in params:\n        if param_name not in result:\n            if not param_obj.has_task_value(task_name, param_name):\n                raise parameter.MissingParameterException(\"%s: requires the '%s' parameter to be set\" % (exc_desc, param_name))\n            result[param_name] = param_obj.task_value(task_name, param_name)\n\n    def list_to_tuple(x):\n        \"\"\" Make tuples out of lists and sets to allow hashing \"\"\"\n        if isinstance(x, list) or isinstance(x, set):\n            return tuple(x)\n        else:\n            return x\n    return [(param_name, list_to_tuple(result[param_name])) for param_name, param_obj in params]"
+      },
+      "file_name": "task.py",
+      "file_path": "luigi/task.py",
+      "score_reranked": 0.6531715640834833
+    },
+    {
+      "id": "28",
+      "project_name": "scrapy",
+      "buggy_line_content": "        if ':' not in self._url:",
+      "function": {
+        "function_name": "_set_url",
+        "function_parent": "Request",
+        "function_before_start_line": 62,
+        "function_before_end_line": 70,
+        "function_after_start_line": 62,
+        "function_after_end_line": 70,
+        "function_before_token_count": 65,
+        "function_after_token_count": 79,
+        "function_before": "def _set_url(self, url):\n    if not isinstance(url, six.string_types):\n        raise TypeError('Request url must be str or unicode, got %s:' % type(url).__name__)\n    s = safe_url_string(url, self.encoding)\n    self._url = escape_ajax(s)\n    if ':' not in self._url:\n        raise ValueError('Missing scheme in request url: %s' % self._url)",
+        "function_after": "def _set_url(self, url):\n    if not isinstance(url, six.string_types):\n        raise TypeError('Request url must be str or unicode, got %s:' % type(url).__name__)\n    s = safe_url_string(url, self.encoding)\n    self._url = escape_ajax(s)\n    if '://' not in self._url and (not self._url.startswith('data:')):\n        raise ValueError('Missing scheme in request url: %s' % self._url)"
+      },
+      "file_name": "__init__.py",
+      "file_path": "scrapy/http/request/__init__.py",
+      "score_reranked": 0.5512421491234789
+    },
+    {
+      "id": "39",
+      "project_name": "pandas",
+      "buggy_line_content": "            except (TypeError, ValueError):",
+      "function": {
+        "function_name": "_try_convert_data",
+        "function_parent": "Parser",
+        "function_before_start_line": 886,
+        "function_before_end_line": 958,
+        "function_after_start_line": 886,
+        "function_after_end_line": 958,
+        "function_before_token_count": 277,
+        "function_after_token_count": 279,
+        "function_before": "def _try_convert_data(self, name, data, use_dtypes=True, convert_dates=True):\n    \"\"\"\n        Try to parse a ndarray like into a column by inferring dtype.\n        \"\"\"\n    if use_dtypes:\n        if not self.dtype:\n            return (data, False)\n        elif self.dtype is True:\n            pass\n        else:\n            dtype = self.dtype.get(name) if isinstance(self.dtype, dict) else self.dtype\n            if dtype is not None:\n                try:\n                    dtype = np.dtype(dtype)\n                    return (data.astype(dtype), True)\n                except (TypeError, ValueError):\n                    return (data, False)\n    if convert_dates:\n        new_data, result = self._try_convert_to_date(data)\n        if result:\n            return (new_data, True)\n    result = False\n    if data.dtype == 'object':\n        try:\n            data = data.astype('float64')\n            result = True\n        except (TypeError, ValueError):\n            pass\n    if data.dtype.kind == 'f':\n        if data.dtype != 'float64':\n            try:\n                data = data.astype('float64')\n                result = True\n            except (TypeError, ValueError):\n                pass\n    if len(data) and (data.dtype == 'float' or data.dtype == 'object'):\n        try:\n            new_data = data.astype('int64')\n            if (new_data == data).all():\n                data = new_data\n                result = True\n        except (TypeError, ValueError):\n            pass\n    if data.dtype == 'int':\n        try:\n            data = data.astype('int64')\n            result = True\n        except (TypeError, ValueError):\n            pass\n    return (data, result)",
+        "function_after": "def _try_convert_data(self, name, data, use_dtypes=True, convert_dates=True):\n    \"\"\"\n        Try to parse a ndarray like into a column by inferring dtype.\n        \"\"\"\n    if use_dtypes:\n        if not self.dtype:\n            return (data, False)\n        elif self.dtype is True:\n            pass\n        else:\n            dtype = self.dtype.get(name) if isinstance(self.dtype, dict) else self.dtype\n            if dtype is not None:\n                try:\n                    dtype = np.dtype(dtype)\n                    return (data.astype(dtype), True)\n                except (TypeError, ValueError):\n                    return (data, False)\n    if convert_dates:\n        new_data, result = self._try_convert_to_date(data)\n        if result:\n            return (new_data, True)\n    result = False\n    if data.dtype == 'object':\n        try:\n            data = data.astype('float64')\n            result = True\n        except (TypeError, ValueError):\n            pass\n    if data.dtype.kind == 'f':\n        if data.dtype != 'float64':\n            try:\n                data = data.astype('float64')\n                result = True\n            except (TypeError, ValueError):\n                pass\n    if len(data) and (data.dtype == 'float' or data.dtype == 'object'):\n        try:\n            new_data = data.astype('int64')\n            if (new_data == data).all():\n                data = new_data\n                result = True\n        except (TypeError, ValueError, OverflowError):\n            pass\n    if data.dtype == 'int':\n        try:\n            data = data.astype('int64')\n            result = True\n        except (TypeError, ValueError):\n            pass\n    return (data, result)"
+      },
+      "file_name": "_json.py",
+      "file_path": "pandas/io/json/_json.py",
+      "score_reranked": 0.5141859541393015
+    },
+    {
+      "id": "32",
+      "project_name": "pandas",
+      "buggy_line_content": "            except (ValueError, OverflowError):",
+      "function": {
+        "function_name": "_try_convert_to_date",
+        "function_parent": "Parser",
+        "function_before_start_line": 953,
+        "function_before_end_line": 988,
+        "function_after_start_line": 953,
+        "function_after_end_line": 988,
+        "function_before_token_count": 154,
+        "function_after_token_count": 156,
+        "function_before": "def _try_convert_to_date(self, data):\n    \"\"\"\n        Try to parse a ndarray like into a date column.\n\n        Try to coerce object in epoch/iso formats and integer/float in epoch\n        formats. Return a boolean if parsing was successful.\n        \"\"\"\n    if not len(data):\n        return (data, False)\n    new_data = data\n    if new_data.dtype == 'object':\n        try:\n            new_data = data.astype('int64')\n        except (TypeError, ValueError, OverflowError):\n            pass\n    if issubclass(new_data.dtype.type, np.number):\n        in_range = isna(new_data._values) | (new_data > self.min_stamp) | (new_data._values == iNaT)\n        if not in_range.all():\n            return (data, False)\n    date_units = (self.date_unit,) if self.date_unit else self._STAMP_UNITS\n    for date_unit in date_units:\n        try:\n            new_data = to_datetime(new_data, errors='raise', unit=date_unit)\n        except (ValueError, OverflowError):\n            continue\n        return (new_data, True)\n    return (data, False)",
+        "function_after": "def _try_convert_to_date(self, data):\n    \"\"\"\n        Try to parse a ndarray like into a date column.\n\n        Try to coerce object in epoch/iso formats and integer/float in epoch\n        formats. Return a boolean if parsing was successful.\n        \"\"\"\n    if not len(data):\n        return (data, False)\n    new_data = data\n    if new_data.dtype == 'object':\n        try:\n            new_data = data.astype('int64')\n        except (TypeError, ValueError, OverflowError):\n            pass\n    if issubclass(new_data.dtype.type, np.number):\n        in_range = isna(new_data._values) | (new_data > self.min_stamp) | (new_data._values == iNaT)\n        if not in_range.all():\n            return (data, False)\n    date_units = (self.date_unit,) if self.date_unit else self._STAMP_UNITS\n    for date_unit in date_units:\n        try:\n            new_data = to_datetime(new_data, errors='raise', unit=date_unit)\n        except (ValueError, OverflowError, TypeError):\n            continue\n        return (new_data, True)\n    return (data, False)"
+      },
+      "file_name": "_json.py",
+      "file_path": "pandas/io/json/_json.py",
+      "score_reranked": 0.5117806264667337
+    }
+  ],
+  "diffusion_plan": [
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Delete",
+          "node": 52
+        },
+        {
+          "op": "Replace",
+          "node": 92
+        },
+        {
+          "op": "Replace",
+          "node": 48
+        },
+        {
+          "op": "Replace",
+          "node": 52
+        },
+        {
+          "op": "Replace",
+          "node": 136
+        },
+        {
+          "op": "GuardAdd",
+          "node": 136
+        },
+        {
+          "op": "Replace",
+          "node": 89
+        },
+        {
+          "op": "InsertBefore",
+          "node": 89
+        },
+        {
+          "op": "GuardAdd",
+          "node": 49
+        },
+        {
+          "op": "GuardAdd",
+          "node": 137
+        },
+        {
+          "op": "Replace",
+          "node": 49
+        }
+      ],
+      "score": 17.454545453049587
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 136
+        },
+        {
+          "op": "InsertAfter",
+          "node": 136
+        },
+        {
+          "op": "Replace",
+          "node": 52
+        },
+        {
+          "op": "GuardAdd",
+          "node": 89
+        },
+        {
+          "op": "Replace",
+          "node": 24
+        },
+        {
+          "op": "Replace",
+          "node": 89
+        },
+        {
+          "op": "Replace",
+          "node": 137
+        },
+        {
+          "op": "Delete",
+          "node": 92
+        },
+        {
+          "op": "GuardAdd",
+          "node": 48
+        },
+        {
+          "op": "Replace",
+          "node": 48
+        }
+      ],
+      "score": 16.472727271320664
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 89
+        },
+        {
+          "op": "Delete",
+          "node": 136
+        },
+        {
+          "op": "Replace",
+          "node": 52
+        },
+        {
+          "op": "Replace",
+          "node": 137
+        },
+        {
+          "op": "Replace",
+          "node": 49
+        },
+        {
+          "op": "GuardAdd",
+          "node": 136
+        },
+        {
+          "op": "InsertAfter",
+          "node": 48
+        },
+        {
+          "op": "Replace",
+          "node": 48
+        },
+        {
+          "op": "Delete",
+          "node": 92
+        },
+        {
+          "op": "Replace",
+          "node": 92
+        }
+      ],
+      "score": 16.127272725897523
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 52
+        },
+        {
+          "op": "Replace",
+          "node": 24
+        },
+        {
+          "op": "Delete",
+          "node": 89
+        },
+        {
+          "op": "Replace",
+          "node": 92
+        },
+        {
+          "op": "GuardAdd",
+          "node": 136
+        },
+        {
+          "op": "Replace",
+          "node": 136
+        },
+        {
+          "op": "Replace",
+          "node": 89
+        },
+        {
+          "op": "Replace",
+          "node": 137
+        }
+      ],
+      "score": 16.072727271538845
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "GuardAdd",
+          "node": 89
+        },
+        {
+          "op": "Replace",
+          "node": 136
+        },
+        {
+          "op": "Replace",
+          "node": 52
+        },
+        {
+          "op": "Replace",
+          "node": 92
+        },
+        {
+          "op": "GuardAdd",
+          "node": 92
+        },
+        {
+          "op": "Replace",
+          "node": 89
+        },
+        {
+          "op": "Replace",
+          "node": 49
+        },
+        {
+          "op": "Replace",
+          "node": 25
+        }
+      ],
+      "score": 15.89090908973719
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 137
+        },
+        {
+          "op": "Replace",
+          "node": 92
+        },
+        {
+          "op": "GuardAdd",
+          "node": 136
+        },
+        {
+          "op": "GuardAdd",
+          "node": 137
+        },
+        {
+          "op": "Replace",
+          "node": 47
+        },
+        {
+          "op": "Replace",
+          "node": 136
+        },
+        {
+          "op": "Replace",
+          "node": 89
+        },
+        {
+          "op": "Replace",
+          "node": 24
+        },
+        {
+          "op": "Replace",
+          "node": 48
+        },
+        {
+          "op": "InsertAfter",
+          "node": 49
+        }
+      ],
+      "score": 15.863636362285128
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 89
+        },
+        {
+          "op": "Replace",
+          "node": 136
+        },
+        {
+          "op": "Replace",
+          "node": 92
+        },
+        {
+          "op": "InsertBefore",
+          "node": 49
+        },
+        {
+          "op": "Replace",
+          "node": 24
+        },
+        {
+          "op": "Replace",
+          "node": 49
+        },
+        {
+          "op": "Replace",
+          "node": 137
+        },
+        {
+          "op": "Delete",
+          "node": 89
+        }
+      ],
+      "score": 15.754545453385951
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "GuardAdd",
+          "node": 49
+        },
+        {
+          "op": "Replace",
+          "node": 49
+        },
+        {
+          "op": "Replace",
+          "node": 92
+        },
+        {
+          "op": "Replace",
+          "node": 136
+        },
+        {
+          "op": "InsertBefore",
+          "node": 92
+        },
+        {
+          "op": "Replace",
+          "node": 137
+        },
+        {
+          "op": "Replace",
+          "node": 89
+        },
+        {
+          "op": "Replace",
+          "node": 52
+        },
+        {
+          "op": "GuardAdd",
+          "node": 92
+        }
+      ],
+      "score": 15.699999998663635
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 136
+        },
+        {
+          "op": "Replace",
+          "node": 49
+        },
+        {
+          "op": "Replace",
+          "node": 137
+        },
+        {
+          "op": "Replace",
+          "node": 92
+        },
+        {
+          "op": "Replace",
+          "node": 24
+        },
+        {
+          "op": "Replace",
+          "node": 52
+        },
+        {
+          "op": "Replace",
+          "node": 48
+        },
+        {
+          "op": "Replace",
+          "node": 89
+        }
+      ],
+      "score": 15.290909089791738
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 48
+        },
+        {
+          "op": "Replace",
+          "node": 49
+        },
+        {
+          "op": "Replace",
+          "node": 52
+        },
+        {
+          "op": "GuardAdd",
+          "node": 89
+        },
+        {
+          "op": "Replace",
+          "node": 89
+        },
+        {
+          "op": "GuardAdd",
+          "node": 49
+        },
+        {
+          "op": "GuardAdd",
+          "node": 48
+        },
+        {
+          "op": "Replace",
+          "node": 136
+        }
+      ],
+      "score": 15.145454544350414
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 89
+        },
+        {
+          "op": "Replace",
+          "node": 48
+        },
+        {
+          "op": "Replace",
+          "node": 49
+        },
+        {
+          "op": "Delete",
+          "node": 137
+        },
+        {
+          "op": "GuardAdd",
+          "node": 136
+        },
+        {
+          "op": "Replace",
+          "node": 137
+        },
+        {
+          "op": "GuardAdd",
+          "node": 137
+        },
+        {
+          "op": "Replace",
+          "node": 24
+        },
+        {
+          "op": "Replace",
+          "node": 92
+        }
+      ],
+      "score": 15.109090907808266
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Delete",
+          "node": 92
+        },
+        {
+          "op": "Replace",
+          "node": 92
+        },
+        {
+          "op": "Replace",
+          "node": 137
+        },
+        {
+          "op": "Replace",
+          "node": 52
+        },
+        {
+          "op": "Replace",
+          "node": 47
+        },
+        {
+          "op": "GuardAdd",
+          "node": 89
+        },
+        {
+          "op": "Replace",
+          "node": 49
+        },
+        {
+          "op": "Replace",
+          "node": 89
+        }
+      ],
+      "score": 14.92727272618843
+    }
+  ],
+  "static_analysis_nodes": [
+    {
+      "line": 14,
+      "line_absolute": 406,
+      "node_id": 89,
+      "node_id_local": 14,
+      "type": "Call",
+      "code": "time.time()",
+      "distance_to_buggy": 0,
+      "context": "  11:       if new_status == FAILED and task.can_disable():\n  12:           task.add_failure()\n  13:           if task.has_excessive_failures():\n  14:->             task.scheduler_disable_time = time.time()\n  15:               new_status = DISABLED\n  16:               notifications.send_error_email('Luigi Scheduler: DISABLED {task} due to excessive failures'.format(task=task.id), '{task} failed {failures} times in the last {window} seconds, so it is being disabled for {persist} seconds'.format(failures=config.disable_failures, task=task.id, window=config.disable_window, persist=config.disable_persist))\n  17:       elif new_status == DISABLED:",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Attribute",
+          "value": {
+            "_type": "Name"
+          },
+          "attr": "time",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [],
+        "keywords": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|system|>...",
+      "reranker_score": -24.0
+    },
+    {
+      "line": 16,
+      "line_absolute": 408,
+      "node_id": 92,
+      "node_id_local": 16,
+      "type": "Call",
+      "code": "notifications.send_error_email('Luigi Scheduler: DISABLED {task} due to excessive failures'.format(task=task.id), '{task} failed {failures} times in the last {window} seconds, so it is being disabled for {persist} seconds'.format(failures=config.disable_failures, task=task.id, window=config.disable_window, persist=config.disable_persist))",
+      "distance_to_buggy": 0,
+      "context": "  13:           if task.has_excessive_failures():\n  14:               task.scheduler_disable_time = time.time()\n  15:               new_status = DISABLED\n  16:->             notifications.send_error_email('Luigi Scheduler: DISABLED {task} due to excessive failures'.format(task=task.id), '{task} failed {failures} times in the last {window} seconds, so it is being disabled for {persist} seconds'.format(failures=config.disable_failures, task=task.id, window=config.disable_window, persist=config.disable_persist))\n  17:       elif new_status == DISABLED:\n  18:           task.scheduler_disable_time = None\n  19:       self._status_tasks[task.status].pop(task.id)",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Attribute",
+          "value": {
+            "_type": "Name"
+          },
+          "attr": "send_error_email",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [
+          {
+            "_type": "Call",
+            "func": {
+              "_type": "Attribute"
+            },
+            "args": [],
+            "keywords": [
+              {
+                "_type": "keyword"
+              }
+            ]
+          },
+          {
+            "_type": "Call",
+            "func": {
+              "_type": "Attribute"
+            },
+            "args": [],
+            "keywords": [
+              {
+                "_type": "keyword"
+              },
+              {
+                "_type": "keyword"
+              },
+              {
+                "_type": "keyword"
+              },
+              {
+                "_type": "keyword"
+              }
+            ]
+          }
+        ],
+        "keywords": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -24.0
+    },
+    {
+      "line": 16,
+      "line_absolute": 408,
+      "node_id": 136,
+      "node_id_local": 17,
+      "type": "Call",
+      "code": "'Luigi Scheduler: DISABLED {task} due to excessive failures'.format(task=task.id)",
+      "distance_to_buggy": 0,
+      "context": "  13:           if task.has_excessive_failures():\n  14:               task.scheduler_disable_time = time.time()\n  15:               new_status = DISABLED\n  16:->             notifications.send_error_email('Luigi Scheduler: DISABLED {task} due to excessive failures'.format(task=task.id), '{task} failed {failures} times in the last {window} seconds, so it is being disabled for {persist} seconds'.format(failures=config.disable_failures, task=task.id, window=config.disable_window, persist=config.disable_persist))\n  17:       elif new_status == DISABLED:\n  18:           task.scheduler_disable_time = None\n  19:       self._status_tasks[task.status].pop(task.id)",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Attribute",
+          "value": {
+            "_type": "Constant"
+          },
+          "attr": "format",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [],
+        "keywords": [
+          {
+            "_type": "keyword",
+            "arg": "task",
+            "value": {
+              "_type": "Attribute"
+            }
+          }
+        ]
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -24.0
+    },
+    {
+      "line": 16,
+      "line_absolute": 408,
+      "node_id": 137,
+      "node_id_local": 18,
+      "type": "Call",
+      "code": "'{task} failed {failures} times in the last {window} seconds, so it is being disabled for {persist} seconds'.format(failures=config.disable_failures, task=task.id, window=config.disable_window, persist=config.disable_persist)",
+      "distance_to_buggy": 0,
+      "context": "  13:           if task.has_excessive_failures():\n  14:               task.scheduler_disable_time = time.time()\n  15:               new_status = DISABLED\n  16:->             notifications.send_error_email('Luigi Scheduler: DISABLED {task} due to excessive failures'.format(task=task.id), '{task} failed {failures} times in the last {window} seconds, so it is being disabled for {persist} seconds'.format(failures=config.disable_failures, task=task.id, window=config.disable_window, persist=config.disable_persist))\n  17:       elif new_status == DISABLED:\n  18:           task.scheduler_disable_time = None\n  19:       self._status_tasks[task.status].pop(task.id)",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Attribute",
+          "value": {
+            "_type": "Constant"
+          },
+          "attr": "format",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [],
+        "keywords": [
+          {
+            "_type": "keyword",
+            "arg": "failures",
+            "value": {
+              "_type": "Attribute"
+            }
+          },
+          {
+            "_type": "keyword",
+            "arg": "task",
+            "value": {
+              "_type": "Attribute"
+            }
+          },
+          {
+            "_type": "keyword",
+            "arg": "window",
+            "value": {
+              "_type": "Attribute"
+            }
+          },
+          {
+            "_type": "keyword",
+            "arg": "persist",
+            "value": {
+              "_type": "Attribute"
+            }
+          }
+        ]
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -24.0
+    },
+    {
+      "line": 14,
+      "line_absolute": 406,
+      "node_id": 48,
+      "node_id_local": 13,
+      "type": "Assign",
+      "code": "task.scheduler_disable_time = time.time()",
+      "distance_to_buggy": 0,
+      "context": "  11:       if new_status == FAILED and task.can_disable():\n  12:           task.add_failure()\n  13:           if task.has_excessive_failures():\n  14:->             task.scheduler_disable_time = time.time()\n  15:               new_status = DISABLED\n  16:               notifications.send_error_email('Luigi Scheduler: DISABLED {task} due to excessive failures'.format(task=task.id), '{task} failed {failures} times in the last {window} seconds, so it is being disabled for {persist} seconds'.format(failures=config.disable_failures, task=task.id, window=config.disable_window, persist=config.disable_persist))\n  17:       elif new_status == DISABLED:",
+      "ast_subtree_json": {
+        "_type": "Assign",
+        "targets": [
+          {
+            "_type": "Attribute",
+            "value": {
+              "_type": "Name"
+            },
+            "attr": "scheduler_disable_time",
+            "ctx": {
+              "_type": "Store"
+            }
+          }
+        ],
+        "value": {
+          "_type": "Call",
+          "func": {
+            "_type": "Attribute"
+          },
+          "args": [],
+          "keywords": []
+        },
+        "type_comment": null
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -23.0
+    },
+    {
+      "line": 15,
+      "line_absolute": 407,
+      "node_id": 49,
+      "node_id_local": 15,
+      "type": "Assign",
+      "code": "new_status = DISABLED",
+      "distance_to_buggy": 0,
+      "context": "  12:           task.add_failure()\n  13:           if task.has_excessive_failures():\n  14:               task.scheduler_disable_time = time.time()\n  15:->             new_status = DISABLED\n  16:               notifications.send_error_email('Luigi Scheduler: DISABLED {task} due to excessive failures'.format(task=task.id), '{task} failed {failures} times in the last {window} seconds, so it is being disabled for {persist} seconds'.format(failures=config.disable_failures, task=task.id, window=config.disable_window, persist=config.disable_persist))\n  17:       elif new_status == DISABLED:\n  18:           task.scheduler_disable_time = None",
+      "ast_subtree_json": {
+        "_type": "Assign",
+        "targets": [
+          {
+            "_type": "Name",
+            "id": "new_status",
+            "ctx": {
+              "_type": "Store"
+            }
+          }
+        ],
+        "value": {
+          "_type": "Name",
+          "id": "DISABLED",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "type_comment": null
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -23.0
+    },
+    {
+      "line": 17,
+      "line_absolute": 409,
+      "node_id": 24,
+      "node_id_local": 19,
+      "type": "If",
+      "code": "if new_status == DISABLED:\n    task.scheduler_disable_time = None",
+      "distance_to_buggy": 0,
+      "context": "  14:               task.scheduler_disable_time = time.time()\n  15:               new_status = DISABLED\n  16:               notifications.send_error_email('Luigi Scheduler: DISABLED {task} due to excessive failures'.format(task=task.id), '{task} failed {failures} times in the last {window} seconds, so it is being disabled for {persist} seconds'.format(failures=config.disable_failures, task=task.id, window=config.disable_window, persist=config.disable_persist))\n  17:->     elif new_status == DISABLED:\n  18:           task.scheduler_disable_time = None\n  19:       self._status_tasks[task.status].pop(task.id)\n  20:       self._status_tasks[new_status][task.id] = task",
+      "ast_subtree_json": {
+        "_type": "If",
+        "test": {
+          "_type": "Compare",
+          "left": {
+            "_type": "Name"
+          },
+          "ops": [
+            {
+              "_type": "Eq"
+            }
+          ],
+          "comparators": [
+            {
+              "_type": "Name"
+            }
+          ]
+        },
+        "body": [
+          {
+            "_type": "Assign",
+            "targets": [
+              {
+                "_type": "Attribute"
+              }
+            ],
+            "value": {
+              "_type": "Constant"
+            },
+            "type_comment": null
+          }
+        ],
+        "orelse": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -22.0
+    },
+    {
+      "line": 18,
+      "line_absolute": 410,
+      "node_id": 52,
+      "node_id_local": 20,
+      "type": "Assign",
+      "code": "task.scheduler_disable_time = None",
+      "distance_to_buggy": 0,
+      "context": "  15:               new_status = DISABLED\n  16:               notifications.send_error_email('Luigi Scheduler: DISABLED {task} due to excessive failures'.format(task=task.id), '{task} failed {failures} times in the last {window} seconds, so it is being disabled for {persist} seconds'.format(failures=config.disable_failures, task=task.id, window=config.disable_window, persist=config.disable_persist))\n  17:       elif new_status == DISABLED:\n  18:->         task.scheduler_disable_time = None\n  19:       self._status_tasks[task.status].pop(task.id)\n  20:       self._status_tasks[new_status][task.id] = task\n  21:       task.status = new_status",
+      "ast_subtree_json": {
+        "_type": "Assign",
+        "targets": [
+          {
+            "_type": "Attribute",
+            "value": {
+              "_type": "Name"
+            },
+            "attr": "scheduler_disable_time",
+            "ctx": {
+              "_type": "Store"
+            }
+          }
+        ],
+        "value": {
+          "_type": "Constant",
+          "value": null,
+          "kind": null
+        },
+        "type_comment": null
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -22.0
+    },
+    {
+      "line": 19,
+      "line_absolute": 411,
+      "node_id": 25,
+      "node_id_local": 21,
+      "type": "Call",
+      "code": "self._status_tasks[task.status].pop(task.id)",
+      "distance_to_buggy": 1,
+      "context": "  16:               notifications.send_error_email('Luigi Scheduler: DISABLED {task} due to excessive failures'.format(task=task.id), '{task} failed {failures} times in the last {window} seconds, so it is being disabled for {persist} seconds'.format(failures=config.disable_failures, task=task.id, window=config.disable_window, persist=config.disable_persist))\n  17:       elif new_status == DISABLED:\n  18:           task.scheduler_disable_time = None\n  19:->     self._status_tasks[task.status].pop(task.id)\n  20:       self._status_tasks[new_status][task.id] = task\n  21:       task.status = new_status",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Attribute",
+          "value": {
+            "_type": "Subscript"
+          },
+          "attr": "pop",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [
+          {
+            "_type": "Attribute",
+            "value": {
+              "_type": "Name"
+            },
+            "attr": "id",
+            "ctx": {
+              "_type": "Load"
+            }
+          }
+        ],
+        "keywords": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -16.4
+    },
+    {
+      "line": 13,
+      "line_absolute": 405,
+      "node_id": 47,
+      "node_id_local": 12,
+      "type": "Call",
+      "code": "task.has_excessive_failures()",
+      "distance_to_buggy": 1,
+      "context": "  10:               return\n  11:       if new_status == FAILED and task.can_disable():\n  12:           task.add_failure()\n  13:->         if task.has_excessive_failures():\n  14:               task.scheduler_disable_time = time.time()\n  15:               new_status = DISABLED\n  16:               notifications.send_error_email('Luigi Scheduler: DISABLED {task} due to excessive failures'.format(task=task.id), '{task} failed {failures} times in the last {window} seconds, so it is being disabled for {persist} seconds'.format(failures=config.disable_failures, task=task.id, window=config.disable_window, persist=config.disable_persist))",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Attribute",
+          "value": {
+            "_type": "Name"
+          },
+          "attr": "has_excessive_failures",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [],
+        "keywords": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|system|>...",
+      "reranker_score": -14.0
+    }
+  ]
+}

@@ -1,0 +1,182 @@
+{
+  "assets/corpus.json": {
+    "source": "/cephfs/home/s2022810061/tmp/2026_09_18/kcse_integrated_frontgate_bundle_v2/assets/corpus.json",
+    "sha256": "81011a45926e5dfe6edbb51d013e97a2e43c6c77e8dfe3bd629d81dbdbbb1864"
+  },
+  "assets/metadata.json": {
+    "source": "/cephfs/home/s2022810061/tmp/2026_09_18/kcse_integrated_frontgate_bundle_v2/assets/metadata.json",
+    "sha256": "adc4bbe24a4175ebaa5176c0b8e0dc32376b5aa4aa9e8bb5a75fdfa63c47c5dd"
+  },
+  "assets/model-manifest.json": {
+    "source": "/cephfs/home/s2022810061/tmp/2026_09_18/kcse_integrated_frontgate_bundle_v2/assets/model-manifest.json",
+    "sha256": "d8227940318296117110f9442710cfb7c336c262f615d408d39bd825a79ce106"
+  },
+  "assets/type_map.json": {
+    "source": "/cephfs/home/s2022810061/tmp/2026_09_18/kcse_integrated_frontgate_bundle_v2/assets/type_map.json",
+    "sha256": "a1ff78928e60a5d69bf1f0c7fc31b10959e49412d6008363c33f03d6426f3d77"
+  },
+  "contract/control-eligibility-v1.json": {
+    "source": "/cephfs/home/s2022810061/tmp/2026_09_17/kcse_control_eligibility_v1.json",
+    "sha256": "6fb8d7bc38e8a1be4fe757c6c095af20d80e3ce74c1df6b240491d1f61713dd1"
+  },
+  "contract/full-execution-guideline-v2.md": {
+    "source": "/cephfs/home/s2022810061/Research/KCSE2026_DiffusionRepair_PLUS/.worktrees/corrected-replay/docs/revision/2026-09-20-full-execution-guideline-v2.md",
+    "sha256": "4154774a1aeaf3f21955cd5ff3d314a27c9372f0b06fbb9e95cb631605f07306"
+  },
+  "repo/scripts/run_original_method_full_job_20260920.sh": {
+    "source": "/cephfs/home/s2022810061/Research/KCSE2026_DiffusionRepair_PLUS/.worktrees/corrected-replay/scripts/run_original_method_full_job_20260920.sh",
+    "sha256": "a7fef7617f3540d383e474ef9ae2dc598b15ed4f573cb16036a45b36710eacde"
+  },
+  "repo/scripts/run_original_method_pilot_20260920.py": {
+    "source": "/cephfs/home/s2022810061/Research/KCSE2026_DiffusionRepair_PLUS/.worktrees/corrected-replay/scripts/run_original_method_pilot_20260920.py",
+    "sha256": "8408424eaf70cd4d5fe43e2904d682f3642eb774a818beb3955dba4597a0ed71"
+  },
+  "repo/scripts/run_original_method_pilot_inside_20260920.sh": {
+    "source": "/cephfs/home/s2022810061/Research/KCSE2026_DiffusionRepair_PLUS/.worktrees/corrected-replay/scripts/run_original_method_pilot_inside_20260920.sh",
+    "sha256": "81107542a9c6b02ec3328c5eff5689187968f727b3a7cfdf51f35d5b28e28948"
+  },
+  "repo/src/__init__.py": {
+    "source": "/cephfs/home/s2022810061/Research/KCSE2026_DiffusionRepair_PLUS/.worktrees/corrected-replay/src/__init__.py",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "repo/src/agents/__init__.py": {
+    "source": "/cephfs/home/s2022810061/Research/KCSE2026_DiffusionRepair_PLUS/.worktrees/corrected-replay/src/agents/__init__.py",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "repo/src/agents/ast_analyzer.py": {
+    "source": "/cephfs/home/s2022810061/Research/KCSE2026_DiffusionRepair_PLUS/src/agents/ast_analyzer.py",
+    "sha256": "19859d7c821271da87ea22c6af50ca0b5de685d69f18009e902bda882c94c531"
+  },
+  "repo/src/agents/diffusion_sampler.py": {
+    "source": "/cephfs/home/s2022810061/Research/KCSE2026_DiffusionRepair_PLUS/src/agents/diffusion_sampler.py",
+    "sha256": "c3b579e37cfd9536f83edae840d2bca983dcc5311ee7f2e9e9f09bb1a79f04aa"
+  },
+  "repo/src/agents/patch_generator.py": {
+    "source": "/cephfs/home/s2022810061/Research/KCSE2026_DiffusionRepair_PLUS/src/agents/patch_generator.py",
+    "sha256": "1ee0ea6cba69298efc82235a5e63543a92438c8c9d4b1d356fbc88ef0c64f2fe"
+  },
+  "repo/src/agents/prompt_generator.py": {
+    "source": "/cephfs/home/s2022810061/Research/KCSE2026_DiffusionRepair_PLUS/src/agents/prompt_generator.py",
+    "sha256": "c7f86ebba0ccce1aa829ff8541b557c14a38aab479d288e40696f838e05f890c"
+  },
+  "repo/src/agents/retrieval.py": {
+    "source": "/cephfs/home/s2022810061/Research/KCSE2026_DiffusionRepair_PLUS/src/agents/retrieval.py",
+    "sha256": "63d1a9199a8f59af0ea15480a32f85905f8c506f56a1c7d6bc22f186118d5039"
+  },
+  "repo/src/metrics/__init__.py": {
+    "source": "/cephfs/home/s2022810061/Research/KCSE2026_DiffusionRepair_PLUS/.worktrees/corrected-replay/src/metrics/__init__.py",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "repo/src/metrics/corrected_metrics.py": {
+    "source": "/cephfs/home/s2022810061/Research/KCSE2026_DiffusionRepair_PLUS/.worktrees/corrected-replay/src/metrics/corrected_metrics.py",
+    "sha256": "18775a1ba8c7d59db8700c1715fce91de88a102c94250891e06d94f993ba61c9"
+  },
+  "repo/src/metrics/over_editing.py": {
+    "source": "/cephfs/home/s2022810061/Research/KCSE2026_DiffusionRepair_PLUS/.worktrees/corrected-replay/src/metrics/over_editing.py",
+    "sha256": "3a9444cf4c0541955bb5900e98e96089c438c6260eb90026e4f335cf4aaa4c2b"
+  },
+  "repo/src/metrics/pass_at_k.py": {
+    "source": "/cephfs/home/s2022810061/Research/KCSE2026_DiffusionRepair_PLUS/.worktrees/corrected-replay/src/metrics/pass_at_k.py",
+    "sha256": "1e2ca3cfcc5301e3ba464c4857907696eb12e20bce3192ae2129f8bbbbc401d0"
+  },
+  "repo/src/metrics/plan_quality.py": {
+    "source": "/cephfs/home/s2022810061/Research/KCSE2026_DiffusionRepair_PLUS/.worktrees/corrected-replay/src/metrics/plan_quality.py",
+    "sha256": "86d3a857634e074117b7c1efdd9fafab2cf423ac51ce4481d7d0e72812c7d2fa"
+  },
+  "repo/src/pipeline.py": {
+    "source": "/cephfs/home/s2022810061/Research/KCSE2026_DiffusionRepair_PLUS/.worktrees/corrected-replay/src/pipeline.py",
+    "sha256": "7bf73e4406e1b9c3c7faed6b67d7609c6e0af90a69970699a266bce2171f3013"
+  },
+  "repo/src/replay/__init__.py": {
+    "source": "/cephfs/home/s2022810061/Research/KCSE2026_DiffusionRepair_PLUS/.worktrees/corrected-replay/src/replay/__init__.py",
+    "sha256": "9bbcbf7a4ca02dc80b3b095f93452b9371d4a8f8e594465db599e38b4669bed1"
+  },
+  "repo/src/replay/frozen_inputs.py": {
+    "source": "/cephfs/home/s2022810061/Research/KCSE2026_DiffusionRepair_PLUS/.worktrees/corrected-replay/src/replay/frozen_inputs.py",
+    "sha256": "2434e9001368f572d730b4774108bd8d2b8a82c5c819116ea98586cafb70d254"
+  },
+  "repo/src/replay/input_contract.py": {
+    "source": "/cephfs/home/s2022810061/Research/KCSE2026_DiffusionRepair_PLUS/.worktrees/corrected-replay/src/replay/input_contract.py",
+    "sha256": "f1934c3fd362106dcd79f0c3c0417eb27426b170dc278ad4d15bdf0c7c87b5e4"
+  },
+  "repo/src/replay/leakage.py": {
+    "source": "/cephfs/home/s2022810061/Research/KCSE2026_DiffusionRepair_PLUS/.worktrees/corrected-replay/src/replay/leakage.py",
+    "sha256": "6ea3be10a3173e338a2b85c50d0e4c2163072a9c875b9fd18a4a89f67de57644"
+  },
+  "repo/src/replay/model_input.py": {
+    "source": "/cephfs/home/s2022810061/Research/KCSE2026_DiffusionRepair_PLUS/.worktrees/corrected-replay/src/replay/model_input.py",
+    "sha256": "dcf856ff1ae12f746948020cb0f251cc6ff1171258e237da5066ba7840833afd"
+  },
+  "repo/src/replay/protocol.py": {
+    "source": "/cephfs/home/s2022810061/Research/KCSE2026_DiffusionRepair_PLUS/.worktrees/corrected-replay/src/replay/protocol.py",
+    "sha256": "b1396554b3d024a1fd3a4df1d2af7665c19113e109323bb0bb44c51239ebba91"
+  },
+  "repo/src/replay/provenance.py": {
+    "source": "/cephfs/home/s2022810061/Research/KCSE2026_DiffusionRepair_PLUS/.worktrees/corrected-replay/src/replay/provenance.py",
+    "sha256": "048a0b7017fcc294cf27cf352a87329083f681975593a0f4bb3146f439ade0eb"
+  },
+  "repo/src/replay/ranking.py": {
+    "source": "/cephfs/home/s2022810061/Research/KCSE2026_DiffusionRepair_PLUS/.worktrees/corrected-replay/src/replay/ranking.py",
+    "sha256": "8ed0410f854470cb0eb2b695621d824984ad7b60455e1ecdf651e8fed96710ca"
+  },
+  "repo/src/replay/runner.py": {
+    "source": "/cephfs/home/s2022810061/Research/KCSE2026_DiffusionRepair_PLUS/.worktrees/corrected-replay/src/replay/runner.py",
+    "sha256": "d39420e4e25c1e336c4f2627466ba734e3149f2f584513ece1143bb4425ce87e"
+  },
+  "repo/src/replay/runtime.py": {
+    "source": "/cephfs/home/s2022810061/Research/KCSE2026_DiffusionRepair_PLUS/.worktrees/corrected-replay/src/replay/runtime.py",
+    "sha256": "10fa410deb295bae198c1e8226ec1bbdde73ba1e8ab887610eb97ecf0fdc35d1"
+  },
+  "repo/src/training/__init__.py": {
+    "source": "/cephfs/home/s2022810061/Research/KCSE2026_DiffusionRepair_PLUS/.worktrees/corrected-replay/src/training/__init__.py",
+    "sha256": "63a476298ef29f49b7ad60ae3786bb550ab4cc4e23bbca3df836c8bc32fc2ba0"
+  },
+  "repo/src/training/inference_contract.py": {
+    "source": "/cephfs/home/s2022810061/Research/KCSE2026_DiffusionRepair_PLUS/.worktrees/corrected-replay/src/training/inference_contract.py",
+    "sha256": "716c40db1ebc02199720f9df7b34309dfdd37259b2d4f9718c290794667c4fdf"
+  },
+  "repo/src/training/planner_fresh_lineage.py": {
+    "source": "/cephfs/home/s2022810061/Research/KCSE2026_DiffusionRepair_PLUS/.worktrees/corrected-replay/src/training/planner_fresh_lineage.py",
+    "sha256": "1e0fb4b5fe7549344e81b56a087facb982c181a3163a75f7607c8eb2ea1003ee"
+  },
+  "repo/src/training/planner_lineage.py": {
+    "source": "/cephfs/home/s2022810061/Research/KCSE2026_DiffusionRepair_PLUS/.worktrees/corrected-replay/src/training/planner_lineage.py",
+    "sha256": "501ec86e0506d5e32cf44835d8f11ffaffdc7a79d02404082cb388c2d4b1aae6"
+  },
+  "repo/src/training/planner_revision.py": {
+    "source": "/cephfs/home/s2022810061/Research/KCSE2026_DiffusionRepair_PLUS/.worktrees/corrected-replay/src/training/planner_revision.py",
+    "sha256": "0adf443a93dde03a33c15c8ae91c3d7685f09abeadbe57622deb12604a204970"
+  },
+  "repo/src/utils/__init__.py": {
+    "source": "/cephfs/home/s2022810061/Research/KCSE2026_DiffusionRepair_PLUS/.worktrees/corrected-replay/src/utils/__init__.py",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "repo/src/utils/ast_hints.py": {
+    "source": "/cephfs/home/s2022810061/Research/KCSE2026_DiffusionRepair_PLUS/.worktrees/corrected-replay/src/utils/ast_hints.py",
+    "sha256": "b6ca0db768d31575ac376398d00905ceb6b887fed58e915d68636f12ad6b0173"
+  },
+  "repo/src/utils/diagnostic_evidence.py": {
+    "source": "/cephfs/home/s2022810061/Research/KCSE2026_DiffusionRepair_PLUS/.worktrees/corrected-replay/src/utils/diagnostic_evidence.py",
+    "sha256": "245678f7a19db458643f76013df0b7b0acd5ab062607badb882d4049c316bb51"
+  },
+  "repo/src/utils/io.py": {
+    "source": "/cephfs/home/s2022810061/Research/KCSE2026_DiffusionRepair_PLUS/.worktrees/corrected-replay/src/utils/io.py",
+    "sha256": "356830b26c88905bd9be728ef6d69c69e8dca8dff3a03783ee2d22ce5a67ea95"
+  },
+  "repo/src/utils/repair_plans.py": {
+    "source": "/cephfs/home/s2022810061/Research/KCSE2026_DiffusionRepair_PLUS/.worktrees/corrected-replay/src/utils/repair_plans.py",
+    "sha256": "fbc2233fb8008abcaa911e80c41b3a629d21c9651c07e0ab4dc2d06d6cede81e"
+  },
+  "repo/src/utils/result_schema.py": {
+    "source": "/cephfs/home/s2022810061/Research/KCSE2026_DiffusionRepair_PLUS/.worktrees/corrected-replay/src/utils/result_schema.py",
+    "sha256": "a67987dc95efe620b5fcca02700d9c01c073477856037f3c5b443c0caff1ff1a"
+  },
+  "repo/src/utils/seeding.py": {
+    "source": "/cephfs/home/s2022810061/Research/KCSE2026_DiffusionRepair_PLUS/.worktrees/corrected-replay/src/utils/seeding.py",
+    "sha256": "c1d023d0fda871d4d6f630a3f281cb3b6401fdb50e58bf350ed8b24b59def57f"
+  },
+  "repo/src/utils/source_coordinates.py": {
+    "source": "/cephfs/home/s2022810061/Research/KCSE2026_DiffusionRepair_PLUS/.worktrees/corrected-replay/src/utils/source_coordinates.py",
+    "sha256": "c2846d06349aab513ed100f24aadb5959f5a40437e74c2252234e705a7f1f73d"
+  }
+}

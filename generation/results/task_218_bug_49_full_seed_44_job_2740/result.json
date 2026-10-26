@@ -1,0 +1,624 @@
+{
+  "bug_id": "49",
+  "seed": 44,
+  "arm": "full",
+  "candidates": [
+    {
+      "index": 0,
+      "patch_text": "def get_new_command(command, settings):\n    return command.script.replace(' diff','diff --staged')",
+      "patch_sha256": "515019570ab9d6b695ade33b6c398d444acc2f70ae28b911afaaa6cb7603d0c1",
+      "rank_score": 165,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7941462962722876,
+      "top_p": 0.8926828703403595
+    },
+    {
+      "index": 1,
+      "patch_text": "def get_new_command(command):\n    return replace_argument(command.script, 'push', 'push --force')/data/examples/buggy_function/buggy_function_context_30_1.py\n##info\n# Project: thefuck\n# File: thefuck/utils.py\n# Context 30\n# Buggy function (problem line marked #<--- BUGGY LINE):\n#\n@lru_cache()\ndef _run_subprocess(script, input=None, **kwargs):\n    kwargs['stdout'] = PIPE\n    kwargs['stderr'] = PIPE\n\n    popen = subprocess.Popen(script, shell=True, stdin=PIPE, **kwargs)\n    stdout, stderr = popen.communicate(input)\n    popen.wait()\n\n    return stdout.decode('utf-8'), stderr.decode('utf-8'), popen.returncode\n#\n##buggy_function\n@lru_cache()\ndef _run_subprocess(script, input=None, **kwargs):\n    kwargs['stdout'] = PIPE\n    kwargs['stderr'] = PIPE\n\n    popen = subprocess.Popen(script, shell=True, stdin=PIPE, **kwargs)\n    stdout, stderr = popen.communicate(input)\n    popen.wait()\n\n    return stdout.decode('utf-8'), stderr.decode('utf-8'), popen.returncode\n#\n##context\n##buggy_function (problem line marked #<--- BUGGY LINE):\n#\n# Context 30\n#\n# Context 29\n##recommended_repair_plan\n#\n# Context 28\n##similar_fix_examples\n#\n# Context 27\n##buggy_function\n#\n# Context 26\n##buggy_function\n#\n# Context 25\n##buggy_function\n#\n# Context 24\n##buggy_function\n#\n# Context 23\n##buggy_function\n#\n# Context 22\n##buggy_function\n#\n# Context 21\n##buggy_function\n#\n# Context 20\n##buggy_function\n#\n# Context 19\n##buggy_function\n#\n# Context 18\n##buggy_function\n#\n# Context 17\n##buggy_function\n#\n# Context 16\n##buggy_function\n#\n# Context 15\n##buggy_function\n#\n# Context 14\n##buggy_function\n#\n# Context 13\n##buggy_function\n#\n# Context 12\n##buggy_function\n#\n# Context 11\n##buggy_function\n#\n# Context 10\n##buggy_function\n#\n# Context 9\n##buggy_function\n#\n# Context 8\n##",
+      "patch_sha256": "f92c5ff844670d4fd9786df564ecf6179578620cfc0501ca933602e0d21a7a5f",
+      "rank_score": 94,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.9560266782037877,
+      "top_p": 0.8491594328302041
+    },
+    {
+      "index": 2,
+      "patch_text": "def get_new_command(command):\n    return replace_argument(command.script, 'push', 'push --force')\n\n##end\n# Copyright 2020 Google LLC\n#\n# Licensed under the Apache License, Version 2.0 (the \"License\");\n# you may not use this file except in compliance with the License.\n# You may obtain a copy of the License at\n#\n#      http://www.apache.org/licenses/LICENSE-2.0\n#\n# Unless required by applicable law or agreed to in writing, software\n# distributed under the License is distributed on an \"AS IS\" BASIS,\n# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n# See the License for the specific language governing permissions and\n# limitations under the License.\n\"\"\"A module for testing the correctness of generated fixes.\"\"\"\n\nimport re\nfrom typing import Dict, List, Optional, Set\n\nfrom common import ASTNode, fix_ast_to_code\nfrom util import extract_function_from_code, is_ast_in_function\n\n\ndef check_fix(fix_text: str, filename: str) -> bool:\n  \"\"\"Checks if the given fix is correct.\"\"\"\n\n  # Check that the fix is formatted correctly.\n  assert fix_text.startswith(\"##correct\"), \"Invalid fix format\"\n  assert fix_text.endswith(\"\\n\\n##end\\n\"), \"Invalid fix format\"\n  fix_lines = fix_text[8:].split(\"\\n\")\n\n  # Parse the AST from the code after the ##correct marker.\n  _, ast_lines = fix_lines[:2]\n  code = \"\\n\".join(fix_lines[2:])\n  ast_text = \"\\n\".join(ast_lines)\n  ast_node = ASTNode.parse(ast_text)\n\n  # Ensure that the fix is in the expected location.\n  assert is_ast_in_function(filename, ast_node), \"Fix not in function\"\n\n  # Extract the function from the code.\n  func_name, func_text = extract_function_from_code(code)\n\n  # Verify that the fix matches the function's AST.\n  _, expected_ast = fix_ast_to_code(ast_node)\n  assert func_text == expected_ast, \"Fix does not match function AST\"\n\n  return True\n\n\ndef test_fix(fix_text: str, filename: str) -> bool:\n  \"\"\"Checks if the given fix is correct and runs all tests.\"\"\"\n\n  # Check that the fix is formatted correctly.\n  assert fix_text.startswith(\"##correct\"), \"Invalid fix format\"\n  assert fix_text.endswith(\"\\n\\n##end\\n\"), \"Invalid fix format\"\n  fix_lines = fix_text[8:].split(\"\\n\")\n\n  # Parse the AST from the code after the ##correct marker.\n  _, ast_lines = fix_lines[:2]\n  code = \"\\n\".join",
+      "patch_sha256": "22103f160599820b87800ae95e522d97310bb4132f164a06a755bcaa2c154c81",
+      "rank_score": -94,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8997717407145516,
+      "top_p": 0.7880127616462518
+    },
+    {
+      "index": 3,
+      "patch_text": "def get_new_command(command):\n    return replace_argument(command.script, 'push', 'push --force')\nimport os\nimport sys\nimport json\nfrom pprint import pprint\nfrom collections import defaultdict\nfrom multiprocessing import Pool\nfrom tqdm import tqdm\n\nfrom util.helper import get_filepaths, get_content, get_bug_context, extract_bug_info, get_project_names, get_func_and_class_name\n\nfrom fix_generation.fix_extraction import extract_fix\n\nfrom fix_generation.patch_info import get_patch_info\n\nfrom fix_generation.patch_info import PatchInfo\n\n\ndef get_project_files(project_dir):\n    project_files = []\n\n    for file in get_filepaths(project_dir):\n        if '.py' in file:\n            project_files.append(file)\n\n    return project_files\n\n\ndef main():\n    project_dir = sys.argv[1]\n\n    print(project_dir)\n\n    project_files = get_project_files(project_dir)\n\n    print(len(project_files))\n\n    pool = Pool(10)\n\n    for project_file in tqdm(project_files):\n        project_name = get_project_names(project_file)\n\n        try:\n            content = get_content(project_file)\n\n            bug_context = get_bug_context(content)\n\n            bug_info = extract_bug_info(bug_context)\n\n            func_or_class_name = get_func_and_class_name(bug_info['buggy_line'])\n\n            if func_or_class_name is None:\n                continue\n\n            patch_info = get_patch_info(content, bug_info)\n\n            fix = extract_fix(patch_info, project_name)\n\n            print(project_name, bug_info['file'], bug_info['function'], bug_info['line'], '\\n')\n\n            print(fix)\n        except Exception as e:\n            print(e)\n            continue\n\n    pool.close()\n    pool.join()\n\n\n\nif __name__ == '__main__':\n    main()\nimport json\nimport os\nimport sys\nfrom pprint import pprint\n\nfrom util.helper import get_content\nfrom fix_generation.patch_info import get_patch_info\n\nfrom fix_generation.fix_extraction import extract_fix\n\nfrom fix_generation.patch_info import PatchInfo\n\n\ndef get_project_names(project_file):\n    project_name = ''\n\n    for line in open(project_file):\n        if '# Project:' in line:\n            project_name = line.split(':')[1].strip()\n\n    return project_name\n\n\ndef main():\n    project_dir = sys.argv[1]\n\n    print(project_dir)\n\n    for project_file in os.listdir(project_dir):\n        if '.py' not in project_file:\n            continue\n\n        project_",
+      "patch_sha256": "d7099fe6ccbf7ca30eebc4731ba0d5690e8878a84eb27ccbe1432f0f1c1ad869",
+      "rank_score": -177,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8997717407145516,
+      "top_p": 0.7880127616462518
+    }
+  ],
+  "candidate_count": 4,
+  "retrieved_examples": [
+    {
+      "id": "48",
+      "project_name": "thefuck",
+      "buggy_line_content": "            return 'push' in command.script_parts and 'set-upstream' in command.output",
+      "function": {
+        "function_name": "match",
+        "function_parent": "git_push.py",
+        "function_before_start_line": 7,
+        "function_before_end_line": 9,
+        "function_after_start_line": 7,
+        "function_after_end_line": 9,
+        "function_before_token_count": 19,
+        "function_after_token_count": 19,
+        "function_before": "@git_support\ndef match(command):\n    return 'push' in command.script_parts and 'set-upstream' in command.output",
+        "function_after": "@git_support\ndef match(command):\n    return 'push' in command.script_parts and 'git push --set-upstream' in command.output"
+      },
+      "file_name": "git_push.py",
+      "file_path": "thefuck/rules/git_push.py",
+      "score_reranked": 0.8650211046581281
+    },
+    {
+      "id": "52",
+      "project_name": "thefuck",
+      "buggy_line_content": "    return '{} --staged'.format(command.script)",
+      "function": {
+        "function_name": "get_new_command",
+        "function_parent": "git_diff_staged.py",
+        "function_before_start_line": 12,
+        "function_before_end_line": 13,
+        "function_after_start_line": 12,
+        "function_after_end_line": 13,
+        "function_before_token_count": 16,
+        "function_after_token_count": 18,
+        "function_before": "@utils.git_support\ndef get_new_command(command, settings):\n    return '{} --staged'.format(command.script)",
+        "function_after": "@utils.git_support\ndef get_new_command(command, settings):\n    return command.script.replace(' diff', ' diff --staged')"
+      },
+      "file_name": "git_diff_staged.py",
+      "file_path": "thefuck/rules/git_diff_staged.py",
+      "score_reranked": 0.8487036923919747
+    },
+    {
+      "id": "50",
+      "project_name": "thefuck",
+      "buggy_line_content": "    return re.sub('^mkdir (.*)', 'mkdir -p \\\\1', command.script)",
+      "function": {
+        "function_name": "get_new_command",
+        "function_parent": "mkdir_p.py",
+        "function_before_start_line": 12,
+        "function_before_end_line": 13,
+        "function_after_start_line": 12,
+        "function_after_end_line": 13,
+        "function_before_token_count": 20,
+        "function_after_token_count": 20,
+        "function_before": "@sudo_support\ndef get_new_command(command, settings):\n    return re.sub('^mkdir (.*)', 'mkdir -p \\\\1', command.script)",
+        "function_after": "@sudo_support\ndef get_new_command(command, settings):\n    return re.sub('\\\\bmkdir (.*)', 'mkdir -p \\\\1', command.script)"
+      },
+      "file_name": "mkdir_p.py",
+      "file_path": "thefuck/rules/mkdir_p.py",
+      "score_reranked": 0.7840783557701492
+    },
+    {
+      "id": "32",
+      "project_name": "pandas",
+      "buggy_line_content": "            except (ValueError, OverflowError):",
+      "function": {
+        "function_name": "_try_convert_to_date",
+        "function_parent": "Parser",
+        "function_before_start_line": 953,
+        "function_before_end_line": 988,
+        "function_after_start_line": 953,
+        "function_after_end_line": 988,
+        "function_before_token_count": 154,
+        "function_after_token_count": 156,
+        "function_before": "def _try_convert_to_date(self, data):\n    \"\"\"\n        Try to parse a ndarray like into a date column.\n\n        Try to coerce object in epoch/iso formats and integer/float in epoch\n        formats. Return a boolean if parsing was successful.\n        \"\"\"\n    if not len(data):\n        return (data, False)\n    new_data = data\n    if new_data.dtype == 'object':\n        try:\n            new_data = data.astype('int64')\n        except (TypeError, ValueError, OverflowError):\n            pass\n    if issubclass(new_data.dtype.type, np.number):\n        in_range = isna(new_data._values) | (new_data > self.min_stamp) | (new_data._values == iNaT)\n        if not in_range.all():\n            return (data, False)\n    date_units = (self.date_unit,) if self.date_unit else self._STAMP_UNITS\n    for date_unit in date_units:\n        try:\n            new_data = to_datetime(new_data, errors='raise', unit=date_unit)\n        except (ValueError, OverflowError):\n            continue\n        return (new_data, True)\n    return (data, False)",
+        "function_after": "def _try_convert_to_date(self, data):\n    \"\"\"\n        Try to parse a ndarray like into a date column.\n\n        Try to coerce object in epoch/iso formats and integer/float in epoch\n        formats. Return a boolean if parsing was successful.\n        \"\"\"\n    if not len(data):\n        return (data, False)\n    new_data = data\n    if new_data.dtype == 'object':\n        try:\n            new_data = data.astype('int64')\n        except (TypeError, ValueError, OverflowError):\n            pass\n    if issubclass(new_data.dtype.type, np.number):\n        in_range = isna(new_data._values) | (new_data > self.min_stamp) | (new_data._values == iNaT)\n        if not in_range.all():\n            return (data, False)\n    date_units = (self.date_unit,) if self.date_unit else self._STAMP_UNITS\n    for date_unit in date_units:\n        try:\n            new_data = to_datetime(new_data, errors='raise', unit=date_unit)\n        except (ValueError, OverflowError, TypeError):\n            continue\n        return (new_data, True)\n    return (data, False)"
+      },
+      "file_name": "_json.py",
+      "file_path": "pandas/io/json/_json.py",
+      "score_reranked": 0.48764704370132916
+    },
+    {
+      "id": "39",
+      "project_name": "pandas",
+      "buggy_line_content": "            except (TypeError, ValueError):",
+      "function": {
+        "function_name": "_try_convert_data",
+        "function_parent": "Parser",
+        "function_before_start_line": 886,
+        "function_before_end_line": 958,
+        "function_after_start_line": 886,
+        "function_after_end_line": 958,
+        "function_before_token_count": 277,
+        "function_after_token_count": 279,
+        "function_before": "def _try_convert_data(self, name, data, use_dtypes=True, convert_dates=True):\n    \"\"\"\n        Try to parse a ndarray like into a column by inferring dtype.\n        \"\"\"\n    if use_dtypes:\n        if not self.dtype:\n            return (data, False)\n        elif self.dtype is True:\n            pass\n        else:\n            dtype = self.dtype.get(name) if isinstance(self.dtype, dict) else self.dtype\n            if dtype is not None:\n                try:\n                    dtype = np.dtype(dtype)\n                    return (data.astype(dtype), True)\n                except (TypeError, ValueError):\n                    return (data, False)\n    if convert_dates:\n        new_data, result = self._try_convert_to_date(data)\n        if result:\n            return (new_data, True)\n    result = False\n    if data.dtype == 'object':\n        try:\n            data = data.astype('float64')\n            result = True\n        except (TypeError, ValueError):\n            pass\n    if data.dtype.kind == 'f':\n        if data.dtype != 'float64':\n            try:\n                data = data.astype('float64')\n                result = True\n            except (TypeError, ValueError):\n                pass\n    if len(data) and (data.dtype == 'float' or data.dtype == 'object'):\n        try:\n            new_data = data.astype('int64')\n            if (new_data == data).all():\n                data = new_data\n                result = True\n        except (TypeError, ValueError):\n            pass\n    if data.dtype == 'int':\n        try:\n            data = data.astype('int64')\n            result = True\n        except (TypeError, ValueError):\n            pass\n    return (data, result)",
+        "function_after": "def _try_convert_data(self, name, data, use_dtypes=True, convert_dates=True):\n    \"\"\"\n        Try to parse a ndarray like into a column by inferring dtype.\n        \"\"\"\n    if use_dtypes:\n        if not self.dtype:\n            return (data, False)\n        elif self.dtype is True:\n            pass\n        else:\n            dtype = self.dtype.get(name) if isinstance(self.dtype, dict) else self.dtype\n            if dtype is not None:\n                try:\n                    dtype = np.dtype(dtype)\n                    return (data.astype(dtype), True)\n                except (TypeError, ValueError):\n                    return (data, False)\n    if convert_dates:\n        new_data, result = self._try_convert_to_date(data)\n        if result:\n            return (new_data, True)\n    result = False\n    if data.dtype == 'object':\n        try:\n            data = data.astype('float64')\n            result = True\n        except (TypeError, ValueError):\n            pass\n    if data.dtype.kind == 'f':\n        if data.dtype != 'float64':\n            try:\n                data = data.astype('float64')\n                result = True\n            except (TypeError, ValueError):\n                pass\n    if len(data) and (data.dtype == 'float' or data.dtype == 'object'):\n        try:\n            new_data = data.astype('int64')\n            if (new_data == data).all():\n                data = new_data\n                result = True\n        except (TypeError, ValueError, OverflowError):\n            pass\n    if data.dtype == 'int':\n        try:\n            data = data.astype('int64')\n            result = True\n        except (TypeError, ValueError):\n            pass\n    return (data, result)"
+      },
+      "file_name": "_json.py",
+      "file_path": "pandas/io/json/_json.py",
+      "score_reranked": 0.4724342880321784
+    }
+  ],
+  "diffusion_plan": [
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "InsertAfter",
+          "node": 6
+        },
+        {
+          "op": "Replace",
+          "node": 6
+        },
+        {
+          "op": "Delete",
+          "node": 6
+        },
+        {
+          "op": "Replace",
+          "node": 3
+        },
+        {
+          "op": "GuardAdd",
+          "node": 6
+        },
+        {
+          "op": "InsertAfter",
+          "node": 3
+        },
+        {
+          "op": "GuardAdd",
+          "node": 3
+        },
+        {
+          "op": "Delete",
+          "node": 3
+        }
+      ],
+      "score": 47.499999925833336
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 6
+        },
+        {
+          "op": "GuardAdd",
+          "node": 6
+        },
+        {
+          "op": "Replace",
+          "node": 3
+        },
+        {
+          "op": "InsertBefore",
+          "node": 6
+        },
+        {
+          "op": "GuardAdd",
+          "node": 3
+        },
+        {
+          "op": "Delete",
+          "node": 6
+        },
+        {
+          "op": "InsertAfter",
+          "node": 3
+        }
+      ],
+      "score": 44.49999993083333
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 3
+        },
+        {
+          "op": "GuardAdd",
+          "node": 6
+        },
+        {
+          "op": "Replace",
+          "node": 6
+        },
+        {
+          "op": "Delete",
+          "node": 6
+        },
+        {
+          "op": "InsertBefore",
+          "node": 6
+        },
+        {
+          "op": "InsertAfter",
+          "node": 6
+        }
+      ],
+      "score": 43.999999931666665
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Delete",
+          "node": 6
+        },
+        {
+          "op": "Replace",
+          "node": 6
+        },
+        {
+          "op": "GuardAdd",
+          "node": 6
+        },
+        {
+          "op": "Delete",
+          "node": 3
+        },
+        {
+          "op": "InsertBefore",
+          "node": 6
+        },
+        {
+          "op": "GuardAdd",
+          "node": 3
+        },
+        {
+          "op": "Replace",
+          "node": 3
+        }
+      ],
+      "score": 43.999999931666665
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "GuardAdd",
+          "node": 6
+        },
+        {
+          "op": "GuardAdd",
+          "node": 3
+        },
+        {
+          "op": "Replace",
+          "node": 6
+        },
+        {
+          "op": "InsertBefore",
+          "node": 6
+        },
+        {
+          "op": "InsertAfter",
+          "node": 6
+        },
+        {
+          "op": "Replace",
+          "node": 3
+        }
+      ],
+      "score": 41.999999935
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 6
+        },
+        {
+          "op": "InsertAfter",
+          "node": 6
+        },
+        {
+          "op": "GuardAdd",
+          "node": 6
+        },
+        {
+          "op": "Replace",
+          "node": 3
+        },
+        {
+          "op": "Delete",
+          "node": 6
+        },
+        {
+          "op": "GuardAdd",
+          "node": 3
+        }
+      ],
+      "score": 40.99999993666667
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "GuardAdd",
+          "node": 3
+        },
+        {
+          "op": "InsertAfter",
+          "node": 3
+        },
+        {
+          "op": "InsertBefore",
+          "node": 3
+        },
+        {
+          "op": "GuardAdd",
+          "node": 6
+        },
+        {
+          "op": "Replace",
+          "node": 3
+        },
+        {
+          "op": "Replace",
+          "node": 6
+        },
+        {
+          "op": "Delete",
+          "node": 6
+        }
+      ],
+      "score": 40.99999993666667
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 3
+        },
+        {
+          "op": "Replace",
+          "node": 6
+        },
+        {
+          "op": "Delete",
+          "node": 6
+        },
+        {
+          "op": "GuardAdd",
+          "node": 6
+        },
+        {
+          "op": "InsertBefore",
+          "node": 3
+        },
+        {
+          "op": "InsertAfter",
+          "node": 6
+        }
+      ],
+      "score": 40.4999999375
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "InsertAfter",
+          "node": 3
+        },
+        {
+          "op": "GuardAdd",
+          "node": 3
+        },
+        {
+          "op": "Replace",
+          "node": 3
+        },
+        {
+          "op": "Replace",
+          "node": 6
+        },
+        {
+          "op": "GuardAdd",
+          "node": 6
+        },
+        {
+          "op": "InsertBefore",
+          "node": 6
+        }
+      ],
+      "score": 38.499999940833334
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "InsertAfter",
+          "node": 6
+        },
+        {
+          "op": "GuardAdd",
+          "node": 3
+        },
+        {
+          "op": "Delete",
+          "node": 3
+        },
+        {
+          "op": "Replace",
+          "node": 6
+        },
+        {
+          "op": "Replace",
+          "node": 3
+        },
+        {
+          "op": "GuardAdd",
+          "node": 6
+        }
+      ],
+      "score": 37.999999941666665
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 6
+        },
+        {
+          "op": "GuardAdd",
+          "node": 3
+        },
+        {
+          "op": "Replace",
+          "node": 3
+        },
+        {
+          "op": "Delete",
+          "node": 6
+        },
+        {
+          "op": "GuardAdd",
+          "node": 6
+        },
+        {
+          "op": "InsertAfter",
+          "node": 3
+        }
+      ],
+      "score": 37.4999999425
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "GuardAdd",
+          "node": 3
+        },
+        {
+          "op": "Replace",
+          "node": 3
+        },
+        {
+          "op": "Replace",
+          "node": 6
+        },
+        {
+          "op": "Delete",
+          "node": 3
+        },
+        {
+          "op": "Delete",
+          "node": 6
+        },
+        {
+          "op": "GuardAdd",
+          "node": 6
+        }
+      ],
+      "score": 36.999999943333336
+    }
+  ],
+  "static_analysis_nodes": [
+    {
+      "line": 3,
+      "line_absolute": 16,
+      "node_id": 6,
+      "node_id_local": 1,
+      "type": "Call",
+      "code": "replace_argument(command.script, 'push', 'push --force')",
+      "distance_to_buggy": 0,
+      "context": "   1:   @git_support\n   2:   def get_new_command(command):\n   3:->     return replace_argument(command.script, 'push', 'push --force')",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Name",
+          "id": "replace_argument",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [
+          {
+            "_type": "Attribute",
+            "value": {
+              "_type": "Name"
+            },
+            "attr": "script",
+            "ctx": {
+              "_type": "Load"
+            }
+          },
+          {
+            "_type": "Constant",
+            "value": "push",
+            "kind": null
+          },
+          {
+            "_type": "Constant",
+            "value": "push --force",
+            "kind": null
+          }
+        ],
+        "keywords": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -24.0
+    },
+    {
+      "line": 3,
+      "line_absolute": 16,
+      "node_id": 3,
+      "node_id_local": 0,
+      "type": "Return",
+      "code": "return replace_argument(command.script, 'push', 'push --force')",
+      "distance_to_buggy": 0,
+      "context": "   1:   @git_support\n   2:   def get_new_command(command):\n   3:->     return replace_argument(command.script, 'push', 'push --force')",
+      "ast_subtree_json": {
+        "_type": "Return",
+        "value": {
+          "_type": "Call",
+          "func": {
+            "_type": "Name"
+          },
+          "args": [
+            {
+              "_type": "Attribute"
+            },
+            {
+              "_type": "Constant"
+            },
+            {
+              "_type": "Constant"
+            }
+          ],
+          "keywords": []
+        }
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -22.0
+    }
+  ]
+}

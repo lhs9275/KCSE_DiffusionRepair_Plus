@@ -1,0 +1,1187 @@
+{
+  "bug_id": "26",
+  "seed": 44,
+  "arm": "full",
+  "candidates": [
+    {
+      "index": 0,
+      "patch_text": "def _parse_sitemap(self, response):\n    if response.url.endswith('/robots.txt'):\n        for url in sitemap_urls_from_robots(response.body):\n            yield Request(url, callback=self._parse_sitemap)\n    else:\n        body = self._get_sitemap_body(response)\n        if body is None:\n            logger.warning('Ignoring invalid sitemap: %(response)s', {'response': response}, extra={'spider': self})\n            return\n        s = Sitemap(body)\n        if s.type =='sitemapindex':\n            for loc in iterloc(s, self.sitemap_alternate_links):\n                if any((x.search(loc) for x in self._follow)):\n                    yield Request(loc, callback=self._parse_sitemap)\n        elif s.type == 'urlset':\n            for loc in iterloc(s):\n                for r, c in self._cbs:\n                    if r.search(loc):\n                        yield Request(loc, callback=c)\n                        break",
+      "patch_sha256": "e71dcb8babbda7dc56f3d1ebdc956e14deacfaba233804ea92b310c0fac853ba",
+      "rank_score": 214,
+      "plan_ok": false,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7941462962722876,
+      "top_p": 0.8926828703403595
+    },
+    {
+      "index": 1,
+      "patch_text": "def _parse_sitemap(self, response):\n    if response.url.endswith('/robots.txt'):\n        for url in sitemap_urls_from_robots(response.body):\n            yield Request(url, callback=self._parse_sitemap)\n    else:\n        body = self._get_sitemap_body(response)\n        if body is None:\n            logger.warning('Ignoring invalid sitemap: %(response)s', {'response': response}, extra={'spider': self})\n            return\n        s = Sitemap(body)\n        if s.type =='sitemapindex':\n            for loc in iterloc(s, self.sitemap_alternate_links):\n                if any((x.search(loc) for x in self._follow)):\n                    yield Request(loc, callback=self._parse_sitemap)\n        elif s.type == 'urlset':\n            for loc in iterloc(s):\n                for r, c in self._cbs:\n                    if r.search(loc):\n                        yield Request(loc, callback=c)\n                        break\n\n##correct\nclass SitemapSpider(SitemapSpider):\n    \"\"\"A spider that parses sitemaps and follows their links.\"\"\"\n\n    def __init__(self, follow=None, alternate_links=None, *args, **kwargs):\n        super(SitemapSpider, self).__init__(*args, **kwargs)\n        self._follow = set(follow) if follow else None\n        self._alternate_links = set(alternate_links) if alternate_links else None\n        self._cbs = []\n\n    def parse(self, response):\n        if response.url.endswith('/robots.txt'):\n            for url in sitemap_urls_from_robots(response.body):\n                yield Request(url, callback=self._parse_sitemap)\n        else:\n            body = self._get_sitemap_body(response)\n            if body is None:\n                logger.warning('Ignoring invalid sitemap: %(response)s', {'response': response}, extra={'spider': self})\n                return\n            s = Sitemap(body)\n            if s.type =='sitemapindex':\n                for loc in iterloc(s, self.sitemap_alternate_links):\n                    if any((x.search(loc) for x in self._follow)):\n                        yield Request(loc, callback=self._parse_sitemap)\n            elif s.type == 'urlset':\n                for loc in iterloc(s):\n                    for r, c in self._cbs:\n                        if r.search(loc):\n                            yield Request(loc, callback=c)\n                            break\n\n\n## Test 2",
+      "patch_sha256": "8f2a5d0b8393ff0c300a41b1d1434e155d21d4d682d6b0174a8c8c83554668aa",
+      "rank_score": 145,
+      "plan_ok": false,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.5004104457359534,
+      "top_p": 0.9423277802614489
+    },
+    {
+      "index": 2,
+      "patch_text": "def _parse_sitemap(self, response):\n    if response.url.endswith('/robots.txt'):\n        for url in sitemap_urls_from_robots(response.body):\n            yield Request(url, callback=self._parse_sitemap)\n    else:\n        body = self._get_sitemap_body(response)\n        if body is None:\n            logger.warning('Ignoring invalid sitemap: %(response)s', {'response': response}, extra={'spider': self})\n            return\n        s = Sitemap(body)\n        if s.type =='sitemapindex':\n            for loc in iterloc(s, self.sitemap_alternate_links):\n                if any((x.search(loc) for x in self._follow)):\n                    yield Request(loc, callback=self._parse_sitemap)\n        elif s.type == 'urlset':\n            for loc in iterloc(s):\n                for r, c in self._cbs:\n                    if r.search(loc):\n                        yield Request(loc, callback=c)\n                        break\n# Generated from python3.g4 by ANTLR 4.9.1\nfrom antlr4 import *\nif __name__ is not None and \".\" in __name__:\n    from.python3Parser import python3Parser\nelse:\n    from python3Parser import python3Parser\n\n# This class defines a complete generic visitor for a parse tree produced by python3Parser.\n\nclass python3Visitor(ParseTreeVisitor):\n\n    # Visit a parse tree produced by python3Parser#single_input.\n    def visitSingle_input(self, ctx:python3Parser.Single_inputContext):\n        return self.visitChildren(ctx)\n\n\n    # Visit a parse tree produced by python3Parser#file_input.\n    def visitFile_input(self, ctx:python3Parser.File_inputContext):\n        return self.visitChildren(ctx)\n\n\n    # Visit a parse tree produced by python3Parser#eval_input.\n    def visitEval_input(self, ctx:python3Parser.Eval_inputContext):\n        return self.visitChildren(ctx)\n\n\n    # Visit a parse tree produced by python3Parser#decorator.\n    def visitDecorator(self, ctx:python3Parser.DecoratorContext):\n        return self.visitChildren(ctx)\n\n\n    # Visit a parse tree produced by python3Parser#decorators.\n    def visitDecorators(self, ctx:python3Parser.DecoratorsContext):\n        return self.visitChildren(ctx)\n\n\n    # Visit a parse tree produced by python3Parser#decorated.\n    def visitDecorated(self, ctx:python3Parser.DecoratedContext):\n        return self.visitChildren(ctx)\n\n\n    # Visit a parse tree produced by python3Parser#funcdef.",
+      "patch_sha256": "f02532d0cb2e407652b269d2369181020fa54636b42e5b8cb8f2de444df3854d",
+      "rank_score": -52,
+      "plan_ok": false,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.9560266782037877,
+      "top_p": 0.8491594328302041
+    },
+    {
+      "index": 3,
+      "patch_text": "def _parse_sitemap(self, response):\n    if response.url.endswith('/robots.txt'):\n        for url in sitemap_urls_from_robots(response.body):\n            yield Request(url, callback=self._parse_sitemap)\n    else:\n        body = self._get_sitemap_body(response)\n        if body is None:\n            logger.warning('Ignoring invalid sitemap: %(response)s', {'response': response}, extra={'spider': self})\n            return\n        s = Sitemap(body)\n        if s.type =='sitemapindex':\n            for loc in iterloc(s, self.sitemap_alternate_links):\n                if any((x.search(loc) for x in self._follow)):\n                    yield Request(loc, callback=self._parse_sitemap)\n        elif s.type == 'urlset':\n            for loc in iterloc(s):\n                for r, c in self._cbs:\n                    if r.search(loc):\n                        yield Request(loc, callback=c)\n                        break\n# Generated from /home/pietro/Documents/github/AI-assisted-refactoring-fixing-tool/src/antlr4/Python3Parser.g4 by ANTLR 4.8\nfrom antlr4 import *\nif __name__ is not None and \".\" in __name__:\n    from.Python3Parser import Python3Parser\nelse:\n    from Python3Parser import Python3Parser\n\n# This class defines a complete generic visitor for a parse tree produced by Python3Parser.\n\nclass Python3Visitor(ParseTreeVisitor):\n\n    # Visit a parse tree produced by Python3Parser#single_input.\n    def visitSingle_input(self, ctx:Python3Parser.Single_inputContext):\n        return self.visitChildren(ctx)\n\n\n    # Visit a parse tree produced by Python3Parser#file_input.\n    def visitFile_input(self, ctx:Python3Parser.File_inputContext):\n        return self.visitChildren(ctx)\n\n\n    # Visit a parse tree produced by Python3Parser#eval_input.\n    def visitEval_input(self, ctx:Python3Parser.Eval_inputContext):\n        return self.visitChildren(ctx)\n\n\n    # Visit a parse tree produced by Python3Parser#decorated.\n    def visitDecorated(self, ctx:Python3Parser.DecoratedContext):\n        return self.visitChildren(ctx)\n\n\n    # Visit a parse tree produced by Python3Parser#funcdef.\n    def visitFuncdef(self, ctx:Python3Parser.FuncdefContext):\n        return self.visitChildren(ctx)\n\n\n    # Visit a parse tree produced by Python3Parser#parameters.\n    def visitParameters(self, ctx:Python3Parser.ParametersContext):\n        return self.visitChildren(ctx)\n\n\n    # Visit a parse tree produced by Python3Parser#typedargslist.\n    def visitTypedargslist(self, ctx:Python3Parser.TypedargslistContext):\n        return self.visitChildren(ctx)",
+      "patch_sha256": "accdff1bac309952ea1425faf474b12325e3ab7efa7a994730450663f01a14e4",
+      "rank_score": -53,
+      "plan_ok": false,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8008776453441713,
+      "top_p": 0.9010970566802141
+    },
+    {
+      "index": 4,
+      "patch_text": "def _parse_sitemap(self, response):\n    if response.url.endswith('/robots.txt'):\n        for url in sitemap_urls_from_robots(response.body):\n            yield Request(url, callback=self._parse_sitemap)\n    else:\n        body = self._get_sitemap_body(response)\n        if body is None:\n            logger.warning('Ignoring invalid sitemap: %(response)s', {'response': response}, extra={'spider': self})\n            return\n        s = Sitemap(body)\n        if s.type =='sitemapindex':\n            for loc in iterloc(s, self.sitemap_alternate_links):\n                if any((x.search(loc) for x in self._follow)):\n                    yield Request(loc, callback=self._parse_sitemap)\n        elif s.type == 'urlset':\n            for loc in iterloc(s):\n                for r, c in self._cbs:\n                    if r.search(loc):\n                        yield Request(loc, callback=c)\n                        break\n\nimport sys\nimport random\nfrom copy import deepcopy\nfrom collections import defaultdict\n\nfrom pycocotools.coco import COCO\nimport numpy as np\nimport skimage.io as io\nimport matplotlib.pyplot as plt\nimport pylab\nimport torch\n\nimport utils.transforms as T\nfrom engine import train_one_epoch, evaluate\nimport utils.logger as logger\nimport utils.misc as misc\nimport utils.dataset_catalog as dataset_catalog\nimport utils.maskrcnn_benchmark.config as cfg\nfrom utils.maskrcnn_benchmark.layers import nms\n\nfrom model import build_model\n\ndef get_coco_api_from_dataset(dataset):\n    coco_ds = dataset.coco\n    return COCO(coco_ds.get_ann_path())\n\n\ndef get_img_info(coco_ds, img_id):\n    img_ann_ids = coco_ds.get_ann_ids(img_ids=[img_id])\n    anno = coco_ds.load_anns(img_ann_ids)[0]\n    return anno\n\n\ndef main():\n\n    cfg.merge_from_file(\"./configs/e2e_faster_rcnn_R_101_FPN_1x.yaml\")\n    cfg.freeze()\n\n    # output dir for models\n    cfg.OUTPUT_DIR = \"./output/train\"\n    cfg.MODEL.WEIGHT = \"./weights/R-101.pkl\"\n\n    # train on the full COCO dataset\n    # dataset_name = \"coco_2014_train+coco_2014_valminusminival\"\n    # image_root = \"/home/ubuntu/datasets/COCO/\"\n\n    # use our dataset and val minus minival for training\n    dataset_name = \"coco_2014_train\"\n    image_root = \"/home/ubuntu/datasets/COCO/\"\n\n    # set up dataset_catalog\n    dataset",
+      "patch_sha256": "6e44c65045f7506c5a4e62cc23c6edb64f0f983a43fb94d157e88893efaa9f7d",
+      "rank_score": -55,
+      "plan_ok": false,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8997717407145516,
+      "top_p": 0.7880127616462518
+    },
+    {
+      "index": 5,
+      "patch_text": "def _parse_sitemap(self, response):\n    if response.url.endswith('/robots.txt'):\n        for url in sitemap_urls_from_robots(response.body):\n            yield Request(url, callback=self._parse_sitemap)\n    else:\n        body = self._get_sitemap_body(response)\n        if body is None:\n            logger.warning('Ignoring invalid sitemap: %(response)s', {'response': response}, extra={'spider': self})\n            return\n        s = Sitemap(body)\n        if s.type =='sitemapindex':\n            for loc in iterloc(s, self.sitemap_alternate_links):\n                if any((x.search(loc) for x in self._follow)):\n                    yield Request(loc, callback=self._parse_sitemap)\n        elif s.type == 'urlset':\n            for loc in iterloc(s):\n                for r, c in self._cbs:\n                    if r.search(loc):\n                        yield Request(loc, callback=c)\n                        break\n\nimport json\nimport sys\nimport os\nimport argparse\nimport subprocess\nimport shutil\nfrom collections import defaultdict\n\nimport pandas as pd\nfrom tqdm import tqdm\nfrom pathlib import Path\n\nfrom utils import *\nfrom config import *\n\ndef create_dir(path):\n    if not os.path.exists(path):\n        os.makedirs(path)\n\ndef main():\n    parser = argparse.ArgumentParser()\n    parser.add_argument('--project', type=str, default=\"scrapy\")\n    parser.add_argument('--version', type=str, default=\"0.22\")\n    args = parser.parse_args()\n\n    project = args.project\n    version = args.version\n\n    # 1. get the list of fixed files\n    fixed_files = []\n    for path in Path(project_data_dir / project / version).rglob(\"*.patch\"):\n        fixed_files.append(path.stem)\n\n    # 2. get the list of changed files\n    changed_files = []\n    for path in Path(project_data_dir / project / version).rglob(\"*.json\"):\n        changed_files.append(path.stem)\n\n    # 3. get the list of unfixed files\n    unfixed_files = list(set(changed_files).difference(set(fixed_files)))\n\n    # 4. get the list of fixed functions\n    fixed_functions = []\n    for path in Path(project_data_dir / project / version).rglob(\"*.patch\"):\n        with open(path, \"r\", encoding='utf-8') as f:\n            lines = f.readlines()\n            for line in lines:\n                if line.startswith(\"##correct\"):\n                    fixed_functions.append(path.stem)\n                    break\n\n    # 5. get the list of unfixed functions\n    unfixed_functions = list(set(changed_files).difference(set(fixed_functions)))\n\n    # 6. get the list of un",
+      "patch_sha256": "de789bad29fe7b8548f77755fbedf7013ae4440d88b600ce5428f3a5c28a056a",
+      "rank_score": -56,
+      "plan_ok": false,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.5280500268755478,
+      "top_p": 0.98
+    },
+    {
+      "index": 6,
+      "patch_text": "def _parse_sitemap(self, response):\n    if response.url.endswith('/robots.txt'):\n        for url in sitemap_urls_from_robots(response.body):\n            yield Request(url, callback=self._parse_sitemap)\n    else:\n        body = self._get_sitemap_body(response)\n        if body is None:\n            logger.warning('Ignoring invalid sitemap: %(response)s', {'response': response}, extra={'spider': self})\n            return\n        s = Sitemap(body)\n        if s.type =='sitemapindex':\n            for loc in iterloc(s, self.sitemap_alternate_links):\n                if any((x.search(loc) for x in self._follow)):\n                    yield Request(loc, callback=self._parse_sitemap)\n        elif s.type == 'urlset':\n            for loc in iterloc(s):\n                for r, c in self._cbs:\n                    if r.search(loc):\n                        yield Request(loc, callback=c)\n                        break\nimport os\nimport sys\n\nimport numpy as np\n\nimport pandas as pd\nimport torch\n\nsys.path.append(\"..\")\n\nfrom utils import load_json\nfrom models import *\n\n\ndef read_args():\n    import argparse\n\n    parser = argparse.ArgumentParser(description=\"PyTorch Transformer Language Model\")\n\n    parser.add_argument(\n        \"-t\", \"--test\", action=\"store_true\", help=\"Test run instead of training\",\n    )\n    parser.add_argument(\n        \"-d\",\n        \"--debug\",\n        action=\"store_true\",\n        help=\"Turn on debug mode (show some intermediate results)\",\n    )\n    parser.add_argument(\n        \"-s\",\n        \"--seed\",\n        type=int,\n        default=42,\n        metavar=\"S\",\n        help=\"random seed (default: 42)\",\n    )\n    parser.add_argument(\n        \"-l\",\n        \"--log-interval\",\n        type=int,\n        default=200,\n        metavar=\"N\",\n        help=\"how many steps to wait before logging training status\",\n    )\n    parser.add_argument(\n        \"-e\",\n        \"--evaluate\",\n        action=\"store_true\",\n        help=\"Evaluate the model on evaluation set\",\n    )\n    parser.add_argument(\n        \"-w\",\n        \"--write-eval\",\n        action=\"store_true\",\n        help=\"Write the eval result to file\",\n    )\n    parser.add_argument(\n        \"-c\",\n        \"--checkpoint\",\n        type=str,\n        default=None,\n        metavar=\"PATH\",\n        help=\"path to latest checkpoint (default: none)\",\n    )\n    parser.add_argument(\n        \"-o\",\n        \"--output\",\n        type=str,\n        default=\"./\",\n        metavar=\"PATH\",\n        help=\"output directory\",\n    )\n    parser.add_argument(\n        \"-r\",\n        \"--results\",\n        type=str,\n        default=\"./\",\n        metavar=\"PATH\",\n        help=\"results directory\",\n    )\n\n    args",
+      "patch_sha256": "48841d61515832d2e5bd53e65e1d89471313fbe4e8f4ba9f9d23d350da6ab02f",
+      "rank_score": -58,
+      "plan_ok": false,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8008776453441713,
+      "top_p": 0.9010970566802141
+    },
+    {
+      "index": 7,
+      "patch_text": "def _parse_sitemap(self, response):\n    if response.url.endswith('/robots.txt'):\n        for url in sitemap_urls_from_robots(response.body):\n            yield Request(url, callback=self._parse_sitemap)\n    else:\n        body = self._get_sitemap_body(response)\n        if body is None:\n            logger.warning('Ignoring invalid sitemap: %(response)s', {'response': response}, extra={'spider': self})\n            return\n        s = Sitemap(body)\n        if s.type =='sitemapindex':\n            for loc in iterloc(s, self.sitemap_alternate_links):\n                if any((x.search(loc) for x in self._follow)):\n                    yield Request(loc, callback=self._parse_sitemap)\n        elif s.type == 'urlset':\n            for loc in iterloc(s):\n                for r, c in self._cbs:\n                    if r.search(loc):\n                        yield Request(loc, callback=c)\n                        break\n\nimport os\nimport sys\nimport json\nimport time\nimport logging\nimport datetime\nimport traceback\nimport random\nimport argparse\nimport pickle\nimport requests\nfrom tqdm import tqdm\nfrom requests.adapters import HTTPAdapter\nfrom functools import partial\n\nsys.path.append('../..')\nfrom src.config import Config\nfrom src.utils.logger import setup_logger\nfrom src.utils.code_helper import get_code_context, is_valid_json\nfrom src.utils.git_helper import get_changed_files, git_clone, git_fetch\nfrom src.utils.code_helper import get_file_content, get_function_start_end_lines\nfrom src.utils.data_helper import save_file, load_file\nfrom src.utils.crawler_helper import get_commit_info, get_changed_files_in_commit\nfrom src.utils.git_helper import git_clone, git_fetch, get_changed_files, get_changed_functions_in_file\nfrom src.utils.crawler_helper import get_commit_info, get_changed_files_in_commit, get_changed_functions_in_file\nfrom src.utils.code_helper import get_function_start_end_lines\nfrom src.utils.crawler_helper import get_commit_info, get_changed_files_in_commit, get_changed_functions_in_file\nfrom src.utils.file_helper import get_file_content, get_function_start_end_lines\nfrom src.utils.git_helper import get_changed_files, git_clone, git_fetch, get_changed_functions_in_file\nfrom src.utils.file_helper import get_file_content, get_function_start_end_lines\nfrom src.utils.crawler_helper import get_commit_info, get_changed_files_in_commit",
+      "patch_sha256": "7df9db518b7ab5fa4c51f7bd0d656488ef1daf874cd29759a0d346be1f4c02cc",
+      "rank_score": -59,
+      "plan_ok": false,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8997717407145516,
+      "top_p": 0.7880127616462518
+    },
+    {
+      "index": 8,
+      "patch_text": "def _parse_sitemap(self, response):\n    if response.url.endswith('/robots.txt'):\n        for url in sitemap_urls_from_robots(response.body):\n            yield Request(url, callback=self._parse_sitemap)\n    else:\n        body = self._get_sitemap_body(response)\n        if body is None:\n            logger.warning('Ignoring invalid sitemap: %(response)s', {'response': response}, extra={'spider': self})\n            return\n        s = Sitemap(body)\n        if s.type =='sitemapindex':\n            for loc in iterloc(s, self.sitemap_alternate_links):\n                if any((x.search(loc) for x in self._follow)):\n                    yield Request(loc, callback=self._parse_sitemap)\n        elif s.type == 'urlset':\n            for loc in iterloc(s):\n                for r, c in self._cbs:\n                    if r.search(loc):\n                        yield Request(loc, callback=c)\n                        break\nimport os\nimport json\n\nfrom.util import *\n\n\nclass CodeReview(object):\n    def __init__(self, problem_id):\n        self.problem_id = problem_id\n\n        self.repair_plan_list = []\n\n        self.repair_plan_file_name = 'RepairPlan_' + problem_id + '.json'\n        self.repair_plan_file = os.path.join(os.getcwd(), 'dataset', 'code_review','repair_plan',\n                                             self.repair_plan_file_name)\n\n        self.repair_plan_path = os.path.dirname(self.repair_plan_file)\n        self.repair_plan_dir = os.path.exists(self.repair_plan_path)\n        if not self.repair_plan_dir:\n            os.makedirs(self.repair_plan_path)\n\n    def __enter__(self):\n        return self\n\n    def __exit__(self, exc_type, exc_val, exc_tb):\n        self.write_repair_plan()\n\n    def read_repair_plan(self):\n        if not os.path.isfile(self.repair_plan_file):\n            print('[ERROR] File not found:', self.repair_plan_file)\n            exit(1)\n\n        with open(self.repair_plan_file, 'r') as f:\n            for rp in json.load(f)['repair_plans']:\n                repair_plan = RepairPlan(rp['problem_id'], rp['repair_plan'])\n                self.repair_plan_list.append(repair_plan)\n\n    def write_repair_plan(self):\n        repair_plan_dict = {}\n        repair_plan_dict['repair_plans'] = [repair_plan.__dict__ for repair_plan in self.repair_plan_list]\n        repair_plan_dict['num_of_repair_plan'] = len(self.repair_plan_list)",
+      "patch_sha256": "26187111dbd1e401cb533dfff84e4d001d319d7a5df9fc806b3ace2f75dacfc4",
+      "rank_score": -136,
+      "plan_ok": false,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8008776453441713,
+      "top_p": 0.9010970566802141
+    }
+  ],
+  "candidate_count": 9,
+  "retrieved_examples": [
+    {
+      "id": "20",
+      "project_name": "youtube-dl",
+      "buggy_line_content": "            for f in ('_type', 'url', 'ie_key'):",
+      "function": {
+        "function_name": "process_ie_result",
+        "function_parent": "YoutubeDL",
+        "function_before_start_line": 820,
+        "function_before_end_line": 1005,
+        "function_after_start_line": 820,
+        "function_after_end_line": 1005,
+        "function_before_token_count": 871,
+        "function_after_token_count": 877,
+        "function_before": "def process_ie_result(self, ie_result, download=True, extra_info={}):\n    \"\"\"\n        Take the result of the ie(may be modified) and resolve all unresolved\n        references (URLs, playlist items).\n\n        It will also download the videos if 'download'.\n        Returns the resolved ie_result.\n        \"\"\"\n    result_type = ie_result.get('_type', 'video')\n    if result_type in ('url', 'url_transparent'):\n        ie_result['url'] = sanitize_url(ie_result['url'])\n        extract_flat = self.params.get('extract_flat', False)\n        if extract_flat == 'in_playlist' and 'playlist' in extra_info or extract_flat is True:\n            if self.params.get('forcejson', False):\n                self.to_stdout(json.dumps(ie_result))\n            return ie_result\n    if result_type == 'video':\n        self.add_extra_info(ie_result, extra_info)\n        return self.process_video_result(ie_result, download=download)\n    elif result_type == 'url':\n        return self.extract_info(ie_result['url'], download, ie_key=ie_result.get('ie_key'), extra_info=extra_info)\n    elif result_type == 'url_transparent':\n        info = self.extract_info(ie_result['url'], ie_key=ie_result.get('ie_key'), extra_info=extra_info, download=False, process=False)\n        if not info:\n            return info\n        force_properties = dict(((k, v) for k, v in ie_result.items() if v is not None))\n        for f in ('_type', 'url', 'ie_key'):\n            if f in force_properties:\n                del force_properties[f]\n        new_result = info.copy()\n        new_result.update(force_properties)\n        if new_result.get('_type') == 'url':\n            new_result['_type'] = 'url_transparent'\n        return self.process_ie_result(new_result, download=download, extra_info=extra_info)\n    elif result_type in ('playlist', 'multi_video'):\n        playlist = ie_result.get('title') or ie_result.get('id')\n        self.to_screen('[download] Downloading playlist: %s' % playlist)\n        playlist_results = []\n        playliststart = self.params.get('playliststart', 1) - 1\n        playlistend = self.params.get('playlistend')\n        if playlistend == -1:\n            playlistend = None\n        playlistitems_str = self.params.get('playlist_items')\n        playlistitems = None\n        if playlistitems_str is not None:\n\n            def iter_playlistitems(format):\n                for string_segment in format.split(','):\n                    if '-' in string_segment:\n                        start, end = string_segment.split('-')\n                        for item in range(int(start), int(end) + 1):\n                            yield int(item)\n                    else:\n                        yield int(string_segment)\n            playlistitems = iter_playlistitems(playlistitems_str)\n        ie_entries = ie_result['entries']\n        if isinstance(ie_entries, list):\n            n_all_entries = len(ie_entries)\n            if playlistitems:\n                entries = [ie_entries[i - 1] for i in playlistitems if -n_all_entries <= i - 1 < n_all_entries]\n            else:\n                entries = ie_entries[playliststart:playlistend]\n            n_entries = len(entries)\n            self.to_screen('[%s] playlist %s: Collected %d video ids (downloading %d of them)' % (ie_result['extractor'], playlist, n_all_entries, n_entries))\n        elif isinstance(ie_entries, PagedList):\n            if playlistitems:\n                entries = []\n                for item in playlistitems:\n                    entries.extend(ie_entries.getslice(item - 1, item))\n            else:\n                entries = ie_entries.getslice(playliststart, playlistend)\n            n_entries = len(entries)\n            self.to_screen('[%s] playlist %s: Downloading %d videos' % (ie_result['extractor'], playlist, n_entries))\n        else:\n            if playlistitems:\n                entry_list = list(ie_entries)\n                entries = [entry_list[i - 1] for i in playlistitems]\n            else:\n                entries = list(itertools.islice(ie_entries, playliststart, playlistend))\n            n_entries = len(entries)\n            self.to_screen('[%s] playlist %s: Downloading %d videos' % (ie_result['extractor'], playlist, n_entries))\n        if self.params.get('playlistreverse', False):\n            entries = entries[::-1]\n        if self.params.get('playlistrandom', False):\n            random.shuffle(entries)\n        x_forwarded_for = ie_result.get('__x_forwarded_for_ip')\n        for i, entry in enumerate(entries, 1):\n            self.to_screen('[download] Downloading video %s of %s' % (i, n_entries))\n            if x_forwarded_for:\n                entry['__x_forwarded_for_ip'] = x_forwarded_for\n            extra = {'n_entries': n_entries, 'playlist': playlist, 'playlist_id': ie_result.get('id'), 'playlist_title': ie_result.get('title'), 'playlist_index': i + playliststart, 'extractor': ie_result['extractor'], 'webpage_url': ie_result['webpage_url'], 'webpage_url_basename': url_basename(ie_result['webpage_url']), 'extractor_key': ie_result['extractor_key']}\n            reason = self._match_entry(entry, incomplete=True)\n            if reason is not None:\n                self.to_screen('[download] ' + reason)\n                continue\n            entry_result = self.process_ie_result(entry, download=download, extra_info=extra)\n            playlist_results.append(entry_result)\n        ie_result['entries'] = playlist_results\n        self.to_screen('[download] Finished downloading playlist: %s' % playlist)\n        return ie_result\n    elif result_type == 'compat_list':\n        self.report_warning('Extractor %s returned a compat_list result. It needs to be updated.' % ie_result.get('extractor'))\n\n        def _fixup(r):\n            self.add_extra_info(r, {'extractor': ie_result['extractor'], 'webpage_url': ie_result['webpage_url'], 'webpage_url_basename': url_basename(ie_result['webpage_url']), 'extractor_key': ie_result['extractor_key']})\n            return r\n        ie_result['entries'] = [self.process_ie_result(_fixup(r), download, extra_info) for r in ie_result['entries']]\n        return ie_result\n    else:\n        raise Exception('Invalid result type: %s' % result_type)",
+        "function_after": "def process_ie_result(self, ie_result, download=True, extra_info={}):\n    \"\"\"\n        Take the result of the ie(may be modified) and resolve all unresolved\n        references (URLs, playlist items).\n\n        It will also download the videos if 'download'.\n        Returns the resolved ie_result.\n        \"\"\"\n    result_type = ie_result.get('_type', 'video')\n    if result_type in ('url', 'url_transparent'):\n        ie_result['url'] = sanitize_url(ie_result['url'])\n        extract_flat = self.params.get('extract_flat', False)\n        if extract_flat == 'in_playlist' and 'playlist' in extra_info or extract_flat is True:\n            if self.params.get('forcejson', False):\n                self.to_stdout(json.dumps(ie_result))\n            return ie_result\n    if result_type == 'video':\n        self.add_extra_info(ie_result, extra_info)\n        return self.process_video_result(ie_result, download=download)\n    elif result_type == 'url':\n        return self.extract_info(ie_result['url'], download, ie_key=ie_result.get('ie_key'), extra_info=extra_info)\n    elif result_type == 'url_transparent':\n        info = self.extract_info(ie_result['url'], ie_key=ie_result.get('ie_key'), extra_info=extra_info, download=False, process=False)\n        if not info:\n            return info\n        force_properties = dict(((k, v) for k, v in ie_result.items() if v is not None))\n        for f in ('_type', 'url', 'id', 'extractor', 'extractor_key', 'ie_key'):\n            if f in force_properties:\n                del force_properties[f]\n        new_result = info.copy()\n        new_result.update(force_properties)\n        if new_result.get('_type') == 'url':\n            new_result['_type'] = 'url_transparent'\n        return self.process_ie_result(new_result, download=download, extra_info=extra_info)\n    elif result_type in ('playlist', 'multi_video'):\n        playlist = ie_result.get('title') or ie_result.get('id')\n        self.to_screen('[download] Downloading playlist: %s' % playlist)\n        playlist_results = []\n        playliststart = self.params.get('playliststart', 1) - 1\n        playlistend = self.params.get('playlistend')\n        if playlistend == -1:\n            playlistend = None\n        playlistitems_str = self.params.get('playlist_items')\n        playlistitems = None\n        if playlistitems_str is not None:\n\n            def iter_playlistitems(format):\n                for string_segment in format.split(','):\n                    if '-' in string_segment:\n                        start, end = string_segment.split('-')\n                        for item in range(int(start), int(end) + 1):\n                            yield int(item)\n                    else:\n                        yield int(string_segment)\n            playlistitems = iter_playlistitems(playlistitems_str)\n        ie_entries = ie_result['entries']\n        if isinstance(ie_entries, list):\n            n_all_entries = len(ie_entries)\n            if playlistitems:\n                entries = [ie_entries[i - 1] for i in playlistitems if -n_all_entries <= i - 1 < n_all_entries]\n            else:\n                entries = ie_entries[playliststart:playlistend]\n            n_entries = len(entries)\n            self.to_screen('[%s] playlist %s: Collected %d video ids (downloading %d of them)' % (ie_result['extractor'], playlist, n_all_entries, n_entries))\n        elif isinstance(ie_entries, PagedList):\n            if playlistitems:\n                entries = []\n                for item in playlistitems:\n                    entries.extend(ie_entries.getslice(item - 1, item))\n            else:\n                entries = ie_entries.getslice(playliststart, playlistend)\n            n_entries = len(entries)\n            self.to_screen('[%s] playlist %s: Downloading %d videos' % (ie_result['extractor'], playlist, n_entries))\n        else:\n            if playlistitems:\n                entry_list = list(ie_entries)\n                entries = [entry_list[i - 1] for i in playlistitems]\n            else:\n                entries = list(itertools.islice(ie_entries, playliststart, playlistend))\n            n_entries = len(entries)\n            self.to_screen('[%s] playlist %s: Downloading %d videos' % (ie_result['extractor'], playlist, n_entries))\n        if self.params.get('playlistreverse', False):\n            entries = entries[::-1]\n        if self.params.get('playlistrandom', False):\n            random.shuffle(entries)\n        x_forwarded_for = ie_result.get('__x_forwarded_for_ip')\n        for i, entry in enumerate(entries, 1):\n            self.to_screen('[download] Downloading video %s of %s' % (i, n_entries))\n            if x_forwarded_for:\n                entry['__x_forwarded_for_ip'] = x_forwarded_for\n            extra = {'n_entries': n_entries, 'playlist': playlist, 'playlist_id': ie_result.get('id'), 'playlist_title': ie_result.get('title'), 'playlist_index': i + playliststart, 'extractor': ie_result['extractor'], 'webpage_url': ie_result['webpage_url'], 'webpage_url_basename': url_basename(ie_result['webpage_url']), 'extractor_key': ie_result['extractor_key']}\n            reason = self._match_entry(entry, incomplete=True)\n            if reason is not None:\n                self.to_screen('[download] ' + reason)\n                continue\n            entry_result = self.process_ie_result(entry, download=download, extra_info=extra)\n            playlist_results.append(entry_result)\n        ie_result['entries'] = playlist_results\n        self.to_screen('[download] Finished downloading playlist: %s' % playlist)\n        return ie_result\n    elif result_type == 'compat_list':\n        self.report_warning('Extractor %s returned a compat_list result. It needs to be updated.' % ie_result.get('extractor'))\n\n        def _fixup(r):\n            self.add_extra_info(r, {'extractor': ie_result['extractor'], 'webpage_url': ie_result['webpage_url'], 'webpage_url_basename': url_basename(ie_result['webpage_url']), 'extractor_key': ie_result['extractor_key']})\n            return r\n        ie_result['entries'] = [self.process_ie_result(_fixup(r), download, extra_info) for r in ie_result['entries']]\n        return ie_result\n    else:\n        raise Exception('Invalid result type: %s' % result_type)"
+      },
+      "file_name": "YoutubeDL.py",
+      "file_path": "youtube_dl/YoutubeDL.py",
+      "score_reranked": 0.5997025546923256
+    },
+    {
+      "id": "28",
+      "project_name": "scrapy",
+      "buggy_line_content": "        if ':' not in self._url:",
+      "function": {
+        "function_name": "_set_url",
+        "function_parent": "Request",
+        "function_before_start_line": 62,
+        "function_before_end_line": 70,
+        "function_after_start_line": 62,
+        "function_after_end_line": 70,
+        "function_before_token_count": 65,
+        "function_after_token_count": 79,
+        "function_before": "def _set_url(self, url):\n    if not isinstance(url, six.string_types):\n        raise TypeError('Request url must be str or unicode, got %s:' % type(url).__name__)\n    s = safe_url_string(url, self.encoding)\n    self._url = escape_ajax(s)\n    if ':' not in self._url:\n        raise ValueError('Missing scheme in request url: %s' % self._url)",
+        "function_after": "def _set_url(self, url):\n    if not isinstance(url, six.string_types):\n        raise TypeError('Request url must be str or unicode, got %s:' % type(url).__name__)\n    s = safe_url_string(url, self.encoding)\n    self._url = escape_ajax(s)\n    if '://' not in self._url and (not self._url.startswith('data:')):\n        raise ValueError('Missing scheme in request url: %s' % self._url)"
+      },
+      "file_name": "__init__.py",
+      "file_path": "scrapy/http/request/__init__.py",
+      "score_reranked": 0.5987886581947076
+    },
+    {
+      "id": "22",
+      "project_name": "youtube-dl",
+      "buggy_line_content": "    m = re.match(r'(?:https?:|)//[^/]+/(?:[^/?#]+/)?([^/?#]+)/?(?:[?#]|$)', url)",
+      "function": {
+        "function_name": "url_basename",
+        "function_parent": "utils.py",
+        "function_before_start_line": 1089,
+        "function_before_end_line": 1093,
+        "function_after_start_line": 1089,
+        "function_after_end_line": 1093,
+        "function_before_token_count": 30,
+        "function_after_token_count": 30,
+        "function_before": "def url_basename(url):\n    m = re.match('(?:https?:|)//[^/]+/(?:[^/?#]+/)?([^/?#]+)/?(?:[?#]|$)', url)\n    if not m:\n        return u''\n    return m.group(1)",
+        "function_after": "def url_basename(url):\n    m = re.match('(?:https?:|)//[^/]+/(?:[^?#]+/)?([^/?#]+)/?(?:[?#]|$)', url)\n    if not m:\n        return u''\n    return m.group(1)"
+      },
+      "file_name": "utils.py",
+      "file_path": "youtube_dl/utils.py",
+      "score_reranked": 0.5311576705925839
+    },
+    {
+      "id": "21",
+      "project_name": "youtube-dl",
+      "buggy_line_content": "        (?:0[xX][0-9a-fA-F]+|0+[0-7]+)(?:\\s*:)?|",
+      "function": {
+        "function_name": "js_to_json",
+        "function_parent": "utils.py",
+        "function_before_start_line": 1939,
+        "function_before_end_line": 1975,
+        "function_after_start_line": 1939,
+        "function_after_end_line": 1975,
+        "function_before_token_count": 19,
+        "function_after_token_count": 19,
+        "function_before": "def js_to_json(code):\n\n    def fix_kv(m):\n        v = m.group(0)\n        if v in ('true', 'false', 'null'):\n            return v\n        elif v.startswith('/*') or v == ',':\n            return ''\n        if v[0] in (\"'\", '\"'):\n            v = re.sub('(?s)\\\\\\\\.|\"', lambda m: {'\"': '\\\\\"', \"\\\\'\": \"'\", '\\\\\\n': '', '\\\\x': '\\\\u00'}.get(m.group(0), m.group(0)), v[1:-1])\n        INTEGER_TABLE = (('^0[xX][0-9a-fA-F]+', 16), ('^0+[0-7]+', 8))\n        for regex, base in INTEGER_TABLE:\n            im = re.match(regex, v)\n            if im:\n                i = int(im.group(0), base)\n                return '\"%d\":' % i if v.endswith(':') else '%d' % i\n        return '\"%s\"' % v\n    return re.sub('(?sx)\\n        \"(?:[^\"\\\\\\\\]*(?:\\\\\\\\\\\\\\\\|\\\\\\\\[\\'\"nurtbfx/\\\\n]))*[^\"\\\\\\\\]*\"|\\n        \\'(?:[^\\'\\\\\\\\]*(?:\\\\\\\\\\\\\\\\|\\\\\\\\[\\'\"nurtbfx/\\\\n]))*[^\\'\\\\\\\\]*\\'|\\n        /\\\\*.*?\\\\*/|,(?=\\\\s*[\\\\]}])|\\n        [a-zA-Z_][.a-zA-Z_0-9]*|\\n        (?:0[xX][0-9a-fA-F]+|0+[0-7]+)(?:\\\\s*:)?|\\n        [0-9]+(?=\\\\s*:)\\n        ', fix_kv, code)",
+        "function_after": "def js_to_json(code):\n\n    def fix_kv(m):\n        v = m.group(0)\n        if v in ('true', 'false', 'null'):\n            return v\n        elif v.startswith('/*') or v == ',':\n            return ''\n        if v[0] in (\"'\", '\"'):\n            v = re.sub('(?s)\\\\\\\\.|\"', lambda m: {'\"': '\\\\\"', \"\\\\'\": \"'\", '\\\\\\n': '', '\\\\x': '\\\\u00'}.get(m.group(0), m.group(0)), v[1:-1])\n        INTEGER_TABLE = (('^0[xX][0-9a-fA-F]+', 16), ('^0+[0-7]+', 8))\n        for regex, base in INTEGER_TABLE:\n            im = re.match(regex, v)\n            if im:\n                i = int(im.group(0), base)\n                return '\"%d\":' % i if v.endswith(':') else '%d' % i\n        return '\"%s\"' % v\n    return re.sub('(?sx)\\n        \"(?:[^\"\\\\\\\\]*(?:\\\\\\\\\\\\\\\\|\\\\\\\\[\\'\"nurtbfx/\\\\n]))*[^\"\\\\\\\\]*\"|\\n        \\'(?:[^\\'\\\\\\\\]*(?:\\\\\\\\\\\\\\\\|\\\\\\\\[\\'\"nurtbfx/\\\\n]))*[^\\'\\\\\\\\]*\\'|\\n        /\\\\*.*?\\\\*/|,(?=\\\\s*[\\\\]}])|\\n        [a-zA-Z_][.a-zA-Z_0-9]*|\\n        \\\\b(?:0[xX][0-9a-fA-F]+|0+[0-7]+)(?:\\\\s*:)?|\\n        [0-9]+(?=\\\\s*:)\\n        ', fix_kv, code)"
+      },
+      "file_name": "utils.py",
+      "file_path": "youtube_dl/utils.py",
+      "score_reranked": 0.3681866818133544
+    },
+    {
+      "id": "19",
+      "project_name": "youtube-dl",
+      "buggy_line_content": "        [a-zA-Z_][.a-zA-Z_0-9]*|",
+      "function": {
+        "function_name": "js_to_json",
+        "function_parent": "utils.py",
+        "function_before_start_line": 2235,
+        "function_before_end_line": 2273,
+        "function_after_start_line": 2235,
+        "function_after_end_line": 2273,
+        "function_before_token_count": 77,
+        "function_after_token_count": 77,
+        "function_before": "def js_to_json(code):\n    COMMENT_RE = '/\\\\*(?:(?!\\\\*/).)*?\\\\*/|//[^\\\\n]*'\n    SKIP_RE = '\\\\s*(?:{comment})?\\\\s*'.format(comment=COMMENT_RE)\n    INTEGER_TABLE = (('(?s)^(0[xX][0-9a-fA-F]+){skip}:?$'.format(skip=SKIP_RE), 16), ('(?s)^(0+[0-7]+){skip}:?$'.format(skip=SKIP_RE), 8))\n\n    def fix_kv(m):\n        v = m.group(0)\n        if v in ('true', 'false', 'null'):\n            return v\n        elif v.startswith('/*') or v.startswith('//') or v == ',':\n            return ''\n        if v[0] in (\"'\", '\"'):\n            v = re.sub('(?s)\\\\\\\\.|\"', lambda m: {'\"': '\\\\\"', \"\\\\'\": \"'\", '\\\\\\n': '', '\\\\x': '\\\\u00'}.get(m.group(0), m.group(0)), v[1:-1])\n        for regex, base in INTEGER_TABLE:\n            im = re.match(regex, v)\n            if im:\n                i = int(im.group(1), base)\n                return '\"%d\":' % i if v.endswith(':') else '%d' % i\n        return '\"%s\"' % v\n    return re.sub('(?sx)\\n        \"(?:[^\"\\\\\\\\]*(?:\\\\\\\\\\\\\\\\|\\\\\\\\[\\'\"nurtbfx/\\\\n]))*[^\"\\\\\\\\]*\"|\\n        \\'(?:[^\\'\\\\\\\\]*(?:\\\\\\\\\\\\\\\\|\\\\\\\\[\\'\"nurtbfx/\\\\n]))*[^\\'\\\\\\\\]*\\'|\\n        {comment}|,(?={skip}[\\\\]}}])|\\n        [a-zA-Z_][.a-zA-Z_0-9]*|\\n        \\\\b(?:0[xX][0-9a-fA-F]+|0+[0-7]+)(?:{skip}:)?|\\n        [0-9]+(?={skip}:)\\n        '.format(comment=COMMENT_RE, skip=SKIP_RE), fix_kv, code)",
+        "function_after": "def js_to_json(code):\n    COMMENT_RE = '/\\\\*(?:(?!\\\\*/).)*?\\\\*/|//[^\\\\n]*'\n    SKIP_RE = '\\\\s*(?:{comment})?\\\\s*'.format(comment=COMMENT_RE)\n    INTEGER_TABLE = (('(?s)^(0[xX][0-9a-fA-F]+){skip}:?$'.format(skip=SKIP_RE), 16), ('(?s)^(0+[0-7]+){skip}:?$'.format(skip=SKIP_RE), 8))\n\n    def fix_kv(m):\n        v = m.group(0)\n        if v in ('true', 'false', 'null'):\n            return v\n        elif v.startswith('/*') or v.startswith('//') or v == ',':\n            return ''\n        if v[0] in (\"'\", '\"'):\n            v = re.sub('(?s)\\\\\\\\.|\"', lambda m: {'\"': '\\\\\"', \"\\\\'\": \"'\", '\\\\\\n': '', '\\\\x': '\\\\u00'}.get(m.group(0), m.group(0)), v[1:-1])\n        for regex, base in INTEGER_TABLE:\n            im = re.match(regex, v)\n            if im:\n                i = int(im.group(1), base)\n                return '\"%d\":' % i if v.endswith(':') else '%d' % i\n        return '\"%s\"' % v\n    return re.sub('(?sx)\\n        \"(?:[^\"\\\\\\\\]*(?:\\\\\\\\\\\\\\\\|\\\\\\\\[\\'\"nurtbfx/\\\\n]))*[^\"\\\\\\\\]*\"|\\n        \\'(?:[^\\'\\\\\\\\]*(?:\\\\\\\\\\\\\\\\|\\\\\\\\[\\'\"nurtbfx/\\\\n]))*[^\\'\\\\\\\\]*\\'|\\n        {comment}|,(?={skip}[\\\\]}}])|\\n        (?:(?<![0-9])[eE]|[a-df-zA-DF-Z_])[.a-zA-Z_0-9]*|\\n        \\\\b(?:0[xX][0-9a-fA-F]+|0+[0-7]+)(?:{skip}:)?|\\n        [0-9]+(?={skip}:)\\n        '.format(comment=COMMENT_RE, skip=SKIP_RE), fix_kv, code)"
+      },
+      "file_name": "utils.py",
+      "file_path": "youtube_dl/utils.py",
+      "score_reranked": 0.35087741583341364
+    }
+  ],
+  "diffusion_plan": [
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "GuardAdd",
+          "node": 3
+        },
+        {
+          "op": "InsertAfter",
+          "node": 7
+        },
+        {
+          "op": "InsertBefore",
+          "node": 6
+        },
+        {
+          "op": "Replace",
+          "node": 6
+        },
+        {
+          "op": "Replace",
+          "node": 56
+        },
+        {
+          "op": "Replace",
+          "node": 15
+        },
+        {
+          "op": "GuardAdd",
+          "node": 6
+        },
+        {
+          "op": "GuardAdd",
+          "node": 15
+        }
+      ],
+      "score": 18.109090907717356
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 6
+        },
+        {
+          "op": "Replace",
+          "node": 15
+        },
+        {
+          "op": "Replace",
+          "node": 56
+        },
+        {
+          "op": "InsertBefore",
+          "node": 6
+        },
+        {
+          "op": "GuardAdd",
+          "node": 3
+        },
+        {
+          "op": "InsertAfter",
+          "node": 56
+        },
+        {
+          "op": "Replace",
+          "node": 7
+        },
+        {
+          "op": "GuardAdd",
+          "node": 15
+        }
+      ],
+      "score": 17.727272725933886
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "InsertAfter",
+          "node": 6
+        },
+        {
+          "op": "Replace",
+          "node": 56
+        },
+        {
+          "op": "Replace",
+          "node": 7
+        },
+        {
+          "op": "Replace",
+          "node": 15
+        },
+        {
+          "op": "Replace",
+          "node": 6
+        },
+        {
+          "op": "Replace",
+          "node": 39
+        },
+        {
+          "op": "Replace",
+          "node": 3
+        },
+        {
+          "op": "Replace",
+          "node": 18
+        },
+        {
+          "op": "GuardAdd",
+          "node": 6
+        },
+        {
+          "op": "GuardAdd",
+          "node": 18
+        }
+      ],
+      "score": 17.2909090894281
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 6
+        },
+        {
+          "op": "Replace",
+          "node": 15
+        },
+        {
+          "op": "Replace",
+          "node": 18
+        },
+        {
+          "op": "Replace",
+          "node": 39
+        },
+        {
+          "op": "Replace",
+          "node": 7
+        },
+        {
+          "op": "GuardAdd",
+          "node": 6
+        },
+        {
+          "op": "InsertAfter",
+          "node": 6
+        },
+        {
+          "op": "Replace",
+          "node": 56
+        },
+        {
+          "op": "Delete",
+          "node": 6
+        },
+        {
+          "op": "Replace",
+          "node": 8
+        }
+      ],
+      "score": 17.127272725806613
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Delete",
+          "node": 7
+        },
+        {
+          "op": "Replace",
+          "node": 18
+        },
+        {
+          "op": "GuardAdd",
+          "node": 6
+        },
+        {
+          "op": "Replace",
+          "node": 7
+        },
+        {
+          "op": "Replace",
+          "node": 56
+        },
+        {
+          "op": "GuardAdd",
+          "node": 18
+        },
+        {
+          "op": "Replace",
+          "node": 15
+        },
+        {
+          "op": "InsertBefore",
+          "node": 7
+        },
+        {
+          "op": "GuardAdd",
+          "node": 56
+        },
+        {
+          "op": "Replace",
+          "node": 6
+        }
+      ],
+      "score": 17.127272725806613
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 56
+        },
+        {
+          "op": "Replace",
+          "node": 15
+        },
+        {
+          "op": "GuardAdd",
+          "node": 39
+        },
+        {
+          "op": "GuardAdd",
+          "node": 56
+        },
+        {
+          "op": "Replace",
+          "node": 3
+        },
+        {
+          "op": "Replace",
+          "node": 18
+        },
+        {
+          "op": "InsertAfter",
+          "node": 3
+        },
+        {
+          "op": "Replace",
+          "node": 6
+        },
+        {
+          "op": "Delete",
+          "node": 56
+        },
+        {
+          "op": "InsertAfter",
+          "node": 6
+        }
+      ],
+      "score": 16.954545453095044
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "GuardAdd",
+          "node": 8
+        },
+        {
+          "op": "Replace",
+          "node": 39
+        },
+        {
+          "op": "Replace",
+          "node": 7
+        },
+        {
+          "op": "Replace",
+          "node": 15
+        },
+        {
+          "op": "Replace",
+          "node": 56
+        },
+        {
+          "op": "GuardAdd",
+          "node": 15
+        },
+        {
+          "op": "Replace",
+          "node": 8
+        },
+        {
+          "op": "Replace",
+          "node": 6
+        },
+        {
+          "op": "Replace",
+          "node": 3
+        },
+        {
+          "op": "GuardAdd",
+          "node": 56
+        }
+      ],
+      "score": 16.454545453140497
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 7
+        },
+        {
+          "op": "Replace",
+          "node": 6
+        },
+        {
+          "op": "GuardAdd",
+          "node": 6
+        },
+        {
+          "op": "GuardAdd",
+          "node": 15
+        },
+        {
+          "op": "GuardAdd",
+          "node": 9
+        },
+        {
+          "op": "Replace",
+          "node": 8
+        },
+        {
+          "op": "Replace",
+          "node": 15
+        },
+        {
+          "op": "InsertAfter",
+          "node": 6
+        },
+        {
+          "op": "Replace",
+          "node": 56
+        }
+      ],
+      "score": 16.454545453140497
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Delete",
+          "node": 8
+        },
+        {
+          "op": "Replace",
+          "node": 21
+        },
+        {
+          "op": "Replace",
+          "node": 7
+        },
+        {
+          "op": "Replace",
+          "node": 39
+        },
+        {
+          "op": "GuardAdd",
+          "node": 18
+        },
+        {
+          "op": "GuardAdd",
+          "node": 8
+        },
+        {
+          "op": "GuardAdd",
+          "node": 3
+        },
+        {
+          "op": "Replace",
+          "node": 3
+        },
+        {
+          "op": "GuardAdd",
+          "node": 7
+        },
+        {
+          "op": "Replace",
+          "node": 56
+        },
+        {
+          "op": "GuardAdd",
+          "node": 15
+        },
+        {
+          "op": "GuardAdd",
+          "node": 6
+        }
+      ],
+      "score": 16.272727271338844
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "GuardAdd",
+          "node": 6
+        },
+        {
+          "op": "Replace",
+          "node": 6
+        },
+        {
+          "op": "Replace",
+          "node": 56
+        },
+        {
+          "op": "Replace",
+          "node": 3
+        },
+        {
+          "op": "Delete",
+          "node": 6
+        },
+        {
+          "op": "Replace",
+          "node": 15
+        },
+        {
+          "op": "Replace",
+          "node": 8
+        }
+      ],
+      "score": 15.799999998836364
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 6
+        },
+        {
+          "op": "Replace",
+          "node": 56
+        },
+        {
+          "op": "Replace",
+          "node": 18
+        },
+        {
+          "op": "GuardAdd",
+          "node": 6
+        },
+        {
+          "op": "Delete",
+          "node": 15
+        },
+        {
+          "op": "Replace",
+          "node": 8
+        },
+        {
+          "op": "GuardAdd",
+          "node": 3
+        },
+        {
+          "op": "Delete",
+          "node": 56
+        },
+        {
+          "op": "Replace",
+          "node": 7
+        }
+      ],
+      "score": 15.290909089609919
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "GuardAdd",
+          "node": 6
+        },
+        {
+          "op": "Replace",
+          "node": 15
+        },
+        {
+          "op": "Replace",
+          "node": 21
+        },
+        {
+          "op": "GuardAdd",
+          "node": 15
+        },
+        {
+          "op": "InsertBefore",
+          "node": 15
+        },
+        {
+          "op": "Replace",
+          "node": 56
+        },
+        {
+          "op": "Replace",
+          "node": 9
+        },
+        {
+          "op": "Replace",
+          "node": 7
+        }
+      ],
+      "score": 15.245454544341323
+    }
+  ],
+  "static_analysis_nodes": [
+    {
+      "line": 2,
+      "line_absolute": 34,
+      "node_id": 6,
+      "node_id_local": 1,
+      "type": "Call",
+      "code": "response.url.endswith('/robots.txt')",
+      "distance_to_buggy": 0,
+      "context": "   1:   def _parse_sitemap(self, response):\n   2:->     if response.url.endswith('/robots.txt'):\n   3:           for url in sitemap_urls_from_robots(response.body):\n   4:               yield Request(url, callback=self._parse_sitemap)\n   5:       else:",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Attribute",
+          "value": {
+            "_type": "Attribute"
+          },
+          "attr": "endswith",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [
+          {
+            "_type": "Constant",
+            "value": "/robots.txt",
+            "kind": null
+          }
+        ],
+        "keywords": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -24.0
+    },
+    {
+      "line": 3,
+      "line_absolute": 35,
+      "node_id": 15,
+      "node_id_local": 3,
+      "type": "Call",
+      "code": "sitemap_urls_from_robots(response.body)",
+      "distance_to_buggy": 0,
+      "context": "   1:   def _parse_sitemap(self, response):\n   2:       if response.url.endswith('/robots.txt'):\n   3:->         for url in sitemap_urls_from_robots(response.body):\n   4:               yield Request(url, callback=self._parse_sitemap)\n   5:       else:\n   6:           body = self._get_sitemap_body(response)",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Name",
+          "id": "sitemap_urls_from_robots",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [
+          {
+            "_type": "Attribute",
+            "value": {
+              "_type": "Name"
+            },
+            "attr": "body",
+            "ctx": {
+              "_type": "Load"
+            }
+          }
+        ],
+        "keywords": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|system|>...",
+      "reranker_score": -24.0
+    },
+    {
+      "line": 4,
+      "line_absolute": 36,
+      "node_id": 56,
+      "node_id_local": 4,
+      "type": "Call",
+      "code": "Request(url, callback=self._parse_sitemap)",
+      "distance_to_buggy": 0,
+      "context": "   1:   def _parse_sitemap(self, response):\n   2:       if response.url.endswith('/robots.txt'):\n   3:           for url in sitemap_urls_from_robots(response.body):\n   4:->             yield Request(url, callback=self._parse_sitemap)\n   5:       else:\n   6:           body = self._get_sitemap_body(response)\n   7:           if body is None:",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Name",
+          "id": "Request",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [
+          {
+            "_type": "Name",
+            "id": "url",
+            "ctx": {
+              "_type": "Load"
+            }
+          }
+        ],
+        "keywords": [
+          {
+            "_type": "keyword",
+            "arg": "callback",
+            "value": {
+              "_type": "Attribute"
+            }
+          }
+        ]
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -24.0
+    },
+    {
+      "line": 2,
+      "line_absolute": 34,
+      "node_id": 3,
+      "node_id_local": 0,
+      "type": "If",
+      "code": "if response.url.endswith('/robots.txt'):\n    for url in sitemap_urls_from_robots(response.body):\n        yield Request(url, callback=self._parse_sitemap)\nelse:\n    body = self._get_sitemap_body(response)\n    if body is None:\n        logger.warning('Ignoring invalid sitemap: %(response)s', {'response': response}, extra={'spider': self})\n        return\n    s = Sitemap(body)\n    if s.type == 'sitemapindex':\n        for loc in iterloc(s, self.sitemap_alternate_links):\n            if any((x.search(loc) for x in self._follow)):\n                yield Request(loc, callback=self._parse_sitemap)\n    elif s.type == 'urlset':\n        for loc in iterloc(s):\n            for r, c in self._cbs:\n                if r.search(loc):\n                    yield Request(loc, callback=c)\n                    break",
+      "distance_to_buggy": 0,
+      "context": "   1:   def _parse_sitemap(self, response):\n   2:->     if response.url.endswith('/robots.txt'):\n   3:           for url in sitemap_urls_from_robots(response.body):\n   4:               yield Request(url, callback=self._parse_sitemap)\n   5:       else:",
+      "ast_subtree_json": {
+        "_type": "If",
+        "test": {
+          "_type": "Call",
+          "func": {
+            "_type": "Attribute"
+          },
+          "args": [
+            {
+              "_type": "Constant"
+            }
+          ],
+          "keywords": []
+        },
+        "body": [
+          {
+            "_type": "For",
+            "target": {
+              "_type": "Name"
+            },
+            "iter": {
+              "_type": "Call"
+            },
+            "body": [
+              {
+                "_type": "Expr"
+              }
+            ],
+            "orelse": [],
+            "type_comment": null
+          }
+        ],
+        "orelse": [
+          {
+            "_type": "Assign",
+            "targets": [
+              {
+                "_type": "Name"
+              }
+            ],
+            "value": {
+              "_type": "Call"
+            },
+            "type_comment": null
+          },
+          {
+            "_type": "If",
+            "test": {
+              "_type": "Compare"
+            },
+            "body": [
+              {
+                "_type": "Expr"
+              },
+              {
+                "_type": "Return"
+              }
+            ],
+            "orelse": []
+          },
+          {
+            "_type": "Assign",
+            "targets": [
+              {
+                "_type": "Name"
+              }
+            ],
+            "value": {
+              "_type": "Call"
+            },
+            "type_comment": null
+          },
+          {
+            "_type": "If",
+            "test": {
+              "_type": "Compare"
+            },
+            "body": [
+              {
+                "_type": "For"
+              }
+            ],
+            "orelse": [
+              {
+                "_type": "If"
+              }
+            ]
+          }
+        ]
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|system|>...",
+      "reranker_score": -23.0
+    },
+    {
+      "line": 3,
+      "line_absolute": 35,
+      "node_id": 7,
+      "node_id_local": 2,
+      "type": "For",
+      "code": "for url in sitemap_urls_from_robots(response.body):\n    yield Request(url, callback=self._parse_sitemap)",
+      "distance_to_buggy": 0,
+      "context": "   1:   def _parse_sitemap(self, response):\n   2:       if response.url.endswith('/robots.txt'):\n   3:->         for url in sitemap_urls_from_robots(response.body):\n   4:               yield Request(url, callback=self._parse_sitemap)\n   5:       else:\n   6:           body = self._get_sitemap_body(response)",
+      "ast_subtree_json": {
+        "_type": "For",
+        "target": {
+          "_type": "Name",
+          "id": "url",
+          "ctx": {
+            "_type": "Store"
+          }
+        },
+        "iter": {
+          "_type": "Call",
+          "func": {
+            "_type": "Name"
+          },
+          "args": [
+            {
+              "_type": "Attribute"
+            }
+          ],
+          "keywords": []
+        },
+        "body": [
+          {
+            "_type": "Expr",
+            "value": {
+              "_type": "Yield"
+            }
+          }
+        ],
+        "orelse": [],
+        "type_comment": null
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|system|>...",
+      "reranker_score": -22.0
+    },
+    {
+      "line": 6,
+      "line_absolute": 38,
+      "node_id": 18,
+      "node_id_local": 6,
+      "type": "Call",
+      "code": "self._get_sitemap_body(response)",
+      "distance_to_buggy": 1,
+      "context": "   3:           for url in sitemap_urls_from_robots(response.body):\n   4:               yield Request(url, callback=self._parse_sitemap)\n   5:       else:\n   6:->         body = self._get_sitemap_body(response)\n   7:           if body is None:\n   8:               logger.warning('Ignoring invalid sitemap: %(response)s', {'response': response}, extra={'spider': self})\n   9:               return",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Attribute",
+          "value": {
+            "_type": "Name"
+          },
+          "attr": "_get_sitemap_body",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [
+          {
+            "_type": "Name",
+            "id": "response",
+            "ctx": {
+              "_type": "Load"
+            }
+          }
+        ],
+        "keywords": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|system|>...",
+      "reranker_score": -14.0
+    },
+    {
+      "line": 6,
+      "line_absolute": 38,
+      "node_id": 8,
+      "node_id_local": 5,
+      "type": "Assign",
+      "code": "body = self._get_sitemap_body(response)",
+      "distance_to_buggy": 1,
+      "context": "   3:           for url in sitemap_urls_from_robots(response.body):\n   4:               yield Request(url, callback=self._parse_sitemap)\n   5:       else:\n   6:->         body = self._get_sitemap_body(response)\n   7:           if body is None:\n   8:               logger.warning('Ignoring invalid sitemap: %(response)s', {'response': response}, extra={'spider': self})\n   9:               return",
+      "ast_subtree_json": {
+        "_type": "Assign",
+        "targets": [
+          {
+            "_type": "Name",
+            "id": "body",
+            "ctx": {
+              "_type": "Store"
+            }
+          }
+        ],
+        "value": {
+          "_type": "Call",
+          "func": {
+            "_type": "Attribute"
+          },
+          "args": [
+            {
+              "_type": "Name"
+            }
+          ],
+          "keywords": []
+        },
+        "type_comment": null
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|system|>...",
+      "reranker_score": -13.0
+    },
+    {
+      "line": 7,
+      "line_absolute": 39,
+      "node_id": 9,
+      "node_id_local": 7,
+      "type": "If",
+      "code": "if body is None:\n    logger.warning('Ignoring invalid sitemap: %(response)s', {'response': response}, extra={'spider': self})\n    return",
+      "distance_to_buggy": 2,
+      "context": "   4:               yield Request(url, callback=self._parse_sitemap)\n   5:       else:\n   6:           body = self._get_sitemap_body(response)\n   7:->         if body is None:\n   8:               logger.warning('Ignoring invalid sitemap: %(response)s', {'response': response}, extra={'spider': self})\n   9:               return\n  10:           s = Sitemap(body)",
+      "ast_subtree_json": {
+        "_type": "If",
+        "test": {
+          "_type": "Compare",
+          "left": {
+            "_type": "Name"
+          },
+          "ops": [
+            {
+              "_type": "Is"
+            }
+          ],
+          "comparators": [
+            {
+              "_type": "Constant"
+            }
+          ]
+        },
+        "body": [
+          {
+            "_type": "Expr",
+            "value": {
+              "_type": "Call"
+            }
+          },
+          {
+            "_type": "Return",
+            "value": null
+          }
+        ],
+        "orelse": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -2.0
+    },
+    {
+      "line": 8,
+      "line_absolute": 40,
+      "node_id": 39,
+      "node_id_local": 8,
+      "type": "Call",
+      "code": "logger.warning('Ignoring invalid sitemap: %(response)s', {'response': response}, extra={'spider': self})",
+      "distance_to_buggy": 3,
+      "context": "   5:       else:\n   6:           body = self._get_sitemap_body(response)\n   7:           if body is None:\n   8:->             logger.warning('Ignoring invalid sitemap: %(response)s', {'response': response}, extra={'spider': self})\n   9:               return\n  10:           s = Sitemap(body)\n  11:           if s.type == 'sitemapindex':",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Attribute",
+          "value": {
+            "_type": "Name"
+          },
+          "attr": "warning",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [
+          {
+            "_type": "Constant",
+            "value": "Ignoring invalid sitemap: %(response)s",
+            "kind": null
+          },
+          {
+            "_type": "Dict",
+            "keys": [
+              {
+                "_type": "Constant"
+              }
+            ],
+            "values": [
+              {
+                "_type": "Name"
+              }
+            ]
+          }
+        ],
+        "keywords": [
+          {
+            "_type": "keyword",
+            "arg": "extra",
+            "value": {
+              "_type": "Dict"
+            }
+          }
+        ]
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": 6.0
+    },
+    {
+      "line": 9,
+      "line_absolute": 41,
+      "node_id": 21,
+      "node_id_local": 9,
+      "type": "Return",
+      "code": "return",
+      "distance_to_buggy": 4,
+      "context": "   6:           body = self._get_sitemap_body(response)\n   7:           if body is None:\n   8:               logger.warning('Ignoring invalid sitemap: %(response)s', {'response': response}, extra={'spider': self})\n   9:->             return\n  10:           s = Sitemap(body)\n  11:           if s.type == 'sitemapindex':\n  12:               for loc in iterloc(s, self.sitemap_alternate_links):",
+      "ast_subtree_json": {
+        "_type": "Return",
+        "value": null
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": 18.0
+    }
+  ]
+}

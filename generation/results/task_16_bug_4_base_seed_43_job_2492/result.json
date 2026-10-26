@@ -1,0 +1,141 @@
+{
+  "bug_id": "4",
+  "seed": 43,
+  "arm": "base",
+  "candidates": [
+    {
+      "index": 0,
+      "patch_text": "def get_pending_tasks(self, state):\n    \"\"\"\n        Get PENDING (and RUNNING) tasks for this worker.\n\n        You have to pass in the state for optimization reasons.\n        \"\"\"\n    if len(self.tasks) < state.num_pending_tasks():\n        return six.moves.filter(lambda task: task.status in [PENDING, RUNNING], self.tasks)\n    else:\n        return list(self.tasks)",
+      "patch_sha256": "891e13b16ea5abcfac93504e24d334ee500be8c38f505eae65bd96aa6ba3c4eb",
+      "rank_score": 242,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7704673177175924,
+      "top_p": 0.8630841471469904
+    },
+    {
+      "index": 1,
+      "patch_text": "def get_pending_tasks(self, state):\n    \"\"\"\n        Get PENDING (and RUNNING) tasks for this worker.\n\n        You have to pass in the state for optimization reasons.\n        \"\"\"\n    if len(self.tasks) < state.num_pending_tasks():\n        return six.moves.filter(lambda task: task.status in [PENDING, RUNNING], self.tasks)\n    else:\n        return self.tasks",
+      "patch_sha256": "f2810f54b7ee96c5ccf2245298aec43a4084ba90c2c8c5e2a95c3402ad31a029",
+      "rank_score": 242,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.934442110146087,
+      "top_p": 0.8256979458109642
+    },
+    {
+      "index": 2,
+      "patch_text": "def get_pending_tasks(self, state):\n    \"\"\"\n        Get PENDING (and RUNNING) tasks for this worker.\n\n        You have to pass in the state for optimization reasons.\n        \"\"\"\n    if len(self.tasks) < state.num_pending_tasks():\n        return six.moves.filter(lambda task: task.status in [PENDING, RUNNING], self.tasks)\n    else:\n        return list(state.get_pending_tasks())",
+      "patch_sha256": "abe8c02cf73763243f141b913e0cd2a0c4c03cf7666018b6e0d5cac8b3a67aba",
+      "rank_score": 241,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.5051876220100471,
+      "top_p": 0.9515146577116289
+    },
+    {
+      "index": 3,
+      "patch_text": "def get_pending_tasks(self, state):\n    \"\"\"\n        Get PENDING (and RUNNING) tasks for this worker.\n\n        You have to pass in the state for optimization reasons.\n        \"\"\"\n    if len(self.tasks) < state.num_pending_tasks():\n        return filter(lambda task: task.status in [PENDING, RUNNING], self.tasks)\n    else:\n        return state.get_pending_tasks()",
+      "patch_sha256": "1f9a6c704aa82d42862ea6c43555bd5f34eb4e72116feaf960b04fc595e212e6",
+      "rank_score": 214,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7976020643090617,
+      "top_p": 0.8970025803863271
+    },
+    {
+      "index": 4,
+      "patch_text": "def get_pending_tasks(self, state):\n    \"\"\"\n        Get PENDING (and RUNNING) tasks for this worker.\n\n        You have to pass in the state for optimization reasons.\n        \"\"\"\n    return six.moves.filter(lambda task: task.status in [PENDING, RUNNING], self.tasks)",
+      "patch_sha256": "5385b143e8deb78d575b766fb2ced785866be564a9dc4135a98b91a8f637b0ff",
+      "rank_score": 200,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.934442110146087,
+      "top_p": 0.8256979458109642
+    },
+    {
+      "index": 5,
+      "patch_text": "def get_pending_tasks(self, state):\n    \"\"\"\n        Get PENDING (and RUNNING) tasks for this worker.\n\n        You have to pass in the state for optimization reasons.\n        \"\"\"\n    return list(state.get_pending_tasks())",
+      "patch_sha256": "8e8e89b23a98b9ea25dc76559515c2fc081d3b936cf280a43158d5e3253d1c2e",
+      "rank_score": 195,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.934442110146087,
+      "top_p": 0.8256979458109642
+    },
+    {
+      "index": 6,
+      "patch_text": "def get_pending_tasks(self, state):\n    \"\"\"\n        Get PENDING (and RUNNING) tasks for this worker.\n\n        You have to pass in the state for optimization reasons.\n        \"\"\"\n    if len(self.tasks) < state.num_pending_tasks():\n        return list(filter(lambda task: task.status in [PENDING, RUNNING], self.tasks))\n    return state.get_pending_tasks()",
+      "patch_sha256": "3bca5fe775b37e26929a20168b148d164a0c649bfd6fe9589958629f2f90893e",
+      "rank_score": 183,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7704673177175924,
+      "top_p": 0.8630841471469904
+    },
+    {
+      "index": 7,
+      "patch_text": "def get_pending_tasks(self, state):\n    \"\"\"\n        Get PENDING (and RUNNING) tasks for this worker.\n\n        You have to pass in the state for optimization reasons.\n        \"\"\"\n    if len(self.tasks) >= state.num_pending_tasks():\n        return state.get_pending_tasks()",
+      "patch_sha256": "84bf180753c6bc25422aa3ec466747d8743eda5e576046074b876a7ae67fd213",
+      "rank_score": 178,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.934442110146087,
+      "top_p": 0.8256979458109642
+    },
+    {
+      "index": 8,
+      "patch_text": "def get_pending_tasks(self, state):\n    \"\"\"\n        Get PENDING (and RUNNING) tasks for this worker.\n\n        You have to pass in the state for optimization reasons.\n        \"\"\"\n    return state.get_pending_tasks()",
+      "patch_sha256": "84eded9f7252b062d3e1be67bd1dab5bc788760a53199094ef9e92b0c9b8501c",
+      "rank_score": 165,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7704673177175924,
+      "top_p": 0.8630841471469904
+    },
+    {
+      "index": 9,
+      "patch_text": "def get_pending_tasks(self, state):\n    if len(self.tasks) > state.num_pending_tasks():\n        return state.get_pending_tasks()\n    else:\n        return six.moves.filter(lambda task: task.status in [PENDING, RUNNING], self.tasks)",
+      "patch_sha256": "40c6d46068bbcee9e0e8c041b069e7609196db46dd7707b4b0aa9d67f5d44a7c",
+      "rank_score": 131,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7976020643090617,
+      "top_p": 0.8970025803863271
+    }
+  ],
+  "candidate_count": 10,
+  "retrieved_examples": [],
+  "diffusion_plan": [],
+  "static_analysis_nodes": []
+}

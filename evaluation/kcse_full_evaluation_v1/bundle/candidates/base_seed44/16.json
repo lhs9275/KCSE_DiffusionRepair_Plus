@@ -1,0 +1,89 @@
+{
+  "bug_id": "16",
+  "seed": 44,
+  "arm": "base",
+  "candidates": [
+    {
+      "index": 0,
+      "patch_text": "def unescapeHTML(s):\n    if s is None:\n        return None\n    assert type(s) == compat_str\n    return re.sub(r'&([^;]+;)', lambda m: _htmlentity_transform(m.group(1)), s)",
+      "patch_sha256": "b680f919e250bfa55a833724b38072e2c15e3366e059bc99fb9d338872d59335",
+      "rank_score": 219,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.9230891398700982,
+      "top_p": 0.8133577607283677
+    },
+    {
+      "index": 1,
+      "patch_text": "def unescapeHTML(s):\n    if s is None:\n        return None\n    assert type(s) == str\n    return re.sub('&([^;]+;)', lambda m: _htmlentity_transform(m.group(1)), s)",
+      "patch_sha256": "31dba4be4817b46891298165beec7def90ea5bf930e2de6f50d880af83fb1d19",
+      "rank_score": 218,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7793066012285085,
+      "top_p": 0.8741332515356355
+    },
+    {
+      "index": 2,
+      "patch_text": "def unescapeHTML(s):\n    if s is None:\n        return None\n    assert type(s) == compat_str\n    return re.sub('&#([^;]+);', lambda m: _htmlentity_transform(m.group(1)), s)",
+      "patch_sha256": "2d3fe885de2f78bc36dace777d494ac2a2bc31e2eb0cb73059ad6a1b1e24a562",
+      "rank_score": 209,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7941462962722876,
+      "top_p": 0.8926828703403595
+    },
+    {
+      "index": 3,
+      "patch_text": "def unescapeHTML(s):\n    if s is None:\n        return None\n    assert type(s) == compat_str\n    return re.sub(r'&#(\\d+);', lambda m: _htmlentity_transform(m.group(1)), s)",
+      "patch_sha256": "5aec95179ff2112db1828e2490f6de31ac947d591b660e2e8fa9dcb532d9ad71",
+      "rank_score": 209,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.9230891398700982,
+      "top_p": 0.8133577607283677
+    },
+    {
+      "index": 4,
+      "patch_text": "def unescapeHTML(s):\n    if s is None:\n        return None\n    assert type(s) == compat_str\n    return s",
+      "patch_sha256": "0df701eb5a9f0a6aee8ab23d3fc51982f56ddf1d564dbefe2a4b62eb36685be2",
+      "rank_score": 207,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.9560266782037877,
+      "top_p": 0.8491594328302041
+    },
+    {
+      "index": 5,
+      "patch_text": "def unescapeHTML(s):\n    if s is None:\n        return None\n    assert type(s) == compat_str\n    return re.sub('&([^;]+;)', lambda m: _htmlentity_transform(m.group(1)), s)\n\n\n##begin_example\n\ndef unescapeHTML(s):\n    if s is None:\n        return None\n    assert type(s) == compat_str\n    return re.sub('&([^;]+;)', lambda m: _htmlentity_transform(m.group(1)), s)\n\n\n##end_example\n##begin_output\n\ndef unescapeHTML(s):\n    if s is None:\n        return None\n    assert type(s) == compat_str\n    return re.sub('&([^;]+;)', lambda m: _htmlentity_transform(m.group(1)), s)\n\n\n##end_output\n##begin_tests\n\nassert unescapeHTML('Foo &amp; Bar') == 'Foo & Bar'\nassert unescapeHTML('Foo &amp; Bar &amp; Baz') == 'Foo & Bar & Baz'\nassert unescapeHTML('Foo &amp;amp; Bar') == 'Foo &amp; Bar'\nassert unescapeHTML('Foo &amp;amp; Bar &amp;amp; Baz') == 'Foo &amp; Bar &amp; Baz'\nassert unescapeHTML('Foo &amp;amp;amp; Bar') == 'Foo &amp;amp; Bar'\nassert unescapeHTML('Foo &amp;amp;amp; Bar &amp;amp;amp; Baz') == 'Foo &amp;amp; Bar &amp;amp; Baz'\nassert unescapeHTML('Foo &amp;amp;amp;amp; Bar') == 'Foo &amp;amp;amp; Bar'\nassert unescapeHTML('Foo &amp;amp;amp;amp; Bar &amp;amp;amp;amp; Baz') == 'Foo &amp;amp;amp; Bar &amp;amp;amp; Baz'\nassert unescapeHTML('Foo &amp;amp;amp;amp;amp; Bar') == 'Foo &amp;amp;amp;amp; Bar'\nassert unescapeHTML('Foo &amp;amp;amp;amp;amp; Bar &amp;amp;amp;amp;amp; Baz') == 'Foo &amp;amp;amp;amp; Bar &amp;amp;amp;amp; Baz'\nassert unescapeHTML('Foo &amp;amp;amp;amp;amp;amp; Bar') == 'Foo &amp;amp;amp;amp;amp; Bar'\nassert unescapeHTML('Foo &amp;amp;amp;amp;amp;amp; Bar &amp;amp;amp;amp;amp;amp; Baz') == 'Foo &amp;amp;amp;amp;amp; Bar &amp;amp;amp;amp;amp; Baz'",
+      "patch_sha256": "2a88eb057d79971a6be22750af0dce86017880efea3177bf670e10ef7af6c0df",
+      "rank_score": 33,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.9560266782037877,
+      "top_p": 0.8491594328302041
+    }
+  ],
+  "candidate_count": 6,
+  "retrieved_examples": [],
+  "diffusion_plan": [],
+  "static_analysis_nodes": []
+}

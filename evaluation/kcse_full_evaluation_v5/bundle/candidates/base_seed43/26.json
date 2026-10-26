@@ -1,0 +1,63 @@
+{
+  "bug_id": "26",
+  "seed": 43,
+  "arm": "base",
+  "candidates": [
+    {
+      "index": 0,
+      "patch_text": "def _parse_sitemap(self, response):\n    if response.url.endswith('/robots.txt'):\n        for url in sitemap_urls_from_robots(response.body):\n            yield Request(url, callback=self._parse_sitemap)\n    else:\n        body = self._get_sitemap_body(response)\n        if body is None:\n            logger.warning('Ignoring invalid sitemap: %(response)s', {'response': response}, extra={'spider': self})\n            return\n        s = Sitemap(body)\n        if s.type =='sitemapindex':\n            for loc in iterloc(s, self.sitemap_alternate_links):\n                if any((x.search(loc) for x in self._follow)):\n                    yield Request(loc, callback=self._parse_sitemap)\n        elif s.type == 'urlset':\n            for loc in iterloc(s):\n                for r, c in self._cbs:\n                    if r.search(loc):\n                        yield Request(loc, callback=c)\n                        break",
+      "patch_sha256": "e71dcb8babbda7dc56f3d1ebdc956e14deacfaba233804ea92b310c0fac853ba",
+      "rank_score": 214,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.0,
+      "top_p": 1.0
+    },
+    {
+      "index": 1,
+      "patch_text": "def _parse_sitemap(self, response):\n    if response.url.endswith('/robots.txt'):\n        for url in sitemap_urls_from_robots(response.body):\n            yield Request(url, callback=self._parse_sitemap)\n    else:\n        body = self._get_sitemap_body(response)\n        if body is None:\n            logger.warning('Ignoring invalid sitemap: %(response)s', {'response': response}, extra={'spider': self})\n            return\n        s = Sitemap(body)\n        if s.type =='sitemapindex':\n            for loc in iterloc(s, self.sitemap_alternate_links):\n                if any((x.search(loc) for x in self._follow)):\n                    yield Request(loc, callback=self._parse_sitemap)\n        elif s.type == 'urlset':\n            for loc in iterloc(s):\n                for r, c in self._cbs:\n                    if r.search(loc):\n                        yield Request(loc, callback=c)\n                        break\n\n##end\n##correct\n\n##\n##correct\n\ndef _parse_sitemap(self, response):\n    if response.url.endswith('/robots.txt'):\n        for url in sitemap_urls_from_robots(response.body):\n            yield Request(url, callback=self._parse_sitemap)\n    else:\n        body = self._get_sitemap_body(response)\n        if body is None:\n            logger.warning('Ignoring invalid sitemap: %(response)s', {'response': response}, extra={'spider': self})\n            return\n        s = Sitemap(body)\n        if s.type =='sitemapindex':\n            for loc in iterloc(s, self.sitemap_alternate_links):\n                if any((x.search(loc) for x in self._follow)):\n                    yield Request(loc, callback=self._parse_sitemap)\n        elif s.type == 'urlset':\n            for loc in iterloc(s):\n                for r, c in self._cbs:\n                    if r.search(loc):\n                        yield Request(loc, callback=c)\n                        break\n\n##end\n##correct\n\n##\n##correct\n\ndef _parse_sitemap(self, response):\n    if response.url.endswith('/robots.txt'):\n        for url in sitemap_urls_from_robots(response.body):\n            yield Request(url, callback=self._parse_sitemap)\n    else:\n        body = self._get_sitemap_body(response)\n        if body is None:\n            logger.warning('Ignoring invalid sitemap: %(response)s', {'response': response}, extra={'spider': self})\n            return\n        s = Sitemap(body)\n        if s.type =='sitemapindex':\n            for loc in iterloc(s, self.sitemap_alternate_links):\n                if any((x.search(loc) for x in self._follow)):\n                    yield Request(loc, callback=self._parse_sitemap)",
+      "patch_sha256": "0f5afb3d21c099bf93a7b002431b69a21782342dc8e1239ec981ac6a327f0d6f",
+      "rank_score": 143,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.934442110146087,
+      "top_p": 0.8256979458109642
+    },
+    {
+      "index": 2,
+      "patch_text": "def _parse_sitemap(self, response):\n    if response.url.endswith('/robots.txt'):\n        for url in sitemap_urls_from_robots(response.body):\n            yield Request(url, callback=self._parse_sitemap)\n    else:\n        body = self._get_sitemap_body(response)\n        if body is None:\n            logger.warning('Ignoring invalid sitemap: %(response)s', {'response': response}, extra={'spider': self})\n            return\n        s = Sitemap(body)\n        if s.type =='sitemapindex':\n            for loc in iterloc(s, self.sitemap_alternate_links):\n                if any((x.search(loc) for x in self._follow)):\n                    yield Request(loc, callback=self._parse_sitemap)\n        elif s.type == 'urlset':\n            for loc in iterloc(s):\n                for r, c in self._cbs:\n                    if r.search(loc):\n                        yield Request(loc, callback=c)\n                        break\nimport json\nimport os\nimport shutil\nimport sys\nfrom pathlib import Path\nfrom typing import Dict, Optional, Tuple\n\nfrom git import Repo, RemoteProgress\nfrom gitdb.exc import BadName\nfrom loguru import logger\nfrom tqdm import tqdm\n\nfrom src.utils.github_api import GitHubApi\n\n\nclass GitHubRepo:\n\n    def __init__(self, repo_id: str, repo_name: str, api: GitHubApi, output_path: str):\n        self.repo_id = repo_id\n        self.repo_name = repo_name\n        self.api = api\n        self.output_path = output_path\n        self.repo_path = os.path.join(self.output_path, self.repo_name)\n\n        # TODO: check if it already exists and ask user for action (skip, overwrite, etc.)\n        try:\n            os.mkdir(self.repo_path)\n        except OSError as e:\n            if e.errno!= os.errno.EEXIST:\n                raise\n\n        self.local_repo = Repo.init(self.repo_path)\n        self.remote_repo = self.local_repo.create_remote(name=\"origin\",\n                                                         url=f\"https://github.com/{self.repo_name}.git\")\n\n    def get_commit_range(self, from_commit_sha: str, to_commit_sha: str) -> Tuple[str, str]:\n        \"\"\"\n        Gets a range of commits between two commit SHAs. The returned tuple contains\n        the SHA of the first commit, and the last one, in this order.\n        :param from_commit_sha: the commit SHA to start the range\n        :param to_commit_sha: the commit SHA to end the range\n        :return: a tuple with the SHA of the first commit and the last one\n        \"\"\"\n        # TODO: check if both are valid commits\n\n        # If there's only one commit in the range,",
+      "patch_sha256": "c18538b44eb8f500162585e112e7d53431a539d557f9f90f60e28fc311d0c562",
+      "rank_score": -57,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.9106067765084201,
+      "top_p": 0.7997899744656741
+    },
+    {
+      "index": 3,
+      "patch_text": "def _parse_sitemap(self, response):\n    if response.url.endswith('/robots.txt'):\n        for url in sitemap_urls_from_robots(response.body):\n            yield Request(url, callback=self._parse_sitemap)\n    else:\n        body = self._get_sitemap_body(response)\n        if body is None:\n            logger.warning('Ignoring invalid sitemap: %(response)s', {'response': response}, extra={'spider': self})\n            return\n        s = Sitemap(body)\n        if s.type =='sitemapindex':\n            for loc in iterloc(s, self.sitemap_alternate_links):\n                if any((x.search(loc) for x in self._follow)):\n                    yield Request(loc, callback=self._parse_sitemap)\n        elif s.type == 'urlset':\n            for loc in iterloc(s):\n                for r, c in self._cbs:\n                    if r.search(loc):\n                        yield Request(loc, callback=c)\n                        break\n##end/python/scripts/update-github-stats.py\n#!/usr/bin/env python\nimport argparse\nimport json\nimport os\nimport re\nimport sys\nimport time\nimport urllib2\n\nfrom github import Github\n\n# See the documentation for this module at https://github.com/PyGithub/PyGithub\n# The documentation assumes you have a github.com account already\n# You can create one here: https://github.com/join\ng = Github(\"username\", \"password\")\n\nrepo_list = {\n    \"scrapy\": \"https://api.github.com/repos/scrapy/scrapy/issues?per_page=100&state=all\",\n    \"scrapinghub\": \"https://api.github.com/repos/scrapinghub/scrapinghub-python-sdk/issues?per_page=100&state=all\"\n}\n\ndef get_stats(repo_name):\n    # print repo_name\n    repo_url = repo_list[repo_name]\n    issues = []\n    try:\n        req = urllib2.Request(repo_url)\n        response = urllib2.urlopen(req)\n    except urllib2.HTTPError as e:\n        print(\"Error retrieving issues from GitHub API: {}\".format(e))\n        exit()\n\n    content = response.read().decode('utf-8')\n    parsed = json.loads(content)\n\n    for issue in parsed:\n        # print issue\n        if not issue['pull_request']:\n            # print issue['labels']\n            labels = issue['labels']\n            labels_text = \"\"\n            for label in labels:\n                labels_text += label['name'] + ','\n\n            comments_url = \"https://api.github.com/repos/\" + repo_name + \"/issues/\" + str(issue['number']) + \"/comments?per_page=100\"\n            comments_req = urllib2.Request(comments_url)",
+      "patch_sha256": "e61e599af0bbf0cf86ec586370128d2eca47de6904a7b9b644332a742899cd3c",
+      "rank_score": -135,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7970041106218376,
+      "top_p": 0.896255138277297
+    }
+  ],
+  "candidate_count": 4,
+  "retrieved_examples": [],
+  "diffusion_plan": [],
+  "static_analysis_nodes": []
+}

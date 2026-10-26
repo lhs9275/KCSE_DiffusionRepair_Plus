@@ -1,0 +1,1550 @@
+[
+  {
+    "task_index": 0,
+    "bug_id": "2",
+    "arm": "full",
+    "seed": 42
+  },
+  {
+    "task_index": 1,
+    "bug_id": "2",
+    "arm": "full",
+    "seed": 43
+  },
+  {
+    "task_index": 2,
+    "bug_id": "2",
+    "arm": "full",
+    "seed": 44
+  },
+  {
+    "task_index": 3,
+    "bug_id": "2",
+    "arm": "base",
+    "seed": 42
+  },
+  {
+    "task_index": 4,
+    "bug_id": "2",
+    "arm": "base",
+    "seed": 43
+  },
+  {
+    "task_index": 5,
+    "bug_id": "2",
+    "arm": "base",
+    "seed": 44
+  },
+  {
+    "task_index": 6,
+    "bug_id": "3",
+    "arm": "full",
+    "seed": 42
+  },
+  {
+    "task_index": 7,
+    "bug_id": "3",
+    "arm": "full",
+    "seed": 43
+  },
+  {
+    "task_index": 8,
+    "bug_id": "3",
+    "arm": "full",
+    "seed": 44
+  },
+  {
+    "task_index": 9,
+    "bug_id": "3",
+    "arm": "base",
+    "seed": 42
+  },
+  {
+    "task_index": 10,
+    "bug_id": "3",
+    "arm": "base",
+    "seed": 43
+  },
+  {
+    "task_index": 11,
+    "bug_id": "3",
+    "arm": "base",
+    "seed": 44
+  },
+  {
+    "task_index": 12,
+    "bug_id": "4",
+    "arm": "full",
+    "seed": 42
+  },
+  {
+    "task_index": 13,
+    "bug_id": "4",
+    "arm": "full",
+    "seed": 43
+  },
+  {
+    "task_index": 14,
+    "bug_id": "4",
+    "arm": "full",
+    "seed": 44
+  },
+  {
+    "task_index": 15,
+    "bug_id": "4",
+    "arm": "base",
+    "seed": 42
+  },
+  {
+    "task_index": 16,
+    "bug_id": "4",
+    "arm": "base",
+    "seed": 43
+  },
+  {
+    "task_index": 17,
+    "bug_id": "4",
+    "arm": "base",
+    "seed": 44
+  },
+  {
+    "task_index": 18,
+    "bug_id": "5",
+    "arm": "full",
+    "seed": 42
+  },
+  {
+    "task_index": 19,
+    "bug_id": "5",
+    "arm": "full",
+    "seed": 43
+  },
+  {
+    "task_index": 20,
+    "bug_id": "5",
+    "arm": "full",
+    "seed": 44
+  },
+  {
+    "task_index": 21,
+    "bug_id": "5",
+    "arm": "base",
+    "seed": 42
+  },
+  {
+    "task_index": 22,
+    "bug_id": "5",
+    "arm": "base",
+    "seed": 43
+  },
+  {
+    "task_index": 23,
+    "bug_id": "5",
+    "arm": "base",
+    "seed": 44
+  },
+  {
+    "task_index": 24,
+    "bug_id": "6",
+    "arm": "full",
+    "seed": 42
+  },
+  {
+    "task_index": 25,
+    "bug_id": "6",
+    "arm": "full",
+    "seed": 43
+  },
+  {
+    "task_index": 26,
+    "bug_id": "6",
+    "arm": "full",
+    "seed": 44
+  },
+  {
+    "task_index": 27,
+    "bug_id": "6",
+    "arm": "base",
+    "seed": 42
+  },
+  {
+    "task_index": 28,
+    "bug_id": "6",
+    "arm": "base",
+    "seed": 43
+  },
+  {
+    "task_index": 29,
+    "bug_id": "6",
+    "arm": "base",
+    "seed": 44
+  },
+  {
+    "task_index": 30,
+    "bug_id": "7",
+    "arm": "full",
+    "seed": 42
+  },
+  {
+    "task_index": 31,
+    "bug_id": "7",
+    "arm": "full",
+    "seed": 43
+  },
+  {
+    "task_index": 32,
+    "bug_id": "7",
+    "arm": "full",
+    "seed": 44
+  },
+  {
+    "task_index": 33,
+    "bug_id": "7",
+    "arm": "base",
+    "seed": 42
+  },
+  {
+    "task_index": 34,
+    "bug_id": "7",
+    "arm": "base",
+    "seed": 43
+  },
+  {
+    "task_index": 35,
+    "bug_id": "7",
+    "arm": "base",
+    "seed": 44
+  },
+  {
+    "task_index": 36,
+    "bug_id": "8",
+    "arm": "full",
+    "seed": 42
+  },
+  {
+    "task_index": 37,
+    "bug_id": "8",
+    "arm": "full",
+    "seed": 43
+  },
+  {
+    "task_index": 38,
+    "bug_id": "8",
+    "arm": "full",
+    "seed": 44
+  },
+  {
+    "task_index": 39,
+    "bug_id": "8",
+    "arm": "base",
+    "seed": 42
+  },
+  {
+    "task_index": 40,
+    "bug_id": "8",
+    "arm": "base",
+    "seed": 43
+  },
+  {
+    "task_index": 41,
+    "bug_id": "8",
+    "arm": "base",
+    "seed": 44
+  },
+  {
+    "task_index": 42,
+    "bug_id": "9",
+    "arm": "full",
+    "seed": 42
+  },
+  {
+    "task_index": 43,
+    "bug_id": "9",
+    "arm": "full",
+    "seed": 43
+  },
+  {
+    "task_index": 44,
+    "bug_id": "9",
+    "arm": "full",
+    "seed": 44
+  },
+  {
+    "task_index": 45,
+    "bug_id": "9",
+    "arm": "base",
+    "seed": 42
+  },
+  {
+    "task_index": 46,
+    "bug_id": "9",
+    "arm": "base",
+    "seed": 43
+  },
+  {
+    "task_index": 47,
+    "bug_id": "9",
+    "arm": "base",
+    "seed": 44
+  },
+  {
+    "task_index": 48,
+    "bug_id": "10",
+    "arm": "full",
+    "seed": 42
+  },
+  {
+    "task_index": 49,
+    "bug_id": "10",
+    "arm": "full",
+    "seed": 43
+  },
+  {
+    "task_index": 50,
+    "bug_id": "10",
+    "arm": "full",
+    "seed": 44
+  },
+  {
+    "task_index": 51,
+    "bug_id": "10",
+    "arm": "base",
+    "seed": 42
+  },
+  {
+    "task_index": 52,
+    "bug_id": "10",
+    "arm": "base",
+    "seed": 43
+  },
+  {
+    "task_index": 53,
+    "bug_id": "10",
+    "arm": "base",
+    "seed": 44
+  },
+  {
+    "task_index": 54,
+    "bug_id": "11",
+    "arm": "full",
+    "seed": 42
+  },
+  {
+    "task_index": 55,
+    "bug_id": "11",
+    "arm": "full",
+    "seed": 43
+  },
+  {
+    "task_index": 56,
+    "bug_id": "11",
+    "arm": "full",
+    "seed": 44
+  },
+  {
+    "task_index": 57,
+    "bug_id": "11",
+    "arm": "base",
+    "seed": 42
+  },
+  {
+    "task_index": 58,
+    "bug_id": "11",
+    "arm": "base",
+    "seed": 43
+  },
+  {
+    "task_index": 59,
+    "bug_id": "11",
+    "arm": "base",
+    "seed": 44
+  },
+  {
+    "task_index": 60,
+    "bug_id": "16",
+    "arm": "full",
+    "seed": 42
+  },
+  {
+    "task_index": 61,
+    "bug_id": "16",
+    "arm": "full",
+    "seed": 43
+  },
+  {
+    "task_index": 62,
+    "bug_id": "16",
+    "arm": "full",
+    "seed": 44
+  },
+  {
+    "task_index": 63,
+    "bug_id": "16",
+    "arm": "base",
+    "seed": 42
+  },
+  {
+    "task_index": 64,
+    "bug_id": "16",
+    "arm": "base",
+    "seed": 43
+  },
+  {
+    "task_index": 65,
+    "bug_id": "16",
+    "arm": "base",
+    "seed": 44
+  },
+  {
+    "task_index": 66,
+    "bug_id": "18",
+    "arm": "full",
+    "seed": 42
+  },
+  {
+    "task_index": 67,
+    "bug_id": "18",
+    "arm": "full",
+    "seed": 43
+  },
+  {
+    "task_index": 68,
+    "bug_id": "18",
+    "arm": "full",
+    "seed": 44
+  },
+  {
+    "task_index": 69,
+    "bug_id": "18",
+    "arm": "base",
+    "seed": 42
+  },
+  {
+    "task_index": 70,
+    "bug_id": "18",
+    "arm": "base",
+    "seed": 43
+  },
+  {
+    "task_index": 71,
+    "bug_id": "18",
+    "arm": "base",
+    "seed": 44
+  },
+  {
+    "task_index": 72,
+    "bug_id": "20",
+    "arm": "full",
+    "seed": 42
+  },
+  {
+    "task_index": 73,
+    "bug_id": "20",
+    "arm": "full",
+    "seed": 43
+  },
+  {
+    "task_index": 74,
+    "bug_id": "20",
+    "arm": "full",
+    "seed": 44
+  },
+  {
+    "task_index": 75,
+    "bug_id": "20",
+    "arm": "base",
+    "seed": 42
+  },
+  {
+    "task_index": 76,
+    "bug_id": "20",
+    "arm": "base",
+    "seed": 43
+  },
+  {
+    "task_index": 77,
+    "bug_id": "20",
+    "arm": "base",
+    "seed": 44
+  },
+  {
+    "task_index": 78,
+    "bug_id": "21",
+    "arm": "full",
+    "seed": 42
+  },
+  {
+    "task_index": 79,
+    "bug_id": "21",
+    "arm": "full",
+    "seed": 43
+  },
+  {
+    "task_index": 80,
+    "bug_id": "21",
+    "arm": "full",
+    "seed": 44
+  },
+  {
+    "task_index": 81,
+    "bug_id": "21",
+    "arm": "base",
+    "seed": 42
+  },
+  {
+    "task_index": 82,
+    "bug_id": "21",
+    "arm": "base",
+    "seed": 43
+  },
+  {
+    "task_index": 83,
+    "bug_id": "21",
+    "arm": "base",
+    "seed": 44
+  },
+  {
+    "task_index": 84,
+    "bug_id": "22",
+    "arm": "full",
+    "seed": 42
+  },
+  {
+    "task_index": 85,
+    "bug_id": "22",
+    "arm": "full",
+    "seed": 43
+  },
+  {
+    "task_index": 86,
+    "bug_id": "22",
+    "arm": "full",
+    "seed": 44
+  },
+  {
+    "task_index": 87,
+    "bug_id": "22",
+    "arm": "base",
+    "seed": 42
+  },
+  {
+    "task_index": 88,
+    "bug_id": "22",
+    "arm": "base",
+    "seed": 43
+  },
+  {
+    "task_index": 89,
+    "bug_id": "22",
+    "arm": "base",
+    "seed": 44
+  },
+  {
+    "task_index": 90,
+    "bug_id": "23",
+    "arm": "full",
+    "seed": 42
+  },
+  {
+    "task_index": 91,
+    "bug_id": "23",
+    "arm": "full",
+    "seed": 43
+  },
+  {
+    "task_index": 92,
+    "bug_id": "23",
+    "arm": "full",
+    "seed": 44
+  },
+  {
+    "task_index": 93,
+    "bug_id": "23",
+    "arm": "base",
+    "seed": 42
+  },
+  {
+    "task_index": 94,
+    "bug_id": "23",
+    "arm": "base",
+    "seed": 43
+  },
+  {
+    "task_index": 95,
+    "bug_id": "23",
+    "arm": "base",
+    "seed": 44
+  },
+  {
+    "task_index": 96,
+    "bug_id": "24",
+    "arm": "full",
+    "seed": 42
+  },
+  {
+    "task_index": 97,
+    "bug_id": "24",
+    "arm": "full",
+    "seed": 43
+  },
+  {
+    "task_index": 98,
+    "bug_id": "24",
+    "arm": "full",
+    "seed": 44
+  },
+  {
+    "task_index": 99,
+    "bug_id": "24",
+    "arm": "base",
+    "seed": 42
+  },
+  {
+    "task_index": 100,
+    "bug_id": "24",
+    "arm": "base",
+    "seed": 43
+  },
+  {
+    "task_index": 101,
+    "bug_id": "24",
+    "arm": "base",
+    "seed": 44
+  },
+  {
+    "task_index": 102,
+    "bug_id": "26",
+    "arm": "full",
+    "seed": 42
+  },
+  {
+    "task_index": 103,
+    "bug_id": "26",
+    "arm": "full",
+    "seed": 43
+  },
+  {
+    "task_index": 104,
+    "bug_id": "26",
+    "arm": "full",
+    "seed": 44
+  },
+  {
+    "task_index": 105,
+    "bug_id": "26",
+    "arm": "base",
+    "seed": 42
+  },
+  {
+    "task_index": 106,
+    "bug_id": "26",
+    "arm": "base",
+    "seed": 43
+  },
+  {
+    "task_index": 107,
+    "bug_id": "26",
+    "arm": "base",
+    "seed": 44
+  },
+  {
+    "task_index": 108,
+    "bug_id": "27",
+    "arm": "full",
+    "seed": 42
+  },
+  {
+    "task_index": 109,
+    "bug_id": "27",
+    "arm": "full",
+    "seed": 43
+  },
+  {
+    "task_index": 110,
+    "bug_id": "27",
+    "arm": "full",
+    "seed": 44
+  },
+  {
+    "task_index": 111,
+    "bug_id": "27",
+    "arm": "base",
+    "seed": 42
+  },
+  {
+    "task_index": 112,
+    "bug_id": "27",
+    "arm": "base",
+    "seed": 43
+  },
+  {
+    "task_index": 113,
+    "bug_id": "27",
+    "arm": "base",
+    "seed": 44
+  },
+  {
+    "task_index": 114,
+    "bug_id": "28",
+    "arm": "full",
+    "seed": 42
+  },
+  {
+    "task_index": 115,
+    "bug_id": "28",
+    "arm": "full",
+    "seed": 43
+  },
+  {
+    "task_index": 116,
+    "bug_id": "28",
+    "arm": "full",
+    "seed": 44
+  },
+  {
+    "task_index": 117,
+    "bug_id": "28",
+    "arm": "base",
+    "seed": 42
+  },
+  {
+    "task_index": 118,
+    "bug_id": "28",
+    "arm": "base",
+    "seed": 43
+  },
+  {
+    "task_index": 119,
+    "bug_id": "28",
+    "arm": "base",
+    "seed": 44
+  },
+  {
+    "task_index": 120,
+    "bug_id": "29",
+    "arm": "full",
+    "seed": 42
+  },
+  {
+    "task_index": 121,
+    "bug_id": "29",
+    "arm": "full",
+    "seed": 43
+  },
+  {
+    "task_index": 122,
+    "bug_id": "29",
+    "arm": "full",
+    "seed": 44
+  },
+  {
+    "task_index": 123,
+    "bug_id": "29",
+    "arm": "base",
+    "seed": 42
+  },
+  {
+    "task_index": 124,
+    "bug_id": "29",
+    "arm": "base",
+    "seed": 43
+  },
+  {
+    "task_index": 125,
+    "bug_id": "29",
+    "arm": "base",
+    "seed": 44
+  },
+  {
+    "task_index": 126,
+    "bug_id": "30",
+    "arm": "full",
+    "seed": 42
+  },
+  {
+    "task_index": 127,
+    "bug_id": "30",
+    "arm": "full",
+    "seed": 43
+  },
+  {
+    "task_index": 128,
+    "bug_id": "30",
+    "arm": "full",
+    "seed": 44
+  },
+  {
+    "task_index": 129,
+    "bug_id": "30",
+    "arm": "base",
+    "seed": 42
+  },
+  {
+    "task_index": 130,
+    "bug_id": "30",
+    "arm": "base",
+    "seed": 43
+  },
+  {
+    "task_index": 131,
+    "bug_id": "30",
+    "arm": "base",
+    "seed": 44
+  },
+  {
+    "task_index": 132,
+    "bug_id": "31",
+    "arm": "full",
+    "seed": 42
+  },
+  {
+    "task_index": 133,
+    "bug_id": "31",
+    "arm": "full",
+    "seed": 43
+  },
+  {
+    "task_index": 134,
+    "bug_id": "31",
+    "arm": "full",
+    "seed": 44
+  },
+  {
+    "task_index": 135,
+    "bug_id": "31",
+    "arm": "base",
+    "seed": 42
+  },
+  {
+    "task_index": 136,
+    "bug_id": "31",
+    "arm": "base",
+    "seed": 43
+  },
+  {
+    "task_index": 137,
+    "bug_id": "31",
+    "arm": "base",
+    "seed": 44
+  },
+  {
+    "task_index": 138,
+    "bug_id": "32",
+    "arm": "full",
+    "seed": 42
+  },
+  {
+    "task_index": 139,
+    "bug_id": "32",
+    "arm": "full",
+    "seed": 43
+  },
+  {
+    "task_index": 140,
+    "bug_id": "32",
+    "arm": "full",
+    "seed": 44
+  },
+  {
+    "task_index": 141,
+    "bug_id": "32",
+    "arm": "base",
+    "seed": 42
+  },
+  {
+    "task_index": 142,
+    "bug_id": "32",
+    "arm": "base",
+    "seed": 43
+  },
+  {
+    "task_index": 143,
+    "bug_id": "32",
+    "arm": "base",
+    "seed": 44
+  },
+  {
+    "task_index": 144,
+    "bug_id": "33",
+    "arm": "full",
+    "seed": 42
+  },
+  {
+    "task_index": 145,
+    "bug_id": "33",
+    "arm": "full",
+    "seed": 43
+  },
+  {
+    "task_index": 146,
+    "bug_id": "33",
+    "arm": "full",
+    "seed": 44
+  },
+  {
+    "task_index": 147,
+    "bug_id": "33",
+    "arm": "base",
+    "seed": 42
+  },
+  {
+    "task_index": 148,
+    "bug_id": "33",
+    "arm": "base",
+    "seed": 43
+  },
+  {
+    "task_index": 149,
+    "bug_id": "33",
+    "arm": "base",
+    "seed": 44
+  },
+  {
+    "task_index": 150,
+    "bug_id": "35",
+    "arm": "full",
+    "seed": 42
+  },
+  {
+    "task_index": 151,
+    "bug_id": "35",
+    "arm": "full",
+    "seed": 43
+  },
+  {
+    "task_index": 152,
+    "bug_id": "35",
+    "arm": "full",
+    "seed": 44
+  },
+  {
+    "task_index": 153,
+    "bug_id": "35",
+    "arm": "base",
+    "seed": 42
+  },
+  {
+    "task_index": 154,
+    "bug_id": "35",
+    "arm": "base",
+    "seed": 43
+  },
+  {
+    "task_index": 155,
+    "bug_id": "35",
+    "arm": "base",
+    "seed": 44
+  },
+  {
+    "task_index": 156,
+    "bug_id": "36",
+    "arm": "full",
+    "seed": 42
+  },
+  {
+    "task_index": 157,
+    "bug_id": "36",
+    "arm": "full",
+    "seed": 43
+  },
+  {
+    "task_index": 158,
+    "bug_id": "36",
+    "arm": "full",
+    "seed": 44
+  },
+  {
+    "task_index": 159,
+    "bug_id": "36",
+    "arm": "base",
+    "seed": 42
+  },
+  {
+    "task_index": 160,
+    "bug_id": "36",
+    "arm": "base",
+    "seed": 43
+  },
+  {
+    "task_index": 161,
+    "bug_id": "36",
+    "arm": "base",
+    "seed": 44
+  },
+  {
+    "task_index": 162,
+    "bug_id": "37",
+    "arm": "full",
+    "seed": 42
+  },
+  {
+    "task_index": 163,
+    "bug_id": "37",
+    "arm": "full",
+    "seed": 43
+  },
+  {
+    "task_index": 164,
+    "bug_id": "37",
+    "arm": "full",
+    "seed": 44
+  },
+  {
+    "task_index": 165,
+    "bug_id": "37",
+    "arm": "base",
+    "seed": 42
+  },
+  {
+    "task_index": 166,
+    "bug_id": "37",
+    "arm": "base",
+    "seed": 43
+  },
+  {
+    "task_index": 167,
+    "bug_id": "37",
+    "arm": "base",
+    "seed": 44
+  },
+  {
+    "task_index": 168,
+    "bug_id": "38",
+    "arm": "full",
+    "seed": 42
+  },
+  {
+    "task_index": 169,
+    "bug_id": "38",
+    "arm": "full",
+    "seed": 43
+  },
+  {
+    "task_index": 170,
+    "bug_id": "38",
+    "arm": "full",
+    "seed": 44
+  },
+  {
+    "task_index": 171,
+    "bug_id": "38",
+    "arm": "base",
+    "seed": 42
+  },
+  {
+    "task_index": 172,
+    "bug_id": "38",
+    "arm": "base",
+    "seed": 43
+  },
+  {
+    "task_index": 173,
+    "bug_id": "38",
+    "arm": "base",
+    "seed": 44
+  },
+  {
+    "task_index": 174,
+    "bug_id": "41",
+    "arm": "full",
+    "seed": 42
+  },
+  {
+    "task_index": 175,
+    "bug_id": "41",
+    "arm": "full",
+    "seed": 43
+  },
+  {
+    "task_index": 176,
+    "bug_id": "41",
+    "arm": "full",
+    "seed": 44
+  },
+  {
+    "task_index": 177,
+    "bug_id": "41",
+    "arm": "base",
+    "seed": 42
+  },
+  {
+    "task_index": 178,
+    "bug_id": "41",
+    "arm": "base",
+    "seed": 43
+  },
+  {
+    "task_index": 179,
+    "bug_id": "41",
+    "arm": "base",
+    "seed": 44
+  },
+  {
+    "task_index": 180,
+    "bug_id": "42",
+    "arm": "full",
+    "seed": 42
+  },
+  {
+    "task_index": 181,
+    "bug_id": "42",
+    "arm": "full",
+    "seed": 43
+  },
+  {
+    "task_index": 182,
+    "bug_id": "42",
+    "arm": "full",
+    "seed": 44
+  },
+  {
+    "task_index": 183,
+    "bug_id": "42",
+    "arm": "base",
+    "seed": 42
+  },
+  {
+    "task_index": 184,
+    "bug_id": "42",
+    "arm": "base",
+    "seed": 43
+  },
+  {
+    "task_index": 185,
+    "bug_id": "42",
+    "arm": "base",
+    "seed": 44
+  },
+  {
+    "task_index": 186,
+    "bug_id": "43",
+    "arm": "full",
+    "seed": 42
+  },
+  {
+    "task_index": 187,
+    "bug_id": "43",
+    "arm": "full",
+    "seed": 43
+  },
+  {
+    "task_index": 188,
+    "bug_id": "43",
+    "arm": "full",
+    "seed": 44
+  },
+  {
+    "task_index": 189,
+    "bug_id": "43",
+    "arm": "base",
+    "seed": 42
+  },
+  {
+    "task_index": 190,
+    "bug_id": "43",
+    "arm": "base",
+    "seed": 43
+  },
+  {
+    "task_index": 191,
+    "bug_id": "43",
+    "arm": "base",
+    "seed": 44
+  },
+  {
+    "task_index": 192,
+    "bug_id": "44",
+    "arm": "full",
+    "seed": 42
+  },
+  {
+    "task_index": 193,
+    "bug_id": "44",
+    "arm": "full",
+    "seed": 43
+  },
+  {
+    "task_index": 194,
+    "bug_id": "44",
+    "arm": "full",
+    "seed": 44
+  },
+  {
+    "task_index": 195,
+    "bug_id": "44",
+    "arm": "base",
+    "seed": 42
+  },
+  {
+    "task_index": 196,
+    "bug_id": "44",
+    "arm": "base",
+    "seed": 43
+  },
+  {
+    "task_index": 197,
+    "bug_id": "44",
+    "arm": "base",
+    "seed": 44
+  },
+  {
+    "task_index": 198,
+    "bug_id": "45",
+    "arm": "full",
+    "seed": 42
+  },
+  {
+    "task_index": 199,
+    "bug_id": "45",
+    "arm": "full",
+    "seed": 43
+  },
+  {
+    "task_index": 200,
+    "bug_id": "45",
+    "arm": "full",
+    "seed": 44
+  },
+  {
+    "task_index": 201,
+    "bug_id": "45",
+    "arm": "base",
+    "seed": 42
+  },
+  {
+    "task_index": 202,
+    "bug_id": "45",
+    "arm": "base",
+    "seed": 43
+  },
+  {
+    "task_index": 203,
+    "bug_id": "45",
+    "arm": "base",
+    "seed": 44
+  },
+  {
+    "task_index": 204,
+    "bug_id": "47",
+    "arm": "full",
+    "seed": 42
+  },
+  {
+    "task_index": 205,
+    "bug_id": "47",
+    "arm": "full",
+    "seed": 43
+  },
+  {
+    "task_index": 206,
+    "bug_id": "47",
+    "arm": "full",
+    "seed": 44
+  },
+  {
+    "task_index": 207,
+    "bug_id": "47",
+    "arm": "base",
+    "seed": 42
+  },
+  {
+    "task_index": 208,
+    "bug_id": "47",
+    "arm": "base",
+    "seed": 43
+  },
+  {
+    "task_index": 209,
+    "bug_id": "47",
+    "arm": "base",
+    "seed": 44
+  },
+  {
+    "task_index": 210,
+    "bug_id": "48",
+    "arm": "full",
+    "seed": 42
+  },
+  {
+    "task_index": 211,
+    "bug_id": "48",
+    "arm": "full",
+    "seed": 43
+  },
+  {
+    "task_index": 212,
+    "bug_id": "48",
+    "arm": "full",
+    "seed": 44
+  },
+  {
+    "task_index": 213,
+    "bug_id": "48",
+    "arm": "base",
+    "seed": 42
+  },
+  {
+    "task_index": 214,
+    "bug_id": "48",
+    "arm": "base",
+    "seed": 43
+  },
+  {
+    "task_index": 215,
+    "bug_id": "48",
+    "arm": "base",
+    "seed": 44
+  },
+  {
+    "task_index": 216,
+    "bug_id": "49",
+    "arm": "full",
+    "seed": 42
+  },
+  {
+    "task_index": 217,
+    "bug_id": "49",
+    "arm": "full",
+    "seed": 43
+  },
+  {
+    "task_index": 218,
+    "bug_id": "49",
+    "arm": "full",
+    "seed": 44
+  },
+  {
+    "task_index": 219,
+    "bug_id": "49",
+    "arm": "base",
+    "seed": 42
+  },
+  {
+    "task_index": 220,
+    "bug_id": "49",
+    "arm": "base",
+    "seed": 43
+  },
+  {
+    "task_index": 221,
+    "bug_id": "49",
+    "arm": "base",
+    "seed": 44
+  },
+  {
+    "task_index": 222,
+    "bug_id": "50",
+    "arm": "full",
+    "seed": 42
+  },
+  {
+    "task_index": 223,
+    "bug_id": "50",
+    "arm": "full",
+    "seed": 43
+  },
+  {
+    "task_index": 224,
+    "bug_id": "50",
+    "arm": "full",
+    "seed": 44
+  },
+  {
+    "task_index": 225,
+    "bug_id": "50",
+    "arm": "base",
+    "seed": 42
+  },
+  {
+    "task_index": 226,
+    "bug_id": "50",
+    "arm": "base",
+    "seed": 43
+  },
+  {
+    "task_index": 227,
+    "bug_id": "50",
+    "arm": "base",
+    "seed": 44
+  },
+  {
+    "task_index": 228,
+    "bug_id": "51",
+    "arm": "full",
+    "seed": 42
+  },
+  {
+    "task_index": 229,
+    "bug_id": "51",
+    "arm": "full",
+    "seed": 43
+  },
+  {
+    "task_index": 230,
+    "bug_id": "51",
+    "arm": "full",
+    "seed": 44
+  },
+  {
+    "task_index": 231,
+    "bug_id": "51",
+    "arm": "base",
+    "seed": 42
+  },
+  {
+    "task_index": 232,
+    "bug_id": "51",
+    "arm": "base",
+    "seed": 43
+  },
+  {
+    "task_index": 233,
+    "bug_id": "51",
+    "arm": "base",
+    "seed": 44
+  },
+  {
+    "task_index": 234,
+    "bug_id": "52",
+    "arm": "full",
+    "seed": 42
+  },
+  {
+    "task_index": 235,
+    "bug_id": "52",
+    "arm": "full",
+    "seed": 43
+  },
+  {
+    "task_index": 236,
+    "bug_id": "52",
+    "arm": "full",
+    "seed": 44
+  },
+  {
+    "task_index": 237,
+    "bug_id": "52",
+    "arm": "base",
+    "seed": 42
+  },
+  {
+    "task_index": 238,
+    "bug_id": "52",
+    "arm": "base",
+    "seed": 43
+  },
+  {
+    "task_index": 239,
+    "bug_id": "52",
+    "arm": "base",
+    "seed": 44
+  },
+  {
+    "task_index": 240,
+    "bug_id": "53",
+    "arm": "full",
+    "seed": 42
+  },
+  {
+    "task_index": 241,
+    "bug_id": "53",
+    "arm": "full",
+    "seed": 43
+  },
+  {
+    "task_index": 242,
+    "bug_id": "53",
+    "arm": "full",
+    "seed": 44
+  },
+  {
+    "task_index": 243,
+    "bug_id": "53",
+    "arm": "base",
+    "seed": 42
+  },
+  {
+    "task_index": 244,
+    "bug_id": "53",
+    "arm": "base",
+    "seed": 43
+  },
+  {
+    "task_index": 245,
+    "bug_id": "53",
+    "arm": "base",
+    "seed": 44
+  },
+  {
+    "task_index": 246,
+    "bug_id": "60",
+    "arm": "full",
+    "seed": 42
+  },
+  {
+    "task_index": 247,
+    "bug_id": "60",
+    "arm": "full",
+    "seed": 43
+  },
+  {
+    "task_index": 248,
+    "bug_id": "60",
+    "arm": "full",
+    "seed": 44
+  },
+  {
+    "task_index": 249,
+    "bug_id": "60",
+    "arm": "base",
+    "seed": 42
+  },
+  {
+    "task_index": 250,
+    "bug_id": "60",
+    "arm": "base",
+    "seed": 43
+  },
+  {
+    "task_index": 251,
+    "bug_id": "60",
+    "arm": "base",
+    "seed": 44
+  },
+  {
+    "task_index": 252,
+    "bug_id": "68",
+    "arm": "full",
+    "seed": 42
+  },
+  {
+    "task_index": 253,
+    "bug_id": "68",
+    "arm": "full",
+    "seed": 43
+  },
+  {
+    "task_index": 254,
+    "bug_id": "68",
+    "arm": "full",
+    "seed": 44
+  },
+  {
+    "task_index": 255,
+    "bug_id": "68",
+    "arm": "base",
+    "seed": 42
+  },
+  {
+    "task_index": 256,
+    "bug_id": "68",
+    "arm": "base",
+    "seed": 43
+  },
+  {
+    "task_index": 257,
+    "bug_id": "68",
+    "arm": "base",
+    "seed": 44
+  }
+]

@@ -1,0 +1,102 @@
+{
+  "bug_id": "45",
+  "seed": 43,
+  "arm": "base",
+  "candidates": [
+    {
+      "index": 0,
+      "patch_text": "def _isna_old(obj):\n    \"\"\"\n    Detect missing values, treating None, NaN, INF, -INF as null.\n\n    Parameters\n    ----------\n    arr: ndarray or object value\n\n    Returns\n    -------\n    boolean ndarray or boolean\n    \"\"\"\n    if is_scalar(obj):\n        return libmissing.checknull_old(obj)\n    elif isinstance(obj, ABCMultiIndex):\n        raise NotImplementedError('isna is not defined for MultiIndex')\n    elif isinstance(obj, type):\n        return False\n    elif isinstance(obj, ABCIndexClass):\n        return _isna_ndarraylike_old(obj)\n    elif isinstance(obj, ABCGeneric):\n        return obj._constructor(obj._data.isna(func=_isna_old))\n    elif isinstance(obj, list):\n        return _isna_ndarraylike_old(np.asarray(obj, dtype=object))\n    elif hasattr(obj, '__array__'):\n        return _isna_ndarraylike_old(np.asarray(obj))\n    else:\n        return obj is None",
+      "patch_sha256": "9eacf9a660982d42ae576012ef2b524a1051c83b9a4367412137ab5608095b0c",
+      "rank_score": 164,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.934442110146087,
+      "top_p": 0.8256979458109642
+    },
+    {
+      "index": 1,
+      "patch_text": "def _isna_old(obj):\n    \"\"\"\n    Detect missing values, treating None, NaN, INF, -INF as null.\n\n    Parameters\n    ----------\n    arr: ndarray or object value\n\n    Returns\n    -------\n    boolean ndarray or boolean\n    \"\"\"\n    if is_scalar(obj):\n        return libmissing.checknull_old(obj)\n    elif isinstance(obj, ABCMultiIndex):\n        raise NotImplementedError('isna is not defined for MultiIndex')\n    elif isinstance(obj, type):\n        return False\n    elif isinstance(obj, np.ndarray):\n        return _isna_ndarraylike_old(obj)\n    elif isinstance(obj, ABCGeneric):\n        return obj._constructor(obj._data.isna(func=_isna_old))\n    elif isinstance(obj, list):\n        return _isna_ndarraylike_old(np.asarray(obj, dtype=object))\n    elif hasattr(obj, '__array__'):\n        return _isna_ndarraylike_old(np.asarray(obj))\n    else:\n        return obj is None",
+      "patch_sha256": "4284b1046b8759530d08a1edb0740aeab9c0c3046a3948037acca1604da82fdb",
+      "rank_score": 164,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7976020643090617,
+      "top_p": 0.8970025803863271
+    },
+    {
+      "index": 2,
+      "patch_text": "def _isna_old(obj):\n    \"\"\"\n    Detect missing values, treating None, NaN, INF, -INF as null.\n\n    Parameters\n    ----------\n    arr: ndarray or object value\n\n    Returns\n    -------\n    boolean ndarray or boolean\n    \"\"\"\n    if is_scalar(obj):\n        return libmissing.checknull_old(obj)\n    elif isinstance(obj, ABCMultiIndex):\n        raise NotImplementedError('isna is not defined for MultiIndex')\n    elif isinstance(obj, type):\n        return False\n    elif isinstance(obj, ABCSeries):\n        return _isna_ndarraylike_old(obj)\n    elif isinstance(obj, ABCIndexClass):\n        return _isna_ndarraylike_old(obj)\n    elif isinstance(obj, ABCGeneric):\n        return obj._constructor(obj._data.isna(func=_isna_old))\n    elif isinstance(obj, list):\n        return _isna_ndarraylike_old(np.asarray(obj, dtype=object))\n    elif hasattr(obj, '__array__'):\n        return _isna_ndarraylike_old(np.asarray(obj))\n    else:\n        return obj is None",
+      "patch_sha256": "c94c02c9415395915a6a0fb6be8aaf566aa6e960231ba5e0fb8a60ec25814116",
+      "rank_score": 162,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.49999693569381287,
+      "top_p": 0.9415325686419478
+    },
+    {
+      "index": 3,
+      "patch_text": "def _isna_old(obj):\n    \"\"\"\n    Detect missing values, treating None, NaN, INF, -INF as null.\n\n    Parameters\n    ----------\n    arr: ndarray or object value\n\n    Returns\n    -------\n    boolean ndarray or boolean\n    \"\"\"\n    if is_scalar(obj):\n        return libmissing.checknull_old(obj)\n    elif isinstance(obj, ABCMultiIndex):\n        raise NotImplementedError('isna is not defined for MultiIndex')\n    elif isinstance(obj, type):\n        return False\n    elif isinstance(obj, ABCIndexClass):\n        return _isna_ndarraylike_old(obj)\n    elif isinstance(obj, list):\n        return _isna_ndarraylike_old(np.asarray(obj, dtype=object))\n    elif hasattr(obj, '__array__'):\n        return _isna_ndarraylike_old(np.asarray(obj))\n    else:\n        return obj is None",
+      "patch_sha256": "1d9060ba433334043b6ada89c0e044388e8a5fdfe4e2d4a83030b7256f1183c2",
+      "rank_score": 161,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7970041106218376,
+      "top_p": 0.896255138277297
+    },
+    {
+      "index": 4,
+      "patch_text": "def _isna_old(obj):\n    \"\"\"\n    Detect missing values, treating None, NaN, INF, -INF as null.\n\n    Parameters\n    ----------\n    arr: ndarray or object value\n\n    Returns\n    -------\n    boolean ndarray or boolean\n    \"\"\"\n    if is_scalar(obj):\n        return libmissing.checknull_old(obj)\n    elif isinstance(obj, ABCMultiIndex):\n        raise NotImplementedError('isna is not defined for MultiIndex')\n    elif isinstance(obj, type):\n        return False\n    elif isinstance(obj, ABCSeries):\n        return _isna_ndarraylike_old(obj)\n    elif isinstance(obj, list):\n        return _isna_ndarraylike_old(np.asarray(obj, dtype=object))\n    elif hasattr(obj, '__array__'):\n        return _isna_ndarraylike_old(np.asarray(obj))\n    else:\n        return obj is None",
+      "patch_sha256": "e5195e18d7adcbeb9f3c71edd5a5bb3eda2a0c042bfe3f0d9452b4ce3f7e8bde",
+      "rank_score": 151,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8030069698746244,
+      "top_p": 0.9037587123432804
+    },
+    {
+      "index": 5,
+      "patch_text": "def _isna_old(obj):\n    \"\"\"\n    Detect missing values, treating None, NaN, INF, -INF as null.\n\n    Parameters\n    ----------\n    arr: ndarray or object value\n\n    Returns\n    -------\n    boolean ndarray or boolean\n    \"\"\"\n    if is_scalar(obj):\n        return libmissing.checknull_old(obj)\n    elif isinstance(obj, ABCMultiIndex):\n        raise NotImplementedError('isna is not defined for MultiIndex')\n    elif isinstance(obj, type):\n        return False\n    elif isinstance(obj, ABCIndexClass):  # <--- BUGGY LINE\n        return _isna_ndarraylike_old(obj)\n    elif isinstance(obj, (ABCSeries, np.ndarray, ABCIndexClass)):\n        return _isna_ndarraylike_old(obj)\n    elif isinstance(obj, ABCGeneric):\n        return obj._constructor(obj._data.isna(func=_isna_old))\n    elif isinstance(obj, list):\n        return _isna_ndarraylike_old(np.asarray(obj, dtype=object))\n    elif hasattr(obj, '__array__'):\n        return _isna_ndarraylike_old(np.asarray(obj))\n    else:\n        return obj is None",
+      "patch_sha256": "815fa9ff40b13376c24adb40ed1f63bbdbba0bd58928054433880a5be4ebeab4",
+      "rank_score": 22,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.934442110146087,
+      "top_p": 0.8256979458109642
+    },
+    {
+      "index": 6,
+      "patch_text": "def _isna_old(obj):\n    \"\"\"\n    Detect missing values, treating None, NaN, INF, -INF as null.\n\n    Parameters\n    ----------\n    arr: ndarray or object value\n\n    Returns\n    -------\n    boolean ndarray or boolean\n    \"\"\"\n    if is_scalar(obj):\n        return libmissing.checknull_old(obj)\n    elif isinstance(obj, ABCMultiIndex):\n        raise NotImplementedError('isna is not defined for MultiIndex')\n    elif isinstance(obj, type):\n        return False\n    elif isinstance(obj, (ABCSeries, np.ndarray, ABCIndexClass)):\n        return _isna_ndarraylike_old(obj)\n    elif isinstance(obj, ABCGeneric):\n        return obj._constructor(obj._data.isna(func=_isna_old))\n    elif isinstance(obj, list):\n        return _isna_ndarraylike_old(np.asarray(obj, dtype=object))\n    elif hasattr(obj, '__array__'):\n        return _isna_ndarraylike_old(np.asarray(obj))\n    else:\n        return obj is None\n\n\ne_name = 'bug_fix_01'\n    # file_name = 'bug_fix_02'\n    # file_name = 'bug_fix_03'\n    # file_name = 'bug_fix_04'\n    # file_name = 'bug_fix_05'\n    # file_name = 'bug_fix_06'\n    # file_name = 'bug_fix_07'\n    # file_name = 'bug_fix_08'\n    # file_name = 'bug_fix_09'\n    # file_name = 'bug_fix_10'\n    # file_name = 'bug_fix_11'\n    # file_name = 'bug_fix_12'\n    # file_name = 'bug_fix_13'\n    # file_name = 'bug_fix_14'\n    # file_name = 'bug_fix_15'\n    # file_name = 'bug_fix_16'\n    # file_name = 'bug_fix_17'\n    # file_name = 'bug_fix_18'\n    # file_name = 'bug_fix_19'\n    # file_name = 'bug_fix_20'\n    # file_name = 'bug_fix_21'\n    # file_name = 'bug_fix_22'\n    # file_name = 'bug_fix_23'\n    # file_name = 'bug_fix_24'\n    # file_name = 'bug_fix_25'\n    # file_name = 'bug_fix_26'\n    # file_name = 'bug_fix_27'\n    # file_name = 'bug_fix_28'\n    # file_name = 'bug_fix_29",
+      "patch_sha256": "51ccf6af37d2721b9bbd3a6f4c02941a567b5b6f849af304a91072c47bf8cc33",
+      "rank_score": 4,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.5051876220100471,
+      "top_p": 0.9515146577116289
+    }
+  ],
+  "candidate_count": 7,
+  "retrieved_examples": [],
+  "diffusion_plan": [],
+  "static_analysis_nodes": []
+}

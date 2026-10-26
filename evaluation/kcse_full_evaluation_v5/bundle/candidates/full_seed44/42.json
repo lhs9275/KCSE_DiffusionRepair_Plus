@@ -1,0 +1,1056 @@
+{
+  "bug_id": "42",
+  "seed": 44,
+  "arm": "full",
+  "candidates": [
+    {
+      "index": 0,
+      "patch_text": "def _unstack_multiple(data, clocs, fill_value=None):\n    if len(clocs) == 0:\n        return data\n    index = data.index\n    clocs = [index._get_level_number(i) for i in clocs]\n    rlocs = [i for i in range(index.nlevels) if i not in clocs]\n    clevels = [index.levels[i] for i in clocs]\n    ccodes = [index.codes[i] for i in clocs]\n    cnames = [index.names[i] for i in clocs]\n    rlevels = [index.levels[i] for i in rlocs]\n    rcodes = [index.codes[i] for i in rlocs]\n    rnames = [index.names[i] for i in rlocs]\n    shape = [len(x) for x in clevels]\n    group_index = get_group_index(ccodes, shape, sort=False, xnull=False)\n    comp_ids, obs_ids = compress_group_index(group_index, sort=False)\n    recons_codes = decons_obs_group_ids(comp_ids, obs_ids, shape, ccodes, xnull=False)\n    if rlocs == []:\n        dummy_index = Index(obs_ids, name='__placeholder__')\n    else:\n        dummy_index = MultiIndex(levels=rlevels + [obs_ids], codes=rcodes + [comp_ids], names=rnames + ['__placeholder__'], verify_integrity=False)\n    if isinstance(data, Series):\n        dummy = data.copy()\n        dummy.index = dummy_index\n        unstacked = dummy.unstack('__placeholder__', fill_value=fill_value)\n        new_levels = clevels\n        new_names = cnames\n        new_codes = recons_codes\n    else:\n        if isinstance(data.columns, MultiIndex):\n            result = data\n            for i in range(len(clocs)):\n                val = clocs[i]\n                result = result.unstack(val)  # <--- BUGGY LINE\n                clocs = [v if i > v else v - 1 for v in clocs]\n            return result\n        dummy = data.copy()\n        dummy.index = dummy_index\n        unstacked = dummy.unstack('__placeholder__', fill_value=fill_value)\n        if isinstance(unstacked, Series):\n            unstcols = unstacked.index\n        else:\n            unstcols = unstacked.columns\n        new_levels = [unstcols.levels[0]] + clevels\n        new_names = [data.columns.name] + cnames\n        new_codes = [unstcols.codes[0]]\n        for rec in recons_codes:\n            new_codes.append(rec.take(unstcols.codes[-1]))\n    new_columns",
+      "patch_sha256": "4d777897337701a34d2b0c39619de8ac8dad8d92d4bf67955dba6cb6410ba89a",
+      "rank_score": 202,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.5350607232455378,
+      "top_p": 0.98
+    },
+    {
+      "index": 1,
+      "patch_text": "def _unstack_multiple(data, clocs, fill_value=None):\n    if len(clocs) == 0:\n        return data\n    index = data.index\n    clocs = [index._get_level_number(i) for i in clocs]\n    rlocs = [i for i in range(index.nlevels) if i not in clocs]\n    clevels = [index.levels[i] for i in clocs]\n    ccodes = [index.codes[i] for i in clocs]\n    cnames = [index.names[i] for i in clocs]\n    rlevels = [index.levels[i] for i in rlocs]\n    rcodes = [index.codes[i] for i in rlocs]\n    rnames = [index.names[i] for i in rlocs]\n    shape = [len(x) for x in clevels]\n    group_index = get_group_index(ccodes, shape, sort=False, xnull=False)\n    comp_ids, obs_ids = compress_group_index(group_index, sort=False)\n    recons_codes = decons_obs_group_ids(comp_ids, obs_ids, shape, ccodes, xnull=False)\n    if rlocs == []:\n        dummy_index = Index(obs_ids, name='__placeholder__')\n    else:\n        dummy_index = MultiIndex(levels=rlevels + [obs_ids], codes=rcodes + [comp_ids], names=rnames + ['__placeholder__'], verify_integrity=False)\n    if isinstance(data, Series):\n        dummy = data.copy()\n        dummy.index = dummy_index\n        unstacked = dummy.unstack('__placeholder__', fill_value=fill_value)\n        new_levels = clevels\n        new_names = cnames\n        new_codes = recons_codes\n    else:\n        if isinstance(data.columns, MultiIndex):\n            result = data\n            for i in range(len(clocs)):\n                val = clocs[i]\n                result = result.unstack(val)  # <--- BUGGY LINE\n                clocs = [v if i > v else v - 1 for v in clocs]\n            return result\n        dummy = data.copy()\n        dummy.index = dummy_index\n        unstacked = dummy.unstack('__placeholder__', fill_value=fill_value)\n        if isinstance(unstacked, Series):\n            unstcols = unstacked.index\n        else:\n            unstcols = unstacked.columns\n        new_levels = [unstcols.levels[0]] + clevels\n        new_names = [data.columns.name] + cnames\n        new_codes = [unstcols.codes[0]]\n        for rec in recons_codes:\n            new_codes.append(rec.take(unstcols.codes[-1]))\n    new_",
+      "patch_sha256": "85165e884aa676421c470d6facb2317e371b9bdbebf38a944466f29ef30ad5c9",
+      "rank_score": 202,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7793066012285085,
+      "top_p": 0.8741332515356355
+    },
+    {
+      "index": 2,
+      "patch_text": "def _unstack_multiple(data, clocs, fill_value=None):\n    if len(clocs) == 0:\n        return data\n    index = data.index\n    clocs = [index._get_level_number(i) for i in clocs]\n    rlocs = [i for i in range(index.nlevels) if i not in clocs]\n    clevels = [index.levels[i] for i in clocs]\n    ccodes = [index.codes[i] for i in clocs]\n    cnames = [index.names[i] for i in clocs]\n    rlevels = [index.levels[i] for i in rlocs]\n    rcodes = [index.codes[i] for i in rlocs]\n    rnames = [index.names[i] for i in rlocs]\n    shape = [len(x) for x in clevels]\n    group_index = get_group_index(ccodes, shape, sort=False, xnull=False)\n    comp_ids, obs_ids = compress_group_index(group_index, sort=False)\n    recons_codes = decons_obs_group_ids(comp_ids, obs_ids, shape, ccodes, xnull=False)\n    if rlocs == []:\n        dummy_index = Index(obs_ids, name='__placeholder__')\n    else:\n        dummy_index = MultiIndex(levels=rlevels + [obs_ids], codes=rcodes + [comp_ids], names=rnames + ['__placeholder__'], verify_integrity=False)\n    if isinstance(data, Series):\n        dummy = data.copy()\n        dummy.index = dummy_index\n        unstacked = dummy.unstack('__placeholder__', fill_value=fill_value)\n        new_levels = clevels\n        new_names = cnames\n        new_codes = recons_codes\n    else:\n        if isinstance(data.columns, MultiIndex):\n            result = data\n            for i in range(len(clocs)):\n                val = clocs[i]\n                result = result.unstack(val)  # <--- BUGGY LINE\n                clocs = [v if i > v else v - 1 for v in clocs]\n            return result\n        dummy = data.copy()\n        dummy.index = dummy_index\n        unstacked = dummy.unstack('__placeholder__', fill_value=fill_value)\n        if isinstance(unstacked, Series):\n            unstcols = unstacked.index\n        else:\n            unstcols = unstacked.columns\n        new_levels = [unstcols.levels[0]] + clevels\n        new_names = [data.columns.name] + cnames\n        new_codes = [unstcols.codes[0]]\n        for rec in recons_codes:\n            new_codes.append(rec.take(unstcols.codes[-1]))",
+      "patch_sha256": "cc10bdec5a11389faa261f12e5992f8eda53de3f14331757fb61568b5cffd817",
+      "rank_score": 202,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8997717407145516,
+      "top_p": 0.7880127616462518
+    }
+  ],
+  "candidate_count": 3,
+  "retrieved_examples": [
+    {
+      "id": "39",
+      "project_name": "pandas",
+      "buggy_line_content": "            except (TypeError, ValueError):",
+      "function": {
+        "function_name": "_try_convert_data",
+        "function_parent": "Parser",
+        "function_before_start_line": 886,
+        "function_before_end_line": 958,
+        "function_after_start_line": 886,
+        "function_after_end_line": 958,
+        "function_before_token_count": 277,
+        "function_after_token_count": 279,
+        "function_before": "def _try_convert_data(self, name, data, use_dtypes=True, convert_dates=True):\n    \"\"\"\n        Try to parse a ndarray like into a column by inferring dtype.\n        \"\"\"\n    if use_dtypes:\n        if not self.dtype:\n            return (data, False)\n        elif self.dtype is True:\n            pass\n        else:\n            dtype = self.dtype.get(name) if isinstance(self.dtype, dict) else self.dtype\n            if dtype is not None:\n                try:\n                    dtype = np.dtype(dtype)\n                    return (data.astype(dtype), True)\n                except (TypeError, ValueError):\n                    return (data, False)\n    if convert_dates:\n        new_data, result = self._try_convert_to_date(data)\n        if result:\n            return (new_data, True)\n    result = False\n    if data.dtype == 'object':\n        try:\n            data = data.astype('float64')\n            result = True\n        except (TypeError, ValueError):\n            pass\n    if data.dtype.kind == 'f':\n        if data.dtype != 'float64':\n            try:\n                data = data.astype('float64')\n                result = True\n            except (TypeError, ValueError):\n                pass\n    if len(data) and (data.dtype == 'float' or data.dtype == 'object'):\n        try:\n            new_data = data.astype('int64')\n            if (new_data == data).all():\n                data = new_data\n                result = True\n        except (TypeError, ValueError):\n            pass\n    if data.dtype == 'int':\n        try:\n            data = data.astype('int64')\n            result = True\n        except (TypeError, ValueError):\n            pass\n    return (data, result)",
+        "function_after": "def _try_convert_data(self, name, data, use_dtypes=True, convert_dates=True):\n    \"\"\"\n        Try to parse a ndarray like into a column by inferring dtype.\n        \"\"\"\n    if use_dtypes:\n        if not self.dtype:\n            return (data, False)\n        elif self.dtype is True:\n            pass\n        else:\n            dtype = self.dtype.get(name) if isinstance(self.dtype, dict) else self.dtype\n            if dtype is not None:\n                try:\n                    dtype = np.dtype(dtype)\n                    return (data.astype(dtype), True)\n                except (TypeError, ValueError):\n                    return (data, False)\n    if convert_dates:\n        new_data, result = self._try_convert_to_date(data)\n        if result:\n            return (new_data, True)\n    result = False\n    if data.dtype == 'object':\n        try:\n            data = data.astype('float64')\n            result = True\n        except (TypeError, ValueError):\n            pass\n    if data.dtype.kind == 'f':\n        if data.dtype != 'float64':\n            try:\n                data = data.astype('float64')\n                result = True\n            except (TypeError, ValueError):\n                pass\n    if len(data) and (data.dtype == 'float' or data.dtype == 'object'):\n        try:\n            new_data = data.astype('int64')\n            if (new_data == data).all():\n                data = new_data\n                result = True\n        except (TypeError, ValueError, OverflowError):\n            pass\n    if data.dtype == 'int':\n        try:\n            data = data.astype('int64')\n            result = True\n        except (TypeError, ValueError):\n            pass\n    return (data, result)"
+      },
+      "file_name": "_json.py",
+      "file_path": "pandas/io/json/_json.py",
+      "score_reranked": 0.6314778910435971
+    },
+    {
+      "id": "40",
+      "project_name": "pandas",
+      "buggy_line_content": "            result = Series(result, index=labels)",
+      "function": {
+        "function_name": "_reduce",
+        "function_parent": "DataFrame",
+        "function_before_start_line": 7903,
+        "function_before_end_line": 8017,
+        "function_after_start_line": 7903,
+        "function_after_end_line": 8017,
+        "function_before_token_count": 489,
+        "function_after_token_count": 491,
+        "function_before": "def _reduce(self, op, name, axis=0, skipna=True, numeric_only=None, filter_type=None, **kwds):\n    if axis is None and filter_type == 'bool':\n        labels = None\n        constructor = None\n    else:\n        axis = self._get_axis_number(axis)\n        labels = self._get_agg_axis(axis)\n        constructor = self._constructor\n\n    def f(x):\n        return op(x, axis=axis, skipna=skipna, **kwds)\n\n    def _get_data(axis_matters):\n        if filter_type is None or filter_type == 'numeric':\n            data = self._get_numeric_data()\n        elif filter_type == 'bool':\n            if axis_matters:\n                data = self._get_bool_data() if axis == 0 else self\n            else:\n                data = self._get_bool_data()\n        else:\n            msg = f'Generating numeric_only data with filter_type {filter_type} not supported.'\n            raise NotImplementedError(msg)\n        return data\n    if numeric_only is not None and axis in [0, 1]:\n        df = self\n        if numeric_only is True:\n            df = _get_data(axis_matters=True)\n        if axis == 1:\n            df = df.T\n            axis = 0\n        out_dtype = 'bool' if filter_type == 'bool' else None\n        res = df._data.reduce(op, axis=1, skipna=skipna, **kwds)\n        assert isinstance(res, dict)\n        if len(res):\n            assert len(res) == max(list(res.keys())) + 1, res.keys()\n        out = df._constructor_sliced(res, index=range(len(res)), dtype=out_dtype)\n        out.index = df.columns\n        return out\n    if numeric_only is None:\n        values = self.values\n        try:\n            result = f(values)\n            if filter_type == 'bool' and is_object_dtype(values) and (axis is None):\n                result = np.bool_(result)\n        except TypeError:\n            if filter_type is None and axis == 0:\n                from pandas.core.apply import frame_apply\n                opa = frame_apply(self, func=f, result_type='expand', ignore_failures=True)\n                result = opa.get_result()\n                if result.ndim == self.ndim:\n                    result = result.iloc[0]\n                return result\n            data = _get_data(axis_matters=False)\n            with np.errstate(all='ignore'):\n                result = f(data.values)\n            labels = data._get_agg_axis(axis)\n    else:\n        if numeric_only:\n            data = _get_data(axis_matters=True)\n            values = data.values\n            labels = data._get_agg_axis(axis)\n        else:\n            values = self.values\n        result = f(values)\n    if hasattr(result, 'dtype') and is_object_dtype(result.dtype):\n        try:\n            if filter_type is None or filter_type == 'numeric':\n                result = result.astype(np.float64)\n            elif filter_type == 'bool' and notna(result).all():\n                result = result.astype(np.bool_)\n        except (ValueError, TypeError):\n            if axis == 0:\n                result = coerce_to_dtypes(result, self.dtypes)\n    if constructor is not None:\n        result = Series(result, index=labels)\n    return result",
+        "function_after": "def _reduce(self, op, name, axis=0, skipna=True, numeric_only=None, filter_type=None, **kwds):\n    if axis is None and filter_type == 'bool':\n        labels = None\n        constructor = None\n    else:\n        axis = self._get_axis_number(axis)\n        labels = self._get_agg_axis(axis)\n        constructor = self._constructor\n\n    def f(x):\n        return op(x, axis=axis, skipna=skipna, **kwds)\n\n    def _get_data(axis_matters):\n        if filter_type is None or filter_type == 'numeric':\n            data = self._get_numeric_data()\n        elif filter_type == 'bool':\n            if axis_matters:\n                data = self._get_bool_data() if axis == 0 else self\n            else:\n                data = self._get_bool_data()\n        else:\n            msg = f'Generating numeric_only data with filter_type {filter_type} not supported.'\n            raise NotImplementedError(msg)\n        return data\n    if numeric_only is not None and axis in [0, 1]:\n        df = self\n        if numeric_only is True:\n            df = _get_data(axis_matters=True)\n        if axis == 1:\n            df = df.T\n            axis = 0\n        out_dtype = 'bool' if filter_type == 'bool' else None\n        res = df._data.reduce(op, axis=1, skipna=skipna, **kwds)\n        assert isinstance(res, dict)\n        if len(res):\n            assert len(res) == max(list(res.keys())) + 1, res.keys()\n        out = df._constructor_sliced(res, index=range(len(res)), dtype=out_dtype)\n        out.index = df.columns\n        return out\n    if numeric_only is None:\n        values = self.values\n        try:\n            result = f(values)\n            if filter_type == 'bool' and is_object_dtype(values) and (axis is None):\n                result = np.bool_(result)\n        except TypeError:\n            if filter_type is None and axis == 0:\n                from pandas.core.apply import frame_apply\n                opa = frame_apply(self, func=f, result_type='expand', ignore_failures=True)\n                result = opa.get_result()\n                if result.ndim == self.ndim:\n                    result = result.iloc[0]\n                return result\n            data = _get_data(axis_matters=False)\n            with np.errstate(all='ignore'):\n                result = f(data.values)\n            labels = data._get_agg_axis(axis)\n    else:\n        if numeric_only:\n            data = _get_data(axis_matters=True)\n            values = data.values\n            labels = data._get_agg_axis(axis)\n        else:\n            values = self.values\n        result = f(values)\n    if hasattr(result, 'dtype') and is_object_dtype(result.dtype):\n        try:\n            if filter_type is None or filter_type == 'numeric':\n                result = result.astype(np.float64)\n            elif filter_type == 'bool' and notna(result).all():\n                result = result.astype(np.bool_)\n        except (ValueError, TypeError):\n            if axis == 0:\n                result = coerce_to_dtypes(result, self.dtypes)\n    if constructor is not None:\n        result = self._constructor_sliced(result, index=labels)\n    return result"
+      },
+      "file_name": "frame.py",
+      "file_path": "pandas/core/frame.py",
+      "score_reranked": 0.6040539614896429
+    },
+    {
+      "id": "32",
+      "project_name": "pandas",
+      "buggy_line_content": "            except (ValueError, OverflowError):",
+      "function": {
+        "function_name": "_try_convert_to_date",
+        "function_parent": "Parser",
+        "function_before_start_line": 953,
+        "function_before_end_line": 988,
+        "function_after_start_line": 953,
+        "function_after_end_line": 988,
+        "function_before_token_count": 154,
+        "function_after_token_count": 156,
+        "function_before": "def _try_convert_to_date(self, data):\n    \"\"\"\n        Try to parse a ndarray like into a date column.\n\n        Try to coerce object in epoch/iso formats and integer/float in epoch\n        formats. Return a boolean if parsing was successful.\n        \"\"\"\n    if not len(data):\n        return (data, False)\n    new_data = data\n    if new_data.dtype == 'object':\n        try:\n            new_data = data.astype('int64')\n        except (TypeError, ValueError, OverflowError):\n            pass\n    if issubclass(new_data.dtype.type, np.number):\n        in_range = isna(new_data._values) | (new_data > self.min_stamp) | (new_data._values == iNaT)\n        if not in_range.all():\n            return (data, False)\n    date_units = (self.date_unit,) if self.date_unit else self._STAMP_UNITS\n    for date_unit in date_units:\n        try:\n            new_data = to_datetime(new_data, errors='raise', unit=date_unit)\n        except (ValueError, OverflowError):\n            continue\n        return (new_data, True)\n    return (data, False)",
+        "function_after": "def _try_convert_to_date(self, data):\n    \"\"\"\n        Try to parse a ndarray like into a date column.\n\n        Try to coerce object in epoch/iso formats and integer/float in epoch\n        formats. Return a boolean if parsing was successful.\n        \"\"\"\n    if not len(data):\n        return (data, False)\n    new_data = data\n    if new_data.dtype == 'object':\n        try:\n            new_data = data.astype('int64')\n        except (TypeError, ValueError, OverflowError):\n            pass\n    if issubclass(new_data.dtype.type, np.number):\n        in_range = isna(new_data._values) | (new_data > self.min_stamp) | (new_data._values == iNaT)\n        if not in_range.all():\n            return (data, False)\n    date_units = (self.date_unit,) if self.date_unit else self._STAMP_UNITS\n    for date_unit in date_units:\n        try:\n            new_data = to_datetime(new_data, errors='raise', unit=date_unit)\n        except (ValueError, OverflowError, TypeError):\n            continue\n        return (new_data, True)\n    return (data, False)"
+      },
+      "file_name": "_json.py",
+      "file_path": "pandas/io/json/_json.py",
+      "score_reranked": 0.5279961835815318
+    },
+    {
+      "id": "33",
+      "project_name": "pandas",
+      "buggy_line_content": "                    except ValueError:",
+      "function": {
+        "function_name": "_cython_agg_blocks",
+        "function_parent": "DataFrameGroupBy",
+        "function_before_start_line": 999,
+        "function_before_end_line": 1129,
+        "function_after_start_line": 999,
+        "function_after_end_line": 1129,
+        "function_before_token_count": 648,
+        "function_after_token_count": 652,
+        "function_before": "def _cython_agg_blocks(self, how: str, alt=None, numeric_only: bool=True, min_count: int=-1) -> 'Tuple[List[Block], Index]':\n    data: BlockManager = self._get_data_to_aggregate()\n    if numeric_only:\n        data = data.get_numeric_data(copy=False)\n    agg_blocks: List[Block] = []\n    new_items: List[np.ndarray] = []\n    deleted_items: List[np.ndarray] = []\n    split_items: List[np.ndarray] = []\n    split_frames: List[DataFrame] = []\n    no_result = object()\n    for block in data.blocks:\n        result = no_result\n        locs = block.mgr_locs.as_array\n        try:\n            result, _ = self.grouper.aggregate(block.values, how, axis=1, min_count=min_count)\n        except NotImplementedError:\n            if alt is None:\n                assert how == 'ohlc'\n                deleted_items.append(locs)\n                continue\n            obj = self.obj[data.items[locs]]\n            if obj.shape[1] == 1:\n                obj = obj.iloc[:, 0]\n            s = get_groupby(obj, self.grouper)\n            try:\n                result = s.aggregate(lambda x: alt(x, axis=self.axis))\n            except TypeError:\n                deleted_items.append(locs)\n                continue\n            else:\n                result = cast(DataFrame, result)\n                if len(result._data.blocks) != 1:\n                    split_items.append(locs)\n                    split_frames.append(result)\n                    continue\n                assert len(result._data.blocks) == 1\n                result = result._data.blocks[0].values\n                if isinstance(result, np.ndarray) and result.ndim == 1:\n                    result = result.reshape(1, -1)\n        assert not isinstance(result, DataFrame)\n        if result is not no_result:\n            result = maybe_downcast_numeric(result, block.dtype)\n            if block.is_extension and isinstance(result, np.ndarray):\n                assert result.ndim == 1 or result.shape[0] == 1\n                try:\n                    result = type(block.values)._from_sequence(result.ravel(), dtype=block.values.dtype)\n                except ValueError:\n                    result = result.reshape(1, -1)\n            agg_block: Block = block.make_block(result)\n        new_items.append(locs)\n        agg_blocks.append(agg_block)\n    if not (agg_blocks or split_frames):\n        raise DataError('No numeric types to aggregate')\n    if split_items:\n        for locs, result in zip(split_items, split_frames):\n            assert len(locs) == result.shape[1]\n            for i, loc in enumerate(locs):\n                new_items.append(np.array([loc], dtype=locs.dtype))\n                agg_blocks.append(result.iloc[:, [i]]._data.blocks[0])\n    indexer = np.concatenate(new_items)\n    agg_items = data.items.take(np.sort(indexer))\n    if deleted_items:\n        deleted = np.concatenate(deleted_items)\n        ai = np.arange(len(data))\n        mask = np.zeros(len(data))\n        mask[deleted] = 1\n        indexer = (ai - mask.cumsum())[indexer]\n    offset = 0\n    for blk in agg_blocks:\n        loc = len(blk.mgr_locs)\n        blk.mgr_locs = indexer[offset:offset + loc]\n        offset += loc\n    return (agg_blocks, agg_items)",
+        "function_after": "def _cython_agg_blocks(self, how: str, alt=None, numeric_only: bool=True, min_count: int=-1) -> 'Tuple[List[Block], Index]':\n    data: BlockManager = self._get_data_to_aggregate()\n    if numeric_only:\n        data = data.get_numeric_data(copy=False)\n    agg_blocks: List[Block] = []\n    new_items: List[np.ndarray] = []\n    deleted_items: List[np.ndarray] = []\n    split_items: List[np.ndarray] = []\n    split_frames: List[DataFrame] = []\n    no_result = object()\n    for block in data.blocks:\n        result = no_result\n        locs = block.mgr_locs.as_array\n        try:\n            result, _ = self.grouper.aggregate(block.values, how, axis=1, min_count=min_count)\n        except NotImplementedError:\n            if alt is None:\n                assert how == 'ohlc'\n                deleted_items.append(locs)\n                continue\n            obj = self.obj[data.items[locs]]\n            if obj.shape[1] == 1:\n                obj = obj.iloc[:, 0]\n            s = get_groupby(obj, self.grouper)\n            try:\n                result = s.aggregate(lambda x: alt(x, axis=self.axis))\n            except TypeError:\n                deleted_items.append(locs)\n                continue\n            else:\n                result = cast(DataFrame, result)\n                if len(result._data.blocks) != 1:\n                    split_items.append(locs)\n                    split_frames.append(result)\n                    continue\n                assert len(result._data.blocks) == 1\n                result = result._data.blocks[0].values\n                if isinstance(result, np.ndarray) and result.ndim == 1:\n                    result = result.reshape(1, -1)\n        assert not isinstance(result, DataFrame)\n        if result is not no_result:\n            result = maybe_downcast_numeric(result, block.dtype)\n            if block.is_extension and isinstance(result, np.ndarray):\n                assert result.ndim == 1 or result.shape[0] == 1\n                try:\n                    result = type(block.values)._from_sequence(result.ravel(), dtype=block.values.dtype)\n                except (ValueError, TypeError):\n                    result = result.reshape(1, -1)\n            agg_block: Block = block.make_block(result)\n        new_items.append(locs)\n        agg_blocks.append(agg_block)\n    if not (agg_blocks or split_frames):\n        raise DataError('No numeric types to aggregate')\n    if split_items:\n        for locs, result in zip(split_items, split_frames):\n            assert len(locs) == result.shape[1]\n            for i, loc in enumerate(locs):\n                new_items.append(np.array([loc], dtype=locs.dtype))\n                agg_blocks.append(result.iloc[:, [i]]._data.blocks[0])\n    indexer = np.concatenate(new_items)\n    agg_items = data.items.take(np.sort(indexer))\n    if deleted_items:\n        deleted = np.concatenate(deleted_items)\n        ai = np.arange(len(data))\n        mask = np.zeros(len(data))\n        mask[deleted] = 1\n        indexer = (ai - mask.cumsum())[indexer]\n    offset = 0\n    for blk in agg_blocks:\n        loc = len(blk.mgr_locs)\n        blk.mgr_locs = indexer[offset:offset + loc]\n        offset += loc\n    return (agg_blocks, agg_items)"
+      },
+      "file_name": "generic.py",
+      "file_path": "pandas/core/groupby/generic.py",
+      "score_reranked": 0.49199125441462127
+    },
+    {
+      "id": "25",
+      "project_name": "scrapy",
+      "buggy_line_content": "            exc_info = failure.value, failure.type, failure.getTracebackObject()",
+      "function": {
+        "function_name": "_clean_req",
+        "function_parent": "ContractsManager",
+        "function_before_start_line": 71,
+        "function_before_end_line": 91,
+        "function_after_start_line": 71,
+        "function_after_end_line": 91,
+        "function_before_token_count": 36,
+        "function_after_token_count": 36,
+        "function_before": "def _clean_req(self, request, method, results):\n    \"\"\" stop the request from returning objects and records any errors \"\"\"\n    cb = request.callback\n\n    @wraps(cb)\n    def cb_wrapper(response):\n        try:\n            output = cb(response)\n            output = list(iterate_spider_output(output))\n        except:\n            case = _create_testcase(method, 'callback')\n            results.addError(case, sys.exc_info())\n\n    def eb_wrapper(failure):\n        case = _create_testcase(method, 'errback')\n        exc_info = failure.value, failure.type, failure.getTracebackObject()\n        results.addError(case, exc_info)\n    request.callback = cb_wrapper\n    request.errback = eb_wrapper",
+        "function_after": "def _clean_req(self, request, method, results):\n    \"\"\" stop the request from returning objects and records any errors \"\"\"\n    cb = request.callback\n\n    @wraps(cb)\n    def cb_wrapper(response):\n        try:\n            output = cb(response)\n            output = list(iterate_spider_output(output))\n        except:\n            case = _create_testcase(method, 'callback')\n            results.addError(case, sys.exc_info())\n\n    def eb_wrapper(failure):\n        case = _create_testcase(method, 'errback')\n        exc_info = (failure.type, failure.value, failure.getTracebackObject())\n        results.addError(case, exc_info)\n    request.callback = cb_wrapper\n    request.errback = eb_wrapper"
+      },
+      "file_name": "__init__.py",
+      "file_path": "scrapy/contracts/__init__.py",
+      "score_reranked": 0.3748661302697066
+    }
+  ],
+  "diffusion_plan": [
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Delete",
+          "node": 74
+        },
+        {
+          "op": "Replace",
+          "node": 77
+        },
+        {
+          "op": "Replace",
+          "node": 74
+        },
+        {
+          "op": "GuardAdd",
+          "node": 76
+        },
+        {
+          "op": "GuardAdd",
+          "node": 74
+        },
+        {
+          "op": "Replace",
+          "node": 19
+        },
+        {
+          "op": "GuardAdd",
+          "node": 20
+        },
+        {
+          "op": "Replace",
+          "node": 20
+        }
+      ],
+      "score": 17.39999999869091
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 77
+        },
+        {
+          "op": "InsertAfter",
+          "node": 76
+        },
+        {
+          "op": "Replace",
+          "node": 74
+        },
+        {
+          "op": "GuardAdd",
+          "node": 74
+        },
+        {
+          "op": "Replace",
+          "node": 19
+        },
+        {
+          "op": "Replace",
+          "node": 75
+        },
+        {
+          "op": "Replace",
+          "node": 439
+        },
+        {
+          "op": "Delete",
+          "node": 76
+        },
+        {
+          "op": "GuardAdd",
+          "node": 20
+        },
+        {
+          "op": "Replace",
+          "node": 20
+        }
+      ],
+      "score": 17.31818181669835
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 75
+        },
+        {
+          "op": "Replace",
+          "node": 74
+        },
+        {
+          "op": "Delete",
+          "node": 77
+        },
+        {
+          "op": "Replace",
+          "node": 322
+        },
+        {
+          "op": "Replace",
+          "node": 72
+        },
+        {
+          "op": "GuardAdd",
+          "node": 77
+        },
+        {
+          "op": "InsertAfter",
+          "node": 20
+        },
+        {
+          "op": "Replace",
+          "node": 20
+        },
+        {
+          "op": "Replace",
+          "node": 19
+        },
+        {
+          "op": "Delete",
+          "node": 75
+        },
+        {
+          "op": "Replace",
+          "node": 76
+        }
+      ],
+      "score": 16.57272727131157
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "InsertAfter",
+          "node": 322
+        },
+        {
+          "op": "Replace",
+          "node": 19
+        },
+        {
+          "op": "Replace",
+          "node": 74
+        },
+        {
+          "op": "Replace",
+          "node": 439
+        },
+        {
+          "op": "Replace",
+          "node": 322
+        },
+        {
+          "op": "Replace",
+          "node": 77
+        },
+        {
+          "op": "Replace",
+          "node": 75
+        },
+        {
+          "op": "Replace",
+          "node": 76
+        },
+        {
+          "op": "Replace",
+          "node": 20
+        },
+        {
+          "op": "GuardAdd",
+          "node": 77
+        },
+        {
+          "op": "GuardAdd",
+          "node": 19
+        }
+      ],
+      "score": 16.454545453140497
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 20
+        },
+        {
+          "op": "Replace",
+          "node": 21
+        },
+        {
+          "op": "Replace",
+          "node": 74
+        },
+        {
+          "op": "GuardAdd",
+          "node": 74
+        },
+        {
+          "op": "Replace",
+          "node": 75
+        },
+        {
+          "op": "GuardAdd",
+          "node": 21
+        },
+        {
+          "op": "GuardAdd",
+          "node": 20
+        },
+        {
+          "op": "Replace",
+          "node": 76
+        }
+      ],
+      "score": 16.09090908971901
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "GuardAdd",
+          "node": 20
+        },
+        {
+          "op": "Replace",
+          "node": 21
+        },
+        {
+          "op": "Replace",
+          "node": 439
+        },
+        {
+          "op": "Replace",
+          "node": 19
+        },
+        {
+          "op": "Replace",
+          "node": 20
+        },
+        {
+          "op": "Delete",
+          "node": 20
+        },
+        {
+          "op": "Replace",
+          "node": 75
+        },
+        {
+          "op": "Replace",
+          "node": 74
+        },
+        {
+          "op": "Replace",
+          "node": 322
+        },
+        {
+          "op": "Replace",
+          "node": 76
+        }
+      ],
+      "score": 16.01818181681653
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "GuardAdd",
+          "node": 20
+        },
+        {
+          "op": "Replace",
+          "node": 75
+        },
+        {
+          "op": "Replace",
+          "node": 77
+        },
+        {
+          "op": "InsertBefore",
+          "node": 75
+        },
+        {
+          "op": "Replace",
+          "node": 439
+        },
+        {
+          "op": "Replace",
+          "node": 74
+        },
+        {
+          "op": "Replace",
+          "node": 76
+        },
+        {
+          "op": "GuardAdd",
+          "node": 76
+        }
+      ],
+      "score": 15.81818181701653
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 76
+        },
+        {
+          "op": "GuardAdd",
+          "node": 77
+        },
+        {
+          "op": "GuardAdd",
+          "node": 76
+        },
+        {
+          "op": "Replace",
+          "node": 75
+        },
+        {
+          "op": "Replace",
+          "node": 74
+        },
+        {
+          "op": "GuardAdd",
+          "node": 20
+        },
+        {
+          "op": "Replace",
+          "node": 439
+        },
+        {
+          "op": "Delete",
+          "node": 20
+        },
+        {
+          "op": "Replace",
+          "node": 77
+        },
+        {
+          "op": "Replace",
+          "node": 322
+        }
+      ],
+      "score": 15.799999998654549
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 74
+        },
+        {
+          "op": "Delete",
+          "node": 75
+        },
+        {
+          "op": "Replace",
+          "node": 19
+        },
+        {
+          "op": "Replace",
+          "node": 75
+        },
+        {
+          "op": "Delete",
+          "node": 74
+        },
+        {
+          "op": "Replace",
+          "node": 76
+        },
+        {
+          "op": "Replace",
+          "node": 20
+        }
+      ],
+      "score": 15.399999998872728
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 75
+        },
+        {
+          "op": "GuardAdd",
+          "node": 19
+        },
+        {
+          "op": "Replace",
+          "node": 19
+        },
+        {
+          "op": "Replace",
+          "node": 76
+        },
+        {
+          "op": "Replace",
+          "node": 74
+        },
+        {
+          "op": "GuardAdd",
+          "node": 75
+        },
+        {
+          "op": "GuardAdd",
+          "node": 77
+        },
+        {
+          "op": "Replace",
+          "node": 20
+        },
+        {
+          "op": "Replace",
+          "node": 21
+        }
+      ],
+      "score": 15.072727271447935
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "GuardAdd",
+          "node": 77
+        },
+        {
+          "op": "Replace",
+          "node": 20
+        },
+        {
+          "op": "Replace",
+          "node": 74
+        },
+        {
+          "op": "InsertBefore",
+          "node": 75
+        },
+        {
+          "op": "InsertAfter",
+          "node": 76
+        },
+        {
+          "op": "Replace",
+          "node": 76
+        },
+        {
+          "op": "Replace",
+          "node": 19
+        }
+      ],
+      "score": 14.518181817134712
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 439
+        },
+        {
+          "op": "Replace",
+          "node": 20
+        },
+        {
+          "op": "Replace",
+          "node": 76
+        },
+        {
+          "op": "Replace",
+          "node": 75
+        },
+        {
+          "op": "Replace",
+          "node": 322
+        },
+        {
+          "op": "Replace",
+          "node": 74
+        },
+        {
+          "op": "GuardAdd",
+          "node": 75
+        }
+      ],
+      "score": 14.436363635323968
+    }
+  ],
+  "static_analysis_nodes": [
+    {
+      "line": 48,
+      "line_absolute": 359,
+      "node_id": 74,
+      "node_id_local": 64,
+      "type": "Call",
+      "code": "MultiIndex(levels=new_levels, codes=new_codes, names=new_names, verify_integrity=False)",
+      "distance_to_buggy": 0,
+      "context": "  45:           new_codes = [unstcols.codes[0]]\n  46:           for rec in recons_codes:\n  47:               new_codes.append(rec.take(unstcols.codes[-1]))\n  48:->     new_columns = MultiIndex(levels=new_levels, codes=new_codes, names=new_names, verify_integrity=False)\n  49:       if isinstance(unstacked, Series):\n  50:           unstacked.index = new_columns\n  51:       else:",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Name",
+          "id": "MultiIndex",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [],
+        "keywords": [
+          {
+            "_type": "keyword",
+            "arg": "levels",
+            "value": {
+              "_type": "Name"
+            }
+          },
+          {
+            "_type": "keyword",
+            "arg": "codes",
+            "value": {
+              "_type": "Name"
+            }
+          },
+          {
+            "_type": "keyword",
+            "arg": "names",
+            "value": {
+              "_type": "Name"
+            }
+          },
+          {
+            "_type": "keyword",
+            "arg": "verify_integrity",
+            "value": {
+              "_type": "Constant"
+            }
+          }
+        ]
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -24.0
+    },
+    {
+      "line": 49,
+      "line_absolute": 360,
+      "node_id": 20,
+      "node_id_local": 65,
+      "type": "If",
+      "code": "if isinstance(unstacked, Series):\n    unstacked.index = new_columns\nelse:\n    unstacked.columns = new_columns",
+      "distance_to_buggy": 0,
+      "context": "  46:           for rec in recons_codes:\n  47:               new_codes.append(rec.take(unstcols.codes[-1]))\n  48:       new_columns = MultiIndex(levels=new_levels, codes=new_codes, names=new_names, verify_integrity=False)\n  49:->     if isinstance(unstacked, Series):\n  50:           unstacked.index = new_columns\n  51:       else:\n  52:           unstacked.columns = new_columns",
+      "ast_subtree_json": {
+        "_type": "If",
+        "test": {
+          "_type": "Call",
+          "func": {
+            "_type": "Name"
+          },
+          "args": [
+            {
+              "_type": "Name"
+            },
+            {
+              "_type": "Name"
+            }
+          ],
+          "keywords": []
+        },
+        "body": [
+          {
+            "_type": "Assign",
+            "targets": [
+              {
+                "_type": "Attribute"
+              }
+            ],
+            "value": {
+              "_type": "Name"
+            },
+            "type_comment": null
+          }
+        ],
+        "orelse": [
+          {
+            "_type": "Assign",
+            "targets": [
+              {
+                "_type": "Attribute"
+              }
+            ],
+            "value": {
+              "_type": "Name"
+            },
+            "type_comment": null
+          }
+        ]
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -24.0
+    },
+    {
+      "line": 49,
+      "line_absolute": 360,
+      "node_id": 75,
+      "node_id_local": 66,
+      "type": "Call",
+      "code": "isinstance(unstacked, Series)",
+      "distance_to_buggy": 0,
+      "context": "  46:           for rec in recons_codes:\n  47:               new_codes.append(rec.take(unstcols.codes[-1]))\n  48:       new_columns = MultiIndex(levels=new_levels, codes=new_codes, names=new_names, verify_integrity=False)\n  49:->     if isinstance(unstacked, Series):\n  50:           unstacked.index = new_columns\n  51:       else:\n  52:           unstacked.columns = new_columns",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Name",
+          "id": "isinstance",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [
+          {
+            "_type": "Name",
+            "id": "unstacked",
+            "ctx": {
+              "_type": "Load"
+            }
+          },
+          {
+            "_type": "Name",
+            "id": "Series",
+            "ctx": {
+              "_type": "Load"
+            }
+          }
+        ],
+        "keywords": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -24.0
+    },
+    {
+      "line": 50,
+      "line_absolute": 361,
+      "node_id": 76,
+      "node_id_local": 67,
+      "type": "Assign",
+      "code": "unstacked.index = new_columns",
+      "distance_to_buggy": 0,
+      "context": "  47:               new_codes.append(rec.take(unstcols.codes[-1]))\n  48:       new_columns = MultiIndex(levels=new_levels, codes=new_codes, names=new_names, verify_integrity=False)\n  49:       if isinstance(unstacked, Series):\n  50:->         unstacked.index = new_columns\n  51:       else:\n  52:           unstacked.columns = new_columns\n  53:       return unstacked",
+      "ast_subtree_json": {
+        "_type": "Assign",
+        "targets": [
+          {
+            "_type": "Attribute",
+            "value": {
+              "_type": "Name"
+            },
+            "attr": "index",
+            "ctx": {
+              "_type": "Store"
+            }
+          }
+        ],
+        "value": {
+          "_type": "Name",
+          "id": "new_columns",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "type_comment": null
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|system|>...",
+      "reranker_score": -24.0
+    },
+    {
+      "line": 48,
+      "line_absolute": 359,
+      "node_id": 19,
+      "node_id_local": 63,
+      "type": "Assign",
+      "code": "new_columns = MultiIndex(levels=new_levels, codes=new_codes, names=new_names, verify_integrity=False)",
+      "distance_to_buggy": 0,
+      "context": "  45:           new_codes = [unstcols.codes[0]]\n  46:           for rec in recons_codes:\n  47:               new_codes.append(rec.take(unstcols.codes[-1]))\n  48:->     new_columns = MultiIndex(levels=new_levels, codes=new_codes, names=new_names, verify_integrity=False)\n  49:       if isinstance(unstacked, Series):\n  50:           unstacked.index = new_columns\n  51:       else:",
+      "ast_subtree_json": {
+        "_type": "Assign",
+        "targets": [
+          {
+            "_type": "Name",
+            "id": "new_columns",
+            "ctx": {
+              "_type": "Store"
+            }
+          }
+        ],
+        "value": {
+          "_type": "Call",
+          "func": {
+            "_type": "Name"
+          },
+          "args": [],
+          "keywords": [
+            {
+              "_type": "keyword"
+            },
+            {
+              "_type": "keyword"
+            },
+            {
+              "_type": "keyword"
+            },
+            {
+              "_type": "keyword"
+            }
+          ]
+        },
+        "type_comment": null
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -23.0
+    },
+    {
+      "line": 52,
+      "line_absolute": 363,
+      "node_id": 77,
+      "node_id_local": 68,
+      "type": "Assign",
+      "code": "unstacked.columns = new_columns",
+      "distance_to_buggy": 0,
+      "context": "  49:       if isinstance(unstacked, Series):\n  50:           unstacked.index = new_columns\n  51:       else:\n  52:->         unstacked.columns = new_columns\n  53:       return unstacked",
+      "ast_subtree_json": {
+        "_type": "Assign",
+        "targets": [
+          {
+            "_type": "Attribute",
+            "value": {
+              "_type": "Name"
+            },
+            "attr": "columns",
+            "ctx": {
+              "_type": "Store"
+            }
+          }
+        ],
+        "value": {
+          "_type": "Name",
+          "id": "new_columns",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "type_comment": null
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -23.0
+    },
+    {
+      "line": 47,
+      "line_absolute": 358,
+      "node_id": 322,
+      "node_id_local": 61,
+      "type": "Call",
+      "code": "new_codes.append(rec.take(unstcols.codes[-1]))",
+      "distance_to_buggy": 1,
+      "context": "  44:           new_names = [data.columns.name] + cnames\n  45:           new_codes = [unstcols.codes[0]]\n  46:           for rec in recons_codes:\n  47:->             new_codes.append(rec.take(unstcols.codes[-1]))\n  48:       new_columns = MultiIndex(levels=new_levels, codes=new_codes, names=new_names, verify_integrity=False)\n  49:       if isinstance(unstacked, Series):\n  50:           unstacked.index = new_columns",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Attribute",
+          "value": {
+            "_type": "Name"
+          },
+          "attr": "append",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [
+          {
+            "_type": "Call",
+            "func": {
+              "_type": "Attribute"
+            },
+            "args": [
+              {
+                "_type": "Subscript"
+              }
+            ],
+            "keywords": []
+          }
+        ],
+        "keywords": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -16.4
+    },
+    {
+      "line": 47,
+      "line_absolute": 358,
+      "node_id": 439,
+      "node_id_local": 62,
+      "type": "Call",
+      "code": "rec.take(unstcols.codes[-1])",
+      "distance_to_buggy": 1,
+      "context": "  44:           new_names = [data.columns.name] + cnames\n  45:           new_codes = [unstcols.codes[0]]\n  46:           for rec in recons_codes:\n  47:->             new_codes.append(rec.take(unstcols.codes[-1]))\n  48:       new_columns = MultiIndex(levels=new_levels, codes=new_codes, names=new_names, verify_integrity=False)\n  49:       if isinstance(unstacked, Series):\n  50:           unstacked.index = new_columns",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Attribute",
+          "value": {
+            "_type": "Name"
+          },
+          "attr": "take",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [
+          {
+            "_type": "Subscript",
+            "value": {
+              "_type": "Attribute"
+            },
+            "slice": {
+              "_type": "UnaryOp"
+            },
+            "ctx": {
+              "_type": "Load"
+            }
+          }
+        ],
+        "keywords": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -15.5
+    },
+    {
+      "line": 53,
+      "line_absolute": 364,
+      "node_id": 21,
+      "node_id_local": 69,
+      "type": "Return",
+      "code": "return unstacked",
+      "distance_to_buggy": 1,
+      "context": "  50:           unstacked.index = new_columns\n  51:       else:\n  52:           unstacked.columns = new_columns\n  53:->     return unstacked",
+      "ast_subtree_json": {
+        "_type": "Return",
+        "value": {
+          "_type": "Name",
+          "id": "unstacked",
+          "ctx": {
+            "_type": "Load"
+          }
+        }
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -12.0
+    },
+    {
+      "line": 46,
+      "line_absolute": 357,
+      "node_id": 72,
+      "node_id_local": 60,
+      "type": "For",
+      "code": "for rec in recons_codes:\n    new_codes.append(rec.take(unstcols.codes[-1]))",
+      "distance_to_buggy": 2,
+      "context": "  43:           new_levels = [unstcols.levels[0]] + clevels\n  44:           new_names = [data.columns.name] + cnames\n  45:           new_codes = [unstcols.codes[0]]\n  46:->         for rec in recons_codes:\n  47:               new_codes.append(rec.take(unstcols.codes[-1]))\n  48:       new_columns = MultiIndex(levels=new_levels, codes=new_codes, names=new_names, verify_integrity=False)\n  49:       if isinstance(unstacked, Series):",
+      "ast_subtree_json": {
+        "_type": "For",
+        "target": {
+          "_type": "Name",
+          "id": "rec",
+          "ctx": {
+            "_type": "Store"
+          }
+        },
+        "iter": {
+          "_type": "Name",
+          "id": "recons_codes",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "body": [
+          {
+            "_type": "Expr",
+            "value": {
+              "_type": "Call"
+            }
+          }
+        ],
+        "orelse": [],
+        "type_comment": null
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -4.4
+    }
+  ]
+}

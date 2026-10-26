@@ -1,0 +1,24 @@
+{
+  "bug_id": "68",
+  "seed": 44,
+  "arm": "base",
+  "candidates": [
+    {
+      "index": 0,
+      "patch_text": "def format_meter(n, total, elapsed, ncols=None, prefix='', ascii=False, unit='it', unit_scale=False, rate=None, bar_format=None):\n    if total and n > total:\n        total = None\n    format_interval = tqdm.format_interval\n    elapsed_str = format_interval(elapsed)\n    if rate is None and elapsed:\n        rate = n / elapsed\n    inv_rate = 1 / rate if rate and rate < 1 else None\n    format_sizeof = tqdm.format_sizeof\n    rate_fmt = ((format_sizeof(inv_rate if inv_rate else rate) if unit_scale else '{0:5.2f}'.format(inv_rate if inv_rate else rate)) if rate else '?') + ('s' if inv_rate else unit) + '/' + (unit if inv_rate else's')\n    if unit_scale:\n        n_fmt = format_sizeof(n)\n        total_fmt = format_sizeof(total) if total else None\n    else:\n        n_fmt = str(n)\n        total_fmt = str(total)\n    if total:\n        frac = n / total\n        percentage = frac * 100\n        remaining_str = format_interval((total - n) / rate) if rate else '?'\n        l_bar = (prefix if prefix else '') + '{0:3.0f}%|'.format(percentage)\n        r_bar = '| {0}/{1} [{2}<{3}, {4}]'.format(n_fmt, total_fmt, elapsed_str, remaining_str, rate_fmt)\n        if ncols == 0:\n            return l_bar[:-1] + r_bar[1:]\n        if bar_format:\n            bar_args = {'n': n, 'n_fmt': n_fmt, 'total': total, 'total_fmt': total_fmt, 'percentage': percentage, 'rate': rate if inv_rate is None else inv_rate, 'rate_noinv': rate, 'rate_noinv_fmt': ((format_sizeof(rate) if unit_scale else '{0:5.2f}'.format(rate)) if rate else '?') + 'it/s', 'rate_fmt': rate_fmt, 'elapsed': elapsed_str,'remaining': remaining_str, 'l_bar': l_bar, 'r_bar': r_bar, 'desc': prefix if prefix else ''}\n            if '{bar}' in bar_format:\n                l_bar, r_bar = l_bar.format(**bar_args), r_bar.format(**bar_args)\n            else:\n                return bar_format.format(**bar_args)\n        N_BARS = max(1, ncols - len(l_bar) - len(r_bar)) if ncols else 10\n        if ascii:\n            bar_length, frac_bar_length = divmod",
+      "patch_sha256": "8bd0c13a998c4a59468b0fb5a4e4662b4d3b68a03787275645366c7b5c996783",
+      "rank_score": 135,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8008776453441713,
+      "top_p": 0.9010970566802141
+    }
+  ],
+  "candidate_count": 1,
+  "retrieved_examples": [],
+  "diffusion_plan": [],
+  "static_analysis_nodes": []
+}

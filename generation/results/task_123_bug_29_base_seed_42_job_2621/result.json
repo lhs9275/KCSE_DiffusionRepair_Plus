@@ -1,0 +1,141 @@
+{
+  "bug_id": "29",
+  "seed": 42,
+  "arm": "base",
+  "candidates": [
+    {
+      "index": 0,
+      "patch_text": "def is_string_dtype(arr_or_dtype) -> bool:\n    \"\"\"\n    Check whether the provided array or dtype is of the string dtype.\n\n    Parameters\n    ----------\n    arr_or_dtype : array-like\n        The array or dtype to check.\n\n    Returns\n    -------\n    boolean\n        Whether or not the array or dtype is of the string dtype.\n\n    Examples\n    --------\n    >>> is_string_dtype(str)\n    True\n    >>> is_string_dtype(object)\n    True\n    >>> is_string_dtype(int)\n    False\n    >>>\n    >>> is_string_dtype(np.array(['a', 'b']))\n    True\n    >>> is_string_dtype(pd.Series([1, 2]))\n    False\n    \"\"\"\n\n    def condition(dtype) -> bool:\n        return dtype.kind in ('O', 'S', 'U') and (not is_excluded_dtype(dtype))\n\n    def is_excluded_dtype(dtype) -> bool:\n        \"\"\"\n        These have kind = \"O\" but aren't string dtypes so need to be explicitly excluded\n        \"\"\"\n        return any((is_excluded(dtype) for is_excluded in (is_period_dtype, is_interval_dtype)))  # <--- BUGGY LINE\n    return _is_dtype(arr_or_dtype, condition)",
+      "patch_sha256": "fa1572bf8f8543884f05110754a1f4345f97f747907e14e64a6aa494755a5bbd",
+      "rank_score": 241,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.5106412196441554,
+      "top_p": 0.9620023454695296
+    },
+    {
+      "index": 1,
+      "patch_text": "def is_string_dtype(arr_or_dtype) -> bool:\n    \"\"\"\n    Check whether the provided array or dtype is of the string dtype.\n\n    Parameters\n    ----------\n    arr_or_dtype : array-like\n        The array or dtype to check.\n\n    Returns\n    -------\n    boolean\n        Whether or not the array or dtype is of the string dtype.\n\n    Examples\n    --------\n    >>> is_string_dtype(str)\n    True\n    >>> is_string_dtype(object)\n    True\n    >>> is_string_dtype(int)\n    False\n    >>>\n    >>> is_string_dtype(np.array(['a', 'b']))\n    True\n    >>> is_string_dtype(pd.Series([1, 2]))\n    False\n    \"\"\"\n\n    def condition(dtype) -> bool:\n        return dtype.kind in ('O', 'S', 'U') and (not is_excluded_dtype(dtype))\n\n    def is_excluded_dtype(dtype) -> bool:\n        \"\"\"\n        These have kind = \"O\" but aren't string dtypes so need to be explicitly excluded\n        \"\"\"\n        return False\n\n    return _is_dtype(arr_or_dtype, condition)",
+      "patch_sha256": "e9e6c7e0d70dec00290280bdf39101a6c5ac4caeab080236ba536473a73c6718",
+      "rank_score": 239,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8850407915843882,
+      "top_p": 0.7720008604178135
+    },
+    {
+      "index": 2,
+      "patch_text": "def is_string_dtype(arr_or_dtype) -> bool:\n    \"\"\"\n    Check whether the provided array or dtype is of the string dtype.\n\n    Parameters\n    ----------\n    arr_or_dtype : array-like\n        The array or dtype to check.\n\n    Returns\n    -------\n    boolean\n        Whether or not the array or dtype is of the string dtype.\n\n    Examples\n    --------\n    >>> is_string_dtype(str)\n    True\n    >>> is_string_dtype(object)\n    True\n    >>> is_string_dtype(int)\n    False\n    >>>\n    >>> is_string_dtype(np.array(['a', 'b']))\n    True\n    >>> is_string_dtype(pd.Series([1, 2]))\n    False\n    \"\"\"\n\n    def condition(dtype) -> bool:\n        return dtype.kind in ('O', 'S', 'U') and (not is_excluded_dtype(dtype))\n\n    def is_excluded_dtype(dtype) -> bool:\n        \"\"\"\n        These have kind = \"O\" but aren't string dtypes so need to be explicitly excluded\n        \"\"\"\n        return is_excluded(dtype) or is_excluded(dtype)  # <--- BUGGY LINE\n    return _is_dtype(arr_or_dtype, condition)",
+      "patch_sha256": "ffac38e6f2bb31e9359c29c8bf6c453cff7e6779de5738d98b10a85144e5b17e",
+      "rank_score": 239,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7822854872415247,
+      "top_p": 0.8778568590519058
+    },
+    {
+      "index": 3,
+      "patch_text": "def is_string_dtype(arr_or_dtype) -> bool:\n    \"\"\"\n    Check whether the provided array or dtype is of the string dtype.\n\n    Parameters\n    ----------\n    arr_or_dtype : array-like\n        The array or dtype to check.\n\n    Returns\n    -------\n    boolean\n        Whether or not the array or dtype is of the string dtype.\n\n    Examples\n    --------\n    >>> is_string_dtype(str)\n    True\n    >>> is_string_dtype(object)\n    True\n    >>> is_string_dtype(int)\n    False\n    >>>\n    >>> is_string_dtype(np.array(['a', 'b']))\n    True\n    >>> is_string_dtype(pd.Series([1, 2]))\n    False\n    \"\"\"\n\n    def condition(dtype) -> bool:\n        return dtype.kind in ('O', 'S', 'U') and (not is_excluded_dtype(dtype))\n\n    def is_excluded_dtype(dtype) -> bool:\n        return dtype.kind == 'M'  # <--- FIXED HERE\n    return _is_dtype(arr_or_dtype, condition)",
+      "patch_sha256": "b4dab02459fcddcdb60e336a7596ea3716b5a840cece04f15b26fba2362b58a8",
+      "rank_score": 226,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.5106412196441554,
+      "top_p": 0.9620023454695296
+    },
+    {
+      "index": 4,
+      "patch_text": "def is_string_dtype(arr_or_dtype):\n    \"\"\"\n    Check whether the provided array or dtype is of the string dtype.\n\n    Parameters\n    ----------\n    arr_or_dtype : array-like\n        The array or dtype to check.\n\n    Returns\n    -------\n    boolean\n        Whether or not the array or dtype is of the string dtype.\n\n    Examples\n    --------\n    >>> is_string_dtype(str)\n    True\n    >>> is_string_dtype(object)\n    True\n    >>> is_string_dtype(int)\n    False\n    >>>\n    >>> is_string_dtype(np.array(['a', 'b']))\n    True\n    >>> is_string_dtype(pd.Series([1, 2]))\n    False\n    \"\"\"\n\n    def condition(dtype):\n        return dtype.kind in ('O', 'S', 'U') and (not is_excluded_dtype(dtype))\n\n    def is_excluded_dtype(dtype):\n        return False\n    return _is_dtype(arr_or_dtype, condition)",
+      "patch_sha256": "272abc151c2efef1c1c2a61d495b1ad066d39da490bbdc7b46eb6cdadbf33c3d",
+      "rank_score": 225,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8250994923331102,
+      "top_p": 0.9313743654163876
+    },
+    {
+      "index": 5,
+      "patch_text": "def is_string_dtype(arr_or_dtype) -> bool:\n    \"\"\"\n    Check whether the provided array or dtype is of the string dtype.\n\n    Parameters\n    ----------\n    arr_or_dtype : array-like\n        The array or dtype to check.\n\n    Returns\n    -------\n    boolean\n        Whether or not the array or dtype is of the string dtype.\n\n    Examples\n    --------\n    >>> is_string_dtype(str)\n    True\n    >>> is_string_dtype(object)\n    True\n    >>> is_string_dtype(int)\n    False\n    >>>\n    >>> is_string_dtype(np.array(['a', 'b']))\n    True\n    >>> is_string_dtype(pd.Series([1, 2]))\n    False\n    \"\"\"\n\n    def condition(dtype) -> bool:\n        return dtype.kind == 'S'\n\n    return _is_dtype(arr_or_dtype, condition)",
+      "patch_sha256": "d0540f2514dd604129a3d3a776ab84a8ab377da12695fef9a871d998d1d12af6",
+      "rank_score": 223,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8850407915843882,
+      "top_p": 0.7720008604178135
+    },
+    {
+      "index": 6,
+      "patch_text": "def is_string_dtype(arr_or_dtype) -> bool:\n    \"\"\"\n    Check whether the provided array or dtype is of the string dtype.\n\n    Parameters\n    ----------\n    arr_or_dtype : array-like\n        The array or dtype to check.\n\n    Returns\n    -------\n    boolean\n        Whether or not the array or dtype is of the string dtype.\n\n    Examples\n    --------\n    >>> is_string_dtype(str)\n    True\n    >>> is_string_dtype(object)\n    True\n    >>> is_string_dtype(int)\n    False\n    >>>\n    >>> is_string_dtype(np.array(['a', 'b']))\n    True\n    >>> is_string_dtype(pd.Series([1, 2]))\n    False\n    \"\"\"\n\n    def condition(dtype) -> bool:\n        return dtype.kind == 'O'\n\n    return _is_dtype(arr_or_dtype, condition)",
+      "patch_sha256": "9d0285dd87c34d28c1c3ee62f962782d978a9d6cdcf6138ccbcf9dd669d8e9b5",
+      "rank_score": 223,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.9374042813624712,
+      "top_p": 0.828917697133121
+    },
+    {
+      "index": 7,
+      "patch_text": "def is_string_dtype(arr_or_dtype) -> bool:\n    \"\"\"\n    Check whether the provided array or dtype is of the string dtype.\n\n    Parameters\n    ----------\n    arr_or_dtype : array-like\n        The array or dtype to check.\n\n    Returns\n    -------\n    boolean\n        Whether or not the array or dtype is of the string dtype.\n\n    Examples\n    --------\n    >>> is_string_dtype(str)\n    True\n    >>> is_string_dtype(object)\n    True\n    >>> is_string_dtype(int)\n    False\n    >>>\n    >>> is_string_dtype(np.array(['a', 'b']))\n    True\n    >>> is_string_dtype(pd.Series([1, 2]))\n    False\n    \"\"\"\n\n    def condition(dtype) -> bool:\n        return dtype.kind == 'O' or dtype.kind == 'S' or dtype.kind == 'U'\n\n    return _is_dtype(arr_or_dtype, condition)",
+      "patch_sha256": "28b052560d7b396decf858de3fd4d9ad836b36f15a1c564388a4da5b53e3a024",
+      "rank_score": 222,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8850407915843882,
+      "top_p": 0.7720008604178135
+    },
+    {
+      "index": 8,
+      "patch_text": "def is_string_dtype(arr_or_dtype) -> bool:\n    \"\"\"\n    Check whether the provided array or dtype is of the string dtype.\n\n    Parameters\n    ----------\n    arr_or_dtype : array-like\n        The array or dtype to check.\n\n    Returns\n    -------\n    boolean\n        Whether or not the array or dtype is of the string dtype.\n\n    Examples\n    --------\n    >>> is_string_dtype(str)\n    True\n    >>> is_string_dtype(object)\n    True\n    >>> is_string_dtype(int)\n    False\n    >>>\n    >>> is_string_dtype(np.array(['a', 'b']))\n    True\n    >>> is_string_dtype(pd.Series([1, 2]))\n    False\n    \"\"\"\n\n    def is_excluded_dtype(dtype) -> bool:\n        \"\"\"\n        These have kind = \"O\" but aren't string dtypes so need to be explicitly excluded\n        \"\"\"\n        return dtype.kind in ('O', 'S', 'U') and (not is_excluded_checks(dtype))\n    return _is_dtype(arr_or_dtype, condition)",
+      "patch_sha256": "52c3caeede5936bb1025729bff74883890b9c41c67fcf38d8e95ab000da0efa7",
+      "rank_score": 222,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.5273506986767932,
+      "top_p": 0.98
+    },
+    {
+      "index": 9,
+      "patch_text": "def is_string_dtype(arr_or_dtype) -> bool:\n    \"\"\"\n    Check whether the provided array or dtype is of the string dtype.\n\n    Parameters\n    ----------\n    arr_or_dtype : array-like\n        The array or dtype to check.\n\n    Returns\n    -------\n    boolean\n        Whether or not the array or dtype is of the string dtype.\n\n    Examples\n    --------\n    >>> is_string_dtype(str)\n    True\n    >>> is_string_dtype(object)\n    True\n    >>> is_string_dtype(int)\n    False\n    >>>\n    >>> is_string_dtype(np.array(['a', 'b']))\n    True\n    >>> is_string_dtype(pd.Series([1, 2]))\n    False\n    \"\"\"\n\n    def condition(dtype) -> bool:\n        return dtype.kind == 'S' and (not is_excluded_dtype(dtype))\n\n    def is_excluded_dtype(dtype) -> bool:\n        \"\"\"\n        These have kind = \"O\" but aren't string dtypes so need to be explicitly excluded\n        \"\"\"\n        is_excluded_checks = (is_period_dtype, is_interval_dtype)\n        return any((is_excluded(dtype) for is_excluded in is_excluded_checks))\n    return _is_dtype(arr_or_dtype, condition)",
+      "patch_sha256": "4f878c21dae243887694ea6bf50732abc0659e0c9ffe5628c614d1b277a49d85",
+      "rank_score": 209,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8250994923331102,
+      "top_p": 0.9313743654163876
+    }
+  ],
+  "candidate_count": 10,
+  "retrieved_examples": [],
+  "diffusion_plan": [],
+  "static_analysis_nodes": []
+}

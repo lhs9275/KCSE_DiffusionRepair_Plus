@@ -1,0 +1,141 @@
+{
+  "bug_id": "30",
+  "seed": 44,
+  "arm": "base",
+  "candidates": [
+    {
+      "index": 0,
+      "patch_text": "def putmask(self, mask, new, inplace: bool=False, axis: int=0, transpose: bool=False) -> List['Block']:\n    \"\"\"\n        See Block.putmask.__doc__\n        \"\"\"\n    inplace = validate_bool_kwarg(inplace, 'inplace')\n    mask = _extract_bool_array(mask)\n    new_values = self.values if inplace else self.values.copy()\n    if len(new) == len(mask):\n        new = new[mask]\n    mask = _safe_reshape(mask, new_values.shape)\n    new_values[mask] = new\n    return [self.make_block(values=new_values)]",
+      "patch_sha256": "4d25915c9db9911c99782ef17e7bb229171820a393490eece7d87d932e2e8ee4",
+      "rank_score": 243,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7793066012285085,
+      "top_p": 0.8741332515356355
+    },
+    {
+      "index": 1,
+      "patch_text": "def putmask(self, mask, new, inplace: bool=False, axis: int=0, transpose: bool=False) -> List['Block']:\n    \"\"\"\n        See Block.putmask.__doc__\n        \"\"\"\n    inplace = validate_bool_kwarg(inplace, 'inplace')\n    mask = _extract_bool_array(mask)\n    new_values = self.values if inplace else self.values.copy()\n    if isinstance(new, np.ndarray):\n        new = new[mask]\n    mask = _safe_reshape(mask, new_values.shape)\n    new_values[mask] = new\n    return [self.make_block(values=new_values)]",
+      "patch_sha256": "076124d0232a04410c2643d66c575b9afe11f620cf9a97cb60cd8d26e231a224",
+      "rank_score": 243,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7793066012285085,
+      "top_p": 0.8741332515356355
+    },
+    {
+      "index": 2,
+      "patch_text": "def putmask(self, mask, new, inplace: bool=False, axis: int=0, transpose: bool=False) -> List['Block']:\n    \"\"\"\n        See Block.putmask.__doc__\n        \"\"\"\n    inplace = validate_bool_kwarg(inplace, 'inplace')\n    mask = _extract_bool_array(mask)\n    new_values = self.values if inplace else self.values.copy()\n    new = new[mask]\n    mask = _safe_reshape(mask, new_values.shape)\n    new_values[mask] = new\n    return [self.make_block(values=new_values)]",
+      "patch_sha256": "cb07eb52b377cff89e5274c7413b1dbba8cad71f6216a77ce0ed75b0c8697a71",
+      "rank_score": 232,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7941462962722876,
+      "top_p": 0.8926828703403595
+    },
+    {
+      "index": 3,
+      "patch_text": "def putmask(self, mask, new, inplace: bool=False, axis: int=0, transpose: bool=False) -> List['Block']:\n    \"\"\"\n        See Block.putmask.__doc__\n        \"\"\"\n    inplace = validate_bool_kwarg(inplace, 'inplace')\n    mask = _extract_bool_array(mask)\n    new_values = self.values if inplace else self.values.copy()\n    if len(new)!= len(mask):  # <--- FIXED\n        raise ValueError('Length mismatch')\n    new = new[mask]\n    mask = _safe_reshape(mask, new_values.shape)\n    new_values[mask] = new\n    return [self.make_block(values=new_values)]",
+      "patch_sha256": "4d3e8854560054f643a5f7760dd6514a9e7870eb41afcfb73b1f57890f17092c",
+      "rank_score": 230,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8997717407145516,
+      "top_p": 0.7880127616462518
+    },
+    {
+      "index": 4,
+      "patch_text": "def putmask(self, mask, new, inplace: bool=False, axis: int=0, transpose: bool=False) -> List['Block']:\n    \"\"\"\n        See Block.putmask.__doc__\n        \"\"\"\n    inplace = validate_bool_kwarg(inplace, 'inplace')\n    mask = _extract_bool_array(mask)\n    new_values = self.values if inplace else self.values.copy()\n    new = _extract_bool_array(new)\n    mask = _safe_reshape(mask, new_values.shape)\n    new_values[mask] = new\n    return [self.make_block(values=new_values)]",
+      "patch_sha256": "019a8f8b2144317b7065e246f7d16c281752f18ca609bef52fdc3e2a3f827ed4",
+      "rank_score": 219,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.5280500268755478,
+      "top_p": 0.98
+    },
+    {
+      "index": 5,
+      "patch_text": "def putmask(self, mask, new, inplace: bool=False, axis: int=0, transpose: bool=False) -> List['Block']:\n    \"\"\"\n        See Block.putmask.__doc__\n        \"\"\"\n    inplace = validate_bool_kwarg(inplace, 'inplace')\n    mask = _extract_bool_array(mask)\n    new_values = self.values if inplace else self.values.copy()\n    new_values[mask] = new\n    return [self.make_block(values=new_values)]",
+      "patch_sha256": "6e56e76b0133eb00182f1519ab38471f704e62f66bdcc02eb5f5888e1e21261d",
+      "rank_score": 210,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.9230891398700982,
+      "top_p": 0.8133577607283677
+    },
+    {
+      "index": 6,
+      "patch_text": "def putmask(self, mask, new, inplace=False, axis=0, transpose=False):\n    \"\"\"\n    See Block.putmask.__doc__\n    \"\"\"\n    inplace = validate_bool_kwarg(inplace, 'inplace')\n    mask = _extract_bool_array(mask)\n    new_values = self.values if inplace else self.values.copy()\n    new = new[mask]\n    mask = _safe_reshape(mask, new_values.shape)\n    new_values[mask] = new\n    return [self.make_block(values=new_values)]",
+      "patch_sha256": "d981129d0472e471c2ef7acdb0a8a16a29a4e9b988a1c9d9128cb444dba97369",
+      "rank_score": 180,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.5350607232455378,
+      "top_p": 0.98
+    },
+    {
+      "index": 7,
+      "patch_text": "def putmask(self, mask, new, inplace: bool=False, axis: int=0, transpose: bool=False) -> List['Block']:\n    \"\"\"\n        See Block.putmask.__doc__\n        \"\"\"\n    inplace = validate_bool_kwarg(inplace, 'inplace')\n    mask = _extract_bool_array(mask)\n    new_values = self.values if inplace else self.values.copy()\n    if isinstance(new, np.ndarray) and len(new) == len(mask):\n        new = new[mask]\n    mask = _safe_reshape(mask, new_values.shape)\n    new_values[mask] = new\n    return [self.make_block(values=new_values)]\n\n##end\n\n##correct\ndef putmask(self, mask, new, inplace: bool=False, axis: int=0, transpose: bool=False) -> List['Block']:\n    \"\"\"\n        See Block.putmask.__doc__\n        \"\"\"\n    inplace = validate_bool_kwarg(inplace, 'inplace')\n    mask = _extract_bool_array(mask)\n    new_values = self.values if inplace else self.values.copy()\n    if isinstance(new, np.ndarray) and len(new) == len(mask):\n        new = new[mask]\n    mask = _safe_reshape(mask, new_values.shape)\n    new_values[mask] = new\n    return [self.make_block(values=new_values)]\n\n##end\n\n##correct\ndef putmask(self, mask, new, inplace: bool=False, axis: int=0, transpose: bool=False) -> List['Block']:\n    \"\"\"\n        See Block.putmask.__doc__\n        \"\"\"\n    inplace = validate_bool_kwarg(inplace, 'inplace')\n    mask = _extract_bool_array(mask)\n    new_values = self.values if inplace else self.values.copy()\n    if isinstance(new, np.ndarray) and len(new) == len(mask):\n        new = new[mask]\n    mask = _safe_reshape(mask, new_values.shape)\n    new_values[mask] = new\n    return [self.make_block(values=new_values)]\n\n##end\n\n##correct\ndef putmask(self, mask, new, inplace: bool=False, axis: int=0, transpose: bool=False) -> List['Block']:\n    \"\"\"\n        See Block.putmask.__doc__\n        \"\"\"\n    inplace = validate_bool_kwarg(inplace, 'inplace')\n    mask = _extract_bool_array(mask)\n    new_values = self.values if inplace else self.values.copy()\n    if isinstance(new, np.ndarray) and len(new) == len(mask):\n        new = new[mask]\n    mask = _safe_reshape(mask, new_values.shape)\n    new_values[mask] = new",
+      "patch_sha256": "8f3ba37c137a5c49cc5a60507cc58e49df42a3729354e0fc246824b2c2153839",
+      "rank_score": 28,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.0,
+      "top_p": 1.0
+    },
+    {
+      "index": 8,
+      "patch_text": "def putmask(self, mask, new, inplace: bool=False, axis: int=0, transpose: bool=False) -> List['Block']:\n    \"\"\"\n        See Block.putmask.__doc__\n        \"\"\"\n    inplace = validate_bool_kwarg(inplace, 'inplace')\n    mask = _extract_bool_array(mask)\n    new_values = self.values if inplace else self.values.copy()\n    new = new[mask]\n    mask = _safe_reshape(mask, new_values.shape)\n    new_values[mask] = new\n    return [self.make_block(values=new_values)]\n\n\n## /correct\n\n\n##original\n\ndef putmask(self, mask, new, inplace: bool=False, axis: int=0, transpose: bool=False) -> List['Block']:\n    \"\"\"\n        See Block.putmask.__doc__\n        \"\"\"\n    inplace = validate_bool_kwarg(inplace, 'inplace')\n    mask = _extract_bool_array(mask)\n    new_values = self.values if inplace else self.values.copy()\n    if isinstance(new, np.ndarray) and len(new) == len(mask):  # <--- BUGGY LINE\n        new = new[mask]\n    mask = _safe_reshape(mask, new_values.shape)\n    new_values[mask] = new\n    return [self.make_block(values=new_values)]\n## /original\nimport os\nimport sys\nfrom pathlib import Path\n\nsys.path.append(str(Path(__file__).parent))\nfrom utils import *\n\ndef test_buggy_line_in_file():\n    buggy_line_in_file(\"pandas/core/dtypes/common.py\", 3451)\n\ndef test_buggy_line_number():\n    buggy_line_number(\"pandas/core/dtypes/common.py\", 3451)\n\ndef test_buggy_line_content():\n    buggy_line_content(\"pandas/core/dtypes/common.py\", 3451)\n\ndef test_function_name():\n    function_name(\"pandas/core/dtypes/common.py\", 3451)\n\ndef test_buggy_file_path():\n    buggy_file_path(\"pandas/core/dtypes/common.py\", 3451)\n\ndef test_buggy_line_context():\n    buggy_line_context(\"pandas/core/dtypes/common.py\", 3451)\n\ndef test_buggy_line_context_full():\n    buggy_line_context_full(\"pandas/core/dtypes/common.py\", 3451)\n\ndef test_buggy_line_context_after_first_and_before_second_quote():\n    buggy_",
+      "patch_sha256": "7dc68e1086ad04368285016e5b8f49a3e7c80675d2babb0cdde50308144fa125",
+      "rank_score": -64,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8008776453441713,
+      "top_p": 0.9010970566802141
+    },
+    {
+      "index": 9,
+      "patch_text": "def putmask(self, mask, new, inplace: bool=False, axis: int=0, transpose: bool=False) -> List['Block']:\n    \"\"\"\n        See Block.putmask.__doc__\n        \"\"\"\n    inplace = validate_bool_kwarg(inplace, 'inplace')\n    mask = _extract_bool_array(mask)\n    new_values = self.values if inplace else self.values.copy()\n    if isinstance(new, np.ndarray) and len(new) == len(mask):\n        new = new[mask]\n    mask = _safe_reshape(mask, new_values.shape)\n    new_values[mask] = new\n    return [self.make_block(values=new_values)]\n\n\n##end-correct\n# Copyright (c) 2020, \n# All rights reserved.\n#\n# This source code is licensed under the BSD-style license found in the\n# LICENSE file in the root directory of this source tree.\n\nimport re\nfrom typing import Dict, Optional\n\nfrom.base import BasePatch\nfrom.utils import is_buggy_line\n\n\nclass PythonFunctionPatch(BasePatch):\n    def __init__(self, filename: str, function_name: str, buggy_line: int) -> None:\n        super().__init__(filename, buggy_line)\n        self._function_name = function_name\n\n    @property\n    def function_name(self) -> str:\n        return self._function_name\n\n    @classmethod\n    def from_string(cls, string: str) -> Optional[\"PythonFunctionPatch\"]:\n        \"\"\"\n        >>> PythonFunctionPatch.from_string('##correct\\ndef foo():\\n    return 5\\n##end-correct')\n        PythonFunctionPatch('foo', 1)\n        \"\"\"\n        matches = cls.pattern.findall(string)\n        if not matches:\n            return None\n        matches = matches[0]\n        return cls(matches[0], matches[1], int(matches[2]))\n\n    def to_string(self) -> str:\n        \"\"\"\n        >>> PythonFunctionPatch.from_string('##correct\\ndef foo():\\n    return 5\\n##end-correct').to_string()\n        '##correct\\\\ndef foo():\\\\n    return 5\\\\n##end-correct'\n        \"\"\"\n        return re.sub(r'\\\\', r'\\\\\\\\', super().to_string())\n\n    @staticmethod\n    def get_type() -> str:\n        return \"function\"\n\n    def is_buggy_line(self, line: str) -> bool:\n        return is_buggy_line(line, self.buggy_line)\n\n    @property\n    def lines(self) -> Dict[int, str]:\n        return self.get_lines(self.buggy_line)\n\n    @property\n    def buggy_line_content(self) -> str:\n        return self.get_line(self.buggy_line)",
+      "patch_sha256": "bff2ae206e16db677cd2350abecae48d79e07e13ff6d04005c2f1ee4507ded0f",
+      "rank_score": -170,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.5280500268755478,
+      "top_p": 0.98
+    }
+  ],
+  "candidate_count": 10,
+  "retrieved_examples": [],
+  "diffusion_plan": [],
+  "static_analysis_nodes": []
+}

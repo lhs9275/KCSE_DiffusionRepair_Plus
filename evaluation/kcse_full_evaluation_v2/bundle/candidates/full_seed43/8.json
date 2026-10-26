@@ -1,0 +1,913 @@
+{
+  "bug_id": "8",
+  "seed": 43,
+  "arm": "full",
+  "candidates": [
+    {
+      "index": 0,
+      "patch_text": "def __init__(self, worker_id, last_active=None):\n    self.id = worker_id\n    self.reference = None\n    self.last_active = last_active\n    self.started = time.time()\n    self.tasks = set()\n    self.info = {}\n\n# edit2: Replace node=5\ndef __init__(self, worker_id, last_active=None):\n    self.id = worker_id\n    self.reference = None\n    self.last_active = last_active\n    self.started = time.time()\n    self.tasks = set()\n    self.info = {}\n\n# edit3: GuardAdd node=4\ndef __init__(self, worker_id, last_active=None):\n    self.id = worker_id\n    self.reference = None\n    self.last_active = last_active\n    self.started = time.time()\n    self.tasks = set()\n    self.info = {}\n\n# edit4: InsertBefore node=5\ndef __init__(self, worker_id, last_active=None):\n    self.id = worker_id\n    self.reference = None\n    self.last_active = last_active\n    self.started = time.time()\n    self.tasks = set()\n    self.info = {}\n\n# edit5: GuardAdd node=3\ndef __init__(self, worker_id, last_active=None):\n    self.id = worker_id\n    self.reference = None\n    self.last_active = last_active\n    self.started = time.time()\n    self.tasks = set()\n    self.info = {}\n\n# edit6: GuardAdd node=5\ndef __init__(self, worker_id, last_active=None):\n    self.id = worker_id\n    self.reference = None\n    self.last_active = last_active\n    self.started = time.time()\n    self.tasks = set()\n    self.info = {}",
+      "patch_sha256": "419a7e82f4445cfcd66290d856f173e62a9ae5047a55d1371d88b81ba41f737e",
+      "rank_score": 24,
+      "plan_ok": false,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.9106067765084201,
+      "top_p": 0.7997899744656741
+    },
+    {
+      "index": 1,
+      "patch_text": "def __init__(self, worker_id, last_active=None):\n    self.id = worker_id\n    self.reference = None\n    self.last_active = last_active\n    self.started = time.time()\n    self.tasks = set()\n    self.info = {}\n\n\n# edit1: Replace node=20\ndef __init__(self, worker_id, last_active=None):\n    self.reference = None\n    self.last_active = last_active\n    self.started = time.time()\n    self.tasks = set()\n    self.info = {}\n    self.id = worker_id\n\n\n# edit2: Replace node=5\ndef __init__(self, worker_id, last_active=None):\n    self.id = worker_id\n    self.reference = None\n    self.last_active = last_active\n    self.started = time.time()\n    self.tasks = set()\n    self.info = {}\n\n\n# edit3: GuardAdd node=4\ndef __init__(self, worker_id, last_active=None):\n    self.id = worker_id\n    self.reference = None\n    self.last_active = last_active\n    self.started = time.time()\n    self.tasks = set()\n    self.info = {}\n    self.id = worker_id\n\n\n# edit4: InsertBefore node=5\ndef __init__(self, worker_id, last_active=None):\n    self.id = worker_id\n    self.reference = None\n    self.last_active = last_active\n    self.started = time.time()\n    self.tasks = set()\n    self.info = {}\n    self.id = worker_id\n\n\n# edit5: GuardAdd node=3\ndef __init__(self, worker_id, last_active=None):\n    self.id = worker_id\n    self.reference = None\n    self.last_active = last_active\n    self.started = time.time()\n    self.tasks = set()\n    self.info = {}\n    self.id = worker_id\n\n\n# edit6: GuardAdd node=5\ndef __init__(self, worker_id, last_active=None):\n    self.id = worker_id\n    self.reference = None\n    self.last_active = last_active\n    self.started = time.time()\n    self.tasks = set()\n    self.info = {}\n    self.id = worker_id\n    self.id = worker_id\n\n##context",
+      "patch_sha256": "c2a610bd185763d08cb90352702584e66d673eb44c36a53f59f27e1481a4ef27",
+      "rank_score": 22,
+      "plan_ok": false,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.9326332018390676,
+      "top_p": 0.8237317411294214
+    },
+    {
+      "index": 2,
+      "patch_text": "def __init__(self, worker_id, last_active=None):\n    self.id = worker_id\n    self.reference = None\n    self.last_active = last_active\n    self.started = time.time()\n    self.tasks = set()\n    self.info = {}\n\n\n##correct\nclass Worker(object):\n    \"\"\" Worker class to run tasks on this machine. \"\"\"\n\n    def __init__(self, id, state, assistant=False, scheduler=None,\n                 max_task_age=None, disable_cache=False,\n                 poll_delay=10):\n        self.id = id\n        self.state = state\n        self.assistant = assistant\n        self.max_task_age = max_task_age\n        self.disable_cache = disable_cache\n        self.poll_delay = poll_delay\n\n        if scheduler is None:\n            scheduler = self.state.scheduler\n        self.scheduler = scheduler\n\n##correct\nclass Worker(object):\n    \"\"\" Worker class to run tasks on this machine. \"\"\"\n\n    def __init__(self, id, state, assistant=False, scheduler=None,\n                 max_task_age=None, disable_cache=False,\n                 poll_delay=10):\n        self.id = id\n        self.reference = None\n        self.state = state\n        self.assistant = assistant\n        self.max_task_age = max_task_age\n        self.disable_cache = disable_cache\n        self.poll_delay = poll_delay\n\n        if scheduler is None:\n            scheduler = self.state.scheduler\n        self.scheduler = scheduler\n\n##correct\nclass Worker(object):\n    \"\"\" Worker class to run tasks on this machine. \"\"\"\n\n    def __init__(self, id, state, assistant=False, scheduler=None,\n                 max_task_age=None, disable_cache=False,\n                 poll_delay=10):\n        self.id = id\n        self.reference = None\n        self.last_active = None\n        self.state = state\n        self.assistant = assistant\n        self.max_task_age = max_task_age\n        self.disable_cache = disable_cache\n        self.poll_delay = poll_delay\n\n        if scheduler is None:\n            scheduler = self.state.scheduler\n        self.scheduler = scheduler\n\n##correct\nclass Worker(object):\n    \"\"\" Worker class to run tasks on this machine. \"\"\"\n\n    def __init__(self, id, state, assistant=False, scheduler=None,\n                 max_task_age=None, disable_cache=False,\n                 poll_delay=10):\n        self.id = id\n        self.reference = None\n        self.last_active = None\n        self.state = state\n        self.assistant = assistant\n        self.max_task_age = max_task_age\n        self.disable_cache = disable_cache\n        self.poll_delay = poll_delay\n\n        if scheduler is None:\n            scheduler = self.state.scheduler\n        self.scheduler = scheduler",
+      "patch_sha256": "ee30c4a3c31ea2ec7fdc9e2e5ff866c6791f27050f22b45de10ea7c3f2579f7f",
+      "rank_score": 19,
+      "plan_ok": false,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7970041106218376,
+      "top_p": 0.896255138277297
+    },
+    {
+      "index": 3,
+      "patch_text": "def __init__(self, worker_id, last_active=None):\n    self.id = worker_id\n    self.reference = None\n    self.last_active = last_active\n    self.started = time.time()\n    self.tasks = set()\n    self.info = {}\n\n\n##correct\nclass Worker(object):\n\n    def __init__(self, worker_id, scheduler, reference=None, last_active=None):\n        self.id = worker_id\n        self.reference = reference\n        self.last_active = last_active\n        self.started = time.time()\n        self.scheduler = scheduler\n        self.tasks = set()\n        self.info = {}\n\n\n##correct\nclass Worker(object):\n\n    def __init__(self, worker_id, scheduler, reference=None, last_active=None):\n        self.id = worker_id\n        self.reference = reference\n        self.last_active = last_active\n        self.started = time.time()\n        self.scheduler = scheduler\n        self.tasks = set()\n        self.info = {}\n\n    @property\n    def name(self):\n        if self.reference is None:\n            return None\n        else:\n            return self.reference.name\n\n\n##correct\nclass Worker(object):\n\n    def __init__(self, worker_id, scheduler, reference=None, last_active=None):\n        self.id = worker_id\n        self.reference = reference\n        self.last_active = last_active\n        self.started = time.time()\n        self.scheduler = scheduler\n        self.tasks = set()\n        self.info = {}\n\n    @property\n    def name(self):\n        if self.reference is None:\n            return None\n        else:\n            return self.reference.name\n\n    def __eq__(self, other):\n        return isinstance(other, Worker) and self.id == other.id\n\n\n##correct\nclass Worker(object):\n\n    def __init__(self, worker_id, scheduler, reference=None, last_active=None):\n        self.id = worker_id\n        self.reference = reference\n        self.last_active = last_active\n        self.started = time.time()\n        self.scheduler = scheduler\n        self.tasks = set()\n        self.info = {}\n\n    @property\n    def name(self):\n        if self.reference is None:\n            return None\n        else:\n            return self.reference.name\n\n    def __eq__(self, other):\n        return isinstance(other, Worker) and self.id == other.id\n\n    def __hash__(self):\n        return hash(self.id)\n\n\n##correct\nclass Worker(object):\n\n    def __init__(self, worker_id, scheduler, reference=None, last_active=None):\n        self.id = worker_id\n        self.reference = reference\n        self.last_active = last_active\n        self.started = time.time()\n        self.scheduler = scheduler\n        self.tasks = set()\n        self.info",
+      "patch_sha256": "8dbfd9a2692dd16f85035e503f0c28fa42f7fd9a4530b99f88a62e5cea365301",
+      "rank_score": 19,
+      "plan_ok": false,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.5346552071407396,
+      "top_p": 0.98
+    }
+  ],
+  "candidate_count": 4,
+  "retrieved_examples": [
+    {
+      "id": "10",
+      "project_name": "luigi",
+      "buggy_line_content": "            in_workers = assistant or worker in task.workers",
+      "function": {
+        "function_name": "get_work",
+        "function_parent": "CentralPlannerScheduler",
+        "function_before_start_line": 624,
+        "function_before_end_line": 708,
+        "function_after_start_line": 624,
+        "function_after_end_line": 708,
+        "function_before_token_count": 494,
+        "function_after_token_count": 500,
+        "function_before": "def get_work(self, worker, host=None, assistant=False, **kwargs):\n    self.update(worker, {'host': host})\n    if assistant:\n        self.add_worker(worker, [('assistant', assistant)])\n    best_task = None\n    locally_pending_tasks = 0\n    running_tasks = []\n    used_resources = self._used_resources()\n    greedy_resources = collections.defaultdict(int)\n    n_unique_pending = 0\n    greedy_workers = dict(((worker.id, worker.info.get('workers', 1)) for worker in self._state.get_active_workers()))\n    tasks = list(self._state.get_pending_tasks())\n    tasks.sort(key=self._rank(), reverse=True)\n    for task in tasks:\n        in_workers = assistant or worker in task.workers\n        if task.status == 'RUNNING' and in_workers:\n            other_worker = self._state.get_worker(task.worker_running)\n            more_info = {'task_id': task.id, 'worker': str(other_worker)}\n            if other_worker is not None:\n                more_info.update(other_worker.info)\n                running_tasks.append(more_info)\n        if task.status == PENDING and in_workers:\n            locally_pending_tasks += 1\n            if len(task.workers) == 1 and (not assistant):\n                n_unique_pending += 1\n        if task.status == RUNNING and task.worker_running in greedy_workers:\n            greedy_workers[task.worker_running] -= 1\n            for resource, amount in six.iteritems(task.resources or {}):\n                greedy_resources[resource] += amount\n        if not best_task and self._schedulable(task) and self._has_resources(task.resources, greedy_resources):\n            if in_workers and self._has_resources(task.resources, used_resources):\n                best_task = task\n            else:\n                workers = itertools.chain(task.workers, [worker]) if assistant else task.workers\n                for task_worker in workers:\n                    if greedy_workers.get(task_worker, 0) > 0:\n                        greedy_workers[task_worker] -= 1\n                        for resource, amount in six.iteritems(task.resources or {}):\n                            greedy_resources[resource] += amount\n                        break\n    reply = {'n_pending_tasks': locally_pending_tasks, 'running_tasks': running_tasks, 'task_id': None, 'n_unique_pending': n_unique_pending}\n    if best_task:\n        self._state.set_status(best_task, RUNNING, self._config)\n        best_task.worker_running = worker\n        best_task.time_running = time.time()\n        self._update_task_history(best_task.id, RUNNING, host=host)\n        reply['task_id'] = best_task.id\n        reply['task_family'] = best_task.family\n        reply['task_module'] = getattr(best_task, 'module', None)\n        reply['task_params'] = best_task.params\n    return reply",
+        "function_after": "def get_work(self, worker, host=None, assistant=False, **kwargs):\n    self.update(worker, {'host': host})\n    if assistant:\n        self.add_worker(worker, [('assistant', assistant)])\n    best_task = None\n    locally_pending_tasks = 0\n    running_tasks = []\n    used_resources = self._used_resources()\n    greedy_resources = collections.defaultdict(int)\n    n_unique_pending = 0\n    greedy_workers = dict(((worker.id, worker.info.get('workers', 1)) for worker in self._state.get_active_workers()))\n    tasks = list(self._state.get_pending_tasks())\n    tasks.sort(key=self._rank(), reverse=True)\n    for task in tasks:\n        in_workers = assistant and task.workers or worker in task.workers\n        if task.status == 'RUNNING' and in_workers:\n            other_worker = self._state.get_worker(task.worker_running)\n            more_info = {'task_id': task.id, 'worker': str(other_worker)}\n            if other_worker is not None:\n                more_info.update(other_worker.info)\n                running_tasks.append(more_info)\n        if task.status == PENDING and in_workers:\n            locally_pending_tasks += 1\n            if len(task.workers) == 1 and (not assistant):\n                n_unique_pending += 1\n        if task.status == RUNNING and task.worker_running in greedy_workers:\n            greedy_workers[task.worker_running] -= 1\n            for resource, amount in six.iteritems(task.resources or {}):\n                greedy_resources[resource] += amount\n        if not best_task and self._schedulable(task) and self._has_resources(task.resources, greedy_resources):\n            if in_workers and self._has_resources(task.resources, used_resources):\n                best_task = task\n            else:\n                workers = itertools.chain(task.workers, [worker]) if assistant else task.workers\n                for task_worker in workers:\n                    if greedy_workers.get(task_worker, 0) > 0:\n                        greedy_workers[task_worker] -= 1\n                        for resource, amount in six.iteritems(task.resources or {}):\n                            greedy_resources[resource] += amount\n                        break\n    reply = {'n_pending_tasks': locally_pending_tasks, 'running_tasks': running_tasks, 'task_id': None, 'n_unique_pending': n_unique_pending}\n    if best_task:\n        self._state.set_status(best_task, RUNNING, self._config)\n        best_task.worker_running = worker\n        best_task.time_running = time.time()\n        self._update_task_history(best_task.id, RUNNING, host=host)\n        reply['task_id'] = best_task.id\n        reply['task_family'] = best_task.family\n        reply['task_module'] = getattr(best_task, 'module', None)\n        reply['task_params'] = best_task.params\n    return reply"
+      },
+      "file_name": "scheduler.py",
+      "file_path": "luigi/scheduler.py",
+      "score_reranked": 0.7699183251583788
+    },
+    {
+      "id": "28",
+      "project_name": "scrapy",
+      "buggy_line_content": "        if ':' not in self._url:",
+      "function": {
+        "function_name": "_set_url",
+        "function_parent": "Request",
+        "function_before_start_line": 62,
+        "function_before_end_line": 70,
+        "function_after_start_line": 62,
+        "function_after_end_line": 70,
+        "function_before_token_count": 65,
+        "function_after_token_count": 79,
+        "function_before": "def _set_url(self, url):\n    if not isinstance(url, six.string_types):\n        raise TypeError('Request url must be str or unicode, got %s:' % type(url).__name__)\n    s = safe_url_string(url, self.encoding)\n    self._url = escape_ajax(s)\n    if ':' not in self._url:\n        raise ValueError('Missing scheme in request url: %s' % self._url)",
+        "function_after": "def _set_url(self, url):\n    if not isinstance(url, six.string_types):\n        raise TypeError('Request url must be str or unicode, got %s:' % type(url).__name__)\n    s = safe_url_string(url, self.encoding)\n    self._url = escape_ajax(s)\n    if '://' not in self._url and (not self._url.startswith('data:')):\n        raise ValueError('Missing scheme in request url: %s' % self._url)"
+      },
+      "file_name": "__init__.py",
+      "file_path": "scrapy/http/request/__init__.py",
+      "score_reranked": 0.7186918337247077
+    },
+    {
+      "id": "36",
+      "project_name": "pandas",
+      "buggy_line_content": "            self.df = df",
+      "function": {
+        "function_name": "__init__",
+        "function_parent": "ExcelFormatter",
+        "function_before_start_line": 372,
+        "function_before_end_line": 414,
+        "function_after_start_line": 372,
+        "function_after_end_line": 414,
+        "function_before_token_count": 240,
+        "function_after_token_count": 247,
+        "function_before": "def __init__(self, df, na_rep: str='', float_format: Optional[str]=None, cols: Optional[Sequence[Label]]=None, header: Union[Sequence[Label], bool]=True, index: bool=True, index_label: Optional[Union[Label, Sequence[Label]]]=None, merge_cells: bool=False, inf_rep: str='inf', style_converter: Optional[Callable]=None):\n    self.rowcounter = 0\n    self.na_rep = na_rep\n    if hasattr(df, 'render'):\n        self.styler = df\n        df = df.data\n        if style_converter is None:\n            style_converter = CSSToExcelConverter()\n        self.style_converter = style_converter\n    else:\n        self.styler = None\n    self.df = df\n    if cols is not None:\n        if not len(Index(cols) & df.columns):\n            raise KeyError('passes columns are not ALL present dataframe')\n        if len(Index(cols) & df.columns) != len(cols):\n            raise KeyError(\"Not all names specified in 'columns' are found\")\n        self.df = df\n    self.columns = self.df.columns\n    self.float_format = float_format\n    self.index = index\n    self.index_label = index_label\n    self.header = header\n    self.merge_cells = merge_cells\n    self.inf_rep = inf_rep",
+        "function_after": "def __init__(self, df, na_rep: str='', float_format: Optional[str]=None, cols: Optional[Sequence[Label]]=None, header: Union[Sequence[Label], bool]=True, index: bool=True, index_label: Optional[Union[Label, Sequence[Label]]]=None, merge_cells: bool=False, inf_rep: str='inf', style_converter: Optional[Callable]=None):\n    self.rowcounter = 0\n    self.na_rep = na_rep\n    if hasattr(df, 'render'):\n        self.styler = df\n        df = df.data\n        if style_converter is None:\n            style_converter = CSSToExcelConverter()\n        self.style_converter = style_converter\n    else:\n        self.styler = None\n    self.df = df\n    if cols is not None:\n        if not len(Index(cols) & df.columns):\n            raise KeyError('passes columns are not ALL present dataframe')\n        if len(Index(cols) & df.columns) != len(cols):\n            raise KeyError(\"Not all names specified in 'columns' are found\")\n        self.df = df.reindex(columns=cols)\n    self.columns = self.df.columns\n    self.float_format = float_format\n    self.index = index\n    self.index_label = index_label\n    self.header = header\n    self.merge_cells = merge_cells\n    self.inf_rep = inf_rep"
+      },
+      "file_name": "excel.py",
+      "file_path": "pandas/io/formats/excel.py",
+      "score_reranked": 0.5598924063655599
+    },
+    {
+      "id": "25",
+      "project_name": "scrapy",
+      "buggy_line_content": "            exc_info = failure.value, failure.type, failure.getTracebackObject()",
+      "function": {
+        "function_name": "_clean_req",
+        "function_parent": "ContractsManager",
+        "function_before_start_line": 71,
+        "function_before_end_line": 91,
+        "function_after_start_line": 71,
+        "function_after_end_line": 91,
+        "function_before_token_count": 36,
+        "function_after_token_count": 36,
+        "function_before": "def _clean_req(self, request, method, results):\n    \"\"\" stop the request from returning objects and records any errors \"\"\"\n    cb = request.callback\n\n    @wraps(cb)\n    def cb_wrapper(response):\n        try:\n            output = cb(response)\n            output = list(iterate_spider_output(output))\n        except:\n            case = _create_testcase(method, 'callback')\n            results.addError(case, sys.exc_info())\n\n    def eb_wrapper(failure):\n        case = _create_testcase(method, 'errback')\n        exc_info = failure.value, failure.type, failure.getTracebackObject()\n        results.addError(case, exc_info)\n    request.callback = cb_wrapper\n    request.errback = eb_wrapper",
+        "function_after": "def _clean_req(self, request, method, results):\n    \"\"\" stop the request from returning objects and records any errors \"\"\"\n    cb = request.callback\n\n    @wraps(cb)\n    def cb_wrapper(response):\n        try:\n            output = cb(response)\n            output = list(iterate_spider_output(output))\n        except:\n            case = _create_testcase(method, 'callback')\n            results.addError(case, sys.exc_info())\n\n    def eb_wrapper(failure):\n        case = _create_testcase(method, 'errback')\n        exc_info = (failure.type, failure.value, failure.getTracebackObject())\n        results.addError(case, exc_info)\n    request.callback = cb_wrapper\n    request.errback = eb_wrapper"
+      },
+      "file_name": "__init__.py",
+      "file_path": "scrapy/contracts/__init__.py",
+      "score_reranked": 0.5225862435203098
+    },
+    {
+      "id": "39",
+      "project_name": "pandas",
+      "buggy_line_content": "            except (TypeError, ValueError):",
+      "function": {
+        "function_name": "_try_convert_data",
+        "function_parent": "Parser",
+        "function_before_start_line": 886,
+        "function_before_end_line": 958,
+        "function_after_start_line": 886,
+        "function_after_end_line": 958,
+        "function_before_token_count": 277,
+        "function_after_token_count": 279,
+        "function_before": "def _try_convert_data(self, name, data, use_dtypes=True, convert_dates=True):\n    \"\"\"\n        Try to parse a ndarray like into a column by inferring dtype.\n        \"\"\"\n    if use_dtypes:\n        if not self.dtype:\n            return (data, False)\n        elif self.dtype is True:\n            pass\n        else:\n            dtype = self.dtype.get(name) if isinstance(self.dtype, dict) else self.dtype\n            if dtype is not None:\n                try:\n                    dtype = np.dtype(dtype)\n                    return (data.astype(dtype), True)\n                except (TypeError, ValueError):\n                    return (data, False)\n    if convert_dates:\n        new_data, result = self._try_convert_to_date(data)\n        if result:\n            return (new_data, True)\n    result = False\n    if data.dtype == 'object':\n        try:\n            data = data.astype('float64')\n            result = True\n        except (TypeError, ValueError):\n            pass\n    if data.dtype.kind == 'f':\n        if data.dtype != 'float64':\n            try:\n                data = data.astype('float64')\n                result = True\n            except (TypeError, ValueError):\n                pass\n    if len(data) and (data.dtype == 'float' or data.dtype == 'object'):\n        try:\n            new_data = data.astype('int64')\n            if (new_data == data).all():\n                data = new_data\n                result = True\n        except (TypeError, ValueError):\n            pass\n    if data.dtype == 'int':\n        try:\n            data = data.astype('int64')\n            result = True\n        except (TypeError, ValueError):\n            pass\n    return (data, result)",
+        "function_after": "def _try_convert_data(self, name, data, use_dtypes=True, convert_dates=True):\n    \"\"\"\n        Try to parse a ndarray like into a column by inferring dtype.\n        \"\"\"\n    if use_dtypes:\n        if not self.dtype:\n            return (data, False)\n        elif self.dtype is True:\n            pass\n        else:\n            dtype = self.dtype.get(name) if isinstance(self.dtype, dict) else self.dtype\n            if dtype is not None:\n                try:\n                    dtype = np.dtype(dtype)\n                    return (data.astype(dtype), True)\n                except (TypeError, ValueError):\n                    return (data, False)\n    if convert_dates:\n        new_data, result = self._try_convert_to_date(data)\n        if result:\n            return (new_data, True)\n    result = False\n    if data.dtype == 'object':\n        try:\n            data = data.astype('float64')\n            result = True\n        except (TypeError, ValueError):\n            pass\n    if data.dtype.kind == 'f':\n        if data.dtype != 'float64':\n            try:\n                data = data.astype('float64')\n                result = True\n            except (TypeError, ValueError):\n                pass\n    if len(data) and (data.dtype == 'float' or data.dtype == 'object'):\n        try:\n            new_data = data.astype('int64')\n            if (new_data == data).all():\n                data = new_data\n                result = True\n        except (TypeError, ValueError, OverflowError):\n            pass\n    if data.dtype == 'int':\n        try:\n            data = data.astype('int64')\n            result = True\n        except (TypeError, ValueError):\n            pass\n    return (data, result)"
+      },
+      "file_name": "_json.py",
+      "file_path": "pandas/io/json/_json.py",
+      "score_reranked": 0.4997525754738391
+    }
+  ],
+  "diffusion_plan": [
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 20
+        },
+        {
+          "op": "Replace",
+          "node": 5
+        },
+        {
+          "op": "GuardAdd",
+          "node": 4
+        },
+        {
+          "op": "InsertBefore",
+          "node": 5
+        },
+        {
+          "op": "GuardAdd",
+          "node": 3
+        },
+        {
+          "op": "GuardAdd",
+          "node": 5
+        },
+        {
+          "op": "Replace",
+          "node": 4
+        },
+        {
+          "op": "Replace",
+          "node": 8
+        },
+        {
+          "op": "Replace",
+          "node": 3
+        },
+        {
+          "op": "Delete",
+          "node": 4
+        }
+      ],
+      "score": 21.2499999971875
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 22
+        },
+        {
+          "op": "Replace",
+          "node": 5
+        },
+        {
+          "op": "Replace",
+          "node": 8
+        },
+        {
+          "op": "Replace",
+          "node": 3
+        },
+        {
+          "op": "Delete",
+          "node": 4
+        },
+        {
+          "op": "Replace",
+          "node": 4
+        },
+        {
+          "op": "GuardAdd",
+          "node": 3
+        },
+        {
+          "op": "GuardAdd",
+          "node": 20
+        },
+        {
+          "op": "InsertBefore",
+          "node": 6
+        },
+        {
+          "op": "GuardAdd",
+          "node": 6
+        },
+        {
+          "op": "GuardAdd",
+          "node": 22
+        }
+      ],
+      "score": 19.611111108526234
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "GuardAdd",
+          "node": 4
+        },
+        {
+          "op": "Delete",
+          "node": 3
+        },
+        {
+          "op": "Replace",
+          "node": 5
+        },
+        {
+          "op": "GuardAdd",
+          "node": 3
+        },
+        {
+          "op": "GuardAdd",
+          "node": 6
+        },
+        {
+          "op": "GuardAdd",
+          "node": 20
+        },
+        {
+          "op": "Replace",
+          "node": 20
+        },
+        {
+          "op": "Replace",
+          "node": 4
+        },
+        {
+          "op": "InsertAfter",
+          "node": 4
+        }
+      ],
+      "score": 19.541666664091437
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 5
+        },
+        {
+          "op": "GuardAdd",
+          "node": 7
+        },
+        {
+          "op": "GuardAdd",
+          "node": 3
+        },
+        {
+          "op": "Replace",
+          "node": 7
+        },
+        {
+          "op": "Replace",
+          "node": 6
+        },
+        {
+          "op": "Replace",
+          "node": 4
+        },
+        {
+          "op": "GuardAdd",
+          "node": 5
+        },
+        {
+          "op": "InsertAfter",
+          "node": 3
+        },
+        {
+          "op": "Replace",
+          "node": 20
+        },
+        {
+          "op": "GuardAdd",
+          "node": 22
+        },
+        {
+          "op": "Replace",
+          "node": 22
+        }
+      ],
+      "score": 19.416666664108796
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "GuardAdd",
+          "node": 20
+        },
+        {
+          "op": "GuardAdd",
+          "node": 6
+        },
+        {
+          "op": "Replace",
+          "node": 3
+        },
+        {
+          "op": "GuardAdd",
+          "node": 8
+        },
+        {
+          "op": "Replace",
+          "node": 4
+        },
+        {
+          "op": "Replace",
+          "node": 20
+        },
+        {
+          "op": "Replace",
+          "node": 22
+        },
+        {
+          "op": "Delete",
+          "node": 5
+        },
+        {
+          "op": "Replace",
+          "node": 6
+        },
+        {
+          "op": "GuardAdd",
+          "node": 4
+        },
+        {
+          "op": "Replace",
+          "node": 7
+        }
+      ],
+      "score": 18.638888886439045
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 3
+        },
+        {
+          "op": "GuardAdd",
+          "node": 6
+        },
+        {
+          "op": "Delete",
+          "node": 3
+        },
+        {
+          "op": "GuardAdd",
+          "node": 3
+        },
+        {
+          "op": "GuardAdd",
+          "node": 20
+        },
+        {
+          "op": "Replace",
+          "node": 4
+        },
+        {
+          "op": "GuardAdd",
+          "node": 5
+        }
+      ],
+      "score": 18.08333333123843
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "GuardAdd",
+          "node": 22
+        },
+        {
+          "op": "Replace",
+          "node": 5
+        },
+        {
+          "op": "Replace",
+          "node": 20
+        },
+        {
+          "op": "InsertAfter",
+          "node": 4
+        },
+        {
+          "op": "Replace",
+          "node": 4
+        },
+        {
+          "op": "Replace",
+          "node": 3
+        },
+        {
+          "op": "GuardAdd",
+          "node": 4
+        }
+      ],
+      "score": 17.76388888683835
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Delete",
+          "node": 4
+        },
+        {
+          "op": "InsertAfter",
+          "node": 3
+        },
+        {
+          "op": "Replace",
+          "node": 5
+        },
+        {
+          "op": "Replace",
+          "node": 4
+        },
+        {
+          "op": "GuardAdd",
+          "node": 20
+        },
+        {
+          "op": "Replace",
+          "node": 3
+        },
+        {
+          "op": "GuardAdd",
+          "node": 6
+        }
+      ],
+      "score": 17.66666666462963
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 3
+        },
+        {
+          "op": "Replace",
+          "node": 7
+        },
+        {
+          "op": "Replace",
+          "node": 5
+        },
+        {
+          "op": "GuardAdd",
+          "node": 22
+        },
+        {
+          "op": "Delete",
+          "node": 4
+        },
+        {
+          "op": "GuardAdd",
+          "node": 5
+        },
+        {
+          "op": "Replace",
+          "node": 6
+        },
+        {
+          "op": "InsertBefore",
+          "node": 3
+        },
+        {
+          "op": "Delete",
+          "node": 3
+        }
+      ],
+      "score": 17.305555553290898
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "GuardAdd",
+          "node": 6
+        },
+        {
+          "op": "Replace",
+          "node": 3
+        },
+        {
+          "op": "Replace",
+          "node": 20
+        },
+        {
+          "op": "GuardAdd",
+          "node": 4
+        },
+        {
+          "op": "GuardAdd",
+          "node": 7
+        },
+        {
+          "op": "Replace",
+          "node": 22
+        },
+        {
+          "op": "Replace",
+          "node": 5
+        },
+        {
+          "op": "Delete",
+          "node": 3
+        }
+      ],
+      "score": 17.277777775794753
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 3
+        },
+        {
+          "op": "GuardAdd",
+          "node": 4
+        },
+        {
+          "op": "Replace",
+          "node": 5
+        },
+        {
+          "op": "Replace",
+          "node": 7
+        },
+        {
+          "op": "GuardAdd",
+          "node": 3
+        },
+        {
+          "op": "Replace",
+          "node": 20
+        },
+        {
+          "op": "Replace",
+          "node": 6
+        }
+      ],
+      "score": 17.027777775829477
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 3
+        },
+        {
+          "op": "GuardAdd",
+          "node": 3
+        },
+        {
+          "op": "Delete",
+          "node": 3
+        },
+        {
+          "op": "GuardAdd",
+          "node": 7
+        },
+        {
+          "op": "GuardAdd",
+          "node": 5
+        },
+        {
+          "op": "Replace",
+          "node": 5
+        },
+        {
+          "op": "Replace",
+          "node": 6
+        }
+      ],
+      "score": 16.83333333141204
+    }
+  ],
+  "static_analysis_nodes": [
+    {
+      "line": 2,
+      "line_absolute": 228,
+      "node_id": 3,
+      "node_id_local": 0,
+      "type": "Assign",
+      "code": "self.id = worker_id",
+      "distance_to_buggy": 0,
+      "context": "   1:   def __init__(self, worker_id, last_active=None):\n   2:->     self.id = worker_id\n   3:       self.reference = None\n   4:       self.last_active = last_active\n   5:       self.started = time.time()",
+      "ast_subtree_json": {
+        "_type": "Assign",
+        "targets": [
+          {
+            "_type": "Attribute",
+            "value": {
+              "_type": "Name"
+            },
+            "attr": "id",
+            "ctx": {
+              "_type": "Store"
+            }
+          }
+        ],
+        "value": {
+          "_type": "Name",
+          "id": "worker_id",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "type_comment": null
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -23.0
+    },
+    {
+      "line": 3,
+      "line_absolute": 229,
+      "node_id": 4,
+      "node_id_local": 1,
+      "type": "Assign",
+      "code": "self.reference = None",
+      "distance_to_buggy": 0,
+      "context": "   1:   def __init__(self, worker_id, last_active=None):\n   2:       self.id = worker_id\n   3:->     self.reference = None\n   4:       self.last_active = last_active\n   5:       self.started = time.time()\n   6:       self.tasks = set()",
+      "ast_subtree_json": {
+        "_type": "Assign",
+        "targets": [
+          {
+            "_type": "Attribute",
+            "value": {
+              "_type": "Name"
+            },
+            "attr": "reference",
+            "ctx": {
+              "_type": "Store"
+            }
+          }
+        ],
+        "value": {
+          "_type": "Constant",
+          "value": null,
+          "kind": null
+        },
+        "type_comment": null
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -22.0
+    },
+    {
+      "line": 4,
+      "line_absolute": 230,
+      "node_id": 5,
+      "node_id_local": 2,
+      "type": "Assign",
+      "code": "self.last_active = last_active",
+      "distance_to_buggy": 1,
+      "context": "   1:   def __init__(self, worker_id, last_active=None):\n   2:       self.id = worker_id\n   3:       self.reference = None\n   4:->     self.last_active = last_active\n   5:       self.started = time.time()\n   6:       self.tasks = set()\n   7:       self.info = {}",
+      "ast_subtree_json": {
+        "_type": "Assign",
+        "targets": [
+          {
+            "_type": "Attribute",
+            "value": {
+              "_type": "Name"
+            },
+            "attr": "last_active",
+            "ctx": {
+              "_type": "Store"
+            }
+          }
+        ],
+        "value": {
+          "_type": "Name",
+          "id": "last_active",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "type_comment": null
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -13.0
+    },
+    {
+      "line": 5,
+      "line_absolute": 231,
+      "node_id": 20,
+      "node_id_local": 4,
+      "type": "Call",
+      "code": "time.time()",
+      "distance_to_buggy": 2,
+      "context": "   2:       self.id = worker_id\n   3:       self.reference = None\n   4:       self.last_active = last_active\n   5:->     self.started = time.time()\n   6:       self.tasks = set()\n   7:       self.info = {}",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Attribute",
+          "value": {
+            "_type": "Name"
+          },
+          "attr": "time",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [],
+        "keywords": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -4.0
+    },
+    {
+      "line": 5,
+      "line_absolute": 231,
+      "node_id": 6,
+      "node_id_local": 3,
+      "type": "Assign",
+      "code": "self.started = time.time()",
+      "distance_to_buggy": 2,
+      "context": "   2:       self.id = worker_id\n   3:       self.reference = None\n   4:       self.last_active = last_active\n   5:->     self.started = time.time()\n   6:       self.tasks = set()\n   7:       self.info = {}",
+      "ast_subtree_json": {
+        "_type": "Assign",
+        "targets": [
+          {
+            "_type": "Attribute",
+            "value": {
+              "_type": "Name"
+            },
+            "attr": "started",
+            "ctx": {
+              "_type": "Store"
+            }
+          }
+        ],
+        "value": {
+          "_type": "Call",
+          "func": {
+            "_type": "Attribute"
+          },
+          "args": [],
+          "keywords": []
+        },
+        "type_comment": null
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -3.0
+    },
+    {
+      "line": 6,
+      "line_absolute": 232,
+      "node_id": 22,
+      "node_id_local": 6,
+      "type": "Call",
+      "code": "set()",
+      "distance_to_buggy": 3,
+      "context": "   3:       self.reference = None\n   4:       self.last_active = last_active\n   5:       self.started = time.time()\n   6:->     self.tasks = set()\n   7:       self.info = {}",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Name",
+          "id": "set",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [],
+        "keywords": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": 6.0
+    },
+    {
+      "line": 6,
+      "line_absolute": 232,
+      "node_id": 7,
+      "node_id_local": 5,
+      "type": "Assign",
+      "code": "self.tasks = set()",
+      "distance_to_buggy": 3,
+      "context": "   3:       self.reference = None\n   4:       self.last_active = last_active\n   5:       self.started = time.time()\n   6:->     self.tasks = set()\n   7:       self.info = {}",
+      "ast_subtree_json": {
+        "_type": "Assign",
+        "targets": [
+          {
+            "_type": "Attribute",
+            "value": {
+              "_type": "Name"
+            },
+            "attr": "tasks",
+            "ctx": {
+              "_type": "Store"
+            }
+          }
+        ],
+        "value": {
+          "_type": "Call",
+          "func": {
+            "_type": "Name"
+          },
+          "args": [],
+          "keywords": []
+        },
+        "type_comment": null
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": 7.0
+    },
+    {
+      "line": 7,
+      "line_absolute": 233,
+      "node_id": 8,
+      "node_id_local": 7,
+      "type": "Assign",
+      "code": "self.info = {}",
+      "distance_to_buggy": 4,
+      "context": "   4:       self.last_active = last_active\n   5:       self.started = time.time()\n   6:       self.tasks = set()\n   7:->     self.info = {}",
+      "ast_subtree_json": {
+        "_type": "Assign",
+        "targets": [
+          {
+            "_type": "Attribute",
+            "value": {
+              "_type": "Name"
+            },
+            "attr": "info",
+            "ctx": {
+              "_type": "Store"
+            }
+          }
+        ],
+        "value": {
+          "_type": "Dict",
+          "keys": [],
+          "values": []
+        },
+        "type_comment": null
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": 17.0
+    }
+  ]
+}

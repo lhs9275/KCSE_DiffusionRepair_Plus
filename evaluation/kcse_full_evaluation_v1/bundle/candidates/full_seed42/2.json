@@ -1,0 +1,1122 @@
+{
+  "bug_id": "2",
+  "seed": 42,
+  "arm": "full",
+  "candidates": [
+    {
+      "index": 0,
+      "patch_text": "def register_named_middleware(self, middleware, route_names, attach_to='request'):\n    if attach_to =='request':\n        for _rn in route_names:\n            if _rn not in self.named_request_middleware:\n                self.named_request_middleware[_rn] = deque()\n            if middleware not in self.named_request_middleware[_rn]:\n                self.named_request_middleware[_rn].append(middleware)\n    if attach_to =='response':\n        for _rn in route_names:\n            if _rn not in self.named_response_middleware:\n                self.named_response_middleware[_rn] = deque()\n            if middleware not in self.named_response_middleware[_rn]:\n                self.named_response_middleware[_rn].append(middleware)  # <--- BUGGY LINE",
+      "patch_sha256": "8fd34d4a56178d1280f9a8872b4a16e307187c4f8c3b7f870ac62d71a076297f",
+      "rank_score": 212,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8089233151013046,
+      "top_p": 0.9111541438766307
+    },
+    {
+      "index": 1,
+      "patch_text": "def register_named_middleware(self, middleware, route_names, attach_to='request'):\n    if attach_to =='request':\n        for _rn in route_names:\n            if _rn not in self.named_request_middleware:\n                self.named_request_middleware[_rn] = deque()\n            self.named_request_middleware[_rn].append(middleware)\n    if attach_to =='response':\n        for _rn in route_names:\n            if _rn not in self.named_response_middleware:\n                self.named_response_middleware[_rn] = deque()\n            self.named_response_middleware[_rn].append(middleware)",
+      "patch_sha256": "103445e449b58ade2a30ca02570f8299de12785d9f693194c649903cc0152291",
+      "rank_score": 193,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8850407915843882,
+      "top_p": 0.7720008604178135
+    },
+    {
+      "index": 2,
+      "patch_text": "def register_named_middleware(self, middleware, route_names, attach_to='request'):\n    if attach_to =='request':\n        for _rn in route_names:\n            self.named_request_middleware[_rn] = deque()\n            if middleware not in self.named_request_middleware[_rn]:\n                self.named_request_middleware[_rn].append(middleware)\n    if attach_to =='response':\n        for _rn in route_names:\n            self.named_response_middleware[_rn] = deque()\n            if middleware not in self.named_response_middleware[_rn]:\n                self.named_response_middleware[_rn].append(middleware)",
+      "patch_sha256": "3291303bc21eea4eaac2eec35adc6ba4c7d625bd561c2ed777f2be41795f4651",
+      "rank_score": 188,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.9374042813624712,
+      "top_p": 0.828917697133121
+    },
+    {
+      "index": 3,
+      "patch_text": "def register_named_middleware(self, middleware, route_names, attach_to='request'):\n    if attach_to =='request':\n        for _rn in route_names:\n            if middleware not in self.named_request_middleware[_rn]:\n                self.named_request_middleware[_rn].append(middleware)\n    if attach_to =='response':\n        for _rn in route_names:\n            if middleware not in self.named_response_middleware[_rn]:\n                self.named_response_middleware[_rn].append(middleware)",
+      "patch_sha256": "133a3481e468fd94dfd372e20e34d00d808e0250587f616c8df5d6ad0cfaae7a",
+      "rank_score": 174,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8250994923331102,
+      "top_p": 0.9313743654163876
+    },
+    {
+      "index": 4,
+      "patch_text": "def register_named_middleware(self, middleware, route_names, attach_to='request'):\n    for _rn in route_names:\n        self.named_request_middleware[_rn].append(middleware)",
+      "patch_sha256": "f15d57e00f373868b8dd4eff4afcfc6904e0b936cfb6f6148ca42c9dfded1d28",
+      "rank_score": 139,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8895986980815249,
+      "top_p": 0.7769551066103534
+    },
+    {
+      "index": 5,
+      "patch_text": "def register_named_middleware(self, middleware, route_names, attach_to='request'):\n    for _rn in route_names:\n        if _rn not in self.named_response_middleware:\n            self.named_response_middleware[_rn] = deque()\n        if middleware not in self.named_response_middleware[_rn]:\n            self.named_response_middleware[_rn].append(middleware)",
+      "patch_sha256": "fd306e0c77ff6b611144da078bac9684f77dab272316115384c9c8de887ed682",
+      "rank_score": 137,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8250994923331102,
+      "top_p": 0.9313743654163876
+    },
+    {
+      "index": 6,
+      "patch_text": "def register_named_middleware(self, middleware, route_names, attach_to='request'):\n    if attach_to =='request':\n        for _rn in route_names:\n            self.named_request_middleware[_rn].append(middleware)\n    if attach_to =='response':\n        for _rn in route_names:\n            self.named_response_middleware[_rn].append(middleware)\n\n##correct\ndef register_named_middleware(self, middleware, route_names, attach_to='request'):\n    if attach_to =='request':\n        for _rn in route_names:\n            self.named_request_middleware[_rn].append(middleware)\n    if attach_to =='response':\n        for _rn in route_names:\n            self.named_response_middleware[_rn].append(middleware)\n\n##correct\ndef register_named_middleware(self, middleware, route_names, attach_to='request'):\n    if attach_to =='request':\n        for _rn in route_names:\n            self.named_request_middleware[_rn].append(middleware)\n    if attach_to =='response':\n        for _rn in route_names:\n            self.named_response_middleware[_rn].append(middleware)\n\n##correct\ndef register_named_middleware(self, middleware, route_names, attach_to='request'):\n    if attach_to =='request':\n        for _rn in route_names:\n            self.named_request_middleware[_rn].append(middleware)\n    if attach_to =='response':\n        for _rn in route_names:\n            self.named_response_middleware[_rn].append(middleware)\n\n##correct\ndef register_named_middleware(self, middleware, route_names, attach_to='request'):\n    if attach_to =='request':\n        for _rn in route_names:\n            self.named_request_middleware[_rn].append(middleware)\n    if attach_to =='response':\n        for _rn in route_names:\n            self.named_response_middleware[_rn].append(middleware)\n\n##correct\ndef register_named_middleware(self, middleware, route_names, attach_to='request'):\n    if attach_to =='request':\n        for _rn in route_names:\n            self.named_request_middleware[_rn].append(middleware)\n    if attach_to =='response':\n        for _rn in route_names:\n            self.named_response_middleware[_rn].append(middleware)\n\n##correct\ndef register_named_middleware(self, middleware, route_names, attach_to='request'):\n    if attach_to =='request':\n        for _rn in route_names:\n            self.named_request_middleware[_rn].append(middleware)\n    if attach_to =='response':\n        for _rn in route_names:\n            self.named_response_middleware[_rn].append(middleware)",
+      "patch_sha256": "0dc905c00d285106a8003063b2f1bedc1141a526e81e12ec184b0a399173a26a",
+      "rank_score": 105,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.5106412196441554,
+      "top_p": 0.9620023454695296
+    },
+    {
+      "index": 7,
+      "patch_text": "def register_named_middleware(self, middleware, route_names, attach_to='request'):\n    if attach_to =='request':\n        for _rn in route_names:\n            if _rn not in self.named_request_middleware:\n                self.named_request_middleware[_rn] = deque()\n            if middleware not in self.named_request_middleware[_rn]:\n                self.named_request_middleware[_rn].append(middleware)\n    if attach_to =='response':\n        for _rn in route_names:\n            if _rn not in self.named_response_middleware:\n                self.named_response_middleware[_rn] = deque()\n            if middleware not in self.named_response_middleware[_rn]:\n                self.named_response_middleware[_rn].append(middleware)\nfrom src.utils import json_print\n\ndef run(filename, test_num, debug=False):\n    # Read Input\n    with open(filename) as f:\n        num_cases = int(f.readline())\n        data = []\n        for _ in range(num_cases):\n            n, k = [int(x) for x in f.readline().split()]\n            data.append((n,k))\n\n    # Solve Problem\n    for i in range(num_cases):\n        ans = solve(*data[i])\n        if debug:\n            print(\"Ans:\", ans)\n\n    # Write Output\n    if debug:\n        json_print(data[0], ans)\n\ndef solve(n, k):\n    pass\nimport unittest\n\nfrom src.run import run\n\nclass TestProblem(unittest.TestCase):\n    def test_all_cases(self):\n        run(\"input\", 0)\n        run(\"input\", 1)\nimport sys\nimport os\nimport time\nfrom pprint import pformat\nimport json\nimport logging\nfrom types import SimpleNamespace\n\nfrom.constants import *\n\ndef json_print(in_data, out_data, filename=None, print_diff=True):\n    out = {\n        \"case_input\": in_data,\n        \"case_output\": out_data,\n    }\n    if print_diff:\n        from py_diff import pretty_diff\n        print(\"\\n\".join(pretty_diff(json.dumps(out, indent=2), json.dumps(out, indent=2))))\n    if filename is not None:\n        import io\n        with io.open(filename, mode='w', encoding=\"utf-8\") as f:\n            f.write(json.dumps(out, indent=2))\n\ndef write_output(filename, out_data, logger=None):\n    out = {\n        \"output\": out_data\n    }\n    if logger is not None:\n        logger.info(\"Writing output: \" + json.dumps(out, indent=2))\n    if filename is not None:\n        with open(filename, mode='w', encoding=\"utf-8\") as f:\n            f",
+      "patch_sha256": "039b627a8d5e34ae015e724e848a4a1197045ebad5ff92dc42bd73dd4b4e8236",
+      "rank_score": -141,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8250994923331102,
+      "top_p": 0.9313743654163876
+    }
+  ],
+  "candidate_count": 8,
+  "retrieved_examples": [
+    {
+      "id": "28",
+      "project_name": "scrapy",
+      "buggy_line_content": "        if ':' not in self._url:",
+      "function": {
+        "function_name": "_set_url",
+        "function_parent": "Request",
+        "function_before_start_line": 62,
+        "function_before_end_line": 70,
+        "function_after_start_line": 62,
+        "function_after_end_line": 70,
+        "function_before_token_count": 65,
+        "function_after_token_count": 79,
+        "function_before": "def _set_url(self, url):\n    if not isinstance(url, six.string_types):\n        raise TypeError('Request url must be str or unicode, got %s:' % type(url).__name__)\n    s = safe_url_string(url, self.encoding)\n    self._url = escape_ajax(s)\n    if ':' not in self._url:\n        raise ValueError('Missing scheme in request url: %s' % self._url)",
+        "function_after": "def _set_url(self, url):\n    if not isinstance(url, six.string_types):\n        raise TypeError('Request url must be str or unicode, got %s:' % type(url).__name__)\n    s = safe_url_string(url, self.encoding)\n    self._url = escape_ajax(s)\n    if '://' not in self._url and (not self._url.startswith('data:')):\n        raise ValueError('Missing scheme in request url: %s' % self._url)"
+      },
+      "file_name": "__init__.py",
+      "file_path": "scrapy/http/request/__init__.py",
+      "score_reranked": 0.4590822774957928
+    },
+    {
+      "id": "39",
+      "project_name": "pandas",
+      "buggy_line_content": "            except (TypeError, ValueError):",
+      "function": {
+        "function_name": "_try_convert_data",
+        "function_parent": "Parser",
+        "function_before_start_line": 886,
+        "function_before_end_line": 958,
+        "function_after_start_line": 886,
+        "function_after_end_line": 958,
+        "function_before_token_count": 277,
+        "function_after_token_count": 279,
+        "function_before": "def _try_convert_data(self, name, data, use_dtypes=True, convert_dates=True):\n    \"\"\"\n        Try to parse a ndarray like into a column by inferring dtype.\n        \"\"\"\n    if use_dtypes:\n        if not self.dtype:\n            return (data, False)\n        elif self.dtype is True:\n            pass\n        else:\n            dtype = self.dtype.get(name) if isinstance(self.dtype, dict) else self.dtype\n            if dtype is not None:\n                try:\n                    dtype = np.dtype(dtype)\n                    return (data.astype(dtype), True)\n                except (TypeError, ValueError):\n                    return (data, False)\n    if convert_dates:\n        new_data, result = self._try_convert_to_date(data)\n        if result:\n            return (new_data, True)\n    result = False\n    if data.dtype == 'object':\n        try:\n            data = data.astype('float64')\n            result = True\n        except (TypeError, ValueError):\n            pass\n    if data.dtype.kind == 'f':\n        if data.dtype != 'float64':\n            try:\n                data = data.astype('float64')\n                result = True\n            except (TypeError, ValueError):\n                pass\n    if len(data) and (data.dtype == 'float' or data.dtype == 'object'):\n        try:\n            new_data = data.astype('int64')\n            if (new_data == data).all():\n                data = new_data\n                result = True\n        except (TypeError, ValueError):\n            pass\n    if data.dtype == 'int':\n        try:\n            data = data.astype('int64')\n            result = True\n        except (TypeError, ValueError):\n            pass\n    return (data, result)",
+        "function_after": "def _try_convert_data(self, name, data, use_dtypes=True, convert_dates=True):\n    \"\"\"\n        Try to parse a ndarray like into a column by inferring dtype.\n        \"\"\"\n    if use_dtypes:\n        if not self.dtype:\n            return (data, False)\n        elif self.dtype is True:\n            pass\n        else:\n            dtype = self.dtype.get(name) if isinstance(self.dtype, dict) else self.dtype\n            if dtype is not None:\n                try:\n                    dtype = np.dtype(dtype)\n                    return (data.astype(dtype), True)\n                except (TypeError, ValueError):\n                    return (data, False)\n    if convert_dates:\n        new_data, result = self._try_convert_to_date(data)\n        if result:\n            return (new_data, True)\n    result = False\n    if data.dtype == 'object':\n        try:\n            data = data.astype('float64')\n            result = True\n        except (TypeError, ValueError):\n            pass\n    if data.dtype.kind == 'f':\n        if data.dtype != 'float64':\n            try:\n                data = data.astype('float64')\n                result = True\n            except (TypeError, ValueError):\n                pass\n    if len(data) and (data.dtype == 'float' or data.dtype == 'object'):\n        try:\n            new_data = data.astype('int64')\n            if (new_data == data).all():\n                data = new_data\n                result = True\n        except (TypeError, ValueError, OverflowError):\n            pass\n    if data.dtype == 'int':\n        try:\n            data = data.astype('int64')\n            result = True\n        except (TypeError, ValueError):\n            pass\n    return (data, result)"
+      },
+      "file_name": "_json.py",
+      "file_path": "pandas/io/json/_json.py",
+      "score_reranked": 0.4388579629626396
+    },
+    {
+      "id": "26",
+      "project_name": "scrapy",
+      "buggy_line_content": "            for url in sitemap_urls_from_robots(response.body):",
+      "function": {
+        "function_name": "_parse_sitemap",
+        "function_parent": "SitemapSpider",
+        "function_before_start_line": 33,
+        "function_before_end_line": 54,
+        "function_after_start_line": 33,
+        "function_after_end_line": 54,
+        "function_before_token_count": 169,
+        "function_after_token_count": 169,
+        "function_before": "def _parse_sitemap(self, response):\n    if response.url.endswith('/robots.txt'):\n        for url in sitemap_urls_from_robots(response.body):\n            yield Request(url, callback=self._parse_sitemap)\n    else:\n        body = self._get_sitemap_body(response)\n        if body is None:\n            logger.warning('Ignoring invalid sitemap: %(response)s', {'response': response}, extra={'spider': self})\n            return\n        s = Sitemap(body)\n        if s.type == 'sitemapindex':\n            for loc in iterloc(s, self.sitemap_alternate_links):\n                if any((x.search(loc) for x in self._follow)):\n                    yield Request(loc, callback=self._parse_sitemap)\n        elif s.type == 'urlset':\n            for loc in iterloc(s):\n                for r, c in self._cbs:\n                    if r.search(loc):\n                        yield Request(loc, callback=c)\n                        break",
+        "function_after": "def _parse_sitemap(self, response):\n    if response.url.endswith('/robots.txt'):\n        for url in sitemap_urls_from_robots(response.text):\n            yield Request(url, callback=self._parse_sitemap)\n    else:\n        body = self._get_sitemap_body(response)\n        if body is None:\n            logger.warning('Ignoring invalid sitemap: %(response)s', {'response': response}, extra={'spider': self})\n            return\n        s = Sitemap(body)\n        if s.type == 'sitemapindex':\n            for loc in iterloc(s, self.sitemap_alternate_links):\n                if any((x.search(loc) for x in self._follow)):\n                    yield Request(loc, callback=self._parse_sitemap)\n        elif s.type == 'urlset':\n            for loc in iterloc(s):\n                for r, c in self._cbs:\n                    if r.search(loc):\n                        yield Request(loc, callback=c)\n                        break"
+      },
+      "file_name": "sitemap.py",
+      "file_path": "scrapy/spiders/sitemap.py",
+      "score_reranked": 0.4084733697027533
+    },
+    {
+      "id": "32",
+      "project_name": "pandas",
+      "buggy_line_content": "            except (ValueError, OverflowError):",
+      "function": {
+        "function_name": "_try_convert_to_date",
+        "function_parent": "Parser",
+        "function_before_start_line": 953,
+        "function_before_end_line": 988,
+        "function_after_start_line": 953,
+        "function_after_end_line": 988,
+        "function_before_token_count": 154,
+        "function_after_token_count": 156,
+        "function_before": "def _try_convert_to_date(self, data):\n    \"\"\"\n        Try to parse a ndarray like into a date column.\n\n        Try to coerce object in epoch/iso formats and integer/float in epoch\n        formats. Return a boolean if parsing was successful.\n        \"\"\"\n    if not len(data):\n        return (data, False)\n    new_data = data\n    if new_data.dtype == 'object':\n        try:\n            new_data = data.astype('int64')\n        except (TypeError, ValueError, OverflowError):\n            pass\n    if issubclass(new_data.dtype.type, np.number):\n        in_range = isna(new_data._values) | (new_data > self.min_stamp) | (new_data._values == iNaT)\n        if not in_range.all():\n            return (data, False)\n    date_units = (self.date_unit,) if self.date_unit else self._STAMP_UNITS\n    for date_unit in date_units:\n        try:\n            new_data = to_datetime(new_data, errors='raise', unit=date_unit)\n        except (ValueError, OverflowError):\n            continue\n        return (new_data, True)\n    return (data, False)",
+        "function_after": "def _try_convert_to_date(self, data):\n    \"\"\"\n        Try to parse a ndarray like into a date column.\n\n        Try to coerce object in epoch/iso formats and integer/float in epoch\n        formats. Return a boolean if parsing was successful.\n        \"\"\"\n    if not len(data):\n        return (data, False)\n    new_data = data\n    if new_data.dtype == 'object':\n        try:\n            new_data = data.astype('int64')\n        except (TypeError, ValueError, OverflowError):\n            pass\n    if issubclass(new_data.dtype.type, np.number):\n        in_range = isna(new_data._values) | (new_data > self.min_stamp) | (new_data._values == iNaT)\n        if not in_range.all():\n            return (data, False)\n    date_units = (self.date_unit,) if self.date_unit else self._STAMP_UNITS\n    for date_unit in date_units:\n        try:\n            new_data = to_datetime(new_data, errors='raise', unit=date_unit)\n        except (ValueError, OverflowError, TypeError):\n            continue\n        return (new_data, True)\n    return (data, False)"
+      },
+      "file_name": "_json.py",
+      "file_path": "pandas/io/json/_json.py",
+      "score_reranked": 0.4023342356273606
+    },
+    {
+      "id": "21",
+      "project_name": "youtube-dl",
+      "buggy_line_content": "        (?:0[xX][0-9a-fA-F]+|0+[0-7]+)(?:\\s*:)?|",
+      "function": {
+        "function_name": "js_to_json",
+        "function_parent": "utils.py",
+        "function_before_start_line": 1939,
+        "function_before_end_line": 1975,
+        "function_after_start_line": 1939,
+        "function_after_end_line": 1975,
+        "function_before_token_count": 19,
+        "function_after_token_count": 19,
+        "function_before": "def js_to_json(code):\n\n    def fix_kv(m):\n        v = m.group(0)\n        if v in ('true', 'false', 'null'):\n            return v\n        elif v.startswith('/*') or v == ',':\n            return ''\n        if v[0] in (\"'\", '\"'):\n            v = re.sub('(?s)\\\\\\\\.|\"', lambda m: {'\"': '\\\\\"', \"\\\\'\": \"'\", '\\\\\\n': '', '\\\\x': '\\\\u00'}.get(m.group(0), m.group(0)), v[1:-1])\n        INTEGER_TABLE = (('^0[xX][0-9a-fA-F]+', 16), ('^0+[0-7]+', 8))\n        for regex, base in INTEGER_TABLE:\n            im = re.match(regex, v)\n            if im:\n                i = int(im.group(0), base)\n                return '\"%d\":' % i if v.endswith(':') else '%d' % i\n        return '\"%s\"' % v\n    return re.sub('(?sx)\\n        \"(?:[^\"\\\\\\\\]*(?:\\\\\\\\\\\\\\\\|\\\\\\\\[\\'\"nurtbfx/\\\\n]))*[^\"\\\\\\\\]*\"|\\n        \\'(?:[^\\'\\\\\\\\]*(?:\\\\\\\\\\\\\\\\|\\\\\\\\[\\'\"nurtbfx/\\\\n]))*[^\\'\\\\\\\\]*\\'|\\n        /\\\\*.*?\\\\*/|,(?=\\\\s*[\\\\]}])|\\n        [a-zA-Z_][.a-zA-Z_0-9]*|\\n        (?:0[xX][0-9a-fA-F]+|0+[0-7]+)(?:\\\\s*:)?|\\n        [0-9]+(?=\\\\s*:)\\n        ', fix_kv, code)",
+        "function_after": "def js_to_json(code):\n\n    def fix_kv(m):\n        v = m.group(0)\n        if v in ('true', 'false', 'null'):\n            return v\n        elif v.startswith('/*') or v == ',':\n            return ''\n        if v[0] in (\"'\", '\"'):\n            v = re.sub('(?s)\\\\\\\\.|\"', lambda m: {'\"': '\\\\\"', \"\\\\'\": \"'\", '\\\\\\n': '', '\\\\x': '\\\\u00'}.get(m.group(0), m.group(0)), v[1:-1])\n        INTEGER_TABLE = (('^0[xX][0-9a-fA-F]+', 16), ('^0+[0-7]+', 8))\n        for regex, base in INTEGER_TABLE:\n            im = re.match(regex, v)\n            if im:\n                i = int(im.group(0), base)\n                return '\"%d\":' % i if v.endswith(':') else '%d' % i\n        return '\"%s\"' % v\n    return re.sub('(?sx)\\n        \"(?:[^\"\\\\\\\\]*(?:\\\\\\\\\\\\\\\\|\\\\\\\\[\\'\"nurtbfx/\\\\n]))*[^\"\\\\\\\\]*\"|\\n        \\'(?:[^\\'\\\\\\\\]*(?:\\\\\\\\\\\\\\\\|\\\\\\\\[\\'\"nurtbfx/\\\\n]))*[^\\'\\\\\\\\]*\\'|\\n        /\\\\*.*?\\\\*/|,(?=\\\\s*[\\\\]}])|\\n        [a-zA-Z_][.a-zA-Z_0-9]*|\\n        \\\\b(?:0[xX][0-9a-fA-F]+|0+[0-7]+)(?:\\\\s*:)?|\\n        [0-9]+(?=\\\\s*:)\\n        ', fix_kv, code)"
+      },
+      "file_name": "utils.py",
+      "file_path": "youtube_dl/utils.py",
+      "score_reranked": 0.3754028407319422
+    }
+  ],
+  "diffusion_plan": [
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 27
+        },
+        {
+          "op": "InsertBefore",
+          "node": 55
+        },
+        {
+          "op": "Replace",
+          "node": 50
+        },
+        {
+          "op": "Replace",
+          "node": 55
+        },
+        {
+          "op": "GuardAdd",
+          "node": 59
+        },
+        {
+          "op": "Replace",
+          "node": 59
+        },
+        {
+          "op": "Replace",
+          "node": 46
+        },
+        {
+          "op": "Replace",
+          "node": 39
+        },
+        {
+          "op": "Delete",
+          "node": 27
+        },
+        {
+          "op": "Replace",
+          "node": 26
+        },
+        {
+          "op": "Replace",
+          "node": 20
+        },
+        {
+          "op": "GuardAdd",
+          "node": 27
+        }
+      ],
+      "score": 18.82727272565207
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "GuardAdd",
+          "node": 27
+        },
+        {
+          "op": "Replace",
+          "node": 27
+        },
+        {
+          "op": "GuardAdd",
+          "node": 4
+        },
+        {
+          "op": "Replace",
+          "node": 39
+        },
+        {
+          "op": "Replace",
+          "node": 13
+        },
+        {
+          "op": "Replace",
+          "node": 26
+        },
+        {
+          "op": "InsertAfter",
+          "node": 4
+        },
+        {
+          "op": "Replace",
+          "node": 50
+        },
+        {
+          "op": "GuardAdd",
+          "node": 26
+        },
+        {
+          "op": "Replace",
+          "node": 59
+        },
+        {
+          "op": "Delete",
+          "node": 59
+        },
+        {
+          "op": "InsertBefore",
+          "node": 55
+        }
+      ],
+      "score": 18.572727271129754
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 27
+        },
+        {
+          "op": "Replace",
+          "node": 26
+        },
+        {
+          "op": "Replace",
+          "node": 39
+        },
+        {
+          "op": "Replace",
+          "node": 59
+        },
+        {
+          "op": "GuardAdd",
+          "node": 59
+        },
+        {
+          "op": "Replace",
+          "node": 55
+        },
+        {
+          "op": "Replace",
+          "node": 13
+        },
+        {
+          "op": "InsertAfter",
+          "node": 27
+        }
+      ],
+      "score": 17.53636363504215
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 39
+        },
+        {
+          "op": "Replace",
+          "node": 13
+        },
+        {
+          "op": "Replace",
+          "node": 55
+        },
+        {
+          "op": "Replace",
+          "node": 59
+        },
+        {
+          "op": "Replace",
+          "node": 27
+        },
+        {
+          "op": "Delete",
+          "node": 26
+        },
+        {
+          "op": "Replace",
+          "node": 26
+        },
+        {
+          "op": "GuardAdd",
+          "node": 59
+        }
+      ],
+      "score": 16.799999998745456
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 50
+        },
+        {
+          "op": "InsertAfter",
+          "node": 55
+        },
+        {
+          "op": "Replace",
+          "node": 59
+        },
+        {
+          "op": "InsertBefore",
+          "node": 26
+        },
+        {
+          "op": "Replace",
+          "node": 55
+        },
+        {
+          "op": "GuardAdd",
+          "node": 59
+        },
+        {
+          "op": "Replace",
+          "node": 39
+        },
+        {
+          "op": "Replace",
+          "node": 27
+        }
+      ],
+      "score": 16.4090909078719
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Delete",
+          "node": 27
+        },
+        {
+          "op": "Replace",
+          "node": 50
+        },
+        {
+          "op": "Replace",
+          "node": 55
+        },
+        {
+          "op": "Replace",
+          "node": 13
+        },
+        {
+          "op": "GuardAdd",
+          "node": 27
+        },
+        {
+          "op": "Replace",
+          "node": 27
+        },
+        {
+          "op": "Replace",
+          "node": 39
+        },
+        {
+          "op": "Replace",
+          "node": 59
+        }
+      ],
+      "score": 16.363636362421488
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "GuardAdd",
+          "node": 59
+        },
+        {
+          "op": "Replace",
+          "node": 4
+        },
+        {
+          "op": "Replace",
+          "node": 59
+        },
+        {
+          "op": "Replace",
+          "node": 20
+        },
+        {
+          "op": "Replace",
+          "node": 26
+        },
+        {
+          "op": "Replace",
+          "node": 46
+        },
+        {
+          "op": "Replace",
+          "node": 13
+        },
+        {
+          "op": "Replace",
+          "node": 55
+        },
+        {
+          "op": "Replace",
+          "node": 50
+        },
+        {
+          "op": "Replace",
+          "node": 27
+        },
+        {
+          "op": "Replace",
+          "node": 39
+        }
+      ],
+      "score": 16.181818180438018
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 39
+        },
+        {
+          "op": "GuardAdd",
+          "node": 59
+        },
+        {
+          "op": "GuardAdd",
+          "node": 4
+        },
+        {
+          "op": "Replace",
+          "node": 59
+        },
+        {
+          "op": "GuardAdd",
+          "node": 13
+        },
+        {
+          "op": "Replace",
+          "node": 55
+        },
+        {
+          "op": "Replace",
+          "node": 27
+        },
+        {
+          "op": "InsertAfter",
+          "node": 39
+        },
+        {
+          "op": "Replace",
+          "node": 26
+        }
+      ],
+      "score": 16.12727272589752
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 55
+        },
+        {
+          "op": "Replace",
+          "node": 39
+        },
+        {
+          "op": "Replace",
+          "node": 59
+        },
+        {
+          "op": "Replace",
+          "node": 50
+        },
+        {
+          "op": "InsertAfter",
+          "node": 55
+        },
+        {
+          "op": "Replace",
+          "node": 27
+        },
+        {
+          "op": "GuardAdd",
+          "node": 59
+        },
+        {
+          "op": "GuardAdd",
+          "node": 26
+        },
+        {
+          "op": "GuardAdd",
+          "node": 55
+        }
+      ],
+      "score": 16.099999998627275
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 27
+        },
+        {
+          "op": "GuardAdd",
+          "node": 39
+        },
+        {
+          "op": "Replace",
+          "node": 26
+        },
+        {
+          "op": "Replace",
+          "node": 20
+        },
+        {
+          "op": "Replace",
+          "node": 39
+        },
+        {
+          "op": "GuardAdd",
+          "node": 27
+        },
+        {
+          "op": "Replace",
+          "node": 59
+        },
+        {
+          "op": "Replace",
+          "node": 4
+        }
+      ],
+      "score": 15.927272726097522
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "GuardAdd",
+          "node": 27
+        },
+        {
+          "op": "Replace",
+          "node": 39
+        },
+        {
+          "op": "Replace",
+          "node": 27
+        },
+        {
+          "op": "InsertBefore",
+          "node": 26
+        },
+        {
+          "op": "GuardAdd",
+          "node": 50
+        },
+        {
+          "op": "Replace",
+          "node": 59
+        },
+        {
+          "op": "GuardAdd",
+          "node": 39
+        },
+        {
+          "op": "GuardAdd",
+          "node": 20
+        },
+        {
+          "op": "Replace",
+          "node": 26
+        },
+        {
+          "op": "Replace",
+          "node": 4
+        }
+      ],
+      "score": 15.690909089573555
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 20
+        },
+        {
+          "op": "Replace",
+          "node": 55
+        },
+        {
+          "op": "GuardAdd",
+          "node": 59
+        },
+        {
+          "op": "Replace",
+          "node": 26
+        },
+        {
+          "op": "Replace",
+          "node": 59
+        },
+        {
+          "op": "Replace",
+          "node": 39
+        },
+        {
+          "op": "Replace",
+          "node": 27
+        }
+      ],
+      "score": 15.109090907990083
+    }
+  ],
+  "static_analysis_nodes": [
+    {
+      "line": 13,
+      "line_absolute": 654,
+      "node_id": 59,
+      "node_id_local": 13,
+      "type": "Call",
+      "code": "self.named_response_middleware[_rn].append(middleware)",
+      "distance_to_buggy": 0,
+      "context": "  10:               if _rn not in self.named_response_middleware:\n  11:                   self.named_response_middleware[_rn] = deque()\n  12:               if middleware not in self.named_response_middleware[_rn]:\n  13:->                 self.named_response_middleware[_rn].append(middleware)",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Attribute",
+          "value": {
+            "_type": "Subscript"
+          },
+          "attr": "append",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [
+          {
+            "_type": "Name",
+            "id": "middleware",
+            "ctx": {
+              "_type": "Load"
+            }
+          }
+        ],
+        "keywords": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -26.4
+    },
+    {
+      "line": 12,
+      "line_absolute": 653,
+      "node_id": 27,
+      "node_id_local": 12,
+      "type": "If",
+      "code": "if middleware not in self.named_response_middleware[_rn]:\n    self.named_response_middleware[_rn].append(middleware)",
+      "distance_to_buggy": 1,
+      "context": "   9:           for _rn in route_names:\n  10:               if _rn not in self.named_response_middleware:\n  11:                   self.named_response_middleware[_rn] = deque()\n  12:->             if middleware not in self.named_response_middleware[_rn]:\n  13:                   self.named_response_middleware[_rn].append(middleware)",
+      "ast_subtree_json": {
+        "_type": "If",
+        "test": {
+          "_type": "Compare",
+          "left": {
+            "_type": "Name"
+          },
+          "ops": [
+            {
+              "_type": "NotIn"
+            }
+          ],
+          "comparators": [
+            {
+              "_type": "Subscript"
+            }
+          ]
+        },
+        "body": [
+          {
+            "_type": "Expr",
+            "value": {
+              "_type": "Call"
+            }
+          }
+        ],
+        "orelse": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -15.4
+    },
+    {
+      "line": 11,
+      "line_absolute": 652,
+      "node_id": 39,
+      "node_id_local": 10,
+      "type": "Assign",
+      "code": "self.named_response_middleware[_rn] = deque()",
+      "distance_to_buggy": 2,
+      "context": "   8:       if attach_to == 'response':\n   9:           for _rn in route_names:\n  10:               if _rn not in self.named_response_middleware:\n  11:->                 self.named_response_middleware[_rn] = deque()\n  12:               if middleware not in self.named_response_middleware[_rn]:\n  13:                   self.named_response_middleware[_rn].append(middleware)",
+      "ast_subtree_json": {
+        "_type": "Assign",
+        "targets": [
+          {
+            "_type": "Subscript",
+            "value": {
+              "_type": "Attribute"
+            },
+            "slice": {
+              "_type": "Name"
+            },
+            "ctx": {
+              "_type": "Store"
+            }
+          }
+        ],
+        "value": {
+          "_type": "Call",
+          "func": {
+            "_type": "Name"
+          },
+          "args": [],
+          "keywords": []
+        },
+        "type_comment": null
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|system|>...",
+      "reranker_score": -2.5
+    },
+    {
+      "line": 11,
+      "line_absolute": 652,
+      "node_id": 55,
+      "node_id_local": 11,
+      "type": "Call",
+      "code": "deque()",
+      "distance_to_buggy": 2,
+      "context": "   8:       if attach_to == 'response':\n   9:           for _rn in route_names:\n  10:               if _rn not in self.named_response_middleware:\n  11:->                 self.named_response_middleware[_rn] = deque()\n  12:               if middleware not in self.named_response_middleware[_rn]:\n  13:                   self.named_response_middleware[_rn].append(middleware)",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Name",
+          "id": "deque",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [],
+        "keywords": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -2.0
+    },
+    {
+      "line": 10,
+      "line_absolute": 651,
+      "node_id": 26,
+      "node_id_local": 9,
+      "type": "If",
+      "code": "if _rn not in self.named_response_middleware:\n    self.named_response_middleware[_rn] = deque()",
+      "distance_to_buggy": 3,
+      "context": "   7:                   self.named_request_middleware[_rn].append(middleware)\n   8:       if attach_to == 'response':\n   9:           for _rn in route_names:\n  10:->             if _rn not in self.named_response_middleware:\n  11:                   self.named_response_middleware[_rn] = deque()\n  12:               if middleware not in self.named_response_middleware[_rn]:\n  13:                   self.named_response_middleware[_rn].append(middleware)",
+      "ast_subtree_json": {
+        "_type": "If",
+        "test": {
+          "_type": "Compare",
+          "left": {
+            "_type": "Name"
+          },
+          "ops": [
+            {
+              "_type": "NotIn"
+            }
+          ],
+          "comparators": [
+            {
+              "_type": "Attribute"
+            }
+          ]
+        },
+        "body": [
+          {
+            "_type": "Assign",
+            "targets": [
+              {
+                "_type": "Subscript"
+              }
+            ],
+            "value": {
+              "_type": "Call"
+            },
+            "type_comment": null
+          }
+        ],
+        "orelse": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": 7.5
+    },
+    {
+      "line": 9,
+      "line_absolute": 650,
+      "node_id": 13,
+      "node_id_local": 8,
+      "type": "For",
+      "code": "for _rn in route_names:\n    if _rn not in self.named_response_middleware:\n        self.named_response_middleware[_rn] = deque()\n    if middleware not in self.named_response_middleware[_rn]:\n        self.named_response_middleware[_rn].append(middleware)",
+      "distance_to_buggy": 4,
+      "context": "   6:               if middleware not in self.named_request_middleware[_rn]:\n   7:                   self.named_request_middleware[_rn].append(middleware)\n   8:       if attach_to == 'response':\n   9:->         for _rn in route_names:\n  10:               if _rn not in self.named_response_middleware:\n  11:                   self.named_response_middleware[_rn] = deque()\n  12:               if middleware not in self.named_response_middleware[_rn]:",
+      "ast_subtree_json": {
+        "_type": "For",
+        "target": {
+          "_type": "Name",
+          "id": "_rn",
+          "ctx": {
+            "_type": "Store"
+          }
+        },
+        "iter": {
+          "_type": "Name",
+          "id": "route_names",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "body": [
+          {
+            "_type": "If",
+            "test": {
+              "_type": "Compare"
+            },
+            "body": [
+              {
+                "_type": "Assign"
+              }
+            ],
+            "orelse": []
+          },
+          {
+            "_type": "If",
+            "test": {
+              "_type": "Compare"
+            },
+            "body": [
+              {
+                "_type": "Expr"
+              }
+            ],
+            "orelse": []
+          }
+        ],
+        "orelse": [],
+        "type_comment": null
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": 17.6
+    },
+    {
+      "line": 8,
+      "line_absolute": 649,
+      "node_id": 4,
+      "node_id_local": 7,
+      "type": "If",
+      "code": "if attach_to == 'response':\n    for _rn in route_names:\n        if _rn not in self.named_response_middleware:\n            self.named_response_middleware[_rn] = deque()\n        if middleware not in self.named_response_middleware[_rn]:\n            self.named_response_middleware[_rn].append(middleware)",
+      "distance_to_buggy": 5,
+      "context": "   5:                   self.named_request_middleware[_rn] = deque()\n   6:               if middleware not in self.named_request_middleware[_rn]:\n   7:                   self.named_request_middleware[_rn].append(middleware)\n   8:->     if attach_to == 'response':\n   9:           for _rn in route_names:\n  10:               if _rn not in self.named_response_middleware:\n  11:                   self.named_response_middleware[_rn] = deque()",
+      "ast_subtree_json": {
+        "_type": "If",
+        "test": {
+          "_type": "Compare",
+          "left": {
+            "_type": "Name"
+          },
+          "ops": [
+            {
+              "_type": "Eq"
+            }
+          ],
+          "comparators": [
+            {
+              "_type": "Constant"
+            }
+          ]
+        },
+        "body": [
+          {
+            "_type": "For",
+            "target": {
+              "_type": "Name"
+            },
+            "iter": {
+              "_type": "Name"
+            },
+            "body": [
+              {
+                "_type": "If"
+              },
+              {
+                "_type": "If"
+              }
+            ],
+            "orelse": [],
+            "type_comment": null
+          }
+        ],
+        "orelse": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": 26.6
+    },
+    {
+      "line": 7,
+      "line_absolute": 648,
+      "node_id": 50,
+      "node_id_local": 6,
+      "type": "Call",
+      "code": "self.named_request_middleware[_rn].append(middleware)",
+      "distance_to_buggy": 6,
+      "context": "   4:               if _rn not in self.named_request_middleware:\n   5:                   self.named_request_middleware[_rn] = deque()\n   6:               if middleware not in self.named_request_middleware[_rn]:\n   7:->                 self.named_request_middleware[_rn].append(middleware)\n   8:       if attach_to == 'response':\n   9:           for _rn in route_names:\n  10:               if _rn not in self.named_response_middleware:",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Attribute",
+          "value": {
+            "_type": "Subscript"
+          },
+          "attr": "append",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [
+          {
+            "_type": "Name",
+            "id": "middleware",
+            "ctx": {
+              "_type": "Load"
+            }
+          }
+        ],
+        "keywords": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|system|>...",
+      "reranker_score": 33.6
+    },
+    {
+      "line": 6,
+      "line_absolute": 647,
+      "node_id": 20,
+      "node_id_local": 5,
+      "type": "If",
+      "code": "if middleware not in self.named_request_middleware[_rn]:\n    self.named_request_middleware[_rn].append(middleware)",
+      "distance_to_buggy": 7,
+      "context": "   3:           for _rn in route_names:\n   4:               if _rn not in self.named_request_middleware:\n   5:                   self.named_request_middleware[_rn] = deque()\n   6:->             if middleware not in self.named_request_middleware[_rn]:\n   7:                   self.named_request_middleware[_rn].append(middleware)\n   8:       if attach_to == 'response':\n   9:           for _rn in route_names:",
+      "ast_subtree_json": {
+        "_type": "If",
+        "test": {
+          "_type": "Compare",
+          "left": {
+            "_type": "Name"
+          },
+          "ops": [
+            {
+              "_type": "NotIn"
+            }
+          ],
+          "comparators": [
+            {
+              "_type": "Subscript"
+            }
+          ]
+        },
+        "body": [
+          {
+            "_type": "Expr",
+            "value": {
+              "_type": "Call"
+            }
+          }
+        ],
+        "orelse": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": 44.6
+    },
+    {
+      "line": 5,
+      "line_absolute": 646,
+      "node_id": 46,
+      "node_id_local": 4,
+      "type": "Call",
+      "code": "deque()",
+      "distance_to_buggy": 8,
+      "context": "   2:       if attach_to == 'request':\n   3:           for _rn in route_names:\n   4:               if _rn not in self.named_request_middleware:\n   5:->                 self.named_request_middleware[_rn] = deque()\n   6:               if middleware not in self.named_request_middleware[_rn]:\n   7:                   self.named_request_middleware[_rn].append(middleware)\n   8:       if attach_to == 'response':",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Name",
+          "id": "deque",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [],
+        "keywords": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": 58.0
+    }
+  ]
+}

@@ -1,0 +1,981 @@
+{
+  "bug_id": "35",
+  "seed": 42,
+  "arm": "full",
+  "candidates": [
+    {
+      "index": 0,
+      "patch_text": "def _get_with(self, key):\n    if isinstance(key, slice):\n        return self._slice(key)\n    elif isinstance(key, ABCDataFrame):\n        raise TypeError('Indexing a Series with DataFrame is not supported, use the appropriate DataFrame column')\n    elif isinstance(key, tuple):\n        try:\n            return self._get_values_tuple(key)\n        except ValueError:\n            if len(key) == 1:\n                key = key[0]\n                if isinstance(key, slice):\n                    return self._get_values(key)  # <--- BUGGY LINE\n            raise\n    if not isinstance(key, (list, np.ndarray, Series, Index)):\n        key = list(key)\n    if isinstance(key, Index):\n        key_type = key.inferred_type\n    else:\n        key_type = lib.infer_dtype(key, skipna=False)\n    if key_type == 'integer':\n        if self.index.is_integer() or self.index.is_floating():\n            return self.loc[key]\n        elif isinstance(self.index, IntervalIndex):\n            indexer = self.index.get_indexer_for(key)\n            return self.iloc[indexer]\n        else:\n            return self._get_values(key)\n    if isinstance(key, (list, tuple)):\n        if len(key) == 1 and isinstance(key[0], slice):\n            return self._get_values(key)\n        return self.loc[key]\n    return self.reindex(key)\n\n##correct\ndef _get_with(self, key):\n    if isinstance(key, slice):\n        return self._slice(key)\n    elif isinstance(key, ABCDataFrame):\n        raise TypeError('Indexing a Series with DataFrame is not supported, use the appropriate DataFrame column')\n    elif isinstance(key, tuple):\n        try:\n            return self._get_values_tuple(key)\n        except ValueError:\n            if len(key) == 1:\n                key = key[0]\n                if isinstance(key, slice):\n                    return self._get_values(key)  # <--- BUGGY LINE\n            raise\n    if not isinstance(key, (list, np.ndarray, Series, Index)):\n        key = list(key)\n    if isinstance(key, Index):\n        key_type = key.inferred_type\n    else:\n        key_type = lib.infer_dtype(key, skipna=False)\n    if key_type == 'integer':\n        if self.index.is_integer() or self.index.is_floating():\n            return self.loc[key]\n        elif isinstance(self.index, IntervalIndex):\n            indexer = self.index.get_indexer_for(key)\n            return self.iloc[indexer]\n        else:\n            return self._get_values(key)\n    if isinstance(key, (list, tuple)):\n        if len(key) == 1 and isinstance(key[0], slice):\n            return",
+      "patch_sha256": "6cfc9aa86cff7c783d5ed65ec9d8a07a157acc50fe022cb43417f29f66332c09",
+      "rank_score": 180,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8895986980815249,
+      "top_p": 0.7769551066103534
+    }
+  ],
+  "candidate_count": 1,
+  "retrieved_examples": [
+    {
+      "id": "36",
+      "project_name": "pandas",
+      "buggy_line_content": "            self.df = df",
+      "function": {
+        "function_name": "__init__",
+        "function_parent": "ExcelFormatter",
+        "function_before_start_line": 372,
+        "function_before_end_line": 414,
+        "function_after_start_line": 372,
+        "function_after_end_line": 414,
+        "function_before_token_count": 240,
+        "function_after_token_count": 247,
+        "function_before": "def __init__(self, df, na_rep: str='', float_format: Optional[str]=None, cols: Optional[Sequence[Label]]=None, header: Union[Sequence[Label], bool]=True, index: bool=True, index_label: Optional[Union[Label, Sequence[Label]]]=None, merge_cells: bool=False, inf_rep: str='inf', style_converter: Optional[Callable]=None):\n    self.rowcounter = 0\n    self.na_rep = na_rep\n    if hasattr(df, 'render'):\n        self.styler = df\n        df = df.data\n        if style_converter is None:\n            style_converter = CSSToExcelConverter()\n        self.style_converter = style_converter\n    else:\n        self.styler = None\n    self.df = df\n    if cols is not None:\n        if not len(Index(cols) & df.columns):\n            raise KeyError('passes columns are not ALL present dataframe')\n        if len(Index(cols) & df.columns) != len(cols):\n            raise KeyError(\"Not all names specified in 'columns' are found\")\n        self.df = df\n    self.columns = self.df.columns\n    self.float_format = float_format\n    self.index = index\n    self.index_label = index_label\n    self.header = header\n    self.merge_cells = merge_cells\n    self.inf_rep = inf_rep",
+        "function_after": "def __init__(self, df, na_rep: str='', float_format: Optional[str]=None, cols: Optional[Sequence[Label]]=None, header: Union[Sequence[Label], bool]=True, index: bool=True, index_label: Optional[Union[Label, Sequence[Label]]]=None, merge_cells: bool=False, inf_rep: str='inf', style_converter: Optional[Callable]=None):\n    self.rowcounter = 0\n    self.na_rep = na_rep\n    if hasattr(df, 'render'):\n        self.styler = df\n        df = df.data\n        if style_converter is None:\n            style_converter = CSSToExcelConverter()\n        self.style_converter = style_converter\n    else:\n        self.styler = None\n    self.df = df\n    if cols is not None:\n        if not len(Index(cols) & df.columns):\n            raise KeyError('passes columns are not ALL present dataframe')\n        if len(Index(cols) & df.columns) != len(cols):\n            raise KeyError(\"Not all names specified in 'columns' are found\")\n        self.df = df.reindex(columns=cols)\n    self.columns = self.df.columns\n    self.float_format = float_format\n    self.index = index\n    self.index_label = index_label\n    self.header = header\n    self.merge_cells = merge_cells\n    self.inf_rep = inf_rep"
+      },
+      "file_name": "excel.py",
+      "file_path": "pandas/io/formats/excel.py",
+      "score_reranked": 0.7599940913776997
+    },
+    {
+      "id": "39",
+      "project_name": "pandas",
+      "buggy_line_content": "            except (TypeError, ValueError):",
+      "function": {
+        "function_name": "_try_convert_data",
+        "function_parent": "Parser",
+        "function_before_start_line": 886,
+        "function_before_end_line": 958,
+        "function_after_start_line": 886,
+        "function_after_end_line": 958,
+        "function_before_token_count": 277,
+        "function_after_token_count": 279,
+        "function_before": "def _try_convert_data(self, name, data, use_dtypes=True, convert_dates=True):\n    \"\"\"\n        Try to parse a ndarray like into a column by inferring dtype.\n        \"\"\"\n    if use_dtypes:\n        if not self.dtype:\n            return (data, False)\n        elif self.dtype is True:\n            pass\n        else:\n            dtype = self.dtype.get(name) if isinstance(self.dtype, dict) else self.dtype\n            if dtype is not None:\n                try:\n                    dtype = np.dtype(dtype)\n                    return (data.astype(dtype), True)\n                except (TypeError, ValueError):\n                    return (data, False)\n    if convert_dates:\n        new_data, result = self._try_convert_to_date(data)\n        if result:\n            return (new_data, True)\n    result = False\n    if data.dtype == 'object':\n        try:\n            data = data.astype('float64')\n            result = True\n        except (TypeError, ValueError):\n            pass\n    if data.dtype.kind == 'f':\n        if data.dtype != 'float64':\n            try:\n                data = data.astype('float64')\n                result = True\n            except (TypeError, ValueError):\n                pass\n    if len(data) and (data.dtype == 'float' or data.dtype == 'object'):\n        try:\n            new_data = data.astype('int64')\n            if (new_data == data).all():\n                data = new_data\n                result = True\n        except (TypeError, ValueError):\n            pass\n    if data.dtype == 'int':\n        try:\n            data = data.astype('int64')\n            result = True\n        except (TypeError, ValueError):\n            pass\n    return (data, result)",
+        "function_after": "def _try_convert_data(self, name, data, use_dtypes=True, convert_dates=True):\n    \"\"\"\n        Try to parse a ndarray like into a column by inferring dtype.\n        \"\"\"\n    if use_dtypes:\n        if not self.dtype:\n            return (data, False)\n        elif self.dtype is True:\n            pass\n        else:\n            dtype = self.dtype.get(name) if isinstance(self.dtype, dict) else self.dtype\n            if dtype is not None:\n                try:\n                    dtype = np.dtype(dtype)\n                    return (data.astype(dtype), True)\n                except (TypeError, ValueError):\n                    return (data, False)\n    if convert_dates:\n        new_data, result = self._try_convert_to_date(data)\n        if result:\n            return (new_data, True)\n    result = False\n    if data.dtype == 'object':\n        try:\n            data = data.astype('float64')\n            result = True\n        except (TypeError, ValueError):\n            pass\n    if data.dtype.kind == 'f':\n        if data.dtype != 'float64':\n            try:\n                data = data.astype('float64')\n                result = True\n            except (TypeError, ValueError):\n                pass\n    if len(data) and (data.dtype == 'float' or data.dtype == 'object'):\n        try:\n            new_data = data.astype('int64')\n            if (new_data == data).all():\n                data = new_data\n                result = True\n        except (TypeError, ValueError, OverflowError):\n            pass\n    if data.dtype == 'int':\n        try:\n            data = data.astype('int64')\n            result = True\n        except (TypeError, ValueError):\n            pass\n    return (data, result)"
+      },
+      "file_name": "_json.py",
+      "file_path": "pandas/io/json/_json.py",
+      "score_reranked": 0.6827157595636828
+    },
+    {
+      "id": "37",
+      "project_name": "pandas",
+      "buggy_line_content": "                elif is_integer(i) and not ax.holds_integer():",
+      "function": {
+        "function_name": "_convert_key",
+        "function_parent": "_AtIndexer",
+        "function_before_start_line": 2110,
+        "function_before_end_line": 2133,
+        "function_after_start_line": 2110,
+        "function_after_end_line": 2133,
+        "function_before_token_count": 82,
+        "function_after_token_count": 90,
+        "function_before": "def _convert_key(self, key, is_setter: bool=False):\n    \"\"\"\n        Require they keys to be the same type as the index. (so we don't\n        fallback)\n        \"\"\"\n    if is_setter:\n        return list(key)\n    for ax, i in zip(self.obj.axes, key):\n        if ax.is_integer():\n            if not is_integer(i):\n                raise ValueError('At based indexing on an integer index can only have integer indexers')\n        elif is_integer(i) and not ax.holds_integer():\n            raise ValueError('At based indexing on an non-integer index can only have non-integer indexers')\n    return key",
+        "function_after": "def _convert_key(self, key, is_setter: bool=False):\n    \"\"\"\n        Require they keys to be the same type as the index. (so we don't\n        fallback)\n        \"\"\"\n    if is_setter:\n        return list(key)\n    for ax, i in zip(self.obj.axes, key):\n        if ax.is_integer():\n            if not is_integer(i):\n                raise ValueError('At based indexing on an integer index can only have integer indexers')\n        elif is_integer(i) and (not (ax.holds_integer() or ax.is_floating())):\n            raise ValueError('At based indexing on an non-integer index can only have non-integer indexers')\n    return key"
+      },
+      "file_name": "indexing.py",
+      "file_path": "pandas/core/indexing.py",
+      "score_reranked": 0.6665472893727168
+    },
+    {
+      "id": "28",
+      "project_name": "scrapy",
+      "buggy_line_content": "        if ':' not in self._url:",
+      "function": {
+        "function_name": "_set_url",
+        "function_parent": "Request",
+        "function_before_start_line": 62,
+        "function_before_end_line": 70,
+        "function_after_start_line": 62,
+        "function_after_end_line": 70,
+        "function_before_token_count": 65,
+        "function_after_token_count": 79,
+        "function_before": "def _set_url(self, url):\n    if not isinstance(url, six.string_types):\n        raise TypeError('Request url must be str or unicode, got %s:' % type(url).__name__)\n    s = safe_url_string(url, self.encoding)\n    self._url = escape_ajax(s)\n    if ':' not in self._url:\n        raise ValueError('Missing scheme in request url: %s' % self._url)",
+        "function_after": "def _set_url(self, url):\n    if not isinstance(url, six.string_types):\n        raise TypeError('Request url must be str or unicode, got %s:' % type(url).__name__)\n    s = safe_url_string(url, self.encoding)\n    self._url = escape_ajax(s)\n    if '://' not in self._url and (not self._url.startswith('data:')):\n        raise ValueError('Missing scheme in request url: %s' % self._url)"
+      },
+      "file_name": "__init__.py",
+      "file_path": "scrapy/http/request/__init__.py",
+      "score_reranked": 0.6410662387150429
+    },
+    {
+      "id": "32",
+      "project_name": "pandas",
+      "buggy_line_content": "            except (ValueError, OverflowError):",
+      "function": {
+        "function_name": "_try_convert_to_date",
+        "function_parent": "Parser",
+        "function_before_start_line": 953,
+        "function_before_end_line": 988,
+        "function_after_start_line": 953,
+        "function_after_end_line": 988,
+        "function_before_token_count": 154,
+        "function_after_token_count": 156,
+        "function_before": "def _try_convert_to_date(self, data):\n    \"\"\"\n        Try to parse a ndarray like into a date column.\n\n        Try to coerce object in epoch/iso formats and integer/float in epoch\n        formats. Return a boolean if parsing was successful.\n        \"\"\"\n    if not len(data):\n        return (data, False)\n    new_data = data\n    if new_data.dtype == 'object':\n        try:\n            new_data = data.astype('int64')\n        except (TypeError, ValueError, OverflowError):\n            pass\n    if issubclass(new_data.dtype.type, np.number):\n        in_range = isna(new_data._values) | (new_data > self.min_stamp) | (new_data._values == iNaT)\n        if not in_range.all():\n            return (data, False)\n    date_units = (self.date_unit,) if self.date_unit else self._STAMP_UNITS\n    for date_unit in date_units:\n        try:\n            new_data = to_datetime(new_data, errors='raise', unit=date_unit)\n        except (ValueError, OverflowError):\n            continue\n        return (new_data, True)\n    return (data, False)",
+        "function_after": "def _try_convert_to_date(self, data):\n    \"\"\"\n        Try to parse a ndarray like into a date column.\n\n        Try to coerce object in epoch/iso formats and integer/float in epoch\n        formats. Return a boolean if parsing was successful.\n        \"\"\"\n    if not len(data):\n        return (data, False)\n    new_data = data\n    if new_data.dtype == 'object':\n        try:\n            new_data = data.astype('int64')\n        except (TypeError, ValueError, OverflowError):\n            pass\n    if issubclass(new_data.dtype.type, np.number):\n        in_range = isna(new_data._values) | (new_data > self.min_stamp) | (new_data._values == iNaT)\n        if not in_range.all():\n            return (data, False)\n    date_units = (self.date_unit,) if self.date_unit else self._STAMP_UNITS\n    for date_unit in date_units:\n        try:\n            new_data = to_datetime(new_data, errors='raise', unit=date_unit)\n        except (ValueError, OverflowError, TypeError):\n            continue\n        return (new_data, True)\n    return (data, False)"
+      },
+      "file_name": "_json.py",
+      "file_path": "pandas/io/json/_json.py",
+      "score_reranked": 0.632878322787551
+    }
+  ],
+  "diffusion_plan": [
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "GuardAdd",
+          "node": 23
+        },
+        {
+          "op": "Replace",
+          "node": 23
+        },
+        {
+          "op": "Delete",
+          "node": 8
+        },
+        {
+          "op": "Replace",
+          "node": 24
+        },
+        {
+          "op": "Replace",
+          "node": 8
+        },
+        {
+          "op": "Replace",
+          "node": 22
+        },
+        {
+          "op": "InsertAfter",
+          "node": 7
+        },
+        {
+          "op": "Replace",
+          "node": 53
+        },
+        {
+          "op": "GuardAdd",
+          "node": 8
+        },
+        {
+          "op": "GuardAdd",
+          "node": 22
+        },
+        {
+          "op": "Replace",
+          "node": 149
+        },
+        {
+          "op": "Delete",
+          "node": 149
+        },
+        {
+          "op": "InsertBefore",
+          "node": 100
+        }
+      ],
+      "score": 18.8090909074719
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "InsertAfter",
+          "node": 24
+        },
+        {
+          "op": "GuardAdd",
+          "node": 23
+        },
+        {
+          "op": "GuardAdd",
+          "node": 24
+        },
+        {
+          "op": "Replace",
+          "node": 8
+        },
+        {
+          "op": "Replace",
+          "node": 101
+        },
+        {
+          "op": "Replace",
+          "node": 53
+        },
+        {
+          "op": "GuardAdd",
+          "node": 8
+        },
+        {
+          "op": "GuardAdd",
+          "node": 53
+        },
+        {
+          "op": "Replace",
+          "node": 22
+        },
+        {
+          "op": "Replace",
+          "node": 149
+        }
+      ],
+      "score": 17.436363634869423
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 24
+        },
+        {
+          "op": "Replace",
+          "node": 8
+        },
+        {
+          "op": "Replace",
+          "node": 149
+        },
+        {
+          "op": "Replace",
+          "node": 23
+        },
+        {
+          "op": "Replace",
+          "node": 101
+        },
+        {
+          "op": "GuardAdd",
+          "node": 8
+        },
+        {
+          "op": "GuardAdd",
+          "node": 23
+        },
+        {
+          "op": "Replace",
+          "node": 53
+        }
+      ],
+      "score": 17.109090907808266
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 23
+        },
+        {
+          "op": "Replace",
+          "node": 24
+        },
+        {
+          "op": "Replace",
+          "node": 22
+        },
+        {
+          "op": "Replace",
+          "node": 8
+        },
+        {
+          "op": "GuardAdd",
+          "node": 23
+        },
+        {
+          "op": "Replace",
+          "node": 101
+        },
+        {
+          "op": "Replace",
+          "node": 7
+        },
+        {
+          "op": "GuardAdd",
+          "node": 24
+        }
+      ],
+      "score": 16.618181816943803
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 149
+        },
+        {
+          "op": "Replace",
+          "node": 53
+        },
+        {
+          "op": "Replace",
+          "node": 24
+        },
+        {
+          "op": "Replace",
+          "node": 101
+        },
+        {
+          "op": "GuardAdd",
+          "node": 23
+        },
+        {
+          "op": "Replace",
+          "node": 23
+        },
+        {
+          "op": "Replace",
+          "node": 100
+        },
+        {
+          "op": "Replace",
+          "node": 8
+        }
+      ],
+      "score": 15.854545453376861
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 8
+        },
+        {
+          "op": "Replace",
+          "node": 101
+        },
+        {
+          "op": "Replace",
+          "node": 24
+        },
+        {
+          "op": "Replace",
+          "node": 23
+        },
+        {
+          "op": "Replace",
+          "node": 100
+        },
+        {
+          "op": "GuardAdd",
+          "node": 101
+        },
+        {
+          "op": "Replace",
+          "node": 149
+        },
+        {
+          "op": "Replace",
+          "node": 53
+        }
+      ],
+      "score": 15.636363635214877
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Delete",
+          "node": 23
+        },
+        {
+          "op": "Replace",
+          "node": 53
+        },
+        {
+          "op": "GuardAdd",
+          "node": 149
+        },
+        {
+          "op": "Replace",
+          "node": 101
+        },
+        {
+          "op": "Replace",
+          "node": 23
+        },
+        {
+          "op": "Replace",
+          "node": 24
+        },
+        {
+          "op": "Replace",
+          "node": 8
+        },
+        {
+          "op": "GuardAdd",
+          "node": 23
+        },
+        {
+          "op": "Replace",
+          "node": 22
+        }
+      ],
+      "score": 15.563636362312398
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 24
+        },
+        {
+          "op": "GuardAdd",
+          "node": 149
+        },
+        {
+          "op": "GuardAdd",
+          "node": 8
+        },
+        {
+          "op": "Replace",
+          "node": 53
+        },
+        {
+          "op": "Replace",
+          "node": 23
+        },
+        {
+          "op": "GuardAdd",
+          "node": 7
+        },
+        {
+          "op": "InsertAfter",
+          "node": 24
+        },
+        {
+          "op": "Replace",
+          "node": 22
+        },
+        {
+          "op": "Replace",
+          "node": 21
+        },
+        {
+          "op": "Replace",
+          "node": 8
+        }
+      ],
+      "score": 15.399999998690909
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 8
+        },
+        {
+          "op": "Replace",
+          "node": 24
+        },
+        {
+          "op": "GuardAdd",
+          "node": 23
+        },
+        {
+          "op": "Replace",
+          "node": 23
+        },
+        {
+          "op": "Replace",
+          "node": 53
+        },
+        {
+          "op": "GuardAdd",
+          "node": 149
+        },
+        {
+          "op": "Replace",
+          "node": 7
+        },
+        {
+          "op": "Replace",
+          "node": 22
+        }
+      ],
+      "score": 15.072727271629754
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 8
+        },
+        {
+          "op": "Replace",
+          "node": 100
+        },
+        {
+          "op": "GuardAdd",
+          "node": 149
+        },
+        {
+          "op": "Replace",
+          "node": 53
+        },
+        {
+          "op": "Replace",
+          "node": 101
+        },
+        {
+          "op": "Replace",
+          "node": 24
+        },
+        {
+          "op": "Replace",
+          "node": 149
+        },
+        {
+          "op": "Replace",
+          "node": 23
+        }
+      ],
+      "score": 14.981818180728927
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 24
+        },
+        {
+          "op": "Replace",
+          "node": 23
+        },
+        {
+          "op": "Replace",
+          "node": 8
+        },
+        {
+          "op": "Replace",
+          "node": 100
+        },
+        {
+          "op": "Delete",
+          "node": 21
+        },
+        {
+          "op": "Replace",
+          "node": 101
+        },
+        {
+          "op": "Replace",
+          "node": 53
+        },
+        {
+          "op": "GuardAdd",
+          "node": 101
+        }
+      ],
+      "score": 14.85454545346777
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 8
+        },
+        {
+          "op": "Replace",
+          "node": 24
+        },
+        {
+          "op": "GuardAdd",
+          "node": 8
+        },
+        {
+          "op": "Replace",
+          "node": 101
+        },
+        {
+          "op": "GuardAdd",
+          "node": 101
+        },
+        {
+          "op": "GuardAdd",
+          "node": 149
+        },
+        {
+          "op": "GuardAdd",
+          "node": 53
+        }
+      ],
+      "score": 14.818181817107439
+    }
+  ],
+  "static_analysis_nodes": [
+    {
+      "line": 33,
+      "line_absolute": 916,
+      "node_id": 24,
+      "node_id_local": 50,
+      "type": "Call",
+      "code": "self.reindex(key)",
+      "distance_to_buggy": 4,
+      "context": "  30:           if len(key) == 1 and isinstance(key[0], slice):\n  31:               return self._get_values(key)\n  32:           return self.loc[key]\n  33:->     return self.reindex(key)",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Attribute",
+          "value": {
+            "_type": "Name"
+          },
+          "attr": "reindex",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [
+          {
+            "_type": "Name",
+            "id": "key",
+            "ctx": {
+              "_type": "Load"
+            }
+          }
+        ],
+        "keywords": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": 15.0
+    },
+    {
+      "line": 33,
+      "line_absolute": 916,
+      "node_id": 8,
+      "node_id_local": 49,
+      "type": "Return",
+      "code": "return self.reindex(key)",
+      "distance_to_buggy": 4,
+      "context": "  30:           if len(key) == 1 and isinstance(key[0], slice):\n  31:               return self._get_values(key)\n  32:           return self.loc[key]\n  33:->     return self.reindex(key)",
+      "ast_subtree_json": {
+        "_type": "Return",
+        "value": {
+          "_type": "Call",
+          "func": {
+            "_type": "Attribute"
+          },
+          "args": [
+            {
+              "_type": "Name"
+            }
+          ],
+          "keywords": []
+        }
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": 17.0
+    },
+    {
+      "line": 32,
+      "line_absolute": 915,
+      "node_id": 23,
+      "node_id_local": 48,
+      "type": "Return",
+      "code": "return self.loc[key]",
+      "distance_to_buggy": 5,
+      "context": "  29:       if isinstance(key, (list, tuple)):\n  30:           if len(key) == 1 and isinstance(key[0], slice):\n  31:               return self._get_values(key)\n  32:->         return self.loc[key]\n  33:       return self.reindex(key)",
+      "ast_subtree_json": {
+        "_type": "Return",
+        "value": {
+          "_type": "Subscript",
+          "value": {
+            "_type": "Attribute"
+          },
+          "slice": {
+            "_type": "Name"
+          },
+          "ctx": {
+            "_type": "Load"
+          }
+        }
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": 26.5
+    },
+    {
+      "line": 31,
+      "line_absolute": 914,
+      "node_id": 101,
+      "node_id_local": 47,
+      "type": "Call",
+      "code": "self._get_values(key)",
+      "distance_to_buggy": 6,
+      "context": "  28:               return self._get_values(key)\n  29:       if isinstance(key, (list, tuple)):\n  30:           if len(key) == 1 and isinstance(key[0], slice):\n  31:->             return self._get_values(key)\n  32:           return self.loc[key]\n  33:       return self.reindex(key)",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Attribute",
+          "value": {
+            "_type": "Name"
+          },
+          "attr": "_get_values",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [
+          {
+            "_type": "Name",
+            "id": "key",
+            "ctx": {
+              "_type": "Load"
+            }
+          }
+        ],
+        "keywords": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": 36.0
+    },
+    {
+      "line": 31,
+      "line_absolute": 914,
+      "node_id": 53,
+      "node_id_local": 46,
+      "type": "Return",
+      "code": "return self._get_values(key)",
+      "distance_to_buggy": 6,
+      "context": "  28:               return self._get_values(key)\n  29:       if isinstance(key, (list, tuple)):\n  30:           if len(key) == 1 and isinstance(key[0], slice):\n  31:->             return self._get_values(key)\n  32:           return self.loc[key]\n  33:       return self.reindex(key)",
+      "ast_subtree_json": {
+        "_type": "Return",
+        "value": {
+          "_type": "Call",
+          "func": {
+            "_type": "Attribute"
+          },
+          "args": [
+            {
+              "_type": "Name"
+            }
+          ],
+          "keywords": []
+        }
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": 38.0
+    },
+    {
+      "line": 30,
+      "line_absolute": 913,
+      "node_id": 22,
+      "node_id_local": 43,
+      "type": "If",
+      "code": "if len(key) == 1 and isinstance(key[0], slice):\n    return self._get_values(key)",
+      "distance_to_buggy": 7,
+      "context": "  27:           else:\n  28:               return self._get_values(key)\n  29:       if isinstance(key, (list, tuple)):\n  30:->         if len(key) == 1 and isinstance(key[0], slice):\n  31:               return self._get_values(key)\n  32:           return self.loc[key]\n  33:       return self.reindex(key)",
+      "ast_subtree_json": {
+        "_type": "If",
+        "test": {
+          "_type": "BoolOp",
+          "op": {
+            "_type": "And"
+          },
+          "values": [
+            {
+              "_type": "Compare"
+            },
+            {
+              "_type": "Call"
+            }
+          ]
+        },
+        "body": [
+          {
+            "_type": "Return",
+            "value": {
+              "_type": "Call"
+            }
+          }
+        ],
+        "orelse": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": 44.0
+    },
+    {
+      "line": 30,
+      "line_absolute": 913,
+      "node_id": 149,
+      "node_id_local": 44,
+      "type": "Call",
+      "code": "len(key)",
+      "distance_to_buggy": 7,
+      "context": "  27:           else:\n  28:               return self._get_values(key)\n  29:       if isinstance(key, (list, tuple)):\n  30:->         if len(key) == 1 and isinstance(key[0], slice):\n  31:               return self._get_values(key)\n  32:           return self.loc[key]\n  33:       return self.reindex(key)",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Name",
+          "id": "len",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [
+          {
+            "_type": "Name",
+            "id": "key",
+            "ctx": {
+              "_type": "Load"
+            }
+          }
+        ],
+        "keywords": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": 44.5
+    },
+    {
+      "line": 30,
+      "line_absolute": 913,
+      "node_id": 100,
+      "node_id_local": 45,
+      "type": "Call",
+      "code": "isinstance(key[0], slice)",
+      "distance_to_buggy": 7,
+      "context": "  27:           else:\n  28:               return self._get_values(key)\n  29:       if isinstance(key, (list, tuple)):\n  30:->         if len(key) == 1 and isinstance(key[0], slice):\n  31:               return self._get_values(key)\n  32:           return self.loc[key]\n  33:       return self.reindex(key)",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Name",
+          "id": "isinstance",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [
+          {
+            "_type": "Subscript",
+            "value": {
+              "_type": "Name"
+            },
+            "slice": {
+              "_type": "Constant"
+            },
+            "ctx": {
+              "_type": "Load"
+            }
+          },
+          {
+            "_type": "Name",
+            "id": "slice",
+            "ctx": {
+              "_type": "Load"
+            }
+          }
+        ],
+        "keywords": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": 44.5
+    },
+    {
+      "line": 29,
+      "line_absolute": 912,
+      "node_id": 7,
+      "node_id_local": 41,
+      "type": "If",
+      "code": "if isinstance(key, (list, tuple)):\n    if len(key) == 1 and isinstance(key[0], slice):\n        return self._get_values(key)\n    return self.loc[key]",
+      "distance_to_buggy": 8,
+      "context": "  26:               return self.iloc[indexer]\n  27:           else:\n  28:               return self._get_values(key)\n  29:->     if isinstance(key, (list, tuple)):\n  30:           if len(key) == 1 and isinstance(key[0], slice):\n  31:               return self._get_values(key)\n  32:           return self.loc[key]",
+      "ast_subtree_json": {
+        "_type": "If",
+        "test": {
+          "_type": "Call",
+          "func": {
+            "_type": "Name"
+          },
+          "args": [
+            {
+              "_type": "Name"
+            },
+            {
+              "_type": "Tuple"
+            }
+          ],
+          "keywords": []
+        },
+        "body": [
+          {
+            "_type": "If",
+            "test": {
+              "_type": "BoolOp"
+            },
+            "body": [
+              {
+                "_type": "Return"
+              }
+            ],
+            "orelse": []
+          },
+          {
+            "_type": "Return",
+            "value": {
+              "_type": "Subscript"
+            }
+          }
+        ],
+        "orelse": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": 54.0
+    },
+    {
+      "line": 29,
+      "line_absolute": 912,
+      "node_id": 21,
+      "node_id_local": 42,
+      "type": "Call",
+      "code": "isinstance(key, (list, tuple))",
+      "distance_to_buggy": 8,
+      "context": "  26:               return self.iloc[indexer]\n  27:           else:\n  28:               return self._get_values(key)\n  29:->     if isinstance(key, (list, tuple)):\n  30:           if len(key) == 1 and isinstance(key[0], slice):\n  31:               return self._get_values(key)\n  32:           return self.loc[key]",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Name",
+          "id": "isinstance",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [
+          {
+            "_type": "Name",
+            "id": "key",
+            "ctx": {
+              "_type": "Load"
+            }
+          },
+          {
+            "_type": "Tuple",
+            "elts": [
+              {
+                "_type": "Name"
+              },
+              {
+                "_type": "Name"
+              }
+            ],
+            "ctx": {
+              "_type": "Load"
+            }
+          }
+        ],
+        "keywords": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": 56.0
+    }
+  ]
+}

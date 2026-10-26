@@ -1,0 +1,37 @@
+{
+  "bug_id": "41",
+  "seed": 43,
+  "arm": "base",
+  "candidates": [
+    {
+      "index": 0,
+      "patch_text": "def _get_empty_dtype_and_na(join_units):\n    \"\"\"\n    Return dtype and N/A values to use when concatenating specified units.\n\n    Returned N/A value may be None which means there was no casting involved.\n\n    Returns\n    -------\n    dtype\n    na\n    \"\"\"\n    if len(join_units) == 1:\n        blk = join_units[0].block\n        if blk is None:\n            return (np.float64, np.nan)\n    if _is_uniform_reindex(join_units):\n        empty_dtype = join_units[0].block.dtype\n        upcasted_na = join_units[0].block.fill_value\n        return (empty_dtype, upcasted_na)\n    has_none_blocks = False\n    dtypes = [None] * len(join_units)\n    for i, unit in enumerate(join_units):\n        if unit.block is None:\n            has_none_blocks = True\n        else:\n            dtypes[i] = unit.dtype\n    upcast_classes = defaultdict(list)\n    null_upcast_classes = defaultdict(list)\n    for dtype, unit in zip(dtypes, join_units):\n        if dtype is None:\n            continue\n        if is_categorical_dtype(dtype):\n            upcast_cls = 'category'\n        elif is_datetime64tz_dtype(dtype):\n            upcast_cls = 'datetimetz'\n        elif is_datetime64_dtype(dtype):\n            upcast_cls = 'datetime'\n        elif is_timedelta64_dtype(dtype):\n            upcast_cls = 'timedelta'\n        elif issubclass(dtype.type, np.bool_):\n            upcast_cls = 'bool'\n        elif is_extension_array_dtype(dtype):\n            upcast_cls = 'object'\n        elif is_float_dtype(dtype) or is_numeric_dtype(dtype):\n            upcast_cls = dtype.name\n        else:\n            upcast_cls = 'float'\n        if unit.is_na:\n            null_upcast_classes[upcast_cls].append(dtype)\n        else:\n            upcast_classes[upcast_cls].append(dtype)\n    if not upcast_classes:\n        upcast_classes = null_upcast_classes\n    if 'object' in upcast_classes:\n        return (np.dtype(np.object_), np.nan)\n    elif 'bool' in upcast_classes:\n        if has_none_blocks:\n            return (np.dtype(np.object_), np.nan)\n        else:\n            return (np.dtype(np.bool_), None)\n    elif 'category' in upcast_classes:\n        return (np.dtype(np.object_), np.nan)\n    elif 'datetimetz' in upcast_classes:\n        dtype = upcast_classes['datetimetz']\n        return (dtype[0], tslibs.NaT)",
+      "patch_sha256": "9ea693330c3565b38c3222f827f92bc58390e9304cbddfee6073a852fa181c2a",
+      "rank_score": 200,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.934442110146087,
+      "top_p": 0.8256979458109642
+    },
+    {
+      "index": 1,
+      "patch_text": "def _get_empty_dtype_and_na(join_units):\n    \"\"\"\n    Return dtype and N/A values to use when concatenating specified units.\n\n    Returned N/A value may be None which means there was no casting involved.\n\n    Returns\n    -------\n    dtype\n    na\n    \"\"\"\n    if len(join_units) == 1:\n        blk = join_units[0].block\n        if blk is None:\n            return (np.float64, np.nan)\n    if _is_uniform_reindex(join_units):\n        empty_dtype = join_units[0].block.dtype\n        upcasted_na = join_units[0].block.fill_value\n        return (empty_dtype, upcasted_na)\n    has_none_blocks = False\n    dtypes = [None] * len(join_units)\n    for i, unit in enumerate(join_units):\n        if unit.block is None:\n            has_none_blocks = True\n        else:\n            dtypes[i] = unit.dtype\n    upcast_classes = defaultdict(list)\n    null_upcast_classes = defaultdict(list)\n    for dtype, unit in zip(dtypes, join_units):\n        if dtype is None:\n            continue\n        if is_categorical_dtype(dtype):\n            upcast_cls = 'category'\n        elif is_datetime64tz_dtype(dtype):\n            upcast_cls = 'datetimetz'\n        elif is_datetime64_dtype(dtype):\n            upcast_cls = 'datetime'\n        elif is_timedelta64_dtype(dtype):\n            upcast_cls = 'timedelta'\n        elif issubclass(dtype.type, np.bool_):\n            upcast_cls = 'bool'\n        elif is_sparse(dtype):\n            upcast_cls = dtype.subtype.name\n        elif is_extension_array_dtype(dtype):\n            upcast_cls = 'object'\n        elif is_float_dtype(dtype) or is_numeric_dtype(dtype):\n            upcast_cls = dtype.name\n        else:\n            upcast_cls = 'float'\n        if unit.is_na:\n            null_upcast_classes[upcast_cls].append(dtype)\n        else:\n            upcast_classes[upcast_cls].append(dtype)\n    if not upcast_classes:\n        upcast_classes = null_upcast_classes\n    if 'object' in upcast_classes:\n        return (np.dtype(np.object_), np.nan)\n    elif 'bool' in upcast_classes:\n        if has_none_blocks:\n            return (np.dtype(np.object_), np.nan)\n        else:\n            return (np.dtype(np.bool_), None)\n    elif 'category' in upcast_classes:\n        return (np.dtype(np.object_), np.nan)\n    elif 'datetimetz' in upcast_classes:\n        dtype = upcast_classes",
+      "patch_sha256": "a7a3acb8750051fbf3796df676d05650be6b36c76ff74ba3a0fa845029ceca7b",
+      "rank_score": 200,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.5051876220100471,
+      "top_p": 0.9515146577116289
+    }
+  ],
+  "candidate_count": 2,
+  "retrieved_examples": [],
+  "diffusion_plan": [],
+  "static_analysis_nodes": []
+}

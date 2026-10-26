@@ -1,0 +1,10 @@
+{
+  "bug_id": "68",
+  "seed": 42,
+  "arm": "base",
+  "candidates": [],
+  "candidate_count": 0,
+  "retrieved_examples": [],
+  "diffusion_plan": [],
+  "static_analysis_nodes": []
+}

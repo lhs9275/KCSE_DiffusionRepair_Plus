@@ -1,0 +1,141 @@
+{
+  "bug_id": "50",
+  "seed": 43,
+  "arm": "base",
+  "candidates": [
+    {
+      "index": 0,
+      "patch_text": "def get_new_command(command, settings):\n    return re.sub('^mkdir (.*)','mkdir -p \\\\1', command.script)",
+      "patch_sha256": "6f809107172ce3f30b549570c604b78e5bf8952a5d78cddcfbb3638c8b11879f",
+      "rank_score": 159,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.0,
+      "top_p": 1.0
+    },
+    {
+      "index": 1,
+      "patch_text": "def get_new_command(command, settings):\n    return'mkdir -p'+ re.sub('^mkdir (.*)', '\\\\1', command.script)",
+      "patch_sha256": "31798a445bc625d89374a356b55f3f6d66a5951025292d14f401934b004c9894",
+      "rank_score": 155,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.9326332018390676,
+      "top_p": 0.8237317411294214
+    },
+    {
+      "index": 2,
+      "patch_text": "def get_new_command(command, settings):\n    return re.sub(r'^(\\w+)', r'kill -9 \\1', command.script)  # <--- BUGGY LINE",
+      "patch_sha256": "77a79e8a84a4ff0cdf1799501da011c383d5cae067f52f494802a5074cef1497",
+      "rank_score": 155,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.9326332018390676,
+      "top_p": 0.8237317411294214
+    },
+    {
+      "index": 3,
+      "patch_text": "def get_new_command(command, settings):\n    return'mkdir -p'+ command.script[5:]",
+      "patch_sha256": "69ca86b118fea35259f690ddf0f252a419d98df98470d9c431b99c824997e89d",
+      "rank_score": 151,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7704673177175924,
+      "top_p": 0.8630841471469904
+    },
+    {
+      "index": 4,
+      "patch_text": "def get_new_command(command, settings):\n    return'mkdir -p {}'.format(command.script)",
+      "patch_sha256": "f769b92da6ae23675e9eba77841826b82a048782f93e36cb8a22e3f828a5f4d9",
+      "rank_score": 151,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.5051876220100471,
+      "top_p": 0.9515146577116289
+    },
+    {
+      "index": 5,
+      "patch_text": "def get_new_command(command, settings):\n    return'mkdir -p \"{}\"'.format(command.script[6:])",
+      "patch_sha256": "489b9eeab8b405c11de097bb8c01b868e19b4418c1c94d7f37f0fb1b211a8d08",
+      "rank_score": 150,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.934442110146087,
+      "top_p": 0.8256979458109642
+    },
+    {
+      "index": 6,
+      "patch_text": "def get_new_command(command, settings):\n    return \"mkdir -p {}\".format(command.script)",
+      "patch_sha256": "022c672725db545b06f17c2b4868b9c7ffbebaaf9246dfa01ce703cd8d95871f",
+      "rank_score": 150,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.934442110146087,
+      "top_p": 0.8256979458109642
+    },
+    {
+      "index": 7,
+      "patch_text": "def get_new_command(command, settings):\n    return'mkdir -p {}'.format(command.script[5:])",
+      "patch_sha256": "c399c6eea3e9d55f611fc9c2fbb465615dd1a3534f4e23d4cf5b37d81dd330e6",
+      "rank_score": 150,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.9326332018390676,
+      "top_p": 0.8237317411294214
+    },
+    {
+      "index": 8,
+      "patch_text": "def get_new_command(command, settings):\n    return'mkdir -p {}'.format(shlex.quote(command.script[5:]))",
+      "patch_sha256": "d3e6cffb9acd3c80572a806d8d7890a009536eacfd2367ce2b11948cb98d43a7",
+      "rank_score": 148,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7976020643090617,
+      "top_p": 0.8970025803863271
+    },
+    {
+      "index": 9,
+      "patch_text": "def get_new_command(command, settings):\n    return'mkdir -p'+ command.script.split(' ', maxsplit=1)[1]",
+      "patch_sha256": "2d5c2590c6886e535a8f6b1bddf10514b82d59c274a16be322608fdba804274f",
+      "rank_score": 148,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.9326332018390676,
+      "top_p": 0.8237317411294214
+    }
+  ],
+  "candidate_count": 10,
+  "retrieved_examples": [],
+  "diffusion_plan": [],
+  "static_analysis_nodes": []
+}

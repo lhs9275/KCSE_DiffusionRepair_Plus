@@ -1,0 +1,99 @@
+{
+  "20": {
+    "status": "Success",
+    "nucleus_sampling_flags": [],
+    "test_evidence": [
+      {
+        "target_file_before_test_sha256": "21b0b614e1f36eb8d254ebf8a82fe078bcfb68451e9415de97ee53e69984f96a",
+        "bytecode_removed_before_test": [],
+        "command": [
+          "bugsinpy-test"
+        ],
+        "cwd": "/output/workspaces/ws_20_10_62tx67n5/youtube-dl_27/youtube-dl",
+        "stdout": "python -m unittest -q test.test_YoutubeDL.TestYoutubeDL.test_do_not_override_ie_key_in_url_transparent\nRUN EVERY COMMAND\n0\n\n\n/output/workspaces/ws_20_10_62tx67n5/youtube-dl_27/youtube-dl/youtube_dl/extractor/pandatv.py:39: SyntaxWarning: \"is not\" with a literal. Did you mean \"!=\"?\n  if error_code is not 0:\n----------------------------------------------------------------------\nRan 1 test in 0.005s\n\nOK\n",
+        "stderr": "",
+        "returncode": 0,
+        "timed_out": false,
+        "flag": "Plausible",
+        "import_root": "/output/workspaces/ws_20_10_62tx67n5/youtube-dl_27/youtube-dl",
+        "pythonpath": "/output/workspaces/ws_20_10_62tx67n5/youtube-dl_27/youtube-dl",
+        "raw_test_flag": "Plausible",
+        "target_file_after_test_sha256": "21b0b614e1f36eb8d254ebf8a82fe078bcfb68451e9415de97ee53e69984f96a",
+        "test_preserved_target_file": true,
+        "target_file_sha256": "21b0b614e1f36eb8d254ebf8a82fe078bcfb68451e9415de97ee53e69984f96a",
+        "stage": "fixed_control",
+        "bug_id": "20",
+        "candidate_index": null,
+        "patch_sha256": null
+      },
+      {
+        "target_file_before_test_sha256": "1fce7851f4f656a7c245fcc1123c17065926c161dcac62f7a800276a16a1b079",
+        "bytecode_removed_before_test": [],
+        "command": [
+          "bugsinpy-test"
+        ],
+        "cwd": "/output/workspaces/ws_20_10_62tx67n5/youtube-dl_27/youtube-dl",
+        "stdout": "python -m unittest -q test.test_YoutubeDL.TestYoutubeDL.test_do_not_override_ie_key_in_url_transparent\nRUN EVERY COMMAND\n0\n\n\n/output/workspaces/ws_20_10_62tx67n5/youtube-dl_27/youtube-dl/youtube_dl/extractor/pandatv.py:39: SyntaxWarning: \"is not\" with a literal. Did you mean \"!=\"?\n  if error_code is not 0:\n======================================================================\nFAIL: test_do_not_override_ie_key_in_url_transparent (test.test_YoutubeDL.TestYoutubeDL)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/output/workspaces/ws_20_10_62tx67n5/youtube-dl_27/youtube-dl/test/test_YoutubeDL.py\", line 792, in test_do_not_override_ie_key_in_url_transparent\n    self.assertEqual(downloaded['id'], 'testid')\nAssertionError: 'foo1_id' != 'testid'\n- foo1_id\n+ testid\n\n\n----------------------------------------------------------------------\nRan 1 test in 0.003s\n\nFAILED (failures=1)\n",
+        "stderr": "",
+        "returncode": 0,
+        "timed_out": false,
+        "flag": "Fail",
+        "import_root": "/output/workspaces/ws_20_10_62tx67n5/youtube-dl_27/youtube-dl",
+        "pythonpath": "/output/workspaces/ws_20_10_62tx67n5/youtube-dl_27/youtube-dl",
+        "raw_test_flag": "Fail",
+        "target_file_after_test_sha256": "1fce7851f4f656a7c245fcc1123c17065926c161dcac62f7a800276a16a1b079",
+        "test_preserved_target_file": true,
+        "candidate_input_sha256": "e8d8afef447ae14938061725ba80546698eb3c2780e901c92015eab421d5af04",
+        "target_file_before_sha256": "21b0b614e1f36eb8d254ebf8a82fe078bcfb68451e9415de97ee53e69984f96a",
+        "executed_function_sha256": "c846e2cf3f7b19381e1bcf73ee58fe89b253f39c78874ca7c6c91e3f91227459",
+        "target_file_during_test_sha256": "1fce7851f4f656a7c245fcc1123c17065926c161dcac62f7a800276a16a1b079",
+        "target_file_after_restore_sha256": "21b0b614e1f36eb8d254ebf8a82fe078bcfb68451e9415de97ee53e69984f96a",
+        "restore_integrity": true,
+        "restore_returncode": 0,
+        "restore_exception": null,
+        "bytecode_removed_after_restore": [],
+        "cache_cleanup_exception": null,
+        "stage": "buggy_control",
+        "bug_id": "20",
+        "candidate_index": null,
+        "patch_sha256": "e8d8afef447ae14938061725ba80546698eb3c2780e901c92015eab421d5af04"
+      },
+      {
+        "target_file_before_test_sha256": "21b0b614e1f36eb8d254ebf8a82fe078bcfb68451e9415de97ee53e69984f96a",
+        "bytecode_removed_before_test": [],
+        "command": [
+          "bugsinpy-test"
+        ],
+        "cwd": "/output/workspaces/ws_20_10_62tx67n5/youtube-dl_27/youtube-dl",
+        "stdout": "python -m unittest -q test.test_YoutubeDL.TestYoutubeDL.test_do_not_override_ie_key_in_url_transparent\nRUN EVERY COMMAND\n0\n\n\n/output/workspaces/ws_20_10_62tx67n5/youtube-dl_27/youtube-dl/youtube_dl/extractor/pandatv.py:39: SyntaxWarning: \"is not\" with a literal. Did you mean \"!=\"?\n  if error_code is not 0:\n----------------------------------------------------------------------\nRan 1 test in 0.002s\n\nOK\n",
+        "stderr": "",
+        "returncode": 0,
+        "timed_out": false,
+        "flag": "Plausible",
+        "import_root": "/output/workspaces/ws_20_10_62tx67n5/youtube-dl_27/youtube-dl",
+        "pythonpath": "/output/workspaces/ws_20_10_62tx67n5/youtube-dl_27/youtube-dl",
+        "raw_test_flag": "Plausible",
+        "target_file_after_test_sha256": "21b0b614e1f36eb8d254ebf8a82fe078bcfb68451e9415de97ee53e69984f96a",
+        "test_preserved_target_file": true,
+        "target_file_sha256": "21b0b614e1f36eb8d254ebf8a82fe078bcfb68451e9415de97ee53e69984f96a",
+        "matches_initial_fixed_file": true,
+        "stage": "restored_fixed_control",
+        "bug_id": "20",
+        "candidate_index": null,
+        "patch_sha256": null
+      }
+    ],
+    "benchmark_identity": {
+      "project": "youtube-dl",
+      "metadata_bugsinpy_id": "27",
+      "resolved_bugsinpy_id": "27",
+      "metadata_fix_commit": "0396806f671e5828c2abdeb8048acf8b654507b6",
+      "fixed_commit_id": "0396806f671e5828c2abdeb8048acf8b654507b6",
+      "buggy_commit_id": "dc6520aa3d1fe7afc52613e392f15dde90af4844",
+      "test_file": "test/test_YoutubeDL.py",
+      "bug_info_sha256": "1350b6d14b1b1f8b93036bfe3577d94e77d884a6a1c1b0b86719cb5a77ab62cf",
+      "run_test_sha256": "25b7fbba7cf9ad45f4684559cbca3104e2c25bc55f284e10a3b0cba368cf6852"
+    },
+    "result_file_sha256": "c303df05a04d6374773759e4f80b4b1bdac85a0c8b78905fa754b9fde8ce7f5e"
+  }
+}

@@ -1,0 +1,115 @@
+{
+  "bug_id": "38",
+  "seed": 44,
+  "arm": "base",
+  "candidates": [
+    {
+      "index": 0,
+      "patch_text": "def __new__(cls, data=None, unit=None, freq=None, closed=None, dtype=_TD_DTYPE, copy=False, name=None):\n    name = maybe_extract_name(name, data, cls)\n    if is_scalar(data):\n        raise TypeError(f'{cls.__name__}() must be called with a collection of some kind, {repr(data)} was passed')\n    if unit in {'Y', 'y', 'M'}:\n        raise ValueError(\"Units 'M' and 'Y' are no longer supported, as they do not represent unambiguous timedelta values durations.\")\n    if isinstance(data, TimedeltaArray):\n        if copy:\n            data = data.copy()\n        return cls._simple_new(data, name=name, freq=freq)\n    if isinstance(data, TimedeltaIndex) and freq is None and (name is None):\n        if copy:\n            return data.copy()\n        else:\n            return data._shallow_copy()\n    tdarr = TimedeltaArray._from_sequence(data, freq=freq, unit=unit, dtype=dtype, copy=copy)\n    return cls._simple_new(tdarr, name=name)/test_output/out149.md\n\n## Bug Report",
+      "patch_sha256": "b2c803c9d02cc089bed99e1ea7df0b9cf35a692cfbdc0ef2ee406d3a3165c544",
+      "rank_score": 214,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.79221930055189,
+      "top_p": 0.8902741256898625
+    },
+    {
+      "index": 1,
+      "patch_text": "def __new__(cls, data=None, unit=None, freq=None, closed=None, dtype=_TD_DTYPE, copy=False, name=None):\n    name = maybe_extract_name(name, data, cls)\n    if is_scalar(data):\n        raise TypeError(f'{cls.__name__}() must be called with a collection of some kind, {repr(data)} was passed')\n    if unit in {'Y', 'y', 'M'}:\n        raise ValueError(\"Units 'M' and 'Y' are no longer supported, as they do not represent unambiguous timedelta values durations.\")\n    if isinstance(data, TimedeltaIndex) and freq is None and (name is None):\n        if copy:\n            return data.copy()\n        else:\n            return data._shallow_copy()\n    tdarr = TimedeltaArray._from_sequence(data, freq=freq, unit=unit, dtype=dtype, copy=copy)\n    return cls._simple_new(tdarr, name=name)",
+      "patch_sha256": "09149034886b9e8bfca03722c930b95c8391c8856905fde08081736b6a1e8f8b",
+      "rank_score": 207,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7941462962722876,
+      "top_p": 0.8926828703403595
+    },
+    {
+      "index": 2,
+      "patch_text": "def __new__(cls, data=None, unit=None, freq=None, closed=None, dtype=_TD_DTYPE, copy=False, name=None):\n    name = maybe_extract_name(name, data, cls)\n    if is_scalar(data):\n        raise TypeError(f'{cls.__name__}() must be called with a collection of some kind, {repr(data)} was passed')\n    if isinstance(data, TimedeltaArray):\n        if copy:\n            data = data.copy()\n        return cls._simple_new(data, name=name, freq=freq)\n    if isinstance(data, TimedeltaIndex) and freq is None and (name is None):\n        if copy:\n            return data.copy()\n        else:\n            return data._shallow_copy()\n    tdarr = TimedeltaArray._from_sequence(data, freq=freq, unit=unit, dtype=dtype, copy=copy)\n    return cls._simple_new(tdarr, name=name)",
+      "patch_sha256": "1811c7a842ba3687c090d407c40ede5659550ffe42c08e7a9cdefa118fe563ea",
+      "rank_score": 188,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.5350607232455378,
+      "top_p": 0.98
+    },
+    {
+      "index": 3,
+      "patch_text": "def __new__(cls, data=None, unit=None, freq=None, closed=None, dtype=_TD_DTYPE, copy=False, name=None):\n    name = maybe_extract_name(name, data, cls)\n    if is_scalar(data):\n        raise TypeError(f'{cls.__name__}() must be called with a collection of some kind, {repr(data)} was passed')\n    if isinstance(data, TimedeltaIndex) and freq is None and (name is None):\n        if copy:\n            return data.copy()\n        else:\n            return data._shallow_copy()\n    tdarr = TimedeltaArray._from_sequence(data, freq=freq, unit=unit, dtype=dtype, copy=copy)\n    return cls._simple_new(tdarr, name=name)",
+      "patch_sha256": "b483266c08c023c8d56c8d1433d17282deebb1b281a105c4e9f5cc4f43a5b138",
+      "rank_score": 182,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7941462962722876,
+      "top_p": 0.8926828703403595
+    },
+    {
+      "index": 4,
+      "patch_text": "def __new__(cls, data=None, unit=None, freq=None, closed=None, dtype=_TD_DTYPE, copy=False, name=None):\n    name = maybe_extract_name(name, data, cls)\n    if is_scalar(data):\n        raise TypeError(f'{cls.__name__}() must be called with a collection of some kind, {repr(data)} was passed')\n    if unit in {'Y', 'y', 'M'}:\n        raise ValueError(\"Units 'M' and 'Y' are no longer supported, as they do not represent unambiguous timedelta values durations.\")\n    if isinstance(data, TimedeltaArray) and copy:\n        data = data.copy()\n    return cls._simple_new(data, name=name, freq=freq)",
+      "patch_sha256": "c945fbbbe605f13d233e1577cbdf11d5cac90cea7d431218022029af6e1401f7",
+      "rank_score": 175,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.9560266782037877,
+      "top_p": 0.8491594328302041
+    },
+    {
+      "index": 5,
+      "patch_text": "def __new__(cls, data=None, unit=None, freq=None, closed=None, dtype=_TD_DTYPE, copy=False, name=None):\n    name = maybe_extract_name(name, data, cls)\n    if is_scalar(data):\n        raise TypeError(f'{cls.__name__}() must be called with a collection of some kind, {repr(data)} was passed')\n    if unit in {'Y', 'y', 'M'}:\n        raise ValueError(\"Units 'M' and 'Y' are no longer supported, as they do not represent unambiguous timedelta values durations.\")\n    if copy:\n        data = data.copy()\n    return cls._simple_new(data, name=name, freq=freq)",
+      "patch_sha256": "8f2abe73cd9033a82dc28ddf4b330692224ca4ecc4501ba61f992f003e4024fc",
+      "rank_score": 174,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7941462962722876,
+      "top_p": 0.8926828703403595
+    },
+    {
+      "index": 6,
+      "patch_text": "def __new__(cls, data=None, unit=None, freq=None, closed=None, dtype=_TD_DTYPE, copy=False, name=None):\n    name = maybe_extract_name(name, data, cls)\n    if is_scalar(data):\n        raise TypeError(f'{cls.__name__}() must be called with a collection of some kind, {repr(data)} was passed')\n    if unit in {'Y', 'y', 'M'}:\n        raise ValueError(\"Units 'M' and 'Y' are no longer supported, as they do not represent unambiguous timedelta values durations.\")\n    if copy:\n        data = data.copy()\n    if isinstance(data, TimedeltaArray):\n        return cls._simple_new(data, name=name, freq=freq)\n    if isinstance(data, TimedeltaIndex) and freq is None and (name is None):\n        return data._shallow_copy()\n    tdarr = TimedeltaArray._from_sequence(data, freq=freq, unit=unit, dtype=dtype, copy=copy)\n    return cls._simple_new(tdarr, name=name)",
+      "patch_sha256": "4db896f36475a3b4c6bb681f4e158701414f1286ae437f08140b0c4d699922d8",
+      "rank_score": 172,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.9230891398700982,
+      "top_p": 0.8133577607283677
+    },
+    {
+      "index": 7,
+      "patch_text": "def __new__(cls, data=None, unit=None, freq=None, closed=None, dtype=_TD_DTYPE, copy=False, name=None):\n    name = maybe_extract_name(name, data, cls)\n    if is_scalar(data):\n        raise TypeError(f'{cls.__name__}() must be called with a collection of some kind, {repr(data)} was passed')\n    if unit in {'Y', 'y', 'M'}:\n        raise ValueError(\"Units 'M' and 'Y' are no longer supported, as they do not represent unambiguous timedelta values durations.\")\n    if isinstance(data, TimedeltaArray):\n        if copy:\n            data = data.copy()\n        return cls._simple_new(data, name=name, freq=freq)\n    if isinstance(data, TimedeltaIndex) and freq is None and (name is None):\n        if copy:\n            return data.copy()\n        else:\n            return data._shallow_copy()\n    tdarr = TimedeltaArray._from_sequence(data, freq=freq, unit=unit, dtype=dtype, copy=copy)\n    return cls._simple_new(tdarr, name=name)\n\n##diff\ndef __new__(cls, data=None, unit=None, freq=None, closed=None, dtype=_TD_DTYPE, copy=False, name=None):\n    name = maybe_extract_name(name, data, cls)\n    if is_scalar(data):\n        raise TypeError(f'{cls.__name__}() must be called with a collection of some kind, {repr(data)} was passed')\n    if unit in {'Y', 'y', 'M'}:\n        raise ValueError(\"Units 'M' and 'Y' are no longer supported, as they do not represent unambiguous timedelta values durations.\")\n    if isinstance(data, TimedeltaArray):\n        if copy:\n            data = data.copy()\n        return cls._simple_new(data, name=name, freq=freq)\n    if isinstance(data, TimedeltaIndex) and freq is None and (name is None):\n        if copy:\n            return data.copy()\n        else:\n            return data._shallow_copy()\n    tdarr = TimedeltaArray._from_sequence(data, freq=freq, unit=unit, dtype=dtype, copy=copy)\n    return cls._simple_new(tdarr, name=name)\n\n##end",
+      "patch_sha256": "402f41cb7a666cc145bfb87a301ffbd683ed3eb76b9f2625cd5ed5e66b42cc1c",
+      "rank_score": 69,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7941462962722876,
+      "top_p": 0.8926828703403595
+    }
+  ],
+  "candidate_count": 8,
+  "retrieved_examples": [],
+  "diffusion_plan": [],
+  "static_analysis_nodes": []
+}

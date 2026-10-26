@@ -1,0 +1,478 @@
+{
+  "bug_id": "51",
+  "seed": 43,
+  "arm": "full",
+  "candidates": [
+    {
+      "index": 0,
+      "patch_text": "def get_new_command(command, settings):\n    return command.script.replace(' diff','diff --staged')",
+      "patch_sha256": "515019570ab9d6b695ade33b6c398d444acc2f70ae28b911afaaa6cb7603d0c1",
+      "rank_score": 196,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7704673177175924,
+      "top_p": 0.8630841471469904
+    },
+    {
+      "index": 1,
+      "patch_text": "def get_new_command(command, settings):\n    return command.script.replace('diff', 'diff --staged')",
+      "patch_sha256": "3e265d90d40354c0dd041f62f0fb6fc22187839606bbb5040d68fdef036bd128",
+      "rank_score": 196,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7704673177175924,
+      "top_p": 0.8630841471469904
+    },
+    {
+      "index": 2,
+      "patch_text": "def get_new_command(command, settings):\n    return 'open http://' + command.script[5:]\n\n#edit2\ndef get_new_command(command, settings):\n    return 'open http://' + command.script[5:]\n\n#edit3\ndef get_new_command(command, settings):\n    return 'open http://' + command.script[5:]\n\n#edit4\ndef get_new_command(command, settings):\n    return 'open http://' + command.script[5:]\n\n#edit5\ndef get_new_command(command, settings):\n    return 'open http://' + command.script[5:]",
+      "patch_sha256": "cdda4bcac4dc96c0d80506707261af5d6f099aee26da0156b65f36c61c64997a",
+      "rank_score": 34,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.5346552071407396,
+      "top_p": 0.98
+    },
+    {
+      "index": 3,
+      "patch_text": "def get_new_command(command, settings):\n    return command.script.replace('diff', 'diff --staged')\n\n##end\n\n# Generated from grammars/Python3/Python3Parser.g4 by ANTLR 4.7.1\nfrom antlr4 import *\nif __name__ is not None and \".\" in __name__:\n    from.Python3Parser import Python3Parser\nelse:\n    from Python3Parser import Python3Parser\n\n# This class defines a complete listener for a parse tree produced by Python3Parser.\nclass Python3Listener(ParseTreeListener):\n\n    # Enter a parse tree produced by Python3Parser#single_input.\n    def enterSingle_input(self, ctx:Python3Parser.Single_inputContext):\n        pass\n\n    # Exit a parse tree produced by Python3Parser#single_input.\n    def exitSingle_input(self, ctx:Python3Parser.Single_inputContext):\n        pass\n\n\n    # Enter a parse tree produced by Python3Parser#file_input.\n    def enterFile_input(self, ctx:Python3Parser.File_inputContext):\n        pass\n\n    # Exit a parse tree produced by Python3Parser#file_input.\n    def exitFile_input(self, ctx:Python3Parser.File_inputContext):\n        pass\n\n\n    # Enter a parse tree produced by Python3Parser#eval_input.\n    def enterEval_input(self, ctx:Python3Parser.Eval_inputContext):\n        pass\n\n    # Exit a parse tree produced by Python3Parser#eval_input.\n    def exitEval_input(self, ctx:Python3Parser.Eval_inputContext):\n        pass\n\n\n    # Enter a parse tree produced by Python3Parser#decorator.\n    def enterDecorator(self, ctx:Python3Parser.DecoratorContext):\n        pass\n\n    # Exit a parse tree produced by Python3Parser#decorator.\n    def exitDecorator(self, ctx:Python3Parser.DecoratorContext):\n        pass\n\n\n    # Enter a parse tree produced by Python3Parser#decorators.\n    def enterDecorators(self, ctx:Python3Parser.DecoratorsContext):\n        pass\n\n    # Exit a parse tree produced by Python3Parser#decorators.\n    def exitDecorators(self, ctx:Python3Parser.DecoratorsContext):\n        pass\n\n\n    # Enter a parse tree produced by Python3Parser#decorated.\n    def enterDecorated(self, ctx:Python3Parser.DecoratedContext):\n        pass\n\n    # Exit a parse tree produced by Python3Parser#decorated.\n    def exitDecorated(self, ctx:Python3Parser.DecoratedContext):\n        pass\n\n\n    # Enter a parse tree produced by Python3Parser#async_funcdef.\n    def enterAsync_funcdef(self, ctx:Python3Parser.Async_funcdefContext):\n        pass\n\n    # Exit a parse tree produced by Python3Parser#async_funcdef.\n    def exitAsync_funcdef(self, ctx:Python3Parser.Async_funcdefContext):\n        pass\n\n\n    # Enter a",
+      "patch_sha256": "04a5a415ed8764cbf1f56f9fef507ca0322437e6d7b2f76b0ed7c7d7f3b872b1",
+      "rank_score": -52,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.5346552071407396,
+      "top_p": 0.98
+    },
+    {
+      "index": 4,
+      "patch_text": "def get_new_command(command, settings):\n    return 'open http://' + command.script[5:]\nimport json\nfrom pprint import pprint\n\nfrom git import Repo\n\nfrom utils import get_repo_info, get_buggy_line, get_commit_files, get_buggy_lines_info, get_project_files, \\\n    get_buggy_lines_context, get_commit_info, get_file_info, get_function_context, get_commit_context, get_patch_context, \\\n    get_function_signature_context, get_function_context_no_signature\n\nfrom generate_bug_contexts import get_bug_context\n\n\ndef get_commit_file_contexts(bug_id, commit_hash, project_name):\n    buggy_line_data = get_buggy_line(bug_id)\n    repo_dir = get_repo_info(bug_id)['repo']\n\n    commit_files = get_commit_files(commit_hash, repo_dir)\n    file_contexts = {}\n    for commit_file in commit_files:\n        context = get_file_context(commit_file, buggy_line_data['line_number'])\n        file_contexts[commit_file] = context\n    return file_contexts\n\n\ndef get_commit_patch_contexts(bug_id, commit_hash, project_name):\n    buggy_line_data = get_buggy_line(bug_id)\n    repo_dir = get_repo_info(bug_id)['repo']\n\n    patch_contexts = get_patch_context(commit_hash, repo_dir)\n    return patch_contexts\n\n\ndef get_commit_function_contexts(bug_id, commit_hash, project_name):\n    buggy_line_data = get_buggy_line(bug_id)\n    repo_dir = get_repo_info(bug_id)['repo']\n\n    commit_files = get_commit_files(commit_hash, repo_dir)\n    file_contexts = {}\n    for commit_file in commit_files:\n        function_contexts = get_function_context(commit_file, buggy_line_data['line_number'])\n        file_contexts[commit_file] = function_contexts\n    return file_contexts\n\n\ndef get_commit_function_no_signature_contexts(bug_id, commit_hash, project_name):\n    buggy_line_data = get_buggy_line(bug_id)\n    repo_dir = get_repo_info(bug_id)['repo']\n\n    commit_files = get_commit_files(commit_hash, repo_dir)\n    file_contexts = {}\n    for commit_file in commit_files:\n        function_contexts = get_function_context_no_signature(commit_file, buggy_line_data['line_number'])\n        file_",
+      "patch_sha256": "2fed03ab2bfdd4cd26f9f4900ea303ac535980b063b0293e063f09bec89fc660",
+      "rank_score": -177,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7976020643090617,
+      "top_p": 0.8970025803863271
+    }
+  ],
+  "candidate_count": 5,
+  "retrieved_examples": [
+    {
+      "id": "52",
+      "project_name": "thefuck",
+      "buggy_line_content": "    return '{} --staged'.format(command.script)",
+      "function": {
+        "function_name": "get_new_command",
+        "function_parent": "git_diff_staged.py",
+        "function_before_start_line": 12,
+        "function_before_end_line": 13,
+        "function_after_start_line": 12,
+        "function_after_end_line": 13,
+        "function_before_token_count": 16,
+        "function_after_token_count": 18,
+        "function_before": "@utils.git_support\ndef get_new_command(command, settings):\n    return '{} --staged'.format(command.script)",
+        "function_after": "@utils.git_support\ndef get_new_command(command, settings):\n    return command.script.replace(' diff', ' diff --staged')"
+      },
+      "file_name": "git_diff_staged.py",
+      "file_path": "thefuck/rules/git_diff_staged.py",
+      "score_reranked": 0.8565032996652595
+    },
+    {
+      "id": "50",
+      "project_name": "thefuck",
+      "buggy_line_content": "    return re.sub('^mkdir (.*)', 'mkdir -p \\\\1', command.script)",
+      "function": {
+        "function_name": "get_new_command",
+        "function_parent": "mkdir_p.py",
+        "function_before_start_line": 12,
+        "function_before_end_line": 13,
+        "function_after_start_line": 12,
+        "function_after_end_line": 13,
+        "function_before_token_count": 20,
+        "function_after_token_count": 20,
+        "function_before": "@sudo_support\ndef get_new_command(command, settings):\n    return re.sub('^mkdir (.*)', 'mkdir -p \\\\1', command.script)",
+        "function_after": "@sudo_support\ndef get_new_command(command, settings):\n    return re.sub('\\\\bmkdir (.*)', 'mkdir -p \\\\1', command.script)"
+      },
+      "file_name": "mkdir_p.py",
+      "file_path": "thefuck/rules/mkdir_p.py",
+      "score_reranked": 0.7911062546316954
+    },
+    {
+      "id": "32",
+      "project_name": "pandas",
+      "buggy_line_content": "            except (ValueError, OverflowError):",
+      "function": {
+        "function_name": "_try_convert_to_date",
+        "function_parent": "Parser",
+        "function_before_start_line": 953,
+        "function_before_end_line": 988,
+        "function_after_start_line": 953,
+        "function_after_end_line": 988,
+        "function_before_token_count": 154,
+        "function_after_token_count": 156,
+        "function_before": "def _try_convert_to_date(self, data):\n    \"\"\"\n        Try to parse a ndarray like into a date column.\n\n        Try to coerce object in epoch/iso formats and integer/float in epoch\n        formats. Return a boolean if parsing was successful.\n        \"\"\"\n    if not len(data):\n        return (data, False)\n    new_data = data\n    if new_data.dtype == 'object':\n        try:\n            new_data = data.astype('int64')\n        except (TypeError, ValueError, OverflowError):\n            pass\n    if issubclass(new_data.dtype.type, np.number):\n        in_range = isna(new_data._values) | (new_data > self.min_stamp) | (new_data._values == iNaT)\n        if not in_range.all():\n            return (data, False)\n    date_units = (self.date_unit,) if self.date_unit else self._STAMP_UNITS\n    for date_unit in date_units:\n        try:\n            new_data = to_datetime(new_data, errors='raise', unit=date_unit)\n        except (ValueError, OverflowError):\n            continue\n        return (new_data, True)\n    return (data, False)",
+        "function_after": "def _try_convert_to_date(self, data):\n    \"\"\"\n        Try to parse a ndarray like into a date column.\n\n        Try to coerce object in epoch/iso formats and integer/float in epoch\n        formats. Return a boolean if parsing was successful.\n        \"\"\"\n    if not len(data):\n        return (data, False)\n    new_data = data\n    if new_data.dtype == 'object':\n        try:\n            new_data = data.astype('int64')\n        except (TypeError, ValueError, OverflowError):\n            pass\n    if issubclass(new_data.dtype.type, np.number):\n        in_range = isna(new_data._values) | (new_data > self.min_stamp) | (new_data._values == iNaT)\n        if not in_range.all():\n            return (data, False)\n    date_units = (self.date_unit,) if self.date_unit else self._STAMP_UNITS\n    for date_unit in date_units:\n        try:\n            new_data = to_datetime(new_data, errors='raise', unit=date_unit)\n        except (ValueError, OverflowError, TypeError):\n            continue\n        return (new_data, True)\n    return (data, False)"
+      },
+      "file_name": "_json.py",
+      "file_path": "pandas/io/json/_json.py",
+      "score_reranked": 0.6307283085791869
+    },
+    {
+      "id": "39",
+      "project_name": "pandas",
+      "buggy_line_content": "            except (TypeError, ValueError):",
+      "function": {
+        "function_name": "_try_convert_data",
+        "function_parent": "Parser",
+        "function_before_start_line": 886,
+        "function_before_end_line": 958,
+        "function_after_start_line": 886,
+        "function_after_end_line": 958,
+        "function_before_token_count": 277,
+        "function_after_token_count": 279,
+        "function_before": "def _try_convert_data(self, name, data, use_dtypes=True, convert_dates=True):\n    \"\"\"\n        Try to parse a ndarray like into a column by inferring dtype.\n        \"\"\"\n    if use_dtypes:\n        if not self.dtype:\n            return (data, False)\n        elif self.dtype is True:\n            pass\n        else:\n            dtype = self.dtype.get(name) if isinstance(self.dtype, dict) else self.dtype\n            if dtype is not None:\n                try:\n                    dtype = np.dtype(dtype)\n                    return (data.astype(dtype), True)\n                except (TypeError, ValueError):\n                    return (data, False)\n    if convert_dates:\n        new_data, result = self._try_convert_to_date(data)\n        if result:\n            return (new_data, True)\n    result = False\n    if data.dtype == 'object':\n        try:\n            data = data.astype('float64')\n            result = True\n        except (TypeError, ValueError):\n            pass\n    if data.dtype.kind == 'f':\n        if data.dtype != 'float64':\n            try:\n                data = data.astype('float64')\n                result = True\n            except (TypeError, ValueError):\n                pass\n    if len(data) and (data.dtype == 'float' or data.dtype == 'object'):\n        try:\n            new_data = data.astype('int64')\n            if (new_data == data).all():\n                data = new_data\n                result = True\n        except (TypeError, ValueError):\n            pass\n    if data.dtype == 'int':\n        try:\n            data = data.astype('int64')\n            result = True\n        except (TypeError, ValueError):\n            pass\n    return (data, result)",
+        "function_after": "def _try_convert_data(self, name, data, use_dtypes=True, convert_dates=True):\n    \"\"\"\n        Try to parse a ndarray like into a column by inferring dtype.\n        \"\"\"\n    if use_dtypes:\n        if not self.dtype:\n            return (data, False)\n        elif self.dtype is True:\n            pass\n        else:\n            dtype = self.dtype.get(name) if isinstance(self.dtype, dict) else self.dtype\n            if dtype is not None:\n                try:\n                    dtype = np.dtype(dtype)\n                    return (data.astype(dtype), True)\n                except (TypeError, ValueError):\n                    return (data, False)\n    if convert_dates:\n        new_data, result = self._try_convert_to_date(data)\n        if result:\n            return (new_data, True)\n    result = False\n    if data.dtype == 'object':\n        try:\n            data = data.astype('float64')\n            result = True\n        except (TypeError, ValueError):\n            pass\n    if data.dtype.kind == 'f':\n        if data.dtype != 'float64':\n            try:\n                data = data.astype('float64')\n                result = True\n            except (TypeError, ValueError):\n                pass\n    if len(data) and (data.dtype == 'float' or data.dtype == 'object'):\n        try:\n            new_data = data.astype('int64')\n            if (new_data == data).all():\n                data = new_data\n                result = True\n        except (TypeError, ValueError, OverflowError):\n            pass\n    if data.dtype == 'int':\n        try:\n            data = data.astype('int64')\n            result = True\n        except (TypeError, ValueError):\n            pass\n    return (data, result)"
+      },
+      "file_name": "_json.py",
+      "file_path": "pandas/io/json/_json.py",
+      "score_reranked": 0.6166004517954069
+    },
+    {
+      "id": "28",
+      "project_name": "scrapy",
+      "buggy_line_content": "        if ':' not in self._url:",
+      "function": {
+        "function_name": "_set_url",
+        "function_parent": "Request",
+        "function_before_start_line": 62,
+        "function_before_end_line": 70,
+        "function_after_start_line": 62,
+        "function_after_end_line": 70,
+        "function_before_token_count": 65,
+        "function_after_token_count": 79,
+        "function_before": "def _set_url(self, url):\n    if not isinstance(url, six.string_types):\n        raise TypeError('Request url must be str or unicode, got %s:' % type(url).__name__)\n    s = safe_url_string(url, self.encoding)\n    self._url = escape_ajax(s)\n    if ':' not in self._url:\n        raise ValueError('Missing scheme in request url: %s' % self._url)",
+        "function_after": "def _set_url(self, url):\n    if not isinstance(url, six.string_types):\n        raise TypeError('Request url must be str or unicode, got %s:' % type(url).__name__)\n    s = safe_url_string(url, self.encoding)\n    self._url = escape_ajax(s)\n    if '://' not in self._url and (not self._url.startswith('data:')):\n        raise ValueError('Missing scheme in request url: %s' % self._url)"
+      },
+      "file_name": "__init__.py",
+      "file_path": "scrapy/http/request/__init__.py",
+      "score_reranked": 0.5593682431222308
+    }
+  ],
+  "diffusion_plan": [
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 3
+        },
+        {
+          "op": "InsertBefore",
+          "node": 3
+        },
+        {
+          "op": "InsertAfter",
+          "node": 3
+        },
+        {
+          "op": "Delete",
+          "node": 3
+        },
+        {
+          "op": "GuardAdd",
+          "node": 3
+        }
+      ],
+      "score": 57.499999724999995
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 3
+        },
+        {
+          "op": "GuardAdd",
+          "node": 3
+        },
+        {
+          "op": "InsertAfter",
+          "node": 3
+        },
+        {
+          "op": "InsertBefore",
+          "node": 3
+        },
+        {
+          "op": "Delete",
+          "node": 3
+        }
+      ],
+      "score": 57.499999724999995
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 3
+        },
+        {
+          "op": "InsertBefore",
+          "node": 3
+        },
+        {
+          "op": "GuardAdd",
+          "node": 3
+        },
+        {
+          "op": "InsertAfter",
+          "node": 3
+        }
+      ],
+      "score": 47.999999769999995
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 3
+        },
+        {
+          "op": "GuardAdd",
+          "node": 3
+        },
+        {
+          "op": "InsertBefore",
+          "node": 3
+        },
+        {
+          "op": "InsertAfter",
+          "node": 3
+        }
+      ],
+      "score": 47.999999769999995
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 3
+        },
+        {
+          "op": "InsertBefore",
+          "node": 3
+        },
+        {
+          "op": "GuardAdd",
+          "node": 3
+        },
+        {
+          "op": "Delete",
+          "node": 3
+        }
+      ],
+      "score": 46.499999777499994
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 3
+        },
+        {
+          "op": "GuardAdd",
+          "node": 3
+        },
+        {
+          "op": "Delete",
+          "node": 3
+        },
+        {
+          "op": "InsertBefore",
+          "node": 3
+        }
+      ],
+      "score": 46.499999777499994
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 3
+        },
+        {
+          "op": "Delete",
+          "node": 3
+        },
+        {
+          "op": "InsertAfter",
+          "node": 3
+        },
+        {
+          "op": "GuardAdd",
+          "node": 3
+        }
+      ],
+      "score": 46.499999777499994
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 3
+        },
+        {
+          "op": "Delete",
+          "node": 3
+        },
+        {
+          "op": "GuardAdd",
+          "node": 3
+        },
+        {
+          "op": "InsertBefore",
+          "node": 3
+        }
+      ],
+      "score": 46.499999777499994
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 3
+        },
+        {
+          "op": "InsertAfter",
+          "node": 3
+        },
+        {
+          "op": "GuardAdd",
+          "node": 3
+        },
+        {
+          "op": "Delete",
+          "node": 3
+        }
+      ],
+      "score": 46.499999777499994
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "GuardAdd",
+          "node": 3
+        },
+        {
+          "op": "Delete",
+          "node": 3
+        },
+        {
+          "op": "Replace",
+          "node": 3
+        },
+        {
+          "op": "InsertAfter",
+          "node": 3
+        }
+      ],
+      "score": 46.499999777499994
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "GuardAdd",
+          "node": 3
+        },
+        {
+          "op": "Replace",
+          "node": 3
+        },
+        {
+          "op": "Delete",
+          "node": 3
+        },
+        {
+          "op": "InsertAfter",
+          "node": 3
+        }
+      ],
+      "score": 46.499999777499994
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "GuardAdd",
+          "node": 3
+        },
+        {
+          "op": "Replace",
+          "node": 3
+        },
+        {
+          "op": "InsertAfter",
+          "node": 3
+        },
+        {
+          "op": "Delete",
+          "node": 3
+        }
+      ],
+      "score": 46.499999777499994
+    }
+  ],
+  "static_analysis_nodes": [
+    {
+      "line": 2,
+      "line_absolute": 26,
+      "node_id": 3,
+      "node_id_local": 0,
+      "type": "Return",
+      "code": "return 'open http://' + command.script[5:]",
+      "distance_to_buggy": 0,
+      "context": "   1:   def get_new_command(command, settings):\n   2:->     return 'open http://' + command.script[5:]",
+      "ast_subtree_json": {
+        "_type": "Return",
+        "value": {
+          "_type": "BinOp",
+          "left": {
+            "_type": "Constant"
+          },
+          "op": {
+            "_type": "Add"
+          },
+          "right": {
+            "_type": "Subscript"
+          }
+        }
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -23.5
+    }
+  ]
+}

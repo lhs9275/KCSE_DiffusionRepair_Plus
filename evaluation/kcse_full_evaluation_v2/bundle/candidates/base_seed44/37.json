@@ -1,0 +1,141 @@
+{
+  "bug_id": "37",
+  "seed": 44,
+  "arm": "base",
+  "candidates": [
+    {
+      "index": 0,
+      "patch_text": "def _convert_key(self, key, is_setter: bool=False):\n    \"\"\"\n        Require they keys to be the same type as the index. (so we don't\n        fallback)\n        \"\"\"\n    if is_setter:\n        return list(key)\n    for ax, i in zip(self.obj.axes, key):\n        if ax.is_integer():\n            if not is_integer(i):\n                raise ValueError('At based indexing on an integer index can only have integer indexers')\n        elif is_integer(i) and ax.holds_integer():\n            raise ValueError('At based indexing on an non-integer index can only have non-integer indexers')\n    return key",
+      "patch_sha256": "667cd54196e9ae61a900404935f819c7e5310e4d06290fa5540e64c3120cd066",
+      "rank_score": 244,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.5004104457359534,
+      "top_p": 0.9423277802614489
+    },
+    {
+      "index": 1,
+      "patch_text": "def _convert_key(self, key, is_setter: bool=False):\n    \"\"\"\n        Require they keys to be the same type as the index. (so we don't\n        fallback)\n        \"\"\"\n    if is_setter:\n        return list(key)\n    for ax, i in zip(self.obj.axes, key):\n        if ax.is_integer():\n            if not is_integer(i):\n                raise ValueError('At based indexing on an integer index can only have integer indexers')\n        elif not ax.holds_integer() and is_integer(i):\n            raise ValueError('At based indexing on an non-integer index can only have non-integer indexers')\n    return key",
+      "patch_sha256": "43d879ef970d66610fbfbfc0c70f7ce8398de6b5a24ef5e2c8d591fdc3b68ac2",
+      "rank_score": 243,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.5350607232455378,
+      "top_p": 0.98
+    },
+    {
+      "index": 2,
+      "patch_text": "def _convert_key(self, key, is_setter: bool=False):\n    \"\"\"\n        Require they keys to be the same type as the index. (so we don't\n        fallback)\n        \"\"\"\n    if is_setter:\n        return list(key)\n    for ax, i in zip(self.obj.axes, key):\n        if ax.is_integer():\n            if not is_integer(i):\n                raise ValueError('At based indexing on an integer index can only have integer indexers')\n        elif isinstance(i, int) and not ax.holds_integer():\n            raise ValueError('At based indexing on an non-integer index can only have non-integer indexers')\n    return key",
+      "patch_sha256": "1de0a9d4ad0a57c543253055b2b9ca7000a62d6287175fbc40b4e71fba7b79cb",
+      "rank_score": 243,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.5350607232455378,
+      "top_p": 0.98
+    },
+    {
+      "index": 3,
+      "patch_text": "def _convert_key(self, key, is_setter: bool=False):\n    \"\"\"\n        Require they keys to be the same type as the index. (so we don't\n        fallback)\n        \"\"\"\n    if is_setter:\n        return list(key)\n    for ax, i in zip(self.obj.axes, key):\n        if ax.is_integer():\n            if not is_integer(i):\n                raise ValueError('At based indexing on an integer index can only have integer indexers')\n        elif is_integer(i):  # <--- FIXED\n            raise ValueError('At based indexing on an non-integer index can only have non-integer indexers')\n    return key",
+      "patch_sha256": "17dbf24b9abc11fd66470df052ee2529b337cb73386f7b9c140f4f74542cde2b",
+      "rank_score": 243,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.5004104457359534,
+      "top_p": 0.9423277802614489
+    },
+    {
+      "index": 4,
+      "patch_text": "def _convert_key(self, key, is_setter: bool=False):\n    \"\"\"\n        Require they keys to be the same type as the index. (so we don't\n        fallback)\n        \"\"\"\n    if is_setter:\n        return list(key)\n    for ax, i in zip(self.obj.axes, key):\n        if ax.is_integer():\n            if not is_integer(i):\n                raise ValueError('At based indexing on an integer index can only have integer indexers')\n        else:  # <--- CHANGED LINE\n            raise ValueError('At based indexing on an non-integer index can only have non-integer indexers')\n    return key",
+      "patch_sha256": "6740a8c6a9883c27fdf2ab59eb4bc48834816e7051393705b8c15223d1e5ddf0",
+      "rank_score": 242,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.9230891398700982,
+      "top_p": 0.8133577607283677
+    },
+    {
+      "index": 5,
+      "patch_text": "def _convert_key(self, key, is_setter: bool=False):\n    \"\"\"\n        Require they keys to be the same type as the index. (so we don't\n        fallback)\n        \"\"\"\n    if is_setter:\n        return list(key)\n    for ax, i in zip(self.obj.axes, key):\n        if ax.is_integer():\n            if not is_integer(i):\n                raise ValueError('At based indexing on an integer index can only have integer indexers')\n        elif not ax.is_integer() and not is_integer(i):  # <--- BUGGY LINE\n            raise ValueError('At based indexing on an non-integer index can only have non-integer indexers')\n    return key",
+      "patch_sha256": "04eb30d4f35570cb13caa9d679b9212c219a463f9f69d630b60b45cdf4684c91",
+      "rank_score": 242,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.5004104457359534,
+      "top_p": 0.9423277802614489
+    },
+    {
+      "index": 6,
+      "patch_text": "def _convert_key(self, key, is_setter: bool=False):\n    \"\"\"\n        Require they keys to be the same type as the index. (so we don't\n        fallback)\n        \"\"\"\n    if is_setter:\n        return list(key)\n    for ax, i in zip(self.obj.axes, key):\n        if ax.is_integer():\n            if not is_integer(i):\n                raise ValueError('At based indexing on an integer index can only have integer indexers')\n        else:\n            if is_integer(i) and not ax.holds_integer():\n                raise ValueError('At based indexing on an non-integer index can only have non-integer indexers')\n    return key",
+      "patch_sha256": "0cbb5243077313f427d1d348bb85eb6b8ba5798a8c6e90c101e19d4998192c9e",
+      "rank_score": 234,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7941462962722876,
+      "top_p": 0.8926828703403595
+    },
+    {
+      "index": 7,
+      "patch_text": "def _convert_key(self, key, is_setter: bool=False):\n    \"\"\"\n        Require they keys to be the same type as the index. (so we don't\n        fallback)\n        \"\"\"\n    if is_setter:\n        return list(key)\n    for ax, i in zip(self.obj.axes, key):\n        if ax.is_integer():\n            if not is_integer(i):\n                raise ValueError('At based indexing on an integer index can only have integer indexers')\n        else:\n            if is_integer(i):\n                raise ValueError('At based indexing on an non-integer index can only have non-integer indexers')\n    return key",
+      "patch_sha256": "6c625eda07644a092ae5f7bf8cfaaa0bfd076518e85b9c29682103a3eab71bd7",
+      "rank_score": 232,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7941462962722876,
+      "top_p": 0.8926828703403595
+    },
+    {
+      "index": 8,
+      "patch_text": "def _convert_key(self, key, is_setter: bool=False):\n    \"\"\"\n        Require they keys to be the same type as the index. (so we don't\n        fallback)\n        \"\"\"\n    if is_setter:\n        return list(key)\n    for ax, i in zip(self.obj.axes, key):\n        if ax.is_integer():\n            if not is_integer(i):\n                raise ValueError('At based indexing on an integer index can only have integer indexers')\n        else:\n            if not is_integer(i):\n                raise ValueError('At based indexing on an non-integer index can only have non-integer indexers')\n    return key",
+      "patch_sha256": "a2778ccc0e3af8504b8c5f7ae6e0811182e3f86a3bd4e253a836a9e5e2dced62",
+      "rank_score": 231,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7941462962722876,
+      "top_p": 0.8926828703403595
+    },
+    {
+      "index": 9,
+      "patch_text": "def _convert_key(self, key, is_setter: bool=False):\n    \"\"\"\n    Require they keys to be the same type as the index. (so we don't\n    fallback)\n    \"\"\"\n    if is_setter:\n        return list(key)\n    for ax, i in zip(self.obj.axes, key):\n        if ax.is_integer():\n            if not is_integer(i):\n                raise ValueError('At based indexing on an integer index can only have integer indexers')\n        elif not ax.is_integer() and is_integer(i):\n            raise ValueError('At based indexing on an non-integer index can only have non-integer indexers')\n    return key",
+      "patch_sha256": "b0e2d00398a2ce61c6f02e5918a5db1d96f6867f83f045ffabc9dcd943987511",
+      "rank_score": 217,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7941462962722876,
+      "top_p": 0.8926828703403595
+    }
+  ],
+  "candidate_count": 10,
+  "retrieved_examples": [],
+  "diffusion_plan": [],
+  "static_analysis_nodes": []
+}

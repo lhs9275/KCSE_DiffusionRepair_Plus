@@ -1,0 +1,141 @@
+{
+  "bug_id": "16",
+  "seed": 43,
+  "arm": "base",
+  "candidates": [
+    {
+      "index": 0,
+      "patch_text": "def unescapeHTML(s):\n    if s is None:\n        return None\n    assert type(s) == compat_str\n    return re.sub(r'&([^;]+;)', lambda m: _htmlentity_transform(m.group(1)), s)",
+      "patch_sha256": "b680f919e250bfa55a833724b38072e2c15e3366e059bc99fb9d338872d59335",
+      "rank_score": 219,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.9198728361131365,
+      "top_p": 0.8098617783838441
+    },
+    {
+      "index": 1,
+      "patch_text": "def unescapeHTML(s):\n    if s is None:\n        return None\n    assert type(s) == compat_str\n    return re.sub(r'(&\\w+;)', lambda m: _htmlentity_transform(m.group(1)), s)",
+      "patch_sha256": "3a48206663ab988815833811dc7b62b9e6be882e5d00550ce18445a2eae22983",
+      "rank_score": 218,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.934442110146087,
+      "top_p": 0.8256979458109642
+    },
+    {
+      "index": 2,
+      "patch_text": "def unescapeHTML(s):\n    if s is None:\n        return None\n    assert type(s) == str\n    return re.sub('&([^;]+;)', lambda m: _htmlentity_transform(m.group(1)), s)",
+      "patch_sha256": "31dba4be4817b46891298165beec7def90ea5bf930e2de6f50d880af83fb1d19",
+      "rank_score": 218,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7976020643090617,
+      "top_p": 0.8970025803863271
+    },
+    {
+      "index": 3,
+      "patch_text": "def unescapeHTML(s):\n    if s is None:\n        return None\n    assert type(s) == compat_str\n    return re.sub('&([A-Za-z0-9]+;)', lambda m: _htmlentity_transform(m.group(1)), s)",
+      "patch_sha256": "fb58f4fd7181e0dd03e8b0694acba6aa1b2b312c6ab5c83c4cb7f3e9c2ea964b",
+      "rank_score": 218,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.9198728361131365,
+      "top_p": 0.8098617783838441
+    },
+    {
+      "index": 4,
+      "patch_text": "def unescapeHTML(s):\n    if s is None:\n        return None\n    assert type(s) == compat_str\n    return re.sub('&([a-zA-Z0-9]+);', lambda m: _htmlentity_transform(m.group(1)), s)",
+      "patch_sha256": "1489c258a0a4be083fd47b39589d19a0d206f2616387ab8d979d0e18a1e9a03b",
+      "rank_score": 218,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.9106067765084201,
+      "top_p": 0.7997899744656741
+    },
+    {
+      "index": 5,
+      "patch_text": "def unescapeHTML(s):\n    if s is None:\n        return None\n    assert type(s) == compat_str\n    return re.sub('&([#;]+)', lambda m: _htmlentity_transform(m.group(1)), s)",
+      "patch_sha256": "09c885dcb8b87d864bf982b169a09c29f4b3e0f5f32246bba21d19af91fa1353",
+      "rank_score": 209,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.934442110146087,
+      "top_p": 0.8256979458109642
+    },
+    {
+      "index": 6,
+      "patch_text": "def unescapeHTML(s):\n    if s is None:\n        return None\n    assert type(s) == compat_str\n    return re.sub('&#([^;]+;)', lambda m: _htmlentity_transform(m.group(1)), s)",
+      "patch_sha256": "80fcc265451b651dbc96f0f7c7f47558a07fd1df9489a702d1a092568a9868b7",
+      "rank_score": 209,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.934442110146087,
+      "top_p": 0.8256979458109642
+    },
+    {
+      "index": 7,
+      "patch_text": "def unescapeHTML(s):\n    if s is None:\n        return None\n    assert type(s) == compat_str\n    return s.replace('&amp;', '&').replace('&lt;', '<').replace('&gt;', '>').replace('&quot;', '\"')",
+      "patch_sha256": "46f23c3d6a60e2e9b426c6cc1cf5b6a03d4d5a61e5a6f8efeda8eb5b43463a22",
+      "rank_score": 202,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7976020643090617,
+      "top_p": 0.8970025803863271
+    },
+    {
+      "index": 8,
+      "patch_text": "def unescapeHTML(s):\n    if s is None:\n        return None\n    assert type(s) == compat_str\n    return s.replace(\"&amp;\", \"&\").replace(\"&lt;\", \"<\").replace(\"&gt;\", \">\").replace(\"&quot;\", '\"').replace(\"&#39;\", \"'\")",
+      "patch_sha256": "69c74c6af888a749288b91b844f34f2e4f2e8c0ad5fb96c9bdae48ba3faefd9d",
+      "rank_score": 201,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.9326332018390676,
+      "top_p": 0.8237317411294214
+    },
+    {
+      "index": 9,
+      "patch_text": "def unescapeHTML(s):\n    if s is None:\n        return None\n    assert type(s) == str\n    return s.replace('&', '&').replace(';', ';')",
+      "patch_sha256": "9b52b109d11ce05f11b95cef7985a8edde8b72be88598dfe9cd29d062a306baa",
+      "rank_score": 191,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7956728856928922,
+      "top_p": 0.8945911071161152
+    }
+  ],
+  "candidate_count": 10,
+  "retrieved_examples": [],
+  "diffusion_plan": [],
+  "static_analysis_nodes": []
+}

@@ -1,0 +1,1085 @@
+{
+  "schema": "kcse_control_eligibility_v1",
+  "status": "frozen_performance_blind",
+  "candidate_performance_inspected": false,
+  "benchmark_case_count": 51,
+  "evaluator_snapshot_manifest_sha256": "aae78092656c5d5332df64eca82802b59570cc61976d71941e20acfea33787eb",
+  "sets": {
+    "v0_original_strict": [
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      16,
+      18,
+      20,
+      21,
+      22,
+      23,
+      24,
+      26,
+      27,
+      28,
+      35,
+      36,
+      47,
+      48,
+      49,
+      50,
+      51,
+      52,
+      53,
+      60,
+      68
+    ],
+    "v0_original_raw_fail": [
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      16,
+      18,
+      20,
+      21,
+      22,
+      23,
+      24,
+      28,
+      35,
+      36,
+      47,
+      48,
+      49,
+      50,
+      51,
+      52,
+      53,
+      60,
+      68
+    ],
+    "v1_revised_strict": [
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      16,
+      18,
+      20,
+      21,
+      22,
+      23,
+      24,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33,
+      35,
+      36,
+      37,
+      38,
+      41,
+      42,
+      43,
+      44,
+      45,
+      47,
+      48,
+      49,
+      50,
+      51,
+      52,
+      53,
+      60,
+      68
+    ],
+    "v1_revised_raw_fail": [
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      16,
+      18,
+      20,
+      21,
+      22,
+      23,
+      24,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33,
+      35,
+      36,
+      37,
+      38,
+      41,
+      42,
+      43,
+      44,
+      45,
+      47,
+      48,
+      49,
+      50,
+      51,
+      52,
+      53,
+      60,
+      68
+    ]
+  },
+  "counts": {
+    "v0_original_strict": 31,
+    "v0_original_raw_fail": 29,
+    "v1_revised_strict": 43,
+    "v1_revised_raw_fail": 41,
+    "v1_excluded": 8
+  },
+  "attributed_error_ids": [
+    26,
+    27
+  ],
+  "excluded": [
+    {
+      "bug_id": 17,
+      "reason": "buggy_control_test_execution_error"
+    },
+    {
+      "bug_id": 19,
+      "reason": "mixed_failure_error_not_auto_adjudicated"
+    },
+    {
+      "bug_id": 25,
+      "reason": "buggy_control_test_execution_error"
+    },
+    {
+      "bug_id": 46,
+      "reason": "bounded_abi_rebuild_failed"
+    },
+    {
+      "bug_id": 54,
+      "reason": "buggy_control_test_execution_error"
+    },
+    {
+      "bug_id": 61,
+      "reason": "fixed_and_buggy_both_pass_nondiscriminating"
+    },
+    {
+      "bug_id": 66,
+      "reason": "mixed_failure_error_not_auto_adjudicated"
+    },
+    {
+      "bug_id": 67,
+      "reason": "buggy_only_timeout_not_strict_fail"
+    }
+  ],
+  "cases": [
+    {
+      "bug_id": 2,
+      "source_job": 1571,
+      "source_directory": "/cephfs/home/s2022810061/tmp/2026_09_17/kcse_e3_v1_homogeneous_revalidation",
+      "raw_fixed_flag": "Plausible",
+      "raw_buggy_flag": "Fail",
+      "adjudicated_buggy_flag": "Fail",
+      "restored_fixed_flag": "Plausible",
+      "v1_eligible": true,
+      "inclusion_reason": "raw_buggy_fail",
+      "controls_sha256": "0d4bdbee71182aa29fb0a005d5641c9548959c3dcbc6d9f7d20c3591d5ad0cb9",
+      "evidence_sha256": {
+        "ws_2_7_ffvtbd86.compile.json": "0dcc198a4aa2a57750e6a8d08a8f4eedc164931e8fb3d4b3b826554a1b547f54",
+        "ws_2_7_ffvtbd86.identity.json": "e0dc2daf7eed284fe99a3d1b138587dc55968ca139ea949cc5f05e43a001e0af",
+        "ws_2_7_ffvtbd86.jsonl": "dc5f2a330b08f4ccd9147ed55f23fb6086d2733a15604fe88e2ce3a28dfa4cc7"
+      }
+    },
+    {
+      "bug_id": 3,
+      "source_job": 1571,
+      "source_directory": "/cephfs/home/s2022810061/tmp/2026_09_17/kcse_e3_v1_homogeneous_revalidation",
+      "raw_fixed_flag": "Plausible",
+      "raw_buggy_flag": "Fail",
+      "adjudicated_buggy_flag": "Fail",
+      "restored_fixed_flag": "Plausible",
+      "v1_eligible": true,
+      "inclusion_reason": "raw_buggy_fail",
+      "controls_sha256": "0d4bdbee71182aa29fb0a005d5641c9548959c3dcbc6d9f7d20c3591d5ad0cb9",
+      "evidence_sha256": {
+        "ws_3_7_q7xd7pjm.compile.json": "04906cbe61dbcb557327c1d985ed4b77c0183305b502021660b0403bb9dce65a",
+        "ws_3_7_q7xd7pjm.identity.json": "720599812ea7ecb69b6a9deec65e07b4524095d0e1993580b04359c30449f2c3",
+        "ws_3_7_q7xd7pjm.jsonl": "b174e7948301dcd92c3035d45822bc060720c8066bbae02b5d89a09a26cd57ab"
+      }
+    },
+    {
+      "bug_id": 4,
+      "source_job": 1571,
+      "source_directory": "/cephfs/home/s2022810061/tmp/2026_09_17/kcse_e3_v1_homogeneous_revalidation",
+      "raw_fixed_flag": "Plausible",
+      "raw_buggy_flag": "Fail",
+      "adjudicated_buggy_flag": "Fail",
+      "restored_fixed_flag": "Plausible",
+      "v1_eligible": true,
+      "inclusion_reason": "raw_buggy_fail",
+      "controls_sha256": "0d4bdbee71182aa29fb0a005d5641c9548959c3dcbc6d9f7d20c3591d5ad0cb9",
+      "evidence_sha256": {
+        "ws_4_8_xwkqyfn8.compile.json": "430699f515c64ec7ade04d597a42e34dd6f5c3216baa7badd753f239820a9cd6",
+        "ws_4_8_xwkqyfn8.identity.json": "ac96e089a2567fa384e662f38dccf9fe0fac6424f281f4b28f31c29ea9c188a5",
+        "ws_4_8_xwkqyfn8.jsonl": "73a1276c1e3bb33ae170975ecd41ef50c067bb9fa9cc3fd7ef6a484c110ae5bf"
+      }
+    },
+    {
+      "bug_id": 5,
+      "source_job": 1571,
+      "source_directory": "/cephfs/home/s2022810061/tmp/2026_09_17/kcse_e3_v1_homogeneous_revalidation",
+      "raw_fixed_flag": "Plausible",
+      "raw_buggy_flag": "Fail",
+      "adjudicated_buggy_flag": "Fail",
+      "restored_fixed_flag": "Plausible",
+      "v1_eligible": true,
+      "inclusion_reason": "raw_buggy_fail",
+      "controls_sha256": "0d4bdbee71182aa29fb0a005d5641c9548959c3dcbc6d9f7d20c3591d5ad0cb9",
+      "evidence_sha256": {
+        "ws_5_8_f2a66dd5.compile.json": "ace4359184c4a6811fee6fffc3ac954b56a2e9cf235346002a8d0c3149a582b1",
+        "ws_5_8_f2a66dd5.identity.json": "70134eed104570149dbb15d9d5bdecb619872736364226f478a6f0a32752b93f",
+        "ws_5_8_f2a66dd5.jsonl": "012de352554434ec24625dc1baaa6c6b37ec60c227aea275b12a3014d0e0879d"
+      }
+    },
+    {
+      "bug_id": 6,
+      "source_job": 1571,
+      "source_directory": "/cephfs/home/s2022810061/tmp/2026_09_17/kcse_e3_v1_homogeneous_revalidation",
+      "raw_fixed_flag": "Plausible",
+      "raw_buggy_flag": "Fail",
+      "adjudicated_buggy_flag": "Fail",
+      "restored_fixed_flag": "Plausible",
+      "v1_eligible": true,
+      "inclusion_reason": "raw_buggy_fail",
+      "controls_sha256": "0d4bdbee71182aa29fb0a005d5641c9548959c3dcbc6d9f7d20c3591d5ad0cb9",
+      "evidence_sha256": {
+        "ws_6_9_fodz8yxo.compile.json": "2394cca93200922efb8dd9fac5e99620d96de60072e744d5ccf233fd8889bf79",
+        "ws_6_9_fodz8yxo.identity.json": "339e986e5ccfd1c1c040775c8b57a96f0b411f2c5db383b8a8dacb2f6a88a6d8",
+        "ws_6_9_fodz8yxo.jsonl": "c84414b26505f5cac3063e11f742664f5fb50083881bd96519664d09027fd995"
+      }
+    },
+    {
+      "bug_id": 7,
+      "source_job": 1571,
+      "source_directory": "/cephfs/home/s2022810061/tmp/2026_09_17/kcse_e3_v1_homogeneous_revalidation",
+      "raw_fixed_flag": "Plausible",
+      "raw_buggy_flag": "Fail",
+      "adjudicated_buggy_flag": "Fail",
+      "restored_fixed_flag": "Plausible",
+      "v1_eligible": true,
+      "inclusion_reason": "raw_buggy_fail",
+      "controls_sha256": "0d4bdbee71182aa29fb0a005d5641c9548959c3dcbc6d9f7d20c3591d5ad0cb9",
+      "evidence_sha256": {
+        "ws_7_9_9vnm2he7.compile.json": "5a4a58c50b98aeecce679648724efc159eae0c6de230a64bfe8604dd4356b060",
+        "ws_7_9_9vnm2he7.identity.json": "5d561b88d594bec9069e86d6ecf4274c3f20bb3d5aba720d72bc30f8a53faf23",
+        "ws_7_9_9vnm2he7.jsonl": "346948c7b6ad21ca298186af4a6bdc698bb741120d76ae29bcb3e07f9c28c5aa"
+      }
+    },
+    {
+      "bug_id": 8,
+      "source_job": 1571,
+      "source_directory": "/cephfs/home/s2022810061/tmp/2026_09_17/kcse_e3_v1_homogeneous_revalidation",
+      "raw_fixed_flag": "Plausible",
+      "raw_buggy_flag": "Fail",
+      "adjudicated_buggy_flag": "Fail",
+      "restored_fixed_flag": "Plausible",
+      "v1_eligible": true,
+      "inclusion_reason": "raw_buggy_fail",
+      "controls_sha256": "0d4bdbee71182aa29fb0a005d5641c9548959c3dcbc6d9f7d20c3591d5ad0cb9",
+      "evidence_sha256": {
+        "ws_8_10_91hw8ogn.compile.json": "b283fa740001662bea8b6c40e81ad482ab95c0da0e9334774ceda3fb9b816b11",
+        "ws_8_10_91hw8ogn.identity.json": "1ef518b6654f223b15468dc2d5e4ad4fea9416b1dd5f55688bf664874e1b6b44",
+        "ws_8_10_91hw8ogn.jsonl": "a44f6169a2cfc1567ed6a358c6f3ebc57f39ffa4a33d70b313ed238752500f32"
+      }
+    },
+    {
+      "bug_id": 9,
+      "source_job": 1571,
+      "source_directory": "/cephfs/home/s2022810061/tmp/2026_09_17/kcse_e3_v1_homogeneous_revalidation",
+      "raw_fixed_flag": "Plausible",
+      "raw_buggy_flag": "Fail",
+      "adjudicated_buggy_flag": "Fail",
+      "restored_fixed_flag": "Plausible",
+      "v1_eligible": true,
+      "inclusion_reason": "raw_buggy_fail",
+      "controls_sha256": "0d4bdbee71182aa29fb0a005d5641c9548959c3dcbc6d9f7d20c3591d5ad0cb9",
+      "evidence_sha256": {
+        "ws_9_10_u_am0218.compile.json": "61ced618e7fa66a33c7a0983f221321373707860cd66b2d04cb58faa276c6867",
+        "ws_9_10_u_am0218.identity.json": "ff61c859150fb420c0619e80945a87b13fef4f1310db3a55a20cdc1e08954a4f",
+        "ws_9_10_u_am0218.jsonl": "beed58105829bb8a08d17c7dea46bd853e352cde46746024fc30b1bdea7e4285"
+      }
+    },
+    {
+      "bug_id": 10,
+      "source_job": 1571,
+      "source_directory": "/cephfs/home/s2022810061/tmp/2026_09_17/kcse_e3_v1_homogeneous_revalidation",
+      "raw_fixed_flag": "Plausible",
+      "raw_buggy_flag": "Fail",
+      "adjudicated_buggy_flag": "Fail",
+      "restored_fixed_flag": "Plausible",
+      "v1_eligible": true,
+      "inclusion_reason": "raw_buggy_fail",
+      "controls_sha256": "0d4bdbee71182aa29fb0a005d5641c9548959c3dcbc6d9f7d20c3591d5ad0cb9",
+      "evidence_sha256": {
+        "ws_10_7_sr00pt8u.compile.json": "306dab4db589353f0e1bc0d2b5cd297cbefe576f8f09b555fc801a031359acb7",
+        "ws_10_7_sr00pt8u.identity.json": "4fdfc42ab5337472e10007776ac79f3c02551b5a188d4c9f777554f28738a271",
+        "ws_10_7_sr00pt8u.jsonl": "a82244ffffd8d3aba406f2252f281a475059b6fd4c26b84ea049fc069bcd816f"
+      }
+    },
+    {
+      "bug_id": 11,
+      "source_job": 1571,
+      "source_directory": "/cephfs/home/s2022810061/tmp/2026_09_17/kcse_e3_v1_homogeneous_revalidation",
+      "raw_fixed_flag": "Plausible",
+      "raw_buggy_flag": "Fail",
+      "adjudicated_buggy_flag": "Fail",
+      "restored_fixed_flag": "Plausible",
+      "v1_eligible": true,
+      "inclusion_reason": "raw_buggy_fail",
+      "controls_sha256": "0d4bdbee71182aa29fb0a005d5641c9548959c3dcbc6d9f7d20c3591d5ad0cb9",
+      "evidence_sha256": {
+        "ws_11_7_6eff4qjy.compile.json": "77d1c14ba7a4b326a730488dccec03219ceb0cabd3fa175f1c0c1c5e7ae9fb75",
+        "ws_11_7_6eff4qjy.identity.json": "296a1cf783865817e75d855966768d5797834208bfb630d28c9d9fabf1df76f9",
+        "ws_11_7_6eff4qjy.jsonl": "59c9fb0cd266f5adfc60260bae9e9697e5c1e8e488185d95805ab4b1be5a7997"
+      }
+    },
+    {
+      "bug_id": 16,
+      "source_job": 1571,
+      "source_directory": "/cephfs/home/s2022810061/tmp/2026_09_17/kcse_e3_v1_homogeneous_revalidation",
+      "raw_fixed_flag": "Plausible",
+      "raw_buggy_flag": "Fail",
+      "adjudicated_buggy_flag": "Fail",
+      "restored_fixed_flag": "Plausible",
+      "v1_eligible": true,
+      "inclusion_reason": "raw_buggy_fail",
+      "controls_sha256": "0d4bdbee71182aa29fb0a005d5641c9548959c3dcbc6d9f7d20c3591d5ad0cb9",
+      "evidence_sha256": {
+        "ws_16_8_ocftkap3.compile.json": "cff86085e6c272e73a5eedb2e49fe78b35e1aa8584aa3de55e85c6b7802cafe0",
+        "ws_16_8_ocftkap3.identity.json": "3cde8982cf5f806cb3c6d1b0fbd61c0a7442c7a70ad8aec031c10400422d8aa1",
+        "ws_16_8_ocftkap3.jsonl": "24d413d5bb43d643df61396bdc60f2624e5f8242f29f9a7e19f2553d095e932a"
+      }
+    },
+    {
+      "bug_id": 17,
+      "source_job": 1462,
+      "source_directory": "/cephfs/home/s2022810061/tmp/2026_09_15/kcse_e3_buggy_errors_diagnostic_v1",
+      "raw_fixed_flag": "Plausible",
+      "raw_buggy_flag": "Error: test_execution",
+      "adjudicated_buggy_flag": "Error: test_execution",
+      "restored_fixed_flag": "Plausible",
+      "v1_eligible": false,
+      "inclusion_reason": "buggy_control_test_execution_error",
+      "controls_sha256": "1c8f4c0d9ac40fb9921f48a9d508ed7ffe7083681b61903642e47c5aad918dd2",
+      "evidence_sha256": {
+        "ws_17_7_4w4uin1g.compile.json": "d6c129c43efba554b208d7e8b027a2b24d30583b17100b088ae6949016a455ef",
+        "ws_17_7_4w4uin1g.identity.json": "91ca38393c68d2ef817577ecde20d4b309938384388215a639f18b2bca4eb9ef",
+        "ws_17_7_4w4uin1g.jsonl": "2e0d45d43c7423bc7bb8cddddbea7b1a517a3186ede2f716aeac41d36494087c"
+      }
+    },
+    {
+      "bug_id": 18,
+      "source_job": 1571,
+      "source_directory": "/cephfs/home/s2022810061/tmp/2026_09_17/kcse_e3_v1_homogeneous_revalidation",
+      "raw_fixed_flag": "Plausible",
+      "raw_buggy_flag": "Fail",
+      "adjudicated_buggy_flag": "Fail",
+      "restored_fixed_flag": "Plausible",
+      "v1_eligible": true,
+      "inclusion_reason": "raw_buggy_fail",
+      "controls_sha256": "0d4bdbee71182aa29fb0a005d5641c9548959c3dcbc6d9f7d20c3591d5ad0cb9",
+      "evidence_sha256": {
+        "ws_18_8_ml59c4sq.compile.json": "bf85ee51234fa8ee9831ab8f9cf6f79ab0b4126fbfb8352a816f725b88bb53ec",
+        "ws_18_8_ml59c4sq.identity.json": "9cc8bbfb83d8e7985769feeed1d286343f732bd14b8d851785019feb850d9555",
+        "ws_18_8_ml59c4sq.jsonl": "b7b6653f00ec3eee033636ba43a68e54555dc467b8ab434908293a4ed06d4334"
+      }
+    },
+    {
+      "bug_id": 19,
+      "source_job": 1462,
+      "source_directory": "/cephfs/home/s2022810061/tmp/2026_09_15/kcse_e3_buggy_errors_diagnostic_v1",
+      "raw_fixed_flag": "Plausible",
+      "raw_buggy_flag": "Error: test_execution",
+      "adjudicated_buggy_flag": "Error: test_execution",
+      "restored_fixed_flag": "Plausible",
+      "v1_eligible": false,
+      "inclusion_reason": "mixed_failure_error_not_auto_adjudicated",
+      "controls_sha256": "1c8f4c0d9ac40fb9921f48a9d508ed7ffe7083681b61903642e47c5aad918dd2",
+      "evidence_sha256": {
+        "ws_19_7_t6kz3ivz.compile.json": "e5ff22dcbfa792abcd3a119217588f0ffdc5b5d1dd428c826bcdb541d506b694",
+        "ws_19_7_t6kz3ivz.identity.json": "4a48518d1d62513d8aeff81ff51b439e66bcf03f235712290cb257e538be1cc3",
+        "ws_19_7_t6kz3ivz.jsonl": "4396b803a9a7f6dc7a9e3c6a4b639f90327f736795896309371f84975e1fe40d"
+      }
+    },
+    {
+      "bug_id": 20,
+      "source_job": 1571,
+      "source_directory": "/cephfs/home/s2022810061/tmp/2026_09_17/kcse_e3_v1_homogeneous_revalidation",
+      "raw_fixed_flag": "Plausible",
+      "raw_buggy_flag": "Fail",
+      "adjudicated_buggy_flag": "Fail",
+      "restored_fixed_flag": "Plausible",
+      "v1_eligible": true,
+      "inclusion_reason": "raw_buggy_fail",
+      "controls_sha256": "0d4bdbee71182aa29fb0a005d5641c9548959c3dcbc6d9f7d20c3591d5ad0cb9",
+      "evidence_sha256": {
+        "ws_20_9_so1ynjay.compile.json": "65ee877451b6819cabe9f1139d8dc5f5c2b6eca2a38dd986e15cd78c89a3b3f3",
+        "ws_20_9_so1ynjay.identity.json": "36f62601942b6830bac755df854b6587bbf8e5b56d6913a98fff7a70d2e5cd84",
+        "ws_20_9_so1ynjay.jsonl": "cd5b8b2c412ddce6716729e2ea55ca5c04561332869f9c635ef9ee305e72e0c1"
+      }
+    },
+    {
+      "bug_id": 21,
+      "source_job": 1571,
+      "source_directory": "/cephfs/home/s2022810061/tmp/2026_09_17/kcse_e3_v1_homogeneous_revalidation",
+      "raw_fixed_flag": "Plausible",
+      "raw_buggy_flag": "Fail",
+      "adjudicated_buggy_flag": "Fail",
+      "restored_fixed_flag": "Plausible",
+      "v1_eligible": true,
+      "inclusion_reason": "raw_buggy_fail",
+      "controls_sha256": "0d4bdbee71182aa29fb0a005d5641c9548959c3dcbc6d9f7d20c3591d5ad0cb9",
+      "evidence_sha256": {
+        "ws_21_9_r5de9kaa.compile.json": "312d3f4f501f36f611b2effc9d249889e9d3953e067dffcbeafd760c6993c9e2",
+        "ws_21_9_r5de9kaa.identity.json": "c3ecf227250985bae234c2a0e4f05282ea65a29fd99d88eddba34f2b65201480",
+        "ws_21_9_r5de9kaa.jsonl": "da91e44679d8434c26c219a05c4cd18a9f4ed28c67bf2861f6c3a7e95ff987f0"
+      }
+    },
+    {
+      "bug_id": 22,
+      "source_job": 1571,
+      "source_directory": "/cephfs/home/s2022810061/tmp/2026_09_17/kcse_e3_v1_homogeneous_revalidation",
+      "raw_fixed_flag": "Plausible",
+      "raw_buggy_flag": "Fail",
+      "adjudicated_buggy_flag": "Fail",
+      "restored_fixed_flag": "Plausible",
+      "v1_eligible": true,
+      "inclusion_reason": "raw_buggy_fail",
+      "controls_sha256": "0d4bdbee71182aa29fb0a005d5641c9548959c3dcbc6d9f7d20c3591d5ad0cb9",
+      "evidence_sha256": {
+        "ws_22_8_mhbo7uhm.compile.json": "46ad4953502784bbff8496d8f090889406c5a77df6aa9664d690fff50e1f6b6f",
+        "ws_22_8_mhbo7uhm.identity.json": "ce8eaf77f6ab95a5a6432287352216aaecc396a039cdb4a2f3553d32f14c5f9e",
+        "ws_22_8_mhbo7uhm.jsonl": "66d2e74baa262c262d7727becc90791800988ea103dd4e32bddf382e43c1b77d"
+      }
+    },
+    {
+      "bug_id": 23,
+      "source_job": 1571,
+      "source_directory": "/cephfs/home/s2022810061/tmp/2026_09_17/kcse_e3_v1_homogeneous_revalidation",
+      "raw_fixed_flag": "Plausible",
+      "raw_buggy_flag": "Fail",
+      "adjudicated_buggy_flag": "Fail",
+      "restored_fixed_flag": "Plausible",
+      "v1_eligible": true,
+      "inclusion_reason": "raw_buggy_fail",
+      "controls_sha256": "0d4bdbee71182aa29fb0a005d5641c9548959c3dcbc6d9f7d20c3591d5ad0cb9",
+      "evidence_sha256": {
+        "ws_23_8_uyx_gzvg.compile.json": "89845992f5d15e8bf21eff7a3dbeb4259495fdb19c32a564c98374d9b876a58b",
+        "ws_23_8_uyx_gzvg.identity.json": "7f24f4432bcf7c4d5f0b9466b62ec0c849a880cb78607ec12487a0c8b4ac5a93",
+        "ws_23_8_uyx_gzvg.jsonl": "65b834a829c421662456fa99ac6e600c8aee2794617ea3a04296ea011e0404f8"
+      }
+    },
+    {
+      "bug_id": 24,
+      "source_job": 1571,
+      "source_directory": "/cephfs/home/s2022810061/tmp/2026_09_17/kcse_e3_v1_homogeneous_revalidation",
+      "raw_fixed_flag": "Plausible",
+      "raw_buggy_flag": "Fail",
+      "adjudicated_buggy_flag": "Fail",
+      "restored_fixed_flag": "Plausible",
+      "v1_eligible": true,
+      "inclusion_reason": "raw_buggy_fail",
+      "controls_sha256": "0d4bdbee71182aa29fb0a005d5641c9548959c3dcbc6d9f7d20c3591d5ad0cb9",
+      "evidence_sha256": {
+        "ws_24_9_ev53i9f9.compile.json": "5de4e29c82e06b3ee68ad714fd8f82bd1bcf9ce1a7938c64a143ae266be3193d",
+        "ws_24_9_ev53i9f9.identity.json": "f713e27fc48d1fb8c1e9eff45414ee56b177a89386efef1f8c57e3589cc80c6c",
+        "ws_24_9_ev53i9f9.jsonl": "e1d3f2f9f45dabcd804cf8b0d3b45daeed4a197b63913cdc1573f299de5be728"
+      }
+    },
+    {
+      "bug_id": 25,
+      "source_job": 1462,
+      "source_directory": "/cephfs/home/s2022810061/tmp/2026_09_15/kcse_e3_buggy_errors_diagnostic_v1",
+      "raw_fixed_flag": "Plausible",
+      "raw_buggy_flag": "Error: test_execution",
+      "adjudicated_buggy_flag": "Error: test_execution",
+      "restored_fixed_flag": "Plausible",
+      "v1_eligible": false,
+      "inclusion_reason": "buggy_control_test_execution_error",
+      "controls_sha256": "1c8f4c0d9ac40fb9921f48a9d508ed7ffe7083681b61903642e47c5aad918dd2",
+      "evidence_sha256": {
+        "ws_25_7_yaxpbh4l.compile.json": "da1eb2b36ebb528d85525bbe896445aa05fd4431a5e02b2c60e50240e07e4405",
+        "ws_25_7_yaxpbh4l.identity.json": "1c8218702b6fbc82df59dd399f8a3301a7fdaa4d9de4ed8a9f88a25c8e36313b",
+        "ws_25_7_yaxpbh4l.jsonl": "5e9f53b0235ce4236b9afdae783163cac0721fdad1e9e667654516254149cf98"
+      }
+    },
+    {
+      "bug_id": 26,
+      "source_job": 1571,
+      "source_directory": "/cephfs/home/s2022810061/tmp/2026_09_17/kcse_e3_v1_homogeneous_revalidation",
+      "raw_fixed_flag": "Plausible",
+      "raw_buggy_flag": "Error: test_execution",
+      "adjudicated_buggy_flag": "Fail",
+      "restored_fixed_flag": "Plausible",
+      "v1_eligible": true,
+      "inclusion_reason": "frozen_changed_line_attribution",
+      "controls_sha256": "0d4bdbee71182aa29fb0a005d5641c9548959c3dcbc6d9f7d20c3591d5ad0cb9",
+      "evidence_sha256": {
+        "ws_26_9_m4qqsbld.compile.json": "7e4746781031bdf316ee4e173dfe2544786cfb1a9b1627368c3b6356100491f1",
+        "ws_26_9_m4qqsbld.identity.json": "017d23b91fa7680fcee648d7301be102f5e9f58fd6196b8e114aad5c989df7d4",
+        "ws_26_9_m4qqsbld.jsonl": "4b6ef671344f2fa11ce258bb11fe59db461282de4da58ccc184560b4d9baef2b"
+      }
+    },
+    {
+      "bug_id": 27,
+      "source_job": 1571,
+      "source_directory": "/cephfs/home/s2022810061/tmp/2026_09_17/kcse_e3_v1_homogeneous_revalidation",
+      "raw_fixed_flag": "Plausible",
+      "raw_buggy_flag": "Error: test_execution",
+      "adjudicated_buggy_flag": "Fail",
+      "restored_fixed_flag": "Plausible",
+      "v1_eligible": true,
+      "inclusion_reason": "frozen_changed_line_attribution",
+      "controls_sha256": "0d4bdbee71182aa29fb0a005d5641c9548959c3dcbc6d9f7d20c3591d5ad0cb9",
+      "evidence_sha256": {
+        "ws_27_10_47n68waz.compile.json": "2adc55f33ce81cdcf6ad77c77dade59efadbdaa3299a09e09c628182b76efda9",
+        "ws_27_10_47n68waz.identity.json": "301eebcfe5e4a29a9712f1cc14e38457f5fc54a6e3039dd31e32ea27bc285573",
+        "ws_27_10_47n68waz.jsonl": "f87eefdf62545af5b962e1c91c25658edfe091eee22ec95bd1af7d478d0909f2"
+      }
+    },
+    {
+      "bug_id": 28,
+      "source_job": 1571,
+      "source_directory": "/cephfs/home/s2022810061/tmp/2026_09_17/kcse_e3_v1_homogeneous_revalidation",
+      "raw_fixed_flag": "Plausible",
+      "raw_buggy_flag": "Fail",
+      "adjudicated_buggy_flag": "Fail",
+      "restored_fixed_flag": "Plausible",
+      "v1_eligible": true,
+      "inclusion_reason": "raw_buggy_fail",
+      "controls_sha256": "0d4bdbee71182aa29fb0a005d5641c9548959c3dcbc6d9f7d20c3591d5ad0cb9",
+      "evidence_sha256": {
+        "ws_28_10_2beons9i.compile.json": "99f11a26b742caf744dbfa0c0e442ab5797b808be27696d6176cdfbd0b6627b2",
+        "ws_28_10_2beons9i.identity.json": "5c453d8ccbb085be072986a6e8c2093f8b4458579099f208a4079df81556b9c6",
+        "ws_28_10_2beons9i.jsonl": "d1d2256ec852d365103968d47dddc1055de53c54ab66ccc5bc0b6d17ec44061a"
+      }
+    },
+    {
+      "bug_id": 29,
+      "source_job": 1392,
+      "source_directory": "/cephfs/home/s2022810061/tmp/2026_09_15/extended_compile_diagnostic_v1",
+      "raw_fixed_flag": "Plausible",
+      "raw_buggy_flag": "Fail",
+      "adjudicated_buggy_flag": "Fail",
+      "restored_fixed_flag": "Plausible",
+      "v1_eligible": true,
+      "inclusion_reason": "raw_buggy_fail",
+      "controls_sha256": "6c64081a80091e1d85268fa3da555b29fd61fb61bcb7cc3910ed6cb6fd0ec708",
+      "evidence_sha256": {
+        "ws_29_8_ri4b4zhf.compile.json": "3febee01461073aefd80fb5de65d53fa152f9a4d4360c20e48254f5f7d1d09ed",
+        "ws_29_8_ri4b4zhf.identity.json": "e2c07d1e46b2b20ebce8a0a1d47c2bf107e9e8b1680683454032dee8e7868169",
+        "ws_29_8_ri4b4zhf.jsonl": "0cd368b80daf2ccf57c3ff6f598f691e060a960e0f1c8a0f4327e2ba1af5351d"
+      }
+    },
+    {
+      "bug_id": 30,
+      "source_job": 1392,
+      "source_directory": "/cephfs/home/s2022810061/tmp/2026_09_15/extended_compile_diagnostic_v1",
+      "raw_fixed_flag": "Plausible",
+      "raw_buggy_flag": "Fail",
+      "adjudicated_buggy_flag": "Fail",
+      "restored_fixed_flag": "Plausible",
+      "v1_eligible": true,
+      "inclusion_reason": "raw_buggy_fail",
+      "controls_sha256": "6c64081a80091e1d85268fa3da555b29fd61fb61bcb7cc3910ed6cb6fd0ec708",
+      "evidence_sha256": {
+        "ws_30_8_90qpal4z.compile.json": "8b0dcde41adcbaa3536e4137588cc40b0091414f5096cce4a2facc97924c1ef7",
+        "ws_30_8_90qpal4z.identity.json": "3bea54b6e6764845772558ee1c2ba74539503581ee0e0ed0e47088cb11af12f4",
+        "ws_30_8_90qpal4z.jsonl": "d0c5b9fdf1018aa4e44e4f37aaf0ecc9ea802d5dcf00c70ff7b0ca595fa3f5b7"
+      }
+    },
+    {
+      "bug_id": 31,
+      "source_job": 1392,
+      "source_directory": "/cephfs/home/s2022810061/tmp/2026_09_15/extended_compile_diagnostic_v1",
+      "raw_fixed_flag": "Plausible",
+      "raw_buggy_flag": "Fail",
+      "adjudicated_buggy_flag": "Fail",
+      "restored_fixed_flag": "Plausible",
+      "v1_eligible": true,
+      "inclusion_reason": "raw_buggy_fail",
+      "controls_sha256": "6c64081a80091e1d85268fa3da555b29fd61fb61bcb7cc3910ed6cb6fd0ec708",
+      "evidence_sha256": {
+        "ws_31_8_3j84_lvl.compile.json": "6592ebbda9471239bfd533202a06100e3198289e0e933f131513812a9a20f2d6",
+        "ws_31_8_3j84_lvl.identity.json": "ad1c5468203bd79f8b1791427bbc3426741a003e677f1817e3ce745ecd7c1cd9",
+        "ws_31_8_3j84_lvl.jsonl": "7507a251d6ed4cdbf7b7f61abdafaee60f9ef3931c18160fed7ba5d8cd9ba8e4"
+      }
+    },
+    {
+      "bug_id": 32,
+      "source_job": 1392,
+      "source_directory": "/cephfs/home/s2022810061/tmp/2026_09_15/extended_compile_diagnostic_v1",
+      "raw_fixed_flag": "Plausible",
+      "raw_buggy_flag": "Fail",
+      "adjudicated_buggy_flag": "Fail",
+      "restored_fixed_flag": "Plausible",
+      "v1_eligible": true,
+      "inclusion_reason": "raw_buggy_fail",
+      "controls_sha256": "6c64081a80091e1d85268fa3da555b29fd61fb61bcb7cc3910ed6cb6fd0ec708",
+      "evidence_sha256": {
+        "ws_32_8_ag4sc0js.compile.json": "94c12c3d2adf6c48507ff0b9bb5aa7f71c11622d96276f2aea667fce265b9477",
+        "ws_32_8_ag4sc0js.identity.json": "106514b1da38e2b9569502e2e4096f3416cc1ab85613156cf417c87e115310fd",
+        "ws_32_8_ag4sc0js.jsonl": "db96113cdcf86a6d3fb5b4c58d55f8b039ce0ce6e5217b1547ba0a72338d7a90"
+      }
+    },
+    {
+      "bug_id": 33,
+      "source_job": 1392,
+      "source_directory": "/cephfs/home/s2022810061/tmp/2026_09_15/extended_compile_diagnostic_v1",
+      "raw_fixed_flag": "Plausible",
+      "raw_buggy_flag": "Fail",
+      "adjudicated_buggy_flag": "Fail",
+      "restored_fixed_flag": "Plausible",
+      "v1_eligible": true,
+      "inclusion_reason": "raw_buggy_fail",
+      "controls_sha256": "6c64081a80091e1d85268fa3da555b29fd61fb61bcb7cc3910ed6cb6fd0ec708",
+      "evidence_sha256": {
+        "ws_33_8_43_f8n11.compile.json": "bc16ee72496fa592cc3ed6425128becad8772ed5b66181aea4c169fb55aeca06",
+        "ws_33_8_43_f8n11.identity.json": "d3bbac764637a5ed2458ba06bc8796d4f38135a9d31445ef6797f56d2fb6f79a",
+        "ws_33_8_43_f8n11.jsonl": "eb73ae2cc455905b1a89d4e9d697e20bb4b26c518937a2913aebaa34a4d07ad5"
+      }
+    },
+    {
+      "bug_id": 35,
+      "source_job": 1571,
+      "source_directory": "/cephfs/home/s2022810061/tmp/2026_09_17/kcse_e3_v1_homogeneous_revalidation",
+      "raw_fixed_flag": "Plausible",
+      "raw_buggy_flag": "Fail",
+      "adjudicated_buggy_flag": "Fail",
+      "restored_fixed_flag": "Plausible",
+      "v1_eligible": true,
+      "inclusion_reason": "raw_buggy_fail",
+      "controls_sha256": "0d4bdbee71182aa29fb0a005d5641c9548959c3dcbc6d9f7d20c3591d5ad0cb9",
+      "evidence_sha256": {
+        "ws_35_8_iicn_8dz.compile.json": "dd728fbe83647a12008a039c138857a828fe080dc566e9949506d9044c66b8f8",
+        "ws_35_8_iicn_8dz.identity.json": "c56f779b0da4bb32325e7fff30fac69496a3714d72f77b155b6613cc0033bfe3",
+        "ws_35_8_iicn_8dz.jsonl": "1f3f081b8a68aff399adafdf84930d6e4c70e0086b234817620015857c51ce30"
+      }
+    },
+    {
+      "bug_id": 36,
+      "source_job": 1571,
+      "source_directory": "/cephfs/home/s2022810061/tmp/2026_09_17/kcse_e3_v1_homogeneous_revalidation",
+      "raw_fixed_flag": "Plausible",
+      "raw_buggy_flag": "Fail",
+      "adjudicated_buggy_flag": "Fail",
+      "restored_fixed_flag": "Plausible",
+      "v1_eligible": true,
+      "inclusion_reason": "raw_buggy_fail",
+      "controls_sha256": "0d4bdbee71182aa29fb0a005d5641c9548959c3dcbc6d9f7d20c3591d5ad0cb9",
+      "evidence_sha256": {
+        "ws_36_8_tv_s7vhm.compile.json": "3c4a22450fd7d441124638acdee327d599cca4d8e6d28d75780cdc03758cf940",
+        "ws_36_8_tv_s7vhm.identity.json": "dd876b7524f54d68043f3520f2acd6c3136e3b291cfca36aca6daa76bece4732",
+        "ws_36_8_tv_s7vhm.jsonl": "1d89ad7a093be448099d536513cf39d232bba7b57385d14b136461fb65d710e1"
+      }
+    },
+    {
+      "bug_id": 37,
+      "source_job": 1382,
+      "source_directory": "/cephfs/home/s2022810061/tmp/2026_09_15/kcse_e3_abi37_diagnostic_v2",
+      "raw_fixed_flag": "Plausible",
+      "raw_buggy_flag": "Fail",
+      "adjudicated_buggy_flag": "Fail",
+      "restored_fixed_flag": "Plausible",
+      "v1_eligible": true,
+      "inclusion_reason": "raw_buggy_fail",
+      "controls_sha256": "fad3dd13c03720692590512ffba14c3e5669236a0834e0279222141205add4ce",
+      "evidence_sha256": {
+        "ws_37_7_q3anwm2y.abi-rebuild.json": "f500abd56ac2f01795f4c3f4113ef850fa4390922fea1087604deadbd848449a",
+        "ws_37_7_q3anwm2y.compile.json": "e1a4d0054380aa333eff7b031e27d24f67aeb4512d27a2bd85afd3c65a9c05fd",
+        "ws_37_7_q3anwm2y.identity.json": "fe75775826bf69598afbcd4f0b5b8b7d9c2c059ef04054efa2f2afc0c1ca2430",
+        "ws_37_7_q3anwm2y.jsonl": "01c0a7deb9ecacdc5b2e58131abb3eb3180faa99e6d2145815bf1355f87ebc7d"
+      }
+    },
+    {
+      "bug_id": 38,
+      "source_job": 1391,
+      "source_directory": "/cephfs/home/s2022810061/tmp/2026_09_15/kcse_e3_abi_remaining_diagnostic_v1",
+      "raw_fixed_flag": "Plausible",
+      "raw_buggy_flag": "Fail",
+      "adjudicated_buggy_flag": "Fail",
+      "restored_fixed_flag": "Plausible",
+      "v1_eligible": true,
+      "inclusion_reason": "raw_buggy_fail",
+      "controls_sha256": "74b92bc1ff9c765f6be0ef442fcd6faffc782b3b9cffe91cb1d3dc9355524791",
+      "evidence_sha256": {
+        "ws_38_7_msoaxsul.abi-rebuild.json": "e8e2554c7694cda9dae1e310c89657bc33895d612a054a8cc88820a960ad7cc2",
+        "ws_38_7_msoaxsul.compile.json": "5a0e40a61e54e16457b88ca9c5240310e53e3a6d80e562c98a304efe0d2680df",
+        "ws_38_7_msoaxsul.identity.json": "087ec3c14a272863ce5d6f1b4f7d973408c07b62d634671cb5bf3e9d47c7884b",
+        "ws_38_7_msoaxsul.jsonl": "c4ce3efd0fe838b69ba20739be7d93c083fce1c7118bacefb233a1539d3e55d5"
+      }
+    },
+    {
+      "bug_id": 41,
+      "source_job": 1391,
+      "source_directory": "/cephfs/home/s2022810061/tmp/2026_09_15/kcse_e3_abi_remaining_diagnostic_v1",
+      "raw_fixed_flag": "Plausible",
+      "raw_buggy_flag": "Fail",
+      "adjudicated_buggy_flag": "Fail",
+      "restored_fixed_flag": "Plausible",
+      "v1_eligible": true,
+      "inclusion_reason": "raw_buggy_fail",
+      "controls_sha256": "74b92bc1ff9c765f6be0ef442fcd6faffc782b3b9cffe91cb1d3dc9355524791",
+      "evidence_sha256": {
+        "ws_41_7_r84a2fs9.abi-rebuild.json": "8cdecb7ec8a64774c7122c703fa6bb33f0bdf9b1ceca30606891b6231cac5640",
+        "ws_41_7_r84a2fs9.compile.json": "28aed54c8e0b3994df46fb7561c47dc8e97e068dd4aa589b09f735b1ff46cdcb",
+        "ws_41_7_r84a2fs9.identity.json": "a6ddbeec35a84e4807143bac3776e7140411d97154408e1bb05308f4442d1d81",
+        "ws_41_7_r84a2fs9.jsonl": "7d96fbfa23dff376cf2450c87c8d89c89f21391a903f8a60099ff97e86dabddf"
+      }
+    },
+    {
+      "bug_id": 42,
+      "source_job": 1391,
+      "source_directory": "/cephfs/home/s2022810061/tmp/2026_09_15/kcse_e3_abi_remaining_diagnostic_v1",
+      "raw_fixed_flag": "Plausible",
+      "raw_buggy_flag": "Fail",
+      "adjudicated_buggy_flag": "Fail",
+      "restored_fixed_flag": "Plausible",
+      "v1_eligible": true,
+      "inclusion_reason": "raw_buggy_fail",
+      "controls_sha256": "74b92bc1ff9c765f6be0ef442fcd6faffc782b3b9cffe91cb1d3dc9355524791",
+      "evidence_sha256": {
+        "ws_42_7_wfxh2h9f.abi-rebuild.json": "ea4b4797c4f9462a0864867905522d22c01065bdf205219083bea245a00ecdee",
+        "ws_42_7_wfxh2h9f.compile.json": "9cc26f2576d586ca91720534f95e77a5f8461d0d9ab8269e416dfb9576eb3e69",
+        "ws_42_7_wfxh2h9f.identity.json": "9fecbb1b3a221aee89af55e48bc557a32e06a9025c1dd7e21235886c1e5a1039",
+        "ws_42_7_wfxh2h9f.jsonl": "61cba09d602d66962eecb3d775dda2bba43bc3c4c5f60fe33bdaa00e80b4cece"
+      }
+    },
+    {
+      "bug_id": 43,
+      "source_job": 1391,
+      "source_directory": "/cephfs/home/s2022810061/tmp/2026_09_15/kcse_e3_abi_remaining_diagnostic_v1",
+      "raw_fixed_flag": "Plausible",
+      "raw_buggy_flag": "Fail",
+      "adjudicated_buggy_flag": "Fail",
+      "restored_fixed_flag": "Plausible",
+      "v1_eligible": true,
+      "inclusion_reason": "raw_buggy_fail",
+      "controls_sha256": "74b92bc1ff9c765f6be0ef442fcd6faffc782b3b9cffe91cb1d3dc9355524791",
+      "evidence_sha256": {
+        "ws_43_7__f98a0qx.abi-rebuild.json": "f7ccb1d94df2040808532162854c7a19fb5c554e3b4af55880c438c10140bafb",
+        "ws_43_7__f98a0qx.compile.json": "d77757cab6976aaaf1e6c23db38309e12be094fbe6e190ad1fcc0dc5945ddf62",
+        "ws_43_7__f98a0qx.identity.json": "5061c3d6b47180311ea0c16c1b51a229d260dac8dfde4d6554acd2fc3f1ca2e4",
+        "ws_43_7__f98a0qx.jsonl": "1923c6f37f30ec5213187ccb393c31b2e3bea03eb8db5812f1fd57d6f6539fd3"
+      }
+    },
+    {
+      "bug_id": 44,
+      "source_job": 1391,
+      "source_directory": "/cephfs/home/s2022810061/tmp/2026_09_15/kcse_e3_abi_remaining_diagnostic_v1",
+      "raw_fixed_flag": "Plausible",
+      "raw_buggy_flag": "Fail",
+      "adjudicated_buggy_flag": "Fail",
+      "restored_fixed_flag": "Plausible",
+      "v1_eligible": true,
+      "inclusion_reason": "raw_buggy_fail",
+      "controls_sha256": "74b92bc1ff9c765f6be0ef442fcd6faffc782b3b9cffe91cb1d3dc9355524791",
+      "evidence_sha256": {
+        "ws_44_7_dad4bbzu.abi-rebuild.json": "c18e3ec6fbaf20665603a8a7badc7116a7cc85c8892c2171d3021958a7eda05a",
+        "ws_44_7_dad4bbzu.compile.json": "3d3c12ff16d6775ed80fe72782a8e0946cfab1fb59da771e82f5e630575be3c9",
+        "ws_44_7_dad4bbzu.identity.json": "6baf7fe82ee54c4f6d298811acc4380872af41a9a961bd1691022fe13d6a3efb",
+        "ws_44_7_dad4bbzu.jsonl": "c796c05b9b090e7eae6784e9b1d522e4e80463f458e8a644ca5e820a15f8e5b5"
+      }
+    },
+    {
+      "bug_id": 45,
+      "source_job": 1391,
+      "source_directory": "/cephfs/home/s2022810061/tmp/2026_09_15/kcse_e3_abi_remaining_diagnostic_v1",
+      "raw_fixed_flag": "Plausible",
+      "raw_buggy_flag": "Fail",
+      "adjudicated_buggy_flag": "Fail",
+      "restored_fixed_flag": "Plausible",
+      "v1_eligible": true,
+      "inclusion_reason": "raw_buggy_fail",
+      "controls_sha256": "74b92bc1ff9c765f6be0ef442fcd6faffc782b3b9cffe91cb1d3dc9355524791",
+      "evidence_sha256": {
+        "ws_45_7___1_2tga.abi-rebuild.json": "e0112b1ff8e6ef4b778b99a8037d4e1750f77cb3dc898c8598fb7ea217191d47",
+        "ws_45_7___1_2tga.compile.json": "0088c728c0103bc4ced29075e446d2dbf8f660365acf8dfb96183866f147b0e6",
+        "ws_45_7___1_2tga.identity.json": "835e66ae06f1fa0a4a6dea51b6906a0447676f9c8b2410b03a41363c4ef1398f",
+        "ws_45_7___1_2tga.jsonl": "54b02abe058c6d97ae5ca77ec2974a81d7f12268560bebbfad607fc02f0d36ca"
+      }
+    },
+    {
+      "bug_id": 46,
+      "source_job": 1391,
+      "source_directory": "/cephfs/home/s2022810061/tmp/2026_09_15/kcse_e3_abi_remaining_diagnostic_v1",
+      "raw_fixed_flag": null,
+      "raw_buggy_flag": null,
+      "adjudicated_buggy_flag": null,
+      "restored_fixed_flag": null,
+      "v1_eligible": false,
+      "inclusion_reason": "bounded_abi_rebuild_failed",
+      "controls_sha256": "74b92bc1ff9c765f6be0ef442fcd6faffc782b3b9cffe91cb1d3dc9355524791",
+      "evidence_sha256": {
+        "ws_46_7_fq9is0ri.abi-rebuild.json": "c5fdeffacc687891f197680b14a3edae83494a2b9bf33aca282e29e078cdcaf2",
+        "ws_46_7_fq9is0ri.compile.json": "7123c04b0a6d6e88934097930849d83dc4be8de6b3680ab18c0bdde8a64150a4",
+        "ws_46_7_fq9is0ri.identity.json": "b5ae77f5d0f430b25841a79df616b59be5d6913af785f62e4b79baa07e8a974f",
+        "ws_46_7_fq9is0ri.jsonl": "1cc57e2fbe5bf26ea45656cf9c153718787680c290e40250f828143522da1fc6"
+      }
+    },
+    {
+      "bug_id": 47,
+      "source_job": 1571,
+      "source_directory": "/cephfs/home/s2022810061/tmp/2026_09_17/kcse_e3_v1_homogeneous_revalidation",
+      "raw_fixed_flag": "Plausible",
+      "raw_buggy_flag": "Fail",
+      "adjudicated_buggy_flag": "Fail",
+      "restored_fixed_flag": "Plausible",
+      "v1_eligible": true,
+      "inclusion_reason": "raw_buggy_fail",
+      "controls_sha256": "0d4bdbee71182aa29fb0a005d5641c9548959c3dcbc6d9f7d20c3591d5ad0cb9",
+      "evidence_sha256": {
+        "ws_47_9_5uup5zke.compile.json": "3e3fa96b14e3c5ef98ad6c6a6691c0a7dfd0c76f1f180e50106f601561b93ab6",
+        "ws_47_9_5uup5zke.identity.json": "3d9ccbe5c8b4dbfaeba1c1957295ee109f9303aa2abfe696c9f16d4b334e65fb",
+        "ws_47_9_5uup5zke.jsonl": "09548836f578fcd598dcdb2044ebe4710d45a3b20d40bbb307c3ad20d6f26ff1"
+      }
+    },
+    {
+      "bug_id": 48,
+      "source_job": 1571,
+      "source_directory": "/cephfs/home/s2022810061/tmp/2026_09_17/kcse_e3_v1_homogeneous_revalidation",
+      "raw_fixed_flag": "Plausible",
+      "raw_buggy_flag": "Fail",
+      "adjudicated_buggy_flag": "Fail",
+      "restored_fixed_flag": "Plausible",
+      "v1_eligible": true,
+      "inclusion_reason": "raw_buggy_fail",
+      "controls_sha256": "0d4bdbee71182aa29fb0a005d5641c9548959c3dcbc6d9f7d20c3591d5ad0cb9",
+      "evidence_sha256": {
+        "ws_48_9_49_pbrld.compile.json": "f799b791ffd53110d9bd457254fbeddc5ef5afeb66f57c5d6cf88510902c4bf3",
+        "ws_48_9_49_pbrld.identity.json": "be7c5b3859c9c33f67f5f7b6af2e64ca1d20d1a071f823937f0b03d05f5df4ee",
+        "ws_48_9_49_pbrld.jsonl": "ddd910fa73d420c783284165db7c14536678e162b0e2e8778192ded4c7a405e3"
+      }
+    },
+    {
+      "bug_id": 49,
+      "source_job": 1571,
+      "source_directory": "/cephfs/home/s2022810061/tmp/2026_09_17/kcse_e3_v1_homogeneous_revalidation",
+      "raw_fixed_flag": "Plausible",
+      "raw_buggy_flag": "Fail",
+      "adjudicated_buggy_flag": "Fail",
+      "restored_fixed_flag": "Plausible",
+      "v1_eligible": true,
+      "inclusion_reason": "raw_buggy_fail",
+      "controls_sha256": "0d4bdbee71182aa29fb0a005d5641c9548959c3dcbc6d9f7d20c3591d5ad0cb9",
+      "evidence_sha256": {
+        "ws_49_10_nhm7gs7z.compile.json": "a78f72a1b3342cf28b4800d560301eaf73f609d4b7e26f355980f1872bc0037d",
+        "ws_49_10_nhm7gs7z.identity.json": "e06adf475152a8820d462bd2561f6b052678e90d8105f0e8ce62826cf4f5818c",
+        "ws_49_10_nhm7gs7z.jsonl": "5f19bd6074a4a30413919a01586ced42eb671214b14ebac742191077dd193f39"
+      }
+    },
+    {
+      "bug_id": 50,
+      "source_job": 1571,
+      "source_directory": "/cephfs/home/s2022810061/tmp/2026_09_17/kcse_e3_v1_homogeneous_revalidation",
+      "raw_fixed_flag": "Plausible",
+      "raw_buggy_flag": "Fail",
+      "adjudicated_buggy_flag": "Fail",
+      "restored_fixed_flag": "Plausible",
+      "v1_eligible": true,
+      "inclusion_reason": "raw_buggy_fail",
+      "controls_sha256": "0d4bdbee71182aa29fb0a005d5641c9548959c3dcbc6d9f7d20c3591d5ad0cb9",
+      "evidence_sha256": {
+        "ws_50_10_k_8lhp17.compile.json": "9a592ea462edcc95518110cc71f3ee0205af51c499183d6b1f7416c9732071a8",
+        "ws_50_10_k_8lhp17.identity.json": "9daf1f6bf61378f44573c4272b07d4a8b3d6c7a3504540e5b8163c361fb65dd3",
+        "ws_50_10_k_8lhp17.jsonl": "7720299d25f614aae158522bb33638b586933a44a5e014e6f4f648452070be65"
+      }
+    },
+    {
+      "bug_id": 51,
+      "source_job": 1571,
+      "source_directory": "/cephfs/home/s2022810061/tmp/2026_09_17/kcse_e3_v1_homogeneous_revalidation",
+      "raw_fixed_flag": "Plausible",
+      "raw_buggy_flag": "Fail",
+      "adjudicated_buggy_flag": "Fail",
+      "restored_fixed_flag": "Plausible",
+      "v1_eligible": true,
+      "inclusion_reason": "raw_buggy_fail",
+      "controls_sha256": "0d4bdbee71182aa29fb0a005d5641c9548959c3dcbc6d9f7d20c3591d5ad0cb9",
+      "evidence_sha256": {
+        "ws_51_9_7qs0l7vq.compile.json": "17b39e06b03eb98edb8f2b572800fc506b52f28bf0364b87770d7d74bf1f77e3",
+        "ws_51_9_7qs0l7vq.identity.json": "8e88dba271760bec6402be4632428f2893bec68bac7574b0a6a88b50993fdd9f",
+        "ws_51_9_7qs0l7vq.jsonl": "2f763a0fd4fa01877fd58d28b3ffa99070a17c93281d8a79c7ed844b78824276"
+      }
+    },
+    {
+      "bug_id": 52,
+      "source_job": 1571,
+      "source_directory": "/cephfs/home/s2022810061/tmp/2026_09_17/kcse_e3_v1_homogeneous_revalidation",
+      "raw_fixed_flag": "Plausible",
+      "raw_buggy_flag": "Fail",
+      "adjudicated_buggy_flag": "Fail",
+      "restored_fixed_flag": "Plausible",
+      "v1_eligible": true,
+      "inclusion_reason": "raw_buggy_fail",
+      "controls_sha256": "0d4bdbee71182aa29fb0a005d5641c9548959c3dcbc6d9f7d20c3591d5ad0cb9",
+      "evidence_sha256": {
+        "ws_52_9_hi3wytnh.compile.json": "ccb4a4c565771534f8e3ef82be52459bafe3887ad076694d7d5512fd98639089",
+        "ws_52_9_hi3wytnh.identity.json": "6c1064aded42fcda12fa67528d98a4af3a326c4ef4e0c96ac9880c7c80cd4f53",
+        "ws_52_9_hi3wytnh.jsonl": "3617c96d37139fd0be2e23d2563e62ba2576cec945739bf9ef53f94d3195b609"
+      }
+    },
+    {
+      "bug_id": 53,
+      "source_job": 1571,
+      "source_directory": "/cephfs/home/s2022810061/tmp/2026_09_17/kcse_e3_v1_homogeneous_revalidation",
+      "raw_fixed_flag": "Plausible",
+      "raw_buggy_flag": "Fail",
+      "adjudicated_buggy_flag": "Fail",
+      "restored_fixed_flag": "Plausible",
+      "v1_eligible": true,
+      "inclusion_reason": "raw_buggy_fail",
+      "controls_sha256": "0d4bdbee71182aa29fb0a005d5641c9548959c3dcbc6d9f7d20c3591d5ad0cb9",
+      "evidence_sha256": {
+        "ws_53_7_8h3ai2ed.compile.json": "b8f125c8f543eb6db32b43fd125aca04de9779d2af68a2da2570c475fc2c785b",
+        "ws_53_7_8h3ai2ed.identity.json": "950bb3a899e34586a9965a6aefccef09dd6b730c727a3b78d1c58347982fb1bd",
+        "ws_53_7_8h3ai2ed.jsonl": "9de711813247c6ec18a5258d24013f47fa89665cd5ffbb06de00972ca4843de0"
+      }
+    },
+    {
+      "bug_id": 54,
+      "source_job": 1462,
+      "source_directory": "/cephfs/home/s2022810061/tmp/2026_09_15/kcse_e3_buggy_errors_diagnostic_v1",
+      "raw_fixed_flag": "Plausible",
+      "raw_buggy_flag": "Error: test_execution",
+      "adjudicated_buggy_flag": "Error: test_execution",
+      "restored_fixed_flag": "Plausible",
+      "v1_eligible": false,
+      "inclusion_reason": "buggy_control_test_execution_error",
+      "controls_sha256": "1c8f4c0d9ac40fb9921f48a9d508ed7ffe7083681b61903642e47c5aad918dd2",
+      "evidence_sha256": {
+        "ws_54_7_4zh347za.compile.json": "22172d910efdb950de980aa5532108d7a58fd9d7e09d42063face27c36dbc165",
+        "ws_54_7_4zh347za.identity.json": "da45d778beb0fd5e7418151d9d746f6575958682bee9dc6e8f685fc075c02af3",
+        "ws_54_7_4zh347za.jsonl": "9f475fc4d5b7d4b1e7392719c5338c524880e46c8b245dbcfcd91f3a6f6aafad",
+        "ws_54_7_4zh347za.observations.json": "28d01321d116835a15bef056f10aada0eb186ec7f08b8d096c794b85fb856b4b"
+      }
+    },
+    {
+      "bug_id": 60,
+      "source_job": 1571,
+      "source_directory": "/cephfs/home/s2022810061/tmp/2026_09_17/kcse_e3_v1_homogeneous_revalidation",
+      "raw_fixed_flag": "Plausible",
+      "raw_buggy_flag": "Fail",
+      "adjudicated_buggy_flag": "Fail",
+      "restored_fixed_flag": "Plausible",
+      "v1_eligible": true,
+      "inclusion_reason": "raw_buggy_fail",
+      "controls_sha256": "0d4bdbee71182aa29fb0a005d5641c9548959c3dcbc6d9f7d20c3591d5ad0cb9",
+      "evidence_sha256": {
+        "ws_60_7_ogc_670l.compile.json": "cbbe9dc38e674d227ed9508aab634eb7a283e330f3608c4b72093ad88dccc740",
+        "ws_60_7_ogc_670l.identity.json": "0b5da9fe305aa74718bda04376b3b52c9a358c67fd5b7e07d0a9fe3e3be6a6ab",
+        "ws_60_7_ogc_670l.jsonl": "ba4c1b142e3171fd395c3bf1b8dfd3d396a25a6721f576d97a4705ce5b8dac90"
+      }
+    },
+    {
+      "bug_id": 61,
+      "source_job": 1463,
+      "source_directory": "/cephfs/home/s2022810061/tmp/2026_09_15/kcse_e3_both_pass_diagnostic_v1",
+      "raw_fixed_flag": "Plausible",
+      "raw_buggy_flag": "Plausible",
+      "adjudicated_buggy_flag": "Pass",
+      "restored_fixed_flag": "Plausible",
+      "v1_eligible": false,
+      "inclusion_reason": "fixed_and_buggy_both_pass_nondiscriminating",
+      "controls_sha256": "3bbfd4db82dc50ba0b36a225efdf9e47739ff33b829d69b27f504e322f8001ae",
+      "evidence_sha256": {
+        "ws_61_7_b01farwr.compile.json": "ad29b75705533798aa06dc2e488a6c252a148754d8f3cb6227b0fe2103d6accc",
+        "ws_61_7_b01farwr.identity.json": "8c39ff3941ff69de72beefdfef563189e94f819544ac9953a5a12064e1cf071a",
+        "ws_61_7_b01farwr.jsonl": "be45f8769c32917d9fb6b673ba7cb0876bd36dda18c0ec3a7cfb167da3a9987e",
+        "ws_61_7_b01farwr.observations.json": "8c7dd91df7dafff9aaf541a1264fb3d92509e1759ca9f8a914d8906a0ec351ea"
+      }
+    },
+    {
+      "bug_id": 66,
+      "source_job": 1462,
+      "source_directory": "/cephfs/home/s2022810061/tmp/2026_09_15/kcse_e3_buggy_errors_diagnostic_v1",
+      "raw_fixed_flag": "Plausible",
+      "raw_buggy_flag": "Error: test_execution",
+      "adjudicated_buggy_flag": "Error: test_execution",
+      "restored_fixed_flag": "Plausible",
+      "v1_eligible": false,
+      "inclusion_reason": "mixed_failure_error_not_auto_adjudicated",
+      "controls_sha256": "1c8f4c0d9ac40fb9921f48a9d508ed7ffe7083681b61903642e47c5aad918dd2",
+      "evidence_sha256": {
+        "ws_66_7_2luxzcww.compile.json": "c8bc4b0e8d88274e2322668ae7d9003ee0e645258bcda11667f216a92582b00b",
+        "ws_66_7_2luxzcww.identity.json": "dc2dd00705d92786f217761e1683015d823aaf21cfa9e6101f772d3507f08e9d",
+        "ws_66_7_2luxzcww.jsonl": "5bd0b4f2c9be4eb92deeee9a35fc612a84177b5f8731004a9f23e9df7c7cfce9"
+      }
+    },
+    {
+      "bug_id": 67,
+      "source_job": 1465,
+      "source_directory": "/cephfs/home/s2022810061/tmp/2026_09_15/kcse_e3_buggy_timeout_diagnostic_v1",
+      "raw_fixed_flag": "Plausible",
+      "raw_buggy_flag": "Timeout",
+      "adjudicated_buggy_flag": "Timeout",
+      "restored_fixed_flag": "Plausible",
+      "v1_eligible": false,
+      "inclusion_reason": "buggy_only_timeout_not_strict_fail",
+      "controls_sha256": "4cd701646d31dfb9bf6b6def9a926523e92601f10b8fbc08c7bc65c442e12258",
+      "evidence_sha256": {
+        "ws_67_7_z4x6dmql.compile.json": "74bdaaa0c9e8fdfa840665f54c493614cb5e74f07efe86e0efdf9892f522f22b",
+        "ws_67_7_z4x6dmql.identity.json": "630f9d81eec43524ca0ea6ae34162fbd8b162f94d7eff4ae4a7a32203de16c1d",
+        "ws_67_7_z4x6dmql.jsonl": "be0493efbd832c9ad7ad170620b501d93936437530f9cfdc7dc40feeb3774a1f"
+      }
+    },
+    {
+      "bug_id": 68,
+      "source_job": 1571,
+      "source_directory": "/cephfs/home/s2022810061/tmp/2026_09_17/kcse_e3_v1_homogeneous_revalidation",
+      "raw_fixed_flag": "Plausible",
+      "raw_buggy_flag": "Fail",
+      "adjudicated_buggy_flag": "Fail",
+      "restored_fixed_flag": "Plausible",
+      "v1_eligible": true,
+      "inclusion_reason": "raw_buggy_fail",
+      "controls_sha256": "0d4bdbee71182aa29fb0a005d5641c9548959c3dcbc6d9f7d20c3591d5ad0cb9",
+      "evidence_sha256": {
+        "ws_68_10_2mhpdq3x.compile.json": "9a405769fc72cdf105ced2895d800fac2d00a850dbec79be43b49c3976036d72",
+        "ws_68_10_2mhpdq3x.identity.json": "828cfd4c27cf3e7c9016843a8c12f2933d3a876cd72cc2cb3a3374e5bf3d6253",
+        "ws_68_10_2mhpdq3x.jsonl": "4ea3df1fa0b0638060c3852c1246113a287ef5d2b3a46c9ea11103abd4ef72e0"
+      }
+    }
+  ]
+}

@@ -1,0 +1,1079 @@
+{
+  "bug_id": "32",
+  "seed": 44,
+  "arm": "full",
+  "candidates": [
+    {
+      "index": 0,
+      "patch_text": "def _try_convert_to_date(self, data):\n    \"\"\"\n        Try to parse a ndarray like into a date column.\n\n        Try to coerce object in epoch/iso formats and integer/float in epoch\n        formats. Return a boolean if parsing was successful.\n        \"\"\"\n    if not len(data):\n        return (data, False)\n    new_data = data\n    if new_data.dtype == 'object':\n        try:\n            new_data = data.astype('int64')\n        except (TypeError, ValueError):\n            pass\n    if issubclass(new_data.dtype.type, np.number):\n        in_range = isna(new_data._values) | (new_data > self.min_stamp) | (new_data._values == iNaT)\n        if not in_range.all():\n            return (data, False)\n    date_units = (self.date_unit,) if self.date_unit else self._STAMP_UNITS\n    for date_unit in date_units:\n        try:\n            new_data = to_datetime(new_data, errors='raise', unit=date_unit)\n        except (ValueError):  # <--- BUGGY LINE\n            continue\n        return (new_data, True)\n    return (data, False)\n\n##context",
+      "patch_sha256": "3245ce7ea795c9421baff3e03742b3adb6c2f0804850a4cf53505e6923860525",
+      "rank_score": 244,
+      "plan_ok": false,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8838480940652881,
+      "top_p": 0.7707044500709654
+    },
+    {
+      "index": 1,
+      "patch_text": "def _try_convert_to_date(self, data):\n    \"\"\"\n        Try to parse a ndarray like into a date column.\n\n        Try to coerce object in epoch/iso formats and integer/float in epoch\n        formats. Return a boolean if parsing was successful.\n        \"\"\"\n    if not len(data):\n        return (data, False)\n    new_data = data\n    if new_data.dtype == 'object':\n        try:\n            new_data = data.astype('int64')\n        except (TypeError, ValueError):\n            pass\n    if issubclass(new_data.dtype.type, np.number):\n        in_range = isna(new_data._values) | (new_data > self.min_stamp) | (new_data._values == iNaT)\n        if not in_range.all():\n            return (data, False)\n    date_units = (self.date_unit,) if self.date_unit else self._STAMP_UNITS\n    for date_unit in date_units:\n        try:\n            new_data = to_datetime(new_data, errors='raise', unit=date_unit)\n        except (ValueError, OverflowError):\n            continue\n        return (new_data, True)\n    return (data, False)",
+      "patch_sha256": "da2c28ed8963e1721cbd88830c6c53160baed25b25c4db2f467516adb1e0bebd",
+      "rank_score": 214,
+      "plan_ok": false,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7793066012285085,
+      "top_p": 0.8741332515356355
+    },
+    {
+      "index": 2,
+      "patch_text": "def _try_convert_to_date(self, data):\n    \"\"\"\n        Try to parse a ndarray like into a date column.\n\n        Try to coerce object in epoch/iso formats and integer/float in epoch\n        formats. Return a boolean if parsing was successful.\n        \"\"\"\n    if not len(data):\n        return (data, False)\n    new_data = data\n    if new_data.dtype == 'object':\n        try:\n            new_data = data.astype('int64')\n        except (TypeError, ValueError, OverflowError):\n            pass\n    if issubclass(new_data.dtype.type, np.number):\n        in_range = isna(new_data._values) | (new_data > self.min_stamp) | (new_data._values == iNaT)\n        if not in_range.all():\n            return (data, False)\n    date_units = (self.date_unit,) if self.date_unit else self._STAMP_UNITS\n    for date_unit in date_units:\n        try:\n            new_data = to_datetime(new_data, errors='raise', unit=date_unit)\n        except (ValueError, OverflowError):\n            continue\n        return (new_data, True)\n    return (data, False)\n\n##correct\n\ndef _try_convert_to_date(self, data):\n    \"\"\"\n        Try to parse a ndarray like into a date column.\n\n        Try to coerce object in epoch/iso formats and integer/float in epoch\n        formats. Return a boolean if parsing was successful.\n        \"\"\"\n    if not len(data):\n        return (data, False)\n    new_data = data\n    if new_data.dtype == 'object':\n        try:\n            new_data = data.astype('int64')\n        except (TypeError, ValueError, OverflowError):\n            pass\n    if issubclass(new_data.dtype.type, np.number):\n        in_range = isna(new_data._values) | (new_data > self.min_stamp) | (new_data._values == iNaT)\n        if not in_range.all():\n            return (data, False)\n    date_units = (self.date_unit,) if self.date_unit else self._STAMP_UNITS\n    for date_unit in date_units:\n        try:\n            new_data = to_datetime(new_data, errors='raise', unit=date_unit)\n        except (ValueError, OverflowError):\n            continue\n        return (new_data, True)\n    return (data, False)\n\n##correct\n\ndef _try_convert_to_date(self, data):\n    \"\"\"\n        Try to parse a ndarray like into a date column.\n\n        Try to coerce object in epoch/iso formats and integer/float in epoch\n        formats. Return a boolean if parsing was successful.\n        \"\"\"\n    if not len(data):\n        return (data, False)\n    new_data = data",
+      "patch_sha256": "b351ae62ffc78f21636021fc89e020a50373b2462b8d19791ad495cf3821b53f",
+      "rank_score": 37,
+      "plan_ok": false,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8838480940652881,
+      "top_p": 0.7707044500709654
+    },
+    {
+      "index": 3,
+      "patch_text": "def _try_convert_to_date(self, data):\n    \"\"\"\n        Try to parse a ndarray like into a date column.\n\n        Try to coerce object in epoch/iso formats and integer/float in epoch\n        formats. Return a boolean if parsing was successful.\n        \"\"\"\n    if not len(data):\n        return (data, False)\n    new_data = data\n    if new_data.dtype == 'object':\n        try:\n            new_data = data.astype('int64')\n        except (TypeError, ValueError):\n            pass\n    if issubclass(new_data.dtype.type, np.number):\n        in_range = isna(new_data._values) | (new_data > self.min_stamp) | (new_data._values == iNaT)\n        if not in_range.all():\n            return (data, False)\n    date_units = (self.date_unit,) if self.date_unit else self._STAMP_UNITS\n    for date_unit in date_units:\n        try:\n            new_data = to_datetime(new_data, errors='raise', unit=date_unit)\n        except (ValueError, OverflowError):\n            continue\n        return (new_data, True)\n    return (data, False)\n\n# Generated from Python.g4 by ANTLR 4.9.2\nfrom antlr4 import *\nif __name__ is not None and \".\" in __name__:\n    from.PythonParser import PythonParser\nelse:\n    from PythonParser import PythonParser\n\n# This class defines a complete listener for a parse tree produced by PythonParser.\nclass PythonListener(ParseTreeListener):\n\n    # Enter a parse tree produced by PythonParser#single_input.\n    def enterSingle_input(self, ctx:PythonParser.Single_inputContext):\n        pass\n\n    # Exit a parse tree produced by PythonParser#single_input.\n    def exitSingle_input(self, ctx:PythonParser.Single_inputContext):\n        pass\n\n\n    # Enter a parse tree produced by PythonParser#file_input.\n    def enterFile_input(self, ctx:PythonParser.File_inputContext):\n        pass\n\n    # Exit a parse tree produced by PythonParser#file_input.\n    def exitFile_input(self, ctx:PythonParser.File_inputContext):\n        pass\n\n\n    # Enter a parse tree produced by PythonParser#eval_input.\n    def enterEval_input(self, ctx:PythonParser.Eval_inputContext):\n        pass\n\n    # Exit a parse tree produced by PythonParser#eval_input.\n    def exitEval_input(self, ctx:PythonParser.Eval_inputContext):\n        pass\n\n\n    # Enter a parse tree produced by PythonParser#decorator.\n    def enterDecorator(self, ctx:PythonParser.DecoratorContext):\n        pass\n\n    # Exit a parse tree produced by PythonParser#decorator.\n    def exitDecorator(self, ctx:PythonParser.DecoratorContext):\n        pass\n\n\n    # Enter a parse tree produced by PythonParser",
+      "patch_sha256": "107d3495409496d52de4cd202464f050b2c5f53e86913dc94db312ce0e8fcc47",
+      "rank_score": -50,
+      "plan_ok": false,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.5280500268755478,
+      "top_p": 0.98
+    },
+    {
+      "index": 4,
+      "patch_text": "def _try_convert_to_date(self, data):\n    \"\"\"\n        Try to parse a ndarray like into a date column.\n\n        Try to coerce object in epoch/iso formats and integer/float in epoch\n        formats. Return a boolean if parsing was successful.\n        \"\"\"\n    if not len(data):\n        return (data, False)\n    new_data = data\n    if new_data.dtype == 'object':\n        try:\n            new_data = data.astype('int64')\n        except (TypeError, ValueError, OverflowError):\n            pass\n    if issubclass(new_data.dtype.type, np.number):\n        in_range = isna(new_data._values) | (new_data > self.min_stamp) | (new_data._values == iNaT)\n        if not in_range.all():\n            return (data, False)\n    date_units = (self.date_unit,) if self.date_unit else self._STAMP_UNITS\n    for date_unit in date_units:\n        try:\n            new_data = to_datetime(new_data, errors='raise', unit=date_unit)\n        except (ValueError, OverflowError):\n            continue\n        return (new_data, True)\n    return (data, False)\n\n# Generated from main/antlr/JsonParser.g4 by ANTLR 4.9.2\nfrom antlr4 import *\nif __name__ is not None and \".\" in __name__:\n    from.JsonParser import JsonParser\nelse:\n    from JsonParser import JsonParser\n\n# This class defines a complete listener for a parse tree produced by JsonParser.\nclass JsonListener(ParseTreeListener):\n\n    # Enter a parse tree produced by JsonParser#json.\n    def enterJson(self, ctx:JsonParser.JsonContext):\n        pass\n\n    # Exit a parse tree produced by JsonParser#json.\n    def exitJson(self, ctx:JsonParser.JsonContext):\n        pass\n\n\n    # Enter a parse tree produced by JsonParser#object.\n    def enterObject(self, ctx:JsonParser.ObjectContext):\n        pass\n\n    # Exit a parse tree produced by JsonParser#object.\n    def exitObject(self, ctx:JsonParser.ObjectContext):\n        pass\n\n\n    # Enter a parse tree produced by JsonParser#pair.\n    def enterPair(self, ctx:JsonParser.PairContext):\n        pass\n\n    # Exit a parse tree produced by JsonParser#pair.\n    def exitPair(self, ctx:JsonParser.PairContext):\n        pass\n\n\n    # Enter a parse tree produced by JsonParser#array.\n    def enterArray(self, ctx:JsonParser.ArrayContext):\n        pass\n\n    # Exit a parse tree produced by JsonParser#array.\n    def exitArray(self, ctx:JsonParser.ArrayContext):\n        pass\n\n\n    # Enter a parse tree produced by JsonParser#value.\n    def enterValue(self, ctx:JsonParser.ValueContext):\n        pass\n\n    # Exit a parse tree produced by",
+      "patch_sha256": "d82b09cc204520b4f83a55493147d2fe011edf09fc37a8987c28875e4a39343c",
+      "rank_score": -158,
+      "plan_ok": false,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7793066012285085,
+      "top_p": 0.8741332515356355
+    }
+  ],
+  "candidate_count": 5,
+  "retrieved_examples": [
+    {
+      "id": "39",
+      "project_name": "pandas",
+      "buggy_line_content": "            except (TypeError, ValueError):",
+      "function": {
+        "function_name": "_try_convert_data",
+        "function_parent": "Parser",
+        "function_before_start_line": 886,
+        "function_before_end_line": 958,
+        "function_after_start_line": 886,
+        "function_after_end_line": 958,
+        "function_before_token_count": 277,
+        "function_after_token_count": 279,
+        "function_before": "def _try_convert_data(self, name, data, use_dtypes=True, convert_dates=True):\n    \"\"\"\n        Try to parse a ndarray like into a column by inferring dtype.\n        \"\"\"\n    if use_dtypes:\n        if not self.dtype:\n            return (data, False)\n        elif self.dtype is True:\n            pass\n        else:\n            dtype = self.dtype.get(name) if isinstance(self.dtype, dict) else self.dtype\n            if dtype is not None:\n                try:\n                    dtype = np.dtype(dtype)\n                    return (data.astype(dtype), True)\n                except (TypeError, ValueError):\n                    return (data, False)\n    if convert_dates:\n        new_data, result = self._try_convert_to_date(data)\n        if result:\n            return (new_data, True)\n    result = False\n    if data.dtype == 'object':\n        try:\n            data = data.astype('float64')\n            result = True\n        except (TypeError, ValueError):\n            pass\n    if data.dtype.kind == 'f':\n        if data.dtype != 'float64':\n            try:\n                data = data.astype('float64')\n                result = True\n            except (TypeError, ValueError):\n                pass\n    if len(data) and (data.dtype == 'float' or data.dtype == 'object'):\n        try:\n            new_data = data.astype('int64')\n            if (new_data == data).all():\n                data = new_data\n                result = True\n        except (TypeError, ValueError):\n            pass\n    if data.dtype == 'int':\n        try:\n            data = data.astype('int64')\n            result = True\n        except (TypeError, ValueError):\n            pass\n    return (data, result)",
+        "function_after": "def _try_convert_data(self, name, data, use_dtypes=True, convert_dates=True):\n    \"\"\"\n        Try to parse a ndarray like into a column by inferring dtype.\n        \"\"\"\n    if use_dtypes:\n        if not self.dtype:\n            return (data, False)\n        elif self.dtype is True:\n            pass\n        else:\n            dtype = self.dtype.get(name) if isinstance(self.dtype, dict) else self.dtype\n            if dtype is not None:\n                try:\n                    dtype = np.dtype(dtype)\n                    return (data.astype(dtype), True)\n                except (TypeError, ValueError):\n                    return (data, False)\n    if convert_dates:\n        new_data, result = self._try_convert_to_date(data)\n        if result:\n            return (new_data, True)\n    result = False\n    if data.dtype == 'object':\n        try:\n            data = data.astype('float64')\n            result = True\n        except (TypeError, ValueError):\n            pass\n    if data.dtype.kind == 'f':\n        if data.dtype != 'float64':\n            try:\n                data = data.astype('float64')\n                result = True\n            except (TypeError, ValueError):\n                pass\n    if len(data) and (data.dtype == 'float' or data.dtype == 'object'):\n        try:\n            new_data = data.astype('int64')\n            if (new_data == data).all():\n                data = new_data\n                result = True\n        except (TypeError, ValueError, OverflowError):\n            pass\n    if data.dtype == 'int':\n        try:\n            data = data.astype('int64')\n            result = True\n        except (TypeError, ValueError):\n            pass\n    return (data, result)"
+      },
+      "file_name": "_json.py",
+      "file_path": "pandas/io/json/_json.py",
+      "score_reranked": 1.1551816273265725
+    },
+    {
+      "id": "33",
+      "project_name": "pandas",
+      "buggy_line_content": "                    except ValueError:",
+      "function": {
+        "function_name": "_cython_agg_blocks",
+        "function_parent": "DataFrameGroupBy",
+        "function_before_start_line": 999,
+        "function_before_end_line": 1129,
+        "function_after_start_line": 999,
+        "function_after_end_line": 1129,
+        "function_before_token_count": 648,
+        "function_after_token_count": 652,
+        "function_before": "def _cython_agg_blocks(self, how: str, alt=None, numeric_only: bool=True, min_count: int=-1) -> 'Tuple[List[Block], Index]':\n    data: BlockManager = self._get_data_to_aggregate()\n    if numeric_only:\n        data = data.get_numeric_data(copy=False)\n    agg_blocks: List[Block] = []\n    new_items: List[np.ndarray] = []\n    deleted_items: List[np.ndarray] = []\n    split_items: List[np.ndarray] = []\n    split_frames: List[DataFrame] = []\n    no_result = object()\n    for block in data.blocks:\n        result = no_result\n        locs = block.mgr_locs.as_array\n        try:\n            result, _ = self.grouper.aggregate(block.values, how, axis=1, min_count=min_count)\n        except NotImplementedError:\n            if alt is None:\n                assert how == 'ohlc'\n                deleted_items.append(locs)\n                continue\n            obj = self.obj[data.items[locs]]\n            if obj.shape[1] == 1:\n                obj = obj.iloc[:, 0]\n            s = get_groupby(obj, self.grouper)\n            try:\n                result = s.aggregate(lambda x: alt(x, axis=self.axis))\n            except TypeError:\n                deleted_items.append(locs)\n                continue\n            else:\n                result = cast(DataFrame, result)\n                if len(result._data.blocks) != 1:\n                    split_items.append(locs)\n                    split_frames.append(result)\n                    continue\n                assert len(result._data.blocks) == 1\n                result = result._data.blocks[0].values\n                if isinstance(result, np.ndarray) and result.ndim == 1:\n                    result = result.reshape(1, -1)\n        assert not isinstance(result, DataFrame)\n        if result is not no_result:\n            result = maybe_downcast_numeric(result, block.dtype)\n            if block.is_extension and isinstance(result, np.ndarray):\n                assert result.ndim == 1 or result.shape[0] == 1\n                try:\n                    result = type(block.values)._from_sequence(result.ravel(), dtype=block.values.dtype)\n                except ValueError:\n                    result = result.reshape(1, -1)\n            agg_block: Block = block.make_block(result)\n        new_items.append(locs)\n        agg_blocks.append(agg_block)\n    if not (agg_blocks or split_frames):\n        raise DataError('No numeric types to aggregate')\n    if split_items:\n        for locs, result in zip(split_items, split_frames):\n            assert len(locs) == result.shape[1]\n            for i, loc in enumerate(locs):\n                new_items.append(np.array([loc], dtype=locs.dtype))\n                agg_blocks.append(result.iloc[:, [i]]._data.blocks[0])\n    indexer = np.concatenate(new_items)\n    agg_items = data.items.take(np.sort(indexer))\n    if deleted_items:\n        deleted = np.concatenate(deleted_items)\n        ai = np.arange(len(data))\n        mask = np.zeros(len(data))\n        mask[deleted] = 1\n        indexer = (ai - mask.cumsum())[indexer]\n    offset = 0\n    for blk in agg_blocks:\n        loc = len(blk.mgr_locs)\n        blk.mgr_locs = indexer[offset:offset + loc]\n        offset += loc\n    return (agg_blocks, agg_items)",
+        "function_after": "def _cython_agg_blocks(self, how: str, alt=None, numeric_only: bool=True, min_count: int=-1) -> 'Tuple[List[Block], Index]':\n    data: BlockManager = self._get_data_to_aggregate()\n    if numeric_only:\n        data = data.get_numeric_data(copy=False)\n    agg_blocks: List[Block] = []\n    new_items: List[np.ndarray] = []\n    deleted_items: List[np.ndarray] = []\n    split_items: List[np.ndarray] = []\n    split_frames: List[DataFrame] = []\n    no_result = object()\n    for block in data.blocks:\n        result = no_result\n        locs = block.mgr_locs.as_array\n        try:\n            result, _ = self.grouper.aggregate(block.values, how, axis=1, min_count=min_count)\n        except NotImplementedError:\n            if alt is None:\n                assert how == 'ohlc'\n                deleted_items.append(locs)\n                continue\n            obj = self.obj[data.items[locs]]\n            if obj.shape[1] == 1:\n                obj = obj.iloc[:, 0]\n            s = get_groupby(obj, self.grouper)\n            try:\n                result = s.aggregate(lambda x: alt(x, axis=self.axis))\n            except TypeError:\n                deleted_items.append(locs)\n                continue\n            else:\n                result = cast(DataFrame, result)\n                if len(result._data.blocks) != 1:\n                    split_items.append(locs)\n                    split_frames.append(result)\n                    continue\n                assert len(result._data.blocks) == 1\n                result = result._data.blocks[0].values\n                if isinstance(result, np.ndarray) and result.ndim == 1:\n                    result = result.reshape(1, -1)\n        assert not isinstance(result, DataFrame)\n        if result is not no_result:\n            result = maybe_downcast_numeric(result, block.dtype)\n            if block.is_extension and isinstance(result, np.ndarray):\n                assert result.ndim == 1 or result.shape[0] == 1\n                try:\n                    result = type(block.values)._from_sequence(result.ravel(), dtype=block.values.dtype)\n                except (ValueError, TypeError):\n                    result = result.reshape(1, -1)\n            agg_block: Block = block.make_block(result)\n        new_items.append(locs)\n        agg_blocks.append(agg_block)\n    if not (agg_blocks or split_frames):\n        raise DataError('No numeric types to aggregate')\n    if split_items:\n        for locs, result in zip(split_items, split_frames):\n            assert len(locs) == result.shape[1]\n            for i, loc in enumerate(locs):\n                new_items.append(np.array([loc], dtype=locs.dtype))\n                agg_blocks.append(result.iloc[:, [i]]._data.blocks[0])\n    indexer = np.concatenate(new_items)\n    agg_items = data.items.take(np.sort(indexer))\n    if deleted_items:\n        deleted = np.concatenate(deleted_items)\n        ai = np.arange(len(data))\n        mask = np.zeros(len(data))\n        mask[deleted] = 1\n        indexer = (ai - mask.cumsum())[indexer]\n    offset = 0\n    for blk in agg_blocks:\n        loc = len(blk.mgr_locs)\n        blk.mgr_locs = indexer[offset:offset + loc]\n        offset += loc\n    return (agg_blocks, agg_items)"
+      },
+      "file_name": "generic.py",
+      "file_path": "pandas/core/groupby/generic.py",
+      "score_reranked": 0.9843077617050979
+    },
+    {
+      "id": "37",
+      "project_name": "pandas",
+      "buggy_line_content": "                elif is_integer(i) and not ax.holds_integer():",
+      "function": {
+        "function_name": "_convert_key",
+        "function_parent": "_AtIndexer",
+        "function_before_start_line": 2110,
+        "function_before_end_line": 2133,
+        "function_after_start_line": 2110,
+        "function_after_end_line": 2133,
+        "function_before_token_count": 82,
+        "function_after_token_count": 90,
+        "function_before": "def _convert_key(self, key, is_setter: bool=False):\n    \"\"\"\n        Require they keys to be the same type as the index. (so we don't\n        fallback)\n        \"\"\"\n    if is_setter:\n        return list(key)\n    for ax, i in zip(self.obj.axes, key):\n        if ax.is_integer():\n            if not is_integer(i):\n                raise ValueError('At based indexing on an integer index can only have integer indexers')\n        elif is_integer(i) and not ax.holds_integer():\n            raise ValueError('At based indexing on an non-integer index can only have non-integer indexers')\n    return key",
+        "function_after": "def _convert_key(self, key, is_setter: bool=False):\n    \"\"\"\n        Require they keys to be the same type as the index. (so we don't\n        fallback)\n        \"\"\"\n    if is_setter:\n        return list(key)\n    for ax, i in zip(self.obj.axes, key):\n        if ax.is_integer():\n            if not is_integer(i):\n                raise ValueError('At based indexing on an integer index can only have integer indexers')\n        elif is_integer(i) and (not (ax.holds_integer() or ax.is_floating())):\n            raise ValueError('At based indexing on an non-integer index can only have non-integer indexers')\n    return key"
+      },
+      "file_name": "indexing.py",
+      "file_path": "pandas/core/indexing.py",
+      "score_reranked": 0.5108202635361435
+    },
+    {
+      "id": "17",
+      "project_name": "youtube-dl",
+      "buggy_line_content": "                    op = lambda attr, value: not str_op",
+      "function": {
+        "function_name": "_build_format_filter",
+        "function_parent": "YoutubeDL",
+        "function_before_start_line": 1032,
+        "function_before_end_line": 1093,
+        "function_after_start_line": 1032,
+        "function_after_end_line": 1093,
+        "function_before_token_count": 310,
+        "function_after_token_count": 315,
+        "function_before": "def _build_format_filter(self, filter_spec):\n    \"\"\" Returns a function to filter the formats according to the filter_spec \"\"\"\n    OPERATORS = {'<': operator.lt, '<=': operator.le, '>': operator.gt, '>=': operator.ge, '=': operator.eq, '!=': operator.ne}\n    operator_rex = re.compile('(?x)\\\\s*\\n            (?P<key>width|height|tbr|abr|vbr|asr|filesize|filesize_approx|fps)\\n            \\\\s*(?P<op>%s)(?P<none_inclusive>\\\\s*\\\\?)?\\\\s*\\n            (?P<value>[0-9.]+(?:[kKmMgGtTpPeEzZyY]i?[Bb]?)?)\\n            $\\n            ' % '|'.join(map(re.escape, OPERATORS.keys())))\n    m = operator_rex.search(filter_spec)\n    if m:\n        try:\n            comparison_value = int(m.group('value'))\n        except ValueError:\n            comparison_value = parse_filesize(m.group('value'))\n            if comparison_value is None:\n                comparison_value = parse_filesize(m.group('value') + 'B')\n            if comparison_value is None:\n                raise ValueError('Invalid value %r in format specification %r' % (m.group('value'), filter_spec))\n        op = OPERATORS[m.group('op')]\n    if not m:\n        STR_OPERATORS = {'=': operator.eq, '^=': lambda attr, value: attr.startswith(value), '$=': lambda attr, value: attr.endswith(value), '*=': lambda attr, value: value in attr}\n        str_operator_rex = re.compile('(?x)\\n                \\\\s*(?P<key>ext|acodec|vcodec|container|protocol|format_id)\\n                \\\\s*(?P<negation>!\\\\s*)?(?P<op>%s)(?P<none_inclusive>\\\\s*\\\\?)?\\n                \\\\s*(?P<value>[a-zA-Z0-9._-]+)\\n                \\\\s*$\\n                ' % '|'.join(map(re.escape, STR_OPERATORS.keys())))\n        m = str_operator_rex.search(filter_spec)\n        if m:\n            comparison_value = m.group('value')\n            str_op = STR_OPERATORS[m.group('op')]\n            if m.group('negation'):\n                op = lambda attr, value: not str_op\n            else:\n                op = str_op\n    if not m:\n        raise ValueError('Invalid filter specification %r' % filter_spec)\n\n    def _filter(f):\n        actual_value = f.get(m.group('key'))\n        if actual_value is None:\n            return m.group('none_inclusive')\n        return op(actual_value, comparison_value)\n    return _filter",
+        "function_after": "def _build_format_filter(self, filter_spec):\n    \"\"\" Returns a function to filter the formats according to the filter_spec \"\"\"\n    OPERATORS = {'<': operator.lt, '<=': operator.le, '>': operator.gt, '>=': operator.ge, '=': operator.eq, '!=': operator.ne}\n    operator_rex = re.compile('(?x)\\\\s*\\n            (?P<key>width|height|tbr|abr|vbr|asr|filesize|filesize_approx|fps)\\n            \\\\s*(?P<op>%s)(?P<none_inclusive>\\\\s*\\\\?)?\\\\s*\\n            (?P<value>[0-9.]+(?:[kKmMgGtTpPeEzZyY]i?[Bb]?)?)\\n            $\\n            ' % '|'.join(map(re.escape, OPERATORS.keys())))\n    m = operator_rex.search(filter_spec)\n    if m:\n        try:\n            comparison_value = int(m.group('value'))\n        except ValueError:\n            comparison_value = parse_filesize(m.group('value'))\n            if comparison_value is None:\n                comparison_value = parse_filesize(m.group('value') + 'B')\n            if comparison_value is None:\n                raise ValueError('Invalid value %r in format specification %r' % (m.group('value'), filter_spec))\n        op = OPERATORS[m.group('op')]\n    if not m:\n        STR_OPERATORS = {'=': operator.eq, '^=': lambda attr, value: attr.startswith(value), '$=': lambda attr, value: attr.endswith(value), '*=': lambda attr, value: value in attr}\n        str_operator_rex = re.compile('(?x)\\n                \\\\s*(?P<key>ext|acodec|vcodec|container|protocol|format_id)\\n                \\\\s*(?P<negation>!\\\\s*)?(?P<op>%s)(?P<none_inclusive>\\\\s*\\\\?)?\\n                \\\\s*(?P<value>[a-zA-Z0-9._-]+)\\n                \\\\s*$\\n                ' % '|'.join(map(re.escape, STR_OPERATORS.keys())))\n        m = str_operator_rex.search(filter_spec)\n        if m:\n            comparison_value = m.group('value')\n            str_op = STR_OPERATORS[m.group('op')]\n            if m.group('negation'):\n                op = lambda attr, value: not str_op(attr, value)\n            else:\n                op = str_op\n    if not m:\n        raise ValueError('Invalid filter specification %r' % filter_spec)\n\n    def _filter(f):\n        actual_value = f.get(m.group('key'))\n        if actual_value is None:\n            return m.group('none_inclusive')\n        return op(actual_value, comparison_value)\n    return _filter"
+      },
+      "file_name": "YoutubeDL.py",
+      "file_path": "youtube_dl/YoutubeDL.py",
+      "score_reranked": 0.4517457416589429
+    },
+    {
+      "id": "28",
+      "project_name": "scrapy",
+      "buggy_line_content": "        if ':' not in self._url:",
+      "function": {
+        "function_name": "_set_url",
+        "function_parent": "Request",
+        "function_before_start_line": 62,
+        "function_before_end_line": 70,
+        "function_after_start_line": 62,
+        "function_after_end_line": 70,
+        "function_before_token_count": 65,
+        "function_after_token_count": 79,
+        "function_before": "def _set_url(self, url):\n    if not isinstance(url, six.string_types):\n        raise TypeError('Request url must be str or unicode, got %s:' % type(url).__name__)\n    s = safe_url_string(url, self.encoding)\n    self._url = escape_ajax(s)\n    if ':' not in self._url:\n        raise ValueError('Missing scheme in request url: %s' % self._url)",
+        "function_after": "def _set_url(self, url):\n    if not isinstance(url, six.string_types):\n        raise TypeError('Request url must be str or unicode, got %s:' % type(url).__name__)\n    s = safe_url_string(url, self.encoding)\n    self._url = escape_ajax(s)\n    if '://' not in self._url and (not self._url.startswith('data:')):\n        raise ValueError('Missing scheme in request url: %s' % self._url)"
+      },
+      "file_name": "__init__.py",
+      "file_path": "scrapy/http/request/__init__.py",
+      "score_reranked": 0.430739351511281
+    }
+  ],
+  "diffusion_plan": [
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Delete",
+          "node": 28
+        },
+        {
+          "op": "Replace",
+          "node": 54
+        },
+        {
+          "op": "Replace",
+          "node": 27
+        },
+        {
+          "op": "GuardAdd",
+          "node": 54
+        },
+        {
+          "op": "GuardAdd",
+          "node": 28
+        },
+        {
+          "op": "GuardAdd",
+          "node": 9
+        },
+        {
+          "op": "Replace",
+          "node": 9
+        },
+        {
+          "op": "GuardAdd",
+          "node": 27
+        },
+        {
+          "op": "Replace",
+          "node": 80
+        },
+        {
+          "op": "Replace",
+          "node": 28
+        },
+        {
+          "op": "Replace",
+          "node": 53
+        },
+        {
+          "op": "GuardAdd",
+          "node": 10
+        }
+      ],
+      "score": 18.127272725715702
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 27
+        },
+        {
+          "op": "InsertBefore",
+          "node": 10
+        },
+        {
+          "op": "GuardAdd",
+          "node": 10
+        },
+        {
+          "op": "GuardAdd",
+          "node": 53
+        },
+        {
+          "op": "GuardAdd",
+          "node": 28
+        },
+        {
+          "op": "Replace",
+          "node": 28
+        },
+        {
+          "op": "Replace",
+          "node": 46
+        },
+        {
+          "op": "Replace",
+          "node": 10
+        },
+        {
+          "op": "InsertAfter",
+          "node": 10
+        },
+        {
+          "op": "Replace",
+          "node": 89
+        }
+      ],
+      "score": 18.072727271175207
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "InsertAfter",
+          "node": 28
+        },
+        {
+          "op": "Replace",
+          "node": 28
+        },
+        {
+          "op": "Delete",
+          "node": 54
+        },
+        {
+          "op": "Replace",
+          "node": 27
+        },
+        {
+          "op": "Replace",
+          "node": 89
+        },
+        {
+          "op": "GuardAdd",
+          "node": 80
+        },
+        {
+          "op": "InsertAfter",
+          "node": 10
+        },
+        {
+          "op": "GuardAdd",
+          "node": 10
+        },
+        {
+          "op": "Replace",
+          "node": 10
+        },
+        {
+          "op": "Replace",
+          "node": 46
+        },
+        {
+          "op": "Replace",
+          "node": 53
+        }
+      ],
+      "score": 17.554545453040497
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 53
+        },
+        {
+          "op": "Replace",
+          "node": 54
+        },
+        {
+          "op": "GuardAdd",
+          "node": 54
+        },
+        {
+          "op": "GuardAdd",
+          "node": 28
+        },
+        {
+          "op": "GuardAdd",
+          "node": 10
+        },
+        {
+          "op": "InsertAfter",
+          "node": 10
+        },
+        {
+          "op": "Replace",
+          "node": 89
+        },
+        {
+          "op": "Delete",
+          "node": 10
+        }
+      ],
+      "score": 17.39999999869091
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Delete",
+          "node": 27
+        },
+        {
+          "op": "Delete",
+          "node": 54
+        },
+        {
+          "op": "Replace",
+          "node": 27
+        },
+        {
+          "op": "Replace",
+          "node": 54
+        },
+        {
+          "op": "Replace",
+          "node": 80
+        },
+        {
+          "op": "GuardAdd",
+          "node": 54
+        },
+        {
+          "op": "Replace",
+          "node": 28
+        },
+        {
+          "op": "InsertBefore",
+          "node": 28
+        },
+        {
+          "op": "GuardAdd",
+          "node": 10
+        },
+        {
+          "op": "Replace",
+          "node": 53
+        },
+        {
+          "op": "GuardAdd",
+          "node": 89
+        }
+      ],
+      "score": 17.15454545307686
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "GuardAdd",
+          "node": 28
+        },
+        {
+          "op": "Replace",
+          "node": 54
+        },
+        {
+          "op": "Replace",
+          "node": 27
+        },
+        {
+          "op": "Replace",
+          "node": 46
+        },
+        {
+          "op": "Replace",
+          "node": 89
+        },
+        {
+          "op": "GuardAdd",
+          "node": 53
+        },
+        {
+          "op": "Replace",
+          "node": 28
+        },
+        {
+          "op": "Replace",
+          "node": 10
+        },
+        {
+          "op": "Replace",
+          "node": 9
+        },
+        {
+          "op": "GuardAdd",
+          "node": 89
+        }
+      ],
+      "score": 16.43636363496033
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "InsertAfter",
+          "node": 10
+        },
+        {
+          "op": "Replace",
+          "node": 89
+        },
+        {
+          "op": "Replace",
+          "node": 27
+        },
+        {
+          "op": "Replace",
+          "node": 53
+        },
+        {
+          "op": "Replace",
+          "node": 10
+        },
+        {
+          "op": "Replace",
+          "node": 54
+        },
+        {
+          "op": "Replace",
+          "node": 9
+        },
+        {
+          "op": "GuardAdd",
+          "node": 10
+        },
+        {
+          "op": "GuardAdd",
+          "node": 54
+        }
+      ],
+      "score": 16.290909089519012
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "GuardAdd",
+          "node": 10
+        },
+        {
+          "op": "Replace",
+          "node": 10
+        },
+        {
+          "op": "Replace",
+          "node": 89
+        },
+        {
+          "op": "Replace",
+          "node": 9
+        },
+        {
+          "op": "Delete",
+          "node": 10
+        },
+        {
+          "op": "Replace",
+          "node": 8
+        },
+        {
+          "op": "Replace",
+          "node": 28
+        },
+        {
+          "op": "Replace",
+          "node": 53
+        }
+      ],
+      "score": 16.036363635178514
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 10
+        },
+        {
+          "op": "Replace",
+          "node": 89
+        },
+        {
+          "op": "Replace",
+          "node": 54
+        },
+        {
+          "op": "GuardAdd",
+          "node": 10
+        },
+        {
+          "op": "Replace",
+          "node": 53
+        },
+        {
+          "op": "Replace",
+          "node": 28
+        },
+        {
+          "op": "GuardAdd",
+          "node": 8
+        },
+        {
+          "op": "Delete",
+          "node": 89
+        },
+        {
+          "op": "Replace",
+          "node": 27
+        }
+      ],
+      "score": 15.618181816852896
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 10
+        },
+        {
+          "op": "GuardAdd",
+          "node": 10
+        },
+        {
+          "op": "Replace",
+          "node": 27
+        },
+        {
+          "op": "Replace",
+          "node": 54
+        },
+        {
+          "op": "GuardAdd",
+          "node": 28
+        },
+        {
+          "op": "Delete",
+          "node": 54
+        },
+        {
+          "op": "Replace",
+          "node": 53
+        }
+      ],
+      "score": 15.309090907971902
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "GuardAdd",
+          "node": 54
+        },
+        {
+          "op": "GuardAdd",
+          "node": 10
+        },
+        {
+          "op": "InsertBefore",
+          "node": 28
+        },
+        {
+          "op": "InsertAfter",
+          "node": 53
+        },
+        {
+          "op": "Replace",
+          "node": 28
+        },
+        {
+          "op": "GuardAdd",
+          "node": 8
+        },
+        {
+          "op": "Replace",
+          "node": 54
+        },
+        {
+          "op": "Replace",
+          "node": 8
+        }
+      ],
+      "score": 15.172727271620662
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 28
+        },
+        {
+          "op": "Replace",
+          "node": 54
+        },
+        {
+          "op": "Replace",
+          "node": 46
+        },
+        {
+          "op": "InsertBefore",
+          "node": 10
+        },
+        {
+          "op": "Replace",
+          "node": 8
+        },
+        {
+          "op": "Replace",
+          "node": 89
+        },
+        {
+          "op": "Replace",
+          "node": 53
+        },
+        {
+          "op": "Replace",
+          "node": 27
+        },
+        {
+          "op": "GuardAdd",
+          "node": 53
+        },
+        {
+          "op": "Delete",
+          "node": 28
+        }
+      ],
+      "score": 15.145454544168597
+    }
+  ],
+  "static_analysis_nodes": [
+    {
+      "line": 27,
+      "line_absolute": 979,
+      "node_id": 10,
+      "node_id_local": 23,
+      "type": "Return",
+      "code": "return (data, False)",
+      "distance_to_buggy": 4,
+      "context": "  24:           except (ValueError, OverflowError):\n  25:               continue\n  26:           return (new_data, True)\n  27:->     return (data, False)",
+      "ast_subtree_json": {
+        "_type": "Return",
+        "value": {
+          "_type": "Tuple",
+          "elts": [
+            {
+              "_type": "Name"
+            },
+            {
+              "_type": "Constant"
+            }
+          ],
+          "ctx": {
+            "_type": "Load"
+          }
+        }
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": 18.0
+    },
+    {
+      "line": 26,
+      "line_absolute": 978,
+      "node_id": 28,
+      "node_id_local": 22,
+      "type": "Return",
+      "code": "return (new_data, True)",
+      "distance_to_buggy": 5,
+      "context": "  23:               new_data = to_datetime(new_data, errors='raise', unit=date_unit)\n  24:           except (ValueError, OverflowError):\n  25:               continue\n  26:->         return (new_data, True)\n  27:       return (data, False)",
+      "ast_subtree_json": {
+        "_type": "Return",
+        "value": {
+          "_type": "Tuple",
+          "elts": [
+            {
+              "_type": "Name"
+            },
+            {
+              "_type": "Constant"
+            }
+          ],
+          "ctx": {
+            "_type": "Load"
+          }
+        }
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": 28.0
+    },
+    {
+      "line": 24,
+      "line_absolute": 976,
+      "node_id": 54,
+      "node_id_local": 21,
+      "type": "ExceptHandler",
+      "code": "except (ValueError, OverflowError):\n    continue",
+      "distance_to_buggy": 7,
+      "context": "  21:       for date_unit in date_units:\n  22:           try:\n  23:               new_data = to_datetime(new_data, errors='raise', unit=date_unit)\n  24:->         except (ValueError, OverflowError):\n  25:               continue\n  26:           return (new_data, True)\n  27:       return (data, False)",
+      "ast_subtree_json": {
+        "_type": "ExceptHandler",
+        "type": {
+          "_type": "Tuple",
+          "elts": [
+            {
+              "_type": "Name"
+            },
+            {
+              "_type": "Name"
+            }
+          ],
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "name": null,
+        "body": [
+          {
+            "_type": "Continue"
+          }
+        ]
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": 46.8
+    },
+    {
+      "line": 23,
+      "line_absolute": 975,
+      "node_id": 89,
+      "node_id_local": 20,
+      "type": "Call",
+      "code": "to_datetime(new_data, errors='raise', unit=date_unit)",
+      "distance_to_buggy": 8,
+      "context": "  20:       date_units = (self.date_unit,) if self.date_unit else self._STAMP_UNITS\n  21:       for date_unit in date_units:\n  22:           try:\n  23:->             new_data = to_datetime(new_data, errors='raise', unit=date_unit)\n  24:           except (ValueError, OverflowError):\n  25:               continue\n  26:           return (new_data, True)",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Name",
+          "id": "to_datetime",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [
+          {
+            "_type": "Name",
+            "id": "new_data",
+            "ctx": {
+              "_type": "Load"
+            }
+          }
+        ],
+        "keywords": [
+          {
+            "_type": "keyword",
+            "arg": "errors",
+            "value": {
+              "_type": "Constant"
+            }
+          },
+          {
+            "_type": "keyword",
+            "arg": "unit",
+            "value": {
+              "_type": "Name"
+            }
+          }
+        ]
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": 56.0
+    },
+    {
+      "line": 23,
+      "line_absolute": 975,
+      "node_id": 53,
+      "node_id_local": 19,
+      "type": "Assign",
+      "code": "new_data = to_datetime(new_data, errors='raise', unit=date_unit)",
+      "distance_to_buggy": 8,
+      "context": "  20:       date_units = (self.date_unit,) if self.date_unit else self._STAMP_UNITS\n  21:       for date_unit in date_units:\n  22:           try:\n  23:->             new_data = to_datetime(new_data, errors='raise', unit=date_unit)\n  24:           except (ValueError, OverflowError):\n  25:               continue\n  26:           return (new_data, True)",
+      "ast_subtree_json": {
+        "_type": "Assign",
+        "targets": [
+          {
+            "_type": "Name",
+            "id": "new_data",
+            "ctx": {
+              "_type": "Store"
+            }
+          }
+        ],
+        "value": {
+          "_type": "Call",
+          "func": {
+            "_type": "Name"
+          },
+          "args": [
+            {
+              "_type": "Name"
+            }
+          ],
+          "keywords": [
+            {
+              "_type": "keyword"
+            },
+            {
+              "_type": "keyword"
+            }
+          ]
+        },
+        "type_comment": null
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": 57.0
+    },
+    {
+      "line": 22,
+      "line_absolute": 974,
+      "node_id": 27,
+      "node_id_local": 18,
+      "type": "Try",
+      "code": "try:\n    new_data = to_datetime(new_data, errors='raise', unit=date_unit)\nexcept (ValueError, OverflowError):\n    continue",
+      "distance_to_buggy": 9,
+      "context": "  19:               return (data, False)\n  20:       date_units = (self.date_unit,) if self.date_unit else self._STAMP_UNITS\n  21:       for date_unit in date_units:\n  22:->         try:\n  23:               new_data = to_datetime(new_data, errors='raise', unit=date_unit)\n  24:           except (ValueError, OverflowError):\n  25:               continue",
+      "ast_subtree_json": {
+        "_type": "Try",
+        "body": [
+          {
+            "_type": "Assign",
+            "targets": [
+              {
+                "_type": "Name"
+              }
+            ],
+            "value": {
+              "_type": "Call"
+            },
+            "type_comment": null
+          }
+        ],
+        "handlers": [
+          {
+            "_type": "ExceptHandler",
+            "type": {
+              "_type": "Tuple"
+            },
+            "name": null,
+            "body": [
+              {
+                "_type": "Continue"
+              }
+            ]
+          }
+        ],
+        "orelse": [],
+        "finalbody": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": 66.6
+    },
+    {
+      "line": 21,
+      "line_absolute": 973,
+      "node_id": 9,
+      "node_id_local": 17,
+      "type": "For",
+      "code": "for date_unit in date_units:\n    try:\n        new_data = to_datetime(new_data, errors='raise', unit=date_unit)\n    except (ValueError, OverflowError):\n        continue\n    return (new_data, True)",
+      "distance_to_buggy": 10,
+      "context": "  18:           if not in_range.all():\n  19:               return (data, False)\n  20:       date_units = (self.date_unit,) if self.date_unit else self._STAMP_UNITS\n  21:->     for date_unit in date_units:\n  22:           try:\n  23:               new_data = to_datetime(new_data, errors='raise', unit=date_unit)\n  24:           except (ValueError, OverflowError):",
+      "ast_subtree_json": {
+        "_type": "For",
+        "target": {
+          "_type": "Name",
+          "id": "date_unit",
+          "ctx": {
+            "_type": "Store"
+          }
+        },
+        "iter": {
+          "_type": "Name",
+          "id": "date_units",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "body": [
+          {
+            "_type": "Try",
+            "body": [
+              {
+                "_type": "Assign"
+              }
+            ],
+            "handlers": [
+              {
+                "_type": "ExceptHandler"
+              }
+            ],
+            "orelse": [],
+            "finalbody": []
+          },
+          {
+            "_type": "Return",
+            "value": {
+              "_type": "Tuple"
+            }
+          }
+        ],
+        "orelse": [],
+        "type_comment": null
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": 77.6
+    },
+    {
+      "line": 20,
+      "line_absolute": 972,
+      "node_id": 8,
+      "node_id_local": 16,
+      "type": "Assign",
+      "code": "date_units = (self.date_unit,) if self.date_unit else self._STAMP_UNITS",
+      "distance_to_buggy": 11,
+      "context": "  17:           in_range = isna(new_data._values) | (new_data > self.min_stamp) | (new_data._values == iNaT)\n  18:           if not in_range.all():\n  19:               return (data, False)\n  20:->     date_units = (self.date_unit,) if self.date_unit else self._STAMP_UNITS\n  21:       for date_unit in date_units:\n  22:           try:\n  23:               new_data = to_datetime(new_data, errors='raise', unit=date_unit)",
+      "ast_subtree_json": {
+        "_type": "Assign",
+        "targets": [
+          {
+            "_type": "Name",
+            "id": "date_units",
+            "ctx": {
+              "_type": "Store"
+            }
+          }
+        ],
+        "value": {
+          "_type": "IfExp",
+          "test": {
+            "_type": "Attribute"
+          },
+          "body": {
+            "_type": "Tuple"
+          },
+          "orelse": {
+            "_type": "Attribute"
+          }
+        },
+        "type_comment": null
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": 87.0
+    },
+    {
+      "line": 19,
+      "line_absolute": 971,
+      "node_id": 46,
+      "node_id_local": 15,
+      "type": "Return",
+      "code": "return (data, False)",
+      "distance_to_buggy": 12,
+      "context": "  16:       if issubclass(new_data.dtype.type, np.number):\n  17:           in_range = isna(new_data._values) | (new_data > self.min_stamp) | (new_data._values == iNaT)\n  18:           if not in_range.all():\n  19:->             return (data, False)\n  20:       date_units = (self.date_unit,) if self.date_unit else self._STAMP_UNITS\n  21:       for date_unit in date_units:\n  22:           try:",
+      "ast_subtree_json": {
+        "_type": "Return",
+        "value": {
+          "_type": "Tuple",
+          "elts": [
+            {
+              "_type": "Name"
+            },
+            {
+              "_type": "Constant"
+            }
+          ],
+          "ctx": {
+            "_type": "Load"
+          }
+        }
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": 98.0
+    },
+    {
+      "line": 18,
+      "line_absolute": 970,
+      "node_id": 80,
+      "node_id_local": 14,
+      "type": "Call",
+      "code": "in_range.all()",
+      "distance_to_buggy": 13,
+      "context": "  15:               pass\n  16:       if issubclass(new_data.dtype.type, np.number):\n  17:           in_range = isna(new_data._values) | (new_data > self.min_stamp) | (new_data._values == iNaT)\n  18:->         if not in_range.all():\n  19:               return (data, False)\n  20:       date_units = (self.date_unit,) if self.date_unit else self._STAMP_UNITS\n  21:       for date_unit in date_units:",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Attribute",
+          "value": {
+            "_type": "Name"
+          },
+          "attr": "all",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [],
+        "keywords": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": 106.0
+    }
+  ]
+}

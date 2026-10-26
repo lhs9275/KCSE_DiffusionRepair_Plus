@@ -1,0 +1,1120 @@
+{
+  "bug_id": "6",
+  "seed": 42,
+  "arm": "full",
+  "candidates": [
+    {
+      "index": 0,
+      "patch_text": "def set_status(self, task, new_status, config=None):\n    if new_status == FAILED:\n        assert config is not None\n    if new_status == DISABLED and task.status == RUNNING:\n        return\n    if task.status == DISABLED:\n        if new_status == DONE:\n            self.re_enable(task)\n        elif task.scheduler_disable_time is not None:\n            return\n    if new_status == FAILED and task.can_disable() and task.status!= DISABLED:\n        task.add_failure()\n        if task.has_excessive_failures():\n            task.scheduler_disable_time = time.time()\n            new_status = DISABLED\n            notifications.send_error_email('Luigi Scheduler: DISABLED {task} due to excessive failures'.format(task=task.id), '{task} failed {failures} times in the last {window} seconds, so it is being disabled for {persist} seconds'.format(failures=config.disable_failures, task=task.id, window=config.disable_window, persist=config.disable_persist))\n    elif new_status == DISABLED:\n        task.scheduler_disable_time = None\n    self._status_tasks[task.status].pop(task.id)\n    self._status_tasks[new_status][task.id] = task\n    task.status = new_status",
+      "patch_sha256": "cc65fc75159d2a4d3128e49335f73db43289696044fafddc53ac072d0daf7c71",
+      "rank_score": 216,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8250994923331102,
+      "top_p": 0.9313743654163876
+    },
+    {
+      "index": 1,
+      "patch_text": "def set_status(self, task, new_status, config=None):\n    if new_status == FAILED and config is not None:\n        assert config is not None\n    if new_status == DISABLED and task.status == RUNNING:\n        return\n    if task.status == DISABLED:\n        if new_status == DONE:\n            self.re_enable(task)\n        elif task.scheduler_disable_time is not None:\n            return\n    if new_status == FAILED and task.can_disable():\n        task.add_failure()\n        if task.has_excessive_failures():\n            task.scheduler_disable_time = time.time()\n            new_status = DISABLED\n            notifications.send_error_email('Luigi Scheduler: DISABLED {task} due to excessive failures'.format(task=task.id), '{task} failed {failures} times in the last {window} seconds, so it is being disabled for {persist} seconds'.format(failures=config.disable_failures, task=task.id, window=config.disable_window, persist=config.disable_persist))\n    elif new_status == DISABLED:\n        task.scheduler_disable_time = None\n    self._status_tasks[task.status].pop(task.id)\n    self._status_tasks[new_status][task.id] = task\n    task.status = new_status",
+      "patch_sha256": "ba604d6a6f615246a43c6e7129817f393e50ac1fdacf7557f5deb09fac131999",
+      "rank_score": 195,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8089233151013046,
+      "top_p": 0.9111541438766307
+    },
+    {
+      "index": 2,
+      "patch_text": "def set_status(self, task, new_status, config=None):\n    if new_status == FAILED:\n        assert config is not None\n    if new_status == DISABLED and task.status == RUNNING:\n        return\n    if task.status == DISABLED:\n        if new_status == DONE:\n            self.re_enable(task)\n        elif task.scheduler_disable_time is not None:\n            return\n    if new_status == FAILED and task.can_disable():\n        task.add_failure()\n        if task.has_excessive_failures():\n            task.scheduler_disable_time = time.time()\n            new_status = DISABLED\n            notifications.send_error_email('Luigi Scheduler: DISABLED {task} due to excessive failures'.format(task=task.id), '{task} failed {failures} times in the last {window} seconds, so it is being disabled for {persist} seconds'.format(failures=config.disable_failures, task=task.id, window=config.disable_window, persist=config.disable_persist))\n    elif new_status == DISABLED:\n        task.scheduler_disable_time = None\n    self._status_tasks[task.status].pop(task.id)\n    self._status_tasks[new_status][task.id] = task\n    task.status = new_status",
+      "patch_sha256": "189c270cece5241dbef68f847df354b1ba816f7b6d78b9a314b30be5be71a1ab",
+      "rank_score": 195,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8850407915843882,
+      "top_p": 0.7720008604178135
+    },
+    {
+      "index": 3,
+      "patch_text": "def set_status(self, task, new_status, config=None):\n    if new_status == FAILED:\n        assert config is not None\n    if new_status == DISABLED and task.status == RUNNING:\n        return\n    if task.status == DISABLED:\n        if new_status == DONE:\n            self.re_enable(task)\n        elif task.scheduler_disable_time is not None:\n            return\n    if new_status == FAILED and task.can_disable() and (task.status!= DISABLED):\n        task.add_failure()\n        if task.has_excessive_failures():\n            task.scheduler_disable_time = time.time()\n            new_status = DISABLED\n            notifications.send_error_email('Luigi Scheduler: DISABLED {task} due to excessive failures'.format(task=task.id), '{task} failed {failures} times in the last {window} seconds, so it is being disabled for {persist} seconds'.format(failures=config.disable_failures, task=task.id, window=config.disable_window, persist=config.disable_persist))\n    elif new_status == DISABLED:\n        task.scheduler_disable_time = None\n    self._status_tasks[task.status].pop(task.id)\n    self._status_tasks[new_status][task.id] = task\n    task.status = new_status\n\n##before\ndef set_status(self, task, new_status, config=None):\n    if new_status == FAILED:\n        assert config is not None\n    if new_status == DISABLED and task.status == RUNNING:\n        return\n    if task.status == DISABLED:\n        if new_status == DONE:\n            self.re_enable(task)\n        elif task.scheduler_disable_time is not None:\n            return\n    if new_status == FAILED and task.can_disable():\n        task.add_failure()\n        if task.has_excessive_failures():\n            task.scheduler_disable_time = time.time()\n            new_status = DISABLED\n            notifications.send_error_email('Luigi Scheduler: DISABLED {task} due to excessive failures'.format(task=task.id), '{task} failed {failures} times in the last {window} seconds, so it is being disabled for {persist} seconds'.format(failures=config.disable_failures, task=task.id, window=config.disable_window, persist=config.disable_persist))\n    elif new_status == DISABLED:\n        task.scheduler_disable_time = None\n    self._status_tasks[task.status].pop(task.id)\n    self._status_tasks[new_status][task.id] = task\n    task.status = new_status\n\n##after\ndef set_status(self, task, new_status, config=None):\n    if new_status == FAILED:\n        assert config is not None",
+      "patch_sha256": "ddb0c8690e29294d6926c5eeda5a8a1ee27ef4a3f80638fa91b41cd06515c897",
+      "rank_score": 181,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.9374042813624712,
+      "top_p": 0.828917697133121
+    },
+    {
+      "index": 4,
+      "patch_text": "def set_status(self, task, new_status, config=None):\n    if new_status == FAILED:\n        assert config is not None\n    if new_status == DISABLED and task.status == RUNNING:\n        return\n    if task.status == DISABLED:\n        if new_status == DONE:\n            self.re_enable(task)\n        elif task.scheduler_disable_time is not None:\n            return\n    if new_status == FAILED and task.can_disable() and (task.status!= DISABLED):\n        task.add_failure()\n        if task.has_excessive_failures():\n            task.scheduler_disable_time = time.time()\n            new_status = DISABLED\n            notifications.send_error_email('Luigi Scheduler: DISABLED {task} due to excessive failures'.format(task=task.id), '{task} failed {failures} times in the last {window} seconds, so it is being disabled for {persist} seconds'.format(failures=config.disable_failures, task=task.id, window=config.disable_window, persist=config.disable_persist))\n    elif new_status == DISABLED:\n        task.scheduler_disable_time = None\n    self._status_tasks[task.status].pop(task.id)\n    self._status_tasks[new_status][task.id] = task\n    task.status = new_status\n\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#",
+      "patch_sha256": "baabea978e971c39cd5acf6e9d4140ed293a55b6a39e5e7d4e7dda4646a6396b",
+      "rank_score": 166,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.5106412196441554,
+      "top_p": 0.9620023454695296
+    },
+    {
+      "index": 5,
+      "patch_text": "def set_status(self, task, new_status, config=None):\n    if new_status == FAILED:\n        assert config is not None\n    if new_status == DISABLED and task.status == RUNNING:\n        return\n    if task.status == DISABLED:\n        if new_status == DONE:\n            self.re_enable(task)\n        elif task.scheduler_disable_time is not None:\n            return\n    if new_status == FAILED and task.can_disable() and (task.status!= DISABLED):\n        task.add_failure()\n        if task.has_excessive_failures():\n            task.scheduler_disable_time = time.time()\n            new_status = DISABLED\n            notifications.send_error_email('Luigi Scheduler: DISABLED {task} due to excessive failures'.format(task=task.id), '{task} failed {failures} times in the last {window} seconds, so it is being disabled for {persist} seconds'.format(failures=config.disable_failures, task=task.id, window=config.disable_window, persist=config.disable_persist))\n    elif new_status == DISABLED:\n        task.scheduler_disable_time = None\n    self._status_tasks[task.status].pop(task.id)\n    self._status_tasks[new_status][task.id] = task\n    task.status = new_status\n\n##correct\nclass Scheduler(object):\n    \"\"\"\n    The Luigi scheduler, which takes care of scheduling tasks.\n\n    :param state: A luigi.interface.State instance\n    :param scheduler_interval: Interval between scheduling runs\n    :param scheduler_max_runs: Maximum number of scheduling runs\n    \"\"\"\n    def __init__(self, state, scheduler_interval=30, scheduler_max_runs=None):\n        self._state = state\n        self._scheduler_interval = scheduler_interval\n        self._scheduler_max_runs = scheduler_max_runs\n        self._scheduled_tasks = {}\n        self._lock = threading.Lock()\n        self._stop_event = threading.Event()\n        self._thread = threading.Thread(target=self._loop)\n        self._thread.start()\n\n    def _loop(self):\n        while not self._stop_event.wait(self._scheduler_interval):\n            with self._lock:\n                self._run_once()\n\n    def _run_once(self):\n        try:\n            if self._scheduler_max_runs is not None:\n                for _ in range(self._scheduler_max_runs):\n                    self._schedule_once()\n            else:\n                self._schedule_once()\n        except Exception as e:\n            log.exception('Scheduler exception')\n            if config.email_on_error:\n                notifications.send_error_email('Luigi Scheduler error', str(e))\n\n    def _schedule_once(self):\n        now = time.time()\n        pending_tasks = self._state.get_pending_tasks()",
+      "patch_sha256": "b9218b0874c642276221dd80614d22a9e09de57e77ee216ff8f03e2d69a0ded7",
+      "rank_score": 150,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8850407915843882,
+      "top_p": 0.7720008604178135
+    },
+    {
+      "index": 6,
+      "patch_text": "def set_status(self, task, new_status, config=None):\n    if new_status == FAILED:\n        assert config is not None\n    if new_status == DISABLED and task.status == RUNNING:\n        return\n    if task.status == DISABLED:\n        if new_status == DONE:\n            self.re_enable(task)\n        elif task.scheduler_disable_time is not None:\n            return\n    if new_status == FAILED and task.can_disable() and task.status!= DISABLED:\n        task.add_failure()\n        if task.has_excessive_failures():\n            task.scheduler_disable_time = time.time()\n            new_status = DISABLED\n            notifications.send_error_email('Luigi Scheduler: DISABLED {task} due to excessive failures'.format(task=task.id), '{task} failed {failures} times in the last {window} seconds, so it is being disabled for {persist} seconds'.format(failures=config.disable_failures, task=task.id, window=config.disable_window, persist=config.disable_persist))\n    elif new_status == DISABLED:\n        task.scheduler_disable_time = None\n    self._status_tasks[task.status].pop(task.id)\n    self._status_tasks[new_status][task.id] = task\n    task.status = new_status\n# This file is part of RQ.\n# Copyright 2018.\n#\n# Licensed under the Apache License, Version 2.0 (the \"License\");\n# you may not use this file except in compliance with the License.\n# You may obtain a copy of the License at\n#\n# http://www.apache.org/licenses/LICENSE-2.0\n#\n# Unless required by applicable law or agreed to in writing, software\n# distributed under the License is distributed on an \"AS IS\" BASIS,\n# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n# See the License for the specific language governing permissions and\n# limitations under the License.\n\nfrom __future__ import absolute_import\n\nimport socket\n\nfrom rq import connection\nfrom rq.compat import string_types\n\n\nclass Redis(connection.Connection):\n\n    def __init__(self, redis_url=None, db=None, socket_timeout=None):\n        \"\"\"Create a Redis connection.\n\n        :param redis_url: Redis URL. Defaults to'redis://localhost:6379'\n        :type redis_url: str\n        :param db: Redis database number to connect to. Defaults to 0\n        :type db: int\n        :param socket_timeout: Timeout in seconds for blocking commands such as\n            BLPOP\n        :type socket_timeout: float\n        \"\"\"\n        if not redis_url:\n            redis_url ='redis://localhost:6379'\n        self.redis_url = redis_url\n        self",
+      "patch_sha256": "17c230c41cf92d6b8473f2b4a085ae7631d9b21d1b71657f77584e4cabb6ccd5",
+      "rank_score": -44,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": false,
+        "error": "SyntaxError: from __future__ imports must occur at the beginning of the file (<candidate-diagnostic>, line 37)"
+      },
+      "temperature": 0.5273506986767932,
+      "top_p": 0.98
+    },
+    {
+      "index": 7,
+      "patch_text": "def set_status(self, task, new_status, config=None):\n    if new_status == FAILED:\n        assert config is not None\n    if new_status == DISABLED and task.status == RUNNING:\n        return\n    if task.status == DISABLED:\n        if new_status == DONE:\n            self.re_enable(task)\n        elif task.scheduler_disable_time is not None:\n            return\n    if new_status == FAILED and task.can_disable() and (task.status!= DISABLED):\n        task.add_failure()\n        if task.has_excessive_failures():\n            task.scheduler_disable_time = time.time()\n            new_status = DISABLED\n            notifications.send_error_email('Luigi Scheduler: DISABLED {task} due to excessive failures'.format(task=task.id), '{task} failed {failures} times in the last {window} seconds, so it is being disabled for {persist} seconds'.format(failures=config.disable_failures, task=task.id, window=config.disable_window, persist=config.disable_persist))\n    elif new_status == DISABLED:\n        task.scheduler_disable_time = None\n    self._status_tasks[task.status].pop(task.id)\n    self._status_tasks[new_status][task.id] = task\n    task.status = new_status\nimport os\nimport pandas as pd\nimport pickle\nfrom sklearn import model_selection\nfrom scipy.sparse import csr_matrix\n\ndef read_data(path='./'):\n    \"\"\"\n    Read data from csv file into pandas DataFrame\n    Args:\n        path (str): path to the directory\n    Returns:\n        train_df: DataFrame of training data\n        test_df: DataFrame of testing data\n    \"\"\"\n    train_df = pd.read_csv(os.path.join(path, 'train.csv'))\n    test_df = pd.read_csv(os.path.join(path, 'test.csv'))\n    return train_df, test_df\n\ndef process_data(train_df, test_df):\n    \"\"\"\n    Data processing for numerical columns\n    Args:\n        train_df (pd.DataFrame): DataFrame of training data\n        test_df (pd.DataFrame): DataFrame of testing data\n    Returns:\n        train_X (csr_matrix): Sparse matrix of training data\n        train_y (np.array): Numpy array of labels\n        test_X (csr_matrix): Sparse matrix of testing data\n        test_y (np.array): Numpy array of labels\n    \"\"\"\n    train_y = train_df['label'].as_matrix()\n    train_X = csr_matrix(train_df.drop(['label'], axis=1).as_matrix())\n    test_y = test_df['label'].as_matrix()\n    test_X = csr_matrix(test_df.as_matrix())\n    return train_X, train_y",
+      "patch_sha256": "bb3aac5670c875d7b2eb1065eae60ac0791709517358456f6b22928d3c9bd18a",
+      "rank_score": -49,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8250994923331102,
+      "top_p": 0.9313743654163876
+    },
+    {
+      "index": 8,
+      "patch_text": "def set_status(self, task, new_status, config=None):\n    if new_status == FAILED and task.can_disable():\n        task.add_failure()\n        if task.has_excessive_failures():\n            task.scheduler_disable_time = time.time()\n            new_status = DISABLED\n            notifications.send_error_email('Luigi Scheduler: DISABLED {task} due to excessive failures'.format(task=task.id), '{task} failed {failures} times in the last {window} seconds, so it is being disabled for {persist} seconds'.format(failures=config.disable_failures, task=task.id, window=config.disable_window, persist=config.disable_persist))\n    elif new_status == DISABLED:\n        task.scheduler_disable_time = None\n    self._status_tasks[task.status].pop(task.id)\n    self._status_tasks[new_status][task.id] = task\n    task.status = new_status\nimport json\nfrom typing import List, Optional, Union\n\nfrom. import models\n\n\ndef from_json_list(data: Union[List[str], List[bytes], List[int]]) -> List[models.Issue]:\n    return [models.Issue.from_json(item) for item in data]\n\n\ndef from_json(data: Union[str, bytes, int]) -> models.Issue:\n    return models.Issue.from_json(data)\n# Copyright (c) Facebook, Inc. and its affiliates.\n#\n# This source code is licensed under the MIT license found in the\n# LICENSE file in the root directory of this source tree.\n\nimport argparse\nimport os\nimport re\nimport subprocess\nimport sys\nfrom pathlib import Path\nfrom typing import Dict, List, Tuple\n\nfrom. import models\nfrom.utils import get_logger\n\n\nclass Error(Exception):\n    pass\n\n\nclass CommandError(Error):\n    def __init__(self, cmd: str, stderr: str):\n        self.cmd = cmd\n        self.stderr = stderr\n\n    def __str__(self):\n        return f\"Command '{self.cmd}' failed:\\n{self.stderr}\"\n\n\nclass InvalidConfigError(Error):\n    pass\n\n\ndef _get_config_path(repo_dir: Path) -> Path:\n    return repo_dir / \".config/config.json\"\n\n\ndef _get_config(repo_dir: Path) -> Dict[str, str]:\n    config_path = _get_config_path(repo_dir)\n    if not config_path.exists():\n        raise InvalidConfigError(f\"No.config/config.json found\")\n    return models.Config.from_json(config_path.read_text())\n\n\ndef _set_config(repo_dir: Path, config: models.Config) -> None:\n    config_path = _get_config_path",
+      "patch_sha256": "0f979afecc3db9b2123431f1c9d5934ec821591be10ef6dcb88e51861402631b",
+      "rank_score": -68,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.5106412196441554,
+      "top_p": 0.9620023454695296
+    },
+    {
+      "index": 9,
+      "patch_text": "def set_status(self, task, new_status, config=None):\n    if new_status == FAILED:\n        assert config is not None\n    if new_status == DISABLED and task.status == RUNNING:\n        return\n    if task.status == DISABLED:\n        if new_status == DONE:\n            self.re_enable(task)\n        elif task.scheduler_disable_time is not None:\n            return\n    if new_status == FAILED and task.can_disable() and (task.status!= DISABLED):\n        task.add_failure()\n        if task.has_excessive_failures():\n            task.scheduler_disable_time = time.time()\n            new_status = DISABLED\n            notifications.send_error_email('Luigi Scheduler: DISABLED {task} due to excessive failures'.format(task=task.id), '{task} failed {failures} times in the last {window} seconds, so it is being disabled for {persist} seconds'.format(failures=config.disable_failures, task=task.id, window=config.disable_window, persist=config.disable_persist))\n    elif new_status == DISABLED:\n        task.scheduler_disable_time = None\n    self._status_tasks[task.status].pop(task.id)\n    self._status_tasks[new_status][task.id] = task\n    task.status = new_status\n#!/usr/bin/env python\nimport os\nimport sys\nimport json\nfrom collections import defaultdict\nfrom argparse import ArgumentParser\n\nimport torch\nfrom tqdm import tqdm\n\nfrom models.bert import BertForSequenceClassification\nfrom utils.data import load_dataset, convert_examples_to_features\nfrom utils.misc import get_device\nfrom utils.utils import load_checkpoint, calculate_metrics, get_label_map\n\nfrom torch.utils.data import DataLoader\nfrom transformers import AdamW\nfrom transformers import BertTokenizer\nfrom transformers import get_linear_schedule_with_warmup\n\nfrom utils.dataset import NERDataset\nfrom utils.data import collate_fn\nfrom utils.model import get_bert_ner_model\nfrom utils.train import train\nfrom utils.eval import evaluate\nfrom utils.predict import predict\n\ndef get_dataloader(dataset, device, batch_size, tokenizer, num_workers=1):\n    return DataLoader(dataset, batch_size=batch_size, shuffle=False, num_workers=num_workers, collate_fn=collate_fn)\n\n\ndef main(args):\n    # Setup CUDA, GPU training if we have a GPU.\n    device = get_device()\n\n    # Load the dataset split according to the given mode.\n    print(\"Loading dataset from: {}\".format(args.data_dir))\n    train_dataset = load_dataset(args.data_dir, \"train\", args.max_seq_length, args.local_rank)\n    eval",
+      "patch_sha256": "b0f6fdd1c3e697dc2e82773135318396ad2aa6866efd2953fee344cc4b5729ad",
+      "rank_score": -130,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7822854872415247,
+      "top_p": 0.8778568590519058
+    }
+  ],
+  "candidate_count": 10,
+  "retrieved_examples": [
+    {
+      "id": "7",
+      "project_name": "luigi",
+      "buggy_line_content": "        if new_status == FAILED and task.can_disable():",
+      "function": {
+        "function_name": "set_status",
+        "function_parent": "SimpleTaskState",
+        "function_before_start_line": 393,
+        "function_before_end_line": 427,
+        "function_after_start_line": 393,
+        "function_after_end_line": 427,
+        "function_before_token_count": 186,
+        "function_after_token_count": 192,
+        "function_before": "def set_status(self, task, new_status, config=None):\n    if new_status == FAILED:\n        assert config is not None\n    if new_status == DISABLED and task.status == RUNNING:\n        return\n    if task.status == DISABLED:\n        if new_status == DONE:\n            self.re_enable(task)\n        elif task.scheduler_disable_time is not None:\n            return\n    if new_status == FAILED and task.can_disable():\n        task.add_failure()\n        if task.has_excessive_failures():\n            task.scheduler_disable_time = time.time()\n            new_status = DISABLED\n            notifications.send_error_email('Luigi Scheduler: DISABLED {task} due to excessive failures'.format(task=task.id), '{task} failed {failures} times in the last {window} seconds, so it is being disabled for {persist} seconds'.format(failures=config.disable_failures, task=task.id, window=config.disable_window, persist=config.disable_persist))\n    elif new_status == DISABLED:\n        task.scheduler_disable_time = None\n    self._status_tasks[task.status].pop(task.id)\n    self._status_tasks[new_status][task.id] = task\n    task.status = new_status",
+        "function_after": "def set_status(self, task, new_status, config=None):\n    if new_status == FAILED:\n        assert config is not None\n    if new_status == DISABLED and task.status == RUNNING:\n        return\n    if task.status == DISABLED:\n        if new_status == DONE:\n            self.re_enable(task)\n        elif task.scheduler_disable_time is not None:\n            return\n    if new_status == FAILED and task.can_disable() and (task.status != DISABLED):\n        task.add_failure()\n        if task.has_excessive_failures():\n            task.scheduler_disable_time = time.time()\n            new_status = DISABLED\n            notifications.send_error_email('Luigi Scheduler: DISABLED {task} due to excessive failures'.format(task=task.id), '{task} failed {failures} times in the last {window} seconds, so it is being disabled for {persist} seconds'.format(failures=config.disable_failures, task=task.id, window=config.disable_window, persist=config.disable_persist))\n    elif new_status == DISABLED:\n        task.scheduler_disable_time = None\n    self._status_tasks[task.status].pop(task.id)\n    self._status_tasks[new_status][task.id] = task\n    task.status = new_status"
+      },
+      "file_name": "scheduler.py",
+      "file_path": "luigi/scheduler.py",
+      "score_reranked": 1.0101572000820493
+    },
+    {
+      "id": "10",
+      "project_name": "luigi",
+      "buggy_line_content": "            in_workers = assistant or worker in task.workers",
+      "function": {
+        "function_name": "get_work",
+        "function_parent": "CentralPlannerScheduler",
+        "function_before_start_line": 624,
+        "function_before_end_line": 708,
+        "function_after_start_line": 624,
+        "function_after_end_line": 708,
+        "function_before_token_count": 494,
+        "function_after_token_count": 500,
+        "function_before": "def get_work(self, worker, host=None, assistant=False, **kwargs):\n    self.update(worker, {'host': host})\n    if assistant:\n        self.add_worker(worker, [('assistant', assistant)])\n    best_task = None\n    locally_pending_tasks = 0\n    running_tasks = []\n    used_resources = self._used_resources()\n    greedy_resources = collections.defaultdict(int)\n    n_unique_pending = 0\n    greedy_workers = dict(((worker.id, worker.info.get('workers', 1)) for worker in self._state.get_active_workers()))\n    tasks = list(self._state.get_pending_tasks())\n    tasks.sort(key=self._rank(), reverse=True)\n    for task in tasks:\n        in_workers = assistant or worker in task.workers\n        if task.status == 'RUNNING' and in_workers:\n            other_worker = self._state.get_worker(task.worker_running)\n            more_info = {'task_id': task.id, 'worker': str(other_worker)}\n            if other_worker is not None:\n                more_info.update(other_worker.info)\n                running_tasks.append(more_info)\n        if task.status == PENDING and in_workers:\n            locally_pending_tasks += 1\n            if len(task.workers) == 1 and (not assistant):\n                n_unique_pending += 1\n        if task.status == RUNNING and task.worker_running in greedy_workers:\n            greedy_workers[task.worker_running] -= 1\n            for resource, amount in six.iteritems(task.resources or {}):\n                greedy_resources[resource] += amount\n        if not best_task and self._schedulable(task) and self._has_resources(task.resources, greedy_resources):\n            if in_workers and self._has_resources(task.resources, used_resources):\n                best_task = task\n            else:\n                workers = itertools.chain(task.workers, [worker]) if assistant else task.workers\n                for task_worker in workers:\n                    if greedy_workers.get(task_worker, 0) > 0:\n                        greedy_workers[task_worker] -= 1\n                        for resource, amount in six.iteritems(task.resources or {}):\n                            greedy_resources[resource] += amount\n                        break\n    reply = {'n_pending_tasks': locally_pending_tasks, 'running_tasks': running_tasks, 'task_id': None, 'n_unique_pending': n_unique_pending}\n    if best_task:\n        self._state.set_status(best_task, RUNNING, self._config)\n        best_task.worker_running = worker\n        best_task.time_running = time.time()\n        self._update_task_history(best_task.id, RUNNING, host=host)\n        reply['task_id'] = best_task.id\n        reply['task_family'] = best_task.family\n        reply['task_module'] = getattr(best_task, 'module', None)\n        reply['task_params'] = best_task.params\n    return reply",
+        "function_after": "def get_work(self, worker, host=None, assistant=False, **kwargs):\n    self.update(worker, {'host': host})\n    if assistant:\n        self.add_worker(worker, [('assistant', assistant)])\n    best_task = None\n    locally_pending_tasks = 0\n    running_tasks = []\n    used_resources = self._used_resources()\n    greedy_resources = collections.defaultdict(int)\n    n_unique_pending = 0\n    greedy_workers = dict(((worker.id, worker.info.get('workers', 1)) for worker in self._state.get_active_workers()))\n    tasks = list(self._state.get_pending_tasks())\n    tasks.sort(key=self._rank(), reverse=True)\n    for task in tasks:\n        in_workers = assistant and task.workers or worker in task.workers\n        if task.status == 'RUNNING' and in_workers:\n            other_worker = self._state.get_worker(task.worker_running)\n            more_info = {'task_id': task.id, 'worker': str(other_worker)}\n            if other_worker is not None:\n                more_info.update(other_worker.info)\n                running_tasks.append(more_info)\n        if task.status == PENDING and in_workers:\n            locally_pending_tasks += 1\n            if len(task.workers) == 1 and (not assistant):\n                n_unique_pending += 1\n        if task.status == RUNNING and task.worker_running in greedy_workers:\n            greedy_workers[task.worker_running] -= 1\n            for resource, amount in six.iteritems(task.resources or {}):\n                greedy_resources[resource] += amount\n        if not best_task and self._schedulable(task) and self._has_resources(task.resources, greedy_resources):\n            if in_workers and self._has_resources(task.resources, used_resources):\n                best_task = task\n            else:\n                workers = itertools.chain(task.workers, [worker]) if assistant else task.workers\n                for task_worker in workers:\n                    if greedy_workers.get(task_worker, 0) > 0:\n                        greedy_workers[task_worker] -= 1\n                        for resource, amount in six.iteritems(task.resources or {}):\n                            greedy_resources[resource] += amount\n                        break\n    reply = {'n_pending_tasks': locally_pending_tasks, 'running_tasks': running_tasks, 'task_id': None, 'n_unique_pending': n_unique_pending}\n    if best_task:\n        self._state.set_status(best_task, RUNNING, self._config)\n        best_task.worker_running = worker\n        best_task.time_running = time.time()\n        self._update_task_history(best_task.id, RUNNING, host=host)\n        reply['task_id'] = best_task.id\n        reply['task_family'] = best_task.family\n        reply['task_module'] = getattr(best_task, 'module', None)\n        reply['task_params'] = best_task.params\n    return reply"
+      },
+      "file_name": "scheduler.py",
+      "file_path": "luigi/scheduler.py",
+      "score_reranked": 0.770016664091304
+    },
+    {
+      "id": "37",
+      "project_name": "pandas",
+      "buggy_line_content": "                elif is_integer(i) and not ax.holds_integer():",
+      "function": {
+        "function_name": "_convert_key",
+        "function_parent": "_AtIndexer",
+        "function_before_start_line": 2110,
+        "function_before_end_line": 2133,
+        "function_after_start_line": 2110,
+        "function_after_end_line": 2133,
+        "function_before_token_count": 82,
+        "function_after_token_count": 90,
+        "function_before": "def _convert_key(self, key, is_setter: bool=False):\n    \"\"\"\n        Require they keys to be the same type as the index. (so we don't\n        fallback)\n        \"\"\"\n    if is_setter:\n        return list(key)\n    for ax, i in zip(self.obj.axes, key):\n        if ax.is_integer():\n            if not is_integer(i):\n                raise ValueError('At based indexing on an integer index can only have integer indexers')\n        elif is_integer(i) and not ax.holds_integer():\n            raise ValueError('At based indexing on an non-integer index can only have non-integer indexers')\n    return key",
+        "function_after": "def _convert_key(self, key, is_setter: bool=False):\n    \"\"\"\n        Require they keys to be the same type as the index. (so we don't\n        fallback)\n        \"\"\"\n    if is_setter:\n        return list(key)\n    for ax, i in zip(self.obj.axes, key):\n        if ax.is_integer():\n            if not is_integer(i):\n                raise ValueError('At based indexing on an integer index can only have integer indexers')\n        elif is_integer(i) and (not (ax.holds_integer() or ax.is_floating())):\n            raise ValueError('At based indexing on an non-integer index can only have non-integer indexers')\n    return key"
+      },
+      "file_name": "indexing.py",
+      "file_path": "pandas/core/indexing.py",
+      "score_reranked": 0.6339401364855977
+    },
+    {
+      "id": "43",
+      "project_name": "pandas",
+      "buggy_line_content": "        elif self.is_all_dates:",
+      "function": {
+        "function_name": "get_indexer_non_unique",
+        "function_parent": "Index",
+        "function_before_start_line": 4546,
+        "function_before_end_line": 4560,
+        "function_after_start_line": 4546,
+        "function_after_end_line": 4560,
+        "function_before_token_count": 91,
+        "function_after_token_count": 95,
+        "function_before": "@Appender(_index_shared_docs['get_indexer_non_unique'] % _index_doc_kwargs)\ndef get_indexer_non_unique(self, target):\n    target = ensure_index(target)\n    pself, ptarget = self._maybe_promote(target)\n    if pself is not self or ptarget is not target:\n        return pself.get_indexer_non_unique(ptarget)\n    if is_categorical(target):\n        tgt_values = np.asarray(target)\n    elif self.is_all_dates:\n        tgt_values = target.asi8\n    else:\n        tgt_values = target._ndarray_values\n    indexer, missing = self._engine.get_indexer_non_unique(tgt_values)\n    return (ensure_platform_int(indexer), missing)",
+        "function_after": "@Appender(_index_shared_docs['get_indexer_non_unique'] % _index_doc_kwargs)\ndef get_indexer_non_unique(self, target):\n    target = ensure_index(target)\n    pself, ptarget = self._maybe_promote(target)\n    if pself is not self or ptarget is not target:\n        return pself.get_indexer_non_unique(ptarget)\n    if is_categorical(target):\n        tgt_values = np.asarray(target)\n    elif self.is_all_dates and target.is_all_dates:\n        tgt_values = target.asi8\n    else:\n        tgt_values = target._ndarray_values\n    indexer, missing = self._engine.get_indexer_non_unique(tgt_values)\n    return (ensure_platform_int(indexer), missing)"
+      },
+      "file_name": "base.py",
+      "file_path": "pandas/core/indexes/base.py",
+      "score_reranked": 0.5652682180078549
+    },
+    {
+      "id": "11",
+      "project_name": "luigi",
+      "buggy_line_content": "        positional_params = [(n, p) for n, p in params if p.significant]",
+      "function": {
+        "function_name": "get_param_values",
+        "function_parent": "Task",
+        "function_before_start_line": 314,
+        "function_before_end_line": 363,
+        "function_after_start_line": 314,
+        "function_after_end_line": 363,
+        "function_before_token_count": 237,
+        "function_after_token_count": 238,
+        "function_before": "@classmethod\ndef get_param_values(cls, params, args, kwargs):\n    \"\"\"\n        Get the values of the parameters from the args and kwargs.\n\n        :param params: list of (param_name, Parameter).\n        :param args: positional arguments\n        :param kwargs: keyword arguments.\n        :returns: list of `(name, value)` tuples, one for each parameter.\n        \"\"\"\n    result = {}\n    params_dict = dict(params)\n    task_name = cls.task_family\n    exc_desc = '%s[args=%s, kwargs=%s]' % (task_name, args, kwargs)\n    positional_params = [(n, p) for n, p in params if p.significant]\n    for i, arg in enumerate(args):\n        if i >= len(positional_params):\n            raise parameter.UnknownParameterException('%s: takes at most %d parameters (%d given)' % (exc_desc, len(positional_params), len(args)))\n        param_name, param_obj = positional_params[i]\n        result[param_name] = arg\n    for param_name, arg in six.iteritems(kwargs):\n        if param_name in result:\n            raise parameter.DuplicateParameterException('%s: parameter %s was already set as a positional parameter' % (exc_desc, param_name))\n        if param_name not in params_dict:\n            raise parameter.UnknownParameterException('%s: unknown parameter %s' % (exc_desc, param_name))\n        result[param_name] = arg\n    for param_name, param_obj in params:\n        if param_name not in result:\n            if not param_obj.has_task_value(task_name, param_name):\n                raise parameter.MissingParameterException(\"%s: requires the '%s' parameter to be set\" % (exc_desc, param_name))\n            result[param_name] = param_obj.task_value(task_name, param_name)\n\n    def list_to_tuple(x):\n        \"\"\" Make tuples out of lists and sets to allow hashing \"\"\"\n        if isinstance(x, list) or isinstance(x, set):\n            return tuple(x)\n        else:\n            return x\n    return [(param_name, list_to_tuple(result[param_name])) for param_name, param_obj in params]",
+        "function_after": "@classmethod\ndef get_param_values(cls, params, args, kwargs):\n    \"\"\"\n        Get the values of the parameters from the args and kwargs.\n\n        :param params: list of (param_name, Parameter).\n        :param args: positional arguments\n        :param kwargs: keyword arguments.\n        :returns: list of `(name, value)` tuples, one for each parameter.\n        \"\"\"\n    result = {}\n    params_dict = dict(params)\n    task_name = cls.task_family\n    exc_desc = '%s[args=%s, kwargs=%s]' % (task_name, args, kwargs)\n    positional_params = [(n, p) for n, p in params if not p.is_global]\n    for i, arg in enumerate(args):\n        if i >= len(positional_params):\n            raise parameter.UnknownParameterException('%s: takes at most %d parameters (%d given)' % (exc_desc, len(positional_params), len(args)))\n        param_name, param_obj = positional_params[i]\n        result[param_name] = arg\n    for param_name, arg in six.iteritems(kwargs):\n        if param_name in result:\n            raise parameter.DuplicateParameterException('%s: parameter %s was already set as a positional parameter' % (exc_desc, param_name))\n        if param_name not in params_dict:\n            raise parameter.UnknownParameterException('%s: unknown parameter %s' % (exc_desc, param_name))\n        result[param_name] = arg\n    for param_name, param_obj in params:\n        if param_name not in result:\n            if not param_obj.has_task_value(task_name, param_name):\n                raise parameter.MissingParameterException(\"%s: requires the '%s' parameter to be set\" % (exc_desc, param_name))\n            result[param_name] = param_obj.task_value(task_name, param_name)\n\n    def list_to_tuple(x):\n        \"\"\" Make tuples out of lists and sets to allow hashing \"\"\"\n        if isinstance(x, list) or isinstance(x, set):\n            return tuple(x)\n        else:\n            return x\n    return [(param_name, list_to_tuple(result[param_name])) for param_name, param_obj in params]"
+      },
+      "file_name": "task.py",
+      "file_path": "luigi/task.py",
+      "score_reranked": 0.5551406546076669
+    }
+  ],
+  "diffusion_plan": [
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 48
+        },
+        {
+          "op": "Replace",
+          "node": 23
+        },
+        {
+          "op": "Replace",
+          "node": 96
+        },
+        {
+          "op": "Replace",
+          "node": 45
+        },
+        {
+          "op": "Replace",
+          "node": 93
+        },
+        {
+          "op": "GuardAdd",
+          "node": 45
+        },
+        {
+          "op": "Replace",
+          "node": 47
+        },
+        {
+          "op": "GuardAdd",
+          "node": 47
+        }
+      ],
+      "score": 17.072727271447935
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "InsertBefore",
+          "node": 48
+        },
+        {
+          "op": "Replace",
+          "node": 47
+        },
+        {
+          "op": "Replace",
+          "node": 23
+        },
+        {
+          "op": "Replace",
+          "node": 48
+        },
+        {
+          "op": "InsertAfter",
+          "node": 50
+        },
+        {
+          "op": "Delete",
+          "node": 45
+        },
+        {
+          "op": "Replace",
+          "node": 49
+        },
+        {
+          "op": "Replace",
+          "node": 45
+        },
+        {
+          "op": "GuardAdd",
+          "node": 93
+        },
+        {
+          "op": "Replace",
+          "node": 50
+        }
+      ],
+      "score": 16.381818180419835
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 23
+        },
+        {
+          "op": "Replace",
+          "node": 48
+        },
+        {
+          "op": "Replace",
+          "node": 45
+        },
+        {
+          "op": "Replace",
+          "node": 93
+        },
+        {
+          "op": "GuardAdd",
+          "node": 93
+        },
+        {
+          "op": "Replace",
+          "node": 47
+        },
+        {
+          "op": "GuardAdd",
+          "node": 96
+        },
+        {
+          "op": "GuardAdd",
+          "node": 48
+        }
+      ],
+      "score": 16.16363636243967
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Delete",
+          "node": 45
+        },
+        {
+          "op": "Replace",
+          "node": 49
+        },
+        {
+          "op": "GuardAdd",
+          "node": 96
+        },
+        {
+          "op": "Replace",
+          "node": 93
+        },
+        {
+          "op": "Replace",
+          "node": 47
+        },
+        {
+          "op": "GuardAdd",
+          "node": 48
+        },
+        {
+          "op": "Replace",
+          "node": 45
+        },
+        {
+          "op": "GuardAdd",
+          "node": 47
+        }
+      ],
+      "score": 16.109090907899173
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 47
+        },
+        {
+          "op": "Replace",
+          "node": 45
+        },
+        {
+          "op": "Replace",
+          "node": 48
+        },
+        {
+          "op": "GuardAdd",
+          "node": 93
+        },
+        {
+          "op": "Replace",
+          "node": 93
+        },
+        {
+          "op": "GuardAdd",
+          "node": 143
+        },
+        {
+          "op": "Replace",
+          "node": 23
+        },
+        {
+          "op": "InsertAfter",
+          "node": 47
+        }
+      ],
+      "score": 15.91818181700744
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 47
+        },
+        {
+          "op": "GuardAdd",
+          "node": 47
+        },
+        {
+          "op": "Replace",
+          "node": 48
+        },
+        {
+          "op": "Replace",
+          "node": 45
+        },
+        {
+          "op": "Replace",
+          "node": 49
+        },
+        {
+          "op": "GuardAdd",
+          "node": 48
+        },
+        {
+          "op": "GuardAdd",
+          "node": 45
+        },
+        {
+          "op": "GuardAdd",
+          "node": 6
+        },
+        {
+          "op": "Replace",
+          "node": 6
+        }
+      ],
+      "score": 15.81818181683471
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "GuardAdd",
+          "node": 45
+        },
+        {
+          "op": "InsertAfter",
+          "node": 93
+        },
+        {
+          "op": "Replace",
+          "node": 93
+        },
+        {
+          "op": "Replace",
+          "node": 47
+        },
+        {
+          "op": "Replace",
+          "node": 45
+        },
+        {
+          "op": "InsertBefore",
+          "node": 45
+        },
+        {
+          "op": "Replace",
+          "node": 49
+        }
+      ],
+      "score": 15.754545453385951
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 48
+        },
+        {
+          "op": "GuardAdd",
+          "node": 45
+        },
+        {
+          "op": "Replace",
+          "node": 45
+        },
+        {
+          "op": "Delete",
+          "node": 96
+        },
+        {
+          "op": "GuardAdd",
+          "node": 48
+        },
+        {
+          "op": "Replace",
+          "node": 23
+        },
+        {
+          "op": "GuardAdd",
+          "node": 47
+        },
+        {
+          "op": "Replace",
+          "node": 49
+        },
+        {
+          "op": "InsertBefore",
+          "node": 48
+        }
+      ],
+      "score": 15.599999998672729
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "GuardAdd",
+          "node": 50
+        },
+        {
+          "op": "Replace",
+          "node": 47
+        },
+        {
+          "op": "Replace",
+          "node": 49
+        },
+        {
+          "op": "InsertAfter",
+          "node": 49
+        },
+        {
+          "op": "Replace",
+          "node": 93
+        },
+        {
+          "op": "GuardAdd",
+          "node": 93
+        },
+        {
+          "op": "GuardAdd",
+          "node": 45
+        },
+        {
+          "op": "Replace",
+          "node": 48
+        }
+      ],
+      "score": 15.390909089782646
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 48
+        },
+        {
+          "op": "Replace",
+          "node": 50
+        },
+        {
+          "op": "Replace",
+          "node": 45
+        },
+        {
+          "op": "Replace",
+          "node": 93
+        },
+        {
+          "op": "Replace",
+          "node": 49
+        },
+        {
+          "op": "GuardAdd",
+          "node": 50
+        },
+        {
+          "op": "GuardAdd",
+          "node": 49
+        },
+        {
+          "op": "Replace",
+          "node": 47
+        }
+      ],
+      "score": 15.127272726170249
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 48
+        },
+        {
+          "op": "GuardAdd",
+          "node": 45
+        },
+        {
+          "op": "GuardAdd",
+          "node": 48
+        },
+        {
+          "op": "Replace",
+          "node": 23
+        },
+        {
+          "op": "Replace",
+          "node": 93
+        },
+        {
+          "op": "Replace",
+          "node": 45
+        },
+        {
+          "op": "GuardAdd",
+          "node": 49
+        },
+        {
+          "op": "Replace",
+          "node": 49
+        },
+        {
+          "op": "Replace",
+          "node": 96
+        }
+      ],
+      "score": 14.999999998727276
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 48
+        },
+        {
+          "op": "InsertAfter",
+          "node": 49
+        },
+        {
+          "op": "Replace",
+          "node": 93
+        },
+        {
+          "op": "Replace",
+          "node": 45
+        },
+        {
+          "op": "Replace",
+          "node": 23
+        },
+        {
+          "op": "GuardAdd",
+          "node": 50
+        },
+        {
+          "op": "GuardAdd",
+          "node": 93
+        },
+        {
+          "op": "Replace",
+          "node": 49
+        },
+        {
+          "op": "Replace",
+          "node": 47
+        }
+      ],
+      "score": 14.990909089637192
+    }
+  ],
+  "static_analysis_nodes": [
+    {
+      "line": 11,
+      "line_absolute": 403,
+      "node_id": 45,
+      "node_id_local": 9,
+      "type": "Call",
+      "code": "task.can_disable()",
+      "distance_to_buggy": 0,
+      "context": "   8:               self.re_enable(task)\n   9:           elif task.scheduler_disable_time is not None:\n  10:               return\n  11:->     if new_status == FAILED and task.can_disable() and (task.status != DISABLED):\n  12:           task.add_failure()\n  13:           if task.has_excessive_failures():\n  14:               task.scheduler_disable_time = time.time()",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Attribute",
+          "value": {
+            "_type": "Name"
+          },
+          "attr": "can_disable",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [],
+        "keywords": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -24.0
+    },
+    {
+      "line": 12,
+      "line_absolute": 404,
+      "node_id": 47,
+      "node_id_local": 10,
+      "type": "Call",
+      "code": "task.add_failure()",
+      "distance_to_buggy": 0,
+      "context": "   9:           elif task.scheduler_disable_time is not None:\n  10:               return\n  11:       if new_status == FAILED and task.can_disable() and (task.status != DISABLED):\n  12:->         task.add_failure()\n  13:           if task.has_excessive_failures():\n  14:               task.scheduler_disable_time = time.time()\n  15:               new_status = DISABLED",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Attribute",
+          "value": {
+            "_type": "Name"
+          },
+          "attr": "add_failure",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [],
+        "keywords": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -24.0
+    },
+    {
+      "line": 13,
+      "line_absolute": 405,
+      "node_id": 48,
+      "node_id_local": 12,
+      "type": "Call",
+      "code": "task.has_excessive_failures()",
+      "distance_to_buggy": 0,
+      "context": "  10:               return\n  11:       if new_status == FAILED and task.can_disable() and (task.status != DISABLED):\n  12:           task.add_failure()\n  13:->         if task.has_excessive_failures():\n  14:               task.scheduler_disable_time = time.time()\n  15:               new_status = DISABLED\n  16:               notifications.send_error_email('Luigi Scheduler: DISABLED {task} due to excessive failures'.format(task=task.id), '{task} failed {failures} times in the last {window} seconds, so it is being disabled for {persist} seconds'.format(failures=config.disable_failures, task=task.id, window=config.disable_window, persist=config.disable_persist))",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Attribute",
+          "value": {
+            "_type": "Name"
+          },
+          "attr": "has_excessive_failures",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [],
+        "keywords": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|system|>...",
+      "reranker_score": -24.0
+    },
+    {
+      "line": 14,
+      "line_absolute": 406,
+      "node_id": 93,
+      "node_id_local": 14,
+      "type": "Call",
+      "code": "time.time()",
+      "distance_to_buggy": 0,
+      "context": "  11:       if new_status == FAILED and task.can_disable() and (task.status != DISABLED):\n  12:           task.add_failure()\n  13:           if task.has_excessive_failures():\n  14:->             task.scheduler_disable_time = time.time()\n  15:               new_status = DISABLED\n  16:               notifications.send_error_email('Luigi Scheduler: DISABLED {task} due to excessive failures'.format(task=task.id), '{task} failed {failures} times in the last {window} seconds, so it is being disabled for {persist} seconds'.format(failures=config.disable_failures, task=task.id, window=config.disable_window, persist=config.disable_persist))\n  17:       elif new_status == DISABLED:",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Attribute",
+          "value": {
+            "_type": "Name"
+          },
+          "attr": "time",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [],
+        "keywords": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -24.0
+    },
+    {
+      "line": 13,
+      "line_absolute": 405,
+      "node_id": 23,
+      "node_id_local": 11,
+      "type": "If",
+      "code": "if task.has_excessive_failures():\n    task.scheduler_disable_time = time.time()\n    new_status = DISABLED\n    notifications.send_error_email('Luigi Scheduler: DISABLED {task} due to excessive failures'.format(task=task.id), '{task} failed {failures} times in the last {window} seconds, so it is being disabled for {persist} seconds'.format(failures=config.disable_failures, task=task.id, window=config.disable_window, persist=config.disable_persist))",
+      "distance_to_buggy": 0,
+      "context": "  10:               return\n  11:       if new_status == FAILED and task.can_disable() and (task.status != DISABLED):\n  12:           task.add_failure()\n  13:->         if task.has_excessive_failures():\n  14:               task.scheduler_disable_time = time.time()\n  15:               new_status = DISABLED\n  16:               notifications.send_error_email('Luigi Scheduler: DISABLED {task} due to excessive failures'.format(task=task.id), '{task} failed {failures} times in the last {window} seconds, so it is being disabled for {persist} seconds'.format(failures=config.disable_failures, task=task.id, window=config.disable_window, persist=config.disable_persist))",
+      "ast_subtree_json": {
+        "_type": "If",
+        "test": {
+          "_type": "Call",
+          "func": {
+            "_type": "Attribute"
+          },
+          "args": [],
+          "keywords": []
+        },
+        "body": [
+          {
+            "_type": "Assign",
+            "targets": [
+              {
+                "_type": "Attribute"
+              }
+            ],
+            "value": {
+              "_type": "Call"
+            },
+            "type_comment": null
+          },
+          {
+            "_type": "Assign",
+            "targets": [
+              {
+                "_type": "Name"
+              }
+            ],
+            "value": {
+              "_type": "Name"
+            },
+            "type_comment": null
+          },
+          {
+            "_type": "Expr",
+            "value": {
+              "_type": "Call"
+            }
+          }
+        ],
+        "orelse": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -23.0
+    },
+    {
+      "line": 14,
+      "line_absolute": 406,
+      "node_id": 49,
+      "node_id_local": 13,
+      "type": "Assign",
+      "code": "task.scheduler_disable_time = time.time()",
+      "distance_to_buggy": 0,
+      "context": "  11:       if new_status == FAILED and task.can_disable() and (task.status != DISABLED):\n  12:           task.add_failure()\n  13:           if task.has_excessive_failures():\n  14:->             task.scheduler_disable_time = time.time()\n  15:               new_status = DISABLED\n  16:               notifications.send_error_email('Luigi Scheduler: DISABLED {task} due to excessive failures'.format(task=task.id), '{task} failed {failures} times in the last {window} seconds, so it is being disabled for {persist} seconds'.format(failures=config.disable_failures, task=task.id, window=config.disable_window, persist=config.disable_persist))\n  17:       elif new_status == DISABLED:",
+      "ast_subtree_json": {
+        "_type": "Assign",
+        "targets": [
+          {
+            "_type": "Attribute",
+            "value": {
+              "_type": "Name"
+            },
+            "attr": "scheduler_disable_time",
+            "ctx": {
+              "_type": "Store"
+            }
+          }
+        ],
+        "value": {
+          "_type": "Call",
+          "func": {
+            "_type": "Attribute"
+          },
+          "args": [],
+          "keywords": []
+        },
+        "type_comment": null
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -23.0
+    },
+    {
+      "line": 15,
+      "line_absolute": 407,
+      "node_id": 50,
+      "node_id_local": 15,
+      "type": "Assign",
+      "code": "new_status = DISABLED",
+      "distance_to_buggy": 0,
+      "context": "  12:           task.add_failure()\n  13:           if task.has_excessive_failures():\n  14:               task.scheduler_disable_time = time.time()\n  15:->             new_status = DISABLED\n  16:               notifications.send_error_email('Luigi Scheduler: DISABLED {task} due to excessive failures'.format(task=task.id), '{task} failed {failures} times in the last {window} seconds, so it is being disabled for {persist} seconds'.format(failures=config.disable_failures, task=task.id, window=config.disable_window, persist=config.disable_persist))\n  17:       elif new_status == DISABLED:\n  18:           task.scheduler_disable_time = None",
+      "ast_subtree_json": {
+        "_type": "Assign",
+        "targets": [
+          {
+            "_type": "Name",
+            "id": "new_status",
+            "ctx": {
+              "_type": "Store"
+            }
+          }
+        ],
+        "value": {
+          "_type": "Name",
+          "id": "DISABLED",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "type_comment": null
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -23.0
+    },
+    {
+      "line": 11,
+      "line_absolute": 403,
+      "node_id": 6,
+      "node_id_local": 8,
+      "type": "If",
+      "code": "if new_status == FAILED and task.can_disable() and (task.status != DISABLED):\n    task.add_failure()\n    if task.has_excessive_failures():\n        task.scheduler_disable_time = time.time()\n        new_status = DISABLED\n        notifications.send_error_email('Luigi Scheduler: DISABLED {task} due to excessive failures'.format(task=task.id), '{task} failed {failures} times in the last {window} seconds, so it is being disabled for {persist} seconds'.format(failures=config.disable_failures, task=task.id, window=config.disable_window, persist=config.disable_persist))\nelif new_status == DISABLED:\n    task.scheduler_disable_time = None",
+      "distance_to_buggy": 0,
+      "context": "   8:               self.re_enable(task)\n   9:           elif task.scheduler_disable_time is not None:\n  10:               return\n  11:->     if new_status == FAILED and task.can_disable() and (task.status != DISABLED):\n  12:           task.add_failure()\n  13:           if task.has_excessive_failures():\n  14:               task.scheduler_disable_time = time.time()",
+      "ast_subtree_json": {
+        "_type": "If",
+        "test": {
+          "_type": "BoolOp",
+          "op": {
+            "_type": "And"
+          },
+          "values": [
+            {
+              "_type": "Compare"
+            },
+            {
+              "_type": "Call"
+            },
+            {
+              "_type": "Compare"
+            }
+          ]
+        },
+        "body": [
+          {
+            "_type": "Expr",
+            "value": {
+              "_type": "Call"
+            }
+          },
+          {
+            "_type": "If",
+            "test": {
+              "_type": "Call"
+            },
+            "body": [
+              {
+                "_type": "Assign"
+              },
+              {
+                "_type": "Assign"
+              },
+              {
+                "_type": "Expr"
+              }
+            ],
+            "orelse": []
+          }
+        ],
+        "orelse": [
+          {
+            "_type": "If",
+            "test": {
+              "_type": "Compare"
+            },
+            "body": [
+              {
+                "_type": "Assign"
+              }
+            ],
+            "orelse": []
+          }
+        ]
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -22.0
+    },
+    {
+      "line": 16,
+      "line_absolute": 408,
+      "node_id": 96,
+      "node_id_local": 16,
+      "type": "Call",
+      "code": "notifications.send_error_email('Luigi Scheduler: DISABLED {task} due to excessive failures'.format(task=task.id), '{task} failed {failures} times in the last {window} seconds, so it is being disabled for {persist} seconds'.format(failures=config.disable_failures, task=task.id, window=config.disable_window, persist=config.disable_persist))",
+      "distance_to_buggy": 1,
+      "context": "  13:           if task.has_excessive_failures():\n  14:               task.scheduler_disable_time = time.time()\n  15:               new_status = DISABLED\n  16:->             notifications.send_error_email('Luigi Scheduler: DISABLED {task} due to excessive failures'.format(task=task.id), '{task} failed {failures} times in the last {window} seconds, so it is being disabled for {persist} seconds'.format(failures=config.disable_failures, task=task.id, window=config.disable_window, persist=config.disable_persist))\n  17:       elif new_status == DISABLED:\n  18:           task.scheduler_disable_time = None\n  19:       self._status_tasks[task.status].pop(task.id)",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Attribute",
+          "value": {
+            "_type": "Name"
+          },
+          "attr": "send_error_email",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [
+          {
+            "_type": "Call",
+            "func": {
+              "_type": "Attribute"
+            },
+            "args": [],
+            "keywords": [
+              {
+                "_type": "keyword"
+              }
+            ]
+          },
+          {
+            "_type": "Call",
+            "func": {
+              "_type": "Attribute"
+            },
+            "args": [],
+            "keywords": [
+              {
+                "_type": "keyword"
+              },
+              {
+                "_type": "keyword"
+              },
+              {
+                "_type": "keyword"
+              },
+              {
+                "_type": "keyword"
+              }
+            ]
+          }
+        ],
+        "keywords": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -14.0
+    },
+    {
+      "line": 16,
+      "line_absolute": 408,
+      "node_id": 143,
+      "node_id_local": 17,
+      "type": "Call",
+      "code": "'Luigi Scheduler: DISABLED {task} due to excessive failures'.format(task=task.id)",
+      "distance_to_buggy": 1,
+      "context": "  13:           if task.has_excessive_failures():\n  14:               task.scheduler_disable_time = time.time()\n  15:               new_status = DISABLED\n  16:->             notifications.send_error_email('Luigi Scheduler: DISABLED {task} due to excessive failures'.format(task=task.id), '{task} failed {failures} times in the last {window} seconds, so it is being disabled for {persist} seconds'.format(failures=config.disable_failures, task=task.id, window=config.disable_window, persist=config.disable_persist))\n  17:       elif new_status == DISABLED:\n  18:           task.scheduler_disable_time = None\n  19:       self._status_tasks[task.status].pop(task.id)",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Attribute",
+          "value": {
+            "_type": "Constant"
+          },
+          "attr": "format",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [],
+        "keywords": [
+          {
+            "_type": "keyword",
+            "arg": "task",
+            "value": {
+              "_type": "Attribute"
+            }
+          }
+        ]
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|system|>...",
+      "reranker_score": -14.0
+    }
+  ]
+}

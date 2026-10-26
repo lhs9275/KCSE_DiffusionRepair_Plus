@@ -1,0 +1,141 @@
+{
+  "bug_id": "53",
+  "seed": 43,
+  "arm": "base",
+  "candidates": [
+    {
+      "index": 0,
+      "patch_text": "def _read_body(self, code, headers, delegate):\n    if 'Content-Length' in headers:\n        if 'Transfer-Encoding' in headers:\n            raise httputil.HTTPInputError('Response with both Transfer-Encoding and Content-Length')\n        if ',' in headers['Content-Length']:\n            pieces = re.split(',\\\\s*', headers['Content-Length'])\n            if any((i!= pieces[0] for i in pieces)):\n                raise httputil.HTTPInputError('Multiple unequal Content-Lengths: %r' % headers['Content-Length'])\n            headers['Content-Length'] = pieces[0]\n        try:\n            content_length = int(headers['Content-Length'])\n        except ValueError:\n            raise httputil.HTTPInputError('Only integer Content-Length is allowed: %s' % headers['Content-Length'])\n        if content_length > self._max_body_size:\n            raise httputil.HTTPInputError('Content-Length too long')\n    else:\n        content_length = None\n    if code == 204:\n        if 'Transfer-Encoding' in headers or content_length not in (None, 0):\n            raise httputil.HTTPInputError('Response with code %d should not have body' % code)\n        content_length = 0\n    if content_length is not None:\n        return self._read_fixed_body(content_length, delegate)\n    if headers.get('Transfer-Encoding', None) == 'chunked':\n        return self._read_chunked_body(delegate)\n    if self.is_client:\n        return self._read_body_until_close(delegate)\n    return None",
+      "patch_sha256": "921cfe13f404292ac081b5500887c1582c560133ddb1f97fa68a2193b213e799",
+      "rank_score": 244,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.934442110146087,
+      "top_p": 0.8256979458109642
+    },
+    {
+      "index": 1,
+      "patch_text": "def _read_body(self, code, headers, delegate):\n    if 'Content-Length' in headers:\n        if 'Transfer-Encoding' in headers:\n            raise httputil.HTTPInputError('Response with both Transfer-Encoding and Content-Length')\n        if ',' in headers['Content-Length']:\n            pieces = re.split(',\\\\s*', headers['Content-Length'])\n            if any((i!= pieces[0] for i in pieces)):\n                raise httputil.HTTPInputError('Multiple unequal Content-Lengths: %r' % headers['Content-Length'])\n            headers['Content-Length'] = pieces[0]\n        try:\n            content_length = int(headers['Content-Length'])\n        except ValueError:\n            raise httputil.HTTPInputError('Only integer Content-Length is allowed: %s' % headers['Content-Length'])\n        if content_length > self._max_body_size:\n            raise httputil.HTTPInputError('Content-Length too long')\n    else:\n        content_length = None\n    if code == 204:\n        if 'Transfer-Encoding' in headers or content_length not in (None, 0):\n            raise httputil.HTTPInputError('Response with code %d should not have body' % code)\n        content_length = 0\n    if content_length is not None:\n        return self._read_fixed_body(content_length, delegate)\n    if headers.get('Transfer-Encoding', '') == 'chunked':\n        return self._read_chunked_body(delegate)\n    if self.is_client:\n        return self._read_body_until_close(delegate)\n    return None",
+      "patch_sha256": "b844cc1b70ab1c5120e0d334577160053352a7468a8c7a8522a83da95ead31fa",
+      "rank_score": 244,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7976020643090617,
+      "top_p": 0.8970025803863271
+    },
+    {
+      "index": 2,
+      "patch_text": "def _read_body(self, code, headers, delegate):\n    if 'Content-Length' in headers:\n        if 'Transfer-Encoding' in headers:\n            raise httputil.HTTPInputError('Response with both Transfer-Encoding and Content-Length')\n        if ',' in headers['Content-Length']:\n            pieces = re.split(',\\\\s*', headers['Content-Length'])\n            if any((i!= pieces[0] for i in pieces)):\n                raise httputil.HTTPInputError('Multiple unequal Content-Lengths: %r' % headers['Content-Length'])\n            headers['Content-Length'] = pieces[0]\n        try:\n            content_length = int(headers['Content-Length'])\n        except ValueError:\n            raise httputil.HTTPInputError('Only integer Content-Length is allowed: %s' % headers['Content-Length'])\n        if content_length > self._max_body_size:\n            raise httputil.HTTPInputError('Content-Length too long')\n    else:\n        content_length = None\n    if code == 204:\n        if 'Transfer-Encoding' in headers or content_length not in (None, 0):\n            raise httputil.HTTPInputError('Response with code %d should not have body' % code)\n        content_length = 0\n    if content_length is not None:\n        return self._read_fixed_body(content_length, delegate)\n    if 'Transfer-Encoding' in headers and headers['Transfer-Encoding'].lower() == 'chunked':\n        return self._read_chunked_body(delegate)\n    if self.is_client:\n        return self._read_body_until_close(delegate)\n    return None",
+      "patch_sha256": "cf85ce1052befe3613fba4dd377858e90f3ff31bff2927a8653b7a6f87bfa110",
+      "rank_score": 243,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7976020643090617,
+      "top_p": 0.8970025803863271
+    },
+    {
+      "index": 3,
+      "patch_text": "def _read_body(self, code, headers, delegate):\n    if 'Content-Length' in headers:\n        if 'Transfer-Encoding' in headers:\n            raise httputil.HTTPInputError('Response with both Transfer-Encoding and Content-Length')\n        if ',' in headers['Content-Length']:\n            pieces = re.split(',\\\\s*', headers['Content-Length'])\n            if any((i!= pieces[0] for i in pieces)):\n                raise httputil.HTTPInputError('Multiple unequal Content-Lengths: %r' % headers['Content-Length'])\n            headers['Content-Length'] = pieces[0]\n        try:\n            content_length = int(headers['Content-Length'])\n        except ValueError:\n            raise httputil.HTTPInputError('Only integer Content-Length is allowed: %s' % headers['Content-Length'])\n        if content_length > self._max_body_size:\n            raise httputil.HTTPInputError('Content-Length too long')\n    else:\n        content_length = None\n    if code == 204:\n        if 'Transfer-Encoding' in headers or content_length not in (None, 0):\n            raise httputil.HTTPInputError('Response with code %d should not have body' % code)\n        content_length = 0\n    if content_length is not None:\n        return self._read_fixed_body(content_length, delegate)\n    if headers.get('Transfer-Encoding') is not None:  # <--- FIXED\n        return self._read_chunked_body(delegate)\n    if self.is_client:\n        return self._read_body_until_close(delegate)\n    return None",
+      "patch_sha256": "48ef7c6fa3e4f3004711d4d34758b009e966ec858783b131d6a1995b4aafd9bb",
+      "rank_score": 242,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.934442110146087,
+      "top_p": 0.8256979458109642
+    },
+    {
+      "index": 4,
+      "patch_text": "def _read_body(self, code, headers, delegate):\n    if 'Content-Length' in headers:\n        if 'Transfer-Encoding' in headers:\n            raise httputil.HTTPInputError('Response with both Transfer-Encoding and Content-Length')\n        if ',' in headers['Content-Length']:\n            pieces = re.split(',\\\\s*', headers['Content-Length'])\n            if any((i!= pieces[0] for i in pieces)):\n                raise httputil.HTTPInputError('Multiple unequal Content-Lengths: %r' % headers['Content-Length'])\n            headers['Content-Length'] = pieces[0]\n        try:\n            content_length = int(headers['Content-Length'])\n        except ValueError:\n            raise httputil.HTTPInputError('Only integer Content-Length is allowed: %s' % headers['Content-Length'])\n        if content_length > self._max_body_size:\n            raise httputil.HTTPInputError('Content-Length too long')\n    else:\n        content_length = None\n    if code == 204:\n        if 'Transfer-Encoding' in headers or content_length not in (None, 0):\n            raise httputil.HTTPInputError('Response with code %d should not have body' % code)\n        content_length = 0\n    if content_length is not None:\n        return self._read_fixed_body(content_length, delegate)\n    if 'Transfer-Encoding' in headers:  # <--- BUGGY LINE\n        return self._read_chunked_body(delegate)\n    if self.is_client:\n        return self._read_body_until_close(delegate)\n    return None",
+      "patch_sha256": "acf0cc54915c1b4406ce3c29cbcb4b32edc98b71736b432bd3ed2aaa01674b16",
+      "rank_score": 241,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7704673177175924,
+      "top_p": 0.8630841471469904
+    },
+    {
+      "index": 5,
+      "patch_text": "def _read_body(self, code, headers, delegate):\n    if 'Content-Length' in headers:\n        if 'Transfer-Encoding' in headers:\n            raise httputil.HTTPInputError('Response with both Transfer-Encoding and Content-Length')\n        if ',' in headers['Content-Length']:\n            pieces = re.split(',\\\\s*', headers['Content-Length'])\n            if any((i!= pieces[0] for i in pieces)):\n                raise httputil.HTTPInputError('Multiple unequal Content-Lengths: %r' % headers['Content-Length'])\n            headers['Content-Length'] = pieces[0]\n        try:\n            content_length = int(headers['Content-Length'])\n        except ValueError:\n            raise httputil.HTTPInputError('Only integer Content-Length is allowed: %s' % headers['Content-Length'])\n        if content_length > self._max_body_size:\n            raise httputil.HTTPInputError('Content-Length too long')\n    else:\n        content_length = None\n    if code == 204:\n        if 'Transfer-Encoding' in headers or content_length not in (None, 0):\n            raise httputil.HTTPInputError('Response with code %d should not have body' % code)\n        content_length = 0\n    if content_length is not None:\n        return self._read_fixed_body(content_length, delegate)\n    if 'Transfer-Encoding' in headers:\n        raise httputil.HTTPInputError('Response with Transfer-Encoding should not have a body')\n    if self.is_client:\n        return self._read_body_until_close(delegate)\n    return None",
+      "patch_sha256": "9948c07914807c82341322ae4cf6860ce8b48f044499617ad66e7fab70b469ab",
+      "rank_score": 240,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.934442110146087,
+      "top_p": 0.8256979458109642
+    },
+    {
+      "index": 6,
+      "patch_text": "def _read_body(self, code, headers, delegate):\n    if 'Content-Length' in headers:\n        if 'Transfer-Encoding' in headers:\n            raise httputil.HTTPInputError('Response with both Transfer-Encoding and Content-Length')\n        if ',' in headers['Content-Length']:\n            pieces = re.split(',\\\\s*', headers['Content-Length'])\n            if any((i!= pieces[0] for i in pieces)):\n                raise httputil.HTTPInputError('Multiple unequal Content-Lengths: %r' % headers['Content-Length'])\n            headers['Content-Length'] = pieces[0]\n        try:\n            content_length = int(headers['Content-Length'])\n        except ValueError:\n            raise httputil.HTTPInputError('Only integer Content-Length is allowed: %s' % headers['Content-Length'])\n        if content_length > self._max_body_size:\n            raise httputil.HTTPInputError('Content-Length too long')\n    else:\n        content_length = None\n    if code == 204:\n        if 'Transfer-Encoding' in headers or content_length not in (None, 0):\n            raise httputil.HTTPInputError('Response with code %d should not have body' % code)\n        content_length = 0\n    if content_length is not None:\n        return self._read_fixed_body(content_length, delegate)\n    if 'Transfer-Encoding' in headers and 'chunked' in headers['Transfer-Encoding'].lower():\n        return self._read_chunked_body(delegate)\n    if self.is_client:\n        return self._read_body_until_close(delegate)\n    return None",
+      "patch_sha256": "35904bd093cdfa5ee01b29f3ab3915856cf712deaf566b26b92c349e1ea0a099",
+      "rank_score": 240,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7976020643090617,
+      "top_p": 0.8970025803863271
+    },
+    {
+      "index": 7,
+      "patch_text": "def _read_body(self, code, headers, delegate):\n    if 'Content-Length' in headers:\n        if 'Transfer-Encoding' in headers:\n            raise httputil.HTTPInputError('Response with both Transfer-Encoding and Content-Length')\n        if ',' in headers['Content-Length']:\n            pieces = re.split(',\\\\s*', headers['Content-Length'])\n            if any((i!= pieces[0] for i in pieces)):\n                raise httputil.HTTPInputError('Multiple unequal Content-Lengths: %r' % headers['Content-Length'])\n            headers['Content-Length'] = pieces[0]\n        try:\n            content_length = int(headers['Content-Length'])\n        except ValueError:\n            raise httputil.HTTPInputError('Only integer Content-Length is allowed: %s' % headers['Content-Length'])\n        if content_length > self._max_body_size:\n            raise httputil.HTTPInputError('Content-Length too long')\n    else:\n        content_length = None\n    if code == 204:\n        if 'Transfer-Encoding' in headers or content_length not in (None, 0):\n            raise httputil.HTTPInputError('Response with code %d should not have body' % code)\n        content_length = 0\n    if content_length is not None:\n        return self._read_fixed_body(content_length, delegate)\n    if headers.get('Transfer-Encoding') is None:  # <--- CORRECTED HERE\n        return self._read_body_until_close(delegate)\n    return None\n## Bug: 388",
+      "patch_sha256": "f121df56ef285ca3af51d36d84e6705d60aab46b74fb1b13fb856ed596da0609",
+      "rank_score": 233,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7976020643090617,
+      "top_p": 0.8970025803863271
+    },
+    {
+      "index": 8,
+      "patch_text": "def _read_body(self, code, headers, delegate):\n    if 'Content-Length' in headers:\n        if 'Transfer-Encoding' in headers:\n            raise httputil.HTTPInputError('Response with both Transfer-Encoding and Content-Length')\n        if ',' in headers['Content-Length']:\n            pieces = re.split(',\\\\s*', headers['Content-Length'])\n            if any((i!= pieces[0] for i in pieces)):\n                raise httputil.HTTPInputError('Multiple unequal Content-Lengths: %r' % headers['Content-Length'])\n            headers['Content-Length'] = pieces[0]\n        try:\n            content_length = int(headers['Content-Length'])\n        except ValueError:\n            raise httputil.HTTPInputError('Only integer Content-Length is allowed: %s' % headers['Content-Length'])\n        if content_length > self._max_body_size:\n            raise httputil.HTTPInputError('Content-Length too long')\n    else:\n        content_length = None\n    if code == 204:\n        if 'Transfer-Encoding' in headers or content_length not in (None, 0):\n            raise httputil.HTTPInputError('Response with code %d should not have body' % code)\n        content_length = 0\n    if content_length is not None:\n        return self._read_fixed_body(content_length, delegate)\n    if 'Transfer-Encoding' not in headers:\n        if self.is_client:\n            return self._read_body_until_close(delegate)\n    return None",
+      "patch_sha256": "b8b28f941b162b6521100b7a1e4acd2c99a3caaa4a19f31a377af860642c517b",
+      "rank_score": 232,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.934442110146087,
+      "top_p": 0.8256979458109642
+    },
+    {
+      "index": 9,
+      "patch_text": "def _read_body(self, code, headers, delegate):\n    if 'Content-Length' in headers:\n        if 'Transfer-Encoding' in headers:\n            raise httputil.HTTPInputError('Response with both Transfer-Encoding and Content-Length')\n        if ',' in headers['Content-Length']:\n            pieces = re.split(',\\\\s*', headers['Content-Length'])\n            if any((i!= pieces[0] for i in pieces)):\n                raise httputil.HTTPInputError('Multiple unequal Content-Lengths: %r' % headers['Content-Length'])\n            headers['Content-Length'] = pieces[0]\n        try:\n            content_length = int(headers['Content-Length'])\n        except ValueError:\n            raise httputil.HTTPInputError('Only integer Content-Length is allowed: %s' % headers['Content-Length'])\n        if content_length > self._max_body_size:\n            raise httputil.HTTPInputError('Content-Length too long')\n    else:\n        content_length = None\n    if code == 204:\n        if 'Transfer-Encoding' in headers or content_length not in (None, 0):\n            raise httputil.HTTPInputError('Response with code %d should not have body' % code)\n        content_length = 0\n    if content_length is not None:\n        return self._read_fixed_body(content_length, delegate)\n    if 'Transfer-Encoding' == 'chunked':\n        return self._read_chunked_body(delegate)\n    if self.is_client:\n        return self._read_body_until_close(delegate)\n    return None\n# Description:\n#   When the request has a large number of query parameters, the generated HTTP Request string will be too long.\n#   The original request is:\n#       https://www.amazon.com/dp/B07F5Z9GKM/ref=lv_qt_detail_pl_title_0?pd_rd_wg=h5746&pf_rd_r=0H74T7A1P3X11Z03XW6E&pf_rd_p=a4b772c9-f340-4568-84bc-d2f9e09e9664&pd_rd_i=B07F5Z9GKM&pf_rd_m=ATVPDKIKX0DER&pf_rd_s=desktop-2&pf_rd_t=36701&pf_rd_i=desktop\n#   After fixing the bug, the fixed request is:\n#       https://www.amazon.com/dp/B07F5Z9GKM/ref=lv_qt_detail_pl_title_0?pd_rd_wg=h5746&pf_rd_r=0H74T",
+      "patch_sha256": "3c7b2bb6a836baf931b9fe9eb0b8144c808aa692a12e451561ed17cedfcb82c7",
+      "rank_score": 232,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.934442110146087,
+      "top_p": 0.8256979458109642
+    }
+  ],
+  "candidate_count": 10,
+  "retrieved_examples": [],
+  "diffusion_plan": [],
+  "static_analysis_nodes": []
+}

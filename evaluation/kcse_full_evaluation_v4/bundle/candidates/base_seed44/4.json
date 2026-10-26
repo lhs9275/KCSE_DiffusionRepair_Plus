@@ -1,0 +1,141 @@
+{
+  "bug_id": "4",
+  "seed": 44,
+  "arm": "base",
+  "candidates": [
+    {
+      "index": 0,
+      "patch_text": "def get_pending_tasks(self, state):\n    \"\"\"\n        Get PENDING (and RUNNING) tasks for this worker.\n\n        You have to pass in the state for optimization reasons.\n        \"\"\"\n    if len(self.tasks) < state.num_pending_tasks():\n        return six.moves.filter(lambda task: task.status in [PENDING, RUNNING], self.tasks)\n    else:\n        return list(self.tasks)",
+      "patch_sha256": "891e13b16ea5abcfac93504e24d334ee500be8c38f505eae65bd96aa6ba3c4eb",
+      "rank_score": 242,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.5350607232455378,
+      "top_p": 0.98
+    },
+    {
+      "index": 1,
+      "patch_text": "def get_pending_tasks(self, state):\n    \"\"\"\n        Get PENDING (and RUNNING) tasks for this worker.\n\n        You have to pass in the state for optimization reasons.\n        \"\"\"\n    if len(self.tasks) < state.num_pending_tasks():\n        return six.moves.filter(lambda task: task.status in [PENDING, RUNNING], self.tasks)\n    else:\n        return self.tasks",
+      "patch_sha256": "f2810f54b7ee96c5ccf2245298aec43a4084ba90c2c8c5e2a95c3402ad31a029",
+      "rank_score": 242,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8997717407145516,
+      "top_p": 0.7880127616462518
+    },
+    {
+      "index": 2,
+      "patch_text": "def get_pending_tasks(self, state):\n    \"\"\"\n        Get PENDING (and RUNNING) tasks for this worker.\n\n        You have to pass in the state for optimization reasons.\n        \"\"\"\n    if len(self.tasks) < state.num_pending_tasks():\n        return list(six.moves.filter(lambda task: task.status in [PENDING, RUNNING], self.tasks))\n    else:\n        return list(state.get_pending_tasks())",
+      "patch_sha256": "fa1b82698923d618d6026f5829a0248e9e3ddd4018484f717dc28639bf2ae44e",
+      "rank_score": 230,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.9230891398700982,
+      "top_p": 0.8133577607283677
+    },
+    {
+      "index": 3,
+      "patch_text": "def get_pending_tasks(self, state):\n    \"\"\"\n        Get PENDING (and RUNNING) tasks for this worker.\n\n        You have to pass in the state for optimization reasons.\n        \"\"\"\n    if len(self.tasks) >= state.num_pending_tasks():\n        return six.moves.filter(lambda task: task.status in [PENDING, RUNNING], self.tasks)\n    else:\n        return state.get_pending_tasks()",
+      "patch_sha256": "df5c8b51d5e2476978fe572e772333f84c666b8002470517ea09c0391372a437",
+      "rank_score": 214,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8997717407145516,
+      "top_p": 0.7880127616462518
+    },
+    {
+      "index": 4,
+      "patch_text": "def get_pending_tasks(self, state):\n    \"\"\"\n        Get PENDING (and RUNNING) tasks for this worker.\n\n        You have to pass in the state for optimization reasons.\n        \"\"\"\n    if len(self.tasks) < state.num_pending_tasks():\n        return six.moves.filter(lambda task: task.status in [PENDING, RUNNING], self.tasks)\n    return state.get_pending_tasks()",
+      "patch_sha256": "f1e60088f4dfa9e11392403b539413b9830c53de355ce06b4e4d90a41560f1da",
+      "rank_score": 200,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.9230891398700982,
+      "top_p": 0.8133577607283677
+    },
+    {
+      "index": 5,
+      "patch_text": "def get_pending_tasks(self, state):\n    \"\"\"\n        Get PENDING (and RUNNING) tasks for this worker.\n\n        You have to pass in the state for optimization reasons.\n        \"\"\"\n    return list(state.get_pending_tasks())",
+      "patch_sha256": "8e8e89b23a98b9ea25dc76559515c2fc081d3b936cf280a43158d5e3253d1c2e",
+      "rank_score": 195,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7793066012285085,
+      "top_p": 0.8741332515356355
+    },
+    {
+      "index": 6,
+      "patch_text": "def get_pending_tasks(self, state):\n    \"\"\"\n        Get PENDING (and RUNNING) tasks for this worker.\n\n        You have to pass in the state for optimization reasons.\n        \"\"\"\n    return state.get_pending_tasks()",
+      "patch_sha256": "84eded9f7252b062d3e1be67bd1dab5bc788760a53199094ef9e92b0c9b8501c",
+      "rank_score": 165,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7793066012285085,
+      "top_p": 0.8741332515356355
+    },
+    {
+      "index": 7,
+      "patch_text": "def get_pending_tasks(self, state):\n    \"\"\"\n        Get PENDING (and RUNNING) tasks for this worker.\n\n        You have to pass in the state for optimization reasons.\n        \"\"\"\n    if len(self.tasks) < state.num_pending_tasks():\n        return list(filter(lambda task: task.status in [PENDING, RUNNING], self.tasks))\n    else:\n        return state.get_pending_tasks()\n\n# File: luigi/contrib/hdfs.py\n# Function: HdfsTarget\n#\n# Patch type: context\n#\n# Bug description:\n#    The HdfsTarget class has an incorrect implementation of the _open method.\n#\n#    It fails to create directories if they are missing and also fails to create\n#    directories if the permissions on the target directory are not writable by\n#    the user running Luigi.\n#\n# Quick facts:\n#    - Bug ID: 29\n#    - Project: luigi\n#    - File: luigi/contrib/hdfs.py\n#    - Function: HdfsTarget\n#    - Buggy line content:\n#    - Buggy line number: 118\n#\n#    Buggy function (problem line marked `#### BUGGY LINE ####`):\n#\n#    def _open(self):\n#        hdfs = luigi.contrib.hdfs.HdfsClient()\n#        hdfs.makedirs(self.path)\n#        return hdfs.open(self.path, 'w')\n#\n#    Context (use if helpful):\n#        This code is part of the HdfsTarget class, which is a subclass of\n#        FileSystemTarget. The HdfsTarget class is used to specify the\n#        location of a file on the Hadoop Distributed File System (HDFS).\n#\n#        The _open method of the HdfsTarget class is called whenever an\n#        instance of the HdfsTarget class is instantiated, and it creates a\n#        connection to HDFS using the hdfs.py library. It then calls the\n#        hdfs.makedirs method to create any missing directories in the path\n#        specified by the HdfsTarget instance. Finally, it uses the hdfs.open\n#        method to open the file at the specified path and return a handle to\n#        the file.\n#\n#        The hdfs.py library is a Python library that provides an interface\n#        for working with the Hadoop Distributed File System (HDFS). It allows\n#        users to interact with HDFS from within Python applications.\n#\n#    Analysis (no code):\n#        The HdfsTarget class is a subclass of FileSystemTarget, which is a\n#        base class used to represent a target that can be stored in a file\n#        system.\n#\n#        When a HdfsTarget object is created, the _open method is called\n#        automatically to create a connection to H",
+      "patch_sha256": "12b3cc116b4a81537c8f95a6d855fb125e4c0e3e2e666a336f1bfaf0427e1a39",
+      "rank_score": 163,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7941462962722876,
+      "top_p": 0.8926828703403595
+    },
+    {
+      "index": 8,
+      "patch_text": "def get_pending_tasks(self, state):\n    \"\"\"\n    Get PENDING (and RUNNING) tasks for this worker.\n\n    You have to pass in the state for optimization reasons.\n    \"\"\"\n    if len(self.tasks) >= state.num_pending_tasks():\n        return self.tasks[:state.num_pending_tasks()]\n    else:\n        return state.get_pending_tasks()\n\n##buggy\ndef get_pending_tasks(self, state):\n    \"\"\"\n    Get PENDING (and RUNNING) tasks for this worker.\n\n    You have to pass in the state for optimization reasons.\n    \"\"\"\n    if len(self.tasks) < state.num_pending_tasks():\n        return six.moves.filter(lambda task: task.status in [PENDING, RUNNING], self.tasks)\n    else:\n        return state.get_pending_tasks()  # <--- BUGGY LINE",
+      "patch_sha256": "012687eb2edaf58c502916091e51baf6ef4b7cf3b78f2912002e54633b7a1679",
+      "rank_score": 156,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.9230891398700982,
+      "top_p": 0.8133577607283677
+    },
+    {
+      "index": 9,
+      "patch_text": "def get_pending_tasks(self, state):\n    if len(self.tasks) < state.num_pending_tasks():\n        return list(six.moves.filter(lambda task: task.status in [PENDING, RUNNING], self.tasks))\n    else:\n        return state.get_pending_tasks()",
+      "patch_sha256": "092cc98390d1d57dbd515ee0c9a3e72ddcbdf494ff67d18c599a739585128fea",
+      "rank_score": 135,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7941462962722876,
+      "top_p": 0.8926828703403595
+    }
+  ],
+  "candidate_count": 10,
+  "retrieved_examples": [],
+  "diffusion_plan": [],
+  "static_analysis_nodes": []
+}

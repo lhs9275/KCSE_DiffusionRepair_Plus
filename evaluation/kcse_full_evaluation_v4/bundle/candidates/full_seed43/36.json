@@ -1,0 +1,1072 @@
+{
+  "bug_id": "36",
+  "seed": 43,
+  "arm": "full",
+  "candidates": [
+    {
+      "index": 0,
+      "patch_text": "def __init__(self, df, na_rep: str='', float_format: Optional[str]=None, cols: Optional[Sequence[Label]]=None, header: Union[Sequence[Label], bool]=True, index: bool=True, index_label: Optional[Union[Label, Sequence[Label]]]=None, merge_cells: bool=False, inf_rep: str='inf', style_converter: Optional[Callable]=None):\n    self.rowcounter = 0\n    self.na_rep = na_rep\n    if hasattr(df,'render'):\n        self.styler = df\n        df = df.data\n        if style_converter is None:\n            style_converter = CSSToExcelConverter()\n        self.style_converter = style_converter\n    else:\n        self.styler = None\n    if cols is not None:\n        if not len(Index(cols) & df.columns):\n            raise KeyError('passes columns are not ALL present dataframe')\n        if len(Index(cols) & df.columns)!= len(cols):\n            raise KeyError(\"Not all names specified in 'columns' are found\")\n        self.df = df\n    self.columns = self.df.columns\n    self.float_format = float_format\n    self.index = index\n    self.index_label = index_label\n    self.header = header\n    self.merge_cells = merge_cells\n    self.inf_rep = inf_rep",
+      "patch_sha256": "9a5424f12adfebd60aad8ac5934524b7e23decc6a241aa71b94be8405e029ab7",
+      "rank_score": 214,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7704673177175924,
+      "top_p": 0.8630841471469904
+    },
+    {
+      "index": 1,
+      "patch_text": "def __init__(self, df, na_rep: str='', float_format: Optional[str]=None, cols: Optional[Sequence[Label]]=None, header: Union[Sequence[Label], bool]=True, index: bool=True, index_label: Optional[Union[Label, Sequence[Label]]]=None, merge_cells: bool=False, inf_rep: str='inf', style_converter: Optional[Callable]=None):\n    self.rowcounter = 0\n    self.na_rep = na_rep\n    if hasattr(df,'render'):\n        self.styler = df\n        df = df.data\n        if style_converter is None:\n            style_converter = CSSToExcelConverter()\n        self.style_converter = style_converter\n    else:\n        self.styler = None\n    self.df = df\n    if cols is not None:\n        if not len(Index(cols) & df.columns):\n            raise KeyError('passes columns are not ALL present dataframe')\n        if len(Index(cols) & df.columns)!= len(cols):\n            raise KeyError(\"Not all names specified in 'columns' are found\")\n        self.df = df\n    self.columns = self.df.columns\n    self.float_format = float_format\n    self.index = index\n    self.index_label = index_label\n    self.header = header\n    self.merge_cells = merge_cells\n    self.inf_rep = inf_rep",
+      "patch_sha256": "c65a7d2be0d2712e0bbc1cbbf7ec8efc3d2b40671e590cac15fb7646408f7216",
+      "rank_score": 214,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7704673177175924,
+      "top_p": 0.8630841471469904
+    },
+    {
+      "index": 2,
+      "patch_text": "def __init__(self, df, na_rep: str='', float_format: Optional[str]=None, cols: Optional[Sequence[Label]]=None, header: Union[Sequence[Label], bool]=True, index: bool=True, index_label: Optional[Union[Label, Sequence[Label]]]=None, merge_cells: bool=False, inf_rep: str='inf', style_converter: Optional[Callable]=None):\n    self.rowcounter = 0\n    self.na_rep = na_rep\n    if hasattr(df,'render'):\n        self.styler = df\n        df = df.data\n        if style_converter is None:\n            style_converter = CSSToExcelConverter()\n        self.style_converter = style_converter\n    else:\n        self.styler = None\n    self.df = df  # <--- BUGGY LINE\n    if cols is not None:\n        if not len(Index(cols) & df.columns):\n            raise KeyError('passes columns are not ALL present dataframe')\n        if len(Index(cols) & df.columns)!= len(cols):\n            raise KeyError(\"Not all names specified in 'columns' are found\")\n        self.df = df\n    self.columns = self.df.columns\n    self.float_format = float_format\n    self.index = index\n    self.index_label = index_label\n    self.header = header\n    self.merge_cells = merge_cells\n    self.inf_rep = inf_rep\n\n##end\n##skip\ndef __init__(self, df, na_rep: str='', float_format: Optional[str]=None, cols: Optional[Sequence[Label]]=None, header: Union[Sequence[Label], bool]=True, index: bool=True, index_label: Optional[Union[Label, Sequence[Label]]]=None, merge_cells: bool=False, inf_rep: str='inf', style_converter: Optional[Callable]=None):\n    self.rowcounter = 0\n    self.na_rep = na_rep\n    if hasattr(df,'render'):\n        self.styler = df\n        df = df.data\n        if style_converter is None:\n            style_converter = CSSToExcelConverter()\n        self.style_converter = style_converter\n    else:\n        self.styler = None\n    self.df = df  # <--- BUGGY LINE\n    if cols is not None:\n        if not len(Index(cols) & df.columns):\n            raise KeyError('passes columns are not ALL present dataframe')\n        if len(Index(cols) & df.columns)!= len(cols):\n            raise KeyError(\"Not all names specified in 'columns' are found\")\n        self.df = df\n    self.columns = self.df.columns\n    self.float_format = float_format\n    self.index = index\n    self.index_label = index_label\n    self.header = header\n    self.merge_cells",
+      "patch_sha256": "d000b1c04a38640450cdec95fc21063b134d20f38834b2aed4dab1f0ee390efc",
+      "rank_score": 180,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.934442110146087,
+      "top_p": 0.8256979458109642
+    },
+    {
+      "index": 3,
+      "patch_text": "def __init__(self, df, na_rep: str='', float_format: Optional[str]=None, cols: Optional[Sequence[Label]]=None, header: Union[Sequence[Label], bool]=True, index: bool=True, index_label: Optional[Union[Label, Sequence[Label]]]=None, merge_cells: bool=False, inf_rep: str='inf', style_converter: Optional[Callable]=None):\n    self.rowcounter = 0\n    self.na_rep = na_rep\n    if hasattr(df,'render'):\n        self.styler = df\n        df = df.data\n        if style_converter is None:\n            style_converter = CSSToExcelConverter()\n        self.style_converter = style_converter\n    else:\n        self.styler = None\n    self.df = df  # <--- BUGGY LINE\n    if cols is not None:\n        if not len(Index(cols) & df.columns):\n            raise KeyError('passes columns are not ALL present dataframe')\n        if len(Index(cols) & df.columns)!= len(cols):\n            raise KeyError(\"Not all names specified in 'columns' are found\")\n        self.df = df\n    self.columns = self.df.columns\n    self.float_format = float_format\n    self.index = index\n    self.index_label = index_label\n    self.header = header\n    self.merge_cells = merge_cells\n    self.inf_rep = inf_rep\n\n##after-buggy\ndef __init__(self, df, na_rep: str='', float_format: Optional[str]=None, cols: Optional[Sequence[Label]]=None, header: Union[Sequence[Label], bool]=True, index: bool=True, index_label: Optional[Union[Label, Sequence[Label]]]=None, merge_cells: bool=False, inf_rep: str='inf', style_converter: Optional[Callable]=None):\n    self.rowcounter = 0\n    self.na_rep = na_rep\n    if hasattr(df,'render'):\n        self.styler = df\n        df = df.data\n        if style_converter is None:\n            style_converter = CSSToExcelConverter()\n        self.style_converter = style_converter\n    else:\n        self.styler = None\n    if cols is not None:\n        if not len(Index(cols) & df.columns):\n            raise KeyError('passes columns are not ALL present dataframe')\n        if len(Index(cols) & df.columns)!= len(cols):\n            raise KeyError(\"Not all names specified in 'columns' are found\")\n    self.df = df  # <--- BUGGY LINE\n    self.columns = self.df.columns\n    self.float_format = float_format\n    self.index = index\n    self.index_label = index_label\n    self.header = header\n    self.merge_cells = merge_cells\n    self",
+      "patch_sha256": "cea6bee9b1c6274631415b96b9e2363e0abd0e6f4a6e1104ff43cba410de53d2",
+      "rank_score": 180,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.9106067765084201,
+      "top_p": 0.7997899744656741
+    },
+    {
+      "index": 4,
+      "patch_text": "def __init__(self, df, na_rep: str='', float_format: Optional[str]=None, cols: Optional[Sequence[Label]]=None, header: Union[Sequence[Label], bool]=True, index: bool=True, index_label: Optional[Union[Label, Sequence[Label]]]=None, merge_cells: bool=False, inf_rep: str='inf', style_converter: Optional[Callable]=None):\n    self.rowcounter = 0\n    self.na_rep = na_rep\n    if hasattr(df,'render'):\n        self.styler = df\n        df = df.data\n        if style_converter is None:\n            style_converter = CSSToExcelConverter()\n        self.style_converter = style_converter\n    else:\n        self.styler = None\n    self.df = df\n    if cols is not None:\n        if not len(Index(cols) & df.columns):\n            raise KeyError('passes columns are not ALL present dataframe')\n        if len(Index(cols) & df.columns)!= len(cols):\n            raise KeyError(\"Not all names specified in 'columns' are found\")\n        self.df = df\n    self.columns = self.df.columns\n    self.float_format = float_format\n    self.index = index\n    self.index_label = index_label\n    self.header = header\n    self.merge_cells = merge_cells\n    self.inf_rep = inf_rep\n\n##end\n\n##correct\ndef __init__(self, df, na_rep: str='', float_format: Optional[str]=None, cols: Optional[Sequence[Label]]=None, header: Union[Sequence[Label], bool]=True, index: bool=True, index_label: Optional[Union[Label, Sequence[Label]]]=None, merge_cells: bool=False, inf_rep: str='inf', style_converter: Optional[Callable]=None):\n    self.rowcounter = 0\n    self.na_rep = na_rep\n    if hasattr(df,'render'):\n        self.styler = df\n        df = df.data\n        if style_converter is None:\n            style_converter = CSSToExcelConverter()\n        self.style_converter = style_converter\n    else:\n        self.styler = None\n    self.df = df\n    if cols is not None:\n        if not len(Index(cols) & df.columns):\n            raise KeyError('passes columns are not ALL present dataframe')\n        if len(Index(cols) & df.columns)!= len(cols):\n            raise KeyError(\"Not all names specified in 'columns' are found\")\n        self.df = df\n    self.columns = self.df.columns\n    self.float_format = float_format\n    self.index = index\n    self.index_label = index_label\n    self.header = header\n    self.merge_cells = merge_cells\n    self.inf_rep = inf_rep",
+      "patch_sha256": "c20962149baf40f7c051276af72b57d597597954121b86fb5a3903e5525d07ee",
+      "rank_score": 179,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.5051876220100471,
+      "top_p": 0.9515146577116289
+    },
+    {
+      "index": 5,
+      "patch_text": "def __init__(self, df, na_rep: str='', float_format: Optional[str]=None, cols: Optional[Sequence[Label]]=None, header: Union[Sequence[Label], bool]=True, index: bool=True, index_label: Optional[Union[Label, Sequence[Label]]]=None, merge_cells: bool=False, inf_rep: str='inf', style_converter: Optional[Callable]=None):\n    self.rowcounter = 0\n    self.na_rep = na_rep\n    if hasattr(df,'render'):\n        self.styler = df\n        df = df.data\n        if style_converter is None:\n            style_converter = CSSToExcelConverter()\n        self.style_converter = style_converter\n    else:\n        self.styler = None\n    self.df = df\n    self.columns = self.df.columns\n    self.float_format = float_format\n    self.index = index\n    self.index_label = index_label\n    self.header = header\n    self.merge_cells = merge_cells\n    self.inf_rep = inf_rep",
+      "patch_sha256": "c6eb2087688043026c06233f01f8f1f37c6aeb68ce26ff37840d3de26767d930",
+      "rank_score": 168,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.9326332018390676,
+      "top_p": 0.8237317411294214
+    },
+    {
+      "index": 6,
+      "patch_text": "def __init__(self, df, na_rep: str='', float_format: Optional[str]=None, cols: Optional[Sequence[Label]]=None, header: Union[Sequence[Label], bool]=True, index: bool=True, index_label: Optional[Union[Label, Sequence[Label]]]=None, merge_cells: bool=False, inf_rep: str='inf', style_converter: Optional[Callable]=None):\n    self.rowcounter = 0\n    self.na_rep = na_rep\n    if hasattr(df,'render'):\n        self.styler = df\n        df = df.data\n        if style_converter is None:\n            style_converter = CSSToExcelConverter()\n        self.style_converter = style_converter\n    else:\n        self.styler = None\n    self.df = df\n    if cols is not None:\n        if not len(Index(cols) & df.columns):\n            raise KeyError('passes columns are not ALL present dataframe')\n        if len(Index(cols) & df.columns)!= len(cols):\n            raise KeyError(\"Not all names specified in 'columns' are found\")\n        self.df = df\n    self.columns = self.df.columns\n    self.float_format = float_format\n    self.index = index\n    self.index_label = index_label\n    self.header = header\n    self.merge_cells = merge_cells\n    self.inf_rep = inf_rep\n\n\n##test\nimport pandas as pd\nimport numpy as np\nimport pytest\nfrom pandas.io.formats import excel\nfrom pandas.util.testing import assert_frame_equal, assert_index_equal\n\n@pytest.fixture\ndef simple_xlsx():\n    xlsx = excel.ExcelWriter('simple.xlsx')\n    yield xlsx\n    xlsx.close()\n\n\ndef test_init_write(simple_xlsx):\n    df = pd.DataFrame([[1, 2], [3, 4]], columns=['a', 'b'])\n    df.to_excel(simple_xlsx, index=False, sheet_name='test')\n    simple_xlsx.save()\n\n    df2 = pd.read_excel('simple.xlsx')\n    assert_frame_equal(df, df2)\n\ndef test_simple(simple_xlsx):\n    df = pd.DataFrame([[1, 2], [3, 4]], columns=['a', 'b'])\n    df.to_excel(simple_xlsx, index=False, sheet_name='test')\n    simple_xlsx.save()\n\n    df2 = pd.read_excel('simple.xlsx')\n    assert_frame_equal(df, df2)\n\n\ndef test_sheet_names(simple_xlsx):\n    df = pd.DataFrame([[1, 2], [3, 4]], columns=['a', 'b'])\n    df.to_excel(simple_xlsx, index=False, sheet_name='sheet1')",
+      "patch_sha256": "90fa88caa1b092fa1a79f4a283b3c0d0eef9192b154684fe1bcf9d8fd8b60a8a",
+      "rank_score": -19,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7976020643090617,
+      "top_p": 0.8970025803863271
+    },
+    {
+      "index": 7,
+      "patch_text": "def __init__(self, df, na_rep: str='', float_format: Optional[str]=None, cols: Optional[Sequence[Label]]=None, header: Union[Sequence[Label], bool]=True, index: bool=True, index_label: Optional[Union[Label, Sequence[Label]]]=None, merge_cells: bool=False, inf_rep: str='inf', style_converter: Optional[Callable]=None):\n    self.rowcounter = 0\n    self.na_rep = na_rep\n    if hasattr(df,'render'):\n        self.styler = df\n        df = df.data\n        if style_converter is None:\n            style_converter = CSSToExcelConverter()\n        self.style_converter = style_converter\n    else:\n        self.styler = None\n    if cols is not None:\n        if not len(Index(cols) & df.columns):\n            raise KeyError('passes columns are not ALL present dataframe')\n        if len(Index(cols) & df.columns)!= len(cols):\n            raise KeyError(\"Not all names specified in 'columns' are found\")\n        self.df = df\n    else:\n        self.df = df\n    self.columns = self.df.columns\n    self.float_format = float_format\n    self.index = index\n    self.index_label = index_label\n    self.header = header\n    self.merge_cells = merge_cells\n    self.inf_rep = inf_rep\nfrom __future__ import annotations\n\nfrom typing import List, Union, Any, Dict\n\nimport numpy as np\nimport pandas as pd\n\nfrom pandas.core.dtypes.cast import _is_object_dtype\nfrom pandas.core.dtypes.dtypes import CategoricalDtype\nfrom pandas.core.arrays.array_algos import _has_categorical_dtype\nfrom pandas.core.dtypes.common import (\n    is_integer,\n    is_scalar,\n    is_list_like,\n    is_dict_like,\n    is_hashable,\n    is_scalar_or_array_like,\n    is_bool_dtype,\n)\nfrom pandas.errors import MissingDataError\n\nfrom pandas._typing import (\n    Scalar,\n    ArrayLike,\n    Dtype,\n    ExtensionDtype,\n    DtypeObj,\n    Hashable,\n    DatetimeLike,\n)\n\n\ndef maybe_coerce_extension_array(\n    arr: ArrayLike,\n    dtype: Dtype | ExtensionDtype | DtypeObj,\n    copy: bool = False,\n    force_copy: bool | None = None,\n) -> ArrayLike:\n    \"\"\"Coerces to ExtensionArray if needed.\"\"\"\n    if dtype.kind == \"O\" and dtype.is_extension_array_dtype:\n        return dtype.construct_array_type()._coerce_for_op(arr, copy=copy)\n\n    if isinstance(dtype, ExtensionDtype):\n        return dtype.construct_array_",
+      "patch_sha256": "cbe9879cb3424461557b8e0624f3eacb35598cab7c6af92484b78f696027a8c0",
+      "rank_score": -51,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": false,
+        "error": "SyntaxError: from __future__ imports must occur at the beginning of the file (<candidate-diagnostic>, line 27)"
+      },
+      "temperature": 0.934442110146087,
+      "top_p": 0.8256979458109642
+    }
+  ],
+  "candidate_count": 8,
+  "retrieved_examples": [
+    {
+      "id": "43",
+      "project_name": "pandas",
+      "buggy_line_content": "        elif self.is_all_dates:",
+      "function": {
+        "function_name": "get_indexer_non_unique",
+        "function_parent": "Index",
+        "function_before_start_line": 4546,
+        "function_before_end_line": 4560,
+        "function_after_start_line": 4546,
+        "function_after_end_line": 4560,
+        "function_before_token_count": 91,
+        "function_after_token_count": 95,
+        "function_before": "@Appender(_index_shared_docs['get_indexer_non_unique'] % _index_doc_kwargs)\ndef get_indexer_non_unique(self, target):\n    target = ensure_index(target)\n    pself, ptarget = self._maybe_promote(target)\n    if pself is not self or ptarget is not target:\n        return pself.get_indexer_non_unique(ptarget)\n    if is_categorical(target):\n        tgt_values = np.asarray(target)\n    elif self.is_all_dates:\n        tgt_values = target.asi8\n    else:\n        tgt_values = target._ndarray_values\n    indexer, missing = self._engine.get_indexer_non_unique(tgt_values)\n    return (ensure_platform_int(indexer), missing)",
+        "function_after": "@Appender(_index_shared_docs['get_indexer_non_unique'] % _index_doc_kwargs)\ndef get_indexer_non_unique(self, target):\n    target = ensure_index(target)\n    pself, ptarget = self._maybe_promote(target)\n    if pself is not self or ptarget is not target:\n        return pself.get_indexer_non_unique(ptarget)\n    if is_categorical(target):\n        tgt_values = np.asarray(target)\n    elif self.is_all_dates and target.is_all_dates:\n        tgt_values = target.asi8\n    else:\n        tgt_values = target._ndarray_values\n    indexer, missing = self._engine.get_indexer_non_unique(tgt_values)\n    return (ensure_platform_int(indexer), missing)"
+      },
+      "file_name": "base.py",
+      "file_path": "pandas/core/indexes/base.py",
+      "score_reranked": 0.7095328643000126
+    },
+    {
+      "id": "40",
+      "project_name": "pandas",
+      "buggy_line_content": "            result = Series(result, index=labels)",
+      "function": {
+        "function_name": "_reduce",
+        "function_parent": "DataFrame",
+        "function_before_start_line": 7903,
+        "function_before_end_line": 8017,
+        "function_after_start_line": 7903,
+        "function_after_end_line": 8017,
+        "function_before_token_count": 489,
+        "function_after_token_count": 491,
+        "function_before": "def _reduce(self, op, name, axis=0, skipna=True, numeric_only=None, filter_type=None, **kwds):\n    if axis is None and filter_type == 'bool':\n        labels = None\n        constructor = None\n    else:\n        axis = self._get_axis_number(axis)\n        labels = self._get_agg_axis(axis)\n        constructor = self._constructor\n\n    def f(x):\n        return op(x, axis=axis, skipna=skipna, **kwds)\n\n    def _get_data(axis_matters):\n        if filter_type is None or filter_type == 'numeric':\n            data = self._get_numeric_data()\n        elif filter_type == 'bool':\n            if axis_matters:\n                data = self._get_bool_data() if axis == 0 else self\n            else:\n                data = self._get_bool_data()\n        else:\n            msg = f'Generating numeric_only data with filter_type {filter_type} not supported.'\n            raise NotImplementedError(msg)\n        return data\n    if numeric_only is not None and axis in [0, 1]:\n        df = self\n        if numeric_only is True:\n            df = _get_data(axis_matters=True)\n        if axis == 1:\n            df = df.T\n            axis = 0\n        out_dtype = 'bool' if filter_type == 'bool' else None\n        res = df._data.reduce(op, axis=1, skipna=skipna, **kwds)\n        assert isinstance(res, dict)\n        if len(res):\n            assert len(res) == max(list(res.keys())) + 1, res.keys()\n        out = df._constructor_sliced(res, index=range(len(res)), dtype=out_dtype)\n        out.index = df.columns\n        return out\n    if numeric_only is None:\n        values = self.values\n        try:\n            result = f(values)\n            if filter_type == 'bool' and is_object_dtype(values) and (axis is None):\n                result = np.bool_(result)\n        except TypeError:\n            if filter_type is None and axis == 0:\n                from pandas.core.apply import frame_apply\n                opa = frame_apply(self, func=f, result_type='expand', ignore_failures=True)\n                result = opa.get_result()\n                if result.ndim == self.ndim:\n                    result = result.iloc[0]\n                return result\n            data = _get_data(axis_matters=False)\n            with np.errstate(all='ignore'):\n                result = f(data.values)\n            labels = data._get_agg_axis(axis)\n    else:\n        if numeric_only:\n            data = _get_data(axis_matters=True)\n            values = data.values\n            labels = data._get_agg_axis(axis)\n        else:\n            values = self.values\n        result = f(values)\n    if hasattr(result, 'dtype') and is_object_dtype(result.dtype):\n        try:\n            if filter_type is None or filter_type == 'numeric':\n                result = result.astype(np.float64)\n            elif filter_type == 'bool' and notna(result).all():\n                result = result.astype(np.bool_)\n        except (ValueError, TypeError):\n            if axis == 0:\n                result = coerce_to_dtypes(result, self.dtypes)\n    if constructor is not None:\n        result = Series(result, index=labels)\n    return result",
+        "function_after": "def _reduce(self, op, name, axis=0, skipna=True, numeric_only=None, filter_type=None, **kwds):\n    if axis is None and filter_type == 'bool':\n        labels = None\n        constructor = None\n    else:\n        axis = self._get_axis_number(axis)\n        labels = self._get_agg_axis(axis)\n        constructor = self._constructor\n\n    def f(x):\n        return op(x, axis=axis, skipna=skipna, **kwds)\n\n    def _get_data(axis_matters):\n        if filter_type is None or filter_type == 'numeric':\n            data = self._get_numeric_data()\n        elif filter_type == 'bool':\n            if axis_matters:\n                data = self._get_bool_data() if axis == 0 else self\n            else:\n                data = self._get_bool_data()\n        else:\n            msg = f'Generating numeric_only data with filter_type {filter_type} not supported.'\n            raise NotImplementedError(msg)\n        return data\n    if numeric_only is not None and axis in [0, 1]:\n        df = self\n        if numeric_only is True:\n            df = _get_data(axis_matters=True)\n        if axis == 1:\n            df = df.T\n            axis = 0\n        out_dtype = 'bool' if filter_type == 'bool' else None\n        res = df._data.reduce(op, axis=1, skipna=skipna, **kwds)\n        assert isinstance(res, dict)\n        if len(res):\n            assert len(res) == max(list(res.keys())) + 1, res.keys()\n        out = df._constructor_sliced(res, index=range(len(res)), dtype=out_dtype)\n        out.index = df.columns\n        return out\n    if numeric_only is None:\n        values = self.values\n        try:\n            result = f(values)\n            if filter_type == 'bool' and is_object_dtype(values) and (axis is None):\n                result = np.bool_(result)\n        except TypeError:\n            if filter_type is None and axis == 0:\n                from pandas.core.apply import frame_apply\n                opa = frame_apply(self, func=f, result_type='expand', ignore_failures=True)\n                result = opa.get_result()\n                if result.ndim == self.ndim:\n                    result = result.iloc[0]\n                return result\n            data = _get_data(axis_matters=False)\n            with np.errstate(all='ignore'):\n                result = f(data.values)\n            labels = data._get_agg_axis(axis)\n    else:\n        if numeric_only:\n            data = _get_data(axis_matters=True)\n            values = data.values\n            labels = data._get_agg_axis(axis)\n        else:\n            values = self.values\n        result = f(values)\n    if hasattr(result, 'dtype') and is_object_dtype(result.dtype):\n        try:\n            if filter_type is None or filter_type == 'numeric':\n                result = result.astype(np.float64)\n            elif filter_type == 'bool' and notna(result).all():\n                result = result.astype(np.bool_)\n        except (ValueError, TypeError):\n            if axis == 0:\n                result = coerce_to_dtypes(result, self.dtypes)\n    if constructor is not None:\n        result = self._constructor_sliced(result, index=labels)\n    return result"
+      },
+      "file_name": "frame.py",
+      "file_path": "pandas/core/frame.py",
+      "score_reranked": 0.6922059779012665
+    },
+    {
+      "id": "28",
+      "project_name": "scrapy",
+      "buggy_line_content": "        if ':' not in self._url:",
+      "function": {
+        "function_name": "_set_url",
+        "function_parent": "Request",
+        "function_before_start_line": 62,
+        "function_before_end_line": 70,
+        "function_after_start_line": 62,
+        "function_after_end_line": 70,
+        "function_before_token_count": 65,
+        "function_after_token_count": 79,
+        "function_before": "def _set_url(self, url):\n    if not isinstance(url, six.string_types):\n        raise TypeError('Request url must be str or unicode, got %s:' % type(url).__name__)\n    s = safe_url_string(url, self.encoding)\n    self._url = escape_ajax(s)\n    if ':' not in self._url:\n        raise ValueError('Missing scheme in request url: %s' % self._url)",
+        "function_after": "def _set_url(self, url):\n    if not isinstance(url, six.string_types):\n        raise TypeError('Request url must be str or unicode, got %s:' % type(url).__name__)\n    s = safe_url_string(url, self.encoding)\n    self._url = escape_ajax(s)\n    if '://' not in self._url and (not self._url.startswith('data:')):\n        raise ValueError('Missing scheme in request url: %s' % self._url)"
+      },
+      "file_name": "__init__.py",
+      "file_path": "scrapy/http/request/__init__.py",
+      "score_reranked": 0.6141717756682705
+    },
+    {
+      "id": "5",
+      "project_name": "luigi",
+      "buggy_line_content": "            self.fs.mkdir(d)",
+      "function": {
+        "function_name": "move",
+        "function_parent": "LocalFileSystem",
+        "function_before_start_line": 86,
+        "function_before_end_line": 92,
+        "function_after_start_line": 86,
+        "function_after_end_line": 92,
+        "function_before_token_count": 71,
+        "function_after_token_count": 69,
+        "function_before": "def move(self, old_path, new_path, raise_if_exists=False):\n    if raise_if_exists and os.path.exists(new_path):\n        raise RuntimeError('Destination exists: %s' % new_path)\n    d = os.path.dirname(new_path)\n    if d and (not os.path.exists(d)):\n        self.fs.mkdir(d)\n    os.rename(old_path, new_path)",
+        "function_after": "def move(self, old_path, new_path, raise_if_exists=False):\n    if raise_if_exists and os.path.exists(new_path):\n        raise RuntimeError('Destination exists: %s' % new_path)\n    d = os.path.dirname(new_path)\n    if d and (not os.path.exists(d)):\n        self.mkdir(d)\n    os.rename(old_path, new_path)"
+      },
+      "file_name": "file.py",
+      "file_path": "luigi/file.py",
+      "score_reranked": 0.5684190996944928
+    },
+    {
+      "id": "39",
+      "project_name": "pandas",
+      "buggy_line_content": "            except (TypeError, ValueError):",
+      "function": {
+        "function_name": "_try_convert_data",
+        "function_parent": "Parser",
+        "function_before_start_line": 886,
+        "function_before_end_line": 958,
+        "function_after_start_line": 886,
+        "function_after_end_line": 958,
+        "function_before_token_count": 277,
+        "function_after_token_count": 279,
+        "function_before": "def _try_convert_data(self, name, data, use_dtypes=True, convert_dates=True):\n    \"\"\"\n        Try to parse a ndarray like into a column by inferring dtype.\n        \"\"\"\n    if use_dtypes:\n        if not self.dtype:\n            return (data, False)\n        elif self.dtype is True:\n            pass\n        else:\n            dtype = self.dtype.get(name) if isinstance(self.dtype, dict) else self.dtype\n            if dtype is not None:\n                try:\n                    dtype = np.dtype(dtype)\n                    return (data.astype(dtype), True)\n                except (TypeError, ValueError):\n                    return (data, False)\n    if convert_dates:\n        new_data, result = self._try_convert_to_date(data)\n        if result:\n            return (new_data, True)\n    result = False\n    if data.dtype == 'object':\n        try:\n            data = data.astype('float64')\n            result = True\n        except (TypeError, ValueError):\n            pass\n    if data.dtype.kind == 'f':\n        if data.dtype != 'float64':\n            try:\n                data = data.astype('float64')\n                result = True\n            except (TypeError, ValueError):\n                pass\n    if len(data) and (data.dtype == 'float' or data.dtype == 'object'):\n        try:\n            new_data = data.astype('int64')\n            if (new_data == data).all():\n                data = new_data\n                result = True\n        except (TypeError, ValueError):\n            pass\n    if data.dtype == 'int':\n        try:\n            data = data.astype('int64')\n            result = True\n        except (TypeError, ValueError):\n            pass\n    return (data, result)",
+        "function_after": "def _try_convert_data(self, name, data, use_dtypes=True, convert_dates=True):\n    \"\"\"\n        Try to parse a ndarray like into a column by inferring dtype.\n        \"\"\"\n    if use_dtypes:\n        if not self.dtype:\n            return (data, False)\n        elif self.dtype is True:\n            pass\n        else:\n            dtype = self.dtype.get(name) if isinstance(self.dtype, dict) else self.dtype\n            if dtype is not None:\n                try:\n                    dtype = np.dtype(dtype)\n                    return (data.astype(dtype), True)\n                except (TypeError, ValueError):\n                    return (data, False)\n    if convert_dates:\n        new_data, result = self._try_convert_to_date(data)\n        if result:\n            return (new_data, True)\n    result = False\n    if data.dtype == 'object':\n        try:\n            data = data.astype('float64')\n            result = True\n        except (TypeError, ValueError):\n            pass\n    if data.dtype.kind == 'f':\n        if data.dtype != 'float64':\n            try:\n                data = data.astype('float64')\n                result = True\n            except (TypeError, ValueError):\n                pass\n    if len(data) and (data.dtype == 'float' or data.dtype == 'object'):\n        try:\n            new_data = data.astype('int64')\n            if (new_data == data).all():\n                data = new_data\n                result = True\n        except (TypeError, ValueError, OverflowError):\n            pass\n    if data.dtype == 'int':\n        try:\n            data = data.astype('int64')\n            result = True\n        except (TypeError, ValueError):\n            pass\n    return (data, result)"
+      },
+      "file_name": "_json.py",
+      "file_path": "pandas/io/json/_json.py",
+      "score_reranked": 0.5594746039390028
+    }
+  ],
+  "diffusion_plan": [
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 14
+        },
+        {
+          "op": "Replace",
+          "node": 11
+        },
+        {
+          "op": "Replace",
+          "node": 170
+        },
+        {
+          "op": "Replace",
+          "node": 8
+        },
+        {
+          "op": "Replace",
+          "node": 50
+        },
+        {
+          "op": "Replace",
+          "node": 10
+        },
+        {
+          "op": "Replace",
+          "node": 9
+        },
+        {
+          "op": "GuardAdd",
+          "node": 10
+        },
+        {
+          "op": "Replace",
+          "node": 13
+        },
+        {
+          "op": "GuardAdd",
+          "node": 14
+        },
+        {
+          "op": "Replace",
+          "node": 12
+        }
+      ],
+      "score": 17.018181816725622
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 14
+        },
+        {
+          "op": "Replace",
+          "node": 11
+        },
+        {
+          "op": "InsertBefore",
+          "node": 14
+        },
+        {
+          "op": "GuardAdd",
+          "node": 13
+        },
+        {
+          "op": "InsertBefore",
+          "node": 11
+        },
+        {
+          "op": "Replace",
+          "node": 9
+        },
+        {
+          "op": "GuardAdd",
+          "node": 9
+        },
+        {
+          "op": "GuardAdd",
+          "node": 14
+        }
+      ],
+      "score": 16.681818180574382
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 8
+        },
+        {
+          "op": "Replace",
+          "node": 10
+        },
+        {
+          "op": "Replace",
+          "node": 11
+        },
+        {
+          "op": "Replace",
+          "node": 14
+        },
+        {
+          "op": "GuardAdd",
+          "node": 13
+        },
+        {
+          "op": "Replace",
+          "node": 13
+        },
+        {
+          "op": "Replace",
+          "node": 12
+        },
+        {
+          "op": "Replace",
+          "node": 9
+        }
+      ],
+      "score": 16.54545454422314
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "GuardAdd",
+          "node": 14
+        },
+        {
+          "op": "GuardAdd",
+          "node": 13
+        },
+        {
+          "op": "Replace",
+          "node": 10
+        },
+        {
+          "op": "Replace",
+          "node": 14
+        },
+        {
+          "op": "Replace",
+          "node": 50
+        },
+        {
+          "op": "Delete",
+          "node": 12
+        },
+        {
+          "op": "Replace",
+          "node": 13
+        },
+        {
+          "op": "GuardAdd",
+          "node": 10
+        }
+      ],
+      "score": 16.381818180601655
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 11
+        },
+        {
+          "op": "Replace",
+          "node": 14
+        },
+        {
+          "op": "GuardAdd",
+          "node": 12
+        },
+        {
+          "op": "Replace",
+          "node": 13
+        },
+        {
+          "op": "GuardAdd",
+          "node": 11
+        },
+        {
+          "op": "Delete",
+          "node": 11
+        },
+        {
+          "op": "Replace",
+          "node": 9
+        },
+        {
+          "op": "Replace",
+          "node": 12
+        },
+        {
+          "op": "InsertBefore",
+          "node": 13
+        }
+      ],
+      "score": 16.35454545314959
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 50
+        },
+        {
+          "op": "Replace",
+          "node": 8
+        },
+        {
+          "op": "GuardAdd",
+          "node": 9
+        },
+        {
+          "op": "Replace",
+          "node": 14
+        },
+        {
+          "op": "Replace",
+          "node": 12
+        },
+        {
+          "op": "InsertBefore",
+          "node": 14
+        },
+        {
+          "op": "Delete",
+          "node": 12
+        },
+        {
+          "op": "Replace",
+          "node": 13
+        },
+        {
+          "op": "Replace",
+          "node": 11
+        },
+        {
+          "op": "GuardAdd",
+          "node": 10
+        }
+      ],
+      "score": 16.309090907699176
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 8
+        },
+        {
+          "op": "GuardAdd",
+          "node": 8
+        },
+        {
+          "op": "Delete",
+          "node": 8
+        },
+        {
+          "op": "Replace",
+          "node": 10
+        },
+        {
+          "op": "GuardAdd",
+          "node": 14
+        },
+        {
+          "op": "GuardAdd",
+          "node": 9
+        },
+        {
+          "op": "Replace",
+          "node": 14
+        },
+        {
+          "op": "GuardAdd",
+          "node": 12
+        },
+        {
+          "op": "Replace",
+          "node": 13
+        },
+        {
+          "op": "Replace",
+          "node": 12
+        }
+      ],
+      "score": 16.29090908951901
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "GuardAdd",
+          "node": 10
+        },
+        {
+          "op": "Replace",
+          "node": 10
+        },
+        {
+          "op": "GuardAdd",
+          "node": 13
+        },
+        {
+          "op": "Delete",
+          "node": 9
+        },
+        {
+          "op": "GuardAdd",
+          "node": 8
+        },
+        {
+          "op": "GuardAdd",
+          "node": 50
+        },
+        {
+          "op": "Replace",
+          "node": 11
+        },
+        {
+          "op": "Replace",
+          "node": 14
+        },
+        {
+          "op": "GuardAdd",
+          "node": 9
+        },
+        {
+          "op": "GuardAdd",
+          "node": 12
+        },
+        {
+          "op": "Replace",
+          "node": 9
+        }
+      ],
+      "score": 16.072727271357024
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 173
+        },
+        {
+          "op": "Replace",
+          "node": 14
+        },
+        {
+          "op": "Replace",
+          "node": 13
+        },
+        {
+          "op": "Replace",
+          "node": 9
+        },
+        {
+          "op": "InsertBefore",
+          "node": 12
+        },
+        {
+          "op": "GuardAdd",
+          "node": 14
+        },
+        {
+          "op": "Replace",
+          "node": 10
+        },
+        {
+          "op": "Replace",
+          "node": 11
+        }
+      ],
+      "score": 15.927272726097522
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 50
+        },
+        {
+          "op": "Replace",
+          "node": 13
+        },
+        {
+          "op": "Replace",
+          "node": 14
+        },
+        {
+          "op": "GuardAdd",
+          "node": 13
+        },
+        {
+          "op": "GuardAdd",
+          "node": 14
+        },
+        {
+          "op": "Replace",
+          "node": 11
+        },
+        {
+          "op": "Replace",
+          "node": 12
+        }
+      ],
+      "score": 15.89090908973719
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 13
+        },
+        {
+          "op": "Replace",
+          "node": 10
+        },
+        {
+          "op": "Replace",
+          "node": 14
+        },
+        {
+          "op": "Replace",
+          "node": 12
+        },
+        {
+          "op": "Replace",
+          "node": 8
+        },
+        {
+          "op": "Replace",
+          "node": 11
+        },
+        {
+          "op": "Replace",
+          "node": 50
+        },
+        {
+          "op": "InsertBefore",
+          "node": 12
+        }
+      ],
+      "score": 15.636363635214877
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 50
+        },
+        {
+          "op": "Replace",
+          "node": 13
+        },
+        {
+          "op": "Replace",
+          "node": 14
+        },
+        {
+          "op": "Replace",
+          "node": 9
+        },
+        {
+          "op": "InsertBefore",
+          "node": 10
+        },
+        {
+          "op": "Replace",
+          "node": 11
+        },
+        {
+          "op": "GuardAdd",
+          "node": 10
+        },
+        {
+          "op": "InsertBefore",
+          "node": 13
+        },
+        {
+          "op": "GuardAdd",
+          "node": 13
+        },
+        {
+          "op": "GuardAdd",
+          "node": 170
+        }
+      ],
+      "score": 15.390909089600825
+    }
+  ],
+  "static_analysis_nodes": [
+    {
+      "line": 25,
+      "line_absolute": 396,
+      "node_id": 14,
+      "node_id_local": 29,
+      "type": "Assign",
+      "code": "self.inf_rep = inf_rep",
+      "distance_to_buggy": 8,
+      "context": "  22:       self.index_label = index_label\n  23:       self.header = header\n  24:       self.merge_cells = merge_cells\n  25:->     self.inf_rep = inf_rep",
+      "ast_subtree_json": {
+        "_type": "Assign",
+        "targets": [
+          {
+            "_type": "Attribute",
+            "value": {
+              "_type": "Name"
+            },
+            "attr": "inf_rep",
+            "ctx": {
+              "_type": "Store"
+            }
+          }
+        ],
+        "value": {
+          "_type": "Name",
+          "id": "inf_rep",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "type_comment": null
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": 57.0
+    },
+    {
+      "line": 24,
+      "line_absolute": 395,
+      "node_id": 13,
+      "node_id_local": 28,
+      "type": "Assign",
+      "code": "self.merge_cells = merge_cells",
+      "distance_to_buggy": 9,
+      "context": "  21:       self.index = index\n  22:       self.index_label = index_label\n  23:       self.header = header\n  24:->     self.merge_cells = merge_cells\n  25:       self.inf_rep = inf_rep",
+      "ast_subtree_json": {
+        "_type": "Assign",
+        "targets": [
+          {
+            "_type": "Attribute",
+            "value": {
+              "_type": "Name"
+            },
+            "attr": "merge_cells",
+            "ctx": {
+              "_type": "Store"
+            }
+          }
+        ],
+        "value": {
+          "_type": "Name",
+          "id": "merge_cells",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "type_comment": null
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": 67.0
+    },
+    {
+      "line": 23,
+      "line_absolute": 394,
+      "node_id": 12,
+      "node_id_local": 27,
+      "type": "Assign",
+      "code": "self.header = header",
+      "distance_to_buggy": 10,
+      "context": "  20:       self.float_format = float_format\n  21:       self.index = index\n  22:       self.index_label = index_label\n  23:->     self.header = header\n  24:       self.merge_cells = merge_cells\n  25:       self.inf_rep = inf_rep",
+      "ast_subtree_json": {
+        "_type": "Assign",
+        "targets": [
+          {
+            "_type": "Attribute",
+            "value": {
+              "_type": "Name"
+            },
+            "attr": "header",
+            "ctx": {
+              "_type": "Store"
+            }
+          }
+        ],
+        "value": {
+          "_type": "Name",
+          "id": "header",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "type_comment": null
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": 77.0
+    },
+    {
+      "line": 22,
+      "line_absolute": 393,
+      "node_id": 11,
+      "node_id_local": 26,
+      "type": "Assign",
+      "code": "self.index_label = index_label",
+      "distance_to_buggy": 11,
+      "context": "  19:       self.columns = self.df.columns\n  20:       self.float_format = float_format\n  21:       self.index = index\n  22:->     self.index_label = index_label\n  23:       self.header = header\n  24:       self.merge_cells = merge_cells\n  25:       self.inf_rep = inf_rep",
+      "ast_subtree_json": {
+        "_type": "Assign",
+        "targets": [
+          {
+            "_type": "Attribute",
+            "value": {
+              "_type": "Name"
+            },
+            "attr": "index_label",
+            "ctx": {
+              "_type": "Store"
+            }
+          }
+        ],
+        "value": {
+          "_type": "Name",
+          "id": "index_label",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "type_comment": null
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": 86.0
+    },
+    {
+      "line": 21,
+      "line_absolute": 392,
+      "node_id": 10,
+      "node_id_local": 25,
+      "type": "Assign",
+      "code": "self.index = index",
+      "distance_to_buggy": 12,
+      "context": "  18:           self.df = df\n  19:       self.columns = self.df.columns\n  20:       self.float_format = float_format\n  21:->     self.index = index\n  22:       self.index_label = index_label\n  23:       self.header = header\n  24:       self.merge_cells = merge_cells",
+      "ast_subtree_json": {
+        "_type": "Assign",
+        "targets": [
+          {
+            "_type": "Attribute",
+            "value": {
+              "_type": "Name"
+            },
+            "attr": "index",
+            "ctx": {
+              "_type": "Store"
+            }
+          }
+        ],
+        "value": {
+          "_type": "Name",
+          "id": "index",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "type_comment": null
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": 96.0
+    },
+    {
+      "line": 20,
+      "line_absolute": 391,
+      "node_id": 9,
+      "node_id_local": 24,
+      "type": "Assign",
+      "code": "self.float_format = float_format",
+      "distance_to_buggy": 13,
+      "context": "  17:               raise KeyError(\"Not all names specified in 'columns' are found\")\n  18:           self.df = df\n  19:       self.columns = self.df.columns\n  20:->     self.float_format = float_format\n  21:       self.index = index\n  22:       self.index_label = index_label\n  23:       self.header = header",
+      "ast_subtree_json": {
+        "_type": "Assign",
+        "targets": [
+          {
+            "_type": "Attribute",
+            "value": {
+              "_type": "Name"
+            },
+            "attr": "float_format",
+            "ctx": {
+              "_type": "Store"
+            }
+          }
+        ],
+        "value": {
+          "_type": "Name",
+          "id": "float_format",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "type_comment": null
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": 107.0
+    },
+    {
+      "line": 19,
+      "line_absolute": 390,
+      "node_id": 8,
+      "node_id_local": 23,
+      "type": "Assign",
+      "code": "self.columns = self.df.columns",
+      "distance_to_buggy": 14,
+      "context": "  16:           if len(Index(cols) & df.columns) != len(cols):\n  17:               raise KeyError(\"Not all names specified in 'columns' are found\")\n  18:           self.df = df\n  19:->     self.columns = self.df.columns\n  20:       self.float_format = float_format\n  21:       self.index = index\n  22:       self.index_label = index_label",
+      "ast_subtree_json": {
+        "_type": "Assign",
+        "targets": [
+          {
+            "_type": "Attribute",
+            "value": {
+              "_type": "Name"
+            },
+            "attr": "columns",
+            "ctx": {
+              "_type": "Store"
+            }
+          }
+        ],
+        "value": {
+          "_type": "Attribute",
+          "value": {
+            "_type": "Attribute"
+          },
+          "attr": "columns",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "type_comment": null
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": 117.0
+    },
+    {
+      "line": 18,
+      "line_absolute": 389,
+      "node_id": 50,
+      "node_id_local": 22,
+      "type": "Assign",
+      "code": "self.df = df",
+      "distance_to_buggy": 15,
+      "context": "  15:               raise KeyError('passes columns are not ALL present dataframe')\n  16:           if len(Index(cols) & df.columns) != len(cols):\n  17:               raise KeyError(\"Not all names specified in 'columns' are found\")\n  18:->         self.df = df\n  19:       self.columns = self.df.columns\n  20:       self.float_format = float_format\n  21:       self.index = index",
+      "ast_subtree_json": {
+        "_type": "Assign",
+        "targets": [
+          {
+            "_type": "Attribute",
+            "value": {
+              "_type": "Name"
+            },
+            "attr": "df",
+            "ctx": {
+              "_type": "Store"
+            }
+          }
+        ],
+        "value": {
+          "_type": "Name",
+          "id": "df",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "type_comment": null
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": 127.0
+    },
+    {
+      "line": 17,
+      "line_absolute": 388,
+      "node_id": 173,
+      "node_id_local": 21,
+      "type": "Call",
+      "code": "KeyError(\"Not all names specified in 'columns' are found\")",
+      "distance_to_buggy": 16,
+      "context": "  14:           if not len(Index(cols) & df.columns):\n  15:               raise KeyError('passes columns are not ALL present dataframe')\n  16:           if len(Index(cols) & df.columns) != len(cols):\n  17:->             raise KeyError(\"Not all names specified in 'columns' are found\")\n  18:           self.df = df\n  19:       self.columns = self.df.columns\n  20:       self.float_format = float_format",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Name",
+          "id": "KeyError",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [
+          {
+            "_type": "Constant",
+            "value": "Not all names specified in 'columns' are found",
+            "kind": null
+          }
+        ],
+        "keywords": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|system|>...",
+      "reranker_score": 136.0
+    },
+    {
+      "line": 16,
+      "line_absolute": 387,
+      "node_id": 170,
+      "node_id_local": 18,
+      "type": "Call",
+      "code": "len(Index(cols) & df.columns)",
+      "distance_to_buggy": 17,
+      "context": "  13:       if cols is not None:\n  14:           if not len(Index(cols) & df.columns):\n  15:               raise KeyError('passes columns are not ALL present dataframe')\n  16:->         if len(Index(cols) & df.columns) != len(cols):\n  17:               raise KeyError(\"Not all names specified in 'columns' are found\")\n  18:           self.df = df\n  19:       self.columns = self.df.columns",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Name",
+          "id": "len",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [
+          {
+            "_type": "BinOp",
+            "left": {
+              "_type": "Call"
+            },
+            "op": {
+              "_type": "BitAnd"
+            },
+            "right": {
+              "_type": "Attribute"
+            }
+          }
+        ],
+        "keywords": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": 144.5
+    }
+  ]
+}

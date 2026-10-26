@@ -1,0 +1,980 @@
+{
+  "bug_id": "44",
+  "seed": 44,
+  "arm": "full",
+  "candidates": [
+    {
+      "index": 0,
+      "patch_text": "def _get_merge_keys(self):\n    \"\"\"\n        Note: has side effects (copy/delete key columns)\n\n        Parameters\n        ----------\n        left\n        right\n        on\n\n        Returns\n        -------\n        left_keys, right_keys\n        \"\"\"\n    left_keys = []\n    right_keys = []\n    join_names = []\n    right_drop = []\n    left_drop = []\n    left, right = (self.left, self.right)\n    is_lkey = lambda x: is_array_like(x) and len(x) == len(left)\n    is_rkey = lambda x: is_array_like(x) and len(x) == len(right)\n    if _any(self.left_on) and _any(self.right_on):\n        for lk, rk in zip(self.left_on, self.right_on):\n            if is_lkey(lk):\n                left_keys.append(lk)\n                if is_rkey(rk):\n                    right_keys.append(rk)\n                    join_names.append(None)\n                elif rk is not None:\n                    right_keys.append(right._get_label_or_level_values(rk))\n                    join_names.append(rk)\n                else:\n                    right_keys.append(right.index)\n                    join_names.append(right.index.name)\n            else:\n                if not is_rkey(rk):\n                    if rk is not None:\n                        right_keys.append(right._get_label_or_level_values(rk))\n                    else:\n                        right_keys.append(right.index)\n                    if lk is not None and lk == rk:\n                        if len(left) > 0:\n                            right_drop.append(rk)\n                        else:\n                            left_drop.append(lk)\n                else:\n                    right_keys.append(rk)\n                if lk is not None:\n                    left_keys.append(left._get_label_or_level_values(lk))\n                    join_names.append(lk)\n                else:\n                    left_keys.append(left.index)\n                    join_names.append(left.index.name)\n    elif _any(self.left_on):\n        for k in self.left_on:\n            if is_lkey(k):\n                left_keys.append(k)\n                join_names.append(None)\n            else:\n                left_keys.append(left._get_label_or_level_values(k))\n                join_names.append(k)\n        if isinstance(self.right.index, MultiIndex):\n            right_keys = [lev._values.take(lev_codes) for lev, lev_codes in zip(self.right.index.levels, self.right.index.codes)]\n        else:\n            right_keys = [self.right.index._values]  # <--- BUGGY LINE",
+      "patch_sha256": "4f847c6e9b9a2a34c6604684697329d246ef7cee8e000f403c40f5f113b0f9e5",
+      "rank_score": 236,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7941462962722876,
+      "top_p": 0.8926828703403595
+    }
+  ],
+  "candidate_count": 1,
+  "retrieved_examples": [
+    {
+      "id": "46",
+      "project_name": "pandas",
+      "buggy_line_content": "                if left_value != right_value:",
+      "function": {
+        "function_name": "array_equivalent",
+        "function_parent": "missing.py",
+        "function_before_start_line": 393,
+        "function_before_end_line": 477,
+        "function_after_start_line": 393,
+        "function_after_end_line": 477,
+        "function_before_token_count": 299,
+        "function_after_token_count": 304,
+        "function_before": "def array_equivalent(left, right, strict_nan=False):\n    \"\"\"\n    True if two arrays, left and right, have equal non-NaN elements, and NaNs\n    in corresponding locations.  False otherwise. It is assumed that left and\n    right are NumPy arrays of the same dtype. The behavior of this function\n    (particularly with respect to NaNs) is not defined if the dtypes are\n    different.\n\n    Parameters\n    ----------\n    left, right : ndarrays\n    strict_nan : bool, default False\n        If True, consider NaN and None to be different.\n\n    Returns\n    -------\n    b : bool\n        Returns True if the arrays are equivalent.\n\n    Examples\n    --------\n    >>> array_equivalent(\n    ...     np.array([1, 2, np.nan]),\n    ...     np.array([1, 2, np.nan]))\n    True\n    >>> array_equivalent(\n    ...     np.array([1, np.nan, 2]),\n    ...     np.array([1, 2, np.nan]))\n    False\n    \"\"\"\n    left, right = (np.asarray(left), np.asarray(right))\n    if left.shape != right.shape:\n        return False\n    if is_string_dtype(left) or is_string_dtype(right):\n        if not strict_nan:\n            return lib.array_equivalent_object(ensure_object(left.ravel()), ensure_object(right.ravel()))\n        for left_value, right_value in zip(left, right):\n            if left_value is NaT and right_value is not NaT:\n                return False\n            elif isinstance(left_value, float) and np.isnan(left_value):\n                if not isinstance(right_value, float) or not np.isnan(right_value):\n                    return False\n            elif left_value != right_value:\n                return False\n        return True\n    if is_float_dtype(left) or is_complex_dtype(left):\n        if not (np.prod(left.shape) and np.prod(right.shape)):\n            return True\n        return ((left == right) | isna(left) & isna(right)).all()\n    elif is_datetimelike_v_numeric(left, right):\n        return False\n    elif needs_i8_conversion(left) and needs_i8_conversion(right):\n        if not is_dtype_equal(left.dtype, right.dtype):\n            return False\n        left = left.view('i8')\n        right = right.view('i8')\n    if left.dtype.type is np.void or right.dtype.type is np.void:\n        if left.dtype != right.dtype:\n            return False\n    return np.array_equal(left, right)",
+        "function_after": "def array_equivalent(left, right, strict_nan=False):\n    \"\"\"\n    True if two arrays, left and right, have equal non-NaN elements, and NaNs\n    in corresponding locations.  False otherwise. It is assumed that left and\n    right are NumPy arrays of the same dtype. The behavior of this function\n    (particularly with respect to NaNs) is not defined if the dtypes are\n    different.\n\n    Parameters\n    ----------\n    left, right : ndarrays\n    strict_nan : bool, default False\n        If True, consider NaN and None to be different.\n\n    Returns\n    -------\n    b : bool\n        Returns True if the arrays are equivalent.\n\n    Examples\n    --------\n    >>> array_equivalent(\n    ...     np.array([1, 2, np.nan]),\n    ...     np.array([1, 2, np.nan]))\n    True\n    >>> array_equivalent(\n    ...     np.array([1, np.nan, 2]),\n    ...     np.array([1, 2, np.nan]))\n    False\n    \"\"\"\n    left, right = (np.asarray(left), np.asarray(right))\n    if left.shape != right.shape:\n        return False\n    if is_string_dtype(left) or is_string_dtype(right):\n        if not strict_nan:\n            return lib.array_equivalent_object(ensure_object(left.ravel()), ensure_object(right.ravel()))\n        for left_value, right_value in zip(left, right):\n            if left_value is NaT and right_value is not NaT:\n                return False\n            elif isinstance(left_value, float) and np.isnan(left_value):\n                if not isinstance(right_value, float) or not np.isnan(right_value):\n                    return False\n            elif np.any(left_value != right_value):\n                return False\n        return True\n    if is_float_dtype(left) or is_complex_dtype(left):\n        if not (np.prod(left.shape) and np.prod(right.shape)):\n            return True\n        return ((left == right) | isna(left) & isna(right)).all()\n    elif is_datetimelike_v_numeric(left, right):\n        return False\n    elif needs_i8_conversion(left) and needs_i8_conversion(right):\n        if not is_dtype_equal(left.dtype, right.dtype):\n            return False\n        left = left.view('i8')\n        right = right.view('i8')\n    if left.dtype.type is np.void or right.dtype.type is np.void:\n        if left.dtype != right.dtype:\n            return False\n    return np.array_equal(left, right)"
+      },
+      "file_name": "missing.py",
+      "file_path": "pandas/core/dtypes/missing.py",
+      "score_reranked": 0.7579154451884127
+    },
+    {
+      "id": "35",
+      "project_name": "pandas",
+      "buggy_line_content": "                return self._get_values(key)",
+      "function": {
+        "function_name": "_get_with",
+        "function_parent": "Series",
+        "function_before_start_line": 884,
+        "function_before_end_line": 935,
+        "function_after_start_line": 884,
+        "function_after_end_line": 935,
+        "function_before_token_count": 254,
+        "function_after_token_count": 254,
+        "function_before": "def _get_with(self, key):\n    if isinstance(key, slice):\n        return self._slice(key)\n    elif isinstance(key, ABCDataFrame):\n        raise TypeError('Indexing a Series with DataFrame is not supported, use the appropriate DataFrame column')\n    elif isinstance(key, tuple):\n        try:\n            return self._get_values_tuple(key)\n        except ValueError:\n            if len(key) == 1:\n                key = key[0]\n                if isinstance(key, slice):\n                    return self._get_values(key)\n            raise\n    if not isinstance(key, (list, np.ndarray, Series, Index)):\n        key = list(key)\n    if isinstance(key, Index):\n        key_type = key.inferred_type\n    else:\n        key_type = lib.infer_dtype(key, skipna=False)\n    if key_type == 'integer':\n        if self.index.is_integer() or self.index.is_floating():\n            return self.loc[key]\n        elif isinstance(self.index, IntervalIndex):\n            indexer = self.index.get_indexer_for(key)\n            return self.iloc[indexer]\n        else:\n            return self._get_values(key)\n    if isinstance(key, (list, tuple)):\n        if len(key) == 1 and isinstance(key[0], slice):\n            return self._get_values(key)\n        return self.loc[key]\n    return self.reindex(key)",
+        "function_after": "def _get_with(self, key):\n    if isinstance(key, slice):\n        return self._slice(key)\n    elif isinstance(key, ABCDataFrame):\n        raise TypeError('Indexing a Series with DataFrame is not supported, use the appropriate DataFrame column')\n    elif isinstance(key, tuple):\n        try:\n            return self._get_values_tuple(key)\n        except ValueError:\n            if len(key) == 1:\n                key = key[0]\n                if isinstance(key, slice):\n                    return self._get_values(key)\n            raise\n    if not isinstance(key, (list, np.ndarray, Series, Index)):\n        key = list(key)\n    if isinstance(key, Index):\n        key_type = key.inferred_type\n    else:\n        key_type = lib.infer_dtype(key, skipna=False)\n    if key_type == 'integer':\n        if self.index.is_integer() or self.index.is_floating():\n            return self.loc[key]\n        elif isinstance(self.index, IntervalIndex):\n            indexer = self.index.get_indexer_for(key)\n            return self.iloc[indexer]\n        else:\n            return self.iloc[key]\n    if isinstance(key, (list, tuple)):\n        if len(key) == 1 and isinstance(key[0], slice):\n            return self._get_values(key)\n        return self.loc[key]\n    return self.reindex(key)"
+      },
+      "file_name": "series.py",
+      "file_path": "pandas/core/series.py",
+      "score_reranked": 0.6819399631756375
+    },
+    {
+      "id": "36",
+      "project_name": "pandas",
+      "buggy_line_content": "            self.df = df",
+      "function": {
+        "function_name": "__init__",
+        "function_parent": "ExcelFormatter",
+        "function_before_start_line": 372,
+        "function_before_end_line": 414,
+        "function_after_start_line": 372,
+        "function_after_end_line": 414,
+        "function_before_token_count": 240,
+        "function_after_token_count": 247,
+        "function_before": "def __init__(self, df, na_rep: str='', float_format: Optional[str]=None, cols: Optional[Sequence[Label]]=None, header: Union[Sequence[Label], bool]=True, index: bool=True, index_label: Optional[Union[Label, Sequence[Label]]]=None, merge_cells: bool=False, inf_rep: str='inf', style_converter: Optional[Callable]=None):\n    self.rowcounter = 0\n    self.na_rep = na_rep\n    if hasattr(df, 'render'):\n        self.styler = df\n        df = df.data\n        if style_converter is None:\n            style_converter = CSSToExcelConverter()\n        self.style_converter = style_converter\n    else:\n        self.styler = None\n    self.df = df\n    if cols is not None:\n        if not len(Index(cols) & df.columns):\n            raise KeyError('passes columns are not ALL present dataframe')\n        if len(Index(cols) & df.columns) != len(cols):\n            raise KeyError(\"Not all names specified in 'columns' are found\")\n        self.df = df\n    self.columns = self.df.columns\n    self.float_format = float_format\n    self.index = index\n    self.index_label = index_label\n    self.header = header\n    self.merge_cells = merge_cells\n    self.inf_rep = inf_rep",
+        "function_after": "def __init__(self, df, na_rep: str='', float_format: Optional[str]=None, cols: Optional[Sequence[Label]]=None, header: Union[Sequence[Label], bool]=True, index: bool=True, index_label: Optional[Union[Label, Sequence[Label]]]=None, merge_cells: bool=False, inf_rep: str='inf', style_converter: Optional[Callable]=None):\n    self.rowcounter = 0\n    self.na_rep = na_rep\n    if hasattr(df, 'render'):\n        self.styler = df\n        df = df.data\n        if style_converter is None:\n            style_converter = CSSToExcelConverter()\n        self.style_converter = style_converter\n    else:\n        self.styler = None\n    self.df = df\n    if cols is not None:\n        if not len(Index(cols) & df.columns):\n            raise KeyError('passes columns are not ALL present dataframe')\n        if len(Index(cols) & df.columns) != len(cols):\n            raise KeyError(\"Not all names specified in 'columns' are found\")\n        self.df = df.reindex(columns=cols)\n    self.columns = self.df.columns\n    self.float_format = float_format\n    self.index = index\n    self.index_label = index_label\n    self.header = header\n    self.merge_cells = merge_cells\n    self.inf_rep = inf_rep"
+      },
+      "file_name": "excel.py",
+      "file_path": "pandas/io/formats/excel.py",
+      "score_reranked": 0.6680053792283164
+    },
+    {
+      "id": "37",
+      "project_name": "pandas",
+      "buggy_line_content": "                elif is_integer(i) and not ax.holds_integer():",
+      "function": {
+        "function_name": "_convert_key",
+        "function_parent": "_AtIndexer",
+        "function_before_start_line": 2110,
+        "function_before_end_line": 2133,
+        "function_after_start_line": 2110,
+        "function_after_end_line": 2133,
+        "function_before_token_count": 82,
+        "function_after_token_count": 90,
+        "function_before": "def _convert_key(self, key, is_setter: bool=False):\n    \"\"\"\n        Require they keys to be the same type as the index. (so we don't\n        fallback)\n        \"\"\"\n    if is_setter:\n        return list(key)\n    for ax, i in zip(self.obj.axes, key):\n        if ax.is_integer():\n            if not is_integer(i):\n                raise ValueError('At based indexing on an integer index can only have integer indexers')\n        elif is_integer(i) and not ax.holds_integer():\n            raise ValueError('At based indexing on an non-integer index can only have non-integer indexers')\n    return key",
+        "function_after": "def _convert_key(self, key, is_setter: bool=False):\n    \"\"\"\n        Require they keys to be the same type as the index. (so we don't\n        fallback)\n        \"\"\"\n    if is_setter:\n        return list(key)\n    for ax, i in zip(self.obj.axes, key):\n        if ax.is_integer():\n            if not is_integer(i):\n                raise ValueError('At based indexing on an integer index can only have integer indexers')\n        elif is_integer(i) and (not (ax.holds_integer() or ax.is_floating())):\n            raise ValueError('At based indexing on an non-integer index can only have non-integer indexers')\n    return key"
+      },
+      "file_name": "indexing.py",
+      "file_path": "pandas/core/indexing.py",
+      "score_reranked": 0.5737946499939655
+    },
+    {
+      "id": "28",
+      "project_name": "scrapy",
+      "buggy_line_content": "        if ':' not in self._url:",
+      "function": {
+        "function_name": "_set_url",
+        "function_parent": "Request",
+        "function_before_start_line": 62,
+        "function_before_end_line": 70,
+        "function_after_start_line": 62,
+        "function_after_end_line": 70,
+        "function_before_token_count": 65,
+        "function_after_token_count": 79,
+        "function_before": "def _set_url(self, url):\n    if not isinstance(url, six.string_types):\n        raise TypeError('Request url must be str or unicode, got %s:' % type(url).__name__)\n    s = safe_url_string(url, self.encoding)\n    self._url = escape_ajax(s)\n    if ':' not in self._url:\n        raise ValueError('Missing scheme in request url: %s' % self._url)",
+        "function_after": "def _set_url(self, url):\n    if not isinstance(url, six.string_types):\n        raise TypeError('Request url must be str or unicode, got %s:' % type(url).__name__)\n    s = safe_url_string(url, self.encoding)\n    self._url = escape_ajax(s)\n    if '://' not in self._url and (not self._url.startswith('data:')):\n        raise ValueError('Missing scheme in request url: %s' % self._url)"
+      },
+      "file_name": "__init__.py",
+      "file_path": "scrapy/http/request/__init__.py",
+      "score_reranked": 0.520273128509236
+    }
+  ],
+  "diffusion_plan": [
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "InsertAfter",
+          "node": 15
+        },
+        {
+          "op": "Replace",
+          "node": 15
+        },
+        {
+          "op": "Replace",
+          "node": 14
+        },
+        {
+          "op": "GuardAdd",
+          "node": 40
+        },
+        {
+          "op": "GuardAdd",
+          "node": 15
+        },
+        {
+          "op": "GuardAdd",
+          "node": 14
+        },
+        {
+          "op": "Replace",
+          "node": 40
+        },
+        {
+          "op": "Replace",
+          "node": 79
+        }
+      ],
+      "score": 18.399999998600002
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "GuardAdd",
+          "node": 14
+        },
+        {
+          "op": "InsertAfter",
+          "node": 15
+        },
+        {
+          "op": "InsertBefore",
+          "node": 14
+        },
+        {
+          "op": "GuardAdd",
+          "node": 79
+        },
+        {
+          "op": "Replace",
+          "node": 15
+        },
+        {
+          "op": "Replace",
+          "node": 200
+        },
+        {
+          "op": "Replace",
+          "node": 76
+        },
+        {
+          "op": "Replace",
+          "node": 40
+        },
+        {
+          "op": "GuardAdd",
+          "node": 15
+        },
+        {
+          "op": "GuardAdd",
+          "node": 40
+        }
+      ],
+      "score": 17.809090907562812
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 79
+        },
+        {
+          "op": "InsertAfter",
+          "node": 79
+        },
+        {
+          "op": "Replace",
+          "node": 15
+        },
+        {
+          "op": "GuardAdd",
+          "node": 40
+        },
+        {
+          "op": "Replace",
+          "node": 13
+        },
+        {
+          "op": "Replace",
+          "node": 201
+        },
+        {
+          "op": "Replace",
+          "node": 76
+        },
+        {
+          "op": "GuardAdd",
+          "node": 15
+        },
+        {
+          "op": "Replace",
+          "node": 40
+        },
+        {
+          "op": "GuardAdd",
+          "node": 14
+        }
+      ],
+      "score": 17.62727272576116
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "InsertAfter",
+          "node": 15
+        },
+        {
+          "op": "Replace",
+          "node": 470
+        },
+        {
+          "op": "Replace",
+          "node": 15
+        },
+        {
+          "op": "Replace",
+          "node": 76
+        },
+        {
+          "op": "Replace",
+          "node": 14
+        },
+        {
+          "op": "Replace",
+          "node": 79
+        },
+        {
+          "op": "GuardAdd",
+          "node": 15
+        },
+        {
+          "op": "GuardAdd",
+          "node": 79
+        }
+      ],
+      "score": 16.85454545328595
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "GuardAdd",
+          "node": 14
+        },
+        {
+          "op": "Replace",
+          "node": 15
+        },
+        {
+          "op": "Replace",
+          "node": 14
+        },
+        {
+          "op": "Delete",
+          "node": 15
+        },
+        {
+          "op": "Replace",
+          "node": 79
+        },
+        {
+          "op": "Replace",
+          "node": 40
+        },
+        {
+          "op": "Replace",
+          "node": 38
+        },
+        {
+          "op": "Replace",
+          "node": 76
+        }
+      ],
+      "score": 16.799999998745456
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 15
+        },
+        {
+          "op": "Replace",
+          "node": 38
+        },
+        {
+          "op": "GuardAdd",
+          "node": 15
+        },
+        {
+          "op": "GuardAdd",
+          "node": 40
+        },
+        {
+          "op": "Replace",
+          "node": 79
+        },
+        {
+          "op": "InsertAfter",
+          "node": 15
+        },
+        {
+          "op": "Replace",
+          "node": 200
+        },
+        {
+          "op": "Replace",
+          "node": 14
+        }
+      ],
+      "score": 16.636363635123967
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "GuardAdd",
+          "node": 38
+        },
+        {
+          "op": "Replace",
+          "node": 79
+        },
+        {
+          "op": "Replace",
+          "node": 15
+        },
+        {
+          "op": "Replace",
+          "node": 40
+        },
+        {
+          "op": "Replace",
+          "node": 76
+        },
+        {
+          "op": "GuardAdd",
+          "node": 40
+        },
+        {
+          "op": "Replace",
+          "node": 38
+        },
+        {
+          "op": "Replace",
+          "node": 14
+        }
+      ],
+      "score": 16.472727271502478
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "GuardAdd",
+          "node": 15
+        },
+        {
+          "op": "Replace",
+          "node": 40
+        },
+        {
+          "op": "Replace",
+          "node": 79
+        },
+        {
+          "op": "Replace",
+          "node": 76
+        },
+        {
+          "op": "InsertBefore",
+          "node": 40
+        },
+        {
+          "op": "Replace",
+          "node": 201
+        },
+        {
+          "op": "Replace",
+          "node": 15
+        },
+        {
+          "op": "Replace",
+          "node": 38
+        }
+      ],
+      "score": 16.39999999878182
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "GuardAdd",
+          "node": 40
+        },
+        {
+          "op": "Replace",
+          "node": 38
+        },
+        {
+          "op": "Replace",
+          "node": 14
+        },
+        {
+          "op": "Replace",
+          "node": 13
+        },
+        {
+          "op": "Replace",
+          "node": 79
+        },
+        {
+          "op": "Replace",
+          "node": 40
+        },
+        {
+          "op": "Replace",
+          "node": 76
+        },
+        {
+          "op": "Replace",
+          "node": 15
+        }
+      ],
+      "score": 16.32727272606116
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Delete",
+          "node": 38
+        },
+        {
+          "op": "Replace",
+          "node": 79
+        },
+        {
+          "op": "Replace",
+          "node": 38
+        },
+        {
+          "op": "GuardAdd",
+          "node": 76
+        },
+        {
+          "op": "GuardAdd",
+          "node": 40
+        },
+        {
+          "op": "GuardAdd",
+          "node": 14
+        },
+        {
+          "op": "Replace",
+          "node": 14
+        },
+        {
+          "op": "GuardAdd",
+          "node": 38
+        },
+        {
+          "op": "Replace",
+          "node": 76
+        },
+        {
+          "op": "GuardAdd",
+          "node": 15
+        }
+      ],
+      "score": 16.05454545317686
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "GuardAdd",
+          "node": 40
+        },
+        {
+          "op": "Replace",
+          "node": 79
+        },
+        {
+          "op": "Replace",
+          "node": 40
+        },
+        {
+          "op": "Replace",
+          "node": 38
+        },
+        {
+          "op": "Replace",
+          "node": 15
+        },
+        {
+          "op": "GuardAdd",
+          "node": 79
+        },
+        {
+          "op": "InsertAfter",
+          "node": 79
+        }
+      ],
+      "score": 15.9909090897281
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 15
+        },
+        {
+          "op": "GuardAdd",
+          "node": 13
+        },
+        {
+          "op": "Delete",
+          "node": 40
+        },
+        {
+          "op": "Replace",
+          "node": 76
+        },
+        {
+          "op": "GuardAdd",
+          "node": 79
+        },
+        {
+          "op": "Replace",
+          "node": 79
+        },
+        {
+          "op": "Replace",
+          "node": 38
+        },
+        {
+          "op": "InsertAfter",
+          "node": 79
+        },
+        {
+          "op": "Replace",
+          "node": 40
+        }
+      ],
+      "score": 15.84545454410496
+    }
+  ],
+  "static_analysis_nodes": [
+    {
+      "line": 83,
+      "line_absolute": 1006,
+      "node_id": 15,
+      "node_id_local": 88,
+      "type": "Return",
+      "code": "return (left_keys, right_keys, join_names)",
+      "distance_to_buggy": 22,
+      "context": "  80:           self.left = self.left._drop_labels_or_levels(left_drop)\n  81:       if right_drop:\n  82:           self.right = self.right._drop_labels_or_levels(right_drop)\n  83:->     return (left_keys, right_keys, join_names)",
+      "ast_subtree_json": {
+        "_type": "Return",
+        "value": {
+          "_type": "Tuple",
+          "elts": [
+            {
+              "_type": "Name"
+            },
+            {
+              "_type": "Name"
+            },
+            {
+              "_type": "Name"
+            }
+          ],
+          "ctx": {
+            "_type": "Load"
+          }
+        }
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": 198.0
+    },
+    {
+      "line": 82,
+      "line_absolute": 1005,
+      "node_id": 79,
+      "node_id_local": 87,
+      "type": "Call",
+      "code": "self.right._drop_labels_or_levels(right_drop)",
+      "distance_to_buggy": 23,
+      "context": "  79:       if left_drop:\n  80:           self.left = self.left._drop_labels_or_levels(left_drop)\n  81:       if right_drop:\n  82:->         self.right = self.right._drop_labels_or_levels(right_drop)\n  83:       return (left_keys, right_keys, join_names)",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Attribute",
+          "value": {
+            "_type": "Attribute"
+          },
+          "attr": "_drop_labels_or_levels",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [
+          {
+            "_type": "Name",
+            "id": "right_drop",
+            "ctx": {
+              "_type": "Load"
+            }
+          }
+        ],
+        "keywords": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": 206.0
+    },
+    {
+      "line": 82,
+      "line_absolute": 1005,
+      "node_id": 40,
+      "node_id_local": 86,
+      "type": "Assign",
+      "code": "self.right = self.right._drop_labels_or_levels(right_drop)",
+      "distance_to_buggy": 23,
+      "context": "  79:       if left_drop:\n  80:           self.left = self.left._drop_labels_or_levels(left_drop)\n  81:       if right_drop:\n  82:->         self.right = self.right._drop_labels_or_levels(right_drop)\n  83:       return (left_keys, right_keys, join_names)",
+      "ast_subtree_json": {
+        "_type": "Assign",
+        "targets": [
+          {
+            "_type": "Attribute",
+            "value": {
+              "_type": "Name"
+            },
+            "attr": "right",
+            "ctx": {
+              "_type": "Store"
+            }
+          }
+        ],
+        "value": {
+          "_type": "Call",
+          "func": {
+            "_type": "Attribute"
+          },
+          "args": [
+            {
+              "_type": "Name"
+            }
+          ],
+          "keywords": []
+        },
+        "type_comment": null
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": 207.0
+    },
+    {
+      "line": 81,
+      "line_absolute": 1004,
+      "node_id": 14,
+      "node_id_local": 85,
+      "type": "If",
+      "code": "if right_drop:\n    self.right = self.right._drop_labels_or_levels(right_drop)",
+      "distance_to_buggy": 24,
+      "context": "  78:               left_keys = [self.left.index.values]\n  79:       if left_drop:\n  80:           self.left = self.left._drop_labels_or_levels(left_drop)\n  81:->     if right_drop:\n  82:           self.right = self.right._drop_labels_or_levels(right_drop)\n  83:       return (left_keys, right_keys, join_names)",
+      "ast_subtree_json": {
+        "_type": "If",
+        "test": {
+          "_type": "Name",
+          "id": "right_drop",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "body": [
+          {
+            "_type": "Assign",
+            "targets": [
+              {
+                "_type": "Attribute"
+              }
+            ],
+            "value": {
+              "_type": "Call"
+            },
+            "type_comment": null
+          }
+        ],
+        "orelse": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": 217.0
+    },
+    {
+      "line": 80,
+      "line_absolute": 1003,
+      "node_id": 76,
+      "node_id_local": 84,
+      "type": "Call",
+      "code": "self.left._drop_labels_or_levels(left_drop)",
+      "distance_to_buggy": 25,
+      "context": "  77:           else:\n  78:               left_keys = [self.left.index.values]\n  79:       if left_drop:\n  80:->         self.left = self.left._drop_labels_or_levels(left_drop)\n  81:       if right_drop:\n  82:           self.right = self.right._drop_labels_or_levels(right_drop)\n  83:       return (left_keys, right_keys, join_names)",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Attribute",
+          "value": {
+            "_type": "Attribute"
+          },
+          "attr": "_drop_labels_or_levels",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [
+          {
+            "_type": "Name",
+            "id": "left_drop",
+            "ctx": {
+              "_type": "Load"
+            }
+          }
+        ],
+        "keywords": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": 226.0
+    },
+    {
+      "line": 80,
+      "line_absolute": 1003,
+      "node_id": 38,
+      "node_id_local": 83,
+      "type": "Assign",
+      "code": "self.left = self.left._drop_labels_or_levels(left_drop)",
+      "distance_to_buggy": 25,
+      "context": "  77:           else:\n  78:               left_keys = [self.left.index.values]\n  79:       if left_drop:\n  80:->         self.left = self.left._drop_labels_or_levels(left_drop)\n  81:       if right_drop:\n  82:           self.right = self.right._drop_labels_or_levels(right_drop)\n  83:       return (left_keys, right_keys, join_names)",
+      "ast_subtree_json": {
+        "_type": "Assign",
+        "targets": [
+          {
+            "_type": "Attribute",
+            "value": {
+              "_type": "Name"
+            },
+            "attr": "left",
+            "ctx": {
+              "_type": "Store"
+            }
+          }
+        ],
+        "value": {
+          "_type": "Call",
+          "func": {
+            "_type": "Attribute"
+          },
+          "args": [
+            {
+              "_type": "Name"
+            }
+          ],
+          "keywords": []
+        },
+        "type_comment": null
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|system|>...",
+      "reranker_score": 227.0
+    },
+    {
+      "line": 79,
+      "line_absolute": 1002,
+      "node_id": 13,
+      "node_id_local": 82,
+      "type": "If",
+      "code": "if left_drop:\n    self.left = self.left._drop_labels_or_levels(left_drop)",
+      "distance_to_buggy": 26,
+      "context": "  76:               left_keys = [lev._values.take(lev_codes) for lev, lev_codes in zip(self.left.index.levels, self.left.index.codes)]\n  77:           else:\n  78:               left_keys = [self.left.index.values]\n  79:->     if left_drop:\n  80:           self.left = self.left._drop_labels_or_levels(left_drop)\n  81:       if right_drop:\n  82:           self.right = self.right._drop_labels_or_levels(right_drop)",
+      "ast_subtree_json": {
+        "_type": "If",
+        "test": {
+          "_type": "Name",
+          "id": "left_drop",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "body": [
+          {
+            "_type": "Assign",
+            "targets": [
+              {
+                "_type": "Attribute"
+              }
+            ],
+            "value": {
+              "_type": "Call"
+            },
+            "type_comment": null
+          }
+        ],
+        "orelse": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": 237.0
+    },
+    {
+      "line": 78,
+      "line_absolute": 1001,
+      "node_id": 201,
+      "node_id_local": 81,
+      "type": "Assign",
+      "code": "left_keys = [self.left.index.values]",
+      "distance_to_buggy": 27,
+      "context": "  75:           if isinstance(self.left.index, MultiIndex):\n  76:               left_keys = [lev._values.take(lev_codes) for lev, lev_codes in zip(self.left.index.levels, self.left.index.codes)]\n  77:           else:\n  78:->             left_keys = [self.left.index.values]\n  79:       if left_drop:\n  80:           self.left = self.left._drop_labels_or_levels(left_drop)\n  81:       if right_drop:",
+      "ast_subtree_json": {
+        "_type": "Assign",
+        "targets": [
+          {
+            "_type": "Name",
+            "id": "left_keys",
+            "ctx": {
+              "_type": "Store"
+            }
+          }
+        ],
+        "value": {
+          "_type": "List",
+          "elts": [
+            {
+              "_type": "Attribute"
+            }
+          ],
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "type_comment": null
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|system|>...",
+      "reranker_score": 244.5
+    },
+    {
+      "line": 76,
+      "line_absolute": 999,
+      "node_id": 200,
+      "node_id_local": 78,
+      "type": "Assign",
+      "code": "left_keys = [lev._values.take(lev_codes) for lev, lev_codes in zip(self.left.index.levels, self.left.index.codes)]",
+      "distance_to_buggy": 29,
+      "context": "  73:                   right_keys.append(right._get_label_or_level_values(k))\n  74:                   join_names.append(k)\n  75:           if isinstance(self.left.index, MultiIndex):\n  76:->             left_keys = [lev._values.take(lev_codes) for lev, lev_codes in zip(self.left.index.levels, self.left.index.codes)]\n  77:           else:\n  78:               left_keys = [self.left.index.values]\n  79:       if left_drop:",
+      "ast_subtree_json": {
+        "_type": "Assign",
+        "targets": [
+          {
+            "_type": "Name",
+            "id": "left_keys",
+            "ctx": {
+              "_type": "Store"
+            }
+          }
+        ],
+        "value": {
+          "_type": "ListComp",
+          "elt": {
+            "_type": "Call"
+          },
+          "generators": [
+            {
+              "_type": "comprehension"
+            }
+          ]
+        },
+        "type_comment": null
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": 264.5
+    },
+    {
+      "line": 76,
+      "line_absolute": 999,
+      "node_id": 470,
+      "node_id_local": 80,
+      "type": "Call",
+      "code": "zip(self.left.index.levels, self.left.index.codes)",
+      "distance_to_buggy": 29,
+      "context": "  73:                   right_keys.append(right._get_label_or_level_values(k))\n  74:                   join_names.append(k)\n  75:           if isinstance(self.left.index, MultiIndex):\n  76:->             left_keys = [lev._values.take(lev_codes) for lev, lev_codes in zip(self.left.index.levels, self.left.index.codes)]\n  77:           else:\n  78:               left_keys = [self.left.index.values]\n  79:       if left_drop:",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Name",
+          "id": "zip",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [
+          {
+            "_type": "Attribute",
+            "value": {
+              "_type": "Attribute"
+            },
+            "attr": "levels",
+            "ctx": {
+              "_type": "Load"
+            }
+          },
+          {
+            "_type": "Attribute",
+            "value": {
+              "_type": "Attribute"
+            },
+            "attr": "codes",
+            "ctx": {
+              "_type": "Load"
+            }
+          }
+        ],
+        "keywords": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": 265.0
+    }
+  ]
+}

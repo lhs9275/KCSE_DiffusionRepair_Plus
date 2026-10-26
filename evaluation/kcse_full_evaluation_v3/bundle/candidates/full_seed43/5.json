@@ -1,0 +1,1048 @@
+{
+  "bug_id": "5",
+  "seed": 43,
+  "arm": "full",
+  "candidates": [
+    {
+      "index": 0,
+      "patch_text": "def move(self, old_path, new_path, raise_if_exists=False):\n    if raise_if_exists and os.path.exists(new_path):\n        raise RuntimeError('Destination exists: %s' % new_path)\n    os.rename(old_path, new_path)",
+      "patch_sha256": "08d7eb61049095f6fa0765735faa662a2c0d52fa6c77ff3ca0c6417df563092e",
+      "rank_score": 214,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.9198728361131365,
+      "top_p": 0.8098617783838441
+    },
+    {
+      "index": 1,
+      "patch_text": "def move(self, old_path, new_path, raise_if_exists=False):\n    if raise_if_exists and os.path.exists(new_path):\n        raise RuntimeError('Destination exists: %s' % new_path)\n    d = os.path.dirname(new_path)\n    if d and (not os.path.exists(d)):\n        self.fs.mkdir(d)\n    os.rename(old_path, new_path)\n\n##correct\nclass MoveTask(FileTask):\n    \"\"\"\n    Moves a file from one location to another, creating any missing directories along the way.\n    \"\"\"\n\n    def __init__(self, source_path, dest_path):\n        super(MoveTask, self).__init__(dest_path)\n        self.source_path = source_path",
+      "patch_sha256": "6c7fbbad8beaff4c83b128a72eb8340300962ecad45094a3462e499ac074959e",
+      "rank_score": 73,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7956728856928922,
+      "top_p": 0.8945911071161152
+    },
+    {
+      "index": 2,
+      "patch_text": "def move(self, old_path, new_path, raise_if_exists=False):\n    if raise_if_exists and os.path.exists(new_path):\n        raise RuntimeError('Destination exists: %s' % new_path)\n    os.rename(old_path, new_path)\nfrom datetime import datetime\n\nfrom pydantic import BaseModel\n\n\nclass AuthorBase(BaseModel):\n    name: str\n\n    class Config:\n        orm_mode = True\n\n\nclass BookBase(BaseModel):\n    title: str\n    author: AuthorBase\n\n    class Config:\n        orm_mode = True\n\n\nclass AuthorInDBBase(AuthorBase):\n    id: int\n    books: list[BookBase] = []\n    created_at: datetime\n\n    class Config:\n        orm_mode = True\n\n\nclass BookInDBBase(BookBase):\n    id: int\n    author: AuthorInDBBase\n    created_at: datetime\n\n    class Config:\n        orm_mode = True\nimport json\nfrom pathlib import Path\n\nimport pytest\nfrom fastapi.testclient import TestClient\n\nfrom app.main import app\nfrom app.schemas import BookBase, AuthorBase\nfrom app.services.database import database\n\nTEST_PATH = Path(__file__).parent\nTEST_DATA = TEST_PATH / \"testdata\"\n\n\n@pytest.fixture()\nasync def client():\n    yield TestClient(app)\n\n\n@pytest.fixture(autouse=True)\ndef clear_db():\n    yield\n    database.close()\n\n\n@pytest.fixture\ndef valid_author_data():\n    return {\n        \"name\": \"\",\n    }\n\n\n@pytest.fixture\ndef valid_book_data():\n    return {\n        \"title\": \"The Road to Freedom\",\n        \"author\": {\"name\": \"\"},\n    }\n\n\n@pytest.fixture\ndef valid_author_response():\n    return {\n        \"name\": \"\",\n        \"id\": 1,\n        \"books\": [],\n        \"created_at\": \"2021-01-01T00:00:00Z\",\n    }\n\n\n@pytest.fixture\ndef valid_book_response():\n    return {\n        \"title\": \"The Road to Freedom\",\n        \"id\": 1,\n        \"author\": {\"name\": \"\", \"id\": 1},\n        \"created_at\": \"2021-01-01T00:00:00Z\",\n    }\n\n\ndef test_post_author_empty_payload(client):\n    response = client.post(\"/authors/\", data=json.dumps({}))\n    assert response.status_code == 422\n\n\ndef test_post_author_invalid_payload(client, valid_author_data):\n    payload = valid_author_data\n    payload[\"name\"] = \"\"\n    response = client.post(\"/authors/\", data=json.dumps(payload))",
+      "patch_sha256": "51726a8b8fb93eea299bf8d4fd37ddd4cfbac89c20710f87858b0a48b2473f61",
+      "rank_score": -46,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7976020643090617,
+      "top_p": 0.8970025803863271
+    },
+    {
+      "index": 3,
+      "patch_text": "def move(self, old_path, new_path, raise_if_exists=False):\n    if raise_if_exists and os.path.exists(new_path):\n        raise RuntimeError('Destination exists: %s' % new_path)\n    d = os.path.dirname(new_path)\n    if d and (not os.path.exists(d)):\n        self.fs.mkdir(d)\n    os.rename(old_path, new_path)\n\n# Generated from /Users/hongquan/Desktop/buggy_project/buggy_project/buggy_project/buggy_project/test/data/python_parser/python3.g4 by ANTLR 4.9.2\nfrom antlr4 import *\nif __name__ is not None and \".\" in __name__:\n    from.python3Parser import python3Parser\nelse:\n    from python3Parser import python3Parser\n\n# This class defines a complete listener for a parse tree produced by python3Parser.\nclass python3Listener(ParseTreeListener):\n\n    # Enter a parse tree produced by python3Parser#single_input.\n    def enterSingle_input(self, ctx:python3Parser.Single_inputContext):\n        pass\n\n    # Exit a parse tree produced by python3Parser#single_input.\n    def exitSingle_input(self, ctx:python3Parser.Single_inputContext):\n        pass\n\n\n    # Enter a parse tree produced by python3Parser#file_input.\n    def enterFile_input(self, ctx:python3Parser.File_inputContext):\n        pass\n\n    # Exit a parse tree produced by python3Parser#file_input.\n    def exitFile_input(self, ctx:python3Parser.File_inputContext):\n        pass\n\n\n    # Enter a parse tree produced by python3Parser#eval_input.\n    def enterEval_input(self, ctx:python3Parser.Eval_inputContext):\n        pass\n\n    # Exit a parse tree produced by python3Parser#eval_input.\n    def exitEval_input(self, ctx:python3Parser.Eval_inputContext):\n        pass\n\n\n    # Enter a parse tree produced by python3Parser#decorator.\n    def enterDecorator(self, ctx:python3Parser.DecoratorContext):\n        pass\n\n    # Exit a parse tree produced by python3Parser#decorator.\n    def exitDecorator(self, ctx:python3Parser.DecoratorContext):\n        pass\n\n\n    # Enter a parse tree produced by python3Parser#decorators.\n    def enterDecorators(self, ctx:python3Parser.DecoratorsContext):\n        pass\n\n    # Exit a parse tree produced by python3Parser#decorators.\n    def exitDecorators(self, ctx:python3Parser.DecoratorsContext):\n        pass\n\n\n    # Enter a parse tree produced by python3Parser#decorated.\n    def enterDecorated(self, ctx:python3Parser.DecoratedContext):\n        pass\n\n    # Exit a parse tree produced by python3Parser#decorated.",
+      "patch_sha256": "b3fb314cbd6b8e5ef8368fe6b26a543f7dc0c5ef409a31435ca13ab837064279",
+      "rank_score": -172,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7704673177175924,
+      "top_p": 0.8630841471469904
+    },
+    {
+      "index": 4,
+      "patch_text": "def move(self, old_path, new_path, raise_if_exists=False):\n    if raise_if_exists and os.path.exists(new_path):\n        raise RuntimeError('Destination exists: %s' % new_path)\n    d = os.path.dirname(new_path)\n    if d and (not os.path.exists(d)):\n        self.fs.mkdir(d)\n    os.rename(old_path, new_path)\n# Generated from python/Python3.g4 by ANTLR 4.9.2\nfrom antlr4 import *\nif __name__ is not None and \".\" in __name__:\n    from.Python3Parser import Python3Parser\nelse:\n    from Python3Parser import Python3Parser\n\n# This class defines a complete generic visitor for a parse tree produced by Python3Parser.\n\nclass Python3Visitor(ParseTreeVisitor):\n\n    # Visit a parse tree produced by Python3Parser#single_input.\n    def visitSingle_input(self, ctx:Python3Parser.Single_inputContext):\n        return self.visitChildren(ctx)\n\n\n    # Visit a parse tree produced by Python3Parser#file_input.\n    def visitFile_input(self, ctx:Python3Parser.File_inputContext):\n        return self.visitChildren(ctx)\n\n\n    # Visit a parse tree produced by Python3Parser#eval_input.\n    def visitEval_input(self, ctx:Python3Parser.Eval_inputContext):\n        return self.visitChildren(ctx)\n\n\n    # Visit a parse tree produced by Python3Parser#decorated.\n    def visitDecorated(self, ctx:Python3Parser.DecoratedContext):\n        return self.visitChildren(ctx)\n\n\n    # Visit a parse tree produced by Python3Parser#async_funcdef.\n    def visitAsync_funcdef(self, ctx:Python3Parser.Async_funcdefContext):\n        return self.visitChildren(ctx)\n\n\n    # Visit a parse tree produced by Python3Parser#funcdef.\n    def visitFuncdef(self, ctx:Python3Parser.FuncdefContext):\n        return self.visitChildren(ctx)\n\n\n    # Visit a parse tree produced by Python3Parser#parameters.\n    def visitParameters(self, ctx:Python3Parser.ParametersContext):\n        return self.visitChildren(ctx)\n\n\n    # Visit a parse tree produced by Python3Parser#typedargslist.\n    def visitTypedargslist(self, ctx:Python3Parser.TypedargslistContext):\n        return self.visitChildren(ctx)\n\n\n    # Visit a parse tree produced by Python3Parser#tfpdef.\n    def visitTfpdef(self, ctx:Python3Parser.TfpdefContext):\n        return self.visitChildren(ctx)\n\n\n    # Visit a parse tree produced by Python3Parser#varargslist.\n    def visitVarargslist(self, ctx:Python3Parser.VarargslistContext):\n        return self.visitChildren(ctx)\n\n\n    # Visit a parse",
+      "patch_sha256": "dd280724bb7f8a8be135ed4080e8e5eb461d057d54d0d2ec2120d727752701ae",
+      "rank_score": -174,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7956728856928922,
+      "top_p": 0.8945911071161152
+    },
+    {
+      "index": 5,
+      "patch_text": "def move(self, old_path, new_path, raise_if_exists=False):\n    if raise_if_exists and os.path.exists(new_path):\n        raise RuntimeError('Destination exists: %s' % new_path)\n    d = os.path.dirname(new_path)\n    if d and (not os.path.exists(d)):\n        self.fs.mkdir(d)\n    os.rename(old_path, new_path)\nfrom collections import Counter\nimport json\nimport os\nimport random\nfrom typing import List, Dict, Tuple, Set\n\nfrom tqdm import tqdm\n\nfrom.utils import get_code_context, get_buggy_line, get_buggy_function_name\nfrom.utils import get_code_context_for_function, get_function_context\n\n\ndef get_data_for_code_context() -> List[Dict]:\n    data = []\n    for filename in tqdm(os.listdir(\"data/code_context\")):\n        with open(os.path.join(\"data/code_context\", filename)) as f:\n            data += json.load(f)\n    return data\n\n\ndef get_code_context_stats(data: List[Dict]) -> Dict:\n    stats = {}\n    for item in data:\n        context = item[\"code_context\"]\n        stats[context] = stats.get(context, 0) + 1\n    return stats\n\n\ndef get_random_buggy_function(data: List[Dict], function_name: str) -> Dict:\n    random.shuffle(data)\n    for item in data:\n        if item[\"function_name\"] == function_name:\n            return item\n    return None\n\n\ndef get_random_buggy_line(data: List[Dict], function_name: str, line_number: int) -> Dict:\n    random.shuffle(data)\n    for item in data:\n        if item[\"function_name\"] == function_name and item[\"line_number\"] == line_number:\n            return item\n    return None\n\n\ndef get_code_context_for_line(data: List[Dict], function_name: str, line_number: int) -> str:\n    buggy_line = get_random_buggy_line(data, function_name, line_number)\n    if not buggy_line:\n        return \"\"\n    return buggy_line[\"code_context\"]\n\n\ndef get_code_context_for_function(data: List[Dict], function_name: str) -> str:\n    buggy_function = get_random_buggy_function(data, function_name)\n    if not buggy_function:\n        return \"\"\n    return buggy_function[\"code_context\"]\n\n\ndef get_random_code_context(data: List[Dict]) -> str:\n    random.shuffle(data)\n    return data[0][\"code_context\"]",
+      "patch_sha256": "ddb2f135ff0672a541c3e5055d27988b87d6a576ef693a603333eaf7d847ece9",
+      "rank_score": -177,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.5321867729008602,
+      "top_p": 0.98
+    },
+    {
+      "index": 6,
+      "patch_text": "def move(self, old_path, new_path, raise_if_exists=False):\n    if raise_if_exists and os.path.exists(new_path):\n        raise RuntimeError('Destination exists: %s' % new_path)\n    d = os.path.dirname(new_path)\n    if d and (not os.path.exists(d)):\n        self.fs.mkdir(d)\n    os.rename(old_path, new_path)\n\nimport json\nfrom collections import defaultdict\nfrom pathlib import Path\n\nfrom.utils import read_file\n\n\ndef get_paths(dataset_dir: Path) -> list[Path]:\n    \"\"\"Get list of all input paths for the dataset.\"\"\"\n    paths = []\n    paths += [dataset_dir / \"data.json\"]\n    paths += [dataset_dir / \"metadata.json\"]\n    paths += [dataset_dir / \"source\"]\n    paths += [dataset_dir / \"patches\"]\n    paths += [dataset_dir / \"testcases\"]\n    paths += [dataset_dir / \"tests\"]\n    paths += [dataset_dir / \"solutions\"]\n\n    for path in paths:\n        if not path.exists():\n            raise ValueError(f\"The file {path} does not exist!\")\n\n    return paths\n\n\ndef load_data(paths: list[Path]) -> dict:\n    \"\"\"Load the data in all input files.\"\"\"\n    data = defaultdict(dict)\n    for path in paths:\n        if path.is_dir():\n            # load_dataset()\n            continue\n        elif path.suffix == \".json\":\n            data[path.stem] = json.loads(read_file(path))\n    return data\n\n\ndef load_dataset(paths: list[Path]) -> dict:\n    \"\"\"Load the data in all input files.\"\"\"\n    data = defaultdict(dict)\n    for path in paths:\n        if path.is_dir():\n            data[path.stem] = load_dataset(get_paths(path))\n        elif path.suffix == \".json\":\n            data[path.stem] = json.loads(read_file(path))\n    return data\nimport ast\nimport json\nimport sys\nfrom dataclasses import dataclass, field\nfrom pathlib import Path\n\nfrom..patch_parser import patch_parser\nfrom..repairnator import GitRepository\nfrom.git_wrapper import GitWrapper\n\nsys.path.append(\"../..\")\n\n\n@dataclass\nclass BugReport:\n    \"\"\"A class that holds all relevant data for a single bug report.\"\"\"\n\n    name: str\n    dataset: str\n    repository: GitRepository\n    fix: Path\n    git_wrapper: GitWrapper = field(init=False)\n    buggy_file: Path = field(init=False)\n    buggy_line: int = field(init=False)\n    patch_info: dict = field(init=False)\n\n    def __post_init__(self):\n        \"\"\"Set up the instance.\"\"\"\n        # Set up the instance variables\n        self",
+      "patch_sha256": "c9001d5660e5fae3fb2163526c107fee108be7118f0ca9717df52e1f98259519",
+      "rank_score": -178,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.934442110146087,
+      "top_p": 0.8256979458109642
+    },
+    {
+      "index": 7,
+      "patch_text": "def move(self, old_path, new_path, raise_if_exists=False):\n    if raise_if_exists and os.path.exists(new_path):\n        raise RuntimeError('Destination exists: %s' % new_path)\n    d = os.path.dirname(new_path)\n    if d and (not os.path.exists(d)):\n        self.fs.mkdir(d)\n    os.rename(old_path, new_path)\nfrom __future__ import print_function, absolute_import\nfrom __future__ import division\nfrom collections import defaultdict\nimport os\nfrom os.path import join, dirname\nimport json\nimport sys\nimport random\nimport numpy as np\nfrom sklearn.model_selection import train_test_split\nfrom torch.utils.data import DataLoader, RandomSampler, SequentialSampler\nfrom torch.utils.data.distributed import DistributedSampler\nfrom tqdm import tqdm\nfrom transformers import (WEIGHTS_NAME, AdamW, WarmupLinearSchedule,\n                                  RobertaConfig, RobertaForMaskedLM)\nfrom transformers import RobertaTokenizer\nfrom transformers.optimization import get_linear_schedule_with_warmup\nfrom utils import *\nimport argparse\n\nparser = argparse.ArgumentParser()\nparser.add_argument(\"--model\", default='roberta-base', help=\"Model Type\")\nparser.add_argument(\"--batch_size\", default=1, help=\"Batch size\")\nparser.add_argument(\"--lr\", default=2e-5, help=\"Learning Rate\")\nparser.add_argument(\"--seed\", default=42, help=\"Seed\")\nparser.add_argument(\"--epochs\", default=100, help=\"Epochs\")\nparser.add_argument(\"--fp16\", action='store_true', help=\"Use fp16\")\nparser.add_argument(\"--gpu\", default=0, help=\"GPU ID\")\nparser.add_argument(\"--output\", default='', help=\"Output path\")\nargs = parser.parse_args()\n\nMODEL_CLASSES = {\n    'roberta': (RobertaConfig, RobertaForMaskedLM, RobertaTokenizer)\n}\n\nconfig_class, model_class, tokenizer_class = MODEL_CLASSES[args.model]\nconfig = config_class.from_pretrained(args.model)\ntokenizer = tokenizer_class.from_pretrained(args.model)\nmodel = model_class.from_pretrained(args.model)\nmodel.to(args.gpu)\n\ndef create_mask(example):\n    tokens = tokenizer.tokenize(example)\n    mask_tokens = [i for i in range(len(tokens)) if i >= 3 and i <= 5]\n    mask_tokens = [1] + mask_tokens + [1] + [0] * (len(tokens) - len(mask_tokens))\n    return mask_tokens\n\ndef read_data(path):\n    data",
+      "patch_sha256": "4d5dcbee96fa6f0522a935dac2ef1bc3389e925c43c8ad123c59f9d5cee8f025",
+      "rank_score": -178,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": false,
+        "error": "SyntaxError: from __future__ imports must occur at the beginning of the file (<candidate-diagnostic>, line 8)"
+      },
+      "temperature": 0.7970041106218376,
+      "top_p": 0.896255138277297
+    },
+    {
+      "index": 8,
+      "patch_text": "def move(self, old_path, new_path, raise_if_exists=False):\n    if raise_if_exists and os.path.exists(new_path):\n        raise RuntimeError('Destination exists: %s' % new_path)\n    d = os.path.dirname(new_path)\n    if d and (not os.path.exists(d)):\n        self.fs.mkdir(d)\n    os.rename(old_path, new_path)\nimport pandas as pd\nimport sys\nfrom typing import List, Union, Tuple\n\nsys.path.append('../../src/')\n\nfrom src.data import load_dataset\nfrom src.features import extract_text\nfrom src.train import model_pipeline\nfrom sklearn.linear_model import LogisticRegression\nfrom sklearn.ensemble import RandomForestClassifier\nfrom sklearn.tree import DecisionTreeClassifier\nfrom sklearn.preprocessing import OneHotEncoder\nfrom sklearn.metrics import classification_report, confusion_matrix\nfrom sklearn.compose import ColumnTransformer\nfrom sklearn.pipeline import Pipeline\nfrom sklearn.feature_extraction.text import CountVectorizer\nfrom sklearn.feature_extraction.text import TfidfVectorizer\nfrom sklearn.feature_selection import SelectFromModel\nfrom sklearn.ensemble import ExtraTreesClassifier\n\ndef get_data():\n    dataset = load_dataset()\n    X = dataset['train']['X']\n    y = dataset['train']['y']\n\n    # X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=0)\n    X_train = X[:720]\n    y_train = y[:720]\n    X_test = X[720:]\n    y_test = y[720:]\n\n    # print(X_train.shape)\n    # print(X_test.shape)\n    # print(y_train.shape)\n    # print(y_test.shape)\n\n    return X_train, X_test, y_train, y_test\n\n\ndef run_experiment(model, X_train, X_test, y_train, y_test):\n    print(model)\n    clf = model_pipeline(model)\n    clf.fit(X_train, y_train)\n    preds = clf.predict(X_test)\n    print(classification_report(y_test, preds))\n    print(confusion_matrix(y_test, preds))\n    print('Accuracy score is {}'.format(clf.score(X_test, y_test)))\n\n\ndef run_experiments():\n    X_train, X_test, y_train, y_test = get_data()\n    # run_experiment(LogisticRegression(), X_train, X_test, y_train, y_test)\n    # run_experiment(RandomForestClassifier(n_estimators=100), X_train, X_test,",
+      "patch_sha256": "1d061542a74a62be404c921306699414ec5face05d6bf08a1868b0cfae12c8b3",
+      "rank_score": -256,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.9326332018390676,
+      "top_p": 0.8237317411294214
+    }
+  ],
+  "candidate_count": 9,
+  "retrieved_examples": [
+    {
+      "id": "50",
+      "project_name": "thefuck",
+      "buggy_line_content": "    return re.sub('^mkdir (.*)', 'mkdir -p \\\\1', command.script)",
+      "function": {
+        "function_name": "get_new_command",
+        "function_parent": "mkdir_p.py",
+        "function_before_start_line": 12,
+        "function_before_end_line": 13,
+        "function_after_start_line": 12,
+        "function_after_end_line": 13,
+        "function_before_token_count": 20,
+        "function_after_token_count": 20,
+        "function_before": "@sudo_support\ndef get_new_command(command, settings):\n    return re.sub('^mkdir (.*)', 'mkdir -p \\\\1', command.script)",
+        "function_after": "@sudo_support\ndef get_new_command(command, settings):\n    return re.sub('\\\\bmkdir (.*)', 'mkdir -p \\\\1', command.script)"
+      },
+      "file_name": "mkdir_p.py",
+      "file_path": "thefuck/rules/mkdir_p.py",
+      "score_reranked": 0.6766386673618878
+    },
+    {
+      "id": "36",
+      "project_name": "pandas",
+      "buggy_line_content": "            self.df = df",
+      "function": {
+        "function_name": "__init__",
+        "function_parent": "ExcelFormatter",
+        "function_before_start_line": 372,
+        "function_before_end_line": 414,
+        "function_after_start_line": 372,
+        "function_after_end_line": 414,
+        "function_before_token_count": 240,
+        "function_after_token_count": 247,
+        "function_before": "def __init__(self, df, na_rep: str='', float_format: Optional[str]=None, cols: Optional[Sequence[Label]]=None, header: Union[Sequence[Label], bool]=True, index: bool=True, index_label: Optional[Union[Label, Sequence[Label]]]=None, merge_cells: bool=False, inf_rep: str='inf', style_converter: Optional[Callable]=None):\n    self.rowcounter = 0\n    self.na_rep = na_rep\n    if hasattr(df, 'render'):\n        self.styler = df\n        df = df.data\n        if style_converter is None:\n            style_converter = CSSToExcelConverter()\n        self.style_converter = style_converter\n    else:\n        self.styler = None\n    self.df = df\n    if cols is not None:\n        if not len(Index(cols) & df.columns):\n            raise KeyError('passes columns are not ALL present dataframe')\n        if len(Index(cols) & df.columns) != len(cols):\n            raise KeyError(\"Not all names specified in 'columns' are found\")\n        self.df = df\n    self.columns = self.df.columns\n    self.float_format = float_format\n    self.index = index\n    self.index_label = index_label\n    self.header = header\n    self.merge_cells = merge_cells\n    self.inf_rep = inf_rep",
+        "function_after": "def __init__(self, df, na_rep: str='', float_format: Optional[str]=None, cols: Optional[Sequence[Label]]=None, header: Union[Sequence[Label], bool]=True, index: bool=True, index_label: Optional[Union[Label, Sequence[Label]]]=None, merge_cells: bool=False, inf_rep: str='inf', style_converter: Optional[Callable]=None):\n    self.rowcounter = 0\n    self.na_rep = na_rep\n    if hasattr(df, 'render'):\n        self.styler = df\n        df = df.data\n        if style_converter is None:\n            style_converter = CSSToExcelConverter()\n        self.style_converter = style_converter\n    else:\n        self.styler = None\n    self.df = df\n    if cols is not None:\n        if not len(Index(cols) & df.columns):\n            raise KeyError('passes columns are not ALL present dataframe')\n        if len(Index(cols) & df.columns) != len(cols):\n            raise KeyError(\"Not all names specified in 'columns' are found\")\n        self.df = df.reindex(columns=cols)\n    self.columns = self.df.columns\n    self.float_format = float_format\n    self.index = index\n    self.index_label = index_label\n    self.header = header\n    self.merge_cells = merge_cells\n    self.inf_rep = inf_rep"
+      },
+      "file_name": "excel.py",
+      "file_path": "pandas/io/formats/excel.py",
+      "score_reranked": 0.6740079433139492
+    },
+    {
+      "id": "28",
+      "project_name": "scrapy",
+      "buggy_line_content": "        if ':' not in self._url:",
+      "function": {
+        "function_name": "_set_url",
+        "function_parent": "Request",
+        "function_before_start_line": 62,
+        "function_before_end_line": 70,
+        "function_after_start_line": 62,
+        "function_after_end_line": 70,
+        "function_before_token_count": 65,
+        "function_after_token_count": 79,
+        "function_before": "def _set_url(self, url):\n    if not isinstance(url, six.string_types):\n        raise TypeError('Request url must be str or unicode, got %s:' % type(url).__name__)\n    s = safe_url_string(url, self.encoding)\n    self._url = escape_ajax(s)\n    if ':' not in self._url:\n        raise ValueError('Missing scheme in request url: %s' % self._url)",
+        "function_after": "def _set_url(self, url):\n    if not isinstance(url, six.string_types):\n        raise TypeError('Request url must be str or unicode, got %s:' % type(url).__name__)\n    s = safe_url_string(url, self.encoding)\n    self._url = escape_ajax(s)\n    if '://' not in self._url and (not self._url.startswith('data:')):\n        raise ValueError('Missing scheme in request url: %s' % self._url)"
+      },
+      "file_name": "__init__.py",
+      "file_path": "scrapy/http/request/__init__.py",
+      "score_reranked": 0.6472682722230949
+    },
+    {
+      "id": "39",
+      "project_name": "pandas",
+      "buggy_line_content": "            except (TypeError, ValueError):",
+      "function": {
+        "function_name": "_try_convert_data",
+        "function_parent": "Parser",
+        "function_before_start_line": 886,
+        "function_before_end_line": 958,
+        "function_after_start_line": 886,
+        "function_after_end_line": 958,
+        "function_before_token_count": 277,
+        "function_after_token_count": 279,
+        "function_before": "def _try_convert_data(self, name, data, use_dtypes=True, convert_dates=True):\n    \"\"\"\n        Try to parse a ndarray like into a column by inferring dtype.\n        \"\"\"\n    if use_dtypes:\n        if not self.dtype:\n            return (data, False)\n        elif self.dtype is True:\n            pass\n        else:\n            dtype = self.dtype.get(name) if isinstance(self.dtype, dict) else self.dtype\n            if dtype is not None:\n                try:\n                    dtype = np.dtype(dtype)\n                    return (data.astype(dtype), True)\n                except (TypeError, ValueError):\n                    return (data, False)\n    if convert_dates:\n        new_data, result = self._try_convert_to_date(data)\n        if result:\n            return (new_data, True)\n    result = False\n    if data.dtype == 'object':\n        try:\n            data = data.astype('float64')\n            result = True\n        except (TypeError, ValueError):\n            pass\n    if data.dtype.kind == 'f':\n        if data.dtype != 'float64':\n            try:\n                data = data.astype('float64')\n                result = True\n            except (TypeError, ValueError):\n                pass\n    if len(data) and (data.dtype == 'float' or data.dtype == 'object'):\n        try:\n            new_data = data.astype('int64')\n            if (new_data == data).all():\n                data = new_data\n                result = True\n        except (TypeError, ValueError):\n            pass\n    if data.dtype == 'int':\n        try:\n            data = data.astype('int64')\n            result = True\n        except (TypeError, ValueError):\n            pass\n    return (data, result)",
+        "function_after": "def _try_convert_data(self, name, data, use_dtypes=True, convert_dates=True):\n    \"\"\"\n        Try to parse a ndarray like into a column by inferring dtype.\n        \"\"\"\n    if use_dtypes:\n        if not self.dtype:\n            return (data, False)\n        elif self.dtype is True:\n            pass\n        else:\n            dtype = self.dtype.get(name) if isinstance(self.dtype, dict) else self.dtype\n            if dtype is not None:\n                try:\n                    dtype = np.dtype(dtype)\n                    return (data.astype(dtype), True)\n                except (TypeError, ValueError):\n                    return (data, False)\n    if convert_dates:\n        new_data, result = self._try_convert_to_date(data)\n        if result:\n            return (new_data, True)\n    result = False\n    if data.dtype == 'object':\n        try:\n            data = data.astype('float64')\n            result = True\n        except (TypeError, ValueError):\n            pass\n    if data.dtype.kind == 'f':\n        if data.dtype != 'float64':\n            try:\n                data = data.astype('float64')\n                result = True\n            except (TypeError, ValueError):\n                pass\n    if len(data) and (data.dtype == 'float' or data.dtype == 'object'):\n        try:\n            new_data = data.astype('int64')\n            if (new_data == data).all():\n                data = new_data\n                result = True\n        except (TypeError, ValueError, OverflowError):\n            pass\n    if data.dtype == 'int':\n        try:\n            data = data.astype('int64')\n            result = True\n        except (TypeError, ValueError):\n            pass\n    return (data, result)"
+      },
+      "file_name": "_json.py",
+      "file_path": "pandas/io/json/_json.py",
+      "score_reranked": 0.5322591447813875
+    },
+    {
+      "id": "32",
+      "project_name": "pandas",
+      "buggy_line_content": "            except (ValueError, OverflowError):",
+      "function": {
+        "function_name": "_try_convert_to_date",
+        "function_parent": "Parser",
+        "function_before_start_line": 953,
+        "function_before_end_line": 988,
+        "function_after_start_line": 953,
+        "function_after_end_line": 988,
+        "function_before_token_count": 154,
+        "function_after_token_count": 156,
+        "function_before": "def _try_convert_to_date(self, data):\n    \"\"\"\n        Try to parse a ndarray like into a date column.\n\n        Try to coerce object in epoch/iso formats and integer/float in epoch\n        formats. Return a boolean if parsing was successful.\n        \"\"\"\n    if not len(data):\n        return (data, False)\n    new_data = data\n    if new_data.dtype == 'object':\n        try:\n            new_data = data.astype('int64')\n        except (TypeError, ValueError, OverflowError):\n            pass\n    if issubclass(new_data.dtype.type, np.number):\n        in_range = isna(new_data._values) | (new_data > self.min_stamp) | (new_data._values == iNaT)\n        if not in_range.all():\n            return (data, False)\n    date_units = (self.date_unit,) if self.date_unit else self._STAMP_UNITS\n    for date_unit in date_units:\n        try:\n            new_data = to_datetime(new_data, errors='raise', unit=date_unit)\n        except (ValueError, OverflowError):\n            continue\n        return (new_data, True)\n    return (data, False)",
+        "function_after": "def _try_convert_to_date(self, data):\n    \"\"\"\n        Try to parse a ndarray like into a date column.\n\n        Try to coerce object in epoch/iso formats and integer/float in epoch\n        formats. Return a boolean if parsing was successful.\n        \"\"\"\n    if not len(data):\n        return (data, False)\n    new_data = data\n    if new_data.dtype == 'object':\n        try:\n            new_data = data.astype('int64')\n        except (TypeError, ValueError, OverflowError):\n            pass\n    if issubclass(new_data.dtype.type, np.number):\n        in_range = isna(new_data._values) | (new_data > self.min_stamp) | (new_data._values == iNaT)\n        if not in_range.all():\n            return (data, False)\n    date_units = (self.date_unit,) if self.date_unit else self._STAMP_UNITS\n    for date_unit in date_units:\n        try:\n            new_data = to_datetime(new_data, errors='raise', unit=date_unit)\n        except (ValueError, OverflowError, TypeError):\n            continue\n        return (new_data, True)\n    return (data, False)"
+      },
+      "file_name": "_json.py",
+      "file_path": "pandas/io/json/_json.py",
+      "score_reranked": 0.504801636847475
+    }
+  ],
+  "diffusion_plan": [
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 43
+        },
+        {
+          "op": "Replace",
+          "node": 18
+        },
+        {
+          "op": "GuardAdd",
+          "node": 15
+        },
+        {
+          "op": "InsertBefore",
+          "node": 21
+        },
+        {
+          "op": "GuardAdd",
+          "node": 5
+        },
+        {
+          "op": "GuardAdd",
+          "node": 18
+        },
+        {
+          "op": "Replace",
+          "node": 29
+        },
+        {
+          "op": "Replace",
+          "node": 15
+        },
+        {
+          "op": "Replace",
+          "node": 4
+        },
+        {
+          "op": "Delete",
+          "node": 15
+        }
+      ],
+      "score": 18.444444442506175
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 15
+        },
+        {
+          "op": "Replace",
+          "node": 4
+        },
+        {
+          "op": "GuardAdd",
+          "node": 4
+        },
+        {
+          "op": "Delete",
+          "node": 4
+        },
+        {
+          "op": "Replace",
+          "node": 5
+        },
+        {
+          "op": "GuardAdd",
+          "node": 29
+        },
+        {
+          "op": "GuardAdd",
+          "node": 5
+        },
+        {
+          "op": "Replace",
+          "node": 43
+        },
+        {
+          "op": "GuardAdd",
+          "node": 18
+        },
+        {
+          "op": "Replace",
+          "node": 18
+        },
+        {
+          "op": "Replace",
+          "node": 22
+        }
+      ],
+      "score": 17.977777775891358
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "GuardAdd",
+          "node": 43
+        },
+        {
+          "op": "Replace",
+          "node": 18
+        },
+        {
+          "op": "Replace",
+          "node": 43
+        },
+        {
+          "op": "InsertAfter",
+          "node": 15
+        },
+        {
+          "op": "Replace",
+          "node": 15
+        },
+        {
+          "op": "Replace",
+          "node": 4
+        },
+        {
+          "op": "GuardAdd",
+          "node": 15
+        }
+      ],
+      "score": 17.72222222058642
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 15
+        },
+        {
+          "op": "Replace",
+          "node": 43
+        },
+        {
+          "op": "Replace",
+          "node": 18
+        },
+        {
+          "op": "Replace",
+          "node": 29
+        },
+        {
+          "op": "Replace",
+          "node": 4
+        },
+        {
+          "op": "Replace",
+          "node": 5
+        },
+        {
+          "op": "Replace",
+          "node": 22
+        },
+        {
+          "op": "GuardAdd",
+          "node": 15
+        }
+      ],
+      "score": 17.533333331718516
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "GuardAdd",
+          "node": 43
+        },
+        {
+          "op": "GuardAdd",
+          "node": 22
+        },
+        {
+          "op": "Replace",
+          "node": 5
+        },
+        {
+          "op": "GuardAdd",
+          "node": 29
+        },
+        {
+          "op": "Replace",
+          "node": 4
+        },
+        {
+          "op": "Replace",
+          "node": 15
+        },
+        {
+          "op": "Replace",
+          "node": 43
+        },
+        {
+          "op": "Delete",
+          "node": 18
+        },
+        {
+          "op": "Replace",
+          "node": 22
+        },
+        {
+          "op": "Replace",
+          "node": 29
+        }
+      ],
+      "score": 17.39999999817778
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 43
+        },
+        {
+          "op": "Replace",
+          "node": 4
+        },
+        {
+          "op": "GuardAdd",
+          "node": 3
+        },
+        {
+          "op": "GuardAdd",
+          "node": 4
+        },
+        {
+          "op": "Replace",
+          "node": 18
+        },
+        {
+          "op": "GuardAdd",
+          "node": 29
+        },
+        {
+          "op": "InsertBefore",
+          "node": 29
+        },
+        {
+          "op": "Delete",
+          "node": 18
+        },
+        {
+          "op": "Replace",
+          "node": 22
+        },
+        {
+          "op": "Replace",
+          "node": 15
+        },
+        {
+          "op": "GuardAdd",
+          "node": 5
+        }
+      ],
+      "score": 17.322222220408644
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "GuardAdd",
+          "node": 15
+        },
+        {
+          "op": "Replace",
+          "node": 15
+        },
+        {
+          "op": "Delete",
+          "node": 5
+        },
+        {
+          "op": "Replace",
+          "node": 18
+        },
+        {
+          "op": "GuardAdd",
+          "node": 4
+        },
+        {
+          "op": "Replace",
+          "node": 22
+        },
+        {
+          "op": "GuardAdd",
+          "node": 43
+        },
+        {
+          "op": "Replace",
+          "node": 43
+        }
+      ],
+      "score": 17.17777777620247
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "GuardAdd",
+          "node": 29
+        },
+        {
+          "op": "Replace",
+          "node": 29
+        },
+        {
+          "op": "Replace",
+          "node": 15
+        },
+        {
+          "op": "Replace",
+          "node": 43
+        },
+        {
+          "op": "GuardAdd",
+          "node": 15
+        },
+        {
+          "op": "Replace",
+          "node": 18
+        },
+        {
+          "op": "Delete",
+          "node": 4
+        }
+      ],
+      "score": 16.933333331785185
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 15
+        },
+        {
+          "op": "Replace",
+          "node": 43
+        },
+        {
+          "op": "Replace",
+          "node": 29
+        },
+        {
+          "op": "Replace",
+          "node": 5
+        },
+        {
+          "op": "InsertBefore",
+          "node": 15
+        },
+        {
+          "op": "GuardAdd",
+          "node": 29
+        },
+        {
+          "op": "Replace",
+          "node": 4
+        }
+      ],
+      "score": 16.4999999985
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 18
+        },
+        {
+          "op": "GuardAdd",
+          "node": 29
+        },
+        {
+          "op": "GuardAdd",
+          "node": 5
+        },
+        {
+          "op": "Replace",
+          "node": 29
+        },
+        {
+          "op": "Replace",
+          "node": 15
+        },
+        {
+          "op": "GuardAdd",
+          "node": 21
+        },
+        {
+          "op": "InsertAfter",
+          "node": 4
+        },
+        {
+          "op": "Replace",
+          "node": 43
+        },
+        {
+          "op": "GuardAdd",
+          "node": 43
+        }
+      ],
+      "score": 16.43333333161852
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 5
+        },
+        {
+          "op": "Replace",
+          "node": 15
+        },
+        {
+          "op": "Replace",
+          "node": 29
+        },
+        {
+          "op": "Replace",
+          "node": 43
+        },
+        {
+          "op": "Replace",
+          "node": 18
+        },
+        {
+          "op": "GuardAdd",
+          "node": 43
+        },
+        {
+          "op": "Replace",
+          "node": 21
+        },
+        {
+          "op": "Replace",
+          "node": 22
+        }
+      ],
+      "score": 16.399999998511113
+    },
+    {
+      "analysis": "Hybrid Diffusion Model",
+      "edits": [
+        {
+          "op": "Replace",
+          "node": 15
+        },
+        {
+          "op": "Replace",
+          "node": 22
+        },
+        {
+          "op": "Replace",
+          "node": 29
+        },
+        {
+          "op": "GuardAdd",
+          "node": 29
+        },
+        {
+          "op": "GuardAdd",
+          "node": 43
+        },
+        {
+          "op": "GuardAdd",
+          "node": 4
+        },
+        {
+          "op": "GuardAdd",
+          "node": 15
+        }
+      ],
+      "score": 16.222222220753086
+    }
+  ],
+  "static_analysis_nodes": [
+    {
+      "line": 4,
+      "line_absolute": 89,
+      "node_id": 15,
+      "node_id_local": 4,
+      "type": "Call",
+      "code": "os.path.dirname(new_path)",
+      "distance_to_buggy": 0,
+      "context": "   1:   def move(self, old_path, new_path, raise_if_exists=False):\n   2:       if raise_if_exists and os.path.exists(new_path):\n   3:           raise RuntimeError('Destination exists: %s' % new_path)\n   4:->     d = os.path.dirname(new_path)\n   5:       if d and (not os.path.exists(d)):\n   6:           self.fs.mkdir(d)\n   7:       os.rename(old_path, new_path)",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Attribute",
+          "value": {
+            "_type": "Attribute"
+          },
+          "attr": "dirname",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [
+          {
+            "_type": "Name",
+            "id": "new_path",
+            "ctx": {
+              "_type": "Load"
+            }
+          }
+        ],
+        "keywords": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -24.0
+    },
+    {
+      "line": 5,
+      "line_absolute": 90,
+      "node_id": 43,
+      "node_id_local": 6,
+      "type": "Call",
+      "code": "os.path.exists(d)",
+      "distance_to_buggy": 0,
+      "context": "   2:       if raise_if_exists and os.path.exists(new_path):\n   3:           raise RuntimeError('Destination exists: %s' % new_path)\n   4:       d = os.path.dirname(new_path)\n   5:->     if d and (not os.path.exists(d)):\n   6:           self.fs.mkdir(d)\n   7:       os.rename(old_path, new_path)",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Attribute",
+          "value": {
+            "_type": "Attribute"
+          },
+          "attr": "exists",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [
+          {
+            "_type": "Name",
+            "id": "d",
+            "ctx": {
+              "_type": "Load"
+            }
+          }
+        ],
+        "keywords": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -24.0
+    },
+    {
+      "line": 6,
+      "line_absolute": 91,
+      "node_id": 29,
+      "node_id_local": 7,
+      "type": "Call",
+      "code": "self.fs.mkdir(d)",
+      "distance_to_buggy": 0,
+      "context": "   3:           raise RuntimeError('Destination exists: %s' % new_path)\n   4:       d = os.path.dirname(new_path)\n   5:       if d and (not os.path.exists(d)):\n   6:->         self.fs.mkdir(d)\n   7:       os.rename(old_path, new_path)",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Attribute",
+          "value": {
+            "_type": "Attribute"
+          },
+          "attr": "mkdir",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [
+          {
+            "_type": "Name",
+            "id": "d",
+            "ctx": {
+              "_type": "Load"
+            }
+          }
+        ],
+        "keywords": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -24.0
+    },
+    {
+      "line": 7,
+      "line_absolute": 92,
+      "node_id": 18,
+      "node_id_local": 8,
+      "type": "Call",
+      "code": "os.rename(old_path, new_path)",
+      "distance_to_buggy": 0,
+      "context": "   4:       d = os.path.dirname(new_path)\n   5:       if d and (not os.path.exists(d)):\n   6:           self.fs.mkdir(d)\n   7:->     os.rename(old_path, new_path)",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Attribute",
+          "value": {
+            "_type": "Name"
+          },
+          "attr": "rename",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [
+          {
+            "_type": "Name",
+            "id": "old_path",
+            "ctx": {
+              "_type": "Load"
+            }
+          },
+          {
+            "_type": "Name",
+            "id": "new_path",
+            "ctx": {
+              "_type": "Load"
+            }
+          }
+        ],
+        "keywords": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -24.0
+    },
+    {
+      "line": 4,
+      "line_absolute": 89,
+      "node_id": 4,
+      "node_id_local": 3,
+      "type": "Assign",
+      "code": "d = os.path.dirname(new_path)",
+      "distance_to_buggy": 0,
+      "context": "   1:   def move(self, old_path, new_path, raise_if_exists=False):\n   2:       if raise_if_exists and os.path.exists(new_path):\n   3:           raise RuntimeError('Destination exists: %s' % new_path)\n   4:->     d = os.path.dirname(new_path)\n   5:       if d and (not os.path.exists(d)):\n   6:           self.fs.mkdir(d)\n   7:       os.rename(old_path, new_path)",
+      "ast_subtree_json": {
+        "_type": "Assign",
+        "targets": [
+          {
+            "_type": "Name",
+            "id": "d",
+            "ctx": {
+              "_type": "Store"
+            }
+          }
+        ],
+        "value": {
+          "_type": "Call",
+          "func": {
+            "_type": "Attribute"
+          },
+          "args": [
+            {
+              "_type": "Name"
+            }
+          ],
+          "keywords": []
+        },
+        "type_comment": null
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -23.0
+    },
+    {
+      "line": 5,
+      "line_absolute": 90,
+      "node_id": 5,
+      "node_id_local": 5,
+      "type": "If",
+      "code": "if d and (not os.path.exists(d)):\n    self.fs.mkdir(d)",
+      "distance_to_buggy": 0,
+      "context": "   2:       if raise_if_exists and os.path.exists(new_path):\n   3:           raise RuntimeError('Destination exists: %s' % new_path)\n   4:       d = os.path.dirname(new_path)\n   5:->     if d and (not os.path.exists(d)):\n   6:           self.fs.mkdir(d)\n   7:       os.rename(old_path, new_path)",
+      "ast_subtree_json": {
+        "_type": "If",
+        "test": {
+          "_type": "BoolOp",
+          "op": {
+            "_type": "And"
+          },
+          "values": [
+            {
+              "_type": "Name"
+            },
+            {
+              "_type": "UnaryOp"
+            }
+          ]
+        },
+        "body": [
+          {
+            "_type": "Expr",
+            "value": {
+              "_type": "Call"
+            }
+          }
+        ],
+        "orelse": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|system|>...",
+      "reranker_score": -23.0
+    },
+    {
+      "line": 3,
+      "line_absolute": 88,
+      "node_id": 22,
+      "node_id_local": 2,
+      "type": "Call",
+      "code": "RuntimeError('Destination exists: %s' % new_path)",
+      "distance_to_buggy": 1,
+      "context": "   1:   def move(self, old_path, new_path, raise_if_exists=False):\n   2:       if raise_if_exists and os.path.exists(new_path):\n   3:->         raise RuntimeError('Destination exists: %s' % new_path)\n   4:       d = os.path.dirname(new_path)\n   5:       if d and (not os.path.exists(d)):\n   6:           self.fs.mkdir(d)",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Name",
+          "id": "RuntimeError",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [
+          {
+            "_type": "BinOp",
+            "left": {
+              "_type": "Constant"
+            },
+            "op": {
+              "_type": "Mod"
+            },
+            "right": {
+              "_type": "Name"
+            }
+          }
+        ],
+        "keywords": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|user|> A...",
+      "reranker_score": -14.0
+    },
+    {
+      "line": 2,
+      "line_absolute": 87,
+      "node_id": 21,
+      "node_id_local": 1,
+      "type": "Call",
+      "code": "os.path.exists(new_path)",
+      "distance_to_buggy": 2,
+      "context": "   1:   def move(self, old_path, new_path, raise_if_exists=False):\n   2:->     if raise_if_exists and os.path.exists(new_path):\n   3:           raise RuntimeError('Destination exists: %s' % new_path)\n   4:       d = os.path.dirname(new_path)\n   5:       if d and (not os.path.exists(d)):",
+      "ast_subtree_json": {
+        "_type": "Call",
+        "func": {
+          "_type": "Attribute",
+          "value": {
+            "_type": "Attribute"
+          },
+          "attr": "exists",
+          "ctx": {
+            "_type": "Load"
+          }
+        },
+        "args": [
+          {
+            "_type": "Name",
+            "id": "new_path",
+            "ctx": {
+              "_type": "Load"
+            }
+          }
+        ],
+        "keywords": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|system|>...",
+      "reranker_score": -4.0
+    },
+    {
+      "line": 2,
+      "line_absolute": 87,
+      "node_id": 3,
+      "node_id_local": 0,
+      "type": "If",
+      "code": "if raise_if_exists and os.path.exists(new_path):\n    raise RuntimeError('Destination exists: %s' % new_path)",
+      "distance_to_buggy": 2,
+      "context": "   1:   def move(self, old_path, new_path, raise_if_exists=False):\n   2:->     if raise_if_exists and os.path.exists(new_path):\n   3:           raise RuntimeError('Destination exists: %s' % new_path)\n   4:       d = os.path.dirname(new_path)\n   5:       if d and (not os.path.exists(d)):",
+      "ast_subtree_json": {
+        "_type": "If",
+        "test": {
+          "_type": "BoolOp",
+          "op": {
+            "_type": "And"
+          },
+          "values": [
+            {
+              "_type": "Name"
+            },
+            {
+              "_type": "Call"
+            }
+          ]
+        },
+        "body": [
+          {
+            "_type": "Raise",
+            "exc": {
+              "_type": "Call"
+            },
+            "cause": null
+          }
+        ],
+        "orelse": []
+      },
+      "reason": "No valid JSON. Raw: You are an expert Python Static Analyzer. You are sensitive to both runtime crashes AND logical flaws. You MUST output ONLY a valid JSON array. Do NOT output markdown blocks or extra text. <|system|>...",
+      "reranker_score": -3.0
+    }
+  ]
+}

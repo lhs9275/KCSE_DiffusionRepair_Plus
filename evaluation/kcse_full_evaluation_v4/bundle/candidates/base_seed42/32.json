@@ -1,0 +1,128 @@
+{
+  "bug_id": "32",
+  "seed": 42,
+  "arm": "base",
+  "candidates": [
+    {
+      "index": 0,
+      "patch_text": "def _try_convert_to_date(self, data):\n    \"\"\"\n        Try to parse a ndarray like into a date column.\n\n        Try to coerce object in epoch/iso formats and integer/float in epoch\n        formats. Return a boolean if parsing was successful.\n        \"\"\"\n    if not len(data):\n        return (data, False)\n    new_data = data\n    if new_data.dtype == 'object':\n        try:\n            new_data = data.astype('int64')\n        except (TypeError, ValueError):\n            pass\n    if issubclass(new_data.dtype.type, np.number):\n        in_range = isna(new_data._values) | (new_data > self.min_stamp) | (new_data._values == iNaT)\n        if not in_range.all():\n            return (data, False)\n    date_units = (self.date_unit,) if self.date_unit else self._STAMP_UNITS\n    for date_unit in date_units:\n        try:\n            new_data = to_datetime(new_data, errors='raise', unit=date_unit)\n        except (ValueError):\n            continue\n        return (new_data, True)\n    return (data, False)",
+      "patch_sha256": "d0dd93f2a8b82853bf0852333492b22105aa0e4ad8e94a40449dcf92a86bc1f5",
+      "rank_score": 244,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8850407915843882,
+      "top_p": 0.7720008604178135
+    },
+    {
+      "index": 1,
+      "patch_text": "def _try_convert_to_date(self, data):\n    \"\"\"\n        Try to parse a ndarray like into a date column.\n\n        Try to coerce object in epoch/iso formats and integer/float in epoch\n        formats. Return a boolean if parsing was successful.\n        \"\"\"\n    if not len(data):\n        return (data, False)\n    new_data = data\n    if new_data.dtype == 'object':\n        try:\n            new_data = data.astype('int64')\n        except TypeError:\n            pass\n    if issubclass(new_data.dtype.type, np.number):\n        in_range = isna(new_data._values) | (new_data > self.min_stamp) | (new_data._values == iNaT)\n        if not in_range.all():\n            return (data, False)\n    date_units = (self.date_unit,) if self.date_unit else self._STAMP_UNITS\n    for date_unit in date_units:\n        try:\n            new_data = to_datetime(new_data, errors='raise', unit=date_unit)\n        except ValueError:\n            continue\n        return (new_data, True)\n    return (data, False)",
+      "patch_sha256": "3b5b883f2e9c0d00eba354253a628772a9dcda6cd0228e94bb87ee1559eec589",
+      "rank_score": 243,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8850407915843882,
+      "top_p": 0.7720008604178135
+    },
+    {
+      "index": 2,
+      "patch_text": "def _try_convert_to_date(self, data):\n    \"\"\"\n        Try to parse a ndarray like into a date column.\n\n        Try to coerce object in epoch/iso formats and integer/float in epoch\n        formats. Return a boolean if parsing was successful.\n        \"\"\"\n    if not len(data):\n        return (data, False)\n    new_data = data\n    if new_data.dtype == 'object':\n        try:\n            new_data = data.astype('int64')\n        except (TypeError, ValueError):\n            pass\n    if issubclass(new_data.dtype.type, np.number):\n        in_range = isna(new_data._values) | (new_data > self.min_stamp) | (new_data._values == iNaT)\n        if not in_range.all():\n            return (data, False)\n    date_units = (self.date_unit,) if self.date_unit else self._STAMP_UNITS\n    for date_unit in date_units:\n        try:\n            new_data = to_datetime(new_data, errors='raise', unit=date_unit)\n        except (ValueError, OverflowError):\n            continue\n        return (new_data, True)\n    return (data, False)",
+      "patch_sha256": "da2c28ed8963e1721cbd88830c6c53160baed25b25c4db2f467516adb1e0bebd",
+      "rank_score": 214,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.9374042813624712,
+      "top_p": 0.828917697133121
+    },
+    {
+      "index": 3,
+      "patch_text": "def _try_convert_to_date(self, data):\n    \"\"\"\n    Try to parse a ndarray like into a date column.\n\n    Try to coerce object in epoch/iso formats and integer/float in epoch\n    formats. Return a boolean if parsing was successful.\n    \"\"\"\n    if not len(data):\n        return (data, False)\n    new_data = data\n    if new_data.dtype == 'object':\n        try:\n            new_data = data.astype('int64')\n        except TypeError:\n            pass\n    if issubclass(new_data.dtype.type, np.number):\n        in_range = isna(new_data._values) | (new_data > self.min_stamp) | (new_data._values == iNaT)\n        if not in_range.all():\n            return (data, False)\n    date_units = (self.date_unit,) if self.date_unit else self._STAMP_UNITS\n    for date_unit in date_units:\n        try:\n            new_data = to_datetime(new_data, errors='raise', unit=date_unit)\n        except (ValueError, OverflowError):\n            continue\n        return (new_data, True)\n    return (data, False)",
+      "patch_sha256": "af658bb4d9a01aca34d6b005b517e854f15c38e7c4f0e37d733e5ac881a9fd07",
+      "rank_score": 204,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8850407915843882,
+      "top_p": 0.7720008604178135
+    },
+    {
+      "index": 4,
+      "patch_text": "def _try_convert_to_date(self, data):\n    \"\"\"\n        Try to parse a ndarray like into a date column.\n\n        Try to coerce object in epoch/iso formats and integer/float in epoch\n        formats. Return a boolean if parsing was successful.\n        \"\"\"\n    if not len(data):\n        return (data, False)\n    new_data = data\n    if new_data.dtype == 'object':\n        try:\n            new_data = data.astype('int64')\n        except (TypeError, ValueError):\n            pass\n    if issubclass(new_data.dtype.type, np.number):\n        in_range = isna(new_data._values) | (new_data > self.min_stamp) | (new_data._values == iNaT)\n        if not in_range.all():\n            return (data, False)\n    date_units = (self.date_unit,) if self.date_unit else self._STAMP_UNITS\n    for date_unit in date_units:\n        try:\n            new_data = to_datetime(new_data, errors='raise', unit=date_unit)\n        except (ValueError):  # <--- FIXED\n            continue\n        return (new_data, True)\n    return (data, False)\n\n##end_correction\n##end_correction\nimport unittest\nfrom autoadapt.core.utils import get_target_lines\n\n\nclass TestTargetLines(unittest.TestCase):\n    def test_get_target_lines_with_start_line_only(self):\n        target_lines = get_target_lines(\"5\", \"10\")\n        self.assertEqual(target_lines, [\"5\"])\n\n    def test_get_target_lines_with_end_line_only(self):\n        target_lines = get_target_lines(\"-5\", \"10\")\n        self.assertEqual(target_lines, [\"10\"])\n\n    def test_get_target_lines_with_both_lines(self):\n        target_lines = get_target_lines(\"10\", \"20\")\n        self.assertEqual(target_lines, [\"10\", \"11\", \"12\", \"13\", \"14\", \"15\", \"16\", \"17\", \"18\", \"19\"])\nimport re\nfrom pathlib import Path\nfrom typing import List, Union\n\nfrom git import Repo\n\n\nclass GitRepo:\n    \"\"\"\n    Class for manipulating a Git repository\n    \"\"\"\n\n    def __init__(self, repo_path: Union[str, Path]):\n        self.repo_path = repo_path\n        self.repo = Repo(self.repo_path)\n\n    @staticmethod\n    def get_last_commit_message(repo_path: Union[str, Path]) -> str:\n        \"\"\"\n        Get the commit message of the last commit in a Git repository\n        :param repo_path: path to the Git repository\n        :return: commit message\n        \"\"\"",
+      "patch_sha256": "7cf6c0b1fd6dd949e519768ebf5dd7dafce90379efe2a34c829dcf9dc56ac921",
+      "rank_score": -25,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8992917549455451,
+      "top_p": 0.7874910379842883
+    },
+    {
+      "index": 5,
+      "patch_text": "def _try_convert_to_date(self, data):\n    \"\"\"\n        Try to parse a ndarray like into a date column.\n\n        Try to coerce object in epoch/iso formats and integer/float in epoch\n        formats. Return a boolean if parsing was successful.\n        \"\"\"\n    if not len(data):\n        return (data, False)\n    new_data = data\n    if new_data.dtype == 'object':\n        try:\n            new_data = data.astype('int64')\n        except (TypeError, ValueError):\n            pass\n    if issubclass(new_data.dtype.type, np.number):\n        in_range = isna(new_data._values) | (new_data > self.min_stamp) | (new_data._values == iNaT)\n        if not in_range.all():\n            return (data, False)\n    date_units = (self.date_unit,) if self.date_unit else self._STAMP_UNITS\n    for date_unit in date_units:\n        try:\n            new_data = to_datetime(new_data, errors='raise', unit=date_unit)\n        except (ValueError):  # <-- BUG FIX\n            continue\n        return (new_data, True)\n    return (data, False)\n\n##end\n#!/usr/bin/env python\n\"\"\"\nGenerate a corpus from git history, and dump it to a directory.\n\nUsage:\n\n    python corpus.py [path to source directory] [path to output directory] [branch name]\n\"\"\"\nfrom pathlib import Path\nimport shutil\nfrom argparse import ArgumentParser\n\nimport git\n\nif __name__ == '__main__':\n    parser = ArgumentParser()\n    parser.add_argument('source', type=Path)\n    parser.add_argument('dest', type=Path)\n    parser.add_argument('--branch', default='master')\n    args = parser.parse_args()\n\n    repo = git.Repo(args.source)\n    repo.git.checkout(args.branch)\n    corpus = repo.git.diff(None, '--stat', '--summary').split('\\n')\n    with open(args.dest / 'corpus.txt', 'w') as f:\n        f.writelines(corpus)\n\n    for item in corpus:\n        file = item.split(' ')[1].split('/')[-1].split(':')[0]\n        path = args.dest / file\n        if not path.parent.exists():\n            path.parent.mkdir(parents=True)\n        shutil.copyfile(args.source / item.split(' ')[1], path)\n#!/usr/bin/env python\n\"\"\"\nGiven a list of bug IDs, print all the metadata for that bug\n\"\"\"\nimport sys\nfrom argparse import ArgumentParser\n\nfrom git_bug import get_bug\n\n\nif __name__ == '__main__':\n    parser = ArgumentParser()\n    parser.add_argument('bugs', nargs='+', type=int)\n    args = parser",
+      "patch_sha256": "a0d783678f9c7d8c8dc88b5cba3f80aeb16e005017edbcd64795e55302082cb9",
+      "rank_score": -26,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8089233151013046,
+      "top_p": 0.9111541438766307
+    },
+    {
+      "index": 6,
+      "patch_text": "def _try_convert_to_date(self, data):\n    \"\"\"\n        Try to parse a ndarray like into a date column.\n\n        Try to coerce object in epoch/iso formats and integer/float in epoch\n        formats. Return a boolean if parsing was successful.\n        \"\"\"\n    if not len(data):\n        return (data, False)\n    new_data = data\n    if new_data.dtype == 'object':\n        try:\n            new_data = data.astype('int64')\n        except (TypeError, ValueError):\n            pass\n    if issubclass(new_data.dtype.type, np.number):\n        in_range = isna(new_data._values) | (new_data > self.min_stamp) | (new_data._values == iNaT)\n        if not in_range.all():\n            return (data, False)\n    date_units = (self.date_unit,) if self.date_unit else self._STAMP_UNITS\n    for date_unit in date_units:\n        try:\n            new_data = to_datetime(new_data, errors='raise', unit=date_unit)\n        except (ValueError, OverflowError): \n            continue\n        return (new_data, True)\n    return (data, False)\nimport pytest\nimport numpy as np\nfrom pandas import (Series, DatetimeIndex, DataFrame)\nimport pandas._testing as tm\n\n\ndef test_groupby_apply_series_returns_series(date_range):\n    # GH#37260\n    # apply with a Series returns a Series\n    s = Series([1, 2, 3])\n\n    def f(x):\n        return x + 1\n\n    result = s.groupby(date_range).apply(f)\n    expected = Series(np.repeat(2, 3), index=date_range)\n    tm.assert_series_equal(result, expected)\n\n\ndef test_groupby_apply_series_returns_dataframe(date_range):\n    # apply with a Series returns a DataFrame\n    s = Series([1, 2, 3])\n\n    def f(x):\n        return x + 1\n\n    result = s.groupby(date_range).apply(lambda x: Series(x))\n    expected = DataFrame({0: [1, 2, 3]}, index=date_range)\n    tm.assert_frame_equal(result, expected)\n\n\ndef test_groupby_apply_series_multiindex_returns_series(date_range):\n    # apply with a Series returns a Series\n    s = Series([1, 2, 3], index=[0, 1, 2])\n\n    def f(x):\n        return x + 1\n\n    result = s.groupby(date_range, group_keys=False).apply(f)\n    expected = Series(np.repeat(2, 3), index=date_range)\n    tm.assert_series_equal(result, expected)",
+      "patch_sha256": "f961caadebaaefad0fc0dd25cce5805ad24c8e9909892742403484938c214cf4",
+      "rank_score": -52,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8089233151013046,
+      "top_p": 0.9111541438766307
+    },
+    {
+      "index": 7,
+      "patch_text": "def _try_convert_to_date(self, data):\n    \"\"\"\n        Try to parse a ndarray like into a date column.\n\n        Try to coerce object in epoch/iso formats and integer/float in epoch\n        formats. Return a boolean if parsing was successful.\n        \"\"\"\n    if not len(data):\n        return (data, False)\n    new_data = data\n    if new_data.dtype == 'object':\n        try:\n            new_data = data.astype('int64')\n        except (TypeError, ValueError):\n            pass\n    if issubclass(new_data.dtype.type, np.number):\n        in_range = isna(new_data._values) | (new_data > self.min_stamp) | (new_data._values == iNaT)\n        if not in_range.all():\n            return (data, False)\n    date_units = (self.date_unit,) if self.date_unit else self._STAMP_UNITS\n    for date_unit in date_units:\n        try:\n            new_data = to_datetime(new_data, errors='raise', unit=date_unit)\n        except (ValueError):  # <--- BUGGY LINE\n            continue\n        return (new_data, True)\n    return (data, False)\n\n\n##incorrect\ndef _try_convert_to_date(self, data):\n    \"\"\"\n        Try to parse a ndarray like into a date column.\n\n        Try to coerce object in epoch/iso formats and integer/float in epoch\n        formats. Return a boolean if parsing was successful.\n        \"\"\"\n    if not len(data):\n        return (data, False)\n    new_data = data\n    if new_data.dtype == 'object':\n        try:\n            new_data = data.astype('int64')\n        except (TypeError, ValueError):\n            pass\n    if issubclass(new_data.dtype.type, np.number):\n        in_range = isna(new_data._values) | (new_data > self.min_stamp) | (new_data._values == iNaT)\n        if not in_range.all():\n            return (data, False)\n    date_units = (self.date_unit,) if self.date_unit else self._STAMP_UNITS\n    for date_unit in date_units:\n        try:\n            new_data = to_datetime(new_data, errors='raise', unit=date_unit)\n        except (ValueError, OverflowError):  # <--- BUGGY LINE\n            continue\n        return (new_data, True)\n    return (data, False)\nimport json\nimport os\nfrom pathlib import Path\n\nimport numpy as np\nimport pandas as pd\nimport requests\n\nfrom.utils import get_dataset_path\n\n\ndef _download_file(url, filename):\n    r = requests.get(url)\n    with open(filename, \"wb\") as f:\n        f.write(r.content)",
+      "patch_sha256": "a4fe37f36b9b2fafe933beea634b477f1b589a679dc838d4bf246584b1332cdb",
+      "rank_score": -53,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8250994923331102,
+      "top_p": 0.9313743654163876
+    },
+    {
+      "index": 8,
+      "patch_text": "def _try_convert_to_date(self, data):\n    \"\"\"\n        Try to parse a ndarray like into a date column.\n\n        Try to coerce object in epoch/iso formats and integer/float in epoch\n        formats. Return a boolean if parsing was successful.\n        \"\"\"\n    if not len(data):\n        return (data, False)\n    new_data = data\n    if new_data.dtype == 'object':\n        try:\n            new_data = data.astype('int64')\n        except TypeError:\n            pass\n    if issubclass(new_data.dtype.type, np.number):\n        in_range = isna(new_data._values) | (new_data > self.min_stamp) | (new_data._values == iNaT)\n        if not in_range.all():\n            return (data, False)\n    date_units = (self.date_unit,) if self.date_unit else self._STAMP_UNITS\n    for date_unit in date_units:\n        try:\n            new_data = to_datetime(new_data, errors='raise', unit=date_unit)\n        except ValueError:  # <--- BUGGY LINE\n            continue\n        return (new_data, True)\n    return (data, False)\nimport os\nimport sys\nimport time\nimport unittest\nfrom pathlib import Path\n\nimport pandas as pd\n\nfrom autoimpute.autoimputer import AutoImputer\nfrom autoimpute.constants import MISSING_VALUES, NUMERIC_DTYPES\nfrom autoimpute.datasets import get_dataset\nfrom autoimpute.datasets import get_dataset_path\nfrom autoimpute.utils import generate_csv_report\n\nfrom.utils import generate_report_csv\n\n\ndef main():\n    if not len(sys.argv) > 1:\n        raise Exception(\"Usage: python test_report.py <dataset_name>\")\n\n    dataset_name = sys.argv[1]\n    dataset_path = get_dataset_path(dataset_name)\n\n    # load the dataset\n    dataset = get_dataset(dataset_name)\n    df = dataset.get_dataframe()\n\n    # impute missing values\n    imputed_df = AutoImputer(df, missing_values=MISSING_VALUES).fit().transform()\n\n    # save csv file\n    csv_path = str(Path(dataset_path, \"imputed.csv\"))\n    imputed_df.to_csv(csv_path, index=False)\n\n    # run generate_report_csv function\n    report_csv_path = generate_report_csv(csv_path, dataset_name)\n\n    # print result\n    print(\"Report CSV path: {}\".format(report_csv_path))\n\n\nif __name__ == \"__main__\":\n    main()\n# Bug Report: test_case_study_v1_01.md\n\n## Test Case: test_case_study_v1_01.md",
+      "patch_sha256": "3e59366fefc682b31854962294893cf6f7aacdb3c19b67382f24418e7339ba4e",
+      "rank_score": -104,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8895986980815249,
+      "top_p": 0.7769551066103534
+    }
+  ],
+  "candidate_count": 9,
+  "retrieved_examples": [],
+  "diffusion_plan": [],
+  "static_analysis_nodes": []
+}

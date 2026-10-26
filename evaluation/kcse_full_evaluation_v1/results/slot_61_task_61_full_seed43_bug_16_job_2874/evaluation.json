@@ -1,0 +1,135 @@
+{
+  "16": {
+    "status": "Success",
+    "nucleus_sampling_flags": [
+      "Error: test_execution"
+    ],
+    "test_evidence": [
+      {
+        "target_file_before_test_sha256": "1cfb72601e8a104fc724658656a450242fb64cf9b96028283435ded781ce3f98",
+        "bytecode_removed_before_test": [],
+        "command": [
+          "bugsinpy-test"
+        ],
+        "cwd": "/output/workspaces/ws_16_11_4pxsz1h2/youtube-dl_3/youtube-dl",
+        "stdout": "python -m unittest -q test.test_utils.TestUtil.test_unescape_html\nRUN EVERY COMMAND\n0\n\n\n/output/workspaces/ws_16_11_4pxsz1h2/youtube-dl_3/youtube-dl/youtube_dl/extractor/pandatv.py:39: SyntaxWarning: \"is not\" with a literal. Did you mean \"!=\"?\n  if error_code is not 0:\n----------------------------------------------------------------------\nRan 1 test in 0.001s\n\nOK\n",
+        "stderr": "",
+        "returncode": 0,
+        "timed_out": false,
+        "flag": "Plausible",
+        "import_root": "/output/workspaces/ws_16_11_4pxsz1h2/youtube-dl_3/youtube-dl",
+        "pythonpath": "/output/workspaces/ws_16_11_4pxsz1h2/youtube-dl_3/youtube-dl",
+        "raw_test_flag": "Plausible",
+        "target_file_after_test_sha256": "1cfb72601e8a104fc724658656a450242fb64cf9b96028283435ded781ce3f98",
+        "test_preserved_target_file": true,
+        "target_file_sha256": "1cfb72601e8a104fc724658656a450242fb64cf9b96028283435ded781ce3f98",
+        "stage": "fixed_control",
+        "bug_id": "16",
+        "candidate_index": null,
+        "patch_sha256": null
+      },
+      {
+        "target_file_before_test_sha256": "52c94a3d536cad39ea25c67abc108f6074292d49ac2cae8cdbf0465794fdf8cc",
+        "bytecode_removed_before_test": [],
+        "command": [
+          "bugsinpy-test"
+        ],
+        "cwd": "/output/workspaces/ws_16_11_4pxsz1h2/youtube-dl_3/youtube-dl",
+        "stdout": "python -m unittest -q test.test_utils.TestUtil.test_unescape_html\nRUN EVERY COMMAND\n0\n\n\n/output/workspaces/ws_16_11_4pxsz1h2/youtube-dl_3/youtube-dl/youtube_dl/extractor/pandatv.py:39: SyntaxWarning: \"is not\" with a literal. Did you mean \"!=\"?\n  if error_code is not 0:\n======================================================================\nFAIL: test_unescape_html (test.test_utils.TestUtil)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/output/workspaces/ws_16_11_4pxsz1h2/youtube-dl_3/youtube-dl/test/test_utils.py\", line 282, in test_unescape_html\n    self.assertEqual(unescapeHTML('&a&quot;'), '&a\"')\nAssertionError: '&a&quot;' != '&a\"'\n- &a&quot;\n+ &a\"\n\n\n----------------------------------------------------------------------\nRan 1 test in 0.001s\n\nFAILED (failures=1)\n",
+        "stderr": "",
+        "returncode": 0,
+        "timed_out": false,
+        "flag": "Fail",
+        "import_root": "/output/workspaces/ws_16_11_4pxsz1h2/youtube-dl_3/youtube-dl",
+        "pythonpath": "/output/workspaces/ws_16_11_4pxsz1h2/youtube-dl_3/youtube-dl",
+        "raw_test_flag": "Fail",
+        "target_file_after_test_sha256": "52c94a3d536cad39ea25c67abc108f6074292d49ac2cae8cdbf0465794fdf8cc",
+        "test_preserved_target_file": true,
+        "candidate_input_sha256": "8c2b7d7a4301c345d08ac0bea9499e3e6e39188897d2edeefdba7212a3153907",
+        "target_file_before_sha256": "1cfb72601e8a104fc724658656a450242fb64cf9b96028283435ded781ce3f98",
+        "executed_function_sha256": "7a1e1a901c33b38c89f5d89eb21948c79c9a5530e6c2ce529c335d5d19cb7a78",
+        "target_file_during_test_sha256": "52c94a3d536cad39ea25c67abc108f6074292d49ac2cae8cdbf0465794fdf8cc",
+        "target_file_after_restore_sha256": "1cfb72601e8a104fc724658656a450242fb64cf9b96028283435ded781ce3f98",
+        "restore_integrity": true,
+        "restore_returncode": 0,
+        "restore_exception": null,
+        "bytecode_removed_after_restore": [],
+        "cache_cleanup_exception": null,
+        "stage": "buggy_control",
+        "bug_id": "16",
+        "candidate_index": null,
+        "patch_sha256": "8c2b7d7a4301c345d08ac0bea9499e3e6e39188897d2edeefdba7212a3153907"
+      },
+      {
+        "target_file_before_test_sha256": "1cfb72601e8a104fc724658656a450242fb64cf9b96028283435ded781ce3f98",
+        "bytecode_removed_before_test": [],
+        "command": [
+          "bugsinpy-test"
+        ],
+        "cwd": "/output/workspaces/ws_16_11_4pxsz1h2/youtube-dl_3/youtube-dl",
+        "stdout": "python -m unittest -q test.test_utils.TestUtil.test_unescape_html\nRUN EVERY COMMAND\n0\n\n\n/output/workspaces/ws_16_11_4pxsz1h2/youtube-dl_3/youtube-dl/youtube_dl/extractor/pandatv.py:39: SyntaxWarning: \"is not\" with a literal. Did you mean \"!=\"?\n  if error_code is not 0:\n----------------------------------------------------------------------\nRan 1 test in 0.001s\n\nOK\n",
+        "stderr": "",
+        "returncode": 0,
+        "timed_out": false,
+        "flag": "Plausible",
+        "import_root": "/output/workspaces/ws_16_11_4pxsz1h2/youtube-dl_3/youtube-dl",
+        "pythonpath": "/output/workspaces/ws_16_11_4pxsz1h2/youtube-dl_3/youtube-dl",
+        "raw_test_flag": "Plausible",
+        "target_file_after_test_sha256": "1cfb72601e8a104fc724658656a450242fb64cf9b96028283435ded781ce3f98",
+        "test_preserved_target_file": true,
+        "target_file_sha256": "1cfb72601e8a104fc724658656a450242fb64cf9b96028283435ded781ce3f98",
+        "matches_initial_fixed_file": true,
+        "stage": "restored_fixed_control",
+        "bug_id": "16",
+        "candidate_index": null,
+        "patch_sha256": null
+      },
+      {
+        "target_file_before_test_sha256": "df9cca1b9910c54f041b73e3e46a9732196456bcf516af2227591856eb775596",
+        "bytecode_removed_before_test": [],
+        "command": [
+          "bugsinpy-test"
+        ],
+        "cwd": "/output/workspaces/ws_16_11_4pxsz1h2/youtube-dl_3/youtube-dl",
+        "stdout": "python -m unittest -q test.test_utils.TestUtil.test_unescape_html\nRUN EVERY COMMAND\n0\n\n\n======================================================================\nERROR: test_utils (unittest.loader._FailedTest)\n----------------------------------------------------------------------\nImportError: Failed to import test module: test_utils\nTraceback (most recent call last):\n  File \"/usr/lib/python3.8/unittest/loader.py\", line 154, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/output/workspaces/ws_16_11_4pxsz1h2/youtube-dl_3/youtube-dl/test/test_utils.py\", line 18, in <module>\n    from youtube_dl.utils import (\n  File \"/output/workspaces/ws_16_11_4pxsz1h2/youtube-dl_3/youtube-dl/youtube_dl/__init__.py\", line 15, in <module>\n    from .options import (\n  File \"/output/workspaces/ws_16_11_4pxsz1h2/youtube-dl_3/youtube-dl/youtube_dl/options.py\", line 8, in <module>\n    from .downloader.external import list_external_downloaders\n  File \"/output/workspaces/ws_16_11_4pxsz1h2/youtube-dl_3/youtube-dl/youtube_dl/downloader/__init__.py\", line 3, in <module>\n    from .common import FileDownloader\n  File \"/output/workspaces/ws_16_11_4pxsz1h2/youtube-dl_3/youtube-dl/youtube_dl/downloader/common.py\", line 10, in <module>\n    from ..utils import (\n  File \"/output/workspaces/ws_16_11_4pxsz1h2/youtube-dl_3/youtube-dl/youtube_dl/utils.py\", line 599, in <module>\n    from antlr4 import *\nModuleNotFoundError: No module named 'antlr4'\n\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (errors=1)\n",
+        "stderr": "",
+        "returncode": 0,
+        "timed_out": false,
+        "flag": "Error: test_execution",
+        "import_root": "/output/workspaces/ws_16_11_4pxsz1h2/youtube-dl_3/youtube-dl",
+        "pythonpath": "/output/workspaces/ws_16_11_4pxsz1h2/youtube-dl_3/youtube-dl",
+        "raw_test_flag": "Error: test_execution",
+        "target_file_after_test_sha256": "df9cca1b9910c54f041b73e3e46a9732196456bcf516af2227591856eb775596",
+        "test_preserved_target_file": true,
+        "candidate_input_sha256": "5ef120f7de8428e6179eb6f63e6031d8c6d03df7a4129b910b5081790c57ba0b",
+        "target_file_before_sha256": "1cfb72601e8a104fc724658656a450242fb64cf9b96028283435ded781ce3f98",
+        "executed_function_sha256": "3da3c20572d60730c2bb1f78a0cfb194796cce21c4a85369c7421ba06baf3f07",
+        "target_file_during_test_sha256": "df9cca1b9910c54f041b73e3e46a9732196456bcf516af2227591856eb775596",
+        "target_file_after_restore_sha256": "1cfb72601e8a104fc724658656a450242fb64cf9b96028283435ded781ce3f98",
+        "restore_integrity": true,
+        "raw_flag": "Error: test_execution",
+        "classification": "unresolved_execution_error",
+        "restore_returncode": 0,
+        "restore_exception": null,
+        "bytecode_removed_after_restore": [],
+        "cache_cleanup_exception": null,
+        "stage": "candidate",
+        "bug_id": "16",
+        "candidate_index": 0,
+        "patch_sha256": "5ef120f7de8428e6179eb6f63e6031d8c6d03df7a4129b910b5081790c57ba0b"
+      }
+    ],
+    "benchmark_identity": {
+      "project": "youtube-dl",
+      "metadata_bugsinpy_id": "3",
+      "resolved_bugsinpy_id": "3",
+      "metadata_fix_commit": "95f3f7c20a05e7ac490e768b8470b20538ef8581",
+      "fixed_commit_id": "95f3f7c20a05e7ac490e768b8470b20538ef8581",
+      "buggy_commit_id": "f5469da9e6e259c1690c7ef54f1da1c19f65036f",
+      "test_file": "test/test_utils.py",
+      "bug_info_sha256": "0f4b4ad94adf577627c151fe23b9e77b0ee17319a8008d64c364bb16fc43012a",
+      "run_test_sha256": "5d1d6641b56006f0916da8c864cc2adb5b9f6a0af785d0d2b4b9c2d79d5a31eb"
+    },
+    "result_file_sha256": "c1ba7ac8ec10be98adece234b8d38b0f2ceaeb614f1785875b40601192a6d48e"
+  }
+}

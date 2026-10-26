@@ -1,0 +1,31 @@
+{
+  "43": {
+    "status": "Error: ground_truth_test",
+    "nucleus_sampling_flags": [],
+    "test_evidence": [
+      {
+        "target_file_before_test_sha256": "082db718f4295e3643602db8feca8ced99489152c975edb9595d3f5d24078913",
+        "bytecode_removed_before_test": [],
+        "command": [
+          "bugsinpy-test"
+        ],
+        "cwd": "/output/workspaces/ws_43_10_tcia203j/pandas_178/pandas",
+        "stdout": "pytest pandas/tests/indexes/multi/test_drop.py::test_drop_with_non_unique_datetime_index_and_invalid_keys\nRUN EVERY COMMAND\n0\n\n\nImportError while loading conftest '/output/workspaces/ws_43_10_tcia203j/pandas_178/pandas/pandas/conftest.py'.\npandas/__init__.py:31: in <module>\n    from pandas._libs import hashtable as _hashtable, lib as _lib, tslib as _tslib\npandas/_libs/__init__.py:3: in <module>\n    from .tslibs import (\npandas/_libs/tslibs/__init__.py:3: in <module>\n    from .conversion import localize_pydatetime, normalize_date\npandas/_libs/tslibs/conversion.pyx:1: in init pandas._libs.tslibs.conversion\n    import cython\nE   ValueError: numpy.ndarray size changed, may indicate binary incompatibility. Expected 96 from C header, got 80 from PyObject\n",
+        "stderr": "",
+        "returncode": 0,
+        "timed_out": false,
+        "flag": "Error: test_execution",
+        "import_root": "/output/workspaces/ws_43_10_tcia203j/pandas_178/pandas",
+        "pythonpath": "/output/workspaces/ws_43_10_tcia203j/pandas_178/pandas",
+        "raw_test_flag": "Error: test_execution",
+        "target_file_after_test_sha256": "082db718f4295e3643602db8feca8ced99489152c975edb9595d3f5d24078913",
+        "test_preserved_target_file": true,
+        "target_file_sha256": "082db718f4295e3643602db8feca8ced99489152c975edb9595d3f5d24078913",
+        "stage": "fixed_control",
+        "bug_id": "43",
+        "candidate_index": null,
+        "patch_sha256": null
+      }
+    ]
+  }
+}

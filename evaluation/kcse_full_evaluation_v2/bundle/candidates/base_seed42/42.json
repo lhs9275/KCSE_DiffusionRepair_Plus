@@ -1,0 +1,115 @@
+{
+  "bug_id": "42",
+  "seed": 42,
+  "arm": "base",
+  "candidates": [
+    {
+      "index": 0,
+      "patch_text": "def _unstack_multiple(data, clocs, fill_value=None):\n    if len(clocs) == 0:\n        return data\n    index = data.index\n    clocs = [index._get_level_number(i) for i in clocs]\n    rlocs = [i for i in range(index.nlevels) if i not in clocs]\n    clevels = [index.levels[i] for i in clocs]\n    ccodes = [index.codes[i] for i in clocs]\n    cnames = [index.names[i] for i in clocs]\n    rlevels = [index.levels[i] for i in rlocs]\n    rcodes = [index.codes[i] for i in rlocs]\n    rnames = [index.names[i] for i in rlocs]\n    shape = [len(x) for x in clevels]\n    group_index = get_group_index(ccodes, shape, sort=False, xnull=False)\n    comp_ids, obs_ids = compress_group_index(group_index, sort=False)\n    recons_codes = decons_obs_group_ids(comp_ids, obs_ids, shape, ccodes, xnull=False)\n    if rlocs == []:\n        dummy_index = Index(obs_ids, name='__placeholder__')\n    else:\n        dummy_index = MultiIndex(levels=rlevels + [obs_ids], codes=rcodes + [comp_ids], names=rnames + ['__placeholder__'], verify_integrity=False)\n    if isinstance(data, Series):\n        dummy = data.copy()\n        dummy.index = dummy_index\n        unstacked = dummy.unstack('__placeholder__', fill_value=fill_value)\n        new_levels = clevels\n        new_names = cnames\n        new_codes = recons_codes\n    else:\n        dummy = data.copy()\n        dummy.index = dummy_index\n        unstacked = dummy.unstack('__placeholder__', fill_value=fill_value)\n        if isinstance(unstacked, Series):\n            unstcols = unstacked.index\n        else:\n            unstcols = unstacked.columns\n        new_levels = [unstcols.levels[0]] + clevels\n        new_names = [data.columns.name] + cnames\n        new_codes = [unstcols.codes[0]]\n        for rec in recons_codes:\n            new_codes.append(rec.take(unstcols.codes[-1]))\n    new_columns = MultiIndex(levels=new_levels, codes=new_codes, names=new_names, verify_integrity=False)\n    if isinstance(unstacked, Series):\n        unstacked.index = new_columns\n    else:\n        unstacked.columns = new_columns\n    return unstacked",
+      "patch_sha256": "ad9b103291d7f120d92ca6da736b37aabd608ad1900c956ae74e37cda11c7110",
+      "rank_score": 232,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8250994923331102,
+      "top_p": 0.9313743654163876
+    },
+    {
+      "index": 1,
+      "patch_text": "def _unstack_multiple(data, clocs, fill_value=None):\n    if len(clocs) == 0:\n        return data\n    index = data.index\n    clocs = [index._get_level_number(i) for i in clocs]\n    rlocs = [i for i in range(index.nlevels) if i not in clocs]\n    clevels = [index.levels[i] for i in clocs]\n    ccodes = [index.codes[i] for i in clocs]\n    cnames = [index.names[i] for i in clocs]\n    rlevels = [index.levels[i] for i in rlocs]\n    rcodes = [index.codes[i] for i in rlocs]\n    rnames = [index.names[i] for i in rlocs]\n    shape = [len(x) for x in clevels]\n    group_index = get_group_index(ccodes, shape, sort=False, xnull=False)\n    comp_ids, obs_ids = compress_group_index(group_index, sort=False)\n    recons_codes = decons_obs_group_ids(comp_ids, obs_ids, shape, ccodes, xnull=False)\n    if rlocs == []:\n        dummy_index = Index(obs_ids, name='__placeholder__')\n    else:\n        dummy_index = MultiIndex(levels=rlevels + [obs_ids], codes=rcodes + [comp_ids], names=rnames + ['__placeholder__'], verify_integrity=False)\n    if isinstance(data, Series):\n        dummy = data.copy()\n        dummy.index = dummy_index\n        unstacked = dummy.unstack('__placeholder__', fill_value=fill_value)\n        new_levels = clevels\n        new_names = cnames\n        new_codes = recons_codes\n    else:\n        if isinstance(data.columns, MultiIndex):\n            result = data\n            for i in range(len(clocs)):\n                val = clocs[i]\n                result = result.unstack(val)\n            return result\n        dummy = data.copy()\n        dummy.index = dummy_index\n        unstacked = dummy.unstack('__placeholder__', fill_value=fill_value)\n        if isinstance(unstacked, Series):\n            unstcols = unstacked.index\n        else:\n            unstcols = unstacked.columns\n        new_levels = [unstcols.levels[0]] + clevels\n        new_names = [data.columns.name] + cnames\n        new_codes = [unstcols.codes[0]]\n        for rec in recons_codes:\n            new_codes.append(rec.take(unstcols.codes[-1]))\n    new_columns = MultiIndex(levels=new_levels, codes=new_codes, names=new_names, verify_integrity=False)",
+      "patch_sha256": "071af7926c617c0e082fd7b15a70f4e0d5e17184d83b8c44049c75fd05c013ef",
+      "rank_score": 213,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.9374042813624712,
+      "top_p": 0.828917697133121
+    },
+    {
+      "index": 2,
+      "patch_text": "def _unstack_multiple(data, clocs, fill_value=None):\n    if len(clocs) == 0:\n        return data\n    index = data.index\n    clocs = [index._get_level_number(i) for i in clocs]\n    rlocs = [i for i in range(index.nlevels) if i not in clocs]\n    clevels = [index.levels[i] for i in clocs]\n    ccodes = [index.codes[i] for i in clocs]\n    cnames = [index.names[i] for i in clocs]\n    rlevels = [index.levels[i] for i in rlocs]\n    rcodes = [index.codes[i] for i in rlocs]\n    rnames = [index.names[i] for i in rlocs]\n    shape = [len(x) for x in clevels]\n    group_index = get_group_index(ccodes, shape, sort=False, xnull=False)\n    comp_ids, obs_ids = compress_group_index(group_index, sort=False)\n    recons_codes = decons_obs_group_ids(comp_ids, obs_ids, shape, ccodes, xnull=False)\n    if rlocs == []:\n        dummy_index = Index(obs_ids, name='__placeholder__')\n    else:\n        dummy_index = MultiIndex(levels=rlevels + [obs_ids], codes=rcodes + [comp_ids], names=rnames + ['__placeholder__'], verify_integrity=False)\n    if isinstance(data, Series):\n        dummy = data.copy()\n        dummy.index = dummy_index\n        unstacked = dummy.unstack('__placeholder__', fill_value=fill_value)\n        new_levels = clevels\n        new_names = cnames\n        new_codes = recons_codes\n    else:\n        if isinstance(data.columns, MultiIndex):\n            result = data\n            for i in range(len(clocs)):\n                val = clocs[i]\n                result = result.unstack(val)  # <--- BUGGY LINE\n                clocs = [v if i > v else v - 1 for v in clocs]\n            return result\n        dummy = data.copy()\n        dummy.index = dummy_index\n        unstacked = dummy.unstack('__placeholder__', fill_value=fill_value)\n        if isinstance(unstacked, Series):\n            unstcols = unstacked.index\n        else:\n            unstcols = unstacked.columns\n        new_levels = [unstcols.levels[0]] + clevels\n        new_names = [data.columns.name] + cnames\n        new_codes = [unstcols.codes[0]]\n        for rec in recons_codes:\n            new_codes.append(rec.take(unstcols.codes[-1]))\n    new_columns",
+      "patch_sha256": "4d777897337701a34d2b0c39619de8ac8dad8d92d4bf67955dba6cb6410ba89a",
+      "rank_score": 202,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8089233151013046,
+      "top_p": 0.9111541438766307
+    },
+    {
+      "index": 3,
+      "patch_text": "def _unstack_multiple(data, clocs, fill_value=None):\n    if len(clocs) == 0:\n        return data\n    index = data.index\n    clocs = [index._get_level_number(i) for i in clocs]\n    rlocs = [i for i in range(index.nlevels) if i not in clocs]\n    clevels = [index.levels[i] for i in clocs]\n    ccodes = [index.codes[i] for i in clocs]\n    cnames = [index.names[i] for i in clocs]\n    rlevels = [index.levels[i] for i in rlocs]\n    rcodes = [index.codes[i] for i in rlocs]\n    rnames = [index.names[i] for i in rlocs]\n    shape = [len(x) for x in clevels]\n    group_index = get_group_index(ccodes, shape, sort=False, xnull=False)\n    comp_ids, obs_ids = compress_group_index(group_index, sort=False)\n    recons_codes = decons_obs_group_ids(comp_ids, obs_ids, shape, ccodes, xnull=False)\n    if rlocs == []:\n        dummy_index = Index(obs_ids, name='__placeholder__')\n    else:\n        dummy_index = MultiIndex(levels=rlevels + [obs_ids], codes=rcodes + [comp_ids], names=rnames + ['__placeholder__'], verify_integrity=False)\n    if isinstance(data, Series):\n        dummy = data.copy()\n        dummy.index = dummy_index\n        unstacked = dummy.unstack('__placeholder__', fill_value=fill_value)\n        new_levels = clevels\n        new_names = cnames\n        new_codes = recons_codes\n    else:\n        if isinstance(data.columns, MultiIndex):\n            result = data\n            for i in range(len(clocs)):\n                val = clocs[i]\n                result = result.unstack(val)  # <-- BUG FIX\n                clocs = [v if i > v else v - 1 for v in clocs]\n            return result\n        dummy = data.copy()\n        dummy.index = dummy_index\n        unstacked = dummy.unstack('__placeholder__', fill_value=fill_value)\n        if isinstance(unstacked, Series):\n            unstcols = unstacked.index\n        else:\n            unstcols = unstacked.columns\n        new_levels = [unstcols.levels[0]] + clevels\n        new_names = [data.columns.name] + cnames\n        new_codes = [unstcols.codes[0]]\n        for rec in recons_codes:\n            new_codes.append(rec.take(unstcols.codes[-1]))\n    new_columns = MultiIndex",
+      "patch_sha256": "408973747827d0431f3f130f3132688f375092cc0144e5c5458a299afdb47cbd",
+      "rank_score": 202,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8089233151013046,
+      "top_p": 0.9111541438766307
+    },
+    {
+      "index": 4,
+      "patch_text": "def _unstack_multiple(data, clocs, fill_value=None):\n    if len(clocs) == 0:\n        return data\n    index = data.index\n    clocs = [index._get_level_number(i) for i in clocs]\n    rlocs = [i for i in range(index.nlevels) if i not in clocs]\n    clevels = [index.levels[i] for i in clocs]\n    ccodes = [index.codes[i] for i in clocs]\n    cnames = [index.names[i] for i in clocs]\n    rlevels = [index.levels[i] for i in rlocs]\n    rcodes = [index.codes[i] for i in rlocs]\n    rnames = [index.names[i] for i in rlocs]\n    shape = [len(x) for x in clevels]\n    group_index = get_group_index(ccodes, shape, sort=False, xnull=False)\n    comp_ids, obs_ids = compress_group_index(group_index, sort=False)\n    recons_codes = decons_obs_group_ids(comp_ids, obs_ids, shape, ccodes, xnull=False)\n    if rlocs == []:\n        dummy_index = Index(obs_ids, name='__placeholder__')\n    else:\n        dummy_index = MultiIndex(levels=rlevels + [obs_ids], codes=rcodes + [comp_ids], names=rnames + ['__placeholder__'], verify_integrity=False)\n    if isinstance(data, Series):\n        dummy = data.copy()\n        dummy.index = dummy_index\n        unstacked = dummy.unstack('__placeholder__', fill_value=fill_value)\n        new_levels = clevels\n        new_names = cnames\n        new_codes = recons_codes\n    else:\n        if isinstance(data.columns, MultiIndex):\n            result = data\n            for i in range(len(clocs)):\n                val = clocs[i]\n                result = result.unstack(val)  # <--- BUGGY LINE\n                clocs = [v if i > v else v - 1 for v in clocs]\n            return result\n        dummy = data.copy()\n        dummy.index = dummy_index\n        unstacked = dummy.unstack('__placeholder__', fill_value=fill_value)\n        if isinstance(unstacked, Series):\n            unstcols = unstacked.index\n        else:\n            unstcols = unstacked.columns\n        new_levels = [unstcols.levels[0]] + clevels\n        new_names = [data.columns.name] + cnames\n        new_codes = [unstcols.codes[0]]\n        for rec in recons_codes:\n            new_codes.append(rec.take(unstcols.codes[-1]))",
+      "patch_sha256": "cc10bdec5a11389faa261f12e5992f8eda53de3f14331757fb61568b5cffd817",
+      "rank_score": 202,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8850407915843882,
+      "top_p": 0.7720008604178135
+    },
+    {
+      "index": 5,
+      "patch_text": "def _unstack_multiple(data, clocs, fill_value=None):\n    if len(clocs) == 0:\n        return data\n    index = data.index\n    clocs = [index._get_level_number(i) for i in clocs]\n    rlocs = [i for i in range(index.nlevels) if i not in clocs]\n    clevels = [index.levels[i] for i in clocs]\n    ccodes = [index.codes[i] for i in clocs]\n    cnames = [index.names[i] for i in clocs]\n    rlevels = [index.levels[i] for i in rlocs]\n    rcodes = [index.codes[i] for i in rlocs]\n    rnames = [index.names[i] for i in rlocs]\n    shape = [len(x) for x in clevels]\n    group_index = get_group_index(ccodes, shape, sort=False, xnull=False)\n    comp_ids, obs_ids = compress_group_index(group_index, sort=False)\n    recons_codes = decons_obs_group_ids(comp_ids, obs_ids, shape, ccodes, xnull=False)\n    if rlocs == []:\n        dummy_index = Index(obs_ids, name='__placeholder__')\n    else:\n        dummy_index = MultiIndex(levels=rlevels + [obs_ids], codes=rcodes + [comp_ids], names=rnames + ['__placeholder__'], verify_integrity=False)\n    if isinstance(data, Series):\n        dummy = data.copy()\n        dummy.index = dummy_index\n        unstacked = dummy.unstack('__placeholder__', fill_value=fill_value)\n        new_levels = clevels\n        new_names = cnames\n        new_codes = recons_codes\n    else:\n        if isinstance(data.columns, MultiIndex):\n            result = data\n            for i in range(len(clocs)):\n                val = clocs[i]\n                result = result.unstack(val)  # <--- BUGGY LINE\n                clocs = [v if i > v else v - 1 for v in clocs]\n            return result\n        dummy = data.copy()\n        dummy.index = dummy_index\n        unstacked = dummy.unstack('__placeholder__', fill_value=fill_value)\n        if isinstance(unstacked, Series):\n            unstcols = unstacked.index\n        else:\n            unstcols = unstacked.columns\n        new_levels = [unstcols.levels[0]] + clevels\n        new_names = [data.columns.name] + cnames\n        new_codes = [unstcols.codes[0]]\n        for rec in recons_codes:\n            new_codes.append(rec.take(unstcols.codes[-1]))\n    new_",
+      "patch_sha256": "85165e884aa676421c470d6facb2317e371b9bdbebf38a944466f29ef30ad5c9",
+      "rank_score": 202,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7822854872415247,
+      "top_p": 0.8778568590519058
+    },
+    {
+      "index": 6,
+      "patch_text": "def _unstack_multiple(data, clocs, fill_value=None):\n    if len(clocs) == 0:\n        return data\n    index = data.index\n    clocs = [index._get_level_number(i) for i in clocs]\n    rlocs = [i for i in range(index.nlevels) if i not in clocs]\n    clevels = [index.levels[i] for i in clocs]\n    ccodes = [index.codes[i] for i in clocs]\n    cnames = [index.names[i] for i in clocs]\n    rlevels = [index.levels[i] for i in rlocs]\n    rcodes = [index.codes[i] for i in rlocs]\n    rnames = [index.names[i] for i in rlocs]\n    shape = [len(x) for x in clevels]\n    group_index = get_group_index(ccodes, shape, sort=False, xnull=False)\n    comp_ids, obs_ids = compress_group_index(group_index, sort=False)\n    recons_codes = decons_obs_group_ids(comp_ids, obs_ids, shape, ccodes, xnull=False)\n    if rlocs == []:\n        dummy_index = Index(obs_ids, name='__placeholder__')\n    else:\n        dummy_index = MultiIndex(levels=rlevels + [obs_ids], codes=rcodes + [comp_ids], names=rnames + ['__placeholder__'], verify_integrity=False)\n    if isinstance(data, Series):\n        dummy = data.copy()\n        dummy.index = dummy_index\n        unstacked = dummy.unstack('__placeholder__', fill_value=fill_value)\n        new_levels = clevels\n        new_names = cnames\n        new_codes = recons_codes\n    else:\n        if isinstance(data.columns, MultiIndex):\n            result = data\n            for i in range(len(clocs)):\n                val = clocs[i]\n                result = result.unstack(val)  # <--\n                clocs = [v if i > v else v - 1 for v in clocs]\n            return result\n        dummy = data.copy()\n        dummy.index = dummy_index\n        unstacked = dummy.unstack('__placeholder__', fill_value=fill_value)\n        if isinstance(unstacked, Series):\n            unstcols = unstacked.index\n        else:\n            unstcols = unstacked.columns\n        new_levels = [unstcols.levels[0]] + clevels\n        new_names = [data.columns.name] + cnames\n        new_codes = [unstcols.codes[0]]\n        for rec in recons_codes:\n            new_codes.append(rec.take(unstcols.codes[-1]))\n    new_columns = Multi",
+      "patch_sha256": "17c60a3b91d8333130992861dede0feb92661f578983dacd137a37394671f9d9",
+      "rank_score": 202,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7696983020597673,
+      "top_p": 0.8621228775747091
+    },
+    {
+      "index": 7,
+      "patch_text": "def _unstack_multiple(data, clocs, fill_value=None):\n    if len(clocs) == 0:\n        return data\n    index = data.index\n    clocs = [index._get_level_number(i) for i in clocs]\n    rlocs = [i for i in range(index.nlevels) if i not in clocs]\n    clevels = [index.levels[i] for i in clocs]\n    ccodes = [index.codes[i] for i in clocs]\n    cnames = [index.names[i] for i in clocs]\n    rlevels = [index.levels[i] for i in rlocs]\n    rcodes = [index.codes[i] for i in rlocs]\n    rnames = [index.names[i] for i in rlocs]\n    shape = [len(x) for x in clevels]\n    group_index = get_group_index(ccodes, shape, sort=False, xnull=False)\n    comp_ids, obs_ids = compress_group_index(group_index, sort=False)\n    recons_codes = decons_obs_group_ids(comp_ids, obs_ids, shape, ccodes, xnull=False)\n    if rlocs == []:\n        dummy_index = Index(obs_ids, name='__placeholder__')\n    else:\n        dummy_index = MultiIndex(levels=rlevels + [obs_ids], codes=rcodes + [comp_ids], names=rnames + ['__placeholder__'], verify_integrity=False)\n    if isinstance(data, Series):\n        dummy = data.copy()\n        dummy.index = dummy_index\n        unstacked = dummy.unstack('__placeholder__', fill_value=fill_value)\n        new_levels = clevels\n        new_names = cnames\n        new_codes = recons_codes\n    else:\n        result = data\n        for i in range(len(clocs)):\n            val = clocs[i]\n            result = result.unstack(val)\n            clocs = [v if i > v else v - 1 for v in clocs]\n        return result\n    new_columns = MultiIndex(levels=new_levels, codes=new_codes, names=new_names, verify_integrity=False)\n    if isinstance(unstacked, Series):\n        unstacked.index = new_columns\n    else:\n        unstacked.columns = new_columns\n    return unstacked",
+      "patch_sha256": "336e72fcb85228d3fcdf8e63ffab9eeaf3a593c5ef76c6b784393bd6df4c2406",
+      "rank_score": 163,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.5202227799850999,
+      "top_p": 0.98
+    }
+  ],
+  "candidate_count": 8,
+  "retrieved_examples": [],
+  "diffusion_plan": [],
+  "static_analysis_nodes": []
+}

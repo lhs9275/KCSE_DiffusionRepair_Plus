@@ -1,0 +1,102 @@
+{
+  "bug_id": "16",
+  "seed": 42,
+  "arm": "base",
+  "candidates": [
+    {
+      "index": 0,
+      "patch_text": "def unescapeHTML(s):\n    if s is None:\n        return None\n    assert type(s) == compat_str\n    return re.sub(r'&([^;]+;)', lambda m: _htmlentity_transform(m.group(1)), s)",
+      "patch_sha256": "b680f919e250bfa55a833724b38072e2c15e3366e059bc99fb9d338872d59335",
+      "rank_score": 219,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8850407915843882,
+      "top_p": 0.7720008604178135
+    },
+    {
+      "index": 1,
+      "patch_text": "def unescapeHTML(s):\n    if s is None:\n        return None\n    assert type(s) == compat_str\n    return re.sub('&(#[0-9]{3}|#x[0-9a-fA-F]{1,4}|#([0-9]{1,7}(?![0-9])))', _htmlentity_transform, s)",
+      "patch_sha256": "270b839ac6a36c3b3e4204847ae8d155d3b212d2b95b14872ba99ac36c72cfec",
+      "rank_score": 209,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7822854872415247,
+      "top_p": 0.8778568590519058
+    },
+    {
+      "index": 2,
+      "patch_text": "def unescapeHTML(s):\n    if s is None:\n        return None\n    assert type(s) == str\n    return re.sub('&([^;]+;)', lambda m: _htmlentity_transform(m.group(1)), s)\n\n##end",
+      "patch_sha256": "e4cf1f5928382d6ade6d53a745f9ce1897c319b72e85f3bf65c570bb78056504",
+      "rank_score": 206,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.5106412196441554,
+      "top_p": 0.9620023454695296
+    },
+    {
+      "index": 3,
+      "patch_text": "def unescapeHTML(s):\n    if s is None:\n        return None\n    assert type(s) == compat_str\n    return s.replace('&gt;', '>').replace('&lt;', '<').replace('&quot;', '\"')",
+      "patch_sha256": "43dd747985ffd8249a9a5fb259f8d62d62df6e61c5fd17a9f48320fe6ad92d5d",
+      "rank_score": 204,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.9374042813624712,
+      "top_p": 0.828917697133121
+    },
+    {
+      "index": 4,
+      "patch_text": "def unescapeHTML(s):\n    if s is None:\n        return None\n    assert type(s) == str\n    return re.sub(r'&([^;]+;)', lambda m: _htmlentity_transform(m.group(1)), s)",
+      "patch_sha256": "cbcbb0bb35babedd898b0f10d877f0a1e7cebb660aa6b4653ef1e5e17d3f15ac",
+      "rank_score": 203,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8250994923331102,
+      "top_p": 0.9313743654163876
+    },
+    {
+      "index": 5,
+      "patch_text": "def unescapeHTML(s):\n    if s is None:\n        return None\n    assert type(s) == compat_str\n    return re.sub('&([^;]+;)', lambda m: _htmlentity_transform(m.group(1)), s)\n\n\n##end\n\n##complete\n159684",
+      "patch_sha256": "7f5fec1483a39f64fabbe8cd9738cd00fc476db59a9788f2401cf2de33901952",
+      "rank_score": 98,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.8089233151013046,
+      "top_p": 0.9111541438766307
+    },
+    {
+      "index": 6,
+      "patch_text": "def unescapeHTML(s):\n    if s is None:\n        return None\n    assert type(s) == str\n    return re.sub('&([^;]+;)', lambda m: _htmlentity_transform(m.group(1)), s)\nimport ast\nimport sys\n\nfrom.util import parse_python_file, remove_comments, remove_docstring\n\nclass Tester():\n    def __init__(self, file_name):\n        self._file_name = file_name\n\n    def parse(self):\n        file_path = self._file_name\n\n        source = parse_python_file(file_path)\n        print(\"source\")\n        print(source)\n\n        self._source_ast = ast.parse(source)\n        print(\"ast\")\n        print(ast.dump(self._source_ast))\n\n        self._func_ast = self._find_ast_func()\n        print(\"func_ast\")\n        print(ast.dump(self._func_ast))\n\n    def find_node_by_lineno(self, lineno):\n        func_nodes = self._find_ast_func()\n        node = None\n\n        for child in ast.iter_child_nodes(func_nodes):\n            if child.lineno == lineno:\n                node = child\n                break\n\n        return node\n\n    def get_fix_function(self):\n        self.parse()\n        # return self._source_ast\n        return self._func_ast\n\n    def _find_ast_func(self):\n        func_nodes = []\n\n        for node in ast.walk(self._source_ast):\n            if isinstance(node, ast.FunctionDef):\n                func_nodes.append(node)\n\n        return func_nodes[0]\n\n    def _remove_ast_func(self, func_ast):\n        parent = func_ast.parent\n        parent.body.remove(func_ast)\n        return parent\n\n\nif __name__ == \"__main__\":\n    t = Tester(\"src/youtube_dl/extractor/youtube.py\")\n    t.parse()\n    func_ast = t.get_fix_function()\n    func_ast.body[0].lineno = 147\n    print(func_ast)",
+      "patch_sha256": "252a2309715abf41f3d3311aab715cf302438bd87eb0044809fd4faea9189606",
+      "rank_score": -147,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.9374042813624712,
+      "top_p": 0.828917697133121
+    }
+  ],
+  "candidate_count": 7,
+  "retrieved_examples": [],
+  "diffusion_plan": [],
+  "static_analysis_nodes": []
+}

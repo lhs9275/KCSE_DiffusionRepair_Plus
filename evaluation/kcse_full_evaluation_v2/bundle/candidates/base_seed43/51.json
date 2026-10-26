@@ -1,0 +1,141 @@
+{
+  "bug_id": "51",
+  "seed": 43,
+  "arm": "base",
+  "candidates": [
+    {
+      "index": 0,
+      "patch_text": "def get_new_command(command, settings):\n    return 'open https://' + command.script[7:]",
+      "patch_sha256": "821529e962356424bb1ba64e239eb9af3e87ea296c5b27e0c784da1863978f6f",
+      "rank_score": 189,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.934442110146087,
+      "top_p": 0.8256979458109642
+    },
+    {
+      "index": 1,
+      "patch_text": "def get_new_command(command, settings):\n    return 'open https://' + command.script[5:]",
+      "patch_sha256": "8340d2394eff75f1204c6246a22cffa5771377812162672bc6ce07a055c2f9f3",
+      "rank_score": 189,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.934442110146087,
+      "top_p": 0.8256979458109642
+    },
+    {
+      "index": 2,
+      "patch_text": "def get_new_command(command, settings):\n    return 'open'+ command.script[5:]",
+      "patch_sha256": "7e9320bc7a42b036ca3fbaa01f6f01e79343991ba3792bccaf315f70c6521ac2",
+      "rank_score": 187,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.0,
+      "top_p": 1.0
+    },
+    {
+      "index": 3,
+      "patch_text": "def get_new_command(command, settings):\n    return 'open'+ command.script",
+      "patch_sha256": "071af0ec948eb2231161be4bf3f16694067eca5117980212805546c2b8817216",
+      "rank_score": 186,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7704673177175924,
+      "top_p": 0.8630841471469904
+    },
+    {
+      "index": 4,
+      "patch_text": "def get_new_command(command, settings):\n    return 'open {}'.format(command.script[5:])",
+      "patch_sha256": "69890e75763156667ad1b74a93c3f8a7cd6455ad77eed19aad9e057d284d8750",
+      "rank_score": 184,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.934442110146087,
+      "top_p": 0.8256979458109642
+    },
+    {
+      "index": 5,
+      "patch_text": "def get_new_command(command, settings):\n    return 'open {}'.format(' '.join(command.script))",
+      "patch_sha256": "3a08b92c4b34d5f8a73bfa59942ca6d375cbe7dafba9bf9adcf071b2139aa377",
+      "rank_score": 181,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7976020643090617,
+      "top_p": 0.8970025803863271
+    },
+    {
+      "index": 6,
+      "patch_text": "def get_new_command(command, settings):\n    if not command.script.startswith('open http'):\n        return 'open http://' + command.script[5:]\n    else:\n        return command.script",
+      "patch_sha256": "104552678927a615aff9d667fc5e51074993839ecb730384a03b3e3d490c0207",
+      "rank_score": 155,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7976020643090617,
+      "top_p": 0.8970025803863271
+    },
+    {
+      "index": 7,
+      "patch_text": "def get_new_command(command, settings):\n    return 'open'+ command.script[5:]\n\n\n##end\n\n##correct\ndef get_new_command(command, settings):\n    return 'open'+ command.script[5:]\n\n\n##end\n\n##correct\ndef get_new_command(command, settings):\n    return 'open'+ command.script[5:]\n\n\n##end\n\n##correct\ndef get_new_command(command, settings):\n    return 'open'+ command.script[5:]\n\n\n##end\n\n##correct\ndef get_new_command(command, settings):\n    return 'open'+ command.script[5:]\n\n\n##end\n\n##correct\ndef get_new_command(command, settings):\n    return 'open'+ command.script[5:]\n\n\n##end\n\n##correct\ndef get_new_command(command, settings):\n    return 'open'+ command.script[5:]\n\n\n##end\n\n##correct\ndef get_new_command(command, settings):\n    return 'open'+ command.script[5:]\n\n\n##end\n\n##correct\ndef get_new_command(command, settings):\n    return 'open'+ command.script[5:]\n\n\n##end\n\n##correct\ndef get_new_command(command, settings):\n    return 'open'+ command.script[5:]\n\n\n##end\n\n##correct\ndef get_new_command(command, settings):\n    return 'open'+ command.script[5:]\n\n\n##end\n\n##correct\ndef get_new_command(command, settings):\n    return 'open'+ command.script[5:]\n\n\n##end\n\n##correct\ndef get_new_command(command, settings):\n    return 'open'+ command.script[5:]\n\n\n##end\n\n##correct\ndef get_new_command(command, settings):\n    return 'open'+ command.script[5:]\n\n\n##end\n\n##correct\ndef get_new_command(command, settings):\n    return 'open'+ command.script[5:]\n\n\n##end\n\n##correct\ndef get_new_command(command, settings):\n    return 'open'+ command.script[5:]\n\n\n##end\n\n##correct\ndef get_new_command(command, settings):\n    return 'open'+ command.script[5:]\n\n\n##end\n\n##correct\ndef get_new_command(command, settings):\n    return 'open'+ command.script[5:]\n\n\n##end\n\n##correct\ndef get_new_command(command, settings):\n    return 'open'+ command.script[5:]\n\n\n##end\n\n##correct\ndef get_new_command(command, settings):\n    return 'open'+ command.script[5:]\n\n\n##end\n\n##correct",
+      "patch_sha256": "46e45df2620f665c15c46489b9efecf3c9ef4a90152a43dbc9da812af8f691b7",
+      "rank_score": 127,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.5051876220100471,
+      "top_p": 0.9515146577116289
+    },
+    {
+      "index": 8,
+      "patch_text": "def get_new_command(command, settings):\n    if command.script.startswith('open http://'):\n        return command.script\n    else:\n        return 'open http://' + command.script[5:]\n\n##end",
+      "patch_sha256": "42ddf208f25a2ec3f440895dd0fcb3434de4837a6c01841340a208666702b012",
+      "rank_score": 126,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.934442110146087,
+      "top_p": 0.8256979458109642
+    },
+    {
+      "index": 9,
+      "patch_text": "def get_new_command(command, settings):\n    if len(command.script) > 7 and command.script[7] == '?':\n        return 'open https://' + command.script[8:]\n    return 'open http://' + command.script[5:]",
+      "patch_sha256": "125a0751c05eb5676bbfdf6076efe006c8b68138964822d3c41a2d0f8557af3a",
+      "rank_score": 67,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7704673177175924,
+      "top_p": 0.8630841471469904
+    }
+  ],
+  "candidate_count": 10,
+  "retrieved_examples": [],
+  "diffusion_plan": [],
+  "static_analysis_nodes": []
+}

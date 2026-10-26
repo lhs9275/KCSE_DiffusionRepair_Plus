@@ -1,0 +1,141 @@
+{
+  "bug_id": "48",
+  "seed": 43,
+  "arm": "base",
+  "candidates": [
+    {
+      "index": 0,
+      "patch_text": "def match(command):\n    return ('push' in command.script_parts\n            and'set-upstream' in command.output)",
+      "patch_sha256": "fd9eae983702e8a3aee3e26e26653cc27ccb78eac57976529e2ed2fb75f93ca3",
+      "rank_score": 201,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7976020643090617,
+      "top_p": 0.8970025803863271
+    },
+    {
+      "index": 1,
+      "patch_text": "def match(command):\n    if 'push' in command.script_parts and'set-upstream' in command.output:\n        return True",
+      "patch_sha256": "e35663075c9b63846aff01ac9e273c3e8d21977e93ba3195d77ef9ad6e012317",
+      "rank_score": 197,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7976020643090617,
+      "top_p": 0.8970025803863271
+    },
+    {
+      "index": 2,
+      "patch_text": "def match(command):\n    if 'push' in command.script_parts:\n        if command.output == '':\n            return True\n        else:\n            return'set-upstream' in command.output",
+      "patch_sha256": "c25c8d715da398c2e1ee255c5f99c663fa36a3d930bed8513ff70445ca0f40fc",
+      "rank_score": 172,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7970041106218376,
+      "top_p": 0.896255138277297
+    },
+    {
+      "index": 3,
+      "patch_text": "def match(command):\n    return 'push' in command.script_parts and'set-upstream' in command.output",
+      "patch_sha256": "d9df6bc9b395357529f988b7adde0168845deea84ac4126d75de231122a4b9a4",
+      "rank_score": 159,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.0,
+      "top_p": 1.0
+    },
+    {
+      "index": 4,
+      "patch_text": "def match(command):\n    return 'push' in command.script_parts and'set-upstream' not in command.output",
+      "patch_sha256": "4346daf2964548b1116be240ae4af3b323ffcd1e9c077a667ac43e25350d60dd",
+      "rank_score": 159,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.7704673177175924,
+      "top_p": 0.8630841471469904
+    },
+    {
+      "index": 5,
+      "patch_text": "def match(command):\n    return 'push' in command.script_parts and 'upstream' in command.output",
+      "patch_sha256": "56648469cf36511a5c37711a1ce3cd16a9e53354adc606897b26b26d1a42fa57",
+      "rank_score": 159,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.9326332018390676,
+      "top_p": 0.8237317411294214
+    },
+    {
+      "index": 6,
+      "patch_text": "def match(command):\n    return 'push' in command.script_parts and'set-upstream' in command.script_parts[0]",
+      "patch_sha256": "07529f8831552d1888a209c30eff4b5004191937682c06db5e49df8cc4578ea8",
+      "rank_score": 156,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.9198728361131365,
+      "top_p": 0.8098617783838441
+    },
+    {
+      "index": 7,
+      "patch_text": "def match(command):\n    return command.script_parts[0] == 'git' and'set-upstream' in command.output",
+      "patch_sha256": "efd585fd42373b2564d8765baf3dd852f31e5a360b623dc7ea8f8ba27db0d3b4",
+      "rank_score": 154,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.934442110146087,
+      "top_p": 0.8256979458109642
+    },
+    {
+      "index": 8,
+      "patch_text": "def match(command):\n    return command.script_parts[0] == \"git\" and \"set-upstream\" in command.output",
+      "patch_sha256": "a0173a0a50b2926b9e2d6ad0b523b561ef051685d115897d5b2d5cb7149c6e5e",
+      "rank_score": 154,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.9198728361131365,
+      "top_p": 0.8098617783838441
+    },
+    {
+      "index": 9,
+      "patch_text": "def match(command):\n    return 'push' in command.script_parts and not command.stdout.startswith('error')",
+      "patch_sha256": "9b27c7551a3e5694e09bd92702e75b9160d86c151054f55a1e2c4e419f0c20f3",
+      "rank_score": 151,
+      "plan_ok": true,
+      "compile_diagnostic": {
+        "ok": true,
+        "error": null
+      },
+      "temperature": 0.934442110146087,
+      "top_p": 0.8256979458109642
+    }
+  ],
+  "candidate_count": 10,
+  "retrieved_examples": [],
+  "diffusion_plan": [],
+  "static_analysis_nodes": []
+}
